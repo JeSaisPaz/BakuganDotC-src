@@ -1,4 +1,4 @@
 // bdc 0x08ac3ef0 g_gameStageRecAreaBase
 #include "bdc.h"
 
-__typeof__(u8[8]) g_gameStageRecAreaBase = BDC_BYTES(0x2bfef0, 8);
+__typeof__(u8[10]) g_gameStageRecAreaBase = BDC_BYTES(0x2bfef0, 10);
