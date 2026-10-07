@@ -1,4 +1,5 @@
 // bdc 0x08aa2f8d g_gmoBlendFactorMap
 #include "bdc.h"
+// bdc-fix	BYTES	signed char	0x29ef8d	11	0	
 
 __typeof__(s8[11]) g_gmoBlendFactorMap = BDC_BYTES(0x29ef8d, 11);

@@ -1,5 +1,15 @@
 // bdc 0x08a803e4 g_btlAiLevelTuning
 #include "bdc.h"
+// bdc-fix	V	float	0x27c3e4	4	0	.guardDelayMin[0]
+// bdc-fix	V	float	0x27c3e8	4	0	.guardDelayMin[1]
+// bdc-fix	V	float	0x27c3ec	4	0	.guardDelayMax[0]
+// bdc-fix	V	float	0x27c3f0	4	0	.guardDelayMax[1]
+// bdc-fix	BYTES	unsigned char	0x27c3f4	8	0	._unk10
+// bdc-fix	BYTES	signed char	0x27c3fc	2	0	.seekItemChance
+// bdc-fix	V	float	0x27c400	4	0	.comboFalloff[0]
+// bdc-fix	V	float	0x27c404	4	0	.comboFalloff[1]
+// bdc-fix	BYTES	unsigned char	0x27c408	8	0	._unk24
+// bdc-fix	BYTES	signed char	0x27c410	2	0	.guardDelayChance
 
 __typeof__(BtlAiLevelTuning) g_btlAiLevelTuning = {
     .guardDelayMin = { BDC_V(float, 0x27c3e4), BDC_V(float, 0x27c3e8) },

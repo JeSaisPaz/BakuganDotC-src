@@ -1,4 +1,7 @@
 // bdc 0x08a67800 g_btlTargetDirSlots
 #include "bdc.h"
+// bdc-fix	V	int	0x263800	4	0	[0]
+// bdc-fix	V	int	0x263808	4	0	[2]
+// bdc-fix	V	int	0x26380c	4	0	[3]
 
 __typeof__(s32[4]) g_btlTargetDirSlots = { BDC_V(int, 0x263800), 0, BDC_V(int, 0x263808), BDC_V(int, 0x26380c) };

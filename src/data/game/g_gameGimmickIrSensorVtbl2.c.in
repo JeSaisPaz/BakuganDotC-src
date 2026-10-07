@@ -1,4 +1,5 @@
 // bdc 0x08af30e4 g_gameGimmickIrSensorVtbl2
 #include "bdc.h"
+// bdc-fix	V	short	0x2ef0ec	2	0	[1].delta
 
 __typeof__(const VtblEntry[2]) g_gameGimmickIrSensorVtbl2 = { {0}, { .delta = BDC_V(short, 0x2ef0ec), .fn = (void *)GameGimmickIrSensorDtor } };

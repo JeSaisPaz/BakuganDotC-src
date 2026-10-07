@@ -1,5 +1,6 @@
 // bdc 0x08aa43e0 g_cxxBadAllocBases
 #include "bdc.h"
+// bdc-fix	V	unsigned char	0x2a03e6	1	0	[0].flags
 
 __typeof__(const CxxBaseClassEntry[1]) g_cxxBadAllocBases = {
     {

@@ -7,30 +7,26 @@
    `cutInPixelsA` / `cutInPixelsB` (`MemFreeAligned`). Used by
    `BtlHudUpdateAbilityCutIn` and `BtlMainPhaseTalk`. */
 
-typedef struct UiTalkVtable {
-  u8 _pad0[8];
-  s16 thisAdjust;
-  s16 _pad1;
-  void (*dtor)(void *self, int flags);
-} UiTalkVtable;
-
 void UiTalkFreeCutInTextures(void *win)
 {
   BtlHud *hud = (BtlHud *)win;
   CoreObject *obj = hud->cutInTexA;
-  if (obj != 0) {
-    const UiTalkVtable *vt = (const UiTalkVtable *)obj->vtable;
-    vt->dtor((char *)obj + vt->thisAdjust, 3);
-    hud->cutInTexA = 0;
+
+  if (obj != NULL) {
+    const VtblEntry *dtor = &((const VtblEntry *)obj->vtable)[1];
+
+    ((void (*)(void *, s32))dtor->fn)((u8 *)obj + dtor->delta, 3);
+    hud->cutInTexA = NULL;
   }
   MemFreeAligned(hud->cutInPixelsA);
   obj = hud->cutInTexB;
-  hud->cutInPixelsA = 0;
-  if (obj != 0) {
-    const UiTalkVtable *vt = (const UiTalkVtable *)obj->vtable;
-    vt->dtor((char *)obj + vt->thisAdjust, 3);
-    hud->cutInTexB = 0;
+  hud->cutInPixelsA = NULL;
+  if (obj != NULL) {
+    const VtblEntry *dtor = &((const VtblEntry *)obj->vtable)[1];
+
+    ((void (*)(void *, s32))dtor->fn)((u8 *)obj + dtor->delta, 3);
+    hud->cutInTexB = NULL;
   }
   MemFreeAligned(hud->cutInPixelsB);
-  hud->cutInPixelsB = 0;
+  hud->cutInPixelsB = NULL;
 }

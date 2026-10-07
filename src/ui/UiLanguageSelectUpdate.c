@@ -5,14 +5,6 @@
    (0..4) through the pointer-to-member table `g_uiLanguageSelectStateTable` and removes the task
    once the done byte `+0x58` is set. */
 
-extern MemberFnPtr g_uiLanguageSelectStateTable[5];
-
-typedef struct LangVtblEntry {
-  s16 thisAdjust;
-  s16 pad;
-  void (*fn)(void *);
-} LangVtblEntry;
-
 void UiLanguageSelectUpdate(CoreTask *task)
 
 {
@@ -24,9 +16,9 @@ void UiLanguageSelectUpdate(CoreTask *task)
     u8 *obj = (u8 *)self + e->delta;
     void (*fn)(void *) = (void (*)(void *))e->pfn;
     if (e->index != 0) {
-      const LangVtblEntry *v = (const LangVtblEntry *)(*(u8 **)(obj + (intptr_t)e->pfn)) + e->index;
-      fn = v->fn;
-      obj += v->thisAdjust;
+      const VtblEntry *v = *(const VtblEntry **)(obj + (intptr_t)e->pfn) + e->index;
+      fn = (void (*)(void *))v->fn;
+      obj += v->delta;
     }
     fn(obj);
   }

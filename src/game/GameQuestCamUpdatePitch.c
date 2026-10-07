@@ -27,14 +27,9 @@ typedef struct PitchEntryObj {
   ScePspFVector4 eye; /* +0x40 */
 } PitchEntryObj;
 
-typedef struct PitchOwnerVtbl {
-  VtblEntry _unk00[2];
-  VtblEntry getPos; /* +0x10 */
-} PitchOwnerVtbl;
-
 typedef struct PitchOwner {
   void *_unk00;
-  const PitchOwnerVtbl *vtbl; /* +0x04 */
+  const VtblEntry *vtbl; /* +0x04 */
 } PitchOwner;
 
 void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
@@ -102,7 +97,7 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
 
   /* dir = horizontal (target - goal), normalised */
   owner = (const PitchOwner *)(self->base).base.base.followed;
-  e = &owner->vtbl->getPos;
+  e = &owner->vtbl[2];
   pos = ((const ScePspFVector4 *(*)(void *))e->fn)((char *)owner + e->delta);
   dir.x = pos->x - (self->base).base.base.goal.x;
   dir.y = pos->y - (self->base).base.base.goal.y;

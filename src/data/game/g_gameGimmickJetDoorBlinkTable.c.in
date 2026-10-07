@@ -1,5 +1,20 @@
 // bdc 0x08abf078 g_gameGimmickJetDoorBlinkTable
 #include "bdc.h"
+// bdc-fix	V	short	0x2bb078	2	0	[0].from
+// bdc-fix	V	short	0x2bb07e	2	0	[0].end
+// bdc-fix	V	short	0x2bb084	2	0	[1].start
+// bdc-fix	V	short	0x2bb086	2	0	[1].end
+// bdc-fix	V	short	0x2bb08a	2	0	[2].to
+// bdc-fix	V	short	0x2bb08c	2	0	[2].start
+// bdc-fix	V	short	0x2bb08e	2	0	[2].end
+// bdc-fix	V	short	0x2bb090	2	0	[3].from
+// bdc-fix	V	short	0x2bb092	2	0	[3].to
+// bdc-fix	V	short	0x2bb094	2	0	[3].start
+// bdc-fix	V	short	0x2bb096	2	0	[3].end
+// bdc-fix	V	short	0x2bb098	2	0	[4].from
+// bdc-fix	V	short	0x2bb09a	2	0	[4].to
+// bdc-fix	V	short	0x2bb09c	2	0	[4].start
+// bdc-fix	V	short	0x2bb09e	2	0	[4].end
 
 __typeof__(const GameGimmickJetDoorBlinkStep[5]) g_gameGimmickJetDoorBlinkTable = {
     { .from = BDC_V(short, 0x2bb078), .end = BDC_V(short, 0x2bb07e) },

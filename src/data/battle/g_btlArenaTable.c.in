@@ -1,5 +1,127 @@
 // bdc 0x08a81a1c g_btlArenaTable
 #include "bdc.h"
+// bdc-fix	STR	char *	0x27d5e0	0	0	[0].name
+// bdc-fix	STR	char *	0x27d5ec	0	0	[0].mapPath
+// bdc-fix	V	int	0x27da28	4	0	[1].id
+// bdc-fix	STR	char *	0x27d60c	0	0	[1].name
+// bdc-fix	STR	char *	0x27d618	0	0	[1].mapPath
+// bdc-fix	V	int	0x27da34	4	0	[2].id
+// bdc-fix	STR	char *	0x27d638	0	0	[2].name
+// bdc-fix	STR	char *	0x27d644	0	0	[2].mapPath
+// bdc-fix	V	int	0x27da40	4	0	[3].id
+// bdc-fix	STR	char *	0x27d664	0	0	[3].name
+// bdc-fix	STR	char *	0x27d670	0	0	[3].mapPath
+// bdc-fix	V	int	0x27da4c	4	0	[4].id
+// bdc-fix	STR	char *	0x27d5e0	0	0	[4].name
+// bdc-fix	STR	char *	0x27d690	0	0	[4].mapPath
+// bdc-fix	V	int	0x27da58	4	0	[5].id
+// bdc-fix	STR	char *	0x27d60c	0	0	[5].name
+// bdc-fix	STR	char *	0x27d6b0	0	0	[5].mapPath
+// bdc-fix	V	int	0x27da64	4	0	[6].id
+// bdc-fix	STR	char *	0x27d638	0	0	[6].name
+// bdc-fix	STR	char *	0x27d6d0	0	0	[6].mapPath
+// bdc-fix	V	int	0x27da70	4	0	[7].id
+// bdc-fix	STR	char *	0x27d664	0	0	[7].name
+// bdc-fix	STR	char *	0x27d6f0	0	0	[7].mapPath
+// bdc-fix	V	int	0x27da7c	4	0	[8].id
+// bdc-fix	STR	char *	0x27d5e0	0	0	[8].name
+// bdc-fix	STR	char *	0x27d710	0	0	[8].mapPath
+// bdc-fix	V	int	0x27da88	4	0	[9].id
+// bdc-fix	STR	char *	0x27d60c	0	0	[9].name
+// bdc-fix	STR	char *	0x27d730	0	0	[9].mapPath
+// bdc-fix	V	int	0x27da94	4	0	[10].id
+// bdc-fix	STR	char *	0x27d638	0	0	[10].name
+// bdc-fix	STR	char *	0x27d750	0	0	[10].mapPath
+// bdc-fix	V	int	0x27daa0	4	0	[11].id
+// bdc-fix	STR	char *	0x27d664	0	0	[11].name
+// bdc-fix	STR	char *	0x27d770	0	0	[11].mapPath
+// bdc-fix	V	int	0x27daac	4	0	[12].id
+// bdc-fix	STR	char *	0x27d5e0	0	0	[12].name
+// bdc-fix	STR	char *	0x27d790	0	0	[12].mapPath
+// bdc-fix	V	int	0x27dab8	4	0	[13].id
+// bdc-fix	STR	char *	0x27d60c	0	0	[13].name
+// bdc-fix	STR	char *	0x27d7b0	0	0	[13].mapPath
+// bdc-fix	V	int	0x27dac4	4	0	[14].id
+// bdc-fix	STR	char *	0x27d638	0	0	[14].name
+// bdc-fix	STR	char *	0x27d7d0	0	0	[14].mapPath
+// bdc-fix	V	int	0x27dad0	4	0	[15].id
+// bdc-fix	STR	char *	0x27d664	0	0	[15].name
+// bdc-fix	STR	char *	0x27d7f0	0	0	[15].mapPath
+// bdc-fix	V	int	0x27dadc	4	0	[16].id
+// bdc-fix	STR	char *	0x27d5e0	0	0	[16].name
+// bdc-fix	STR	char *	0x27d810	0	0	[16].mapPath
+// bdc-fix	V	int	0x27dae8	4	0	[17].id
+// bdc-fix	STR	char *	0x27d60c	0	0	[17].name
+// bdc-fix	STR	char *	0x27d830	0	0	[17].mapPath
+// bdc-fix	V	int	0x27daf4	4	0	[18].id
+// bdc-fix	STR	char *	0x27d638	0	0	[18].name
+// bdc-fix	STR	char *	0x27d850	0	0	[18].mapPath
+// bdc-fix	V	int	0x27db00	4	0	[19].id
+// bdc-fix	STR	char *	0x27d664	0	0	[19].name
+// bdc-fix	STR	char *	0x27d870	0	0	[19].mapPath
+// bdc-fix	V	int	0x27db0c	4	0	[20].id
+// bdc-fix	STR	char *	0x27d5e0	0	0	[20].name
+// bdc-fix	STR	char *	0x27d890	0	0	[20].mapPath
+// bdc-fix	V	int	0x27db18	4	0	[21].id
+// bdc-fix	STR	char *	0x27d60c	0	0	[21].name
+// bdc-fix	STR	char *	0x27d8b0	0	0	[21].mapPath
+// bdc-fix	V	int	0x27db24	4	0	[22].id
+// bdc-fix	STR	char *	0x27d638	0	0	[22].name
+// bdc-fix	STR	char *	0x27d8d0	0	0	[22].mapPath
+// bdc-fix	V	int	0x27db30	4	0	[23].id
+// bdc-fix	STR	char *	0x27d664	0	0	[23].name
+// bdc-fix	STR	char *	0x27d8f0	0	0	[23].mapPath
+// bdc-fix	V	int	0x27db3c	4	0	[24].id
+// bdc-fix	STR	char *	0x27d5e0	0	0	[24].name
+// bdc-fix	STR	char *	0x27d910	0	0	[24].mapPath
+// bdc-fix	V	int	0x27db48	4	0	[25].id
+// bdc-fix	STR	char *	0x27d60c	0	0	[25].name
+// bdc-fix	STR	char *	0x27d930	0	0	[25].mapPath
+// bdc-fix	V	int	0x27db54	4	0	[26].id
+// bdc-fix	STR	char *	0x27d638	0	0	[26].name
+// bdc-fix	STR	char *	0x27d950	0	0	[26].mapPath
+// bdc-fix	V	int	0x27db60	4	0	[27].id
+// bdc-fix	STR	char *	0x27d664	0	0	[27].name
+// bdc-fix	STR	char *	0x27d970	0	0	[27].mapPath
+// bdc-fix	V	int	0x27db6c	4	0	[28].id
+// bdc-fix	STR	char *	0x27d5e0	0	0	[28].name
+// bdc-fix	STR	char *	0x27d5ec	0	0	[28].mapPath
+// bdc-fix	V	int	0x27db78	4	0	[29].id
+// bdc-fix	STR	char *	0x27d60c	0	0	[29].name
+// bdc-fix	STR	char *	0x27d618	0	0	[29].mapPath
+// bdc-fix	V	int	0x27db84	4	0	[30].id
+// bdc-fix	STR	char *	0x27d638	0	0	[30].name
+// bdc-fix	STR	char *	0x27d644	0	0	[30].mapPath
+// bdc-fix	V	int	0x27db90	4	0	[31].id
+// bdc-fix	STR	char *	0x27d664	0	0	[31].name
+// bdc-fix	STR	char *	0x27d670	0	0	[31].mapPath
+// bdc-fix	V	int	0x27db9c	4	0	[32].id
+// bdc-fix	STR	char *	0x27d5e0	0	0	[32].name
+// bdc-fix	STR	char *	0x27d5ec	0	0	[32].mapPath
+// bdc-fix	V	int	0x27dba8	4	0	[33].id
+// bdc-fix	STR	char *	0x27d60c	0	0	[33].name
+// bdc-fix	STR	char *	0x27d618	0	0	[33].mapPath
+// bdc-fix	V	int	0x27dbb4	4	0	[34].id
+// bdc-fix	STR	char *	0x27d638	0	0	[34].name
+// bdc-fix	STR	char *	0x27d644	0	0	[34].mapPath
+// bdc-fix	V	int	0x27dbc0	4	0	[35].id
+// bdc-fix	STR	char *	0x27d664	0	0	[35].name
+// bdc-fix	STR	char *	0x27d670	0	0	[35].mapPath
+// bdc-fix	V	int	0x27dbcc	4	0	[36].id
+// bdc-fix	STR	char *	0x27d5e0	0	0	[36].name
+// bdc-fix	STR	char *	0x27d990	0	0	[36].mapPath
+// bdc-fix	V	int	0x27dbd8	4	0	[37].id
+// bdc-fix	STR	char *	0x27d60c	0	0	[37].name
+// bdc-fix	STR	char *	0x27d9b0	0	0	[37].mapPath
+// bdc-fix	V	int	0x27dbe4	4	0	[38].id
+// bdc-fix	STR	char *	0x27d638	0	0	[38].name
+// bdc-fix	STR	char *	0x27d990	0	0	[38].mapPath
+// bdc-fix	V	int	0x27dbf0	4	0	[39].id
+// bdc-fix	STR	char *	0x27d664	0	0	[39].name
+// bdc-fix	STR	char *	0x27d9d0	0	0	[39].mapPath
+// bdc-fix	V	int	0x27dbfc	4	0	[40].id
+// bdc-fix	STR	char *	0x27d9f0	0	0	[40].name
+// bdc-fix	STR	char *	0x27d9fc	0	0	[40].mapPath
 
 __typeof__(BtlArenaEntry[41]) g_btlArenaTable = {
     { .name = (const char *)BDC_STR(0x27d5e0), .mapPath = (const char *)BDC_STR(0x27d5ec) },

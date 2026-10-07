@@ -1,5 +1,18 @@
 // bdc 0x08ac1190 g_hologramAttributeColors
 #include "bdc.h"
+// bdc-fix	V	float	0x2bd190	4	0	[0]
+// bdc-fix	V	float	0x2bd198	4	0	[2]
+// bdc-fix	V	float	0x2bd1a0	4	0	[4]
+// bdc-fix	V	float	0x2bd1a4	4	0	[5]
+// bdc-fix	V	float	0x2bd1a8	4	0	[6]
+// bdc-fix	V	float	0x2bd1ac	4	0	[7]
+// bdc-fix	V	float	0x2bd1b4	4	0	[9]
+// bdc-fix	V	float	0x2bd1b8	4	0	[10]
+// bdc-fix	V	float	0x2bd1c0	4	0	[12]
+// bdc-fix	V	float	0x2bd1c4	4	0	[13]
+// bdc-fix	V	float	0x2bd1c8	4	0	[14]
+// bdc-fix	V	float	0x2bd1cc	4	0	[15]
+// bdc-fix	V	float	0x2bd1d0	4	0	[16]
 
 __typeof__(float[18]) g_hologramAttributeColors = {
     BDC_V(float, 0x2bd190), 0, BDC_V(float, 0x2bd198), 0, BDC_V(float, 0x2bd1a0),

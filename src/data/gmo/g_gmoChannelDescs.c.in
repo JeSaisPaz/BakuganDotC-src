@@ -1,5 +1,27 @@
 // bdc 0x08aa30af g_gmoChannelDescs
 #include "bdc.h"
+// bdc-fix	V	unsigned char	0x29f0af	1	0	[0].offset
+// bdc-fix	V	unsigned char	0x29f0b3	1	0	[0].unk04
+// bdc-fix	V	unsigned char	0x29f0b4	1	0	[1].offset
+// bdc-fix	V	unsigned char	0x29f0b8	1	0	[1].unk04
+// bdc-fix	V	unsigned char	0x29f0b9	1	0	[2].offset
+// bdc-fix	V	unsigned char	0x29f0bd	1	0	[2].unk04
+// bdc-fix	V	unsigned char	0x29f0be	1	0	[3].offset
+// bdc-fix	V	unsigned char	0x29f0c2	1	0	[3].unk04
+// bdc-fix	V	unsigned char	0x29f0c3	1	0	[4].offset
+// bdc-fix	V	unsigned char	0x29f0c4	1	0	[4].clearMask
+// bdc-fix	V	unsigned char	0x29f0c6	1	0	[4].unk03
+// bdc-fix	V	unsigned char	0x29f0c7	1	0	[4].unk04
+// bdc-fix	V	unsigned char	0x29f0c8	1	0	[5].offset
+// bdc-fix	V	unsigned char	0x29f0c9	1	0	[5].clearMask
+// bdc-fix	V	unsigned char	0x29f0ca	1	0	[5].setMask
+// bdc-fix	V	unsigned char	0x29f0cb	1	0	[5].unk03
+// bdc-fix	V	unsigned char	0x29f0cc	1	0	[5].unk04
+// bdc-fix	V	unsigned char	0x29f0cd	1	0	[6].offset
+// bdc-fix	V	unsigned char	0x29f0ce	1	0	[6].clearMask
+// bdc-fix	V	unsigned char	0x29f0cf	1	0	[6].setMask
+// bdc-fix	V	unsigned char	0x29f0d0	1	0	[6].unk03
+// bdc-fix	V	unsigned char	0x29f0d1	1	0	[6].unk04
 
 __typeof__(const GmoChannelDesc[7]) g_gmoChannelDescs = {
     { .offset = BDC_V(unsigned char, 0x29f0af), .unk04 = BDC_V(unsigned char, 0x29f0b3) },

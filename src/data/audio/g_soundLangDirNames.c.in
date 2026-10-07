@@ -1,5 +1,12 @@
 // bdc 0x08ac5838 g_soundLangDirNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x29d9d8	0	0	[0]
+// bdc-fix	STR	char *	0x29d9dc	0	0	[1]
+// bdc-fix	STR	char *	0x29d9e0	0	0	[2]
+// bdc-fix	STR	char *	0x29d9e4	0	0	[3]
+// bdc-fix	STR	char *	0x29d9e8	0	0	[4]
+// bdc-fix	STR	char *	0x29d9ec	0	0	[5]
+// bdc-fix	STR	char *	0x29d9f0	0	0	[6]
 
 __typeof__(char *[7]) g_soundLangDirNames = {
     (char *)BDC_STR(0x29d9d8), (char *)BDC_STR(0x29d9dc), (char *)BDC_STR(0x29d9e0),

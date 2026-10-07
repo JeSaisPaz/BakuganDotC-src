@@ -1,0 +1,37 @@
+// bdc 0x08a644b8 g_gfxMaskSplineVertices
+#include "bdc.h"
+// bdc-fix	V	float	0x2604c0	4	0	[2]
+// bdc-fix	V	float	0x2604c4	4	0	[3]
+// bdc-fix	V	float	0x2604d8	4	0	[8]
+// bdc-fix	V	float	0x2604dc	4	0	[9]
+// bdc-fix	V	float	0x2604ec	4	0	[13]
+// bdc-fix	V	float	0x2604f0	4	0	[14]
+// bdc-fix	V	float	0x2604f4	4	0	[15]
+// bdc-fix	V	float	0x2604f8	4	0	[16]
+// bdc-fix	V	float	0x260504	4	0	[19]
+// bdc-fix	V	float	0x260508	4	0	[20]
+// bdc-fix	V	float	0x26050c	4	0	[21]
+// bdc-fix	V	float	0x260510	4	0	[22]
+// bdc-fix	V	float	0x26051c	4	0	[25]
+// bdc-fix	V	float	0x260520	4	0	[26]
+// bdc-fix	V	float	0x260524	4	0	[27]
+// bdc-fix	V	float	0x260528	4	0	[28]
+// bdc-fix	V	float	0x260534	4	0	[31]
+// bdc-fix	V	float	0x260538	4	0	[32]
+// bdc-fix	V	float	0x26053c	4	0	[33]
+// bdc-fix	V	float	0x260540	4	0	[34]
+// bdc-fix	V	float	0x26054c	4	0	[37]
+// bdc-fix	V	float	0x260558	4	0	[40]
+// bdc-fix	V	float	0x260564	4	0	[43]
+// bdc-fix	V	float	0x260570	4	0	[46]
+
+__typeof__(float[48]) g_gfxMaskSplineVertices = {
+    0, 0, BDC_V(float, 0x2604c0), BDC_V(float, 0x2604c4), 0, 0, 0, 0, BDC_V(float, 0x2604d8),
+    BDC_V(float, 0x2604dc), 0, 0, 0, BDC_V(float, 0x2604ec), BDC_V(float, 0x2604f0),
+    BDC_V(float, 0x2604f4), BDC_V(float, 0x2604f8), 0, 0, BDC_V(float, 0x260504),
+    BDC_V(float, 0x260508), BDC_V(float, 0x26050c), BDC_V(float, 0x260510), 0, 0,
+    BDC_V(float, 0x26051c), BDC_V(float, 0x260520), BDC_V(float, 0x260524), BDC_V(float, 0x260528),
+    0, 0, BDC_V(float, 0x260534), BDC_V(float, 0x260538), BDC_V(float, 0x26053c),
+    BDC_V(float, 0x260540), 0, 0, BDC_V(float, 0x26054c), 0, 0, BDC_V(float, 0x260558), 0, 0,
+    BDC_V(float, 0x260564), 0, 0, BDC_V(float, 0x260570),
+};

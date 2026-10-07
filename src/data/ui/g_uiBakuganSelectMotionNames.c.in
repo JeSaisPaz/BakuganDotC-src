@@ -1,5 +1,27 @@
 // bdc 0x08ac15e4 g_uiBakuganSelectMotionNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x298360	0	0	[0]
+// bdc-fix	STR	char *	0x298360	0	0	[1]
+// bdc-fix	STR	char *	0x298370	0	0	[2]
+// bdc-fix	STR	char *	0x298384	0	0	[3]
+// bdc-fix	STR	char *	0x298394	0	0	[4]
+// bdc-fix	STR	char *	0x2983a8	0	0	[5]
+// bdc-fix	STR	char *	0x2983b8	0	0	[6]
+// bdc-fix	STR	char *	0x2983c8	0	0	[7]
+// bdc-fix	STR	char *	0x2983d8	0	0	[8]
+// bdc-fix	STR	char *	0x2983e8	0	0	[9]
+// bdc-fix	STR	char *	0x2983f8	0	0	[10]
+// bdc-fix	STR	char *	0x29840c	0	0	[11]
+// bdc-fix	STR	char *	0x29841c	0	0	[12]
+// bdc-fix	STR	char *	0x29842c	0	0	[13]
+// bdc-fix	STR	char *	0x29843c	0	0	[14]
+// bdc-fix	STR	char *	0x29844c	0	0	[15]
+// bdc-fix	STR	char *	0x29845c	0	0	[16]
+// bdc-fix	STR	char *	0x298470	0	0	[17]
+// bdc-fix	STR	char *	0x298484	0	0	[18]
+// bdc-fix	STR	char *	0x298498	0	0	[19]
+// bdc-fix	STR	char *	0x2984ac	0	0	[20]
+// bdc-fix	STR	char *	0x298360	0	0	[21]
 
 __typeof__(const char *[22]) g_uiBakuganSelectMotionNames = {
     (const char *)BDC_STR(0x298360), (const char *)BDC_STR(0x298360),

@@ -1,5 +1,39 @@
 // bdc 0x08a79820 g_btlKind13MotionSet19
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x275820	4	0	.head.flags
+// bdc-fix	V	short	0x275824	2	0	.head.startMotion
+// bdc-fix	V	short	0x275826	2	0	.head.loopMotion
+// bdc-fix	V	short	0x275828	2	0	.head.mainMotion
+// bdc-fix	V	short	0x27582a	2	0	.head.endMotion
+// bdc-fix	V	unsigned char	0x27582c	1	0	.events[0].type
+// bdc-fix	V	unsigned char	0x27582d	1	0	.events[0].startFrame
+// bdc-fix	V	unsigned char	0x27582e	1	0	.events[0].endFrame
+// bdc-fix	V	int	0x275830	4	0	.events[0].param.soundId
+// bdc-fix	V	float	0x275834	4	0	.events[0].value
+// bdc-fix	V	unsigned char	0x275840	1	0	.events[1].type
+// bdc-fix	V	unsigned char	0x275841	1	0	.events[1].startFrame
+// bdc-fix	V	unsigned char	0x275842	1	0	.events[1].endFrame
+// bdc-fix	V	int	0x275844	4	0	.events[1].param.soundId
+// bdc-fix	V	float	0x275848	4	0	.events[1].value
+// bdc-fix	V	unsigned char	0x275854	1	0	.events[2].type
+// bdc-fix	V	unsigned char	0x275855	1	0	.events[2].startFrame
+// bdc-fix	V	unsigned char	0x275856	1	0	.events[2].endFrame
+// bdc-fix	V	float	0x27585c	4	0	.events[2].value
+// bdc-fix	V	unsigned char	0x275868	1	0	.events[3].type
+// bdc-fix	V	unsigned char	0x275869	1	0	.events[3].startFrame
+// bdc-fix	V	unsigned char	0x27586a	1	0	.events[3].endFrame
+// bdc-fix	V	float	0x275870	4	0	.events[3].value
+// bdc-fix	V	unsigned char	0x27587c	1	0	.events[4].type
+// bdc-fix	V	unsigned char	0x27587d	1	0	.events[4].startFrame
+// bdc-fix	V	unsigned char	0x27587e	1	0	.events[4].endFrame
+// bdc-fix	V	unsigned char	0x275890	1	0	.events[5].type
+// bdc-fix	V	unsigned char	0x275891	1	0	.events[5].startFrame
+// bdc-fix	V	unsigned char	0x275892	1	0	.events[5].endFrame
+// bdc-fix	V	float	0x275898	4	0	.events[5].value
+// bdc-fix	V	unsigned char	0x2758a4	1	0	.events[6].type
+// bdc-fix	V	unsigned char	0x2758a5	1	0	.events[6].startFrame
+// bdc-fix	V	unsigned char	0x2758a6	1	0	.events[6].endFrame
+// bdc-fix	V	int	0x2758a8	4	0	.events[6].param.soundId
 
 __typeof__(BtlAttackMotionSetEv8) g_btlKind13MotionSet19 = {
     .head = {

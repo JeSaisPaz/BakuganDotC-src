@@ -1,4 +1,5 @@
 // bdc 0x08adcbe0 g_bootTexDialogMoji
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2d8be0	1216	0	
 
 __typeof__(u8[1216]) g_bootTexDialogMoji = BDC_BYTES(0x2d8be0, 1216);

@@ -1,0 +1,5 @@
+// bdc 0x08a6447c g_gfxSmokeBezierIndices
+#include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x26047c	16	0	
+
+__typeof__(u8[16]) g_gfxSmokeBezierIndices = BDC_BYTES(0x26047c, 16);

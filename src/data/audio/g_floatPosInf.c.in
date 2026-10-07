@@ -1,4 +1,5 @@
 // bdc 0x08aa04a8 g_floatPosInf
 #include "bdc.h"
+// bdc-fix	V	float	0x29c4a8	4	0	
 
 __typeof__(float) g_floatPosInf = BDC_V(float, 0x29c4a8);

@@ -1,5 +1,15 @@
 // bdc 0x08aa01f8 g_ieeeLogConsts
 #include "bdc.h"
+// bdc-fix	V	double	0x29c1f8	8	0	.ln2Hi
+// bdc-fix	V	double	0x29c200	8	0	.ln2Lo
+// bdc-fix	V	double	0x29c208	8	0	.two54
+// bdc-fix	V	double	0x29c210	8	0	.lg1
+// bdc-fix	V	double	0x29c218	8	0	.lg2
+// bdc-fix	V	double	0x29c220	8	0	.lg3
+// bdc-fix	V	double	0x29c228	8	0	.lg4
+// bdc-fix	V	double	0x29c230	8	0	.lg5
+// bdc-fix	V	double	0x29c238	8	0	.lg6
+// bdc-fix	V	double	0x29c240	8	0	.lg7
 
 __typeof__(IeeeLogConsts) g_ieeeLogConsts = {
     .ln2Hi = BDC_V(double, 0x29c1f8),

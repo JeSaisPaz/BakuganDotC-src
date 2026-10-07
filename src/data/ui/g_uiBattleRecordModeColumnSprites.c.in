@@ -1,5 +1,11 @@
 // bdc 0x08a9d114 g_uiBattleRecordModeColumnSprites
 #include "bdc.h"
+// bdc-fix	V	int	0x299114	4	0	[0]
+// bdc-fix	V	int	0x299118	4	0	[1]
+// bdc-fix	V	int	0x29911c	4	0	[2]
+// bdc-fix	V	int	0x299120	4	0	[3]
+// bdc-fix	V	int	0x299124	4	0	[4]
+// bdc-fix	V	int	0x299128	4	0	[5]
 
 __typeof__(s32[6]) g_uiBattleRecordModeColumnSprites = {
     BDC_V(int, 0x299114), BDC_V(int, 0x299118), BDC_V(int, 0x29911c), BDC_V(int, 0x299120),

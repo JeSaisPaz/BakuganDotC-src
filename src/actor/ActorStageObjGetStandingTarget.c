@@ -4,16 +4,6 @@
 /* Returns the `index`-th standing script-created HP object (virtual `+0x6c`, at most 6 collected) or
    NULL. Used by `BtlHudDrawLayers`, `BtlMainPhaseIntro` and `UiHpGaugeDraw`. */
 
-typedef struct StageObjVirtEntry {
-  short adj;
-  short pad;
-  int (*fn)(void *self);
-} StageObjVirtEntry;
-
-typedef struct StageObjVtable {
-  StageObjVirtEntry slot[15];
-} StageObjVtable;
-
 void *ActorStageObjGetStandingTarget(int index)
 
 {
@@ -26,8 +16,8 @@ void *ActorStageObjGetStandingTarget(int index)
   }
   n = 0;
   while (obj != (CoreObject *)0x0) {
-    const StageObjVirtEntry *ent = (const StageObjVirtEntry *)&((const StageObjVtable *)obj->vtable)->slot[13];
-    if (ent->fn((char *)obj + ent->adj) != 0) {
+    const VtblEntry *ent = &((const VtblEntry *)obj->vtable)[13];
+    if (((int (*)(void *))ent->fn)((char *)obj + ent->delta) != 0) {
       if (((ActorStageObjBase *)obj)->dead == 0 && n < 6) {
         found[n] = obj;
         n = n + 1;

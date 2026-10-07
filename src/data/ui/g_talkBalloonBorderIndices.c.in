@@ -1,4 +1,5 @@
 // bdc 0x08abea3c g_talkBalloonBorderIndices
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2baa3c	51	0	
 
 __typeof__(u8[51]) g_talkBalloonBorderIndices = BDC_BYTES(0x2baa3c, 51);

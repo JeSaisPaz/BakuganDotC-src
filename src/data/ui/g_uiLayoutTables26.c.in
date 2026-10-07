@@ -1,5 +1,10 @@
 // bdc 0x08a412e8 g_uiLayoutTables26
 #include "bdc.h"
+// bdc-fix	V	short	0x23d2e8	2	0	[0]
+// bdc-fix	V	short	0x23d2ea	2	0	[1]
+// bdc-fix	V	short	0x23d2ec	2	0	[2]
+// bdc-fix	V	short	0x23d2f2	2	0	[5]
+// bdc-fix	V	short	0x23d2f4	2	0	[6]
 
 __typeof__(s16[8]) g_uiLayoutTables26 = {
     BDC_V(short, 0x23d2e8), BDC_V(short, 0x23d2ea), BDC_V(short, 0x23d2ec), 0, 0,

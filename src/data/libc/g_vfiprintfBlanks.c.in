@@ -1,4 +1,5 @@
 // bdc 0x08a9fe80 g_vfiprintfBlanks
 #include "bdc.h"
+// bdc-fix	BYTES	char	0x29be80	16	0	
 
 __typeof__(const char[16]) g_vfiprintfBlanks = BDC_BYTES(0x29be80, 16);

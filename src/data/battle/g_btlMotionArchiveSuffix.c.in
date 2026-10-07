@@ -1,4 +1,5 @@
 // bdc 0x08aba914 g_btlMotionArchiveSuffix
 #include "bdc.h"
+// bdc-fix	STR	char *	0x263f90	0	0	
 
 __typeof__(char *) g_btlMotionArchiveSuffix = (char *)BDC_STR(0x263f90);

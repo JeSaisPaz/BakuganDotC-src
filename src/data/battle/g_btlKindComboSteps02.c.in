@@ -1,5 +1,23 @@
 // bdc 0x08a7138c g_btlKindComboSteps02
 #include "bdc.h"
+// bdc-fix	V	short	0x26d38e	2	0	[0].input
+// bdc-fix	V	short	0x26d3a6	2	0	[1].input
+// bdc-fix	V	unsigned char	0x26d3bc	1	0	[2].branch
+// bdc-fix	V	short	0x26d3be	2	0	[2].input
+// bdc-fix	V	short	0x26d3c0	2	0	[2].airInput
+// bdc-fix	V	short	0x26d3d6	2	0	[3].input
+// bdc-fix	V	short	0x26d3d8	2	0	[3].airInput
+// bdc-fix	V	short	0x26d406	2	0	[5].input
+// bdc-fix	V	short	0x26d41e	2	0	[6].input
+// bdc-fix	V	unsigned char	0x26d434	1	0	[7].branch
+// bdc-fix	V	short	0x26d436	2	0	[7].input
+// bdc-fix	V	short	0x26d438	2	0	[7].airInput
+// bdc-fix	V	short	0x26d44e	2	0	[8].input
+// bdc-fix	V	short	0x26d450	2	0	[8].airInput
+// bdc-fix	V	short	0x26d47e	2	0	[10].input
+// bdc-fix	V	short	0x26d4ae	2	0	[12].input
+// bdc-fix	V	short	0x26d4de	2	0	[14].input
+// bdc-fix	V	short	0x26d50e	2	0	[16].input
 
 __typeof__(BtlComboStep[18]) g_btlKindComboSteps02 = {
     {

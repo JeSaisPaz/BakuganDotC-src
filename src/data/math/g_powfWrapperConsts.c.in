@@ -1,5 +1,9 @@
 // bdc 0x08aa4500 g_powfWrapperConsts
 #include "bdc.h"
+// bdc-fix	V	double	0x2a0500	8	0	.one
+// bdc-fix	V	double	0x2a0510	8	0	.huge
+// bdc-fix	V	double	0x2a0518	8	0	.half
+// bdc-fix	V	double	0x2a0520	8	0	.negHuge
 
 __typeof__(PowfWrapperConsts) g_powfWrapperConsts = {
     .one = BDC_V(double, 0x2a0500),

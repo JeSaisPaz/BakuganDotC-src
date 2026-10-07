@@ -1,4 +1,5 @@
 // bdc 0x08aa0080 g_ctype
 #include "bdc.h"
+// bdc-fix	BYTES	signed char	0x29c080	257	0	
 
 __typeof__(s8[257]) g_ctype = BDC_BYTES(0x29c080, 257);

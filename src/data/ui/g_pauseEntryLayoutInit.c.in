@@ -1,5 +1,11 @@
 // bdc 0x08a9b918 g_pauseEntryLayoutInit
 #include "bdc.h"
+// bdc-fix	V	float	0x29792c	4	0	[2][1]
+// bdc-fix	V	float	0x297934	4	0	[3][1]
+// bdc-fix	V	float	0x29793c	4	0	[4][1]
+// bdc-fix	V	float	0x297944	4	0	[5][1]
+// bdc-fix	V	float	0x29794c	4	0	[6][1]
+// bdc-fix	V	float	0x297954	4	0	[7][1]
 
 __typeof__(const float[8][2]) g_pauseEntryLayoutInit = {
     {0}, {0}, { 0, BDC_V(float, 0x29792c) }, { 0, BDC_V(float, 0x297934) },

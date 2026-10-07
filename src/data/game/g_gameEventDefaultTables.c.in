@@ -1,5 +1,14 @@
 // bdc 0x08abe908 g_gameEventDefaultTables
 #include "bdc.h"
+// bdc-fix	STR	unsigned char *	0x28dc5c	0	0	[0]
+// bdc-fix	STR	unsigned char *	0x28df34	0	0	[1]
+// bdc-fix	STR	unsigned char *	0x28e214	0	0	[2]
+// bdc-fix	STR	unsigned char *	0x28e52c	0	0	[3]
+// bdc-fix	STR	unsigned char *	0x28e83c	0	0	[4]
+// bdc-fix	STR	unsigned char *	0x28eb34	0	0	[5]
+// bdc-fix	STR	unsigned char *	0x28ec24	0	0	[6]
+// bdc-fix	STR	unsigned char *	0x28ec2c	0	0	[8]
+// bdc-fix	STR	unsigned char *	0x28ec34	0	0	[9]
 
 __typeof__(u8 *[10]) g_gameEventDefaultTables = {
     (unsigned char *)BDC_STR(0x28dc5c), (unsigned char *)BDC_STR(0x28df34),

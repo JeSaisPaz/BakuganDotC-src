@@ -1,4 +1,5 @@
 // bdc 0x08aa3338 g_normChunkTag
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x29f338	4	0	
 
 __typeof__(u32) g_normChunkTag = BDC_V(unsigned int, 0x29f338);

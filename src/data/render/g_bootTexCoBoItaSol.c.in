@@ -1,4 +1,5 @@
 // bdc 0x08ad81a0 g_bootTexCoBoItaSol
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2d41a0	579	0	
 
 __typeof__(u8[579]) g_bootTexCoBoItaSol = BDC_BYTES(0x2d41a0, 579);

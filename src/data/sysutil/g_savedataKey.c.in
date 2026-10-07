@@ -1,4 +1,5 @@
 // bdc 0x08ac58e8 g_savedataKey
 #include "bdc.h"
+// bdc-fix	STR	unsigned char *	0x29ddf0	0	0	
 
 __typeof__(const u8 *) g_savedataKey = (const unsigned char *)BDC_STR(0x29ddf0);

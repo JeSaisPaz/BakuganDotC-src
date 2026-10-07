@@ -1,5 +1,12 @@
 // bdc 0x08aa5300 g_gmoAttrColorSlots
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2a1300	2	0	[0]
+// bdc-fix	BYTES	unsigned char	0x2a1302	2	0	[1]
+// bdc-fix	BYTES	unsigned char	0x2a1304	2	0	[2]
+// bdc-fix	BYTES	unsigned char	0x2a1306	2	0	[3]
+// bdc-fix	BYTES	unsigned char	0x2a1308	2	0	[4]
+// bdc-fix	BYTES	unsigned char	0x2a130a	2	0	[5]
+// bdc-fix	BYTES	unsigned char	0x2a130c	2	0	[6]
 
 __typeof__(const u8[7][2]) g_gmoAttrColorSlots = {
     BDC_BYTES(0x2a1300, 2), BDC_BYTES(0x2a1302, 2), BDC_BYTES(0x2a1304, 2), BDC_BYTES(0x2a1306, 2),

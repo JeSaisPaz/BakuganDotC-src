@@ -1,5 +1,16 @@
 // bdc 0x08aa4f90 g_atanfAT
 #include "bdc.h"
+// bdc-fix	V	float	0x2a0f90	4	0	[0]
+// bdc-fix	V	float	0x2a0f94	4	0	[1]
+// bdc-fix	V	float	0x2a0f98	4	0	[2]
+// bdc-fix	V	float	0x2a0f9c	4	0	[3]
+// bdc-fix	V	float	0x2a0fa0	4	0	[4]
+// bdc-fix	V	float	0x2a0fa4	4	0	[5]
+// bdc-fix	V	float	0x2a0fa8	4	0	[6]
+// bdc-fix	V	float	0x2a0fac	4	0	[7]
+// bdc-fix	V	float	0x2a0fb0	4	0	[8]
+// bdc-fix	V	float	0x2a0fb4	4	0	[9]
+// bdc-fix	V	float	0x2a0fb8	4	0	[10]
 
 __typeof__(float[11]) g_atanfAT = {
     BDC_V(float, 0x2a0f90), BDC_V(float, 0x2a0f94), BDC_V(float, 0x2a0f98), BDC_V(float, 0x2a0f9c),

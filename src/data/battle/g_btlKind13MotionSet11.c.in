@@ -1,5 +1,13 @@
 // bdc 0x08a79644 g_btlKind13MotionSet11
 #include "bdc.h"
+// bdc-fix	V	short	0x275648	2	0	.head.startMotion
+// bdc-fix	V	short	0x27564a	2	0	.head.loopMotion
+// bdc-fix	V	short	0x27564c	2	0	.head.mainMotion
+// bdc-fix	V	short	0x27564e	2	0	.head.endMotion
+// bdc-fix	V	unsigned char	0x275650	1	0	.events[0].type
+// bdc-fix	V	unsigned char	0x275651	1	0	.events[0].startFrame
+// bdc-fix	V	unsigned char	0x275652	1	0	.events[0].endFrame
+// bdc-fix	V	int	0x275654	4	0	.events[0].param.soundId
 
 __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet11 = {
     .head = {

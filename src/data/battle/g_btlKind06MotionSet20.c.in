@@ -1,5 +1,22 @@
 // bdc 0x08a7320c g_btlKind06MotionSet20
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x26f20c	4	0	.head.flags
+// bdc-fix	V	short	0x26f210	2	0	.head.startMotion
+// bdc-fix	V	short	0x26f212	2	0	.head.loopMotion
+// bdc-fix	V	short	0x26f214	2	0	.head.mainMotion
+// bdc-fix	V	short	0x26f216	2	0	.head.endMotion
+// bdc-fix	V	unsigned char	0x26f218	1	0	.events[0].type
+// bdc-fix	V	unsigned char	0x26f219	1	0	.events[0].startFrame
+// bdc-fix	V	unsigned char	0x26f21a	1	0	.events[0].endFrame
+// bdc-fix	V	unsigned char	0x26f21b	1	0	.events[0].hitFlags
+// bdc-fix	V	int	0x26f21c	4	0	.events[0].param.soundId
+// bdc-fix	V	float	0x26f220	4	0	.events[0].value
+// bdc-fix	V	float	0x26f224	4	0	.events[0].reach
+// bdc-fix	V	unsigned char	0x26f22c	1	0	.events[1].type
+// bdc-fix	V	unsigned char	0x26f22e	1	0	.events[1].endFrame
+// bdc-fix	V	unsigned char	0x26f22f	1	0	.events[1].hitFlags
+// bdc-fix	V	float	0x26f234	4	0	.events[1].value
+// bdc-fix	V	float	0x26f238	4	0	.events[1].reach
 
 __typeof__(BtlAttackMotionSetEv3) g_btlKind06MotionSet20 = {
     .head = {

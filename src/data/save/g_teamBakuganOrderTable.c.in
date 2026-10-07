@@ -1,5 +1,24 @@
 // bdc 0x08a3421c g_teamBakuganOrderTable
 #include "bdc.h"
+// bdc-fix	V	int	0x230224	4	0	[2]
+// bdc-fix	V	int	0x230228	4	0	[3]
+// bdc-fix	V	int	0x23022c	4	0	[4]
+// bdc-fix	V	int	0x230230	4	0	[5]
+// bdc-fix	V	int	0x230234	4	0	[6]
+// bdc-fix	V	int	0x230238	4	0	[7]
+// bdc-fix	V	int	0x23023c	4	0	[8]
+// bdc-fix	V	int	0x230240	4	0	[9]
+// bdc-fix	V	int	0x230244	4	0	[10]
+// bdc-fix	V	int	0x230248	4	0	[11]
+// bdc-fix	V	int	0x23024c	4	0	[12]
+// bdc-fix	V	int	0x230250	4	0	[13]
+// bdc-fix	V	int	0x230254	4	0	[14]
+// bdc-fix	V	int	0x230258	4	0	[15]
+// bdc-fix	V	int	0x23025c	4	0	[16]
+// bdc-fix	V	int	0x230260	4	0	[17]
+// bdc-fix	V	int	0x230264	4	0	[18]
+// bdc-fix	V	int	0x230268	4	0	[19]
+// bdc-fix	V	int	0x23026c	4	0	[20]
 
 __typeof__(s32[21]) g_teamBakuganOrderTable = {
     0, 0, BDC_V(int, 0x230224), BDC_V(int, 0x230228), BDC_V(int, 0x23022c), BDC_V(int, 0x230230),

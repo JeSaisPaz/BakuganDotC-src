@@ -1,5 +1,6 @@
 // bdc 0x08af7080 g_cxxBadAllocTypeInfo
 #include "bdc.h"
+// bdc-fix	STR	char *	0x2a03e8	0	0	.typeName
 
 __typeof__(CxxTypeInfo) g_cxxBadAllocTypeInfo = {
     .vtbl = (void **)&g_cxxTypeInfoVtable,

@@ -1,4 +1,8 @@
 // bdc 0x08a9cf68 g_uiNetLobbyPanelSlots
 #include "bdc.h"
+// bdc-fix	V	int	0x298f68	4	0	[0][0]
+// bdc-fix	V	int	0x298f6c	4	0	[0][1]
+// bdc-fix	V	int	0x298f70	4	0	[1][0]
+// bdc-fix	V	int	0x298f74	4	0	[1][1]
 
 __typeof__(const s32[2][2]) g_uiNetLobbyPanelSlots = { { BDC_V(int, 0x298f68), BDC_V(int, 0x298f6c) }, { BDC_V(int, 0x298f70), BDC_V(int, 0x298f74) } };

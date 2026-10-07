@@ -1,4 +1,5 @@
 // bdc 0x08a68190 g_btlBakuganLandFlipMotionIds
 #include "bdc.h"
+// bdc-fix	V	int	0x264190	4	0	[0]
 
 __typeof__(s32[2]) g_btlBakuganLandFlipMotionIds = { BDC_V(int, 0x264190) };

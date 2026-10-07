@@ -1,5 +1,11 @@
 // bdc 0x08a67378 g_actorCrystalStyleAttributes
 #include "bdc.h"
+// bdc-fix	V	int	0x263378	4	0	[0]
+// bdc-fix	V	int	0x26337c	4	0	[1]
+// bdc-fix	V	int	0x263384	4	0	[3]
+// bdc-fix	V	int	0x263388	4	0	[4]
+// bdc-fix	V	int	0x26338c	4	0	[5]
+// bdc-fix	V	int	0x263390	4	0	[6]
 
 __typeof__(s32[8]) g_actorCrystalStyleAttributes = {
     BDC_V(int, 0x263378), BDC_V(int, 0x26337c), 0, BDC_V(int, 0x263384), BDC_V(int, 0x263388),

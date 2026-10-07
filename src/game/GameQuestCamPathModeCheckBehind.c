@@ -5,14 +5,9 @@
    (`GameQuestCamModeTargetMoved`) and both the camera direction (`entry->+0x50`) and the target
    offset (followed position minus `targetPos`) point against the segment normal (`seg+0x10`). */
 
-typedef struct BehindOwnerVtbl {
-  char pad[0x10];
-  VtblEntry getPos;
-} BehindOwnerVtbl;
-
 typedef struct BehindOwner {
   void *unk0;
-  BehindOwnerVtbl *vtbl;
+  const VtblEntry *vtbl; /* +0x04 */
 } BehindOwner;
 
 typedef struct BehindSegment {
@@ -41,7 +36,7 @@ void GameQuestCamPathModeCheckBehind(GameQuestCamPathMode *self)
     return;
   }
   owner = (BehindOwner *)self->base.base.base.followed;
-  e = &owner->vtbl->getPos;
+  e = &owner->vtbl[2];
   pos = ((const float *(*)(void *))e->fn)((char *)owner + e->delta);
   dx = pos[0] - self->base.targetPos.x;
   dy = pos[1] - self->base.targetPos.y;

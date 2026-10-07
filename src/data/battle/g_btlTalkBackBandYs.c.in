@@ -1,4 +1,6 @@
 // bdc 0x08a664ec g_btlTalkBackBandYs
 #include "bdc.h"
+// bdc-fix	V	short	0x2624ee	2	0	[1]
+// bdc-fix	V	short	0x2624f0	2	0	[2]
 
 __typeof__(s16[3]) g_btlTalkBackBandYs = { 0, BDC_V(short, 0x2624ee), BDC_V(short, 0x2624f0) };

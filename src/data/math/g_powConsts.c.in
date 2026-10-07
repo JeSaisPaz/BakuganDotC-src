@@ -1,5 +1,41 @@
 // bdc 0x08aa45d0 g_powConsts
 #include "bdc.h"
+// bdc-fix	V	double	0x2a05d0	8	0	.bp[0]
+// bdc-fix	V	double	0x2a05d8	8	0	.bp[1]
+// bdc-fix	V	double	0x2a05e8	8	0	.dpH[1]
+// bdc-fix	V	double	0x2a05f8	8	0	.dpL[1]
+// bdc-fix	V	double	0x2a0608	8	0	.one
+// bdc-fix	V	double	0x2a0610	8	0	.two
+// bdc-fix	V	double	0x2a0618	8	0	.two53
+// bdc-fix	V	double	0x2a0620	8	0	.huge
+// bdc-fix	V	double	0x2a0628	8	0	.tiny
+// bdc-fix	V	double	0x2a0630	8	0	.L1
+// bdc-fix	V	double	0x2a0638	8	0	.L2
+// bdc-fix	V	double	0x2a0640	8	0	.L3
+// bdc-fix	V	double	0x2a0648	8	0	.L4
+// bdc-fix	V	double	0x2a0650	8	0	.L5
+// bdc-fix	V	double	0x2a0658	8	0	.L6
+// bdc-fix	V	double	0x2a0660	8	0	.P1
+// bdc-fix	V	double	0x2a0668	8	0	.P2
+// bdc-fix	V	double	0x2a0670	8	0	.P3
+// bdc-fix	V	double	0x2a0678	8	0	.P4
+// bdc-fix	V	double	0x2a0680	8	0	.P5
+// bdc-fix	V	double	0x2a0688	8	0	.lg2
+// bdc-fix	V	double	0x2a0690	8	0	.lg2H
+// bdc-fix	V	double	0x2a0698	8	0	.lg2L
+// bdc-fix	V	double	0x2a06a0	8	0	.ovt
+// bdc-fix	V	double	0x2a06a8	8	0	.cp
+// bdc-fix	V	double	0x2a06b0	8	0	.cpH
+// bdc-fix	V	double	0x2a06b8	8	0	.cpL
+// bdc-fix	V	double	0x2a06c0	8	0	.ivln2
+// bdc-fix	V	double	0x2a06c8	8	0	.ivln2H
+// bdc-fix	V	double	0x2a06d0	8	0	.ivln2L
+// bdc-fix	V	double	0x2a06d8	8	0	.inf
+// bdc-fix	V	double	0x2a06e0	8	0	.quarter
+// bdc-fix	V	double	0x2a06e8	8	0	.third
+// bdc-fix	V	double	0x2a06f0	8	0	.half
+// bdc-fix	V	double	0x2a06f8	8	0	.three
+// bdc-fix	V	double	0x2a0700	8	0	.negOne
 
 __typeof__(PowConsts) g_powConsts = {
     .bp = { BDC_V(double, 0x2a05d0), BDC_V(double, 0x2a05d8) },

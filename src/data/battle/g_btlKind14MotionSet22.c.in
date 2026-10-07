@@ -1,5 +1,23 @@
 // bdc 0x08a764f8 g_btlKind14MotionSet22
 #include "bdc.h"
+// bdc-fix	V	short	0x2724fc	2	0	.head.startMotion
+// bdc-fix	V	short	0x2724fe	2	0	.head.loopMotion
+// bdc-fix	V	short	0x272500	2	0	.head.mainMotion
+// bdc-fix	V	short	0x272502	2	0	.head.endMotion
+// bdc-fix	V	unsigned char	0x272504	1	0	.events[0].type
+// bdc-fix	V	unsigned char	0x272505	1	0	.events[0].startFrame
+// bdc-fix	V	unsigned char	0x272506	1	0	.events[0].endFrame
+// bdc-fix	V	int	0x272508	4	0	.events[0].param.soundId
+// bdc-fix	V	unsigned char	0x272518	1	0	.events[1].type
+// bdc-fix	V	unsigned char	0x272519	1	0	.events[1].startFrame
+// bdc-fix	V	unsigned char	0x27251a	1	0	.events[1].endFrame
+// bdc-fix	V	int	0x27251c	4	0	.events[1].param.soundId
+// bdc-fix	V	float	0x272520	4	0	.events[1].value
+// bdc-fix	V	unsigned char	0x27252c	1	0	.events[2].type
+// bdc-fix	V	unsigned char	0x27252d	1	0	.events[2].startFrame
+// bdc-fix	V	unsigned char	0x27252e	1	0	.events[2].endFrame
+// bdc-fix	V	int	0x272530	4	0	.events[2].param.soundId
+// bdc-fix	V	float	0x272534	4	0	.events[2].value
 
 __typeof__(BtlAttackMotionSetEv4) g_btlKind14MotionSet22 = {
     .head = {

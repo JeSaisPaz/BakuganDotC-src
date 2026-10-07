@@ -1,5 +1,26 @@
 // bdc 0x08ac5ea8 g_gfxScreenSpriteVerts
 #include "bdc.h"
+// bdc-fix	V	short	0x2c1ea8	2	0	[0].u
+// bdc-fix	V	short	0x2c1eaa	2	0	[0].v
+// bdc-fix	V	short	0x2c1eb2	2	0	[1].u
+// bdc-fix	V	short	0x2c1eb4	2	0	[1].v
+// bdc-fix	V	short	0x2c1eb6	2	0	[1].x
+// bdc-fix	V	short	0x2c1eb8	2	0	[1].y
+// bdc-fix	V	short	0x2c1ebc	2	0	[2].u
+// bdc-fix	V	short	0x2c1ebe	2	0	[2].v
+// bdc-fix	V	short	0x2c1ec6	2	0	[3].u
+// bdc-fix	V	short	0x2c1ec8	2	0	[3].v
+// bdc-fix	V	short	0x2c1eca	2	0	[3].x
+// bdc-fix	V	short	0x2c1ecc	2	0	[3].y
+// bdc-fix	V	short	0x2c1eda	2	0	[5].u
+// bdc-fix	V	short	0x2c1edc	2	0	[5].v
+// bdc-fix	V	short	0x2c1ede	2	0	[5].x
+// bdc-fix	V	short	0x2c1ee0	2	0	[5].y
+// bdc-fix	V	short	0x2c1eea	2	0	[6].y
+// bdc-fix	V	short	0x2c1eee	2	0	[7].u
+// bdc-fix	V	short	0x2c1ef0	2	0	[7].v
+// bdc-fix	V	short	0x2c1ef2	2	0	[7].x
+// bdc-fix	V	short	0x2c1ef4	2	0	[7].y
 
 __typeof__(GfxGeTexVertex16[8]) g_gfxScreenSpriteVerts = {
     { .u = BDC_V(short, 0x2c1ea8), .v = BDC_V(short, 0x2c1eaa) },

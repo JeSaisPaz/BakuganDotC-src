@@ -1,5 +1,16 @@
 // bdc 0x08a85220 g_stopWallCorners
 #include "bdc.h"
+// bdc-fix	V	float	0x281220	4	0	[0][0]
+// bdc-fix	V	float	0x281224	4	0	[0][1]
+// bdc-fix	V	float	0x281228	4	0	[0][2]
+// bdc-fix	V	float	0x28122c	4	0	[1][0]
+// bdc-fix	V	float	0x281230	4	0	[1][1]
+// bdc-fix	V	float	0x281234	4	0	[1][2]
+// bdc-fix	V	float	0x281238	4	0	[2][0]
+// bdc-fix	V	float	0x281240	4	0	[2][2]
+// bdc-fix	V	float	0x281244	4	0	[3][0]
+// bdc-fix	V	float	0x281248	4	0	[3][1]
+// bdc-fix	V	float	0x28124c	4	0	[3][2]
 
 __typeof__(float[4][3]) g_stopWallCorners = {
     { BDC_V(float, 0x281220), BDC_V(float, 0x281224), BDC_V(float, 0x281228) },

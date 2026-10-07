@@ -1,5 +1,18 @@
 // bdc 0x08ab9cb8 g_npcMotionFiles
 #include "bdc.h"
+// bdc-fix	STR	char *	0x25c5e0	0	0	[0]
+// bdc-fix	STR	char *	0x25c5f0	0	0	[1]
+// bdc-fix	STR	char *	0x25c600	0	0	[2]
+// bdc-fix	STR	char *	0x25c614	0	0	[3]
+// bdc-fix	STR	char *	0x25c624	0	0	[4]
+// bdc-fix	STR	char *	0x25c634	0	0	[5]
+// bdc-fix	STR	char *	0x25c648	0	0	[6]
+// bdc-fix	STR	char *	0x25c65c	0	0	[7]
+// bdc-fix	STR	char *	0x25c670	0	0	[8]
+// bdc-fix	STR	char *	0x25c680	0	0	[9]
+// bdc-fix	STR	char *	0x25c690	0	0	[10]
+// bdc-fix	STR	char *	0x25c6a4	0	0	[11]
+// bdc-fix	STR	char *	0x25c6b4	0	0	[12]
 
 __typeof__(const char *[13]) g_npcMotionFiles = {
     (const char *)BDC_STR(0x25c5e0), (const char *)BDC_STR(0x25c5f0),

@@ -1,5 +1,17 @@
 // bdc 0x08ac5dd8 g_gfxLightLitStateList
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x2c1dd8	4	0	[0]
+// bdc-fix	V	unsigned int	0x2c1ddc	4	0	[1]
+// bdc-fix	V	unsigned int	0x2c1de0	4	0	[2]
+// bdc-fix	V	unsigned int	0x2c1de4	4	0	[3]
+// bdc-fix	V	unsigned int	0x2c1de8	4	0	[4]
+// bdc-fix	V	unsigned int	0x2c1dec	4	0	[5]
+// bdc-fix	V	unsigned int	0x2c1df0	4	0	[6]
+// bdc-fix	V	unsigned int	0x2c1df4	4	0	[7]
+// bdc-fix	V	unsigned int	0x2c1df8	4	0	[8]
+// bdc-fix	V	unsigned int	0x2c1e00	4	0	[10]
+// bdc-fix	V	unsigned int	0x2c1e04	4	0	[11]
+// bdc-fix	V	unsigned int	0x2c1e08	4	0	[12]
 
 __typeof__(u32[13]) g_gfxLightLitStateList = {
     BDC_V(unsigned int, 0x2c1dd8), BDC_V(unsigned int, 0x2c1ddc), BDC_V(unsigned int, 0x2c1de0),

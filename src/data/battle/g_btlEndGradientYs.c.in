@@ -1,4 +1,6 @@
 // bdc 0x08a6669e g_btlEndGradientYs
 #include "bdc.h"
+// bdc-fix	V	short	0x2626a0	2	0	[1]
+// bdc-fix	V	short	0x2626a2	2	0	[2]
 
 __typeof__(s16[3]) g_btlEndGradientYs = { 0, BDC_V(short, 0x2626a0), BDC_V(short, 0x2626a2) };

@@ -1,5 +1,11 @@
 // bdc 0x08ab9e14 g_gfxEffectModelNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x25e358	0	0	[0]
+// bdc-fix	STR	char *	0x25e368	0	0	[1]
+// bdc-fix	STR	char *	0x25e374	0	0	[2]
+// bdc-fix	STR	char *	0x25e384	0	0	[3]
+// bdc-fix	STR	char *	0x25e398	0	0	[4]
+// bdc-fix	STR	char *	0x25e3ac	0	0	[5]
 
 __typeof__(const char *[6]) g_gfxEffectModelNames = {
     (const char *)BDC_STR(0x25e358), (const char *)BDC_STR(0x25e368),

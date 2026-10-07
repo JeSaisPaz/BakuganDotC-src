@@ -1,5 +1,21 @@
 // bdc 0x08aba6b4 g_btlArenaResultFirstItemSprites
 #include "bdc.h"
+// bdc-fix	V	int	0x2b66b4	4	0	[0]
+// bdc-fix	V	int	0x2b66b8	4	0	[1]
+// bdc-fix	V	int	0x2b66bc	4	0	[2]
+// bdc-fix	V	int	0x2b66c0	4	0	[3]
+// bdc-fix	V	int	0x2b66c4	4	0	[4]
+// bdc-fix	V	int	0x2b66c8	4	0	[5]
+// bdc-fix	V	int	0x2b66cc	4	0	[6]
+// bdc-fix	V	int	0x2b66d0	4	0	[7]
+// bdc-fix	V	int	0x2b66d4	4	0	[8]
+// bdc-fix	V	int	0x2b66d8	4	0	[9]
+// bdc-fix	V	int	0x2b66dc	4	0	[10]
+// bdc-fix	V	int	0x2b66e0	4	0	[11]
+// bdc-fix	V	int	0x2b66e4	4	0	[12]
+// bdc-fix	V	int	0x2b66e8	4	0	[13]
+// bdc-fix	V	int	0x2b66ec	4	0	[14]
+// bdc-fix	V	int	0x2b66f0	4	0	[15]
 
 __typeof__(s32[16]) g_btlArenaResultFirstItemSprites = {
     BDC_V(int, 0x2b66b4), BDC_V(int, 0x2b66b8), BDC_V(int, 0x2b66bc), BDC_V(int, 0x2b66c0),

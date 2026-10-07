@@ -1,4 +1,5 @@
 // bdc 0x08ac19bd g_bakuganListOrderBPos
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2bd9bd	21	0	
 
 __typeof__(u8[21]) g_bakuganListOrderBPos = BDC_BYTES(0x2bd9bd, 21);

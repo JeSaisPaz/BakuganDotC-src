@@ -1,4 +1,6 @@
 // bdc 0x08aba870 g_btlBakuganHitQuery
 #include "bdc.h"
+// bdc-fix	V	int	0x2b6890	4	0	.hitParam
+// bdc-fix	V	int	0x2b689c	4	0	.attackSide
 
 __typeof__(CollisionQuery) g_btlBakuganHitQuery = { .hitParam = BDC_V(int, 0x2b6890), .attackSide = BDC_V(int, 0x2b689c) };

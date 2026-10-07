@@ -1,4 +1,6 @@
 // bdc 0x08a98ca8 g_actorCloakPmskc
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x294ca8	4	0	[0]
+// bdc-fix	V	unsigned int	0x294cb0	4	0	[2]
 
 __typeof__(u32[4]) g_actorCloakPmskc = { BDC_V(unsigned int, 0x294ca8), 0, BDC_V(unsigned int, 0x294cb0) };

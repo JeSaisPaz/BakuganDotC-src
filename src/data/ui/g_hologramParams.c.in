@@ -1,5 +1,109 @@
 // bdc 0x08a853a8 g_hologramParams
 #include "bdc.h"
+// bdc-fix	V	int	0x2813b0	4	0	[0].price
+// bdc-fix	V	int	0x2813b4	4	0	[0].hpLevel
+// bdc-fix	V	int	0x2813b8	4	0	[0].radiusLevel
+// bdc-fix	V	float	0x2813bc	4	0	[0].unk14
+// bdc-fix	V	unsigned int	0x2813c0	4	0	[1].unk0
+// bdc-fix	V	int	0x2813c8	4	0	[1].price
+// bdc-fix	V	int	0x2813cc	4	0	[1].hpLevel
+// bdc-fix	V	int	0x2813d0	4	0	[1].radiusLevel
+// bdc-fix	V	float	0x2813d4	4	0	[1].unk14
+// bdc-fix	V	unsigned int	0x2813d8	4	0	[2].unk0
+// bdc-fix	V	int	0x2813e0	4	0	[2].price
+// bdc-fix	V	int	0x2813e4	4	0	[2].hpLevel
+// bdc-fix	V	int	0x2813e8	4	0	[2].radiusLevel
+// bdc-fix	V	float	0x2813ec	4	0	[2].unk14
+// bdc-fix	V	unsigned int	0x2813f0	4	0	[3].unk0
+// bdc-fix	V	int	0x2813f4	4	0	[3].auraType
+// bdc-fix	V	int	0x2813f8	4	0	[3].price
+// bdc-fix	V	int	0x2813fc	4	0	[3].hpLevel
+// bdc-fix	V	int	0x281400	4	0	[3].radiusLevel
+// bdc-fix	V	float	0x281404	4	0	[3].unk14
+// bdc-fix	V	unsigned int	0x281408	4	0	[4].unk0
+// bdc-fix	V	int	0x28140c	4	0	[4].auraType
+// bdc-fix	V	int	0x281410	4	0	[4].price
+// bdc-fix	V	int	0x281414	4	0	[4].hpLevel
+// bdc-fix	V	int	0x281418	4	0	[4].radiusLevel
+// bdc-fix	V	float	0x28141c	4	0	[4].unk14
+// bdc-fix	V	unsigned int	0x281420	4	0	[5].unk0
+// bdc-fix	V	int	0x281424	4	0	[5].auraType
+// bdc-fix	V	int	0x281428	4	0	[5].price
+// bdc-fix	V	int	0x28142c	4	0	[5].hpLevel
+// bdc-fix	V	int	0x281430	4	0	[5].radiusLevel
+// bdc-fix	V	float	0x281434	4	0	[5].unk14
+// bdc-fix	V	unsigned int	0x281438	4	0	[6].unk0
+// bdc-fix	V	int	0x28143c	4	0	[6].auraType
+// bdc-fix	V	int	0x281440	4	0	[6].price
+// bdc-fix	V	int	0x281444	4	0	[6].hpLevel
+// bdc-fix	V	int	0x281448	4	0	[6].radiusLevel
+// bdc-fix	V	float	0x28144c	4	0	[6].unk14
+// bdc-fix	V	unsigned int	0x281450	4	0	[7].unk0
+// bdc-fix	V	int	0x281454	4	0	[7].auraType
+// bdc-fix	V	int	0x281458	4	0	[7].price
+// bdc-fix	V	int	0x28145c	4	0	[7].hpLevel
+// bdc-fix	V	int	0x281460	4	0	[7].radiusLevel
+// bdc-fix	V	float	0x281464	4	0	[7].unk14
+// bdc-fix	V	unsigned int	0x281468	4	0	[8].unk0
+// bdc-fix	V	int	0x28146c	4	0	[8].auraType
+// bdc-fix	V	int	0x281470	4	0	[8].price
+// bdc-fix	V	int	0x281474	4	0	[8].hpLevel
+// bdc-fix	V	int	0x281478	4	0	[8].radiusLevel
+// bdc-fix	V	float	0x28147c	4	0	[8].unk14
+// bdc-fix	V	unsigned int	0x281480	4	0	[9].unk0
+// bdc-fix	V	int	0x281484	4	0	[9].auraType
+// bdc-fix	V	int	0x281488	4	0	[9].price
+// bdc-fix	V	int	0x28148c	4	0	[9].hpLevel
+// bdc-fix	V	int	0x281490	4	0	[9].radiusLevel
+// bdc-fix	V	float	0x281494	4	0	[9].unk14
+// bdc-fix	V	unsigned int	0x281498	4	0	[10].unk0
+// bdc-fix	V	int	0x28149c	4	0	[10].auraType
+// bdc-fix	V	int	0x2814a0	4	0	[10].price
+// bdc-fix	V	int	0x2814a4	4	0	[10].hpLevel
+// bdc-fix	V	int	0x2814a8	4	0	[10].radiusLevel
+// bdc-fix	V	float	0x2814ac	4	0	[10].unk14
+// bdc-fix	V	unsigned int	0x2814b0	4	0	[11].unk0
+// bdc-fix	V	int	0x2814b4	4	0	[11].auraType
+// bdc-fix	V	int	0x2814b8	4	0	[11].price
+// bdc-fix	V	int	0x2814bc	4	0	[11].hpLevel
+// bdc-fix	V	int	0x2814c0	4	0	[11].radiusLevel
+// bdc-fix	V	float	0x2814c4	4	0	[11].unk14
+// bdc-fix	V	unsigned int	0x2814c8	4	0	[12].unk0
+// bdc-fix	V	int	0x2814cc	4	0	[12].auraType
+// bdc-fix	V	int	0x2814d0	4	0	[12].price
+// bdc-fix	V	int	0x2814d4	4	0	[12].hpLevel
+// bdc-fix	V	int	0x2814d8	4	0	[12].radiusLevel
+// bdc-fix	V	float	0x2814dc	4	0	[12].unk14
+// bdc-fix	V	unsigned int	0x2814e0	4	0	[13].unk0
+// bdc-fix	V	int	0x2814e4	4	0	[13].auraType
+// bdc-fix	V	int	0x2814e8	4	0	[13].price
+// bdc-fix	V	int	0x2814ec	4	0	[13].hpLevel
+// bdc-fix	V	int	0x2814f0	4	0	[13].radiusLevel
+// bdc-fix	V	float	0x2814f4	4	0	[13].unk14
+// bdc-fix	V	unsigned int	0x2814f8	4	0	[14].unk0
+// bdc-fix	V	int	0x2814fc	4	0	[14].auraType
+// bdc-fix	V	int	0x281500	4	0	[14].price
+// bdc-fix	V	int	0x281504	4	0	[14].hpLevel
+// bdc-fix	V	int	0x281508	4	0	[14].radiusLevel
+// bdc-fix	V	float	0x28150c	4	0	[14].unk14
+// bdc-fix	V	unsigned int	0x281510	4	0	[15].unk0
+// bdc-fix	V	int	0x281514	4	0	[15].auraType
+// bdc-fix	V	int	0x281518	4	0	[15].price
+// bdc-fix	V	int	0x28151c	4	0	[15].hpLevel
+// bdc-fix	V	int	0x281520	4	0	[15].radiusLevel
+// bdc-fix	V	float	0x281524	4	0	[15].unk14
+// bdc-fix	V	unsigned int	0x281528	4	0	[16].unk0
+// bdc-fix	V	int	0x28152c	4	0	[16].auraType
+// bdc-fix	V	int	0x281530	4	0	[16].price
+// bdc-fix	V	int	0x281534	4	0	[16].hpLevel
+// bdc-fix	V	int	0x281538	4	0	[16].radiusLevel
+// bdc-fix	V	float	0x28153c	4	0	[16].unk14
+// bdc-fix	V	unsigned int	0x281540	4	0	[17].unk0
+// bdc-fix	V	int	0x281544	4	0	[17].auraType
+// bdc-fix	V	int	0x281548	4	0	[17].price
+// bdc-fix	V	int	0x28154c	4	0	[17].hpLevel
+// bdc-fix	V	int	0x281550	4	0	[17].radiusLevel
+// bdc-fix	V	float	0x281554	4	0	[17].unk14
 
 __typeof__(HologramParam[18]) g_hologramParams = {
     {

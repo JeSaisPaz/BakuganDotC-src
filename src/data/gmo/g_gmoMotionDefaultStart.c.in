@@ -1,4 +1,5 @@
 // bdc 0x08aa5294 g_gmoMotionDefaultStart
 #include "bdc.h"
+// bdc-fix	V	float	0x2a1294	4	0	
 
 __typeof__(float) g_gmoMotionDefaultStart = BDC_V(float, 0x2a1294);

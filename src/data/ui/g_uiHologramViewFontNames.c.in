@@ -1,4 +1,5 @@
 // bdc 0x08ac1330 g_uiHologramViewFontNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x298218	0	0	[0]
 
 __typeof__(char *[2]) g_uiHologramViewFontNames = { (char *)BDC_STR(0x298218) };

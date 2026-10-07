@@ -4,14 +4,9 @@
 /* When the target moved, clears `behind` and sets it again if the target's offset from
    `targetPos` points against the view direction `viewDir` (dot product below zero). */
 
-typedef struct CamBehindOwnerVtbl {
-  char pad[0x10];
-  VtblEntry getPos;
-} CamBehindOwnerVtbl;
-
 typedef struct CamBehindOwner {
   void *unk0;
-  CamBehindOwnerVtbl *vtbl;
+  const VtblEntry *vtbl; /* +0x04 */
 } CamBehindOwner;
 
 void GameQuestCamPointModeCheckBehind(GameQuestCamPointMode *self)
@@ -26,7 +21,7 @@ void GameQuestCamPointModeCheckBehind(GameQuestCamPointMode *self)
   }
   self->base.behind = 0;
   owner = (CamBehindOwner *)self->base.base.base.followed;
-  e = &owner->vtbl->getPos;
+  e = &owner->vtbl[2];
   pos = ((const float *(*)(void *))e->fn)((char *)owner + e->delta);
   dx = pos[0] - self->base.targetPos.x;
   dy = pos[1] - self->base.targetPos.y;

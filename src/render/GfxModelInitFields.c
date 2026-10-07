@@ -44,7 +44,7 @@ void GfxModelInitFields(GfxModel *self)
   self->visible = 1;
   self->fogEnabled = 0;
   self->lighting = 0;
-  self->reservedBa = 0;
+  self->pauseExempt = 0;
   strcpy(self->name, "No Name");
   self->materialStates = NULL;
   data = GmoModelCreate();

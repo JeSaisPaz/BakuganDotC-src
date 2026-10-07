@@ -1,4 +1,5 @@
 // bdc 0x08aa04ac g_floatNegInf
 #include "bdc.h"
+// bdc-fix	V	float	0x29c4ac	4	0	
 
 __typeof__(float) g_floatNegInf = BDC_V(float, 0x29c4ac);

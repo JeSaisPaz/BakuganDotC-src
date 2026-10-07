@@ -1,4 +1,5 @@
 // bdc 0x08a9ed98 g_unlockSpaceString
 #include "bdc.h"
+// bdc-fix	BYTES	char	0x29ad98	2	0	
 
 __typeof__(char[2]) g_unlockSpaceString = BDC_BYTES(0x29ad98, 2);

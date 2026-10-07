@@ -1,4 +1,5 @@
-// bdc 0x08a644b8 g_gfxMaskSplineIndices
+// bdc 0x08a64578 g_gfxMaskSplineIndices
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x260578	40	0	
 
-__typeof__(u8[28]) g_gfxMaskSplineIndices = BDC_BYTES(0x2604b8, 28);
+__typeof__(u8[40]) g_gfxMaskSplineIndices = BDC_BYTES(0x260578, 40);

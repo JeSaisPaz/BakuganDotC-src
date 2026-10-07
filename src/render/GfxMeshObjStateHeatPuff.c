@@ -4,7 +4,7 @@
 /* State 1 state handler of the mesh object (`GfxMeshObjCtor`) (table `0x08ab9ebc`, run by
    `GfxMeshObjRunState`): a rising heat-haze puff.
    Sub-state `step`:
-   0 setup, returns right after: draws `g_gfxDistortionPatchVerts` / `g_gfxDistortionIndices`
+   0 setup, returns right after: draws `g_gfxDistortionGridIndices` / `g_gfxDistortionVertices`
      as an indexed prim textured with the screen copy (`GfxGetFeedbackTexture`, a refraction
      effect), white at half alpha, `scaleA`/`scaleB` 0, random `radius` 22..32, a random sideways
      `velocity` (-1..1) along the camera heading `pi/2 - camera->yaw` wrapped to (-pi, pi],
@@ -16,17 +16,6 @@
    3 deletes itself through the virtual destructor (nothing when `self` is NULL) and returns.
    Every other path (steps 1, 2, >= 4 and negative) re-fits the screen mapping with
    `GfxMeshObjFitScreenBillboard` at `radius`. Random numbers are `vrndf1.s` (1..2) minus 1. */
-
-typedef struct GfxDtorEntry {
-  short thisAdjust;
-  short pad;
-  void (*fn)(void *self, int flags);
-} GfxDtorEntry;
-
-typedef struct GfxDtorVtable {
-  u32 hdr[2];
-  GfxDtorEntry dtor;
-} GfxDtorVtable;
 
 /* velocity -= axis (xyz) */
 static inline void HeatPuffDecelerate(GfxMeshObj *self)
@@ -54,7 +43,7 @@ void GfxMeshObjStateHeatPuff(GfxMeshObj *self)
   float s;
   float pull[4];
   float tmp[3];
-  const GfxDtorEntry *e;
+  const VtblEntry *e;
 
   step = self->step;
   if (step < 2) {
@@ -62,13 +51,13 @@ void GfxMeshObjStateHeatPuff(GfxMeshObj *self)
       goto fit;
     }
     if (step <= 0) {
-      self->vertices = g_gfxDistortionPatchVerts;
+      self->indices = g_gfxDistortionGridIndices;
       self->blendMode = 1;
       self->drawKind = 1;
       self->primCmd = 0x1fd;
       self->texture = GfxGetFeedbackTexture();
       self->vertexType = 0x1200089a;
-      self->indices = g_gfxDistortionIndices;
+      self->vertices = g_gfxDistortionVertices;
       self->emissive = 1;
       self->scaleA = 0.0f;
       self->scaleB = 0.0f;
@@ -143,8 +132,8 @@ void GfxMeshObjStateHeatPuff(GfxMeshObj *self)
   } else if (step < 4) {
     /* step 3 */
     if (self != NULL) {
-      e = &((const GfxDtorVtable *)self->base.vtable)->dtor;
-      e->fn((char *)self + e->thisAdjust, 3);
+      e = &((const VtblEntry *)self->base.vtable)[1];
+      ((void (*)(void *, s32))e->fn)((char *)self + e->delta, 3);
     }
     return;
   }

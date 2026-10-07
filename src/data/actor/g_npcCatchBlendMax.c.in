@@ -1,4 +1,5 @@
 // bdc 0x08abf6e4 g_npcCatchBlendMax
 #include "bdc.h"
+// bdc-fix	V	float	0x2bb6e4	4	0	
 
 __typeof__(float) g_npcCatchBlendMax = BDC_V(float, 0x2bb6e4);

@@ -1,5 +1,11 @@
 // bdc 0x08a68d00 g_btlAttributeBeats
 #include "bdc.h"
+// bdc-fix	V	int	0x264d00	4	0	[0]
+// bdc-fix	V	int	0x264d08	4	0	[2]
+// bdc-fix	V	int	0x264d0c	4	0	[3]
+// bdc-fix	V	int	0x264d10	4	0	[4]
+// bdc-fix	V	int	0x264d14	4	0	[5]
+// bdc-fix	V	int	0x264d18	4	0	[6]
 
 __typeof__(s32[7]) g_btlAttributeBeats = {
     BDC_V(int, 0x264d00), 0, BDC_V(int, 0x264d08), BDC_V(int, 0x264d0c), BDC_V(int, 0x264d10),

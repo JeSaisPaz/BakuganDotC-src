@@ -1,4 +1,0 @@
-// bdc 0x08a62fee g_gfxDistortionIndices
-#include "bdc.h"
-
-__typeof__(u8[2560]) g_gfxDistortionIndices = BDC_BYTES(0x25efee, 2560);

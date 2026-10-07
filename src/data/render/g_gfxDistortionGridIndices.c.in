@@ -1,0 +1,5 @@
+// bdc 0x08a623f0 g_gfxDistortionGridIndices
+#include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x25e3f0	510	0	
+
+__typeof__(u8[510]) g_gfxDistortionGridIndices = BDC_BYTES(0x25e3f0, 510);

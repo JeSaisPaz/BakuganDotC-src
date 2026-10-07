@@ -1,4 +1,5 @@
 // bdc 0x08aa3534 g_uiFontGlyphTableLen
 #include "bdc.h"
+// bdc-fix	V	int	0x29f534	4	0	
 
 __typeof__(s32) g_uiFontGlyphTableLen = BDC_V(int, 0x29f534);

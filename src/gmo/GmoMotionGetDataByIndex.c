@@ -6,13 +6,6 @@
    `GmoMotionAt`; the data comes from the entry's virtual "get data" method (vtable entry 2). NULL
    when there is no such entry. */
 
-typedef struct GmoMotionVtblView {
-  u8 pad00[0x10];
-  s16 getDataAdj;
-  u8 pad12[2];
-  void *(*getData)(void *self);
-} GmoMotionVtblView;
-
 typedef struct GmoMotionMgrView {
   u8 pad00[0x10];
   CoreNode *(*lookup)(s32 index, void *mgr);
@@ -22,7 +15,7 @@ void *GmoMotionGetDataByIndex(void *mgr, s32 index)
 {
   GmoMotionMgrView *m = (GmoMotionMgrView *)mgr;
   CoreNode *node;
-  const GmoMotionVtblView *vt;
+  const VtblEntry *getData;
 
   if (m->lookup != NULL) {
     node = m->lookup(index, mgr);
@@ -32,6 +25,6 @@ void *GmoMotionGetDataByIndex(void *mgr, s32 index)
   if (node == NULL) {
     return NULL;
   }
-  vt = (const GmoMotionVtblView *)node->vtable;
-  return vt->getData((u8 *)node + vt->getDataAdj);
+  getData = &((const VtblEntry *)node->vtable)[2];
+  return ((void *(*)(void *))getData->fn)((u8 *)node + getData->delta);
 }

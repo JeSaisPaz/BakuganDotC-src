@@ -6,16 +6,6 @@
    (`BtlItemSpawnerDestroyAll`, `StopWallDestroyAll`, `BtlEnemySpawnerDestroyAll`). Called by
    `ActorStageObjSystemShutdown`. */
 
-typedef struct RecordVirtEntry {
-  short adj;
-  short pad;
-  void (*fn)(void *self, int flags);
-} RecordVirtEntry;
-
-typedef struct RecordVtable {
-  RecordVirtEntry slot[2];
-} RecordVtable;
-
 void ActorStageObjRecordDestroyAll(void)
 
 {
@@ -28,8 +18,8 @@ void ActorStageObjRecordDestroyAll(void)
       next = obj->next;
       while (1) {
         if (obj != (CoreObject *)0x0) {
-          const RecordVirtEntry *ent = (const RecordVirtEntry *)&((const RecordVtable *)obj->vtable)->slot[1];
-          ent->fn((char *)obj + ent->adj, 3);
+          const VtblEntry *ent = &((const VtblEntry *)obj->vtable)[1];
+          ((void (*)(void *, int))ent->fn)((char *)obj + ent->delta, 3);
         }
         if (next == (CoreObject *)0x0) break;
         obj = next;

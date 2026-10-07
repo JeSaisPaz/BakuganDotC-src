@@ -1,5 +1,22 @@
 // bdc 0x08aacaf8 g_languageSfoStrings
 #include "bdc.h"
+// bdc-fix	STR	char *	0x2305dc	0	0	[0]
+// bdc-fix	STR	char *	0x2305f0	0	0	[1]
+// bdc-fix	STR	char *	0x230604	0	0	[2]
+// bdc-fix	STR	char *	0x230608	0	0	[3]
+// bdc-fix	STR	char *	0x230614	0	0	[4]
+// bdc-fix	STR	char *	0x23061c	0	0	[5]
+// bdc-fix	STR	char *	0x230628	0	0	[6]
+// bdc-fix	STR	char *	0x230634	0	0	[7]
+// bdc-fix	STR	char *	0x23063c	0	0	[8]
+// bdc-fix	STR	char *	0x230648	0	0	[9]
+// bdc-fix	STR	char *	0x230654	0	0	[10]
+// bdc-fix	STR	char *	0x230660	0	0	[11]
+// bdc-fix	STR	char *	0x230670	0	0	[12]
+// bdc-fix	STR	char *	0x23067c	0	0	[13]
+// bdc-fix	STR	char *	0x230690	0	0	[14]
+// bdc-fix	STR	char *	0x2306a4	0	0	[15]
+// bdc-fix	STR	char *	0x2306ac	0	0	[16]
 
 __typeof__(const char *[17]) g_languageSfoStrings = {
     (const char *)BDC_STR(0x2305dc), (const char *)BDC_STR(0x2305f0),

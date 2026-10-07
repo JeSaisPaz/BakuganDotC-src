@@ -1,5 +1,18 @@
 // bdc 0x08a664f4 g_btlStoryWinStageValues
 #include "bdc.h"
+// bdc-fix	V	int	0x2624f4	4	0	[0]
+// bdc-fix	V	int	0x2624f8	4	0	[1]
+// bdc-fix	V	int	0x2624fc	4	0	[2]
+// bdc-fix	V	int	0x262504	4	0	[4]
+// bdc-fix	V	int	0x262508	4	0	[5]
+// bdc-fix	V	int	0x26250c	4	0	[6]
+// bdc-fix	V	int	0x262514	4	0	[8]
+// bdc-fix	V	int	0x26251c	4	0	[10]
+// bdc-fix	V	int	0x262524	4	0	[12]
+// bdc-fix	V	int	0x26252c	4	0	[14]
+// bdc-fix	V	int	0x262534	4	0	[16]
+// bdc-fix	V	int	0x262538	4	0	[17]
+// bdc-fix	V	int	0x26253c	4	0	[18]
 
 __typeof__(s32[41]) g_btlStoryWinStageValues = {
     BDC_V(int, 0x2624f4), BDC_V(int, 0x2624f8), BDC_V(int, 0x2624fc), 0, BDC_V(int, 0x262504),

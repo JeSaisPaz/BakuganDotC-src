@@ -1,5 +1,14 @@
 // bdc 0x08a9134c g_actorBallMotionLists15
 #include "bdc.h"
+// bdc-fix	STR	char *	0x28d300	0	0	[0].name
+// bdc-fix	V	int	0x28d354	4	0	[1].slot
+// bdc-fix	STR	char *	0x28d314	0	0	[1].name
+// bdc-fix	V	int	0x28d35c	4	0	[2].slot
+// bdc-fix	STR	char *	0x28d32c	0	0	[2].name
+// bdc-fix	V	int	0x28d364	4	0	[3].slot
+// bdc-fix	STR	char *	0x28d33c	0	0	[3].name
+// bdc-fix	V	int	0x28d36c	4	0	[4].slot
+// bdc-fix	STR	char *	0x28cda8	0	0	[4].name
 
 __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists15 = {
     { .name = (const char *)BDC_STR(0x28d300) },

@@ -3,7 +3,7 @@
 
 /* State 5 state handler of the mesh object (`GfxMeshObjCtor`) (table `0x08ab9ebc`, run by
    `GfxMeshObjRunState`): an invisible stencil-mask
-   mesh: setup draws the built-in spline mesh `g_gfxMaskSplineVerts` (indices
+   mesh: setup draws the built-in spline mesh `g_gfxMaskSplineVertices` (indices
    `g_gfxMaskSplineIndices`, 7×4 patch) with zero colour and almost zero alpha, scales the X/Y/Z
    rows of its matrix by 16 and puts it at the origin (the VFPU bank zero C720), so only the
    stencil writes set by its creator take effect. Sub-state `+0x1c`: 0 set
@@ -31,7 +31,7 @@ void GfxMeshObjStateStencilMask(GfxMeshObj *self)
   if (step < 0)
     return;
 
-  self->vertices = g_gfxMaskSplineVerts;
+  self->indices = g_gfxMaskSplineIndices;
   self->drawKind = 0;
   self->blendMode = 1;
   self->splineEdgeU = 0;
@@ -44,7 +44,7 @@ void GfxMeshObjStateStencilMask(GfxMeshObj *self)
   self->patchDivT = 6;
   self->vertexType = 0x12000980;
   self->buffer = NULL;
-  self->indices = g_gfxMaskSplineIndices;
+  self->vertices = g_gfxMaskSplineVertices;
   self->emissive = 0;
   self->color[0] = 0.0f;
   self->color[1] = 0.0f;

@@ -1,5 +1,14 @@
 // bdc 0x08a9b458 g_uiLoadingBandColours
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x297458	4	0	[0][0]
+// bdc-fix	V	unsigned int	0x29745c	4	0	[0][1]
+// bdc-fix	V	unsigned int	0x29746c	4	0	[1][0]
+// bdc-fix	V	unsigned int	0x297470	4	0	[1][1]
+// bdc-fix	V	unsigned int	0x297480	4	0	[2][0]
+// bdc-fix	V	unsigned int	0x297484	4	0	[2][1]
+// bdc-fix	V	unsigned int	0x297488	4	0	[2][2]
+// bdc-fix	V	unsigned int	0x29748c	4	0	[2][3]
+// bdc-fix	V	unsigned int	0x297490	4	0	[2][4]
 
 __typeof__(u32[3][5]) g_uiLoadingBandColours = {
     { BDC_V(unsigned int, 0x297458), BDC_V(unsigned int, 0x29745c) },

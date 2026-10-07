@@ -1,5 +1,17 @@
 // bdc 0x08aba1a0 g_btlHudHintHideSprites
 #include "bdc.h"
+// bdc-fix	V	int	0x2b61a0	4	0	[0]
+// bdc-fix	V	int	0x2b61a4	4	0	[1]
+// bdc-fix	V	int	0x2b61a8	4	0	[2]
+// bdc-fix	V	int	0x2b61ac	4	0	[3]
+// bdc-fix	V	int	0x2b61b0	4	0	[4]
+// bdc-fix	V	int	0x2b61b4	4	0	[5]
+// bdc-fix	V	int	0x2b61b8	4	0	[6]
+// bdc-fix	V	int	0x2b61bc	4	0	[7]
+// bdc-fix	V	int	0x2b61c0	4	0	[8]
+// bdc-fix	V	int	0x2b61c4	4	0	[9]
+// bdc-fix	V	int	0x2b61c8	4	0	[10]
+// bdc-fix	V	int	0x2b61cc	4	0	[11]
 
 __typeof__(const s32[12]) g_btlHudHintHideSprites = {
     BDC_V(int, 0x2b61a0), BDC_V(int, 0x2b61a4), BDC_V(int, 0x2b61a8), BDC_V(int, 0x2b61ac),

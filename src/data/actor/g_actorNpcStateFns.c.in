@@ -1,5 +1,29 @@
 // bdc 0x08a98d30 g_actorNpcStateFns
 #include "bdc.h"
+// bdc-fix	V	short	0x294d32	2	0	[0].index
+// bdc-fix	V	int	0x294d34	4	0	[0].delta2
+// bdc-fix	V	short	0x294d3a	2	0	[1].index
+// bdc-fix	V	int	0x294d3c	4	0	[1].delta2
+// bdc-fix	V	short	0x294d42	2	0	[2].index
+// bdc-fix	V	int	0x294d44	4	0	[2].delta2
+// bdc-fix	V	short	0x294d4a	2	0	[3].index
+// bdc-fix	V	int	0x294d4c	4	0	[3].delta2
+// bdc-fix	V	short	0x294d52	2	0	[4].index
+// bdc-fix	V	int	0x294d54	4	0	[4].delta2
+// bdc-fix	V	short	0x294d5a	2	0	[5].index
+// bdc-fix	V	int	0x294d5c	4	0	[5].delta2
+// bdc-fix	V	short	0x294d62	2	0	[6].index
+// bdc-fix	V	int	0x294d64	4	0	[6].delta2
+// bdc-fix	V	short	0x294d6a	2	0	[7].index
+// bdc-fix	V	int	0x294d6c	4	0	[7].delta2
+// bdc-fix	V	short	0x294d72	2	0	[8].index
+// bdc-fix	V	int	0x294d74	4	0	[8].delta2
+// bdc-fix	V	short	0x294d7a	2	0	[9].index
+// bdc-fix	V	int	0x294d7c	4	0	[9].delta2
+// bdc-fix	V	short	0x294d82	2	0	[10].index
+// bdc-fix	V	int	0x294d84	4	0	[10].delta2
+// bdc-fix	V	short	0x294d8a	2	0	[11].index
+// bdc-fix	V	int	0x294d8c	4	0	[11].delta2
 
 __typeof__(MemberFnPtr[12]) g_actorNpcStateFns = {
     { .index = BDC_V(short, 0x294d32), .delta2 = BDC_V(int, 0x294d34) },

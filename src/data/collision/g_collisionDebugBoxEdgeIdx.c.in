@@ -1,4 +1,5 @@
 // bdc 0x08aa3966 g_collisionDebugBoxEdgeIdx
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x29f966	6	0	
 
 __typeof__(u8[6]) g_collisionDebugBoxEdgeIdx = BDC_BYTES(0x29f966, 6);

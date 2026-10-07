@@ -1,5 +1,19 @@
 // bdc 0x08aac9f4 g_languageDirNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x23018c	0	0	[0]
+// bdc-fix	STR	char *	0x23018c	0	0	[1]
+// bdc-fix	STR	char *	0x230190	0	0	[2]
+// bdc-fix	STR	char *	0x230198	0	0	[3]
+// bdc-fix	STR	char *	0x23019c	0	0	[4]
+// bdc-fix	STR	char *	0x2301a0	0	0	[5]
+// bdc-fix	STR	char *	0x2301a4	0	0	[6]
+// bdc-fix	STR	char *	0x23018c	0	0	[7]
+// bdc-fix	STR	char *	0x23018c	0	0	[8]
+// bdc-fix	STR	char *	0x23018c	0	0	[9]
+// bdc-fix	STR	char *	0x23018c	0	0	[10]
+// bdc-fix	STR	char *	0x23018c	0	0	[11]
+// bdc-fix	STR	char *	0x2301a8	0	0	[12]
+// bdc-fix	STR	char *	0x23018c	0	0	[13]
 
 __typeof__(const char *[14]) g_languageDirNames = {
     (const char *)BDC_STR(0x23018c), (const char *)BDC_STR(0x23018c),

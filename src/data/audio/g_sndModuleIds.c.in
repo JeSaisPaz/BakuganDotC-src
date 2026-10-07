@@ -1,4 +1,6 @@
 // bdc 0x08aa12d8 g_sndModuleIds
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x29d2dc	4	0	[1]
+// bdc-fix	V	unsigned int	0x29d2e0	4	0	[2]
 
 __typeof__(u32[3]) g_sndModuleIds = { 0, BDC_V(unsigned int, 0x29d2dc), BDC_V(unsigned int, 0x29d2e0) };

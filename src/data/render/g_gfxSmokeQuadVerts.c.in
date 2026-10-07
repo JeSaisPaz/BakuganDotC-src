@@ -1,4 +1,5 @@
 // bdc 0x08a645a0 g_gfxSmokeQuadVerts
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2605a0	20	0	
 
 __typeof__(u8[20]) g_gfxSmokeQuadVerts = BDC_BYTES(0x2605a0, 20);

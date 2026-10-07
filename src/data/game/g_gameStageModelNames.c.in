@@ -1,5 +1,16 @@
 // bdc 0x08abef70 g_gameStageModelNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x292354	0	0	[0]
+// bdc-fix	STR	char *	0x292368	0	0	[1]
+// bdc-fix	STR	char *	0x292380	0	0	[2]
+// bdc-fix	STR	char *	0x292398	0	0	[3]
+// bdc-fix	STR	char *	0x2923b0	0	0	[4]
+// bdc-fix	STR	char *	0x2923c8	0	0	[5]
+// bdc-fix	STR	char *	0x2923e0	0	0	[6]
+// bdc-fix	STR	char *	0x2923f8	0	0	[7]
+// bdc-fix	STR	char *	0x292410	0	0	[8]
+// bdc-fix	STR	char *	0x292428	0	0	[9]
+// bdc-fix	STR	char *	0x292440	0	0	[10]
 
 __typeof__(char *[11]) g_gameStageModelNames = {
     (char *)BDC_STR(0x292354), (char *)BDC_STR(0x292368), (char *)BDC_STR(0x292380),

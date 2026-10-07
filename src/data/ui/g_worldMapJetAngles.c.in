@@ -1,5 +1,16 @@
 // bdc 0x08ac3d20 g_worldMapJetAngles
 #include "bdc.h"
+// bdc-fix	V	float	0x2bfd20	4	0	[0]
+// bdc-fix	V	float	0x2bfd24	4	0	[1]
+// bdc-fix	V	float	0x2bfd28	4	0	[2]
+// bdc-fix	V	float	0x2bfd2c	4	0	[3]
+// bdc-fix	V	float	0x2bfd30	4	0	[4]
+// bdc-fix	V	float	0x2bfd34	4	0	[5]
+// bdc-fix	V	float	0x2bfd38	4	0	[6]
+// bdc-fix	V	float	0x2bfd3c	4	0	[7]
+// bdc-fix	V	float	0x2bfd44	4	0	[9]
+// bdc-fix	V	float	0x2bfd48	4	0	[10]
+// bdc-fix	V	float	0x2bfd4c	4	0	[11]
 
 __typeof__(float[12]) g_worldMapJetAngles = {
     BDC_V(float, 0x2bfd20), BDC_V(float, 0x2bfd24), BDC_V(float, 0x2bfd28), BDC_V(float, 0x2bfd2c),

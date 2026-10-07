@@ -1,5 +1,26 @@
 // bdc 0x08a9aa70 g_btlDemoEffectIdTable
 #include "bdc.h"
+// bdc-fix	V	int	0x296a70	4	0	[0]
+// bdc-fix	V	int	0x296a74	4	0	[1]
+// bdc-fix	V	int	0x296a78	4	0	[2]
+// bdc-fix	V	int	0x296a7c	4	0	[3]
+// bdc-fix	V	int	0x296a80	4	0	[4]
+// bdc-fix	V	int	0x296a84	4	0	[5]
+// bdc-fix	V	int	0x296a88	4	0	[6]
+// bdc-fix	V	int	0x296a8c	4	0	[7]
+// bdc-fix	V	int	0x296a90	4	0	[8]
+// bdc-fix	V	int	0x296a94	4	0	[9]
+// bdc-fix	V	int	0x296a98	4	0	[10]
+// bdc-fix	V	int	0x296a9c	4	0	[11]
+// bdc-fix	V	int	0x296aa0	4	0	[12]
+// bdc-fix	V	int	0x296aa4	4	0	[13]
+// bdc-fix	V	int	0x296aa8	4	0	[14]
+// bdc-fix	V	int	0x296aac	4	0	[15]
+// bdc-fix	V	int	0x296ab0	4	0	[16]
+// bdc-fix	V	int	0x296ab4	4	0	[17]
+// bdc-fix	V	int	0x296ab8	4	0	[18]
+// bdc-fix	V	int	0x296abc	4	0	[19]
+// bdc-fix	V	int	0x296ac0	4	0	[20]
 
 __typeof__(s32[21]) g_btlDemoEffectIdTable = {
     BDC_V(int, 0x296a70), BDC_V(int, 0x296a74), BDC_V(int, 0x296a78), BDC_V(int, 0x296a7c),

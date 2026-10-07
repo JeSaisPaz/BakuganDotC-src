@@ -1,5 +1,35 @@
 // bdc 0x08a85558 g_stageObjLandmarkHpTable
 #include "bdc.h"
+// bdc-fix	V	int	0x28156c	4	0	[1].maxHp
+// bdc-fix	V	float	0x281570	4	0	[1].radius
+// bdc-fix	V	float	0x281574	4	0	[1].field0c
+// bdc-fix	V	int	0x28157c	4	0	[2].maxHp
+// bdc-fix	V	float	0x281580	4	0	[2].radius
+// bdc-fix	V	float	0x281584	4	0	[2].field0c
+// bdc-fix	V	int	0x28158c	4	0	[3].maxHp
+// bdc-fix	V	float	0x281590	4	0	[3].radius
+// bdc-fix	V	float	0x281594	4	0	[3].field0c
+// bdc-fix	V	int	0x28159c	4	0	[4].maxHp
+// bdc-fix	V	float	0x2815a0	4	0	[4].radius
+// bdc-fix	V	float	0x2815a4	4	0	[4].field0c
+// bdc-fix	V	int	0x2815ac	4	0	[5].maxHp
+// bdc-fix	V	float	0x2815b0	4	0	[5].radius
+// bdc-fix	V	float	0x2815b4	4	0	[5].field0c
+// bdc-fix	V	int	0x2815bc	4	0	[6].maxHp
+// bdc-fix	V	float	0x2815c0	4	0	[6].radius
+// bdc-fix	V	float	0x2815c4	4	0	[6].field0c
+// bdc-fix	V	int	0x2815cc	4	0	[7].maxHp
+// bdc-fix	V	float	0x2815d0	4	0	[7].radius
+// bdc-fix	V	float	0x2815d4	4	0	[7].field0c
+// bdc-fix	V	int	0x2815dc	4	0	[8].maxHp
+// bdc-fix	V	float	0x2815e0	4	0	[8].radius
+// bdc-fix	V	float	0x2815e4	4	0	[8].field0c
+// bdc-fix	V	int	0x2815ec	4	0	[9].maxHp
+// bdc-fix	V	float	0x2815f0	4	0	[9].radius
+// bdc-fix	V	float	0x2815f4	4	0	[9].field0c
+// bdc-fix	V	int	0x2815fc	4	0	[10].maxHp
+// bdc-fix	V	float	0x281600	4	0	[10].radius
+// bdc-fix	V	float	0x281604	4	0	[10].field0c
 
 __typeof__(ActorStageObjLandmarkLevel[11]) g_stageObjLandmarkHpTable = {
     {0},

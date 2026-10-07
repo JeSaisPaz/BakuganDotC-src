@@ -1,4 +1,5 @@
 // bdc 0x08a34bcf g_scriptPackageLoadFlags
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x230bcf	14	0	
 
 __typeof__(u8 [14]) g_scriptPackageLoadFlags = BDC_BYTES(0x230bcf, 14);

@@ -1,5 +1,23 @@
 // bdc 0x08a7b13c g_btlKind20MotionSet20
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x27713c	4	0	.head.flags
+// bdc-fix	V	short	0x277140	2	0	.head.startMotion
+// bdc-fix	V	short	0x277142	2	0	.head.loopMotion
+// bdc-fix	V	short	0x277144	2	0	.head.mainMotion
+// bdc-fix	V	short	0x277146	2	0	.head.endMotion
+// bdc-fix	V	unsigned char	0x277148	1	0	.events[0].type
+// bdc-fix	V	unsigned char	0x277149	1	0	.events[0].startFrame
+// bdc-fix	V	unsigned char	0x27714a	1	0	.events[0].endFrame
+// bdc-fix	V	int	0x27714c	4	0	.events[0].param.soundId
+// bdc-fix	V	float	0x277154	4	0	.events[0].reach
+// bdc-fix	V	float	0x277158	4	0	.events[0].launchDist
+// bdc-fix	V	unsigned char	0x27715c	1	0	.events[1].type
+// bdc-fix	V	unsigned char	0x27715d	1	0	.events[1].startFrame
+// bdc-fix	V	unsigned char	0x27715e	1	0	.events[1].endFrame
+// bdc-fix	V	int	0x277160	4	0	.events[1].param.soundId
+// bdc-fix	V	float	0x277164	4	0	.events[1].value
+// bdc-fix	V	float	0x277168	4	0	.events[1].reach
+// bdc-fix	V	float	0x27716c	4	0	.events[1].launchDist
 
 __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet20 = {
     .head = {

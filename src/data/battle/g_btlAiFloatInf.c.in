@@ -1,4 +1,5 @@
 // bdc 0x08a803d0 g_btlAiFloatInf
 #include "bdc.h"
+// bdc-fix	V	float	0x27c3d0	4	0	
 
 __typeof__(float) g_btlAiFloatInf = BDC_V(float, 0x27c3d0);

@@ -1,5 +1,22 @@
 // bdc 0x08a81de8 g_btlMapFlashFogParams
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x27dde8	4	0	[0].color
+// bdc-fix	V	float	0x27ddec	4	0	[0].range
+// bdc-fix	V	float	0x27ddf0	4	0	[0].scale
+// bdc-fix	V	unsigned int	0x27ddf4	4	0	[1].color
+// bdc-fix	V	float	0x27ddf8	4	0	[1].range
+// bdc-fix	V	float	0x27ddfc	4	0	[1].scale
+// bdc-fix	V	unsigned int	0x27de00	4	0	[2].color
+// bdc-fix	V	float	0x27de04	4	0	[2].range
+// bdc-fix	V	float	0x27de08	4	0	[2].scale
+// bdc-fix	V	float	0x27de10	4	0	[3].range
+// bdc-fix	V	float	0x27de14	4	0	[3].scale
+// bdc-fix	V	unsigned int	0x27de18	4	0	[4].color
+// bdc-fix	V	float	0x27de1c	4	0	[4].range
+// bdc-fix	V	float	0x27de20	4	0	[4].scale
+// bdc-fix	V	unsigned int	0x27de24	4	0	[5].color
+// bdc-fix	V	float	0x27de28	4	0	[5].range
+// bdc-fix	V	float	0x27de2c	4	0	[5].scale
 
 __typeof__(BtlArenaFog[6]) g_btlMapFlashFogParams = {
     {

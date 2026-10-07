@@ -2,36 +2,22 @@
 #include "bdc.h"
 
 /* Destructor of the event prop: destroys its model object `+0` through its virtual destructor and
-   frees the prop when `flags & 1`. */
-
-
-typedef struct {
-  s16 adj;
-  s16 pad;
-  void (*dtor)(void *obj, s32 flags);
-} GameEventPropVEntry;
-
-typedef struct {
-  u8 pad[8];
-  GameEventPropVEntry dtorEntry;
-} GameEventPropVTable;
-
-typedef struct {
-  u8 pad[0x14];
-  GameEventPropVTable *vtable;
-} GameEventPropModel;
+   frees the prop when `flags & 1`. The model is a CoreObject (`GameEventPropReleaseModel` unlinks
+   and defer-deletes it as one). */
 
 void GameEventPropDtor(void *prop, u32 flags)
 
 {
-  GameEventPropModel *model;
+  GameEventProp *p = (GameEventProp *)prop;
+  CoreObject *model;
 
-  if (prop != NULL) {
-    model = *(GameEventPropModel **)prop;
+  if (p != NULL) {
+    model = (CoreObject *)p->model;
     if (model != NULL) {
-      GameEventPropVEntry *e = &model->vtable->dtorEntry;
-      e->dtor((u8 *)model + e->adj, 3);
-      *(void **)prop = NULL;
+      const VtblEntry *dtor = &((const VtblEntry *)model->vtable)[1];
+
+      ((void (*)(void *, s32))dtor->fn)((u8 *)model + dtor->delta, 3);
+      p->model = NULL;
     }
     if ((flags & 1) != 0) {
       MemLock();

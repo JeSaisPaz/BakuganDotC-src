@@ -1,5 +1,26 @@
 // bdc 0x08a9b874 g_uiPauseActionCells
 #include "bdc.h"
+// bdc-fix	V	int	0x297874	4	0	[0][0]
+// bdc-fix	V	int	0x297878	4	0	[0][1]
+// bdc-fix	V	int	0x297888	4	0	[2][1]
+// bdc-fix	V	int	0x297890	4	0	[3][1]
+// bdc-fix	V	int	0x297898	4	0	[4][1]
+// bdc-fix	V	int	0x29789c	4	0	[5][0]
+// bdc-fix	V	int	0x2978a8	4	0	[6][1]
+// bdc-fix	V	int	0x2978ac	4	0	[7][0]
+// bdc-fix	V	int	0x2978b4	4	0	[8][0]
+// bdc-fix	V	int	0x2978bc	4	0	[9][0]
+// bdc-fix	V	int	0x2978c0	4	0	[9][1]
+// bdc-fix	V	int	0x2978c4	4	0	[10][0]
+// bdc-fix	V	int	0x2978cc	4	0	[11][0]
+// bdc-fix	V	int	0x2978d0	4	0	[11][1]
+// bdc-fix	V	int	0x2978d4	4	0	[12][0]
+// bdc-fix	V	int	0x2978dc	4	0	[13][0]
+// bdc-fix	V	int	0x2978e8	4	0	[14][1]
+// bdc-fix	V	int	0x2978ec	4	0	[15][0]
+// bdc-fix	V	int	0x2978f0	4	0	[15][1]
+// bdc-fix	V	int	0x2978f4	4	0	[16][0]
+// bdc-fix	V	int	0x2978f8	4	0	[16][1]
 
 __typeof__(s32[17][2]) g_uiPauseActionCells = {
     { BDC_V(int, 0x297874), BDC_V(int, 0x297878) }, {0}, { 0, BDC_V(int, 0x297888) },

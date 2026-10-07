@@ -1,0 +1,1493 @@
+// bdc 0x08a625ee g_gfxMeshObjDefaultVertices
+#include "bdc.h"
+// bdc-fix	V	unsigned short	0x25e5f2	2	0	[2]
+// bdc-fix	V	unsigned short	0x25e5f4	2	0	[3]
+// bdc-fix	V	unsigned short	0x25e5fa	2	0	[6]
+// bdc-fix	V	unsigned short	0x25e5fc	2	0	[7]
+// bdc-fix	V	unsigned short	0x25e5fe	2	0	[8]
+// bdc-fix	V	unsigned short	0x25e604	2	0	[11]
+// bdc-fix	V	unsigned short	0x25e606	2	0	[12]
+// bdc-fix	V	unsigned short	0x25e608	2	0	[13]
+// bdc-fix	V	unsigned short	0x25e60e	2	0	[16]
+// bdc-fix	V	unsigned short	0x25e610	2	0	[17]
+// bdc-fix	V	unsigned short	0x25e612	2	0	[18]
+// bdc-fix	V	unsigned short	0x25e618	2	0	[21]
+// bdc-fix	V	unsigned short	0x25e61a	2	0	[22]
+// bdc-fix	V	unsigned short	0x25e61c	2	0	[23]
+// bdc-fix	V	unsigned short	0x25e622	2	0	[26]
+// bdc-fix	V	unsigned short	0x25e624	2	0	[27]
+// bdc-fix	V	unsigned short	0x25e626	2	0	[28]
+// bdc-fix	V	unsigned short	0x25e62c	2	0	[31]
+// bdc-fix	V	unsigned short	0x25e62e	2	0	[32]
+// bdc-fix	V	unsigned short	0x25e630	2	0	[33]
+// bdc-fix	V	unsigned short	0x25e636	2	0	[36]
+// bdc-fix	V	unsigned short	0x25e638	2	0	[37]
+// bdc-fix	V	unsigned short	0x25e63a	2	0	[38]
+// bdc-fix	V	unsigned short	0x25e640	2	0	[41]
+// bdc-fix	V	unsigned short	0x25e642	2	0	[42]
+// bdc-fix	V	unsigned short	0x25e644	2	0	[43]
+// bdc-fix	V	unsigned short	0x25e64a	2	0	[46]
+// bdc-fix	V	unsigned short	0x25e64c	2	0	[47]
+// bdc-fix	V	unsigned short	0x25e64e	2	0	[48]
+// bdc-fix	V	unsigned short	0x25e654	2	0	[51]
+// bdc-fix	V	unsigned short	0x25e656	2	0	[52]
+// bdc-fix	V	unsigned short	0x25e658	2	0	[53]
+// bdc-fix	V	unsigned short	0x25e65e	2	0	[56]
+// bdc-fix	V	unsigned short	0x25e660	2	0	[57]
+// bdc-fix	V	unsigned short	0x25e662	2	0	[58]
+// bdc-fix	V	unsigned short	0x25e668	2	0	[61]
+// bdc-fix	V	unsigned short	0x25e66a	2	0	[62]
+// bdc-fix	V	unsigned short	0x25e66c	2	0	[63]
+// bdc-fix	V	unsigned short	0x25e672	2	0	[66]
+// bdc-fix	V	unsigned short	0x25e674	2	0	[67]
+// bdc-fix	V	unsigned short	0x25e676	2	0	[68]
+// bdc-fix	V	unsigned short	0x25e67c	2	0	[71]
+// bdc-fix	V	unsigned short	0x25e67e	2	0	[72]
+// bdc-fix	V	unsigned short	0x25e680	2	0	[73]
+// bdc-fix	V	unsigned short	0x25e686	2	0	[76]
+// bdc-fix	V	unsigned short	0x25e688	2	0	[77]
+// bdc-fix	V	unsigned short	0x25e68a	2	0	[78]
+// bdc-fix	V	unsigned short	0x25e68e	2	0	[80]
+// bdc-fix	V	unsigned short	0x25e692	2	0	[82]
+// bdc-fix	V	unsigned short	0x25e694	2	0	[83]
+// bdc-fix	V	unsigned short	0x25e698	2	0	[85]
+// bdc-fix	V	unsigned short	0x25e69a	2	0	[86]
+// bdc-fix	V	unsigned short	0x25e69c	2	0	[87]
+// bdc-fix	V	unsigned short	0x25e69e	2	0	[88]
+// bdc-fix	V	unsigned short	0x25e6a2	2	0	[90]
+// bdc-fix	V	unsigned short	0x25e6a4	2	0	[91]
+// bdc-fix	V	unsigned short	0x25e6a6	2	0	[92]
+// bdc-fix	V	unsigned short	0x25e6a8	2	0	[93]
+// bdc-fix	V	unsigned short	0x25e6ac	2	0	[95]
+// bdc-fix	V	unsigned short	0x25e6ae	2	0	[96]
+// bdc-fix	V	unsigned short	0x25e6b0	2	0	[97]
+// bdc-fix	V	unsigned short	0x25e6b2	2	0	[98]
+// bdc-fix	V	unsigned short	0x25e6b6	2	0	[100]
+// bdc-fix	V	unsigned short	0x25e6b8	2	0	[101]
+// bdc-fix	V	unsigned short	0x25e6ba	2	0	[102]
+// bdc-fix	V	unsigned short	0x25e6bc	2	0	[103]
+// bdc-fix	V	unsigned short	0x25e6c0	2	0	[105]
+// bdc-fix	V	unsigned short	0x25e6c2	2	0	[106]
+// bdc-fix	V	unsigned short	0x25e6c4	2	0	[107]
+// bdc-fix	V	unsigned short	0x25e6c6	2	0	[108]
+// bdc-fix	V	unsigned short	0x25e6ca	2	0	[110]
+// bdc-fix	V	unsigned short	0x25e6cc	2	0	[111]
+// bdc-fix	V	unsigned short	0x25e6ce	2	0	[112]
+// bdc-fix	V	unsigned short	0x25e6d0	2	0	[113]
+// bdc-fix	V	unsigned short	0x25e6d4	2	0	[115]
+// bdc-fix	V	unsigned short	0x25e6d6	2	0	[116]
+// bdc-fix	V	unsigned short	0x25e6d8	2	0	[117]
+// bdc-fix	V	unsigned short	0x25e6da	2	0	[118]
+// bdc-fix	V	unsigned short	0x25e6de	2	0	[120]
+// bdc-fix	V	unsigned short	0x25e6e0	2	0	[121]
+// bdc-fix	V	unsigned short	0x25e6e2	2	0	[122]
+// bdc-fix	V	unsigned short	0x25e6e4	2	0	[123]
+// bdc-fix	V	unsigned short	0x25e6e8	2	0	[125]
+// bdc-fix	V	unsigned short	0x25e6ea	2	0	[126]
+// bdc-fix	V	unsigned short	0x25e6ec	2	0	[127]
+// bdc-fix	V	unsigned short	0x25e6ee	2	0	[128]
+// bdc-fix	V	unsigned short	0x25e6f2	2	0	[130]
+// bdc-fix	V	unsigned short	0x25e6f4	2	0	[131]
+// bdc-fix	V	unsigned short	0x25e6f6	2	0	[132]
+// bdc-fix	V	unsigned short	0x25e6f8	2	0	[133]
+// bdc-fix	V	unsigned short	0x25e6fc	2	0	[135]
+// bdc-fix	V	unsigned short	0x25e6fe	2	0	[136]
+// bdc-fix	V	unsigned short	0x25e700	2	0	[137]
+// bdc-fix	V	unsigned short	0x25e702	2	0	[138]
+// bdc-fix	V	unsigned short	0x25e706	2	0	[140]
+// bdc-fix	V	unsigned short	0x25e708	2	0	[141]
+// bdc-fix	V	unsigned short	0x25e70a	2	0	[142]
+// bdc-fix	V	unsigned short	0x25e70c	2	0	[143]
+// bdc-fix	V	unsigned short	0x25e710	2	0	[145]
+// bdc-fix	V	unsigned short	0x25e712	2	0	[146]
+// bdc-fix	V	unsigned short	0x25e714	2	0	[147]
+// bdc-fix	V	unsigned short	0x25e716	2	0	[148]
+// bdc-fix	V	unsigned short	0x25e71a	2	0	[150]
+// bdc-fix	V	unsigned short	0x25e71c	2	0	[151]
+// bdc-fix	V	unsigned short	0x25e71e	2	0	[152]
+// bdc-fix	V	unsigned short	0x25e720	2	0	[153]
+// bdc-fix	V	unsigned short	0x25e724	2	0	[155]
+// bdc-fix	V	unsigned short	0x25e726	2	0	[156]
+// bdc-fix	V	unsigned short	0x25e728	2	0	[157]
+// bdc-fix	V	unsigned short	0x25e72a	2	0	[158]
+// bdc-fix	V	unsigned short	0x25e72e	2	0	[160]
+// bdc-fix	V	unsigned short	0x25e732	2	0	[162]
+// bdc-fix	V	unsigned short	0x25e734	2	0	[163]
+// bdc-fix	V	unsigned short	0x25e738	2	0	[165]
+// bdc-fix	V	unsigned short	0x25e73a	2	0	[166]
+// bdc-fix	V	unsigned short	0x25e73c	2	0	[167]
+// bdc-fix	V	unsigned short	0x25e73e	2	0	[168]
+// bdc-fix	V	unsigned short	0x25e742	2	0	[170]
+// bdc-fix	V	unsigned short	0x25e744	2	0	[171]
+// bdc-fix	V	unsigned short	0x25e746	2	0	[172]
+// bdc-fix	V	unsigned short	0x25e748	2	0	[173]
+// bdc-fix	V	unsigned short	0x25e74c	2	0	[175]
+// bdc-fix	V	unsigned short	0x25e74e	2	0	[176]
+// bdc-fix	V	unsigned short	0x25e750	2	0	[177]
+// bdc-fix	V	unsigned short	0x25e752	2	0	[178]
+// bdc-fix	V	unsigned short	0x25e756	2	0	[180]
+// bdc-fix	V	unsigned short	0x25e758	2	0	[181]
+// bdc-fix	V	unsigned short	0x25e75a	2	0	[182]
+// bdc-fix	V	unsigned short	0x25e75c	2	0	[183]
+// bdc-fix	V	unsigned short	0x25e760	2	0	[185]
+// bdc-fix	V	unsigned short	0x25e762	2	0	[186]
+// bdc-fix	V	unsigned short	0x25e764	2	0	[187]
+// bdc-fix	V	unsigned short	0x25e766	2	0	[188]
+// bdc-fix	V	unsigned short	0x25e76a	2	0	[190]
+// bdc-fix	V	unsigned short	0x25e76c	2	0	[191]
+// bdc-fix	V	unsigned short	0x25e76e	2	0	[192]
+// bdc-fix	V	unsigned short	0x25e770	2	0	[193]
+// bdc-fix	V	unsigned short	0x25e774	2	0	[195]
+// bdc-fix	V	unsigned short	0x25e776	2	0	[196]
+// bdc-fix	V	unsigned short	0x25e778	2	0	[197]
+// bdc-fix	V	unsigned short	0x25e77a	2	0	[198]
+// bdc-fix	V	unsigned short	0x25e77e	2	0	[200]
+// bdc-fix	V	unsigned short	0x25e780	2	0	[201]
+// bdc-fix	V	unsigned short	0x25e782	2	0	[202]
+// bdc-fix	V	unsigned short	0x25e784	2	0	[203]
+// bdc-fix	V	unsigned short	0x25e788	2	0	[205]
+// bdc-fix	V	unsigned short	0x25e78a	2	0	[206]
+// bdc-fix	V	unsigned short	0x25e78c	2	0	[207]
+// bdc-fix	V	unsigned short	0x25e78e	2	0	[208]
+// bdc-fix	V	unsigned short	0x25e792	2	0	[210]
+// bdc-fix	V	unsigned short	0x25e794	2	0	[211]
+// bdc-fix	V	unsigned short	0x25e796	2	0	[212]
+// bdc-fix	V	unsigned short	0x25e798	2	0	[213]
+// bdc-fix	V	unsigned short	0x25e79c	2	0	[215]
+// bdc-fix	V	unsigned short	0x25e79e	2	0	[216]
+// bdc-fix	V	unsigned short	0x25e7a0	2	0	[217]
+// bdc-fix	V	unsigned short	0x25e7a2	2	0	[218]
+// bdc-fix	V	unsigned short	0x25e7a6	2	0	[220]
+// bdc-fix	V	unsigned short	0x25e7a8	2	0	[221]
+// bdc-fix	V	unsigned short	0x25e7aa	2	0	[222]
+// bdc-fix	V	unsigned short	0x25e7ac	2	0	[223]
+// bdc-fix	V	unsigned short	0x25e7b0	2	0	[225]
+// bdc-fix	V	unsigned short	0x25e7b2	2	0	[226]
+// bdc-fix	V	unsigned short	0x25e7b4	2	0	[227]
+// bdc-fix	V	unsigned short	0x25e7b6	2	0	[228]
+// bdc-fix	V	unsigned short	0x25e7ba	2	0	[230]
+// bdc-fix	V	unsigned short	0x25e7bc	2	0	[231]
+// bdc-fix	V	unsigned short	0x25e7be	2	0	[232]
+// bdc-fix	V	unsigned short	0x25e7c0	2	0	[233]
+// bdc-fix	V	unsigned short	0x25e7c4	2	0	[235]
+// bdc-fix	V	unsigned short	0x25e7c6	2	0	[236]
+// bdc-fix	V	unsigned short	0x25e7c8	2	0	[237]
+// bdc-fix	V	unsigned short	0x25e7ca	2	0	[238]
+// bdc-fix	V	unsigned short	0x25e7ce	2	0	[240]
+// bdc-fix	V	unsigned short	0x25e7d2	2	0	[242]
+// bdc-fix	V	unsigned short	0x25e7d4	2	0	[243]
+// bdc-fix	V	unsigned short	0x25e7d8	2	0	[245]
+// bdc-fix	V	unsigned short	0x25e7da	2	0	[246]
+// bdc-fix	V	unsigned short	0x25e7dc	2	0	[247]
+// bdc-fix	V	unsigned short	0x25e7de	2	0	[248]
+// bdc-fix	V	unsigned short	0x25e7e2	2	0	[250]
+// bdc-fix	V	unsigned short	0x25e7e4	2	0	[251]
+// bdc-fix	V	unsigned short	0x25e7e6	2	0	[252]
+// bdc-fix	V	unsigned short	0x25e7e8	2	0	[253]
+// bdc-fix	V	unsigned short	0x25e7ec	2	0	[255]
+// bdc-fix	V	unsigned short	0x25e7ee	2	0	[256]
+// bdc-fix	V	unsigned short	0x25e7f0	2	0	[257]
+// bdc-fix	V	unsigned short	0x25e7f2	2	0	[258]
+// bdc-fix	V	unsigned short	0x25e7f6	2	0	[260]
+// bdc-fix	V	unsigned short	0x25e7f8	2	0	[261]
+// bdc-fix	V	unsigned short	0x25e7fa	2	0	[262]
+// bdc-fix	V	unsigned short	0x25e7fc	2	0	[263]
+// bdc-fix	V	unsigned short	0x25e800	2	0	[265]
+// bdc-fix	V	unsigned short	0x25e802	2	0	[266]
+// bdc-fix	V	unsigned short	0x25e804	2	0	[267]
+// bdc-fix	V	unsigned short	0x25e806	2	0	[268]
+// bdc-fix	V	unsigned short	0x25e80a	2	0	[270]
+// bdc-fix	V	unsigned short	0x25e80c	2	0	[271]
+// bdc-fix	V	unsigned short	0x25e80e	2	0	[272]
+// bdc-fix	V	unsigned short	0x25e810	2	0	[273]
+// bdc-fix	V	unsigned short	0x25e814	2	0	[275]
+// bdc-fix	V	unsigned short	0x25e816	2	0	[276]
+// bdc-fix	V	unsigned short	0x25e818	2	0	[277]
+// bdc-fix	V	unsigned short	0x25e81a	2	0	[278]
+// bdc-fix	V	unsigned short	0x25e81e	2	0	[280]
+// bdc-fix	V	unsigned short	0x25e820	2	0	[281]
+// bdc-fix	V	unsigned short	0x25e822	2	0	[282]
+// bdc-fix	V	unsigned short	0x25e824	2	0	[283]
+// bdc-fix	V	unsigned short	0x25e828	2	0	[285]
+// bdc-fix	V	unsigned short	0x25e82a	2	0	[286]
+// bdc-fix	V	unsigned short	0x25e82c	2	0	[287]
+// bdc-fix	V	unsigned short	0x25e82e	2	0	[288]
+// bdc-fix	V	unsigned short	0x25e832	2	0	[290]
+// bdc-fix	V	unsigned short	0x25e834	2	0	[291]
+// bdc-fix	V	unsigned short	0x25e836	2	0	[292]
+// bdc-fix	V	unsigned short	0x25e838	2	0	[293]
+// bdc-fix	V	unsigned short	0x25e83c	2	0	[295]
+// bdc-fix	V	unsigned short	0x25e83e	2	0	[296]
+// bdc-fix	V	unsigned short	0x25e840	2	0	[297]
+// bdc-fix	V	unsigned short	0x25e842	2	0	[298]
+// bdc-fix	V	unsigned short	0x25e846	2	0	[300]
+// bdc-fix	V	unsigned short	0x25e848	2	0	[301]
+// bdc-fix	V	unsigned short	0x25e84a	2	0	[302]
+// bdc-fix	V	unsigned short	0x25e84c	2	0	[303]
+// bdc-fix	V	unsigned short	0x25e850	2	0	[305]
+// bdc-fix	V	unsigned short	0x25e852	2	0	[306]
+// bdc-fix	V	unsigned short	0x25e854	2	0	[307]
+// bdc-fix	V	unsigned short	0x25e856	2	0	[308]
+// bdc-fix	V	unsigned short	0x25e85a	2	0	[310]
+// bdc-fix	V	unsigned short	0x25e85c	2	0	[311]
+// bdc-fix	V	unsigned short	0x25e85e	2	0	[312]
+// bdc-fix	V	unsigned short	0x25e860	2	0	[313]
+// bdc-fix	V	unsigned short	0x25e864	2	0	[315]
+// bdc-fix	V	unsigned short	0x25e866	2	0	[316]
+// bdc-fix	V	unsigned short	0x25e868	2	0	[317]
+// bdc-fix	V	unsigned short	0x25e86a	2	0	[318]
+// bdc-fix	V	unsigned short	0x25e86e	2	0	[320]
+// bdc-fix	V	unsigned short	0x25e872	2	0	[322]
+// bdc-fix	V	unsigned short	0x25e874	2	0	[323]
+// bdc-fix	V	unsigned short	0x25e878	2	0	[325]
+// bdc-fix	V	unsigned short	0x25e87a	2	0	[326]
+// bdc-fix	V	unsigned short	0x25e87c	2	0	[327]
+// bdc-fix	V	unsigned short	0x25e87e	2	0	[328]
+// bdc-fix	V	unsigned short	0x25e882	2	0	[330]
+// bdc-fix	V	unsigned short	0x25e884	2	0	[331]
+// bdc-fix	V	unsigned short	0x25e886	2	0	[332]
+// bdc-fix	V	unsigned short	0x25e888	2	0	[333]
+// bdc-fix	V	unsigned short	0x25e88c	2	0	[335]
+// bdc-fix	V	unsigned short	0x25e88e	2	0	[336]
+// bdc-fix	V	unsigned short	0x25e890	2	0	[337]
+// bdc-fix	V	unsigned short	0x25e892	2	0	[338]
+// bdc-fix	V	unsigned short	0x25e896	2	0	[340]
+// bdc-fix	V	unsigned short	0x25e898	2	0	[341]
+// bdc-fix	V	unsigned short	0x25e89a	2	0	[342]
+// bdc-fix	V	unsigned short	0x25e89c	2	0	[343]
+// bdc-fix	V	unsigned short	0x25e8a0	2	0	[345]
+// bdc-fix	V	unsigned short	0x25e8a2	2	0	[346]
+// bdc-fix	V	unsigned short	0x25e8a4	2	0	[347]
+// bdc-fix	V	unsigned short	0x25e8a6	2	0	[348]
+// bdc-fix	V	unsigned short	0x25e8aa	2	0	[350]
+// bdc-fix	V	unsigned short	0x25e8ac	2	0	[351]
+// bdc-fix	V	unsigned short	0x25e8ae	2	0	[352]
+// bdc-fix	V	unsigned short	0x25e8b0	2	0	[353]
+// bdc-fix	V	unsigned short	0x25e8b4	2	0	[355]
+// bdc-fix	V	unsigned short	0x25e8b6	2	0	[356]
+// bdc-fix	V	unsigned short	0x25e8b8	2	0	[357]
+// bdc-fix	V	unsigned short	0x25e8ba	2	0	[358]
+// bdc-fix	V	unsigned short	0x25e8be	2	0	[360]
+// bdc-fix	V	unsigned short	0x25e8c0	2	0	[361]
+// bdc-fix	V	unsigned short	0x25e8c2	2	0	[362]
+// bdc-fix	V	unsigned short	0x25e8c4	2	0	[363]
+// bdc-fix	V	unsigned short	0x25e8c8	2	0	[365]
+// bdc-fix	V	unsigned short	0x25e8ca	2	0	[366]
+// bdc-fix	V	unsigned short	0x25e8cc	2	0	[367]
+// bdc-fix	V	unsigned short	0x25e8ce	2	0	[368]
+// bdc-fix	V	unsigned short	0x25e8d2	2	0	[370]
+// bdc-fix	V	unsigned short	0x25e8d4	2	0	[371]
+// bdc-fix	V	unsigned short	0x25e8d6	2	0	[372]
+// bdc-fix	V	unsigned short	0x25e8d8	2	0	[373]
+// bdc-fix	V	unsigned short	0x25e8dc	2	0	[375]
+// bdc-fix	V	unsigned short	0x25e8de	2	0	[376]
+// bdc-fix	V	unsigned short	0x25e8e0	2	0	[377]
+// bdc-fix	V	unsigned short	0x25e8e2	2	0	[378]
+// bdc-fix	V	unsigned short	0x25e8e6	2	0	[380]
+// bdc-fix	V	unsigned short	0x25e8e8	2	0	[381]
+// bdc-fix	V	unsigned short	0x25e8ea	2	0	[382]
+// bdc-fix	V	unsigned short	0x25e8ec	2	0	[383]
+// bdc-fix	V	unsigned short	0x25e8f0	2	0	[385]
+// bdc-fix	V	unsigned short	0x25e8f2	2	0	[386]
+// bdc-fix	V	unsigned short	0x25e8f4	2	0	[387]
+// bdc-fix	V	unsigned short	0x25e8f6	2	0	[388]
+// bdc-fix	V	unsigned short	0x25e8fa	2	0	[390]
+// bdc-fix	V	unsigned short	0x25e8fc	2	0	[391]
+// bdc-fix	V	unsigned short	0x25e8fe	2	0	[392]
+// bdc-fix	V	unsigned short	0x25e900	2	0	[393]
+// bdc-fix	V	unsigned short	0x25e904	2	0	[395]
+// bdc-fix	V	unsigned short	0x25e906	2	0	[396]
+// bdc-fix	V	unsigned short	0x25e908	2	0	[397]
+// bdc-fix	V	unsigned short	0x25e90a	2	0	[398]
+// bdc-fix	V	unsigned short	0x25e90e	2	0	[400]
+// bdc-fix	V	unsigned short	0x25e912	2	0	[402]
+// bdc-fix	V	unsigned short	0x25e914	2	0	[403]
+// bdc-fix	V	unsigned short	0x25e918	2	0	[405]
+// bdc-fix	V	unsigned short	0x25e91a	2	0	[406]
+// bdc-fix	V	unsigned short	0x25e91c	2	0	[407]
+// bdc-fix	V	unsigned short	0x25e91e	2	0	[408]
+// bdc-fix	V	unsigned short	0x25e922	2	0	[410]
+// bdc-fix	V	unsigned short	0x25e924	2	0	[411]
+// bdc-fix	V	unsigned short	0x25e926	2	0	[412]
+// bdc-fix	V	unsigned short	0x25e928	2	0	[413]
+// bdc-fix	V	unsigned short	0x25e92c	2	0	[415]
+// bdc-fix	V	unsigned short	0x25e92e	2	0	[416]
+// bdc-fix	V	unsigned short	0x25e930	2	0	[417]
+// bdc-fix	V	unsigned short	0x25e932	2	0	[418]
+// bdc-fix	V	unsigned short	0x25e936	2	0	[420]
+// bdc-fix	V	unsigned short	0x25e938	2	0	[421]
+// bdc-fix	V	unsigned short	0x25e93a	2	0	[422]
+// bdc-fix	V	unsigned short	0x25e93c	2	0	[423]
+// bdc-fix	V	unsigned short	0x25e940	2	0	[425]
+// bdc-fix	V	unsigned short	0x25e942	2	0	[426]
+// bdc-fix	V	unsigned short	0x25e944	2	0	[427]
+// bdc-fix	V	unsigned short	0x25e946	2	0	[428]
+// bdc-fix	V	unsigned short	0x25e94a	2	0	[430]
+// bdc-fix	V	unsigned short	0x25e94c	2	0	[431]
+// bdc-fix	V	unsigned short	0x25e94e	2	0	[432]
+// bdc-fix	V	unsigned short	0x25e950	2	0	[433]
+// bdc-fix	V	unsigned short	0x25e954	2	0	[435]
+// bdc-fix	V	unsigned short	0x25e956	2	0	[436]
+// bdc-fix	V	unsigned short	0x25e958	2	0	[437]
+// bdc-fix	V	unsigned short	0x25e95a	2	0	[438]
+// bdc-fix	V	unsigned short	0x25e95e	2	0	[440]
+// bdc-fix	V	unsigned short	0x25e960	2	0	[441]
+// bdc-fix	V	unsigned short	0x25e962	2	0	[442]
+// bdc-fix	V	unsigned short	0x25e964	2	0	[443]
+// bdc-fix	V	unsigned short	0x25e968	2	0	[445]
+// bdc-fix	V	unsigned short	0x25e96a	2	0	[446]
+// bdc-fix	V	unsigned short	0x25e96c	2	0	[447]
+// bdc-fix	V	unsigned short	0x25e96e	2	0	[448]
+// bdc-fix	V	unsigned short	0x25e972	2	0	[450]
+// bdc-fix	V	unsigned short	0x25e974	2	0	[451]
+// bdc-fix	V	unsigned short	0x25e976	2	0	[452]
+// bdc-fix	V	unsigned short	0x25e978	2	0	[453]
+// bdc-fix	V	unsigned short	0x25e97c	2	0	[455]
+// bdc-fix	V	unsigned short	0x25e97e	2	0	[456]
+// bdc-fix	V	unsigned short	0x25e980	2	0	[457]
+// bdc-fix	V	unsigned short	0x25e982	2	0	[458]
+// bdc-fix	V	unsigned short	0x25e986	2	0	[460]
+// bdc-fix	V	unsigned short	0x25e988	2	0	[461]
+// bdc-fix	V	unsigned short	0x25e98a	2	0	[462]
+// bdc-fix	V	unsigned short	0x25e98c	2	0	[463]
+// bdc-fix	V	unsigned short	0x25e990	2	0	[465]
+// bdc-fix	V	unsigned short	0x25e992	2	0	[466]
+// bdc-fix	V	unsigned short	0x25e994	2	0	[467]
+// bdc-fix	V	unsigned short	0x25e996	2	0	[468]
+// bdc-fix	V	unsigned short	0x25e99a	2	0	[470]
+// bdc-fix	V	unsigned short	0x25e99c	2	0	[471]
+// bdc-fix	V	unsigned short	0x25e99e	2	0	[472]
+// bdc-fix	V	unsigned short	0x25e9a0	2	0	[473]
+// bdc-fix	V	unsigned short	0x25e9a4	2	0	[475]
+// bdc-fix	V	unsigned short	0x25e9a6	2	0	[476]
+// bdc-fix	V	unsigned short	0x25e9a8	2	0	[477]
+// bdc-fix	V	unsigned short	0x25e9aa	2	0	[478]
+// bdc-fix	V	unsigned short	0x25e9ae	2	0	[480]
+// bdc-fix	V	unsigned short	0x25e9b2	2	0	[482]
+// bdc-fix	V	unsigned short	0x25e9b4	2	0	[483]
+// bdc-fix	V	unsigned short	0x25e9b8	2	0	[485]
+// bdc-fix	V	unsigned short	0x25e9ba	2	0	[486]
+// bdc-fix	V	unsigned short	0x25e9bc	2	0	[487]
+// bdc-fix	V	unsigned short	0x25e9be	2	0	[488]
+// bdc-fix	V	unsigned short	0x25e9c2	2	0	[490]
+// bdc-fix	V	unsigned short	0x25e9c4	2	0	[491]
+// bdc-fix	V	unsigned short	0x25e9c6	2	0	[492]
+// bdc-fix	V	unsigned short	0x25e9c8	2	0	[493]
+// bdc-fix	V	unsigned short	0x25e9cc	2	0	[495]
+// bdc-fix	V	unsigned short	0x25e9ce	2	0	[496]
+// bdc-fix	V	unsigned short	0x25e9d0	2	0	[497]
+// bdc-fix	V	unsigned short	0x25e9d2	2	0	[498]
+// bdc-fix	V	unsigned short	0x25e9d6	2	0	[500]
+// bdc-fix	V	unsigned short	0x25e9d8	2	0	[501]
+// bdc-fix	V	unsigned short	0x25e9da	2	0	[502]
+// bdc-fix	V	unsigned short	0x25e9dc	2	0	[503]
+// bdc-fix	V	unsigned short	0x25e9e0	2	0	[505]
+// bdc-fix	V	unsigned short	0x25e9e2	2	0	[506]
+// bdc-fix	V	unsigned short	0x25e9e4	2	0	[507]
+// bdc-fix	V	unsigned short	0x25e9e6	2	0	[508]
+// bdc-fix	V	unsigned short	0x25e9ea	2	0	[510]
+// bdc-fix	V	unsigned short	0x25e9ec	2	0	[511]
+// bdc-fix	V	unsigned short	0x25e9ee	2	0	[512]
+// bdc-fix	V	unsigned short	0x25e9f0	2	0	[513]
+// bdc-fix	V	unsigned short	0x25e9f4	2	0	[515]
+// bdc-fix	V	unsigned short	0x25e9f6	2	0	[516]
+// bdc-fix	V	unsigned short	0x25e9f8	2	0	[517]
+// bdc-fix	V	unsigned short	0x25e9fa	2	0	[518]
+// bdc-fix	V	unsigned short	0x25e9fe	2	0	[520]
+// bdc-fix	V	unsigned short	0x25ea00	2	0	[521]
+// bdc-fix	V	unsigned short	0x25ea02	2	0	[522]
+// bdc-fix	V	unsigned short	0x25ea04	2	0	[523]
+// bdc-fix	V	unsigned short	0x25ea08	2	0	[525]
+// bdc-fix	V	unsigned short	0x25ea0a	2	0	[526]
+// bdc-fix	V	unsigned short	0x25ea0c	2	0	[527]
+// bdc-fix	V	unsigned short	0x25ea0e	2	0	[528]
+// bdc-fix	V	unsigned short	0x25ea12	2	0	[530]
+// bdc-fix	V	unsigned short	0x25ea14	2	0	[531]
+// bdc-fix	V	unsigned short	0x25ea16	2	0	[532]
+// bdc-fix	V	unsigned short	0x25ea18	2	0	[533]
+// bdc-fix	V	unsigned short	0x25ea1c	2	0	[535]
+// bdc-fix	V	unsigned short	0x25ea1e	2	0	[536]
+// bdc-fix	V	unsigned short	0x25ea20	2	0	[537]
+// bdc-fix	V	unsigned short	0x25ea22	2	0	[538]
+// bdc-fix	V	unsigned short	0x25ea26	2	0	[540]
+// bdc-fix	V	unsigned short	0x25ea28	2	0	[541]
+// bdc-fix	V	unsigned short	0x25ea2a	2	0	[542]
+// bdc-fix	V	unsigned short	0x25ea2c	2	0	[543]
+// bdc-fix	V	unsigned short	0x25ea30	2	0	[545]
+// bdc-fix	V	unsigned short	0x25ea32	2	0	[546]
+// bdc-fix	V	unsigned short	0x25ea34	2	0	[547]
+// bdc-fix	V	unsigned short	0x25ea36	2	0	[548]
+// bdc-fix	V	unsigned short	0x25ea3a	2	0	[550]
+// bdc-fix	V	unsigned short	0x25ea3c	2	0	[551]
+// bdc-fix	V	unsigned short	0x25ea3e	2	0	[552]
+// bdc-fix	V	unsigned short	0x25ea40	2	0	[553]
+// bdc-fix	V	unsigned short	0x25ea44	2	0	[555]
+// bdc-fix	V	unsigned short	0x25ea46	2	0	[556]
+// bdc-fix	V	unsigned short	0x25ea48	2	0	[557]
+// bdc-fix	V	unsigned short	0x25ea4a	2	0	[558]
+// bdc-fix	V	unsigned short	0x25ea4e	2	0	[560]
+// bdc-fix	V	unsigned short	0x25ea52	2	0	[562]
+// bdc-fix	V	unsigned short	0x25ea54	2	0	[563]
+// bdc-fix	V	unsigned short	0x25ea58	2	0	[565]
+// bdc-fix	V	unsigned short	0x25ea5a	2	0	[566]
+// bdc-fix	V	unsigned short	0x25ea5c	2	0	[567]
+// bdc-fix	V	unsigned short	0x25ea5e	2	0	[568]
+// bdc-fix	V	unsigned short	0x25ea62	2	0	[570]
+// bdc-fix	V	unsigned short	0x25ea64	2	0	[571]
+// bdc-fix	V	unsigned short	0x25ea66	2	0	[572]
+// bdc-fix	V	unsigned short	0x25ea68	2	0	[573]
+// bdc-fix	V	unsigned short	0x25ea6c	2	0	[575]
+// bdc-fix	V	unsigned short	0x25ea6e	2	0	[576]
+// bdc-fix	V	unsigned short	0x25ea70	2	0	[577]
+// bdc-fix	V	unsigned short	0x25ea72	2	0	[578]
+// bdc-fix	V	unsigned short	0x25ea76	2	0	[580]
+// bdc-fix	V	unsigned short	0x25ea78	2	0	[581]
+// bdc-fix	V	unsigned short	0x25ea7a	2	0	[582]
+// bdc-fix	V	unsigned short	0x25ea7c	2	0	[583]
+// bdc-fix	V	unsigned short	0x25ea80	2	0	[585]
+// bdc-fix	V	unsigned short	0x25ea82	2	0	[586]
+// bdc-fix	V	unsigned short	0x25ea84	2	0	[587]
+// bdc-fix	V	unsigned short	0x25ea86	2	0	[588]
+// bdc-fix	V	unsigned short	0x25ea8a	2	0	[590]
+// bdc-fix	V	unsigned short	0x25ea8c	2	0	[591]
+// bdc-fix	V	unsigned short	0x25ea8e	2	0	[592]
+// bdc-fix	V	unsigned short	0x25ea90	2	0	[593]
+// bdc-fix	V	unsigned short	0x25ea94	2	0	[595]
+// bdc-fix	V	unsigned short	0x25ea96	2	0	[596]
+// bdc-fix	V	unsigned short	0x25ea98	2	0	[597]
+// bdc-fix	V	unsigned short	0x25ea9a	2	0	[598]
+// bdc-fix	V	unsigned short	0x25ea9e	2	0	[600]
+// bdc-fix	V	unsigned short	0x25eaa0	2	0	[601]
+// bdc-fix	V	unsigned short	0x25eaa2	2	0	[602]
+// bdc-fix	V	unsigned short	0x25eaa4	2	0	[603]
+// bdc-fix	V	unsigned short	0x25eaa8	2	0	[605]
+// bdc-fix	V	unsigned short	0x25eaaa	2	0	[606]
+// bdc-fix	V	unsigned short	0x25eaac	2	0	[607]
+// bdc-fix	V	unsigned short	0x25eaae	2	0	[608]
+// bdc-fix	V	unsigned short	0x25eab2	2	0	[610]
+// bdc-fix	V	unsigned short	0x25eab4	2	0	[611]
+// bdc-fix	V	unsigned short	0x25eab6	2	0	[612]
+// bdc-fix	V	unsigned short	0x25eab8	2	0	[613]
+// bdc-fix	V	unsigned short	0x25eabc	2	0	[615]
+// bdc-fix	V	unsigned short	0x25eabe	2	0	[616]
+// bdc-fix	V	unsigned short	0x25eac0	2	0	[617]
+// bdc-fix	V	unsigned short	0x25eac2	2	0	[618]
+// bdc-fix	V	unsigned short	0x25eac6	2	0	[620]
+// bdc-fix	V	unsigned short	0x25eac8	2	0	[621]
+// bdc-fix	V	unsigned short	0x25eaca	2	0	[622]
+// bdc-fix	V	unsigned short	0x25eacc	2	0	[623]
+// bdc-fix	V	unsigned short	0x25ead0	2	0	[625]
+// bdc-fix	V	unsigned short	0x25ead2	2	0	[626]
+// bdc-fix	V	unsigned short	0x25ead4	2	0	[627]
+// bdc-fix	V	unsigned short	0x25ead6	2	0	[628]
+// bdc-fix	V	unsigned short	0x25eada	2	0	[630]
+// bdc-fix	V	unsigned short	0x25eadc	2	0	[631]
+// bdc-fix	V	unsigned short	0x25eade	2	0	[632]
+// bdc-fix	V	unsigned short	0x25eae0	2	0	[633]
+// bdc-fix	V	unsigned short	0x25eae4	2	0	[635]
+// bdc-fix	V	unsigned short	0x25eae6	2	0	[636]
+// bdc-fix	V	unsigned short	0x25eae8	2	0	[637]
+// bdc-fix	V	unsigned short	0x25eaea	2	0	[638]
+// bdc-fix	V	unsigned short	0x25eaee	2	0	[640]
+// bdc-fix	V	unsigned short	0x25eaf2	2	0	[642]
+// bdc-fix	V	unsigned short	0x25eaf4	2	0	[643]
+// bdc-fix	V	unsigned short	0x25eaf8	2	0	[645]
+// bdc-fix	V	unsigned short	0x25eafa	2	0	[646]
+// bdc-fix	V	unsigned short	0x25eafc	2	0	[647]
+// bdc-fix	V	unsigned short	0x25eafe	2	0	[648]
+// bdc-fix	V	unsigned short	0x25eb02	2	0	[650]
+// bdc-fix	V	unsigned short	0x25eb04	2	0	[651]
+// bdc-fix	V	unsigned short	0x25eb06	2	0	[652]
+// bdc-fix	V	unsigned short	0x25eb08	2	0	[653]
+// bdc-fix	V	unsigned short	0x25eb0c	2	0	[655]
+// bdc-fix	V	unsigned short	0x25eb0e	2	0	[656]
+// bdc-fix	V	unsigned short	0x25eb10	2	0	[657]
+// bdc-fix	V	unsigned short	0x25eb12	2	0	[658]
+// bdc-fix	V	unsigned short	0x25eb16	2	0	[660]
+// bdc-fix	V	unsigned short	0x25eb18	2	0	[661]
+// bdc-fix	V	unsigned short	0x25eb1a	2	0	[662]
+// bdc-fix	V	unsigned short	0x25eb1c	2	0	[663]
+// bdc-fix	V	unsigned short	0x25eb20	2	0	[665]
+// bdc-fix	V	unsigned short	0x25eb22	2	0	[666]
+// bdc-fix	V	unsigned short	0x25eb24	2	0	[667]
+// bdc-fix	V	unsigned short	0x25eb26	2	0	[668]
+// bdc-fix	V	unsigned short	0x25eb2a	2	0	[670]
+// bdc-fix	V	unsigned short	0x25eb2c	2	0	[671]
+// bdc-fix	V	unsigned short	0x25eb2e	2	0	[672]
+// bdc-fix	V	unsigned short	0x25eb30	2	0	[673]
+// bdc-fix	V	unsigned short	0x25eb34	2	0	[675]
+// bdc-fix	V	unsigned short	0x25eb36	2	0	[676]
+// bdc-fix	V	unsigned short	0x25eb38	2	0	[677]
+// bdc-fix	V	unsigned short	0x25eb3a	2	0	[678]
+// bdc-fix	V	unsigned short	0x25eb3e	2	0	[680]
+// bdc-fix	V	unsigned short	0x25eb40	2	0	[681]
+// bdc-fix	V	unsigned short	0x25eb42	2	0	[682]
+// bdc-fix	V	unsigned short	0x25eb44	2	0	[683]
+// bdc-fix	V	unsigned short	0x25eb48	2	0	[685]
+// bdc-fix	V	unsigned short	0x25eb4a	2	0	[686]
+// bdc-fix	V	unsigned short	0x25eb4c	2	0	[687]
+// bdc-fix	V	unsigned short	0x25eb4e	2	0	[688]
+// bdc-fix	V	unsigned short	0x25eb52	2	0	[690]
+// bdc-fix	V	unsigned short	0x25eb54	2	0	[691]
+// bdc-fix	V	unsigned short	0x25eb56	2	0	[692]
+// bdc-fix	V	unsigned short	0x25eb58	2	0	[693]
+// bdc-fix	V	unsigned short	0x25eb5c	2	0	[695]
+// bdc-fix	V	unsigned short	0x25eb5e	2	0	[696]
+// bdc-fix	V	unsigned short	0x25eb60	2	0	[697]
+// bdc-fix	V	unsigned short	0x25eb62	2	0	[698]
+// bdc-fix	V	unsigned short	0x25eb66	2	0	[700]
+// bdc-fix	V	unsigned short	0x25eb68	2	0	[701]
+// bdc-fix	V	unsigned short	0x25eb6a	2	0	[702]
+// bdc-fix	V	unsigned short	0x25eb6c	2	0	[703]
+// bdc-fix	V	unsigned short	0x25eb70	2	0	[705]
+// bdc-fix	V	unsigned short	0x25eb72	2	0	[706]
+// bdc-fix	V	unsigned short	0x25eb74	2	0	[707]
+// bdc-fix	V	unsigned short	0x25eb76	2	0	[708]
+// bdc-fix	V	unsigned short	0x25eb7a	2	0	[710]
+// bdc-fix	V	unsigned short	0x25eb7c	2	0	[711]
+// bdc-fix	V	unsigned short	0x25eb7e	2	0	[712]
+// bdc-fix	V	unsigned short	0x25eb80	2	0	[713]
+// bdc-fix	V	unsigned short	0x25eb84	2	0	[715]
+// bdc-fix	V	unsigned short	0x25eb86	2	0	[716]
+// bdc-fix	V	unsigned short	0x25eb88	2	0	[717]
+// bdc-fix	V	unsigned short	0x25eb8a	2	0	[718]
+// bdc-fix	V	unsigned short	0x25eb8e	2	0	[720]
+// bdc-fix	V	unsigned short	0x25eb92	2	0	[722]
+// bdc-fix	V	unsigned short	0x25eb94	2	0	[723]
+// bdc-fix	V	unsigned short	0x25eb98	2	0	[725]
+// bdc-fix	V	unsigned short	0x25eb9a	2	0	[726]
+// bdc-fix	V	unsigned short	0x25eb9c	2	0	[727]
+// bdc-fix	V	unsigned short	0x25eb9e	2	0	[728]
+// bdc-fix	V	unsigned short	0x25eba2	2	0	[730]
+// bdc-fix	V	unsigned short	0x25eba4	2	0	[731]
+// bdc-fix	V	unsigned short	0x25eba6	2	0	[732]
+// bdc-fix	V	unsigned short	0x25eba8	2	0	[733]
+// bdc-fix	V	unsigned short	0x25ebac	2	0	[735]
+// bdc-fix	V	unsigned short	0x25ebae	2	0	[736]
+// bdc-fix	V	unsigned short	0x25ebb0	2	0	[737]
+// bdc-fix	V	unsigned short	0x25ebb2	2	0	[738]
+// bdc-fix	V	unsigned short	0x25ebb6	2	0	[740]
+// bdc-fix	V	unsigned short	0x25ebb8	2	0	[741]
+// bdc-fix	V	unsigned short	0x25ebba	2	0	[742]
+// bdc-fix	V	unsigned short	0x25ebbc	2	0	[743]
+// bdc-fix	V	unsigned short	0x25ebc0	2	0	[745]
+// bdc-fix	V	unsigned short	0x25ebc2	2	0	[746]
+// bdc-fix	V	unsigned short	0x25ebc4	2	0	[747]
+// bdc-fix	V	unsigned short	0x25ebc6	2	0	[748]
+// bdc-fix	V	unsigned short	0x25ebca	2	0	[750]
+// bdc-fix	V	unsigned short	0x25ebcc	2	0	[751]
+// bdc-fix	V	unsigned short	0x25ebce	2	0	[752]
+// bdc-fix	V	unsigned short	0x25ebd0	2	0	[753]
+// bdc-fix	V	unsigned short	0x25ebd4	2	0	[755]
+// bdc-fix	V	unsigned short	0x25ebd6	2	0	[756]
+// bdc-fix	V	unsigned short	0x25ebd8	2	0	[757]
+// bdc-fix	V	unsigned short	0x25ebda	2	0	[758]
+// bdc-fix	V	unsigned short	0x25ebde	2	0	[760]
+// bdc-fix	V	unsigned short	0x25ebe0	2	0	[761]
+// bdc-fix	V	unsigned short	0x25ebe2	2	0	[762]
+// bdc-fix	V	unsigned short	0x25ebe4	2	0	[763]
+// bdc-fix	V	unsigned short	0x25ebe8	2	0	[765]
+// bdc-fix	V	unsigned short	0x25ebea	2	0	[766]
+// bdc-fix	V	unsigned short	0x25ebec	2	0	[767]
+// bdc-fix	V	unsigned short	0x25ebee	2	0	[768]
+// bdc-fix	V	unsigned short	0x25ebf2	2	0	[770]
+// bdc-fix	V	unsigned short	0x25ebf4	2	0	[771]
+// bdc-fix	V	unsigned short	0x25ebf6	2	0	[772]
+// bdc-fix	V	unsigned short	0x25ebf8	2	0	[773]
+// bdc-fix	V	unsigned short	0x25ebfc	2	0	[775]
+// bdc-fix	V	unsigned short	0x25ebfe	2	0	[776]
+// bdc-fix	V	unsigned short	0x25ec00	2	0	[777]
+// bdc-fix	V	unsigned short	0x25ec02	2	0	[778]
+// bdc-fix	V	unsigned short	0x25ec06	2	0	[780]
+// bdc-fix	V	unsigned short	0x25ec08	2	0	[781]
+// bdc-fix	V	unsigned short	0x25ec0a	2	0	[782]
+// bdc-fix	V	unsigned short	0x25ec0c	2	0	[783]
+// bdc-fix	V	unsigned short	0x25ec10	2	0	[785]
+// bdc-fix	V	unsigned short	0x25ec12	2	0	[786]
+// bdc-fix	V	unsigned short	0x25ec14	2	0	[787]
+// bdc-fix	V	unsigned short	0x25ec16	2	0	[788]
+// bdc-fix	V	unsigned short	0x25ec1a	2	0	[790]
+// bdc-fix	V	unsigned short	0x25ec1c	2	0	[791]
+// bdc-fix	V	unsigned short	0x25ec1e	2	0	[792]
+// bdc-fix	V	unsigned short	0x25ec20	2	0	[793]
+// bdc-fix	V	unsigned short	0x25ec24	2	0	[795]
+// bdc-fix	V	unsigned short	0x25ec26	2	0	[796]
+// bdc-fix	V	unsigned short	0x25ec28	2	0	[797]
+// bdc-fix	V	unsigned short	0x25ec2a	2	0	[798]
+// bdc-fix	V	unsigned short	0x25ec2e	2	0	[800]
+// bdc-fix	V	unsigned short	0x25ec32	2	0	[802]
+// bdc-fix	V	unsigned short	0x25ec34	2	0	[803]
+// bdc-fix	V	unsigned short	0x25ec38	2	0	[805]
+// bdc-fix	V	unsigned short	0x25ec3a	2	0	[806]
+// bdc-fix	V	unsigned short	0x25ec3c	2	0	[807]
+// bdc-fix	V	unsigned short	0x25ec3e	2	0	[808]
+// bdc-fix	V	unsigned short	0x25ec42	2	0	[810]
+// bdc-fix	V	unsigned short	0x25ec44	2	0	[811]
+// bdc-fix	V	unsigned short	0x25ec46	2	0	[812]
+// bdc-fix	V	unsigned short	0x25ec48	2	0	[813]
+// bdc-fix	V	unsigned short	0x25ec4c	2	0	[815]
+// bdc-fix	V	unsigned short	0x25ec4e	2	0	[816]
+// bdc-fix	V	unsigned short	0x25ec50	2	0	[817]
+// bdc-fix	V	unsigned short	0x25ec52	2	0	[818]
+// bdc-fix	V	unsigned short	0x25ec56	2	0	[820]
+// bdc-fix	V	unsigned short	0x25ec58	2	0	[821]
+// bdc-fix	V	unsigned short	0x25ec5a	2	0	[822]
+// bdc-fix	V	unsigned short	0x25ec5c	2	0	[823]
+// bdc-fix	V	unsigned short	0x25ec60	2	0	[825]
+// bdc-fix	V	unsigned short	0x25ec62	2	0	[826]
+// bdc-fix	V	unsigned short	0x25ec64	2	0	[827]
+// bdc-fix	V	unsigned short	0x25ec66	2	0	[828]
+// bdc-fix	V	unsigned short	0x25ec6a	2	0	[830]
+// bdc-fix	V	unsigned short	0x25ec6c	2	0	[831]
+// bdc-fix	V	unsigned short	0x25ec6e	2	0	[832]
+// bdc-fix	V	unsigned short	0x25ec70	2	0	[833]
+// bdc-fix	V	unsigned short	0x25ec74	2	0	[835]
+// bdc-fix	V	unsigned short	0x25ec76	2	0	[836]
+// bdc-fix	V	unsigned short	0x25ec78	2	0	[837]
+// bdc-fix	V	unsigned short	0x25ec7a	2	0	[838]
+// bdc-fix	V	unsigned short	0x25ec7e	2	0	[840]
+// bdc-fix	V	unsigned short	0x25ec80	2	0	[841]
+// bdc-fix	V	unsigned short	0x25ec82	2	0	[842]
+// bdc-fix	V	unsigned short	0x25ec84	2	0	[843]
+// bdc-fix	V	unsigned short	0x25ec88	2	0	[845]
+// bdc-fix	V	unsigned short	0x25ec8a	2	0	[846]
+// bdc-fix	V	unsigned short	0x25ec8c	2	0	[847]
+// bdc-fix	V	unsigned short	0x25ec8e	2	0	[848]
+// bdc-fix	V	unsigned short	0x25ec92	2	0	[850]
+// bdc-fix	V	unsigned short	0x25ec94	2	0	[851]
+// bdc-fix	V	unsigned short	0x25ec96	2	0	[852]
+// bdc-fix	V	unsigned short	0x25ec98	2	0	[853]
+// bdc-fix	V	unsigned short	0x25ec9c	2	0	[855]
+// bdc-fix	V	unsigned short	0x25ec9e	2	0	[856]
+// bdc-fix	V	unsigned short	0x25eca0	2	0	[857]
+// bdc-fix	V	unsigned short	0x25eca2	2	0	[858]
+// bdc-fix	V	unsigned short	0x25eca6	2	0	[860]
+// bdc-fix	V	unsigned short	0x25eca8	2	0	[861]
+// bdc-fix	V	unsigned short	0x25ecaa	2	0	[862]
+// bdc-fix	V	unsigned short	0x25ecac	2	0	[863]
+// bdc-fix	V	unsigned short	0x25ecb0	2	0	[865]
+// bdc-fix	V	unsigned short	0x25ecb2	2	0	[866]
+// bdc-fix	V	unsigned short	0x25ecb4	2	0	[867]
+// bdc-fix	V	unsigned short	0x25ecb6	2	0	[868]
+// bdc-fix	V	unsigned short	0x25ecba	2	0	[870]
+// bdc-fix	V	unsigned short	0x25ecbc	2	0	[871]
+// bdc-fix	V	unsigned short	0x25ecbe	2	0	[872]
+// bdc-fix	V	unsigned short	0x25ecc0	2	0	[873]
+// bdc-fix	V	unsigned short	0x25ecc4	2	0	[875]
+// bdc-fix	V	unsigned short	0x25ecc6	2	0	[876]
+// bdc-fix	V	unsigned short	0x25ecc8	2	0	[877]
+// bdc-fix	V	unsigned short	0x25ecca	2	0	[878]
+// bdc-fix	V	unsigned short	0x25ecce	2	0	[880]
+// bdc-fix	V	unsigned short	0x25ecd2	2	0	[882]
+// bdc-fix	V	unsigned short	0x25ecd4	2	0	[883]
+// bdc-fix	V	unsigned short	0x25ecd8	2	0	[885]
+// bdc-fix	V	unsigned short	0x25ecda	2	0	[886]
+// bdc-fix	V	unsigned short	0x25ecdc	2	0	[887]
+// bdc-fix	V	unsigned short	0x25ecde	2	0	[888]
+// bdc-fix	V	unsigned short	0x25ece2	2	0	[890]
+// bdc-fix	V	unsigned short	0x25ece4	2	0	[891]
+// bdc-fix	V	unsigned short	0x25ece6	2	0	[892]
+// bdc-fix	V	unsigned short	0x25ece8	2	0	[893]
+// bdc-fix	V	unsigned short	0x25ecec	2	0	[895]
+// bdc-fix	V	unsigned short	0x25ecee	2	0	[896]
+// bdc-fix	V	unsigned short	0x25ecf0	2	0	[897]
+// bdc-fix	V	unsigned short	0x25ecf2	2	0	[898]
+// bdc-fix	V	unsigned short	0x25ecf6	2	0	[900]
+// bdc-fix	V	unsigned short	0x25ecf8	2	0	[901]
+// bdc-fix	V	unsigned short	0x25ecfa	2	0	[902]
+// bdc-fix	V	unsigned short	0x25ecfc	2	0	[903]
+// bdc-fix	V	unsigned short	0x25ed00	2	0	[905]
+// bdc-fix	V	unsigned short	0x25ed02	2	0	[906]
+// bdc-fix	V	unsigned short	0x25ed04	2	0	[907]
+// bdc-fix	V	unsigned short	0x25ed06	2	0	[908]
+// bdc-fix	V	unsigned short	0x25ed0a	2	0	[910]
+// bdc-fix	V	unsigned short	0x25ed0c	2	0	[911]
+// bdc-fix	V	unsigned short	0x25ed0e	2	0	[912]
+// bdc-fix	V	unsigned short	0x25ed10	2	0	[913]
+// bdc-fix	V	unsigned short	0x25ed14	2	0	[915]
+// bdc-fix	V	unsigned short	0x25ed16	2	0	[916]
+// bdc-fix	V	unsigned short	0x25ed18	2	0	[917]
+// bdc-fix	V	unsigned short	0x25ed1a	2	0	[918]
+// bdc-fix	V	unsigned short	0x25ed1e	2	0	[920]
+// bdc-fix	V	unsigned short	0x25ed20	2	0	[921]
+// bdc-fix	V	unsigned short	0x25ed22	2	0	[922]
+// bdc-fix	V	unsigned short	0x25ed24	2	0	[923]
+// bdc-fix	V	unsigned short	0x25ed28	2	0	[925]
+// bdc-fix	V	unsigned short	0x25ed2a	2	0	[926]
+// bdc-fix	V	unsigned short	0x25ed2c	2	0	[927]
+// bdc-fix	V	unsigned short	0x25ed2e	2	0	[928]
+// bdc-fix	V	unsigned short	0x25ed32	2	0	[930]
+// bdc-fix	V	unsigned short	0x25ed34	2	0	[931]
+// bdc-fix	V	unsigned short	0x25ed36	2	0	[932]
+// bdc-fix	V	unsigned short	0x25ed38	2	0	[933]
+// bdc-fix	V	unsigned short	0x25ed3c	2	0	[935]
+// bdc-fix	V	unsigned short	0x25ed3e	2	0	[936]
+// bdc-fix	V	unsigned short	0x25ed40	2	0	[937]
+// bdc-fix	V	unsigned short	0x25ed42	2	0	[938]
+// bdc-fix	V	unsigned short	0x25ed46	2	0	[940]
+// bdc-fix	V	unsigned short	0x25ed48	2	0	[941]
+// bdc-fix	V	unsigned short	0x25ed4a	2	0	[942]
+// bdc-fix	V	unsigned short	0x25ed4c	2	0	[943]
+// bdc-fix	V	unsigned short	0x25ed50	2	0	[945]
+// bdc-fix	V	unsigned short	0x25ed52	2	0	[946]
+// bdc-fix	V	unsigned short	0x25ed54	2	0	[947]
+// bdc-fix	V	unsigned short	0x25ed56	2	0	[948]
+// bdc-fix	V	unsigned short	0x25ed5a	2	0	[950]
+// bdc-fix	V	unsigned short	0x25ed5c	2	0	[951]
+// bdc-fix	V	unsigned short	0x25ed5e	2	0	[952]
+// bdc-fix	V	unsigned short	0x25ed60	2	0	[953]
+// bdc-fix	V	unsigned short	0x25ed64	2	0	[955]
+// bdc-fix	V	unsigned short	0x25ed66	2	0	[956]
+// bdc-fix	V	unsigned short	0x25ed68	2	0	[957]
+// bdc-fix	V	unsigned short	0x25ed6a	2	0	[958]
+// bdc-fix	V	unsigned short	0x25ed6e	2	0	[960]
+// bdc-fix	V	unsigned short	0x25ed72	2	0	[962]
+// bdc-fix	V	unsigned short	0x25ed74	2	0	[963]
+// bdc-fix	V	unsigned short	0x25ed78	2	0	[965]
+// bdc-fix	V	unsigned short	0x25ed7a	2	0	[966]
+// bdc-fix	V	unsigned short	0x25ed7c	2	0	[967]
+// bdc-fix	V	unsigned short	0x25ed7e	2	0	[968]
+// bdc-fix	V	unsigned short	0x25ed82	2	0	[970]
+// bdc-fix	V	unsigned short	0x25ed84	2	0	[971]
+// bdc-fix	V	unsigned short	0x25ed86	2	0	[972]
+// bdc-fix	V	unsigned short	0x25ed88	2	0	[973]
+// bdc-fix	V	unsigned short	0x25ed8c	2	0	[975]
+// bdc-fix	V	unsigned short	0x25ed8e	2	0	[976]
+// bdc-fix	V	unsigned short	0x25ed90	2	0	[977]
+// bdc-fix	V	unsigned short	0x25ed92	2	0	[978]
+// bdc-fix	V	unsigned short	0x25ed96	2	0	[980]
+// bdc-fix	V	unsigned short	0x25ed98	2	0	[981]
+// bdc-fix	V	unsigned short	0x25ed9a	2	0	[982]
+// bdc-fix	V	unsigned short	0x25ed9c	2	0	[983]
+// bdc-fix	V	unsigned short	0x25eda0	2	0	[985]
+// bdc-fix	V	unsigned short	0x25eda2	2	0	[986]
+// bdc-fix	V	unsigned short	0x25eda4	2	0	[987]
+// bdc-fix	V	unsigned short	0x25eda6	2	0	[988]
+// bdc-fix	V	unsigned short	0x25edaa	2	0	[990]
+// bdc-fix	V	unsigned short	0x25edac	2	0	[991]
+// bdc-fix	V	unsigned short	0x25edae	2	0	[992]
+// bdc-fix	V	unsigned short	0x25edb0	2	0	[993]
+// bdc-fix	V	unsigned short	0x25edb4	2	0	[995]
+// bdc-fix	V	unsigned short	0x25edb6	2	0	[996]
+// bdc-fix	V	unsigned short	0x25edb8	2	0	[997]
+// bdc-fix	V	unsigned short	0x25edba	2	0	[998]
+// bdc-fix	V	unsigned short	0x25edbe	2	0	[1000]
+// bdc-fix	V	unsigned short	0x25edc0	2	0	[1001]
+// bdc-fix	V	unsigned short	0x25edc2	2	0	[1002]
+// bdc-fix	V	unsigned short	0x25edc4	2	0	[1003]
+// bdc-fix	V	unsigned short	0x25edc8	2	0	[1005]
+// bdc-fix	V	unsigned short	0x25edca	2	0	[1006]
+// bdc-fix	V	unsigned short	0x25edcc	2	0	[1007]
+// bdc-fix	V	unsigned short	0x25edce	2	0	[1008]
+// bdc-fix	V	unsigned short	0x25edd2	2	0	[1010]
+// bdc-fix	V	unsigned short	0x25edd4	2	0	[1011]
+// bdc-fix	V	unsigned short	0x25edd6	2	0	[1012]
+// bdc-fix	V	unsigned short	0x25edd8	2	0	[1013]
+// bdc-fix	V	unsigned short	0x25eddc	2	0	[1015]
+// bdc-fix	V	unsigned short	0x25edde	2	0	[1016]
+// bdc-fix	V	unsigned short	0x25ede0	2	0	[1017]
+// bdc-fix	V	unsigned short	0x25ede2	2	0	[1018]
+// bdc-fix	V	unsigned short	0x25ede6	2	0	[1020]
+// bdc-fix	V	unsigned short	0x25ede8	2	0	[1021]
+// bdc-fix	V	unsigned short	0x25edea	2	0	[1022]
+// bdc-fix	V	unsigned short	0x25edec	2	0	[1023]
+// bdc-fix	V	unsigned short	0x25edf0	2	0	[1025]
+// bdc-fix	V	unsigned short	0x25edf2	2	0	[1026]
+// bdc-fix	V	unsigned short	0x25edf4	2	0	[1027]
+// bdc-fix	V	unsigned short	0x25edf6	2	0	[1028]
+// bdc-fix	V	unsigned short	0x25edfa	2	0	[1030]
+// bdc-fix	V	unsigned short	0x25edfc	2	0	[1031]
+// bdc-fix	V	unsigned short	0x25edfe	2	0	[1032]
+// bdc-fix	V	unsigned short	0x25ee00	2	0	[1033]
+// bdc-fix	V	unsigned short	0x25ee04	2	0	[1035]
+// bdc-fix	V	unsigned short	0x25ee06	2	0	[1036]
+// bdc-fix	V	unsigned short	0x25ee08	2	0	[1037]
+// bdc-fix	V	unsigned short	0x25ee0a	2	0	[1038]
+// bdc-fix	V	unsigned short	0x25ee0e	2	0	[1040]
+// bdc-fix	V	unsigned short	0x25ee12	2	0	[1042]
+// bdc-fix	V	unsigned short	0x25ee14	2	0	[1043]
+// bdc-fix	V	unsigned short	0x25ee18	2	0	[1045]
+// bdc-fix	V	unsigned short	0x25ee1a	2	0	[1046]
+// bdc-fix	V	unsigned short	0x25ee1c	2	0	[1047]
+// bdc-fix	V	unsigned short	0x25ee1e	2	0	[1048]
+// bdc-fix	V	unsigned short	0x25ee22	2	0	[1050]
+// bdc-fix	V	unsigned short	0x25ee24	2	0	[1051]
+// bdc-fix	V	unsigned short	0x25ee26	2	0	[1052]
+// bdc-fix	V	unsigned short	0x25ee28	2	0	[1053]
+// bdc-fix	V	unsigned short	0x25ee2c	2	0	[1055]
+// bdc-fix	V	unsigned short	0x25ee2e	2	0	[1056]
+// bdc-fix	V	unsigned short	0x25ee30	2	0	[1057]
+// bdc-fix	V	unsigned short	0x25ee32	2	0	[1058]
+// bdc-fix	V	unsigned short	0x25ee36	2	0	[1060]
+// bdc-fix	V	unsigned short	0x25ee38	2	0	[1061]
+// bdc-fix	V	unsigned short	0x25ee3a	2	0	[1062]
+// bdc-fix	V	unsigned short	0x25ee3c	2	0	[1063]
+// bdc-fix	V	unsigned short	0x25ee40	2	0	[1065]
+// bdc-fix	V	unsigned short	0x25ee42	2	0	[1066]
+// bdc-fix	V	unsigned short	0x25ee44	2	0	[1067]
+// bdc-fix	V	unsigned short	0x25ee46	2	0	[1068]
+// bdc-fix	V	unsigned short	0x25ee4a	2	0	[1070]
+// bdc-fix	V	unsigned short	0x25ee4c	2	0	[1071]
+// bdc-fix	V	unsigned short	0x25ee4e	2	0	[1072]
+// bdc-fix	V	unsigned short	0x25ee50	2	0	[1073]
+// bdc-fix	V	unsigned short	0x25ee54	2	0	[1075]
+// bdc-fix	V	unsigned short	0x25ee56	2	0	[1076]
+// bdc-fix	V	unsigned short	0x25ee58	2	0	[1077]
+// bdc-fix	V	unsigned short	0x25ee5a	2	0	[1078]
+// bdc-fix	V	unsigned short	0x25ee5e	2	0	[1080]
+// bdc-fix	V	unsigned short	0x25ee60	2	0	[1081]
+// bdc-fix	V	unsigned short	0x25ee62	2	0	[1082]
+// bdc-fix	V	unsigned short	0x25ee64	2	0	[1083]
+// bdc-fix	V	unsigned short	0x25ee68	2	0	[1085]
+// bdc-fix	V	unsigned short	0x25ee6a	2	0	[1086]
+// bdc-fix	V	unsigned short	0x25ee6c	2	0	[1087]
+// bdc-fix	V	unsigned short	0x25ee6e	2	0	[1088]
+// bdc-fix	V	unsigned short	0x25ee72	2	0	[1090]
+// bdc-fix	V	unsigned short	0x25ee74	2	0	[1091]
+// bdc-fix	V	unsigned short	0x25ee76	2	0	[1092]
+// bdc-fix	V	unsigned short	0x25ee78	2	0	[1093]
+// bdc-fix	V	unsigned short	0x25ee7c	2	0	[1095]
+// bdc-fix	V	unsigned short	0x25ee7e	2	0	[1096]
+// bdc-fix	V	unsigned short	0x25ee80	2	0	[1097]
+// bdc-fix	V	unsigned short	0x25ee82	2	0	[1098]
+// bdc-fix	V	unsigned short	0x25ee86	2	0	[1100]
+// bdc-fix	V	unsigned short	0x25ee88	2	0	[1101]
+// bdc-fix	V	unsigned short	0x25ee8a	2	0	[1102]
+// bdc-fix	V	unsigned short	0x25ee8c	2	0	[1103]
+// bdc-fix	V	unsigned short	0x25ee90	2	0	[1105]
+// bdc-fix	V	unsigned short	0x25ee92	2	0	[1106]
+// bdc-fix	V	unsigned short	0x25ee94	2	0	[1107]
+// bdc-fix	V	unsigned short	0x25ee96	2	0	[1108]
+// bdc-fix	V	unsigned short	0x25ee9a	2	0	[1110]
+// bdc-fix	V	unsigned short	0x25ee9c	2	0	[1111]
+// bdc-fix	V	unsigned short	0x25ee9e	2	0	[1112]
+// bdc-fix	V	unsigned short	0x25eea0	2	0	[1113]
+// bdc-fix	V	unsigned short	0x25eea4	2	0	[1115]
+// bdc-fix	V	unsigned short	0x25eea6	2	0	[1116]
+// bdc-fix	V	unsigned short	0x25eea8	2	0	[1117]
+// bdc-fix	V	unsigned short	0x25eeaa	2	0	[1118]
+// bdc-fix	V	unsigned short	0x25eeae	2	0	[1120]
+// bdc-fix	V	unsigned short	0x25eeb2	2	0	[1122]
+// bdc-fix	V	unsigned short	0x25eeb4	2	0	[1123]
+// bdc-fix	V	unsigned short	0x25eeb8	2	0	[1125]
+// bdc-fix	V	unsigned short	0x25eeba	2	0	[1126]
+// bdc-fix	V	unsigned short	0x25eebc	2	0	[1127]
+// bdc-fix	V	unsigned short	0x25eebe	2	0	[1128]
+// bdc-fix	V	unsigned short	0x25eec2	2	0	[1130]
+// bdc-fix	V	unsigned short	0x25eec4	2	0	[1131]
+// bdc-fix	V	unsigned short	0x25eec6	2	0	[1132]
+// bdc-fix	V	unsigned short	0x25eec8	2	0	[1133]
+// bdc-fix	V	unsigned short	0x25eecc	2	0	[1135]
+// bdc-fix	V	unsigned short	0x25eece	2	0	[1136]
+// bdc-fix	V	unsigned short	0x25eed0	2	0	[1137]
+// bdc-fix	V	unsigned short	0x25eed2	2	0	[1138]
+// bdc-fix	V	unsigned short	0x25eed6	2	0	[1140]
+// bdc-fix	V	unsigned short	0x25eed8	2	0	[1141]
+// bdc-fix	V	unsigned short	0x25eeda	2	0	[1142]
+// bdc-fix	V	unsigned short	0x25eedc	2	0	[1143]
+// bdc-fix	V	unsigned short	0x25eee0	2	0	[1145]
+// bdc-fix	V	unsigned short	0x25eee2	2	0	[1146]
+// bdc-fix	V	unsigned short	0x25eee4	2	0	[1147]
+// bdc-fix	V	unsigned short	0x25eee6	2	0	[1148]
+// bdc-fix	V	unsigned short	0x25eeea	2	0	[1150]
+// bdc-fix	V	unsigned short	0x25eeec	2	0	[1151]
+// bdc-fix	V	unsigned short	0x25eeee	2	0	[1152]
+// bdc-fix	V	unsigned short	0x25eef0	2	0	[1153]
+// bdc-fix	V	unsigned short	0x25eef4	2	0	[1155]
+// bdc-fix	V	unsigned short	0x25eef6	2	0	[1156]
+// bdc-fix	V	unsigned short	0x25eef8	2	0	[1157]
+// bdc-fix	V	unsigned short	0x25eefa	2	0	[1158]
+// bdc-fix	V	unsigned short	0x25eefe	2	0	[1160]
+// bdc-fix	V	unsigned short	0x25ef00	2	0	[1161]
+// bdc-fix	V	unsigned short	0x25ef02	2	0	[1162]
+// bdc-fix	V	unsigned short	0x25ef04	2	0	[1163]
+// bdc-fix	V	unsigned short	0x25ef08	2	0	[1165]
+// bdc-fix	V	unsigned short	0x25ef0a	2	0	[1166]
+// bdc-fix	V	unsigned short	0x25ef0c	2	0	[1167]
+// bdc-fix	V	unsigned short	0x25ef0e	2	0	[1168]
+// bdc-fix	V	unsigned short	0x25ef12	2	0	[1170]
+// bdc-fix	V	unsigned short	0x25ef14	2	0	[1171]
+// bdc-fix	V	unsigned short	0x25ef16	2	0	[1172]
+// bdc-fix	V	unsigned short	0x25ef18	2	0	[1173]
+// bdc-fix	V	unsigned short	0x25ef1c	2	0	[1175]
+// bdc-fix	V	unsigned short	0x25ef1e	2	0	[1176]
+// bdc-fix	V	unsigned short	0x25ef20	2	0	[1177]
+// bdc-fix	V	unsigned short	0x25ef22	2	0	[1178]
+// bdc-fix	V	unsigned short	0x25ef26	2	0	[1180]
+// bdc-fix	V	unsigned short	0x25ef28	2	0	[1181]
+// bdc-fix	V	unsigned short	0x25ef2a	2	0	[1182]
+// bdc-fix	V	unsigned short	0x25ef2c	2	0	[1183]
+// bdc-fix	V	unsigned short	0x25ef30	2	0	[1185]
+// bdc-fix	V	unsigned short	0x25ef32	2	0	[1186]
+// bdc-fix	V	unsigned short	0x25ef34	2	0	[1187]
+// bdc-fix	V	unsigned short	0x25ef36	2	0	[1188]
+// bdc-fix	V	unsigned short	0x25ef3a	2	0	[1190]
+// bdc-fix	V	unsigned short	0x25ef3c	2	0	[1191]
+// bdc-fix	V	unsigned short	0x25ef3e	2	0	[1192]
+// bdc-fix	V	unsigned short	0x25ef40	2	0	[1193]
+// bdc-fix	V	unsigned short	0x25ef44	2	0	[1195]
+// bdc-fix	V	unsigned short	0x25ef46	2	0	[1196]
+// bdc-fix	V	unsigned short	0x25ef48	2	0	[1197]
+// bdc-fix	V	unsigned short	0x25ef4a	2	0	[1198]
+// bdc-fix	V	unsigned short	0x25ef4e	2	0	[1200]
+// bdc-fix	V	unsigned short	0x25ef52	2	0	[1202]
+// bdc-fix	V	unsigned short	0x25ef54	2	0	[1203]
+// bdc-fix	V	unsigned short	0x25ef58	2	0	[1205]
+// bdc-fix	V	unsigned short	0x25ef5a	2	0	[1206]
+// bdc-fix	V	unsigned short	0x25ef5c	2	0	[1207]
+// bdc-fix	V	unsigned short	0x25ef5e	2	0	[1208]
+// bdc-fix	V	unsigned short	0x25ef62	2	0	[1210]
+// bdc-fix	V	unsigned short	0x25ef64	2	0	[1211]
+// bdc-fix	V	unsigned short	0x25ef66	2	0	[1212]
+// bdc-fix	V	unsigned short	0x25ef68	2	0	[1213]
+// bdc-fix	V	unsigned short	0x25ef6c	2	0	[1215]
+// bdc-fix	V	unsigned short	0x25ef6e	2	0	[1216]
+// bdc-fix	V	unsigned short	0x25ef70	2	0	[1217]
+// bdc-fix	V	unsigned short	0x25ef72	2	0	[1218]
+// bdc-fix	V	unsigned short	0x25ef76	2	0	[1220]
+// bdc-fix	V	unsigned short	0x25ef78	2	0	[1221]
+// bdc-fix	V	unsigned short	0x25ef7a	2	0	[1222]
+// bdc-fix	V	unsigned short	0x25ef7c	2	0	[1223]
+// bdc-fix	V	unsigned short	0x25ef80	2	0	[1225]
+// bdc-fix	V	unsigned short	0x25ef82	2	0	[1226]
+// bdc-fix	V	unsigned short	0x25ef84	2	0	[1227]
+// bdc-fix	V	unsigned short	0x25ef86	2	0	[1228]
+// bdc-fix	V	unsigned short	0x25ef8a	2	0	[1230]
+// bdc-fix	V	unsigned short	0x25ef8c	2	0	[1231]
+// bdc-fix	V	unsigned short	0x25ef8e	2	0	[1232]
+// bdc-fix	V	unsigned short	0x25ef90	2	0	[1233]
+// bdc-fix	V	unsigned short	0x25ef94	2	0	[1235]
+// bdc-fix	V	unsigned short	0x25ef96	2	0	[1236]
+// bdc-fix	V	unsigned short	0x25ef98	2	0	[1237]
+// bdc-fix	V	unsigned short	0x25ef9a	2	0	[1238]
+// bdc-fix	V	unsigned short	0x25ef9e	2	0	[1240]
+// bdc-fix	V	unsigned short	0x25efa0	2	0	[1241]
+// bdc-fix	V	unsigned short	0x25efa2	2	0	[1242]
+// bdc-fix	V	unsigned short	0x25efa4	2	0	[1243]
+// bdc-fix	V	unsigned short	0x25efa8	2	0	[1245]
+// bdc-fix	V	unsigned short	0x25efaa	2	0	[1246]
+// bdc-fix	V	unsigned short	0x25efac	2	0	[1247]
+// bdc-fix	V	unsigned short	0x25efae	2	0	[1248]
+// bdc-fix	V	unsigned short	0x25efb2	2	0	[1250]
+// bdc-fix	V	unsigned short	0x25efb4	2	0	[1251]
+// bdc-fix	V	unsigned short	0x25efb6	2	0	[1252]
+// bdc-fix	V	unsigned short	0x25efb8	2	0	[1253]
+// bdc-fix	V	unsigned short	0x25efbc	2	0	[1255]
+// bdc-fix	V	unsigned short	0x25efbe	2	0	[1256]
+// bdc-fix	V	unsigned short	0x25efc0	2	0	[1257]
+// bdc-fix	V	unsigned short	0x25efc2	2	0	[1258]
+// bdc-fix	V	unsigned short	0x25efc6	2	0	[1260]
+// bdc-fix	V	unsigned short	0x25efc8	2	0	[1261]
+// bdc-fix	V	unsigned short	0x25efca	2	0	[1262]
+// bdc-fix	V	unsigned short	0x25efcc	2	0	[1263]
+// bdc-fix	V	unsigned short	0x25efd0	2	0	[1265]
+// bdc-fix	V	unsigned short	0x25efd2	2	0	[1266]
+// bdc-fix	V	unsigned short	0x25efd4	2	0	[1267]
+// bdc-fix	V	unsigned short	0x25efd6	2	0	[1268]
+// bdc-fix	V	unsigned short	0x25efda	2	0	[1270]
+// bdc-fix	V	unsigned short	0x25efdc	2	0	[1271]
+// bdc-fix	V	unsigned short	0x25efde	2	0	[1272]
+// bdc-fix	V	unsigned short	0x25efe0	2	0	[1273]
+// bdc-fix	V	unsigned short	0x25efe4	2	0	[1275]
+// bdc-fix	V	unsigned short	0x25efe6	2	0	[1276]
+// bdc-fix	V	unsigned short	0x25efe8	2	0	[1277]
+// bdc-fix	V	unsigned short	0x25efea	2	0	[1278]
+
+__typeof__(u16[1280]) g_gfxMeshObjDefaultVertices = {
+    0, 0, BDC_V(unsigned short, 0x25e5f2), BDC_V(unsigned short, 0x25e5f4), 0, 0,
+    BDC_V(unsigned short, 0x25e5fa), BDC_V(unsigned short, 0x25e5fc),
+    BDC_V(unsigned short, 0x25e5fe), 0, 0, BDC_V(unsigned short, 0x25e604),
+    BDC_V(unsigned short, 0x25e606), BDC_V(unsigned short, 0x25e608), 0, 0,
+    BDC_V(unsigned short, 0x25e60e), BDC_V(unsigned short, 0x25e610),
+    BDC_V(unsigned short, 0x25e612), 0, 0, BDC_V(unsigned short, 0x25e618),
+    BDC_V(unsigned short, 0x25e61a), BDC_V(unsigned short, 0x25e61c), 0, 0,
+    BDC_V(unsigned short, 0x25e622), BDC_V(unsigned short, 0x25e624),
+    BDC_V(unsigned short, 0x25e626), 0, 0, BDC_V(unsigned short, 0x25e62c),
+    BDC_V(unsigned short, 0x25e62e), BDC_V(unsigned short, 0x25e630), 0, 0,
+    BDC_V(unsigned short, 0x25e636), BDC_V(unsigned short, 0x25e638),
+    BDC_V(unsigned short, 0x25e63a), 0, 0, BDC_V(unsigned short, 0x25e640),
+    BDC_V(unsigned short, 0x25e642), BDC_V(unsigned short, 0x25e644), 0, 0,
+    BDC_V(unsigned short, 0x25e64a), BDC_V(unsigned short, 0x25e64c),
+    BDC_V(unsigned short, 0x25e64e), 0, 0, BDC_V(unsigned short, 0x25e654),
+    BDC_V(unsigned short, 0x25e656), BDC_V(unsigned short, 0x25e658), 0, 0,
+    BDC_V(unsigned short, 0x25e65e), BDC_V(unsigned short, 0x25e660),
+    BDC_V(unsigned short, 0x25e662), 0, 0, BDC_V(unsigned short, 0x25e668),
+    BDC_V(unsigned short, 0x25e66a), BDC_V(unsigned short, 0x25e66c), 0, 0,
+    BDC_V(unsigned short, 0x25e672), BDC_V(unsigned short, 0x25e674),
+    BDC_V(unsigned short, 0x25e676), 0, 0, BDC_V(unsigned short, 0x25e67c),
+    BDC_V(unsigned short, 0x25e67e), BDC_V(unsigned short, 0x25e680), 0, 0,
+    BDC_V(unsigned short, 0x25e686), BDC_V(unsigned short, 0x25e688),
+    BDC_V(unsigned short, 0x25e68a), 0, BDC_V(unsigned short, 0x25e68e), 0,
+    BDC_V(unsigned short, 0x25e692), BDC_V(unsigned short, 0x25e694), 0,
+    BDC_V(unsigned short, 0x25e698), BDC_V(unsigned short, 0x25e69a),
+    BDC_V(unsigned short, 0x25e69c), BDC_V(unsigned short, 0x25e69e), 0,
+    BDC_V(unsigned short, 0x25e6a2), BDC_V(unsigned short, 0x25e6a4),
+    BDC_V(unsigned short, 0x25e6a6), BDC_V(unsigned short, 0x25e6a8), 0,
+    BDC_V(unsigned short, 0x25e6ac), BDC_V(unsigned short, 0x25e6ae),
+    BDC_V(unsigned short, 0x25e6b0), BDC_V(unsigned short, 0x25e6b2), 0,
+    BDC_V(unsigned short, 0x25e6b6), BDC_V(unsigned short, 0x25e6b8),
+    BDC_V(unsigned short, 0x25e6ba), BDC_V(unsigned short, 0x25e6bc), 0,
+    BDC_V(unsigned short, 0x25e6c0), BDC_V(unsigned short, 0x25e6c2),
+    BDC_V(unsigned short, 0x25e6c4), BDC_V(unsigned short, 0x25e6c6), 0,
+    BDC_V(unsigned short, 0x25e6ca), BDC_V(unsigned short, 0x25e6cc),
+    BDC_V(unsigned short, 0x25e6ce), BDC_V(unsigned short, 0x25e6d0), 0,
+    BDC_V(unsigned short, 0x25e6d4), BDC_V(unsigned short, 0x25e6d6),
+    BDC_V(unsigned short, 0x25e6d8), BDC_V(unsigned short, 0x25e6da), 0,
+    BDC_V(unsigned short, 0x25e6de), BDC_V(unsigned short, 0x25e6e0),
+    BDC_V(unsigned short, 0x25e6e2), BDC_V(unsigned short, 0x25e6e4), 0,
+    BDC_V(unsigned short, 0x25e6e8), BDC_V(unsigned short, 0x25e6ea),
+    BDC_V(unsigned short, 0x25e6ec), BDC_V(unsigned short, 0x25e6ee), 0,
+    BDC_V(unsigned short, 0x25e6f2), BDC_V(unsigned short, 0x25e6f4),
+    BDC_V(unsigned short, 0x25e6f6), BDC_V(unsigned short, 0x25e6f8), 0,
+    BDC_V(unsigned short, 0x25e6fc), BDC_V(unsigned short, 0x25e6fe),
+    BDC_V(unsigned short, 0x25e700), BDC_V(unsigned short, 0x25e702), 0,
+    BDC_V(unsigned short, 0x25e706), BDC_V(unsigned short, 0x25e708),
+    BDC_V(unsigned short, 0x25e70a), BDC_V(unsigned short, 0x25e70c), 0,
+    BDC_V(unsigned short, 0x25e710), BDC_V(unsigned short, 0x25e712),
+    BDC_V(unsigned short, 0x25e714), BDC_V(unsigned short, 0x25e716), 0,
+    BDC_V(unsigned short, 0x25e71a), BDC_V(unsigned short, 0x25e71c),
+    BDC_V(unsigned short, 0x25e71e), BDC_V(unsigned short, 0x25e720), 0,
+    BDC_V(unsigned short, 0x25e724), BDC_V(unsigned short, 0x25e726),
+    BDC_V(unsigned short, 0x25e728), BDC_V(unsigned short, 0x25e72a), 0,
+    BDC_V(unsigned short, 0x25e72e), 0, BDC_V(unsigned short, 0x25e732),
+    BDC_V(unsigned short, 0x25e734), 0, BDC_V(unsigned short, 0x25e738),
+    BDC_V(unsigned short, 0x25e73a), BDC_V(unsigned short, 0x25e73c),
+    BDC_V(unsigned short, 0x25e73e), 0, BDC_V(unsigned short, 0x25e742),
+    BDC_V(unsigned short, 0x25e744), BDC_V(unsigned short, 0x25e746),
+    BDC_V(unsigned short, 0x25e748), 0, BDC_V(unsigned short, 0x25e74c),
+    BDC_V(unsigned short, 0x25e74e), BDC_V(unsigned short, 0x25e750),
+    BDC_V(unsigned short, 0x25e752), 0, BDC_V(unsigned short, 0x25e756),
+    BDC_V(unsigned short, 0x25e758), BDC_V(unsigned short, 0x25e75a),
+    BDC_V(unsigned short, 0x25e75c), 0, BDC_V(unsigned short, 0x25e760),
+    BDC_V(unsigned short, 0x25e762), BDC_V(unsigned short, 0x25e764),
+    BDC_V(unsigned short, 0x25e766), 0, BDC_V(unsigned short, 0x25e76a),
+    BDC_V(unsigned short, 0x25e76c), BDC_V(unsigned short, 0x25e76e),
+    BDC_V(unsigned short, 0x25e770), 0, BDC_V(unsigned short, 0x25e774),
+    BDC_V(unsigned short, 0x25e776), BDC_V(unsigned short, 0x25e778),
+    BDC_V(unsigned short, 0x25e77a), 0, BDC_V(unsigned short, 0x25e77e),
+    BDC_V(unsigned short, 0x25e780), BDC_V(unsigned short, 0x25e782),
+    BDC_V(unsigned short, 0x25e784), 0, BDC_V(unsigned short, 0x25e788),
+    BDC_V(unsigned short, 0x25e78a), BDC_V(unsigned short, 0x25e78c),
+    BDC_V(unsigned short, 0x25e78e), 0, BDC_V(unsigned short, 0x25e792),
+    BDC_V(unsigned short, 0x25e794), BDC_V(unsigned short, 0x25e796),
+    BDC_V(unsigned short, 0x25e798), 0, BDC_V(unsigned short, 0x25e79c),
+    BDC_V(unsigned short, 0x25e79e), BDC_V(unsigned short, 0x25e7a0),
+    BDC_V(unsigned short, 0x25e7a2), 0, BDC_V(unsigned short, 0x25e7a6),
+    BDC_V(unsigned short, 0x25e7a8), BDC_V(unsigned short, 0x25e7aa),
+    BDC_V(unsigned short, 0x25e7ac), 0, BDC_V(unsigned short, 0x25e7b0),
+    BDC_V(unsigned short, 0x25e7b2), BDC_V(unsigned short, 0x25e7b4),
+    BDC_V(unsigned short, 0x25e7b6), 0, BDC_V(unsigned short, 0x25e7ba),
+    BDC_V(unsigned short, 0x25e7bc), BDC_V(unsigned short, 0x25e7be),
+    BDC_V(unsigned short, 0x25e7c0), 0, BDC_V(unsigned short, 0x25e7c4),
+    BDC_V(unsigned short, 0x25e7c6), BDC_V(unsigned short, 0x25e7c8),
+    BDC_V(unsigned short, 0x25e7ca), 0, BDC_V(unsigned short, 0x25e7ce), 0,
+    BDC_V(unsigned short, 0x25e7d2), BDC_V(unsigned short, 0x25e7d4), 0,
+    BDC_V(unsigned short, 0x25e7d8), BDC_V(unsigned short, 0x25e7da),
+    BDC_V(unsigned short, 0x25e7dc), BDC_V(unsigned short, 0x25e7de), 0,
+    BDC_V(unsigned short, 0x25e7e2), BDC_V(unsigned short, 0x25e7e4),
+    BDC_V(unsigned short, 0x25e7e6), BDC_V(unsigned short, 0x25e7e8), 0,
+    BDC_V(unsigned short, 0x25e7ec), BDC_V(unsigned short, 0x25e7ee),
+    BDC_V(unsigned short, 0x25e7f0), BDC_V(unsigned short, 0x25e7f2), 0,
+    BDC_V(unsigned short, 0x25e7f6), BDC_V(unsigned short, 0x25e7f8),
+    BDC_V(unsigned short, 0x25e7fa), BDC_V(unsigned short, 0x25e7fc), 0,
+    BDC_V(unsigned short, 0x25e800), BDC_V(unsigned short, 0x25e802),
+    BDC_V(unsigned short, 0x25e804), BDC_V(unsigned short, 0x25e806), 0,
+    BDC_V(unsigned short, 0x25e80a), BDC_V(unsigned short, 0x25e80c),
+    BDC_V(unsigned short, 0x25e80e), BDC_V(unsigned short, 0x25e810), 0,
+    BDC_V(unsigned short, 0x25e814), BDC_V(unsigned short, 0x25e816),
+    BDC_V(unsigned short, 0x25e818), BDC_V(unsigned short, 0x25e81a), 0,
+    BDC_V(unsigned short, 0x25e81e), BDC_V(unsigned short, 0x25e820),
+    BDC_V(unsigned short, 0x25e822), BDC_V(unsigned short, 0x25e824), 0,
+    BDC_V(unsigned short, 0x25e828), BDC_V(unsigned short, 0x25e82a),
+    BDC_V(unsigned short, 0x25e82c), BDC_V(unsigned short, 0x25e82e), 0,
+    BDC_V(unsigned short, 0x25e832), BDC_V(unsigned short, 0x25e834),
+    BDC_V(unsigned short, 0x25e836), BDC_V(unsigned short, 0x25e838), 0,
+    BDC_V(unsigned short, 0x25e83c), BDC_V(unsigned short, 0x25e83e),
+    BDC_V(unsigned short, 0x25e840), BDC_V(unsigned short, 0x25e842), 0,
+    BDC_V(unsigned short, 0x25e846), BDC_V(unsigned short, 0x25e848),
+    BDC_V(unsigned short, 0x25e84a), BDC_V(unsigned short, 0x25e84c), 0,
+    BDC_V(unsigned short, 0x25e850), BDC_V(unsigned short, 0x25e852),
+    BDC_V(unsigned short, 0x25e854), BDC_V(unsigned short, 0x25e856), 0,
+    BDC_V(unsigned short, 0x25e85a), BDC_V(unsigned short, 0x25e85c),
+    BDC_V(unsigned short, 0x25e85e), BDC_V(unsigned short, 0x25e860), 0,
+    BDC_V(unsigned short, 0x25e864), BDC_V(unsigned short, 0x25e866),
+    BDC_V(unsigned short, 0x25e868), BDC_V(unsigned short, 0x25e86a), 0,
+    BDC_V(unsigned short, 0x25e86e), 0, BDC_V(unsigned short, 0x25e872),
+    BDC_V(unsigned short, 0x25e874), 0, BDC_V(unsigned short, 0x25e878),
+    BDC_V(unsigned short, 0x25e87a), BDC_V(unsigned short, 0x25e87c),
+    BDC_V(unsigned short, 0x25e87e), 0, BDC_V(unsigned short, 0x25e882),
+    BDC_V(unsigned short, 0x25e884), BDC_V(unsigned short, 0x25e886),
+    BDC_V(unsigned short, 0x25e888), 0, BDC_V(unsigned short, 0x25e88c),
+    BDC_V(unsigned short, 0x25e88e), BDC_V(unsigned short, 0x25e890),
+    BDC_V(unsigned short, 0x25e892), 0, BDC_V(unsigned short, 0x25e896),
+    BDC_V(unsigned short, 0x25e898), BDC_V(unsigned short, 0x25e89a),
+    BDC_V(unsigned short, 0x25e89c), 0, BDC_V(unsigned short, 0x25e8a0),
+    BDC_V(unsigned short, 0x25e8a2), BDC_V(unsigned short, 0x25e8a4),
+    BDC_V(unsigned short, 0x25e8a6), 0, BDC_V(unsigned short, 0x25e8aa),
+    BDC_V(unsigned short, 0x25e8ac), BDC_V(unsigned short, 0x25e8ae),
+    BDC_V(unsigned short, 0x25e8b0), 0, BDC_V(unsigned short, 0x25e8b4),
+    BDC_V(unsigned short, 0x25e8b6), BDC_V(unsigned short, 0x25e8b8),
+    BDC_V(unsigned short, 0x25e8ba), 0, BDC_V(unsigned short, 0x25e8be),
+    BDC_V(unsigned short, 0x25e8c0), BDC_V(unsigned short, 0x25e8c2),
+    BDC_V(unsigned short, 0x25e8c4), 0, BDC_V(unsigned short, 0x25e8c8),
+    BDC_V(unsigned short, 0x25e8ca), BDC_V(unsigned short, 0x25e8cc),
+    BDC_V(unsigned short, 0x25e8ce), 0, BDC_V(unsigned short, 0x25e8d2),
+    BDC_V(unsigned short, 0x25e8d4), BDC_V(unsigned short, 0x25e8d6),
+    BDC_V(unsigned short, 0x25e8d8), 0, BDC_V(unsigned short, 0x25e8dc),
+    BDC_V(unsigned short, 0x25e8de), BDC_V(unsigned short, 0x25e8e0),
+    BDC_V(unsigned short, 0x25e8e2), 0, BDC_V(unsigned short, 0x25e8e6),
+    BDC_V(unsigned short, 0x25e8e8), BDC_V(unsigned short, 0x25e8ea),
+    BDC_V(unsigned short, 0x25e8ec), 0, BDC_V(unsigned short, 0x25e8f0),
+    BDC_V(unsigned short, 0x25e8f2), BDC_V(unsigned short, 0x25e8f4),
+    BDC_V(unsigned short, 0x25e8f6), 0, BDC_V(unsigned short, 0x25e8fa),
+    BDC_V(unsigned short, 0x25e8fc), BDC_V(unsigned short, 0x25e8fe),
+    BDC_V(unsigned short, 0x25e900), 0, BDC_V(unsigned short, 0x25e904),
+    BDC_V(unsigned short, 0x25e906), BDC_V(unsigned short, 0x25e908),
+    BDC_V(unsigned short, 0x25e90a), 0, BDC_V(unsigned short, 0x25e90e), 0,
+    BDC_V(unsigned short, 0x25e912), BDC_V(unsigned short, 0x25e914), 0,
+    BDC_V(unsigned short, 0x25e918), BDC_V(unsigned short, 0x25e91a),
+    BDC_V(unsigned short, 0x25e91c), BDC_V(unsigned short, 0x25e91e), 0,
+    BDC_V(unsigned short, 0x25e922), BDC_V(unsigned short, 0x25e924),
+    BDC_V(unsigned short, 0x25e926), BDC_V(unsigned short, 0x25e928), 0,
+    BDC_V(unsigned short, 0x25e92c), BDC_V(unsigned short, 0x25e92e),
+    BDC_V(unsigned short, 0x25e930), BDC_V(unsigned short, 0x25e932), 0,
+    BDC_V(unsigned short, 0x25e936), BDC_V(unsigned short, 0x25e938),
+    BDC_V(unsigned short, 0x25e93a), BDC_V(unsigned short, 0x25e93c), 0,
+    BDC_V(unsigned short, 0x25e940), BDC_V(unsigned short, 0x25e942),
+    BDC_V(unsigned short, 0x25e944), BDC_V(unsigned short, 0x25e946), 0,
+    BDC_V(unsigned short, 0x25e94a), BDC_V(unsigned short, 0x25e94c),
+    BDC_V(unsigned short, 0x25e94e), BDC_V(unsigned short, 0x25e950), 0,
+    BDC_V(unsigned short, 0x25e954), BDC_V(unsigned short, 0x25e956),
+    BDC_V(unsigned short, 0x25e958), BDC_V(unsigned short, 0x25e95a), 0,
+    BDC_V(unsigned short, 0x25e95e), BDC_V(unsigned short, 0x25e960),
+    BDC_V(unsigned short, 0x25e962), BDC_V(unsigned short, 0x25e964), 0,
+    BDC_V(unsigned short, 0x25e968), BDC_V(unsigned short, 0x25e96a),
+    BDC_V(unsigned short, 0x25e96c), BDC_V(unsigned short, 0x25e96e), 0,
+    BDC_V(unsigned short, 0x25e972), BDC_V(unsigned short, 0x25e974),
+    BDC_V(unsigned short, 0x25e976), BDC_V(unsigned short, 0x25e978), 0,
+    BDC_V(unsigned short, 0x25e97c), BDC_V(unsigned short, 0x25e97e),
+    BDC_V(unsigned short, 0x25e980), BDC_V(unsigned short, 0x25e982), 0,
+    BDC_V(unsigned short, 0x25e986), BDC_V(unsigned short, 0x25e988),
+    BDC_V(unsigned short, 0x25e98a), BDC_V(unsigned short, 0x25e98c), 0,
+    BDC_V(unsigned short, 0x25e990), BDC_V(unsigned short, 0x25e992),
+    BDC_V(unsigned short, 0x25e994), BDC_V(unsigned short, 0x25e996), 0,
+    BDC_V(unsigned short, 0x25e99a), BDC_V(unsigned short, 0x25e99c),
+    BDC_V(unsigned short, 0x25e99e), BDC_V(unsigned short, 0x25e9a0), 0,
+    BDC_V(unsigned short, 0x25e9a4), BDC_V(unsigned short, 0x25e9a6),
+    BDC_V(unsigned short, 0x25e9a8), BDC_V(unsigned short, 0x25e9aa), 0,
+    BDC_V(unsigned short, 0x25e9ae), 0, BDC_V(unsigned short, 0x25e9b2),
+    BDC_V(unsigned short, 0x25e9b4), 0, BDC_V(unsigned short, 0x25e9b8),
+    BDC_V(unsigned short, 0x25e9ba), BDC_V(unsigned short, 0x25e9bc),
+    BDC_V(unsigned short, 0x25e9be), 0, BDC_V(unsigned short, 0x25e9c2),
+    BDC_V(unsigned short, 0x25e9c4), BDC_V(unsigned short, 0x25e9c6),
+    BDC_V(unsigned short, 0x25e9c8), 0, BDC_V(unsigned short, 0x25e9cc),
+    BDC_V(unsigned short, 0x25e9ce), BDC_V(unsigned short, 0x25e9d0),
+    BDC_V(unsigned short, 0x25e9d2), 0, BDC_V(unsigned short, 0x25e9d6),
+    BDC_V(unsigned short, 0x25e9d8), BDC_V(unsigned short, 0x25e9da),
+    BDC_V(unsigned short, 0x25e9dc), 0, BDC_V(unsigned short, 0x25e9e0),
+    BDC_V(unsigned short, 0x25e9e2), BDC_V(unsigned short, 0x25e9e4),
+    BDC_V(unsigned short, 0x25e9e6), 0, BDC_V(unsigned short, 0x25e9ea),
+    BDC_V(unsigned short, 0x25e9ec), BDC_V(unsigned short, 0x25e9ee),
+    BDC_V(unsigned short, 0x25e9f0), 0, BDC_V(unsigned short, 0x25e9f4),
+    BDC_V(unsigned short, 0x25e9f6), BDC_V(unsigned short, 0x25e9f8),
+    BDC_V(unsigned short, 0x25e9fa), 0, BDC_V(unsigned short, 0x25e9fe),
+    BDC_V(unsigned short, 0x25ea00), BDC_V(unsigned short, 0x25ea02),
+    BDC_V(unsigned short, 0x25ea04), 0, BDC_V(unsigned short, 0x25ea08),
+    BDC_V(unsigned short, 0x25ea0a), BDC_V(unsigned short, 0x25ea0c),
+    BDC_V(unsigned short, 0x25ea0e), 0, BDC_V(unsigned short, 0x25ea12),
+    BDC_V(unsigned short, 0x25ea14), BDC_V(unsigned short, 0x25ea16),
+    BDC_V(unsigned short, 0x25ea18), 0, BDC_V(unsigned short, 0x25ea1c),
+    BDC_V(unsigned short, 0x25ea1e), BDC_V(unsigned short, 0x25ea20),
+    BDC_V(unsigned short, 0x25ea22), 0, BDC_V(unsigned short, 0x25ea26),
+    BDC_V(unsigned short, 0x25ea28), BDC_V(unsigned short, 0x25ea2a),
+    BDC_V(unsigned short, 0x25ea2c), 0, BDC_V(unsigned short, 0x25ea30),
+    BDC_V(unsigned short, 0x25ea32), BDC_V(unsigned short, 0x25ea34),
+    BDC_V(unsigned short, 0x25ea36), 0, BDC_V(unsigned short, 0x25ea3a),
+    BDC_V(unsigned short, 0x25ea3c), BDC_V(unsigned short, 0x25ea3e),
+    BDC_V(unsigned short, 0x25ea40), 0, BDC_V(unsigned short, 0x25ea44),
+    BDC_V(unsigned short, 0x25ea46), BDC_V(unsigned short, 0x25ea48),
+    BDC_V(unsigned short, 0x25ea4a), 0, BDC_V(unsigned short, 0x25ea4e), 0,
+    BDC_V(unsigned short, 0x25ea52), BDC_V(unsigned short, 0x25ea54), 0,
+    BDC_V(unsigned short, 0x25ea58), BDC_V(unsigned short, 0x25ea5a),
+    BDC_V(unsigned short, 0x25ea5c), BDC_V(unsigned short, 0x25ea5e), 0,
+    BDC_V(unsigned short, 0x25ea62), BDC_V(unsigned short, 0x25ea64),
+    BDC_V(unsigned short, 0x25ea66), BDC_V(unsigned short, 0x25ea68), 0,
+    BDC_V(unsigned short, 0x25ea6c), BDC_V(unsigned short, 0x25ea6e),
+    BDC_V(unsigned short, 0x25ea70), BDC_V(unsigned short, 0x25ea72), 0,
+    BDC_V(unsigned short, 0x25ea76), BDC_V(unsigned short, 0x25ea78),
+    BDC_V(unsigned short, 0x25ea7a), BDC_V(unsigned short, 0x25ea7c), 0,
+    BDC_V(unsigned short, 0x25ea80), BDC_V(unsigned short, 0x25ea82),
+    BDC_V(unsigned short, 0x25ea84), BDC_V(unsigned short, 0x25ea86), 0,
+    BDC_V(unsigned short, 0x25ea8a), BDC_V(unsigned short, 0x25ea8c),
+    BDC_V(unsigned short, 0x25ea8e), BDC_V(unsigned short, 0x25ea90), 0,
+    BDC_V(unsigned short, 0x25ea94), BDC_V(unsigned short, 0x25ea96),
+    BDC_V(unsigned short, 0x25ea98), BDC_V(unsigned short, 0x25ea9a), 0,
+    BDC_V(unsigned short, 0x25ea9e), BDC_V(unsigned short, 0x25eaa0),
+    BDC_V(unsigned short, 0x25eaa2), BDC_V(unsigned short, 0x25eaa4), 0,
+    BDC_V(unsigned short, 0x25eaa8), BDC_V(unsigned short, 0x25eaaa),
+    BDC_V(unsigned short, 0x25eaac), BDC_V(unsigned short, 0x25eaae), 0,
+    BDC_V(unsigned short, 0x25eab2), BDC_V(unsigned short, 0x25eab4),
+    BDC_V(unsigned short, 0x25eab6), BDC_V(unsigned short, 0x25eab8), 0,
+    BDC_V(unsigned short, 0x25eabc), BDC_V(unsigned short, 0x25eabe),
+    BDC_V(unsigned short, 0x25eac0), BDC_V(unsigned short, 0x25eac2), 0,
+    BDC_V(unsigned short, 0x25eac6), BDC_V(unsigned short, 0x25eac8),
+    BDC_V(unsigned short, 0x25eaca), BDC_V(unsigned short, 0x25eacc), 0,
+    BDC_V(unsigned short, 0x25ead0), BDC_V(unsigned short, 0x25ead2),
+    BDC_V(unsigned short, 0x25ead4), BDC_V(unsigned short, 0x25ead6), 0,
+    BDC_V(unsigned short, 0x25eada), BDC_V(unsigned short, 0x25eadc),
+    BDC_V(unsigned short, 0x25eade), BDC_V(unsigned short, 0x25eae0), 0,
+    BDC_V(unsigned short, 0x25eae4), BDC_V(unsigned short, 0x25eae6),
+    BDC_V(unsigned short, 0x25eae8), BDC_V(unsigned short, 0x25eaea), 0,
+    BDC_V(unsigned short, 0x25eaee), 0, BDC_V(unsigned short, 0x25eaf2),
+    BDC_V(unsigned short, 0x25eaf4), 0, BDC_V(unsigned short, 0x25eaf8),
+    BDC_V(unsigned short, 0x25eafa), BDC_V(unsigned short, 0x25eafc),
+    BDC_V(unsigned short, 0x25eafe), 0, BDC_V(unsigned short, 0x25eb02),
+    BDC_V(unsigned short, 0x25eb04), BDC_V(unsigned short, 0x25eb06),
+    BDC_V(unsigned short, 0x25eb08), 0, BDC_V(unsigned short, 0x25eb0c),
+    BDC_V(unsigned short, 0x25eb0e), BDC_V(unsigned short, 0x25eb10),
+    BDC_V(unsigned short, 0x25eb12), 0, BDC_V(unsigned short, 0x25eb16),
+    BDC_V(unsigned short, 0x25eb18), BDC_V(unsigned short, 0x25eb1a),
+    BDC_V(unsigned short, 0x25eb1c), 0, BDC_V(unsigned short, 0x25eb20),
+    BDC_V(unsigned short, 0x25eb22), BDC_V(unsigned short, 0x25eb24),
+    BDC_V(unsigned short, 0x25eb26), 0, BDC_V(unsigned short, 0x25eb2a),
+    BDC_V(unsigned short, 0x25eb2c), BDC_V(unsigned short, 0x25eb2e),
+    BDC_V(unsigned short, 0x25eb30), 0, BDC_V(unsigned short, 0x25eb34),
+    BDC_V(unsigned short, 0x25eb36), BDC_V(unsigned short, 0x25eb38),
+    BDC_V(unsigned short, 0x25eb3a), 0, BDC_V(unsigned short, 0x25eb3e),
+    BDC_V(unsigned short, 0x25eb40), BDC_V(unsigned short, 0x25eb42),
+    BDC_V(unsigned short, 0x25eb44), 0, BDC_V(unsigned short, 0x25eb48),
+    BDC_V(unsigned short, 0x25eb4a), BDC_V(unsigned short, 0x25eb4c),
+    BDC_V(unsigned short, 0x25eb4e), 0, BDC_V(unsigned short, 0x25eb52),
+    BDC_V(unsigned short, 0x25eb54), BDC_V(unsigned short, 0x25eb56),
+    BDC_V(unsigned short, 0x25eb58), 0, BDC_V(unsigned short, 0x25eb5c),
+    BDC_V(unsigned short, 0x25eb5e), BDC_V(unsigned short, 0x25eb60),
+    BDC_V(unsigned short, 0x25eb62), 0, BDC_V(unsigned short, 0x25eb66),
+    BDC_V(unsigned short, 0x25eb68), BDC_V(unsigned short, 0x25eb6a),
+    BDC_V(unsigned short, 0x25eb6c), 0, BDC_V(unsigned short, 0x25eb70),
+    BDC_V(unsigned short, 0x25eb72), BDC_V(unsigned short, 0x25eb74),
+    BDC_V(unsigned short, 0x25eb76), 0, BDC_V(unsigned short, 0x25eb7a),
+    BDC_V(unsigned short, 0x25eb7c), BDC_V(unsigned short, 0x25eb7e),
+    BDC_V(unsigned short, 0x25eb80), 0, BDC_V(unsigned short, 0x25eb84),
+    BDC_V(unsigned short, 0x25eb86), BDC_V(unsigned short, 0x25eb88),
+    BDC_V(unsigned short, 0x25eb8a), 0, BDC_V(unsigned short, 0x25eb8e), 0,
+    BDC_V(unsigned short, 0x25eb92), BDC_V(unsigned short, 0x25eb94), 0,
+    BDC_V(unsigned short, 0x25eb98), BDC_V(unsigned short, 0x25eb9a),
+    BDC_V(unsigned short, 0x25eb9c), BDC_V(unsigned short, 0x25eb9e), 0,
+    BDC_V(unsigned short, 0x25eba2), BDC_V(unsigned short, 0x25eba4),
+    BDC_V(unsigned short, 0x25eba6), BDC_V(unsigned short, 0x25eba8), 0,
+    BDC_V(unsigned short, 0x25ebac), BDC_V(unsigned short, 0x25ebae),
+    BDC_V(unsigned short, 0x25ebb0), BDC_V(unsigned short, 0x25ebb2), 0,
+    BDC_V(unsigned short, 0x25ebb6), BDC_V(unsigned short, 0x25ebb8),
+    BDC_V(unsigned short, 0x25ebba), BDC_V(unsigned short, 0x25ebbc), 0,
+    BDC_V(unsigned short, 0x25ebc0), BDC_V(unsigned short, 0x25ebc2),
+    BDC_V(unsigned short, 0x25ebc4), BDC_V(unsigned short, 0x25ebc6), 0,
+    BDC_V(unsigned short, 0x25ebca), BDC_V(unsigned short, 0x25ebcc),
+    BDC_V(unsigned short, 0x25ebce), BDC_V(unsigned short, 0x25ebd0), 0,
+    BDC_V(unsigned short, 0x25ebd4), BDC_V(unsigned short, 0x25ebd6),
+    BDC_V(unsigned short, 0x25ebd8), BDC_V(unsigned short, 0x25ebda), 0,
+    BDC_V(unsigned short, 0x25ebde), BDC_V(unsigned short, 0x25ebe0),
+    BDC_V(unsigned short, 0x25ebe2), BDC_V(unsigned short, 0x25ebe4), 0,
+    BDC_V(unsigned short, 0x25ebe8), BDC_V(unsigned short, 0x25ebea),
+    BDC_V(unsigned short, 0x25ebec), BDC_V(unsigned short, 0x25ebee), 0,
+    BDC_V(unsigned short, 0x25ebf2), BDC_V(unsigned short, 0x25ebf4),
+    BDC_V(unsigned short, 0x25ebf6), BDC_V(unsigned short, 0x25ebf8), 0,
+    BDC_V(unsigned short, 0x25ebfc), BDC_V(unsigned short, 0x25ebfe),
+    BDC_V(unsigned short, 0x25ec00), BDC_V(unsigned short, 0x25ec02), 0,
+    BDC_V(unsigned short, 0x25ec06), BDC_V(unsigned short, 0x25ec08),
+    BDC_V(unsigned short, 0x25ec0a), BDC_V(unsigned short, 0x25ec0c), 0,
+    BDC_V(unsigned short, 0x25ec10), BDC_V(unsigned short, 0x25ec12),
+    BDC_V(unsigned short, 0x25ec14), BDC_V(unsigned short, 0x25ec16), 0,
+    BDC_V(unsigned short, 0x25ec1a), BDC_V(unsigned short, 0x25ec1c),
+    BDC_V(unsigned short, 0x25ec1e), BDC_V(unsigned short, 0x25ec20), 0,
+    BDC_V(unsigned short, 0x25ec24), BDC_V(unsigned short, 0x25ec26),
+    BDC_V(unsigned short, 0x25ec28), BDC_V(unsigned short, 0x25ec2a), 0,
+    BDC_V(unsigned short, 0x25ec2e), 0, BDC_V(unsigned short, 0x25ec32),
+    BDC_V(unsigned short, 0x25ec34), 0, BDC_V(unsigned short, 0x25ec38),
+    BDC_V(unsigned short, 0x25ec3a), BDC_V(unsigned short, 0x25ec3c),
+    BDC_V(unsigned short, 0x25ec3e), 0, BDC_V(unsigned short, 0x25ec42),
+    BDC_V(unsigned short, 0x25ec44), BDC_V(unsigned short, 0x25ec46),
+    BDC_V(unsigned short, 0x25ec48), 0, BDC_V(unsigned short, 0x25ec4c),
+    BDC_V(unsigned short, 0x25ec4e), BDC_V(unsigned short, 0x25ec50),
+    BDC_V(unsigned short, 0x25ec52), 0, BDC_V(unsigned short, 0x25ec56),
+    BDC_V(unsigned short, 0x25ec58), BDC_V(unsigned short, 0x25ec5a),
+    BDC_V(unsigned short, 0x25ec5c), 0, BDC_V(unsigned short, 0x25ec60),
+    BDC_V(unsigned short, 0x25ec62), BDC_V(unsigned short, 0x25ec64),
+    BDC_V(unsigned short, 0x25ec66), 0, BDC_V(unsigned short, 0x25ec6a),
+    BDC_V(unsigned short, 0x25ec6c), BDC_V(unsigned short, 0x25ec6e),
+    BDC_V(unsigned short, 0x25ec70), 0, BDC_V(unsigned short, 0x25ec74),
+    BDC_V(unsigned short, 0x25ec76), BDC_V(unsigned short, 0x25ec78),
+    BDC_V(unsigned short, 0x25ec7a), 0, BDC_V(unsigned short, 0x25ec7e),
+    BDC_V(unsigned short, 0x25ec80), BDC_V(unsigned short, 0x25ec82),
+    BDC_V(unsigned short, 0x25ec84), 0, BDC_V(unsigned short, 0x25ec88),
+    BDC_V(unsigned short, 0x25ec8a), BDC_V(unsigned short, 0x25ec8c),
+    BDC_V(unsigned short, 0x25ec8e), 0, BDC_V(unsigned short, 0x25ec92),
+    BDC_V(unsigned short, 0x25ec94), BDC_V(unsigned short, 0x25ec96),
+    BDC_V(unsigned short, 0x25ec98), 0, BDC_V(unsigned short, 0x25ec9c),
+    BDC_V(unsigned short, 0x25ec9e), BDC_V(unsigned short, 0x25eca0),
+    BDC_V(unsigned short, 0x25eca2), 0, BDC_V(unsigned short, 0x25eca6),
+    BDC_V(unsigned short, 0x25eca8), BDC_V(unsigned short, 0x25ecaa),
+    BDC_V(unsigned short, 0x25ecac), 0, BDC_V(unsigned short, 0x25ecb0),
+    BDC_V(unsigned short, 0x25ecb2), BDC_V(unsigned short, 0x25ecb4),
+    BDC_V(unsigned short, 0x25ecb6), 0, BDC_V(unsigned short, 0x25ecba),
+    BDC_V(unsigned short, 0x25ecbc), BDC_V(unsigned short, 0x25ecbe),
+    BDC_V(unsigned short, 0x25ecc0), 0, BDC_V(unsigned short, 0x25ecc4),
+    BDC_V(unsigned short, 0x25ecc6), BDC_V(unsigned short, 0x25ecc8),
+    BDC_V(unsigned short, 0x25ecca), 0, BDC_V(unsigned short, 0x25ecce), 0,
+    BDC_V(unsigned short, 0x25ecd2), BDC_V(unsigned short, 0x25ecd4), 0,
+    BDC_V(unsigned short, 0x25ecd8), BDC_V(unsigned short, 0x25ecda),
+    BDC_V(unsigned short, 0x25ecdc), BDC_V(unsigned short, 0x25ecde), 0,
+    BDC_V(unsigned short, 0x25ece2), BDC_V(unsigned short, 0x25ece4),
+    BDC_V(unsigned short, 0x25ece6), BDC_V(unsigned short, 0x25ece8), 0,
+    BDC_V(unsigned short, 0x25ecec), BDC_V(unsigned short, 0x25ecee),
+    BDC_V(unsigned short, 0x25ecf0), BDC_V(unsigned short, 0x25ecf2), 0,
+    BDC_V(unsigned short, 0x25ecf6), BDC_V(unsigned short, 0x25ecf8),
+    BDC_V(unsigned short, 0x25ecfa), BDC_V(unsigned short, 0x25ecfc), 0,
+    BDC_V(unsigned short, 0x25ed00), BDC_V(unsigned short, 0x25ed02),
+    BDC_V(unsigned short, 0x25ed04), BDC_V(unsigned short, 0x25ed06), 0,
+    BDC_V(unsigned short, 0x25ed0a), BDC_V(unsigned short, 0x25ed0c),
+    BDC_V(unsigned short, 0x25ed0e), BDC_V(unsigned short, 0x25ed10), 0,
+    BDC_V(unsigned short, 0x25ed14), BDC_V(unsigned short, 0x25ed16),
+    BDC_V(unsigned short, 0x25ed18), BDC_V(unsigned short, 0x25ed1a), 0,
+    BDC_V(unsigned short, 0x25ed1e), BDC_V(unsigned short, 0x25ed20),
+    BDC_V(unsigned short, 0x25ed22), BDC_V(unsigned short, 0x25ed24), 0,
+    BDC_V(unsigned short, 0x25ed28), BDC_V(unsigned short, 0x25ed2a),
+    BDC_V(unsigned short, 0x25ed2c), BDC_V(unsigned short, 0x25ed2e), 0,
+    BDC_V(unsigned short, 0x25ed32), BDC_V(unsigned short, 0x25ed34),
+    BDC_V(unsigned short, 0x25ed36), BDC_V(unsigned short, 0x25ed38), 0,
+    BDC_V(unsigned short, 0x25ed3c), BDC_V(unsigned short, 0x25ed3e),
+    BDC_V(unsigned short, 0x25ed40), BDC_V(unsigned short, 0x25ed42), 0,
+    BDC_V(unsigned short, 0x25ed46), BDC_V(unsigned short, 0x25ed48),
+    BDC_V(unsigned short, 0x25ed4a), BDC_V(unsigned short, 0x25ed4c), 0,
+    BDC_V(unsigned short, 0x25ed50), BDC_V(unsigned short, 0x25ed52),
+    BDC_V(unsigned short, 0x25ed54), BDC_V(unsigned short, 0x25ed56), 0,
+    BDC_V(unsigned short, 0x25ed5a), BDC_V(unsigned short, 0x25ed5c),
+    BDC_V(unsigned short, 0x25ed5e), BDC_V(unsigned short, 0x25ed60), 0,
+    BDC_V(unsigned short, 0x25ed64), BDC_V(unsigned short, 0x25ed66),
+    BDC_V(unsigned short, 0x25ed68), BDC_V(unsigned short, 0x25ed6a), 0,
+    BDC_V(unsigned short, 0x25ed6e), 0, BDC_V(unsigned short, 0x25ed72),
+    BDC_V(unsigned short, 0x25ed74), 0, BDC_V(unsigned short, 0x25ed78),
+    BDC_V(unsigned short, 0x25ed7a), BDC_V(unsigned short, 0x25ed7c),
+    BDC_V(unsigned short, 0x25ed7e), 0, BDC_V(unsigned short, 0x25ed82),
+    BDC_V(unsigned short, 0x25ed84), BDC_V(unsigned short, 0x25ed86),
+    BDC_V(unsigned short, 0x25ed88), 0, BDC_V(unsigned short, 0x25ed8c),
+    BDC_V(unsigned short, 0x25ed8e), BDC_V(unsigned short, 0x25ed90),
+    BDC_V(unsigned short, 0x25ed92), 0, BDC_V(unsigned short, 0x25ed96),
+    BDC_V(unsigned short, 0x25ed98), BDC_V(unsigned short, 0x25ed9a),
+    BDC_V(unsigned short, 0x25ed9c), 0, BDC_V(unsigned short, 0x25eda0),
+    BDC_V(unsigned short, 0x25eda2), BDC_V(unsigned short, 0x25eda4),
+    BDC_V(unsigned short, 0x25eda6), 0, BDC_V(unsigned short, 0x25edaa),
+    BDC_V(unsigned short, 0x25edac), BDC_V(unsigned short, 0x25edae),
+    BDC_V(unsigned short, 0x25edb0), 0, BDC_V(unsigned short, 0x25edb4),
+    BDC_V(unsigned short, 0x25edb6), BDC_V(unsigned short, 0x25edb8),
+    BDC_V(unsigned short, 0x25edba), 0, BDC_V(unsigned short, 0x25edbe),
+    BDC_V(unsigned short, 0x25edc0), BDC_V(unsigned short, 0x25edc2),
+    BDC_V(unsigned short, 0x25edc4), 0, BDC_V(unsigned short, 0x25edc8),
+    BDC_V(unsigned short, 0x25edca), BDC_V(unsigned short, 0x25edcc),
+    BDC_V(unsigned short, 0x25edce), 0, BDC_V(unsigned short, 0x25edd2),
+    BDC_V(unsigned short, 0x25edd4), BDC_V(unsigned short, 0x25edd6),
+    BDC_V(unsigned short, 0x25edd8), 0, BDC_V(unsigned short, 0x25eddc),
+    BDC_V(unsigned short, 0x25edde), BDC_V(unsigned short, 0x25ede0),
+    BDC_V(unsigned short, 0x25ede2), 0, BDC_V(unsigned short, 0x25ede6),
+    BDC_V(unsigned short, 0x25ede8), BDC_V(unsigned short, 0x25edea),
+    BDC_V(unsigned short, 0x25edec), 0, BDC_V(unsigned short, 0x25edf0),
+    BDC_V(unsigned short, 0x25edf2), BDC_V(unsigned short, 0x25edf4),
+    BDC_V(unsigned short, 0x25edf6), 0, BDC_V(unsigned short, 0x25edfa),
+    BDC_V(unsigned short, 0x25edfc), BDC_V(unsigned short, 0x25edfe),
+    BDC_V(unsigned short, 0x25ee00), 0, BDC_V(unsigned short, 0x25ee04),
+    BDC_V(unsigned short, 0x25ee06), BDC_V(unsigned short, 0x25ee08),
+    BDC_V(unsigned short, 0x25ee0a), 0, BDC_V(unsigned short, 0x25ee0e), 0,
+    BDC_V(unsigned short, 0x25ee12), BDC_V(unsigned short, 0x25ee14), 0,
+    BDC_V(unsigned short, 0x25ee18), BDC_V(unsigned short, 0x25ee1a),
+    BDC_V(unsigned short, 0x25ee1c), BDC_V(unsigned short, 0x25ee1e), 0,
+    BDC_V(unsigned short, 0x25ee22), BDC_V(unsigned short, 0x25ee24),
+    BDC_V(unsigned short, 0x25ee26), BDC_V(unsigned short, 0x25ee28), 0,
+    BDC_V(unsigned short, 0x25ee2c), BDC_V(unsigned short, 0x25ee2e),
+    BDC_V(unsigned short, 0x25ee30), BDC_V(unsigned short, 0x25ee32), 0,
+    BDC_V(unsigned short, 0x25ee36), BDC_V(unsigned short, 0x25ee38),
+    BDC_V(unsigned short, 0x25ee3a), BDC_V(unsigned short, 0x25ee3c), 0,
+    BDC_V(unsigned short, 0x25ee40), BDC_V(unsigned short, 0x25ee42),
+    BDC_V(unsigned short, 0x25ee44), BDC_V(unsigned short, 0x25ee46), 0,
+    BDC_V(unsigned short, 0x25ee4a), BDC_V(unsigned short, 0x25ee4c),
+    BDC_V(unsigned short, 0x25ee4e), BDC_V(unsigned short, 0x25ee50), 0,
+    BDC_V(unsigned short, 0x25ee54), BDC_V(unsigned short, 0x25ee56),
+    BDC_V(unsigned short, 0x25ee58), BDC_V(unsigned short, 0x25ee5a), 0,
+    BDC_V(unsigned short, 0x25ee5e), BDC_V(unsigned short, 0x25ee60),
+    BDC_V(unsigned short, 0x25ee62), BDC_V(unsigned short, 0x25ee64), 0,
+    BDC_V(unsigned short, 0x25ee68), BDC_V(unsigned short, 0x25ee6a),
+    BDC_V(unsigned short, 0x25ee6c), BDC_V(unsigned short, 0x25ee6e), 0,
+    BDC_V(unsigned short, 0x25ee72), BDC_V(unsigned short, 0x25ee74),
+    BDC_V(unsigned short, 0x25ee76), BDC_V(unsigned short, 0x25ee78), 0,
+    BDC_V(unsigned short, 0x25ee7c), BDC_V(unsigned short, 0x25ee7e),
+    BDC_V(unsigned short, 0x25ee80), BDC_V(unsigned short, 0x25ee82), 0,
+    BDC_V(unsigned short, 0x25ee86), BDC_V(unsigned short, 0x25ee88),
+    BDC_V(unsigned short, 0x25ee8a), BDC_V(unsigned short, 0x25ee8c), 0,
+    BDC_V(unsigned short, 0x25ee90), BDC_V(unsigned short, 0x25ee92),
+    BDC_V(unsigned short, 0x25ee94), BDC_V(unsigned short, 0x25ee96), 0,
+    BDC_V(unsigned short, 0x25ee9a), BDC_V(unsigned short, 0x25ee9c),
+    BDC_V(unsigned short, 0x25ee9e), BDC_V(unsigned short, 0x25eea0), 0,
+    BDC_V(unsigned short, 0x25eea4), BDC_V(unsigned short, 0x25eea6),
+    BDC_V(unsigned short, 0x25eea8), BDC_V(unsigned short, 0x25eeaa), 0,
+    BDC_V(unsigned short, 0x25eeae), 0, BDC_V(unsigned short, 0x25eeb2),
+    BDC_V(unsigned short, 0x25eeb4), 0, BDC_V(unsigned short, 0x25eeb8),
+    BDC_V(unsigned short, 0x25eeba), BDC_V(unsigned short, 0x25eebc),
+    BDC_V(unsigned short, 0x25eebe), 0, BDC_V(unsigned short, 0x25eec2),
+    BDC_V(unsigned short, 0x25eec4), BDC_V(unsigned short, 0x25eec6),
+    BDC_V(unsigned short, 0x25eec8), 0, BDC_V(unsigned short, 0x25eecc),
+    BDC_V(unsigned short, 0x25eece), BDC_V(unsigned short, 0x25eed0),
+    BDC_V(unsigned short, 0x25eed2), 0, BDC_V(unsigned short, 0x25eed6),
+    BDC_V(unsigned short, 0x25eed8), BDC_V(unsigned short, 0x25eeda),
+    BDC_V(unsigned short, 0x25eedc), 0, BDC_V(unsigned short, 0x25eee0),
+    BDC_V(unsigned short, 0x25eee2), BDC_V(unsigned short, 0x25eee4),
+    BDC_V(unsigned short, 0x25eee6), 0, BDC_V(unsigned short, 0x25eeea),
+    BDC_V(unsigned short, 0x25eeec), BDC_V(unsigned short, 0x25eeee),
+    BDC_V(unsigned short, 0x25eef0), 0, BDC_V(unsigned short, 0x25eef4),
+    BDC_V(unsigned short, 0x25eef6), BDC_V(unsigned short, 0x25eef8),
+    BDC_V(unsigned short, 0x25eefa), 0, BDC_V(unsigned short, 0x25eefe),
+    BDC_V(unsigned short, 0x25ef00), BDC_V(unsigned short, 0x25ef02),
+    BDC_V(unsigned short, 0x25ef04), 0, BDC_V(unsigned short, 0x25ef08),
+    BDC_V(unsigned short, 0x25ef0a), BDC_V(unsigned short, 0x25ef0c),
+    BDC_V(unsigned short, 0x25ef0e), 0, BDC_V(unsigned short, 0x25ef12),
+    BDC_V(unsigned short, 0x25ef14), BDC_V(unsigned short, 0x25ef16),
+    BDC_V(unsigned short, 0x25ef18), 0, BDC_V(unsigned short, 0x25ef1c),
+    BDC_V(unsigned short, 0x25ef1e), BDC_V(unsigned short, 0x25ef20),
+    BDC_V(unsigned short, 0x25ef22), 0, BDC_V(unsigned short, 0x25ef26),
+    BDC_V(unsigned short, 0x25ef28), BDC_V(unsigned short, 0x25ef2a),
+    BDC_V(unsigned short, 0x25ef2c), 0, BDC_V(unsigned short, 0x25ef30),
+    BDC_V(unsigned short, 0x25ef32), BDC_V(unsigned short, 0x25ef34),
+    BDC_V(unsigned short, 0x25ef36), 0, BDC_V(unsigned short, 0x25ef3a),
+    BDC_V(unsigned short, 0x25ef3c), BDC_V(unsigned short, 0x25ef3e),
+    BDC_V(unsigned short, 0x25ef40), 0, BDC_V(unsigned short, 0x25ef44),
+    BDC_V(unsigned short, 0x25ef46), BDC_V(unsigned short, 0x25ef48),
+    BDC_V(unsigned short, 0x25ef4a), 0, BDC_V(unsigned short, 0x25ef4e), 0,
+    BDC_V(unsigned short, 0x25ef52), BDC_V(unsigned short, 0x25ef54), 0,
+    BDC_V(unsigned short, 0x25ef58), BDC_V(unsigned short, 0x25ef5a),
+    BDC_V(unsigned short, 0x25ef5c), BDC_V(unsigned short, 0x25ef5e), 0,
+    BDC_V(unsigned short, 0x25ef62), BDC_V(unsigned short, 0x25ef64),
+    BDC_V(unsigned short, 0x25ef66), BDC_V(unsigned short, 0x25ef68), 0,
+    BDC_V(unsigned short, 0x25ef6c), BDC_V(unsigned short, 0x25ef6e),
+    BDC_V(unsigned short, 0x25ef70), BDC_V(unsigned short, 0x25ef72), 0,
+    BDC_V(unsigned short, 0x25ef76), BDC_V(unsigned short, 0x25ef78),
+    BDC_V(unsigned short, 0x25ef7a), BDC_V(unsigned short, 0x25ef7c), 0,
+    BDC_V(unsigned short, 0x25ef80), BDC_V(unsigned short, 0x25ef82),
+    BDC_V(unsigned short, 0x25ef84), BDC_V(unsigned short, 0x25ef86), 0,
+    BDC_V(unsigned short, 0x25ef8a), BDC_V(unsigned short, 0x25ef8c),
+    BDC_V(unsigned short, 0x25ef8e), BDC_V(unsigned short, 0x25ef90), 0,
+    BDC_V(unsigned short, 0x25ef94), BDC_V(unsigned short, 0x25ef96),
+    BDC_V(unsigned short, 0x25ef98), BDC_V(unsigned short, 0x25ef9a), 0,
+    BDC_V(unsigned short, 0x25ef9e), BDC_V(unsigned short, 0x25efa0),
+    BDC_V(unsigned short, 0x25efa2), BDC_V(unsigned short, 0x25efa4), 0,
+    BDC_V(unsigned short, 0x25efa8), BDC_V(unsigned short, 0x25efaa),
+    BDC_V(unsigned short, 0x25efac), BDC_V(unsigned short, 0x25efae), 0,
+    BDC_V(unsigned short, 0x25efb2), BDC_V(unsigned short, 0x25efb4),
+    BDC_V(unsigned short, 0x25efb6), BDC_V(unsigned short, 0x25efb8), 0,
+    BDC_V(unsigned short, 0x25efbc), BDC_V(unsigned short, 0x25efbe),
+    BDC_V(unsigned short, 0x25efc0), BDC_V(unsigned short, 0x25efc2), 0,
+    BDC_V(unsigned short, 0x25efc6), BDC_V(unsigned short, 0x25efc8),
+    BDC_V(unsigned short, 0x25efca), BDC_V(unsigned short, 0x25efcc), 0,
+    BDC_V(unsigned short, 0x25efd0), BDC_V(unsigned short, 0x25efd2),
+    BDC_V(unsigned short, 0x25efd4), BDC_V(unsigned short, 0x25efd6), 0,
+    BDC_V(unsigned short, 0x25efda), BDC_V(unsigned short, 0x25efdc),
+    BDC_V(unsigned short, 0x25efde), BDC_V(unsigned short, 0x25efe0), 0,
+    BDC_V(unsigned short, 0x25efe4), BDC_V(unsigned short, 0x25efe6),
+    BDC_V(unsigned short, 0x25efe8), BDC_V(unsigned short, 0x25efea),
+};

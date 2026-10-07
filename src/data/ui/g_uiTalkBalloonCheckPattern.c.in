@@ -1,4 +1,5 @@
 // bdc 0x08a9321c g_uiTalkBalloonCheckPattern
 #include "bdc.h"
+// bdc-fix	BYTES	signed char	0x28f21c	13	0	
 
 __typeof__(const s8[13]) g_uiTalkBalloonCheckPattern = BDC_BYTES(0x28f21c, 13);

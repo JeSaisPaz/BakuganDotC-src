@@ -1,4 +1,5 @@
 // bdc 0x08abd100 g_btlAiTargetLossHook
 #include "bdc.h"
+// bdc-fix	V	unsigned char	0x2b9100	1	0	
 
 __typeof__(u8) g_btlAiTargetLossHook = BDC_V(unsigned char, 0x2b9100);

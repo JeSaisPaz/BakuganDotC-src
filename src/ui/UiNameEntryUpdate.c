@@ -5,12 +5,6 @@
    handler from the 5-entry pointer-to-member table `g_uiNameEntryPhaseTable` (indexed by
    `phase`); when the `done` byte is set it removes itself with `CoreTaskRemove``(task, true)`. */
 
-typedef struct NameEntryVtblEntry {
-  s16 thisAdjust;
-  s16 pad;
-  void (*fn)(void *);
-} NameEntryVtblEntry;
-
 void UiNameEntryUpdate(UiNameEntry *self)
 {
   u32 phase = (u32)self->base.phase;
@@ -22,10 +16,10 @@ void UiNameEntryUpdate(UiNameEntry *self)
 
     if (e->index != 0) {
       /* virtual: pfn holds the offset of the vtable pointer, index selects the slot */
-      const NameEntryVtblEntry *v =
-          (const NameEntryVtblEntry *)(*(u8 **)(obj + (intptr_t)e->pfn)) + e->index;
-      fn = v->fn;
-      obj += v->thisAdjust;
+      const VtblEntry *v =
+          *(const VtblEntry **)(obj + (intptr_t)e->pfn) + e->index;
+      fn = (void (*)(void *))v->fn;
+      obj += v->delta;
     }
     fn(obj);
   }

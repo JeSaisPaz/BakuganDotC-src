@@ -1,5 +1,27 @@
 // bdc 0x08ac5e58 g_gfxFbCopyVerts
 #include "bdc.h"
+// bdc-fix	V	unsigned short	0x2c1e62	2	0	[1].u
+// bdc-fix	V	unsigned short	0x2c1e64	2	0	[1].v
+// bdc-fix	V	short	0x2c1e66	2	0	[1].x
+// bdc-fix	V	short	0x2c1e68	2	0	[1].y
+// bdc-fix	V	unsigned short	0x2c1e6c	2	0	[2].u
+// bdc-fix	V	short	0x2c1e70	2	0	[2].x
+// bdc-fix	V	unsigned short	0x2c1e76	2	0	[3].u
+// bdc-fix	V	unsigned short	0x2c1e78	2	0	[3].v
+// bdc-fix	V	short	0x2c1e7a	2	0	[3].x
+// bdc-fix	V	short	0x2c1e7c	2	0	[3].y
+// bdc-fix	V	unsigned short	0x2c1e80	2	0	[4].u
+// bdc-fix	V	short	0x2c1e84	2	0	[4].x
+// bdc-fix	V	unsigned short	0x2c1e8a	2	0	[5].u
+// bdc-fix	V	unsigned short	0x2c1e8c	2	0	[5].v
+// bdc-fix	V	short	0x2c1e8e	2	0	[5].x
+// bdc-fix	V	short	0x2c1e90	2	0	[5].y
+// bdc-fix	V	unsigned short	0x2c1e94	2	0	[6].u
+// bdc-fix	V	short	0x2c1e98	2	0	[6].x
+// bdc-fix	V	unsigned short	0x2c1e9e	2	0	[7].u
+// bdc-fix	V	unsigned short	0x2c1ea0	2	0	[7].v
+// bdc-fix	V	short	0x2c1ea2	2	0	[7].x
+// bdc-fix	V	short	0x2c1ea4	2	0	[7].y
 
 __typeof__(GfxStripVertex[8]) g_gfxFbCopyVerts = {
     {0},

@@ -1,4 +1,6 @@
 // bdc 0x08a66698 g_btlTalkGradientYs
 #include "bdc.h"
+// bdc-fix	V	short	0x26269a	2	0	[1]
+// bdc-fix	V	short	0x26269c	2	0	[2]
 
 __typeof__(s16[3]) g_btlTalkGradientYs = { 0, BDC_V(short, 0x26269a), BDC_V(short, 0x26269c) };

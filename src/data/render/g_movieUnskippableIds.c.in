@@ -1,5 +1,29 @@
 // bdc 0x08aa2d48 g_movieUnskippableIds
 #include "bdc.h"
+// bdc-fix	V	int	0x29ed48	4	0	[0]
+// bdc-fix	V	int	0x29ed4c	4	0	[1]
+// bdc-fix	V	int	0x29ed50	4	0	[2]
+// bdc-fix	V	int	0x29ed54	4	0	[3]
+// bdc-fix	V	int	0x29ed58	4	0	[4]
+// bdc-fix	V	int	0x29ed5c	4	0	[5]
+// bdc-fix	V	int	0x29ed60	4	0	[6]
+// bdc-fix	V	int	0x29ed64	4	0	[7]
+// bdc-fix	V	int	0x29ed68	4	0	[8]
+// bdc-fix	V	int	0x29ed6c	4	0	[9]
+// bdc-fix	V	int	0x29ed70	4	0	[10]
+// bdc-fix	V	int	0x29ed74	4	0	[11]
+// bdc-fix	V	int	0x29ed78	4	0	[12]
+// bdc-fix	V	int	0x29ed7c	4	0	[13]
+// bdc-fix	V	int	0x29ed80	4	0	[14]
+// bdc-fix	V	int	0x29ed84	4	0	[15]
+// bdc-fix	V	int	0x29ed88	4	0	[16]
+// bdc-fix	V	int	0x29ed8c	4	0	[17]
+// bdc-fix	V	int	0x29ed90	4	0	[18]
+// bdc-fix	V	int	0x29ed94	4	0	[19]
+// bdc-fix	V	int	0x29ed98	4	0	[20]
+// bdc-fix	V	int	0x29ed9c	4	0	[21]
+// bdc-fix	V	int	0x29eda0	4	0	[22]
+// bdc-fix	V	int	0x29eda4	4	0	[23]
 
 __typeof__(s32[24]) g_movieUnskippableIds = {
     BDC_V(int, 0x29ed48), BDC_V(int, 0x29ed4c), BDC_V(int, 0x29ed50), BDC_V(int, 0x29ed54),

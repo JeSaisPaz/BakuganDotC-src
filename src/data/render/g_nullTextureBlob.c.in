@@ -1,4 +1,5 @@
 // bdc 0x08ac6240 g_nullTextureBlob
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2c2240	144	0	
 
 __typeof__(u8 [144]) g_nullTextureBlob = BDC_BYTES(0x2c2240, 144);

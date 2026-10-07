@@ -1,4 +1,7 @@
 // bdc 0x08aa4eb0 g_kernelRemPio2fInitJk
 #include "bdc.h"
+// bdc-fix	V	int	0x2a0eb0	4	0	[0]
+// bdc-fix	V	int	0x2a0eb4	4	0	[1]
+// bdc-fix	V	int	0x2a0eb8	4	0	[2]
 
 __typeof__(s32[3]) g_kernelRemPio2fInitJk = { BDC_V(int, 0x2a0eb0), BDC_V(int, 0x2a0eb4), BDC_V(int, 0x2a0eb8) };

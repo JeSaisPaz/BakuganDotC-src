@@ -1,5 +1,10 @@
 // bdc 0x08a64e1c g_btlHudAttributeHues
 #include "bdc.h"
+// bdc-fix	V	float	0x260e20	4	0	[1]
+// bdc-fix	V	float	0x260e24	4	0	[2]
+// bdc-fix	V	float	0x260e28	4	0	[3]
+// bdc-fix	V	float	0x260e2c	4	0	[4]
+// bdc-fix	V	float	0x260e30	4	0	[5]
 
 __typeof__(const float[6]) g_btlHudAttributeHues = {
     0, BDC_V(float, 0x260e20), BDC_V(float, 0x260e24), BDC_V(float, 0x260e28),

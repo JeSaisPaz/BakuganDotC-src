@@ -1,5 +1,18 @@
 // bdc 0x08ac35f8 g_sphereSpecialModelNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x299fe0	0	0	[0]
+// bdc-fix	STR	char *	0x299fe0	0	0	[1]
+// bdc-fix	STR	char *	0x29a000	0	0	[2]
+// bdc-fix	STR	char *	0x29a020	0	0	[3]
+// bdc-fix	STR	char *	0x29a040	0	0	[4]
+// bdc-fix	STR	char *	0x29a060	0	0	[5]
+// bdc-fix	STR	char *	0x29a080	0	0	[6]
+// bdc-fix	STR	char *	0x29a0a0	0	0	[7]
+// bdc-fix	STR	char *	0x29a0bc	0	0	[8]
+// bdc-fix	STR	char *	0x29a0d8	0	0	[9]
+// bdc-fix	STR	char *	0x29a0f4	0	0	[10]
+// bdc-fix	STR	char *	0x29a110	0	0	[11]
+// bdc-fix	STR	char *	0x29a12c	0	0	[12]
 
 __typeof__(const char *[13]) g_sphereSpecialModelNames = {
     (const char *)BDC_STR(0x299fe0), (const char *)BDC_STR(0x299fe0),

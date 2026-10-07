@@ -1,5 +1,12 @@
 // bdc 0x08a9b858 g_pauseActionTableFlagged
 #include "bdc.h"
+// bdc-fix	V	int	0x297858	4	0	[0]
+// bdc-fix	V	int	0x29785c	4	0	[1]
+// bdc-fix	V	int	0x297860	4	0	[2]
+// bdc-fix	V	int	0x297864	4	0	[3]
+// bdc-fix	V	int	0x297868	4	0	[4]
+// bdc-fix	V	int	0x29786c	4	0	[5]
+// bdc-fix	V	int	0x297870	4	0	[6]
 
 __typeof__(s32[7]) g_pauseActionTableFlagged = {
     BDC_V(int, 0x297858), BDC_V(int, 0x29785c), BDC_V(int, 0x297860), BDC_V(int, 0x297864),

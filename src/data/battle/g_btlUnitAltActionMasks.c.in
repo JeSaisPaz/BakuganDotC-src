@@ -1,5 +1,17 @@
 // bdc 0x08a675c0 g_btlUnitAltActionMasks
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x2635c0	4	0	[0]
+// bdc-fix	V	unsigned int	0x2635c4	4	0	[1]
+// bdc-fix	V	unsigned int	0x2635c8	4	0	[2]
+// bdc-fix	V	unsigned int	0x2635cc	4	0	[3]
+// bdc-fix	V	unsigned int	0x2635d0	4	0	[4]
+// bdc-fix	V	unsigned int	0x2635d4	4	0	[5]
+// bdc-fix	V	unsigned int	0x2635d8	4	0	[6]
+// bdc-fix	V	unsigned int	0x2635dc	4	0	[7]
+// bdc-fix	V	unsigned int	0x2635e0	4	0	[8]
+// bdc-fix	V	unsigned int	0x2635e4	4	0	[9]
+// bdc-fix	V	unsigned int	0x2635e8	4	0	[10]
+// bdc-fix	V	unsigned int	0x2635ec	4	0	[11]
 
 __typeof__(u32[12]) g_btlUnitAltActionMasks = {
     BDC_V(unsigned int, 0x2635c0), BDC_V(unsigned int, 0x2635c4), BDC_V(unsigned int, 0x2635c8),

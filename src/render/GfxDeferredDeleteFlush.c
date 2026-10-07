@@ -5,30 +5,19 @@
    destructor (slot 1, flags 3). Called once per frame from `CoreTaskManagerUpdate`, so objects
    are destroyed outside the code that still draws them. */
 
-typedef struct GfxVtblEntry {
-  s16 thisAdjust;
-  s16 pad;
-  void (*fn)(void *self, s32 flags);
-} GfxVtblEntry;
-
-typedef struct GfxVtbl {
-  u32 hdr[2];
-  GfxVtblEntry dtor;
-} GfxVtbl;
-
 void GfxDeferredDeleteFlush(void)
 
 {
   CoreObject *obj;
   CoreObject *next;
-  const GfxVtblEntry *entry;
+  const VtblEntry *entry;
 
   obj = g_gfxDeferredDeleteHead;
   if (obj != (CoreObject *)0x0) {
     do {
-      entry = &((const GfxVtbl *)obj->vtable)->dtor;
+      entry = &((const VtblEntry *)obj->vtable)[1];
       next = obj->next;
-      entry->fn((u8 *)obj + entry->thisAdjust, 3);
+      ((void (*)(void *, s32))entry->fn)((u8 *)obj + entry->delta, 3);
       obj = next;
     } while (obj != (CoreObject *)0x0);
   }

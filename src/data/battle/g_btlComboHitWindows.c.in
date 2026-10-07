@@ -1,5 +1,57 @@
 // bdc 0x08a6f9e8 g_btlComboHitWindows
 #include "bdc.h"
+// bdc-fix	V	float	0x26b9ec	4	0	[0].size
+// bdc-fix	V	float	0x26b9f0	4	0	[0].reach
+// bdc-fix	V	short	0x26b9f4	2	0	[1].attackId
+// bdc-fix	V	float	0x26b9f8	4	0	[1].size
+// bdc-fix	V	float	0x26b9fc	4	0	[1].reach
+// bdc-fix	V	short	0x26ba00	2	0	[2].attackId
+// bdc-fix	V	float	0x26ba04	4	0	[2].size
+// bdc-fix	V	float	0x26ba08	4	0	[2].reach
+// bdc-fix	V	short	0x26ba0c	2	0	[3].attackId
+// bdc-fix	V	float	0x26ba10	4	0	[3].size
+// bdc-fix	V	float	0x26ba14	4	0	[3].reach
+// bdc-fix	V	short	0x26ba18	2	0	[4].attackId
+// bdc-fix	V	float	0x26ba1c	4	0	[4].size
+// bdc-fix	V	float	0x26ba20	4	0	[4].reach
+// bdc-fix	V	short	0x26ba24	2	0	[5].attackId
+// bdc-fix	V	float	0x26ba28	4	0	[5].size
+// bdc-fix	V	float	0x26ba2c	4	0	[5].reach
+// bdc-fix	V	short	0x26ba30	2	0	[6].attackId
+// bdc-fix	V	float	0x26ba34	4	0	[6].size
+// bdc-fix	V	float	0x26ba38	4	0	[6].reach
+// bdc-fix	V	short	0x26ba3c	2	0	[7].attackId
+// bdc-fix	V	short	0x26ba3e	2	0	[7].flags
+// bdc-fix	V	float	0x26ba40	4	0	[7].size
+// bdc-fix	V	float	0x26ba44	4	0	[7].reach
+// bdc-fix	V	short	0x26ba48	2	0	[8].attackId
+// bdc-fix	V	short	0x26ba4a	2	0	[8].flags
+// bdc-fix	V	float	0x26ba4c	4	0	[8].size
+// bdc-fix	V	float	0x26ba50	4	0	[8].reach
+// bdc-fix	V	short	0x26ba54	2	0	[9].attackId
+// bdc-fix	V	short	0x26ba56	2	0	[9].flags
+// bdc-fix	V	float	0x26ba58	4	0	[9].size
+// bdc-fix	V	float	0x26ba5c	4	0	[9].reach
+// bdc-fix	V	short	0x26ba60	2	0	[10].attackId
+// bdc-fix	V	short	0x26ba62	2	0	[10].flags
+// bdc-fix	V	float	0x26ba64	4	0	[10].size
+// bdc-fix	V	float	0x26ba68	4	0	[10].reach
+// bdc-fix	V	short	0x26ba6c	2	0	[11].attackId
+// bdc-fix	V	short	0x26ba6e	2	0	[11].flags
+// bdc-fix	V	float	0x26ba70	4	0	[11].size
+// bdc-fix	V	float	0x26ba74	4	0	[11].reach
+// bdc-fix	V	short	0x26ba78	2	0	[12].attackId
+// bdc-fix	V	short	0x26ba7a	2	0	[12].flags
+// bdc-fix	V	float	0x26ba7c	4	0	[12].size
+// bdc-fix	V	float	0x26ba80	4	0	[12].reach
+// bdc-fix	V	short	0x26ba84	2	0	[13].attackId
+// bdc-fix	V	short	0x26ba86	2	0	[13].flags
+// bdc-fix	V	float	0x26ba88	4	0	[13].size
+// bdc-fix	V	float	0x26ba8c	4	0	[13].reach
+// bdc-fix	V	short	0x26ba90	2	0	[14].attackId
+// bdc-fix	V	short	0x26ba92	2	0	[14].flags
+// bdc-fix	V	float	0x26ba94	4	0	[14].size
+// bdc-fix	V	float	0x26ba98	4	0	[14].reach
 
 __typeof__(BtlHitWindowDef[15]) g_btlComboHitWindows = {
     { .size = BDC_V(float, 0x26b9ec), .reach = BDC_V(float, 0x26b9f0) },

@@ -1,5 +1,29 @@
 // bdc 0x08aa3a24 g_gfxLightBaseStateList
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x29fa24	4	0	[0]
+// bdc-fix	V	unsigned int	0x29fa28	4	0	[1]
+// bdc-fix	V	unsigned int	0x29fa2c	4	0	[2]
+// bdc-fix	V	unsigned int	0x29fa30	4	0	[3]
+// bdc-fix	V	unsigned int	0x29fa34	4	0	[4]
+// bdc-fix	V	unsigned int	0x29fa38	4	0	[5]
+// bdc-fix	V	unsigned int	0x29fa3c	4	0	[6]
+// bdc-fix	V	unsigned int	0x29fa40	4	0	[7]
+// bdc-fix	V	unsigned int	0x29fa44	4	0	[8]
+// bdc-fix	V	unsigned int	0x29fa48	4	0	[9]
+// bdc-fix	V	unsigned int	0x29fa4c	4	0	[10]
+// bdc-fix	V	unsigned int	0x29fa50	4	0	[11]
+// bdc-fix	V	unsigned int	0x29fa54	4	0	[12]
+// bdc-fix	V	unsigned int	0x29fa58	4	0	[13]
+// bdc-fix	V	unsigned int	0x29fa5c	4	0	[14]
+// bdc-fix	V	unsigned int	0x29fa60	4	0	[15]
+// bdc-fix	V	unsigned int	0x29fa64	4	0	[16]
+// bdc-fix	V	unsigned int	0x29fa68	4	0	[17]
+// bdc-fix	V	unsigned int	0x29fa6c	4	0	[18]
+// bdc-fix	V	unsigned int	0x29fa70	4	0	[19]
+// bdc-fix	V	unsigned int	0x29fa74	4	0	[20]
+// bdc-fix	V	unsigned int	0x29fa78	4	0	[21]
+// bdc-fix	V	unsigned int	0x29fa7c	4	0	[22]
+// bdc-fix	V	unsigned int	0x29fa80	4	0	[23]
 
 __typeof__(const u32[24]) g_gfxLightBaseStateList = {
     BDC_V(unsigned int, 0x29fa24), BDC_V(unsigned int, 0x29fa28), BDC_V(unsigned int, 0x29fa2c),

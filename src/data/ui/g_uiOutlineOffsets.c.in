@@ -1,5 +1,12 @@
 // bdc 0x08a3a180 g_uiOutlineOffsets
 #include "bdc.h"
+// bdc-fix	BYTES	signed char	0x236180	2	0	[0]
+// bdc-fix	BYTES	signed char	0x236182	2	0	[1]
+// bdc-fix	BYTES	signed char	0x236184	2	0	[2]
+// bdc-fix	BYTES	signed char	0x236186	2	0	[3]
+// bdc-fix	BYTES	signed char	0x236188	2	0	[4]
+// bdc-fix	BYTES	signed char	0x23618a	2	0	[5]
+// bdc-fix	BYTES	signed char	0x23618c	2	0	[6]
 
 __typeof__(const signed char [8][2]) g_uiOutlineOffsets = {
     BDC_BYTES(0x236180, 2), BDC_BYTES(0x236182, 2), BDC_BYTES(0x236184, 2), BDC_BYTES(0x236186, 2),

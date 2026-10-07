@@ -1,5 +1,8 @@
 // bdc 0x08ac58ec g_savedataSaveNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x29de00	0	0	[0]
+// bdc-fix	STR	char *	0x29de0c	0	0	[1]
+// bdc-fix	STR	char *	0x29de14	0	0	[2]
 
 __typeof__(const char *[3]) g_savedataSaveNames = {
     (const char *)BDC_STR(0x29de00), (const char *)BDC_STR(0x29de0c),

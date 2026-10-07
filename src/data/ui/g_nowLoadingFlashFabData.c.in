@@ -1,4 +1,5 @@
 // bdc 0x08ae0400 g_nowLoadingFlashFabData
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2dc400	68976	0	
 
 __typeof__(u8[68976]) g_nowLoadingFlashFabData = BDC_BYTES(0x2dc400, 68976);

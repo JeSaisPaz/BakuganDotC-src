@@ -1,5 +1,9 @@
 // bdc 0x08aa5230 g_gmoDefaultEyePos
 #include "bdc.h"
+// bdc-fix	V	float	0x2a1230	4	0	.x
+// bdc-fix	V	float	0x2a1234	4	0	.y
+// bdc-fix	V	float	0x2a1238	4	0	.z
+// bdc-fix	V	float	0x2a123c	4	0	.w
 
 __typeof__(ScePspFVector4) g_gmoDefaultEyePos = {
     .x = BDC_V(float, 0x2a1230),

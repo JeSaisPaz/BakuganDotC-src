@@ -1,4 +1,5 @@
 // bdc 0x08aa34b0 g_uiMsgBoxPromptCellX
 #include "bdc.h"
+// bdc-fix	V	float	0x29f4b4	4	0	[1]
 
 __typeof__(float[2]) g_uiMsgBoxPromptCellX = { 0, BDC_V(float, 0x29f4b4) };

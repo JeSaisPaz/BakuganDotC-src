@@ -1,4 +1,5 @@
 // bdc 0x08ac5c60 g_gmoStencilWrite
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x2c1c60	4	0	
 
 __typeof__(u32) g_gmoStencilWrite = BDC_V(unsigned int, 0x2c1c60);

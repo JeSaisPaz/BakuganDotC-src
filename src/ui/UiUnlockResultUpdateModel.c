@@ -7,20 +7,10 @@
    entry 7: adjustor + function).
    The `vsin.s` of angle·(2/π) (bank S703) is sin(angle in radians). */
 
-typedef struct UiUnlockResultVtblEntry {
-  short adjust;
-  short pad;
-  void (*fn)(void *);
-} UiUnlockResultVtblEntry;
-
-typedef struct UiUnlockResultModelVtbl {
-  UiUnlockResultVtblEntry entries[8];
-} UiUnlockResultModelVtbl;
-
 void UiUnlockResultUpdateModel(UiUnlockResult *self)
 {
   GfxModel *model = (GfxModel *)self->model;
-  const UiUnlockResultVtblEntry *entry;
+  const VtblEntry *entry;
 
   if (model == NULL) {
     return;
@@ -36,6 +26,6 @@ void UiUnlockResultUpdateModel(UiUnlockResult *self)
   } else if (self->rewardKind == 6) {
     self->modelTimer = self->modelTimer + 4.0f;
   }
-  entry = &((const UiUnlockResultModelVtbl *)model->base.vtable)->entries[7];
-  entry->fn((char *)model + entry->adjust);
+  entry = &((const VtblEntry *)model->base.vtable)[7];
+  ((void (*)(void *))entry->fn)((u8 *)model + entry->delta);
 }

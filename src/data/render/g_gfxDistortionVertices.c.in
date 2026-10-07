@@ -1,0 +1,5 @@
+// bdc 0x08a62fee g_gfxDistortionVertices
+#include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x25efee	2560	0	
+
+__typeof__(u8[2560]) g_gfxDistortionVertices = BDC_BYTES(0x25efee, 2560);

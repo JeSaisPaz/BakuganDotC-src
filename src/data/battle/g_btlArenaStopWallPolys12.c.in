@@ -1,5 +1,23 @@
 // bdc 0x08a8313c g_btlArenaStopWallPolys12
 #include "bdc.h"
+// bdc-fix	V	float	0x27f13c	4	0	[0]
+// bdc-fix	V	float	0x27f140	4	0	[1]
+// bdc-fix	V	float	0x27f144	4	0	[2]
+// bdc-fix	V	float	0x27f148	4	0	[3]
+// bdc-fix	V	float	0x27f14c	4	0	[4]
+// bdc-fix	V	float	0x27f150	4	0	[5]
+// bdc-fix	V	float	0x27f154	4	0	[6]
+// bdc-fix	V	float	0x27f158	4	0	[7]
+// bdc-fix	V	float	0x27f15c	4	0	[8]
+// bdc-fix	V	float	0x27f160	4	0	[9]
+// bdc-fix	V	float	0x27f164	4	0	[10]
+// bdc-fix	V	float	0x27f168	4	0	[11]
+// bdc-fix	V	float	0x27f16c	4	0	[12]
+// bdc-fix	V	float	0x27f170	4	0	[13]
+// bdc-fix	V	float	0x27f174	4	0	[14]
+// bdc-fix	V	float	0x27f178	4	0	[15]
+// bdc-fix	V	float	0x27f17c	4	0	[16]
+// bdc-fix	V	float	0x27f180	4	0	[17]
 
 __typeof__(float[20]) g_btlArenaStopWallPolys12 = {
     BDC_V(float, 0x27f13c), BDC_V(float, 0x27f140), BDC_V(float, 0x27f144), BDC_V(float, 0x27f148),

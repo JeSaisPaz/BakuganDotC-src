@@ -1,5 +1,27 @@
 // bdc 0x08a98a08 g_actorStateTable
 #include "bdc.h"
+// bdc-fix	V	short	0x294a0a	2	0	[0].index
+// bdc-fix	V	int	0x294a0c	4	0	[0].delta2
+// bdc-fix	V	short	0x294a12	2	0	[1].index
+// bdc-fix	V	int	0x294a14	4	0	[1].delta2
+// bdc-fix	V	short	0x294a1a	2	0	[2].index
+// bdc-fix	V	int	0x294a1c	4	0	[2].delta2
+// bdc-fix	V	short	0x294a22	2	0	[3].index
+// bdc-fix	V	int	0x294a24	4	0	[3].delta2
+// bdc-fix	V	short	0x294a2a	2	0	[4].index
+// bdc-fix	V	int	0x294a2c	4	0	[4].delta2
+// bdc-fix	V	short	0x294a32	2	0	[5].index
+// bdc-fix	V	int	0x294a34	4	0	[5].delta2
+// bdc-fix	V	short	0x294a3a	2	0	[6].index
+// bdc-fix	V	int	0x294a3c	4	0	[6].delta2
+// bdc-fix	V	short	0x294a42	2	0	[7].index
+// bdc-fix	V	int	0x294a44	4	0	[7].delta2
+// bdc-fix	V	short	0x294a4a	2	0	[8].index
+// bdc-fix	V	int	0x294a4c	4	0	[8].delta2
+// bdc-fix	V	short	0x294a52	2	0	[9].index
+// bdc-fix	V	int	0x294a54	4	0	[9].delta2
+// bdc-fix	V	short	0x294a5a	2	0	[10].index
+// bdc-fix	V	int	0x294a5c	4	0	[10].delta2
 
 __typeof__(MemberFnPtr[11]) g_actorStateTable = {
     { .index = BDC_V(short, 0x294a0a), .delta2 = BDC_V(int, 0x294a0c) },

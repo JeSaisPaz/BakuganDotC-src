@@ -1,4 +1,5 @@
 // bdc 0x08ac5c64 g_gmoMotionEnabled
 #include "bdc.h"
+// bdc-fix	V	unsigned char	0x2c1c64	1	0	
 
 __typeof__(u8) g_gmoMotionEnabled = BDC_V(unsigned char, 0x2c1c64);

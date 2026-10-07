@@ -1,4 +1,5 @@
 // bdc 0x08aa5c48 g_guViewportScaleY
 #include "bdc.h"
+// bdc-fix	V	float	0x2a1c48	4	0	
 
 __typeof__(float) g_guViewportScaleY = BDC_V(float, 0x2a1c48);

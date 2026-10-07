@@ -1,5 +1,6 @@
 // bdc 0x08af5ac4 g_cxxBadExceptionTypeInfo
 #include "bdc.h"
+// bdc-fix	STR	char *	0x2a0420	0	0	.typeName
 
 __typeof__(CxxTypeInfo) g_cxxBadExceptionTypeInfo = {
     .vtbl = (void **)&g_cxxTypeInfoVtable,

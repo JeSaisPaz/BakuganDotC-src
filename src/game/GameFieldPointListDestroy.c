@@ -5,14 +5,6 @@
    virtual destructor (slot 1, flags 3), frees the list head and clears the global. Called from
    `GameFieldDtor`. */
 
-typedef struct GameFieldPointDtorSlot {
-  s16 thisAdjust;
-  s16 pad;
-  void (*fn)(void *self, s32 flags);
-} GameFieldPointDtorSlot;
-
-/* vtable slot 1 (`vtable + 8`): this-adjust and destructor. */
-
 void GameFieldPointListDestroy(void)
 {
   GameFieldPoint *p;
@@ -24,8 +16,8 @@ void GameFieldPointListDestroy(void)
       next = p->next;
       while (1) {
         if (p != NULL) {
-          const GameFieldPointDtorSlot *slot = (const GameFieldPointDtorSlot *)p->vtable + 1;
-          slot->fn((u8 *)p + slot->thisAdjust, 3);
+          const VtblEntry *dtor = &((const VtblEntry *)p->vtable)[1];
+          ((void (*)(void *, s32))dtor->fn)((u8 *)p + dtor->delta, 3);
         }
         if (next == NULL) break;
         p = next;

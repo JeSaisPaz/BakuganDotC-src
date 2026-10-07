@@ -1,4 +1,5 @@
 // bdc 0x08a85608 g_stageObjKindSoundParams
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x281608	12	0	
 
 __typeof__(u8[12]) g_stageObjKindSoundParams = BDC_BYTES(0x281608, 12);

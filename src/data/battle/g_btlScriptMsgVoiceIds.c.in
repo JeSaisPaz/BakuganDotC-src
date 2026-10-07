@@ -1,5 +1,27 @@
 // bdc 0x08a6567c g_btlScriptMsgVoiceIds
 #include "bdc.h"
+// bdc-fix	V	int	0x26167c	4	0	[0]
+// bdc-fix	V	int	0x261680	4	0	[1]
+// bdc-fix	V	int	0x261684	4	0	[2]
+// bdc-fix	V	int	0x261688	4	0	[3]
+// bdc-fix	V	int	0x26168c	4	0	[4]
+// bdc-fix	V	int	0x261690	4	0	[5]
+// bdc-fix	V	int	0x261694	4	0	[6]
+// bdc-fix	V	int	0x261698	4	0	[7]
+// bdc-fix	V	int	0x26169c	4	0	[8]
+// bdc-fix	V	int	0x2616a0	4	0	[9]
+// bdc-fix	V	int	0x2616a4	4	0	[10]
+// bdc-fix	V	int	0x2616a8	4	0	[11]
+// bdc-fix	V	int	0x2616ac	4	0	[12]
+// bdc-fix	V	int	0x2616b0	4	0	[13]
+// bdc-fix	V	int	0x2616b4	4	0	[14]
+// bdc-fix	V	int	0x2616b8	4	0	[15]
+// bdc-fix	V	int	0x2616bc	4	0	[16]
+// bdc-fix	V	int	0x2616c0	4	0	[17]
+// bdc-fix	V	int	0x2616c4	4	0	[18]
+// bdc-fix	V	int	0x2616c8	4	0	[19]
+// bdc-fix	V	int	0x2616cc	4	0	[20]
+// bdc-fix	V	int	0x2616d0	4	0	[21]
 
 __typeof__(s32[22]) g_btlScriptMsgVoiceIds = {
     BDC_V(int, 0x26167c), BDC_V(int, 0x261680), BDC_V(int, 0x261684), BDC_V(int, 0x261688),

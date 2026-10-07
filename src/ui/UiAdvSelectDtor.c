@@ -7,22 +7,6 @@
    `+0x910` (virtual dtor, flag 3), stores its id in `g_lastScreenTaskId`. Then
    `UiScreenDtor``(screen, 0)`; frees the object when `flags & 1`. */
 
-typedef struct AdvSelectCamVSlot {
-  s16 adjust;
-  s16 pad;
-  void (*fn)(void *, s32);
-} AdvSelectCamVSlot;
-
-typedef struct AdvSelectCamVTable {
-  u8 unk00[8];
-  AdvSelectCamVSlot dtor;
-} AdvSelectCamVTable;
-
-typedef struct AdvSelectCamObj {
-  u8 unk00[0x20];
-  AdvSelectCamVTable *vtable;
-} AdvSelectCamObj;
-
 void UiAdvSelectDtor(UiAdvSelect *self, u32 flags)
 {
   if (self != NULL) {
@@ -33,10 +17,10 @@ void UiAdvSelectDtor(UiAdvSelect *self, u32 flags)
     UiAdvSelectFreeModels(self);
     GmoMotionFreeAll(GmoMotionMgrGet(), 0);
     if (self->camera != NULL) {
-      AdvSelectCamObj *cam = (AdvSelectCamObj *)self->camera;
-      AdvSelectCamVSlot *slot = &cam->vtable->dtor;
+      GfxCamera *cam = (GfxCamera *)self->camera;
+      const VtblEntry *slot = &((const VtblEntry *)cam->base.vtable)[1];
 
-      slot->fn((u8 *)cam + slot->adjust, 3);
+      ((void (*)(void *, s32))slot->fn)((u8 *)cam + slot->delta, 3);
       self->camera = NULL;
     }
     g_lastScreenTaskId = (self->base).base.id;

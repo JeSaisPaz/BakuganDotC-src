@@ -1,5 +1,18 @@
 // bdc 0x08aacbc8 g_staffCreditLayoutCopy
 #include "bdc.h"
+// bdc-fix	V	float	0x2a8bd8	4	0	.sizeAdvance[0]
+// bdc-fix	V	float	0x2a8bdc	4	0	.sizeAdvance[1]
+// bdc-fix	V	float	0x2a8be0	4	0	.sizeAdvance[2]
+// bdc-fix	V	float	0x2a8be4	4	0	.sizeAdvance[3]
+// bdc-fix	V	float	0x2a8be8	4	0	.sizeAdvance[4]
+// bdc-fix	V	float	0x2a8bf0	4	0	.sizeAdvance[6]
+// bdc-fix	V	float	0x2a8bf4	4	0	.sizeAdvance[7]
+// bdc-fix	V	float	0x2a8bf8	4	0	.sizeAdvance[8]
+// bdc-fix	V	float	0x2a8bfc	4	0	.sizeAdvance[9]
+// bdc-fix	V	float	0x2a8c00	4	0	.sizeAdvance[10]
+// bdc-fix	V	float	0x2a8c04	4	0	.sizeAdvance[11]
+// bdc-fix	V	float	0x2a8c08	4	0	.sizeAdvance[12]
+// bdc-fix	V	float	0x2a8c0c	4	0	.sizeAdvance[13]
 
 __typeof__(UiStaffCreditLayout) g_staffCreditLayoutCopy = {
     .sizeAdvance = {

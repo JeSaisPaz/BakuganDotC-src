@@ -8,15 +8,6 @@
    run commands (`GameEventRunCommands`, the interpreter), 5 → virtual slot 8 (`GameEventEnd` /
    override), 6 → `GameEventRemoveTask`. */
 
-typedef struct GameEventVtblSlot {
-  s16 adjust;
-  void (*fn)(void *self);
-} GameEventVtblSlot;
-
-typedef struct GameEventVtbl {
-  GameEventVtblSlot slots[9];
-} GameEventVtbl;
-
 void GameEventUpdate(GameEvent *self)
 {
   if ((self->flags & 2) == 0) {
@@ -41,8 +32,8 @@ void GameEventUpdate(GameEvent *self)
       GameEventRunCommands(self);
       break;
     case 5: {
-      const GameEventVtblSlot *slot = &((const GameEventVtbl *)self->base.vtable)->slots[8];
-      slot->fn((u8 *)self + slot->adjust);
+      const VtblEntry *end = &((const VtblEntry *)self->base.vtable)[8];
+      ((void (*)(void *))end->fn)((u8 *)self + end->delta);
       break;
     }
     case 6:

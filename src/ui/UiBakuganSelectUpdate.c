@@ -6,30 +6,18 @@
    `phase`, +0x28), then `UiBakuganSelectUpdateModel`, then `UiScreenUpdateCommon` and, unless a close
    was requested, `UiScreenUpdateBg`. */
 
-typedef struct BakuganPhaseEntry {
-  s16 thisAdjust; /* +0 */
-  s16 vtIndex;    /* +2: nonzero = virtual, index into the vtable */
-  void *fn;       /* +4: function, or vtable offset when virtual */
-} BakuganPhaseEntry;
-
-typedef struct BakuganVtblEntry {
-  s16 thisAdjust;
-  s16 pad;
-  void (*fn)(void *);
-} BakuganVtblEntry;
-
 void UiBakuganSelectUpdate(UiBakuganSelect *self)
 
 {
   u32 phase = self->base.phase;
   if ((s32)phase >= 0 && phase < 4) {
-    const BakuganPhaseEntry *e = (const BakuganPhaseEntry *)g_uiBakuganSelectPhaseTable + phase;
-    u8 *obj = (u8 *)self + e->thisAdjust;
-    void (*fn)(void *) = (void (*)(void *))e->fn;
-    if (e->vtIndex != 0) {
-      const BakuganVtblEntry *v = (const BakuganVtblEntry *)(*(u8 **)(obj + (intptr_t)e->fn)) + e->vtIndex;
-      fn = v->fn;
-      obj += v->thisAdjust;
+    const MemberFnPtr *e = &g_uiBakuganSelectPhaseTable[phase];
+    u8 *obj = (u8 *)self + e->delta;
+    void (*fn)(void *) = (void (*)(void *))e->pfn;
+    if (e->index != 0) {
+      const VtblEntry *v = *(const VtblEntry **)(obj + (intptr_t)e->pfn) + e->index;
+      fn = (void (*)(void *))v->fn;
+      obj += v->delta;
     }
     fn(obj);
   }

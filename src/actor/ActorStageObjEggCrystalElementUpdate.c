@@ -6,22 +6,15 @@
    runs the break virtual `+0x5c` (`ActorStageObjEggCrystalBreak`) and rebuilds the matrix — the
    crystal shatters immediately to release the Bakugan. */
 
-typedef struct StageObjVtable {
-  u8 _unk00[0x58];
-  s16 thisAdjust; /* +0x58 */
-  s16 _pad5a;
-  void (*breakFn)(void *); /* +0x5c */
-} StageObjVtable;
-
 void ActorStageObjEggCrystalElementUpdate(ActorStageObjEggCrystal *self)
 {
-  const StageObjVtable *vtable;
+  const VtblEntry *breakFn;
 
   if (self->broken == 0) {
-    vtable = (const StageObjVtable *)self->base.base.base.vtable;
+    breakFn = &((const VtblEntry *)self->base.base.base.vtable)[11];
     self->broken = 1;
     self->base.removeRequest = 1;
-    vtable->breakFn((u8 *)self + vtable->thisAdjust);
+    ((void (*)(void *))breakFn->fn)((u8 *)self + breakFn->delta);
     ActorStageObjEggCrystalUpdateTransform(self);
   }
 }

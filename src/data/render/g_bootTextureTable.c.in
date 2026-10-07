@@ -1,5 +1,19 @@
 // bdc 0x08aac764 g_bootTextureTable
 #include "bdc.h"
+// bdc-fix	STR	void *	0x22f780	0	0	[1]
+// bdc-fix	STR	void *	0x22f78c	0	0	[3]
+// bdc-fix	STR	void *	0x22f798	0	0	[5]
+// bdc-fix	STR	void *	0x22f7ac	0	0	[7]
+// bdc-fix	STR	void *	0x22f7bc	0	0	[9]
+// bdc-fix	STR	void *	0x22f7c4	0	0	[11]
+// bdc-fix	STR	void *	0x22f7d8	0	0	[13]
+// bdc-fix	STR	void *	0x22f7e4	0	0	[15]
+// bdc-fix	STR	void *	0x22f7f4	0	0	[17]
+// bdc-fix	STR	void *	0x22f804	0	0	[19]
+// bdc-fix	STR	void *	0x22f814	0	0	[21]
+// bdc-fix	STR	void *	0x22f824	0	0	[23]
+// bdc-fix	STR	void *	0x22f838	0	0	[25]
+// bdc-fix	STR	void *	0x22f844	0	0	[27]
 
 __typeof__(void *[28]) g_bootTextureTable = {
     (void *)&g_bootTexWdFont12, (void *)BDC_STR(0x22f780), (void *)&g_bootTexWdFont16,

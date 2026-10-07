@@ -1,5 +1,25 @@
 // bdc 0x08ac43a0 g_comboListPageNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x29b96c	0	0	[0]
+// bdc-fix	STR	char *	0x29b97c	0	0	[1]
+// bdc-fix	STR	char *	0x29b98c	0	0	[2]
+// bdc-fix	STR	char *	0x29b99c	0	0	[3]
+// bdc-fix	STR	char *	0x29b9ac	0	0	[4]
+// bdc-fix	STR	char *	0x29b9bc	0	0	[5]
+// bdc-fix	STR	char *	0x29b9cc	0	0	[6]
+// bdc-fix	STR	char *	0x29b9dc	0	0	[7]
+// bdc-fix	STR	char *	0x29b9ec	0	0	[8]
+// bdc-fix	STR	char *	0x29b9fc	0	0	[9]
+// bdc-fix	STR	char *	0x29ba0c	0	0	[10]
+// bdc-fix	STR	char *	0x29ba1c	0	0	[11]
+// bdc-fix	STR	char *	0x29ba2c	0	0	[12]
+// bdc-fix	STR	char *	0x29ba3c	0	0	[13]
+// bdc-fix	STR	char *	0x29ba4c	0	0	[14]
+// bdc-fix	STR	char *	0x29ba5c	0	0	[15]
+// bdc-fix	STR	char *	0x29ba6c	0	0	[16]
+// bdc-fix	STR	char *	0x29ba7c	0	0	[17]
+// bdc-fix	STR	char *	0x29ba8c	0	0	[18]
+// bdc-fix	STR	char *	0x29ba9c	0	0	[19]
 
 __typeof__(const char *[20]) g_comboListPageNames = {
     (const char *)BDC_STR(0x29b96c), (const char *)BDC_STR(0x29b97c),

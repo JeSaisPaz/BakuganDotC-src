@@ -1,5 +1,25 @@
 // bdc 0x08a9bac8 g_upgradeClassTable
 #include "bdc.h"
+// bdc-fix	V	int	0x297acc	4	0	[1]
+// bdc-fix	V	int	0x297ad0	4	0	[2]
+// bdc-fix	V	int	0x297ad4	4	0	[3]
+// bdc-fix	V	int	0x297ad8	4	0	[4]
+// bdc-fix	V	int	0x297adc	4	0	[5]
+// bdc-fix	V	int	0x297ae0	4	0	[6]
+// bdc-fix	V	int	0x297ae4	4	0	[7]
+// bdc-fix	V	int	0x297ae8	4	0	[8]
+// bdc-fix	V	int	0x297aec	4	0	[9]
+// bdc-fix	V	int	0x297af0	4	0	[10]
+// bdc-fix	V	int	0x297af4	4	0	[11]
+// bdc-fix	V	int	0x297af8	4	0	[12]
+// bdc-fix	V	int	0x297afc	4	0	[13]
+// bdc-fix	V	int	0x297b00	4	0	[14]
+// bdc-fix	V	int	0x297b04	4	0	[15]
+// bdc-fix	V	int	0x297b08	4	0	[16]
+// bdc-fix	V	int	0x297b0c	4	0	[17]
+// bdc-fix	V	int	0x297b10	4	0	[18]
+// bdc-fix	V	int	0x297b14	4	0	[19]
+// bdc-fix	V	int	0x297b18	4	0	[20]
 
 __typeof__(int[21]) g_upgradeClassTable = {
     0, BDC_V(int, 0x297acc), BDC_V(int, 0x297ad0), BDC_V(int, 0x297ad4), BDC_V(int, 0x297ad8),

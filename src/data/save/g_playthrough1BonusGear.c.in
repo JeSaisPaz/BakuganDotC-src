@@ -1,4 +1,5 @@
 // bdc 0x08ac436e g_playthrough1BonusGear
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2c036e	22	0	
 
 __typeof__(u8[22]) g_playthrough1BonusGear = BDC_BYTES(0x2c036e, 22);

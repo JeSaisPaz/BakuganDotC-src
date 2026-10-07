@@ -1,5 +1,9 @@
 // bdc 0x08ac5218 g_randState
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x2c1218	4	0	[0]
+// bdc-fix	V	unsigned int	0x2c121c	4	0	[1]
+// bdc-fix	V	unsigned int	0x2c1220	4	0	[2]
+// bdc-fix	V	unsigned int	0x2c1224	4	0	[3]
 
 __typeof__(u32[4]) g_randState = {
     BDC_V(unsigned int, 0x2c1218), BDC_V(unsigned int, 0x2c121c), BDC_V(unsigned int, 0x2c1220),

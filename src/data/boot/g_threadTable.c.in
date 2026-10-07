@@ -1,5 +1,82 @@
 // bdc 0x08ac4f78 g_threadTable
 #include "bdc.h"
+// bdc-fix	V	int	0x2c0f78	4	0	[0].threadId
+// bdc-fix	STR	char *	0x29c2e0	0	0	[0].name
+// bdc-fix	V	int	0x2c0f84	4	0	[0].initPriority
+// bdc-fix	V	unsigned int	0x2c0f88	4	0	[0].stackSize
+// bdc-fix	V	unsigned int	0x2c0f8c	4	0	[0].attr
+// bdc-fix	V	int	0x2c0f98	4	0	[1].threadId
+// bdc-fix	STR	char *	0x29c2f0	0	0	[1].name
+// bdc-fix	V	int	0x2c0fa4	4	0	[1].initPriority
+// bdc-fix	V	unsigned int	0x2c0fa8	4	0	[1].stackSize
+// bdc-fix	V	int	0x2c0fb8	4	0	[2].threadId
+// bdc-fix	STR	char *	0x29c304	0	0	[2].name
+// bdc-fix	V	int	0x2c0fc4	4	0	[2].initPriority
+// bdc-fix	V	unsigned int	0x2c0fc8	4	0	[2].stackSize
+// bdc-fix	V	int	0x2c0fd8	4	0	[3].threadId
+// bdc-fix	STR	char *	0x29c314	0	0	[3].name
+// bdc-fix	V	int	0x2c0fe4	4	0	[3].initPriority
+// bdc-fix	V	unsigned int	0x2c0fe8	4	0	[3].stackSize
+// bdc-fix	V	int	0x2c0ff8	4	0	[4].threadId
+// bdc-fix	STR	char *	0x29c324	0	0	[4].name
+// bdc-fix	V	int	0x2c1004	4	0	[4].initPriority
+// bdc-fix	V	unsigned int	0x2c1008	4	0	[4].stackSize
+// bdc-fix	V	int	0x2c1018	4	0	[5].threadId
+// bdc-fix	STR	char *	0x29c334	0	0	[5].name
+// bdc-fix	V	int	0x2c1024	4	0	[5].initPriority
+// bdc-fix	V	unsigned int	0x2c1028	4	0	[5].stackSize
+// bdc-fix	V	int	0x2c1038	4	0	[6].threadId
+// bdc-fix	STR	char *	0x29c348	0	0	[6].name
+// bdc-fix	V	int	0x2c1044	4	0	[6].initPriority
+// bdc-fix	V	unsigned int	0x2c1048	4	0	[6].stackSize
+// bdc-fix	V	int	0x2c1058	4	0	[7].threadId
+// bdc-fix	STR	char *	0x29c35c	0	0	[7].name
+// bdc-fix	V	int	0x2c1064	4	0	[7].initPriority
+// bdc-fix	V	unsigned int	0x2c1068	4	0	[7].stackSize
+// bdc-fix	V	int	0x2c1078	4	0	[8].threadId
+// bdc-fix	STR	char *	0x29c370	0	0	[8].name
+// bdc-fix	V	int	0x2c1084	4	0	[8].initPriority
+// bdc-fix	V	unsigned int	0x2c1088	4	0	[8].stackSize
+// bdc-fix	V	int	0x2c1098	4	0	[9].threadId
+// bdc-fix	STR	char *	0x29c384	0	0	[9].name
+// bdc-fix	V	int	0x2c10a4	4	0	[9].initPriority
+// bdc-fix	V	unsigned int	0x2c10a8	4	0	[9].stackSize
+// bdc-fix	V	int	0x2c10b8	4	0	[10].threadId
+// bdc-fix	STR	char *	0x29c398	0	0	[10].name
+// bdc-fix	V	int	0x2c10c4	4	0	[10].initPriority
+// bdc-fix	V	unsigned int	0x2c10c8	4	0	[10].stackSize
+// bdc-fix	V	int	0x2c10d8	4	0	[11].threadId
+// bdc-fix	STR	char *	0x29c3ac	0	0	[11].name
+// bdc-fix	V	int	0x2c10e4	4	0	[11].initPriority
+// bdc-fix	V	unsigned int	0x2c10e8	4	0	[11].stackSize
+// bdc-fix	V	int	0x2c10f8	4	0	[12].threadId
+// bdc-fix	STR	char *	0x29c3c0	0	0	[12].name
+// bdc-fix	V	int	0x2c1104	4	0	[12].initPriority
+// bdc-fix	V	unsigned int	0x2c1108	4	0	[12].stackSize
+// bdc-fix	V	int	0x2c1118	4	0	[13].threadId
+// bdc-fix	STR	char *	0x29c3d0	0	0	[13].name
+// bdc-fix	V	int	0x2c1124	4	0	[13].initPriority
+// bdc-fix	V	unsigned int	0x2c1128	4	0	[13].stackSize
+// bdc-fix	V	int	0x2c1138	4	0	[14].threadId
+// bdc-fix	STR	char *	0x29c3e4	0	0	[14].name
+// bdc-fix	V	int	0x2c1144	4	0	[14].initPriority
+// bdc-fix	V	unsigned int	0x2c1148	4	0	[14].stackSize
+// bdc-fix	V	int	0x2c1158	4	0	[15].threadId
+// bdc-fix	STR	char *	0x29c3f8	0	0	[15].name
+// bdc-fix	V	int	0x2c1164	4	0	[15].initPriority
+// bdc-fix	V	unsigned int	0x2c1168	4	0	[15].stackSize
+// bdc-fix	V	int	0x2c1178	4	0	[16].threadId
+// bdc-fix	STR	char *	0x29c3f8	0	0	[16].name
+// bdc-fix	V	int	0x2c1184	4	0	[16].initPriority
+// bdc-fix	V	unsigned int	0x2c1188	4	0	[16].stackSize
+// bdc-fix	V	int	0x2c1198	4	0	[17].threadId
+// bdc-fix	STR	char *	0x29c408	0	0	[17].name
+// bdc-fix	V	int	0x2c11a4	4	0	[17].initPriority
+// bdc-fix	V	unsigned int	0x2c11a8	4	0	[17].stackSize
+// bdc-fix	V	int	0x2c11b8	4	0	[18].threadId
+// bdc-fix	STR	char *	0x29c424	0	0	[18].name
+// bdc-fix	V	int	0x2c11c4	4	0	[18].initPriority
+// bdc-fix	V	unsigned int	0x2c11c8	4	0	[18].stackSize
 
 __typeof__(BootThreadDef[19]) g_threadTable = {
     {

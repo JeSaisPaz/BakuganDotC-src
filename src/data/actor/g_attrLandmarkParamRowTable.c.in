@@ -1,5 +1,22 @@
 // bdc 0x08abd544 g_attrLandmarkParamRowTable
 #include "bdc.h"
+// bdc-fix	V	int	0x2b9548	4	0	[1]
+// bdc-fix	V	int	0x2b954c	4	0	[2]
+// bdc-fix	V	int	0x2b9550	4	0	[3]
+// bdc-fix	V	int	0x2b9554	4	0	[4]
+// bdc-fix	V	int	0x2b9558	4	0	[5]
+// bdc-fix	V	int	0x2b955c	4	0	[6]
+// bdc-fix	V	int	0x2b9560	4	0	[7]
+// bdc-fix	V	int	0x2b9564	4	0	[8]
+// bdc-fix	V	int	0x2b9568	4	0	[9]
+// bdc-fix	V	int	0x2b956c	4	0	[10]
+// bdc-fix	V	int	0x2b9570	4	0	[11]
+// bdc-fix	V	int	0x2b9574	4	0	[12]
+// bdc-fix	V	int	0x2b9578	4	0	[13]
+// bdc-fix	V	int	0x2b957c	4	0	[14]
+// bdc-fix	V	int	0x2b9580	4	0	[15]
+// bdc-fix	V	int	0x2b9584	4	0	[16]
+// bdc-fix	V	int	0x2b9588	4	0	[17]
 
 __typeof__(int[18]) g_attrLandmarkParamRowTable = {
     0, BDC_V(int, 0x2b9548), BDC_V(int, 0x2b954c), BDC_V(int, 0x2b9550), BDC_V(int, 0x2b9554),

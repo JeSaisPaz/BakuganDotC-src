@@ -6,21 +6,10 @@
    offset (-120, 0) via `GfxCameraSetScreenOffset`, full matrix update (`GfxCameraUpdate`), then
    calls virtual slot at camera vtable `+0x10` (the update hook). */
 
-typedef struct AdvSelectCamSlot {
-  s16 adjust;
-  s16 pad;
-  void (*fn)(void *);
-} AdvSelectCamSlot;
-
-typedef struct AdvSelectCamVTable {
-  u8 unk00[0x10];
-  AdvSelectCamSlot update;
-} AdvSelectCamVTable;
-
 void UiAdvSelectCreateCamera(UiAdvSelect *self)
 {
   GfxCamera *cam;
-  const AdvSelectCamSlot *slot;
+  const VtblEntry *slot;
 
   cam = (GfxCamera *)GfxSetActiveCamera(NULL);
   self->camera = cam;
@@ -36,6 +25,6 @@ void UiAdvSelectCreateCamera(UiAdvSelect *self)
   GfxCameraSetScreenOffset(-120.0f, 0.0f, (GfxCamera *)self->camera);
   GfxCameraUpdate((GfxCamera *)self->camera, 0xffffffff);
   cam = (GfxCamera *)self->camera;
-  slot = &((const AdvSelectCamVTable *)cam->base.vtable)->update;
-  slot->fn((u8 *)cam + slot->adjust);
+  slot = &((const VtblEntry *)cam->base.vtable)[2];
+  ((void (*)(void *))slot->fn)((u8 *)cam + slot->delta);
 }

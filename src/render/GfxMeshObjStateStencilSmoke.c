@@ -33,11 +33,11 @@ void GfxMeshObjStateStencilSmoke(GfxMeshObj *self)
             return;
         }
         if (step <= 0) {
-            self->vertices = NULL;
+            self->indices = NULL;
             self->drawKind = 1;
             self->primCmd = 4;
             self->vertexType = 0x81;
-            self->indices = g_gfxSmokeQuadVerts;
+            self->vertices = g_gfxSmokeQuadVerts;
             self->texScaleU = 1.0f;
             self->texScaleV = 1.0f;
             self->blendMode = 1;

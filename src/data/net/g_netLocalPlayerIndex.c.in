@@ -1,4 +1,5 @@
 // bdc 0x08aac9ec g_netLocalPlayerIndex
 #include "bdc.h"
+// bdc-fix	V	int	0x2a89ec	4	0	
 
 __typeof__(s32) g_netLocalPlayerIndex = BDC_V(int, 0x2a89ec);

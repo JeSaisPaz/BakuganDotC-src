@@ -1,5 +1,15 @@
 // bdc 0x08a9d044 g_staffCreditKindSprite
 #include "bdc.h"
+// bdc-fix	V	int	0x299044	4	0	[0]
+// bdc-fix	V	int	0x299048	4	0	[1]
+// bdc-fix	V	int	0x29904c	4	0	[2]
+// bdc-fix	V	int	0x299050	4	0	[3]
+// bdc-fix	V	int	0x299054	4	0	[4]
+// bdc-fix	V	int	0x299058	4	0	[5]
+// bdc-fix	V	int	0x29905c	4	0	[6]
+// bdc-fix	V	int	0x299060	4	0	[7]
+// bdc-fix	V	int	0x299064	4	0	[8]
+// bdc-fix	V	int	0x299068	4	0	[9]
 
 __typeof__(const s32[10]) g_staffCreditKindSprite = {
     BDC_V(int, 0x299044), BDC_V(int, 0x299048), BDC_V(int, 0x29904c), BDC_V(int, 0x299050),

@@ -1,5 +1,2377 @@
 // bdc 0x08a69060 g_btlAttackParamTable
 #include "bdc.h"
+// bdc-fix	V	short	0x265064	2	0	[0]._unk04
+// bdc-fix	V	short	0x265066	2	0	[0]._unk06
+// bdc-fix	V	short	0x26506c	2	0	[0]._unk0c
+// bdc-fix	V	unsigned char	0x26506e	1	0	[0].reflectMode
+// bdc-fix	V	unsigned char	0x26506f	1	0	[0].hitCount
+// bdc-fix	V	int	0x265070	4	0	[0].power
+// bdc-fix	V	int	0x265074	4	0	[0].specialPower
+// bdc-fix	V	int	0x265078	4	0	[0].knockdownPower
+// bdc-fix	V	int	0x26507c	4	0	[0].flinchPower
+// bdc-fix	V	int	0x265080	4	0	[0].hitEnergy
+// bdc-fix	V	float	0x265084	4	0	[0]._unk24
+// bdc-fix	V	float	0x265088	4	0	[0]._unk28
+// bdc-fix	V	float	0x26508c	4	0	[0]._unk2c
+// bdc-fix	V	float	0x265090	4	0	[0]._unk30
+// bdc-fix	V	int	0x265098	4	0	[0].launchSound
+// bdc-fix	V	int	0x26509c	4	0	[0].hitSound
+// bdc-fix	V	int	0x2650a0	4	0	[0]._unk40
+// bdc-fix	BYTES	unsigned char	0x2650a4	3	0	[1]._unk00
+// bdc-fix	V	short	0x2650a8	2	0	[1]._unk04
+// bdc-fix	V	short	0x2650aa	2	0	[1]._unk06
+// bdc-fix	V	unsigned char	0x2650ac	1	0	[1].noGuardFlag
+// bdc-fix	V	short	0x2650b0	2	0	[1]._unk0c
+// bdc-fix	V	unsigned char	0x2650b3	1	0	[1].hitCount
+// bdc-fix	V	int	0x2650b4	4	0	[1].power
+// bdc-fix	V	int	0x2650b8	4	0	[1].specialPower
+// bdc-fix	V	int	0x2650bc	4	0	[1].knockdownPower
+// bdc-fix	V	int	0x2650c0	4	0	[1].flinchPower
+// bdc-fix	V	int	0x2650c4	4	0	[1].hitEnergy
+// bdc-fix	V	float	0x2650c8	4	0	[1]._unk24
+// bdc-fix	V	float	0x2650d0	4	0	[1]._unk2c
+// bdc-fix	V	float	0x2650d4	4	0	[1]._unk30
+// bdc-fix	V	int	0x2650dc	4	0	[1].launchSound
+// bdc-fix	V	int	0x2650e0	4	0	[1].hitSound
+// bdc-fix	V	int	0x2650e4	4	0	[1]._unk40
+// bdc-fix	BYTES	unsigned char	0x2650e8	3	0	[2]._unk00
+// bdc-fix	V	short	0x2650ec	2	0	[2]._unk04
+// bdc-fix	V	short	0x2650ee	2	0	[2]._unk06
+// bdc-fix	V	short	0x2650f4	2	0	[2]._unk0c
+// bdc-fix	V	unsigned char	0x2650f6	1	0	[2].reflectMode
+// bdc-fix	V	unsigned char	0x2650f7	1	0	[2].hitCount
+// bdc-fix	V	int	0x2650f8	4	0	[2].power
+// bdc-fix	V	int	0x2650fc	4	0	[2].specialPower
+// bdc-fix	V	int	0x265100	4	0	[2].knockdownPower
+// bdc-fix	V	int	0x265104	4	0	[2].flinchPower
+// bdc-fix	V	int	0x265108	4	0	[2].hitEnergy
+// bdc-fix	V	float	0x26510c	4	0	[2]._unk24
+// bdc-fix	V	float	0x265110	4	0	[2]._unk28
+// bdc-fix	V	float	0x265114	4	0	[2]._unk2c
+// bdc-fix	V	float	0x265118	4	0	[2]._unk30
+// bdc-fix	V	int	0x265120	4	0	[2].launchSound
+// bdc-fix	V	int	0x265124	4	0	[2].hitSound
+// bdc-fix	V	int	0x265128	4	0	[2]._unk40
+// bdc-fix	BYTES	unsigned char	0x26512c	3	0	[3]._unk00
+// bdc-fix	V	short	0x265130	2	0	[3]._unk04
+// bdc-fix	V	short	0x265132	2	0	[3]._unk06
+// bdc-fix	V	unsigned char	0x265134	1	0	[3].noGuardFlag
+// bdc-fix	V	short	0x265138	2	0	[3]._unk0c
+// bdc-fix	V	unsigned char	0x26513b	1	0	[3].hitCount
+// bdc-fix	V	int	0x26513c	4	0	[3].power
+// bdc-fix	V	int	0x265140	4	0	[3].specialPower
+// bdc-fix	V	int	0x265144	4	0	[3].knockdownPower
+// bdc-fix	V	int	0x265148	4	0	[3].flinchPower
+// bdc-fix	V	int	0x26514c	4	0	[3].hitEnergy
+// bdc-fix	V	float	0x265150	4	0	[3]._unk24
+// bdc-fix	V	float	0x265154	4	0	[3]._unk28
+// bdc-fix	V	float	0x265158	4	0	[3]._unk2c
+// bdc-fix	V	float	0x26515c	4	0	[3]._unk30
+// bdc-fix	V	int	0x265164	4	0	[3].launchSound
+// bdc-fix	V	int	0x265168	4	0	[3].hitSound
+// bdc-fix	V	int	0x26516c	4	0	[3]._unk40
+// bdc-fix	BYTES	unsigned char	0x265170	3	0	[4]._unk00
+// bdc-fix	V	short	0x265174	2	0	[4]._unk04
+// bdc-fix	V	short	0x265176	2	0	[4]._unk06
+// bdc-fix	V	short	0x26517c	2	0	[4]._unk0c
+// bdc-fix	V	unsigned char	0x26517e	1	0	[4].reflectMode
+// bdc-fix	V	unsigned char	0x26517f	1	0	[4].hitCount
+// bdc-fix	V	int	0x265180	4	0	[4].power
+// bdc-fix	V	int	0x265184	4	0	[4].specialPower
+// bdc-fix	V	int	0x265188	4	0	[4].knockdownPower
+// bdc-fix	V	int	0x26518c	4	0	[4].flinchPower
+// bdc-fix	V	int	0x265190	4	0	[4].hitEnergy
+// bdc-fix	V	float	0x265194	4	0	[4]._unk24
+// bdc-fix	V	float	0x26519c	4	0	[4]._unk2c
+// bdc-fix	V	float	0x2651a0	4	0	[4]._unk30
+// bdc-fix	V	int	0x2651a8	4	0	[4].launchSound
+// bdc-fix	V	int	0x2651ac	4	0	[4].hitSound
+// bdc-fix	V	int	0x2651b0	4	0	[4]._unk40
+// bdc-fix	BYTES	unsigned char	0x2651b4	3	0	[5]._unk00
+// bdc-fix	V	short	0x2651b8	2	0	[5]._unk04
+// bdc-fix	V	short	0x2651ba	2	0	[5]._unk06
+// bdc-fix	V	unsigned char	0x2651bc	1	0	[5].noGuardFlag
+// bdc-fix	V	short	0x2651c0	2	0	[5]._unk0c
+// bdc-fix	V	unsigned char	0x2651c3	1	0	[5].hitCount
+// bdc-fix	V	int	0x2651c4	4	0	[5].power
+// bdc-fix	V	int	0x2651c8	4	0	[5].specialPower
+// bdc-fix	V	int	0x2651cc	4	0	[5].knockdownPower
+// bdc-fix	V	int	0x2651d0	4	0	[5].flinchPower
+// bdc-fix	V	int	0x2651d4	4	0	[5].hitEnergy
+// bdc-fix	V	float	0x2651d8	4	0	[5]._unk24
+// bdc-fix	V	float	0x2651dc	4	0	[5]._unk28
+// bdc-fix	V	float	0x2651e0	4	0	[5]._unk2c
+// bdc-fix	V	float	0x2651e4	4	0	[5]._unk30
+// bdc-fix	V	int	0x2651ec	4	0	[5].launchSound
+// bdc-fix	V	int	0x2651f0	4	0	[5].hitSound
+// bdc-fix	V	int	0x2651f4	4	0	[5]._unk40
+// bdc-fix	BYTES	unsigned char	0x2651f8	3	0	[6]._unk00
+// bdc-fix	V	short	0x2651fc	2	0	[6]._unk04
+// bdc-fix	V	short	0x2651fe	2	0	[6]._unk06
+// bdc-fix	V	short	0x265204	2	0	[6]._unk0c
+// bdc-fix	V	unsigned char	0x265206	1	0	[6].reflectMode
+// bdc-fix	V	unsigned char	0x265207	1	0	[6].hitCount
+// bdc-fix	V	int	0x265208	4	0	[6].power
+// bdc-fix	V	int	0x26520c	4	0	[6].specialPower
+// bdc-fix	V	int	0x265210	4	0	[6].knockdownPower
+// bdc-fix	V	int	0x265214	4	0	[6].flinchPower
+// bdc-fix	V	int	0x265218	4	0	[6].hitEnergy
+// bdc-fix	V	float	0x26521c	4	0	[6]._unk24
+// bdc-fix	V	float	0x265224	4	0	[6]._unk2c
+// bdc-fix	V	float	0x265228	4	0	[6]._unk30
+// bdc-fix	V	int	0x265230	4	0	[6].launchSound
+// bdc-fix	V	int	0x265234	4	0	[6].hitSound
+// bdc-fix	V	int	0x265238	4	0	[6]._unk40
+// bdc-fix	BYTES	unsigned char	0x26523c	3	0	[7]._unk00
+// bdc-fix	V	short	0x265240	2	0	[7]._unk04
+// bdc-fix	V	short	0x265242	2	0	[7]._unk06
+// bdc-fix	V	short	0x265248	2	0	[7]._unk0c
+// bdc-fix	V	unsigned char	0x26524b	1	0	[7].hitCount
+// bdc-fix	V	int	0x26524c	4	0	[7].power
+// bdc-fix	V	int	0x265250	4	0	[7].specialPower
+// bdc-fix	V	int	0x265254	4	0	[7].knockdownPower
+// bdc-fix	V	int	0x265258	4	0	[7].flinchPower
+// bdc-fix	V	int	0x26525c	4	0	[7].hitEnergy
+// bdc-fix	V	float	0x265260	4	0	[7]._unk24
+// bdc-fix	V	float	0x265268	4	0	[7]._unk2c
+// bdc-fix	V	float	0x26526c	4	0	[7]._unk30
+// bdc-fix	V	int	0x265274	4	0	[7].launchSound
+// bdc-fix	V	int	0x265278	4	0	[7].hitSound
+// bdc-fix	V	int	0x26527c	4	0	[7]._unk40
+// bdc-fix	BYTES	unsigned char	0x265280	3	0	[8]._unk00
+// bdc-fix	V	short	0x265284	2	0	[8]._unk04
+// bdc-fix	V	short	0x265286	2	0	[8]._unk06
+// bdc-fix	V	unsigned char	0x265288	1	0	[8].noGuardFlag
+// bdc-fix	V	short	0x26528c	2	0	[8]._unk0c
+// bdc-fix	V	unsigned char	0x26528f	1	0	[8].hitCount
+// bdc-fix	V	int	0x265290	4	0	[8].power
+// bdc-fix	V	int	0x265294	4	0	[8].specialPower
+// bdc-fix	V	int	0x265298	4	0	[8].knockdownPower
+// bdc-fix	V	int	0x26529c	4	0	[8].flinchPower
+// bdc-fix	V	int	0x2652a0	4	0	[8].hitEnergy
+// bdc-fix	V	float	0x2652a4	4	0	[8]._unk24
+// bdc-fix	V	float	0x2652ac	4	0	[8]._unk2c
+// bdc-fix	V	float	0x2652b0	4	0	[8]._unk30
+// bdc-fix	V	int	0x2652b8	4	0	[8].launchSound
+// bdc-fix	V	int	0x2652bc	4	0	[8].hitSound
+// bdc-fix	V	int	0x2652c0	4	0	[8]._unk40
+// bdc-fix	BYTES	unsigned char	0x2652c4	3	0	[9]._unk00
+// bdc-fix	V	short	0x2652c8	2	0	[9]._unk04
+// bdc-fix	V	short	0x2652ca	2	0	[9]._unk06
+// bdc-fix	V	unsigned char	0x2652cc	1	0	[9].noGuardFlag
+// bdc-fix	V	short	0x2652d0	2	0	[9]._unk0c
+// bdc-fix	V	unsigned char	0x2652d3	1	0	[9].hitCount
+// bdc-fix	V	int	0x2652d4	4	0	[9].power
+// bdc-fix	V	int	0x2652d8	4	0	[9].specialPower
+// bdc-fix	V	int	0x2652dc	4	0	[9].knockdownPower
+// bdc-fix	V	int	0x2652e0	4	0	[9].flinchPower
+// bdc-fix	V	int	0x2652e4	4	0	[9].hitEnergy
+// bdc-fix	V	float	0x2652e8	4	0	[9]._unk24
+// bdc-fix	V	float	0x2652f0	4	0	[9]._unk2c
+// bdc-fix	V	float	0x2652f4	4	0	[9]._unk30
+// bdc-fix	V	int	0x2652fc	4	0	[9].launchSound
+// bdc-fix	V	int	0x265300	4	0	[9].hitSound
+// bdc-fix	V	int	0x265304	4	0	[9]._unk40
+// bdc-fix	BYTES	unsigned char	0x265308	3	0	[10]._unk00
+// bdc-fix	V	short	0x26530c	2	0	[10]._unk04
+// bdc-fix	V	short	0x26530e	2	0	[10]._unk06
+// bdc-fix	V	unsigned char	0x265310	1	0	[10].noGuardFlag
+// bdc-fix	V	short	0x265314	2	0	[10]._unk0c
+// bdc-fix	V	unsigned char	0x265317	1	0	[10].hitCount
+// bdc-fix	V	int	0x265318	4	0	[10].power
+// bdc-fix	V	int	0x26531c	4	0	[10].specialPower
+// bdc-fix	V	int	0x265320	4	0	[10].knockdownPower
+// bdc-fix	V	int	0x265324	4	0	[10].flinchPower
+// bdc-fix	V	int	0x265328	4	0	[10].hitEnergy
+// bdc-fix	V	float	0x26532c	4	0	[10]._unk24
+// bdc-fix	V	float	0x265334	4	0	[10]._unk2c
+// bdc-fix	V	float	0x265338	4	0	[10]._unk30
+// bdc-fix	V	int	0x265340	4	0	[10].launchSound
+// bdc-fix	V	int	0x265344	4	0	[10].hitSound
+// bdc-fix	V	int	0x265348	4	0	[10]._unk40
+// bdc-fix	BYTES	unsigned char	0x26534c	3	0	[11]._unk00
+// bdc-fix	V	short	0x265350	2	0	[11]._unk04
+// bdc-fix	V	short	0x265352	2	0	[11]._unk06
+// bdc-fix	V	unsigned char	0x265354	1	0	[11].noGuardFlag
+// bdc-fix	V	short	0x265358	2	0	[11]._unk0c
+// bdc-fix	V	unsigned char	0x26535b	1	0	[11].hitCount
+// bdc-fix	V	int	0x26535c	4	0	[11].power
+// bdc-fix	V	int	0x265360	4	0	[11].specialPower
+// bdc-fix	V	int	0x265364	4	0	[11].knockdownPower
+// bdc-fix	V	int	0x265368	4	0	[11].flinchPower
+// bdc-fix	V	int	0x26536c	4	0	[11].hitEnergy
+// bdc-fix	V	float	0x265370	4	0	[11]._unk24
+// bdc-fix	V	float	0x265378	4	0	[11]._unk2c
+// bdc-fix	V	float	0x26537c	4	0	[11]._unk30
+// bdc-fix	V	int	0x265384	4	0	[11].launchSound
+// bdc-fix	V	int	0x265388	4	0	[11].hitSound
+// bdc-fix	V	int	0x26538c	4	0	[11]._unk40
+// bdc-fix	BYTES	unsigned char	0x265390	3	0	[12]._unk00
+// bdc-fix	V	short	0x265394	2	0	[12]._unk04
+// bdc-fix	V	short	0x265396	2	0	[12]._unk06
+// bdc-fix	V	unsigned char	0x265398	1	0	[12].noGuardFlag
+// bdc-fix	V	short	0x26539c	2	0	[12]._unk0c
+// bdc-fix	V	unsigned char	0x26539f	1	0	[12].hitCount
+// bdc-fix	V	int	0x2653b0	4	0	[12].hitEnergy
+// bdc-fix	V	float	0x2653b4	4	0	[12]._unk24
+// bdc-fix	V	float	0x2653bc	4	0	[12]._unk2c
+// bdc-fix	V	int	0x2653c8	4	0	[12].launchSound
+// bdc-fix	V	int	0x2653cc	4	0	[12].hitSound
+// bdc-fix	V	int	0x2653d0	4	0	[12]._unk40
+// bdc-fix	BYTES	unsigned char	0x2653d4	3	0	[13]._unk00
+// bdc-fix	V	short	0x2653d8	2	0	[13]._unk04
+// bdc-fix	V	short	0x2653da	2	0	[13]._unk06
+// bdc-fix	V	unsigned char	0x2653dc	1	0	[13].noGuardFlag
+// bdc-fix	V	short	0x2653e0	2	0	[13]._unk0c
+// bdc-fix	V	unsigned char	0x2653e3	1	0	[13].hitCount
+// bdc-fix	V	int	0x2653e4	4	0	[13].power
+// bdc-fix	V	int	0x2653e8	4	0	[13].specialPower
+// bdc-fix	V	int	0x2653ec	4	0	[13].knockdownPower
+// bdc-fix	V	int	0x2653f0	4	0	[13].flinchPower
+// bdc-fix	V	int	0x2653f4	4	0	[13].hitEnergy
+// bdc-fix	V	float	0x2653f8	4	0	[13]._unk24
+// bdc-fix	V	float	0x265400	4	0	[13]._unk2c
+// bdc-fix	V	float	0x265404	4	0	[13]._unk30
+// bdc-fix	V	int	0x26540c	4	0	[13].launchSound
+// bdc-fix	V	int	0x265410	4	0	[13].hitSound
+// bdc-fix	V	int	0x265414	4	0	[13]._unk40
+// bdc-fix	BYTES	unsigned char	0x265418	3	0	[14]._unk00
+// bdc-fix	V	short	0x26541c	2	0	[14]._unk04
+// bdc-fix	V	short	0x26541e	2	0	[14]._unk06
+// bdc-fix	V	unsigned char	0x265420	1	0	[14].noGuardFlag
+// bdc-fix	V	short	0x265424	2	0	[14]._unk0c
+// bdc-fix	V	unsigned char	0x265427	1	0	[14].hitCount
+// bdc-fix	V	int	0x265428	4	0	[14].power
+// bdc-fix	V	int	0x26542c	4	0	[14].specialPower
+// bdc-fix	V	int	0x265430	4	0	[14].knockdownPower
+// bdc-fix	V	int	0x265434	4	0	[14].flinchPower
+// bdc-fix	V	int	0x265438	4	0	[14].hitEnergy
+// bdc-fix	V	float	0x26543c	4	0	[14]._unk24
+// bdc-fix	V	float	0x265444	4	0	[14]._unk2c
+// bdc-fix	V	float	0x265448	4	0	[14]._unk30
+// bdc-fix	V	int	0x265450	4	0	[14].launchSound
+// bdc-fix	V	int	0x265454	4	0	[14].hitSound
+// bdc-fix	V	int	0x265458	4	0	[14]._unk40
+// bdc-fix	BYTES	unsigned char	0x26545c	3	0	[15]._unk00
+// bdc-fix	V	short	0x265460	2	0	[15]._unk04
+// bdc-fix	V	short	0x265462	2	0	[15]._unk06
+// bdc-fix	V	unsigned char	0x265464	1	0	[15].noGuardFlag
+// bdc-fix	V	short	0x265468	2	0	[15]._unk0c
+// bdc-fix	V	unsigned char	0x26546b	1	0	[15].hitCount
+// bdc-fix	V	int	0x26546c	4	0	[15].power
+// bdc-fix	V	int	0x265470	4	0	[15].specialPower
+// bdc-fix	V	int	0x265474	4	0	[15].knockdownPower
+// bdc-fix	V	int	0x265478	4	0	[15].flinchPower
+// bdc-fix	V	int	0x26547c	4	0	[15].hitEnergy
+// bdc-fix	V	float	0x265480	4	0	[15]._unk24
+// bdc-fix	V	float	0x265484	4	0	[15]._unk28
+// bdc-fix	V	float	0x265488	4	0	[15]._unk2c
+// bdc-fix	V	float	0x26548c	4	0	[15]._unk30
+// bdc-fix	V	int	0x265494	4	0	[15].launchSound
+// bdc-fix	V	int	0x265498	4	0	[15].hitSound
+// bdc-fix	V	int	0x26549c	4	0	[15]._unk40
+// bdc-fix	BYTES	unsigned char	0x2654a0	3	0	[16]._unk00
+// bdc-fix	V	short	0x2654a4	2	0	[16]._unk04
+// bdc-fix	V	short	0x2654a6	2	0	[16]._unk06
+// bdc-fix	V	unsigned char	0x2654a8	1	0	[16].noGuardFlag
+// bdc-fix	V	short	0x2654ac	2	0	[16]._unk0c
+// bdc-fix	V	unsigned char	0x2654af	1	0	[16].hitCount
+// bdc-fix	V	int	0x2654b0	4	0	[16].power
+// bdc-fix	V	int	0x2654b4	4	0	[16].specialPower
+// bdc-fix	V	int	0x2654b8	4	0	[16].knockdownPower
+// bdc-fix	V	int	0x2654bc	4	0	[16].flinchPower
+// bdc-fix	V	int	0x2654c0	4	0	[16].hitEnergy
+// bdc-fix	V	float	0x2654c4	4	0	[16]._unk24
+// bdc-fix	V	float	0x2654cc	4	0	[16]._unk2c
+// bdc-fix	V	float	0x2654d0	4	0	[16]._unk30
+// bdc-fix	V	int	0x2654d8	4	0	[16].launchSound
+// bdc-fix	V	int	0x2654dc	4	0	[16].hitSound
+// bdc-fix	V	int	0x2654e0	4	0	[16]._unk40
+// bdc-fix	BYTES	unsigned char	0x2654e4	3	0	[17]._unk00
+// bdc-fix	V	short	0x2654e8	2	0	[17]._unk04
+// bdc-fix	V	short	0x2654ea	2	0	[17]._unk06
+// bdc-fix	V	unsigned char	0x2654ec	1	0	[17].noGuardFlag
+// bdc-fix	V	short	0x2654f0	2	0	[17]._unk0c
+// bdc-fix	V	unsigned char	0x2654f3	1	0	[17].hitCount
+// bdc-fix	V	int	0x2654f4	4	0	[17].power
+// bdc-fix	V	int	0x2654f8	4	0	[17].specialPower
+// bdc-fix	V	int	0x2654fc	4	0	[17].knockdownPower
+// bdc-fix	V	int	0x265500	4	0	[17].flinchPower
+// bdc-fix	V	int	0x265504	4	0	[17].hitEnergy
+// bdc-fix	V	float	0x265508	4	0	[17]._unk24
+// bdc-fix	V	float	0x265510	4	0	[17]._unk2c
+// bdc-fix	V	float	0x265514	4	0	[17]._unk30
+// bdc-fix	V	int	0x26551c	4	0	[17].launchSound
+// bdc-fix	V	int	0x265520	4	0	[17].hitSound
+// bdc-fix	V	int	0x265524	4	0	[17]._unk40
+// bdc-fix	BYTES	unsigned char	0x265528	3	0	[18]._unk00
+// bdc-fix	V	short	0x26552c	2	0	[18]._unk04
+// bdc-fix	V	short	0x26552e	2	0	[18]._unk06
+// bdc-fix	V	short	0x265534	2	0	[18]._unk0c
+// bdc-fix	V	unsigned char	0x265536	1	0	[18].reflectMode
+// bdc-fix	V	unsigned char	0x265537	1	0	[18].hitCount
+// bdc-fix	V	int	0x265538	4	0	[18].power
+// bdc-fix	V	int	0x26553c	4	0	[18].specialPower
+// bdc-fix	V	int	0x265540	4	0	[18].knockdownPower
+// bdc-fix	V	int	0x265544	4	0	[18].flinchPower
+// bdc-fix	V	int	0x265548	4	0	[18].hitEnergy
+// bdc-fix	V	float	0x26554c	4	0	[18]._unk24
+// bdc-fix	V	float	0x265550	4	0	[18]._unk28
+// bdc-fix	V	float	0x265554	4	0	[18]._unk2c
+// bdc-fix	V	float	0x265558	4	0	[18]._unk30
+// bdc-fix	V	int	0x265560	4	0	[18].launchSound
+// bdc-fix	V	int	0x265564	4	0	[18].hitSound
+// bdc-fix	V	int	0x265568	4	0	[18]._unk40
+// bdc-fix	BYTES	unsigned char	0x26556c	3	0	[19]._unk00
+// bdc-fix	V	short	0x265570	2	0	[19]._unk04
+// bdc-fix	V	short	0x265572	2	0	[19]._unk06
+// bdc-fix	V	short	0x265578	2	0	[19]._unk0c
+// bdc-fix	V	unsigned char	0x26557b	1	0	[19].hitCount
+// bdc-fix	V	int	0x26557c	4	0	[19].power
+// bdc-fix	V	int	0x265580	4	0	[19].specialPower
+// bdc-fix	V	int	0x265584	4	0	[19].knockdownPower
+// bdc-fix	V	int	0x265588	4	0	[19].flinchPower
+// bdc-fix	V	int	0x26558c	4	0	[19].hitEnergy
+// bdc-fix	V	float	0x265590	4	0	[19]._unk24
+// bdc-fix	V	float	0x265594	4	0	[19]._unk28
+// bdc-fix	V	float	0x265598	4	0	[19]._unk2c
+// bdc-fix	V	float	0x26559c	4	0	[19]._unk30
+// bdc-fix	BYTES	unsigned char	0x2655a0	4	0	[19]._unk34
+// bdc-fix	V	int	0x2655a4	4	0	[19].launchSound
+// bdc-fix	V	int	0x2655a8	4	0	[19].hitSound
+// bdc-fix	V	int	0x2655ac	4	0	[19]._unk40
+// bdc-fix	BYTES	unsigned char	0x2655b0	3	0	[20]._unk00
+// bdc-fix	V	short	0x2655b4	2	0	[20]._unk04
+// bdc-fix	V	short	0x2655b6	2	0	[20]._unk06
+// bdc-fix	V	short	0x2655bc	2	0	[20]._unk0c
+// bdc-fix	V	unsigned char	0x2655bf	1	0	[20].hitCount
+// bdc-fix	V	int	0x2655c0	4	0	[20].power
+// bdc-fix	V	int	0x2655c4	4	0	[20].specialPower
+// bdc-fix	V	int	0x2655c8	4	0	[20].knockdownPower
+// bdc-fix	V	int	0x2655cc	4	0	[20].flinchPower
+// bdc-fix	V	int	0x2655d0	4	0	[20].hitEnergy
+// bdc-fix	V	float	0x2655d4	4	0	[20]._unk24
+// bdc-fix	V	float	0x2655d8	4	0	[20]._unk28
+// bdc-fix	V	float	0x2655dc	4	0	[20]._unk2c
+// bdc-fix	V	float	0x2655e0	4	0	[20]._unk30
+// bdc-fix	BYTES	unsigned char	0x2655e4	4	0	[20]._unk34
+// bdc-fix	V	int	0x2655e8	4	0	[20].launchSound
+// bdc-fix	V	int	0x2655ec	4	0	[20].hitSound
+// bdc-fix	V	int	0x2655f0	4	0	[20]._unk40
+// bdc-fix	BYTES	unsigned char	0x2655f4	3	0	[21]._unk00
+// bdc-fix	V	short	0x2655f8	2	0	[21]._unk04
+// bdc-fix	V	short	0x2655fa	2	0	[21]._unk06
+// bdc-fix	V	unsigned char	0x2655fc	1	0	[21].noGuardFlag
+// bdc-fix	V	short	0x265600	2	0	[21]._unk0c
+// bdc-fix	V	unsigned char	0x265603	1	0	[21].hitCount
+// bdc-fix	V	int	0x265604	4	0	[21].power
+// bdc-fix	V	int	0x265608	4	0	[21].specialPower
+// bdc-fix	V	int	0x26560c	4	0	[21].knockdownPower
+// bdc-fix	V	int	0x265610	4	0	[21].flinchPower
+// bdc-fix	V	int	0x265614	4	0	[21].hitEnergy
+// bdc-fix	V	float	0x265618	4	0	[21]._unk24
+// bdc-fix	V	float	0x265620	4	0	[21]._unk2c
+// bdc-fix	V	float	0x265624	4	0	[21]._unk30
+// bdc-fix	V	int	0x26562c	4	0	[21].launchSound
+// bdc-fix	V	int	0x265630	4	0	[21].hitSound
+// bdc-fix	V	int	0x265634	4	0	[21]._unk40
+// bdc-fix	BYTES	unsigned char	0x265638	3	0	[22]._unk00
+// bdc-fix	V	short	0x26563c	2	0	[22]._unk04
+// bdc-fix	V	short	0x26563e	2	0	[22]._unk06
+// bdc-fix	V	unsigned char	0x265640	1	0	[22].noGuardFlag
+// bdc-fix	V	short	0x265644	2	0	[22]._unk0c
+// bdc-fix	V	unsigned char	0x265647	1	0	[22].hitCount
+// bdc-fix	V	int	0x265648	4	0	[22].power
+// bdc-fix	V	int	0x26564c	4	0	[22].specialPower
+// bdc-fix	V	int	0x265650	4	0	[22].knockdownPower
+// bdc-fix	V	int	0x265654	4	0	[22].flinchPower
+// bdc-fix	V	int	0x265658	4	0	[22].hitEnergy
+// bdc-fix	V	float	0x26565c	4	0	[22]._unk24
+// bdc-fix	V	float	0x265664	4	0	[22]._unk2c
+// bdc-fix	V	float	0x265668	4	0	[22]._unk30
+// bdc-fix	BYTES	unsigned char	0x26566c	4	0	[22]._unk34
+// bdc-fix	V	int	0x265670	4	0	[22].launchSound
+// bdc-fix	V	int	0x265674	4	0	[22].hitSound
+// bdc-fix	V	int	0x265678	4	0	[22]._unk40
+// bdc-fix	BYTES	unsigned char	0x26567c	3	0	[23]._unk00
+// bdc-fix	V	short	0x265680	2	0	[23]._unk04
+// bdc-fix	V	short	0x265682	2	0	[23]._unk06
+// bdc-fix	V	unsigned char	0x265684	1	0	[23].noGuardFlag
+// bdc-fix	V	short	0x265688	2	0	[23]._unk0c
+// bdc-fix	V	unsigned char	0x26568b	1	0	[23].hitCount
+// bdc-fix	V	int	0x26568c	4	0	[23].power
+// bdc-fix	V	int	0x265690	4	0	[23].specialPower
+// bdc-fix	V	int	0x265694	4	0	[23].knockdownPower
+// bdc-fix	V	int	0x265698	4	0	[23].flinchPower
+// bdc-fix	V	int	0x26569c	4	0	[23].hitEnergy
+// bdc-fix	V	float	0x2656a0	4	0	[23]._unk24
+// bdc-fix	V	float	0x2656a8	4	0	[23]._unk2c
+// bdc-fix	V	float	0x2656ac	4	0	[23]._unk30
+// bdc-fix	BYTES	unsigned char	0x2656b0	4	0	[23]._unk34
+// bdc-fix	V	int	0x2656b4	4	0	[23].launchSound
+// bdc-fix	V	int	0x2656b8	4	0	[23].hitSound
+// bdc-fix	V	int	0x2656bc	4	0	[23]._unk40
+// bdc-fix	BYTES	unsigned char	0x2656c0	3	0	[24]._unk00
+// bdc-fix	V	short	0x2656c4	2	0	[24]._unk04
+// bdc-fix	V	short	0x2656c6	2	0	[24]._unk06
+// bdc-fix	V	short	0x2656cc	2	0	[24]._unk0c
+// bdc-fix	V	unsigned char	0x2656ce	1	0	[24].reflectMode
+// bdc-fix	V	unsigned char	0x2656cf	1	0	[24].hitCount
+// bdc-fix	V	int	0x2656d0	4	0	[24].power
+// bdc-fix	V	int	0x2656d4	4	0	[24].specialPower
+// bdc-fix	V	int	0x2656d8	4	0	[24].knockdownPower
+// bdc-fix	V	int	0x2656dc	4	0	[24].flinchPower
+// bdc-fix	V	int	0x2656e0	4	0	[24].hitEnergy
+// bdc-fix	V	float	0x2656e4	4	0	[24]._unk24
+// bdc-fix	V	float	0x2656e8	4	0	[24]._unk28
+// bdc-fix	V	float	0x2656ec	4	0	[24]._unk2c
+// bdc-fix	V	float	0x2656f0	4	0	[24]._unk30
+// bdc-fix	V	int	0x2656f8	4	0	[24].launchSound
+// bdc-fix	V	int	0x2656fc	4	0	[24].hitSound
+// bdc-fix	V	int	0x265700	4	0	[24]._unk40
+// bdc-fix	BYTES	unsigned char	0x265704	3	0	[25]._unk00
+// bdc-fix	V	short	0x265708	2	0	[25]._unk04
+// bdc-fix	V	short	0x26570a	2	0	[25]._unk06
+// bdc-fix	V	unsigned char	0x26570c	1	0	[25].noGuardFlag
+// bdc-fix	V	short	0x265710	2	0	[25]._unk0c
+// bdc-fix	V	unsigned char	0x265713	1	0	[25].hitCount
+// bdc-fix	V	int	0x265714	4	0	[25].power
+// bdc-fix	V	int	0x265718	4	0	[25].specialPower
+// bdc-fix	V	int	0x26571c	4	0	[25].knockdownPower
+// bdc-fix	V	int	0x265720	4	0	[25].flinchPower
+// bdc-fix	V	int	0x265724	4	0	[25].hitEnergy
+// bdc-fix	V	float	0x265728	4	0	[25]._unk24
+// bdc-fix	V	float	0x26572c	4	0	[25]._unk28
+// bdc-fix	V	float	0x265730	4	0	[25]._unk2c
+// bdc-fix	V	float	0x265734	4	0	[25]._unk30
+// bdc-fix	V	int	0x26573c	4	0	[25].launchSound
+// bdc-fix	V	int	0x265740	4	0	[25].hitSound
+// bdc-fix	V	int	0x265744	4	0	[25]._unk40
+// bdc-fix	BYTES	unsigned char	0x265748	3	0	[26]._unk00
+// bdc-fix	V	short	0x26574c	2	0	[26]._unk04
+// bdc-fix	V	short	0x26574e	2	0	[26]._unk06
+// bdc-fix	V	short	0x265754	2	0	[26]._unk0c
+// bdc-fix	V	unsigned char	0x265756	1	0	[26].reflectMode
+// bdc-fix	V	unsigned char	0x265757	1	0	[26].hitCount
+// bdc-fix	V	int	0x265758	4	0	[26].power
+// bdc-fix	V	int	0x26575c	4	0	[26].specialPower
+// bdc-fix	V	int	0x265760	4	0	[26].knockdownPower
+// bdc-fix	V	int	0x265764	4	0	[26].flinchPower
+// bdc-fix	V	int	0x265768	4	0	[26].hitEnergy
+// bdc-fix	V	float	0x26576c	4	0	[26]._unk24
+// bdc-fix	V	float	0x265770	4	0	[26]._unk28
+// bdc-fix	V	float	0x265774	4	0	[26]._unk2c
+// bdc-fix	V	float	0x265778	4	0	[26]._unk30
+// bdc-fix	V	int	0x265780	4	0	[26].launchSound
+// bdc-fix	V	int	0x265784	4	0	[26].hitSound
+// bdc-fix	V	int	0x265788	4	0	[26]._unk40
+// bdc-fix	BYTES	unsigned char	0x26578c	3	0	[27]._unk00
+// bdc-fix	V	short	0x265790	2	0	[27]._unk04
+// bdc-fix	V	short	0x265792	2	0	[27]._unk06
+// bdc-fix	V	unsigned char	0x265794	1	0	[27].noGuardFlag
+// bdc-fix	V	short	0x265798	2	0	[27]._unk0c
+// bdc-fix	V	unsigned char	0x26579b	1	0	[27].hitCount
+// bdc-fix	V	int	0x26579c	4	0	[27].power
+// bdc-fix	V	int	0x2657a0	4	0	[27].specialPower
+// bdc-fix	V	int	0x2657a4	4	0	[27].knockdownPower
+// bdc-fix	V	int	0x2657a8	4	0	[27].flinchPower
+// bdc-fix	V	int	0x2657ac	4	0	[27].hitEnergy
+// bdc-fix	V	float	0x2657b0	4	0	[27]._unk24
+// bdc-fix	V	float	0x2657b4	4	0	[27]._unk28
+// bdc-fix	V	float	0x2657b8	4	0	[27]._unk2c
+// bdc-fix	V	float	0x2657bc	4	0	[27]._unk30
+// bdc-fix	BYTES	unsigned char	0x2657c0	4	0	[27]._unk34
+// bdc-fix	V	int	0x2657c4	4	0	[27].launchSound
+// bdc-fix	V	int	0x2657c8	4	0	[27].hitSound
+// bdc-fix	V	int	0x2657cc	4	0	[27]._unk40
+// bdc-fix	BYTES	unsigned char	0x2657d0	3	0	[28]._unk00
+// bdc-fix	V	short	0x2657d4	2	0	[28]._unk04
+// bdc-fix	V	short	0x2657d6	2	0	[28]._unk06
+// bdc-fix	V	unsigned char	0x2657d8	1	0	[28].noGuardFlag
+// bdc-fix	V	short	0x2657dc	2	0	[28]._unk0c
+// bdc-fix	V	unsigned char	0x2657df	1	0	[28].hitCount
+// bdc-fix	V	int	0x2657e0	4	0	[28].power
+// bdc-fix	V	int	0x2657e4	4	0	[28].specialPower
+// bdc-fix	V	int	0x2657e8	4	0	[28].knockdownPower
+// bdc-fix	V	int	0x2657ec	4	0	[28].flinchPower
+// bdc-fix	V	int	0x2657f0	4	0	[28].hitEnergy
+// bdc-fix	V	float	0x2657f4	4	0	[28]._unk24
+// bdc-fix	V	float	0x2657fc	4	0	[28]._unk2c
+// bdc-fix	V	float	0x265800	4	0	[28]._unk30
+// bdc-fix	V	int	0x265808	4	0	[28].launchSound
+// bdc-fix	V	int	0x26580c	4	0	[28].hitSound
+// bdc-fix	V	int	0x265810	4	0	[28]._unk40
+// bdc-fix	BYTES	unsigned char	0x265814	3	0	[29]._unk00
+// bdc-fix	V	short	0x265818	2	0	[29]._unk04
+// bdc-fix	V	short	0x26581a	2	0	[29]._unk06
+// bdc-fix	V	short	0x265820	2	0	[29]._unk0c
+// bdc-fix	V	unsigned char	0x265822	1	0	[29].reflectMode
+// bdc-fix	V	unsigned char	0x265823	1	0	[29].hitCount
+// bdc-fix	V	int	0x265824	4	0	[29].power
+// bdc-fix	V	int	0x265828	4	0	[29].specialPower
+// bdc-fix	V	int	0x26582c	4	0	[29].knockdownPower
+// bdc-fix	V	int	0x265830	4	0	[29].flinchPower
+// bdc-fix	V	int	0x265834	4	0	[29].hitEnergy
+// bdc-fix	V	float	0x265838	4	0	[29]._unk24
+// bdc-fix	V	float	0x26583c	4	0	[29]._unk28
+// bdc-fix	V	float	0x265840	4	0	[29]._unk2c
+// bdc-fix	V	float	0x265844	4	0	[29]._unk30
+// bdc-fix	V	int	0x26584c	4	0	[29].launchSound
+// bdc-fix	V	int	0x265850	4	0	[29].hitSound
+// bdc-fix	V	int	0x265854	4	0	[29]._unk40
+// bdc-fix	BYTES	unsigned char	0x265858	3	0	[30]._unk00
+// bdc-fix	V	short	0x26585c	2	0	[30]._unk04
+// bdc-fix	V	short	0x26585e	2	0	[30]._unk06
+// bdc-fix	V	unsigned char	0x265860	1	0	[30].noGuardFlag
+// bdc-fix	V	short	0x265864	2	0	[30]._unk0c
+// bdc-fix	V	unsigned char	0x265867	1	0	[30].hitCount
+// bdc-fix	V	int	0x265868	4	0	[30].power
+// bdc-fix	V	int	0x26586c	4	0	[30].specialPower
+// bdc-fix	V	int	0x265870	4	0	[30].knockdownPower
+// bdc-fix	V	int	0x265874	4	0	[30].flinchPower
+// bdc-fix	V	int	0x265878	4	0	[30].hitEnergy
+// bdc-fix	V	float	0x26587c	4	0	[30]._unk24
+// bdc-fix	V	float	0x265880	4	0	[30]._unk28
+// bdc-fix	V	float	0x265884	4	0	[30]._unk2c
+// bdc-fix	V	float	0x265888	4	0	[30]._unk30
+// bdc-fix	V	int	0x265890	4	0	[30].launchSound
+// bdc-fix	V	int	0x265894	4	0	[30].hitSound
+// bdc-fix	V	int	0x265898	4	0	[30]._unk40
+// bdc-fix	BYTES	unsigned char	0x26589c	3	0	[31]._unk00
+// bdc-fix	V	short	0x2658a0	2	0	[31]._unk04
+// bdc-fix	V	short	0x2658a2	2	0	[31]._unk06
+// bdc-fix	V	unsigned char	0x2658a4	1	0	[31].noGuardFlag
+// bdc-fix	V	short	0x2658a8	2	0	[31]._unk0c
+// bdc-fix	V	unsigned char	0x2658ab	1	0	[31].hitCount
+// bdc-fix	V	int	0x2658ac	4	0	[31].power
+// bdc-fix	V	int	0x2658b0	4	0	[31].specialPower
+// bdc-fix	V	int	0x2658b4	4	0	[31].knockdownPower
+// bdc-fix	V	int	0x2658b8	4	0	[31].flinchPower
+// bdc-fix	V	int	0x2658bc	4	0	[31].hitEnergy
+// bdc-fix	V	float	0x2658c0	4	0	[31]._unk24
+// bdc-fix	V	float	0x2658c8	4	0	[31]._unk2c
+// bdc-fix	V	float	0x2658cc	4	0	[31]._unk30
+// bdc-fix	V	int	0x2658d4	4	0	[31].launchSound
+// bdc-fix	V	int	0x2658d8	4	0	[31].hitSound
+// bdc-fix	V	int	0x2658dc	4	0	[31]._unk40
+// bdc-fix	BYTES	unsigned char	0x2658e0	3	0	[32]._unk00
+// bdc-fix	V	short	0x2658e4	2	0	[32]._unk04
+// bdc-fix	V	short	0x2658e6	2	0	[32]._unk06
+// bdc-fix	V	unsigned char	0x2658e8	1	0	[32].noGuardFlag
+// bdc-fix	V	short	0x2658ec	2	0	[32]._unk0c
+// bdc-fix	V	unsigned char	0x2658ef	1	0	[32].hitCount
+// bdc-fix	V	int	0x2658f0	4	0	[32].power
+// bdc-fix	V	int	0x2658f4	4	0	[32].specialPower
+// bdc-fix	V	int	0x2658fc	4	0	[32].flinchPower
+// bdc-fix	V	int	0x265900	4	0	[32].hitEnergy
+// bdc-fix	V	float	0x265904	4	0	[32]._unk24
+// bdc-fix	V	float	0x265908	4	0	[32]._unk28
+// bdc-fix	V	float	0x26590c	4	0	[32]._unk2c
+// bdc-fix	V	float	0x265910	4	0	[32]._unk30
+// bdc-fix	BYTES	unsigned char	0x265914	4	0	[32]._unk34
+// bdc-fix	V	int	0x265918	4	0	[32].launchSound
+// bdc-fix	V	int	0x26591c	4	0	[32].hitSound
+// bdc-fix	V	int	0x265920	4	0	[32]._unk40
+// bdc-fix	BYTES	unsigned char	0x265924	3	0	[33]._unk00
+// bdc-fix	V	short	0x265928	2	0	[33]._unk04
+// bdc-fix	V	short	0x26592a	2	0	[33]._unk06
+// bdc-fix	V	unsigned char	0x26592c	1	0	[33].noGuardFlag
+// bdc-fix	V	short	0x265930	2	0	[33]._unk0c
+// bdc-fix	V	unsigned char	0x265933	1	0	[33].hitCount
+// bdc-fix	V	int	0x265934	4	0	[33].power
+// bdc-fix	V	int	0x265938	4	0	[33].specialPower
+// bdc-fix	V	int	0x26593c	4	0	[33].knockdownPower
+// bdc-fix	V	int	0x265940	4	0	[33].flinchPower
+// bdc-fix	V	int	0x265944	4	0	[33].hitEnergy
+// bdc-fix	V	float	0x265948	4	0	[33]._unk24
+// bdc-fix	V	float	0x265950	4	0	[33]._unk2c
+// bdc-fix	V	float	0x265954	4	0	[33]._unk30
+// bdc-fix	V	int	0x26595c	4	0	[33].launchSound
+// bdc-fix	V	int	0x265960	4	0	[33].hitSound
+// bdc-fix	V	int	0x265964	4	0	[33]._unk40
+// bdc-fix	BYTES	unsigned char	0x265968	3	0	[34]._unk00
+// bdc-fix	V	short	0x26596c	2	0	[34]._unk04
+// bdc-fix	V	short	0x26596e	2	0	[34]._unk06
+// bdc-fix	V	short	0x265974	2	0	[34]._unk0c
+// bdc-fix	V	unsigned char	0x265976	1	0	[34].reflectMode
+// bdc-fix	V	unsigned char	0x265977	1	0	[34].hitCount
+// bdc-fix	V	int	0x265978	4	0	[34].power
+// bdc-fix	V	int	0x26597c	4	0	[34].specialPower
+// bdc-fix	V	int	0x265980	4	0	[34].knockdownPower
+// bdc-fix	V	int	0x265984	4	0	[34].flinchPower
+// bdc-fix	V	int	0x265988	4	0	[34].hitEnergy
+// bdc-fix	V	float	0x26598c	4	0	[34]._unk24
+// bdc-fix	V	float	0x265990	4	0	[34]._unk28
+// bdc-fix	V	float	0x265994	4	0	[34]._unk2c
+// bdc-fix	V	float	0x265998	4	0	[34]._unk30
+// bdc-fix	V	int	0x2659a0	4	0	[34].launchSound
+// bdc-fix	V	int	0x2659a4	4	0	[34].hitSound
+// bdc-fix	V	int	0x2659a8	4	0	[34]._unk40
+// bdc-fix	BYTES	unsigned char	0x2659ac	3	0	[35]._unk00
+// bdc-fix	V	short	0x2659b0	2	0	[35]._unk04
+// bdc-fix	V	short	0x2659b2	2	0	[35]._unk06
+// bdc-fix	V	unsigned char	0x2659b4	1	0	[35].noGuardFlag
+// bdc-fix	V	short	0x2659b8	2	0	[35]._unk0c
+// bdc-fix	V	unsigned char	0x2659bb	1	0	[35].hitCount
+// bdc-fix	V	int	0x2659bc	4	0	[35].power
+// bdc-fix	V	int	0x2659c0	4	0	[35].specialPower
+// bdc-fix	V	int	0x2659c4	4	0	[35].knockdownPower
+// bdc-fix	V	int	0x2659c8	4	0	[35].flinchPower
+// bdc-fix	V	int	0x2659cc	4	0	[35].hitEnergy
+// bdc-fix	V	float	0x2659d0	4	0	[35]._unk24
+// bdc-fix	V	float	0x2659d4	4	0	[35]._unk28
+// bdc-fix	V	float	0x2659d8	4	0	[35]._unk2c
+// bdc-fix	V	float	0x2659dc	4	0	[35]._unk30
+// bdc-fix	V	int	0x2659e4	4	0	[35].launchSound
+// bdc-fix	V	int	0x2659e8	4	0	[35].hitSound
+// bdc-fix	V	int	0x2659ec	4	0	[35]._unk40
+// bdc-fix	BYTES	unsigned char	0x2659f0	3	0	[36]._unk00
+// bdc-fix	V	short	0x2659f4	2	0	[36]._unk04
+// bdc-fix	V	short	0x2659f6	2	0	[36]._unk06
+// bdc-fix	V	unsigned char	0x2659f8	1	0	[36].noGuardFlag
+// bdc-fix	V	short	0x2659fc	2	0	[36]._unk0c
+// bdc-fix	V	unsigned char	0x2659ff	1	0	[36].hitCount
+// bdc-fix	V	int	0x265a00	4	0	[36].power
+// bdc-fix	V	int	0x265a04	4	0	[36].specialPower
+// bdc-fix	V	int	0x265a08	4	0	[36].knockdownPower
+// bdc-fix	V	int	0x265a0c	4	0	[36].flinchPower
+// bdc-fix	V	int	0x265a10	4	0	[36].hitEnergy
+// bdc-fix	V	float	0x265a14	4	0	[36]._unk24
+// bdc-fix	V	float	0x265a18	4	0	[36]._unk28
+// bdc-fix	V	float	0x265a1c	4	0	[36]._unk2c
+// bdc-fix	V	float	0x265a20	4	0	[36]._unk30
+// bdc-fix	V	int	0x265a28	4	0	[36].launchSound
+// bdc-fix	V	int	0x265a2c	4	0	[36].hitSound
+// bdc-fix	V	int	0x265a30	4	0	[36]._unk40
+// bdc-fix	BYTES	unsigned char	0x265a34	3	0	[37]._unk00
+// bdc-fix	V	short	0x265a38	2	0	[37]._unk04
+// bdc-fix	V	short	0x265a3a	2	0	[37]._unk06
+// bdc-fix	V	unsigned char	0x265a3c	1	0	[37].noGuardFlag
+// bdc-fix	V	short	0x265a40	2	0	[37]._unk0c
+// bdc-fix	V	unsigned char	0x265a43	1	0	[37].hitCount
+// bdc-fix	V	int	0x265a54	4	0	[37].hitEnergy
+// bdc-fix	V	float	0x265a58	4	0	[37]._unk24
+// bdc-fix	V	float	0x265a60	4	0	[37]._unk2c
+// bdc-fix	V	int	0x265a6c	4	0	[37].launchSound
+// bdc-fix	V	int	0x265a70	4	0	[37].hitSound
+// bdc-fix	V	int	0x265a74	4	0	[37]._unk40
+// bdc-fix	V	short	0x265a7c	2	0	[38]._unk04
+// bdc-fix	V	short	0x265a7e	2	0	[38]._unk06
+// bdc-fix	V	short	0x265a84	2	0	[38]._unk0c
+// bdc-fix	V	unsigned char	0x265a86	1	0	[38].reflectMode
+// bdc-fix	V	unsigned char	0x265a87	1	0	[38].hitCount
+// bdc-fix	V	int	0x265a88	4	0	[38].power
+// bdc-fix	V	int	0x265a8c	4	0	[38].specialPower
+// bdc-fix	V	int	0x265a90	4	0	[38].knockdownPower
+// bdc-fix	V	int	0x265a94	4	0	[38].flinchPower
+// bdc-fix	V	int	0x265a98	4	0	[38].hitEnergy
+// bdc-fix	V	float	0x265a9c	4	0	[38]._unk24
+// bdc-fix	V	float	0x265aa0	4	0	[38]._unk28
+// bdc-fix	V	float	0x265aa4	4	0	[38]._unk2c
+// bdc-fix	V	float	0x265aa8	4	0	[38]._unk30
+// bdc-fix	V	int	0x265ab0	4	0	[38].launchSound
+// bdc-fix	V	int	0x265ab4	4	0	[38].hitSound
+// bdc-fix	V	int	0x265ab8	4	0	[38]._unk40
+// bdc-fix	BYTES	unsigned char	0x265abc	3	0	[39]._unk00
+// bdc-fix	V	short	0x265ac0	2	0	[39]._unk04
+// bdc-fix	V	short	0x265ac2	2	0	[39]._unk06
+// bdc-fix	V	short	0x265ac8	2	0	[39]._unk0c
+// bdc-fix	V	unsigned char	0x265acb	1	0	[39].hitCount
+// bdc-fix	V	int	0x265acc	4	0	[39].power
+// bdc-fix	V	int	0x265ad0	4	0	[39].specialPower
+// bdc-fix	V	int	0x265ad4	4	0	[39].knockdownPower
+// bdc-fix	V	int	0x265ad8	4	0	[39].flinchPower
+// bdc-fix	V	int	0x265adc	4	0	[39].hitEnergy
+// bdc-fix	V	float	0x265ae0	4	0	[39]._unk24
+// bdc-fix	V	float	0x265ae4	4	0	[39]._unk28
+// bdc-fix	V	float	0x265ae8	4	0	[39]._unk2c
+// bdc-fix	V	float	0x265aec	4	0	[39]._unk30
+// bdc-fix	BYTES	unsigned char	0x265af0	4	0	[39]._unk34
+// bdc-fix	V	int	0x265af4	4	0	[39].launchSound
+// bdc-fix	V	int	0x265af8	4	0	[39].hitSound
+// bdc-fix	V	int	0x265afc	4	0	[39]._unk40
+// bdc-fix	BYTES	unsigned char	0x265b00	3	0	[40]._unk00
+// bdc-fix	V	short	0x265b04	2	0	[40]._unk04
+// bdc-fix	V	short	0x265b06	2	0	[40]._unk06
+// bdc-fix	V	short	0x265b0c	2	0	[40]._unk0c
+// bdc-fix	V	unsigned char	0x265b0e	1	0	[40].reflectMode
+// bdc-fix	V	unsigned char	0x265b0f	1	0	[40].hitCount
+// bdc-fix	V	int	0x265b10	4	0	[40].power
+// bdc-fix	V	int	0x265b14	4	0	[40].specialPower
+// bdc-fix	V	int	0x265b18	4	0	[40].knockdownPower
+// bdc-fix	V	int	0x265b1c	4	0	[40].flinchPower
+// bdc-fix	V	int	0x265b20	4	0	[40].hitEnergy
+// bdc-fix	V	float	0x265b24	4	0	[40]._unk24
+// bdc-fix	V	float	0x265b2c	4	0	[40]._unk2c
+// bdc-fix	V	float	0x265b30	4	0	[40]._unk30
+// bdc-fix	V	int	0x265b38	4	0	[40].launchSound
+// bdc-fix	V	int	0x265b3c	4	0	[40].hitSound
+// bdc-fix	V	int	0x265b40	4	0	[40]._unk40
+// bdc-fix	BYTES	unsigned char	0x265b44	3	0	[41]._unk00
+// bdc-fix	V	short	0x265b48	2	0	[41]._unk04
+// bdc-fix	V	short	0x265b4a	2	0	[41]._unk06
+// bdc-fix	V	unsigned char	0x265b4c	1	0	[41].noGuardFlag
+// bdc-fix	V	short	0x265b50	2	0	[41]._unk0c
+// bdc-fix	V	unsigned char	0x265b53	1	0	[41].hitCount
+// bdc-fix	V	int	0x265b54	4	0	[41].power
+// bdc-fix	V	int	0x265b58	4	0	[41].specialPower
+// bdc-fix	V	int	0x265b5c	4	0	[41].knockdownPower
+// bdc-fix	V	int	0x265b60	4	0	[41].flinchPower
+// bdc-fix	V	int	0x265b64	4	0	[41].hitEnergy
+// bdc-fix	V	float	0x265b68	4	0	[41]._unk24
+// bdc-fix	V	float	0x265b70	4	0	[41]._unk2c
+// bdc-fix	V	float	0x265b74	4	0	[41]._unk30
+// bdc-fix	V	int	0x265b7c	4	0	[41].launchSound
+// bdc-fix	V	int	0x265b80	4	0	[41].hitSound
+// bdc-fix	V	int	0x265b84	4	0	[41]._unk40
+// bdc-fix	BYTES	unsigned char	0x265b88	3	0	[42]._unk00
+// bdc-fix	V	short	0x265b8c	2	0	[42]._unk04
+// bdc-fix	V	short	0x265b8e	2	0	[42]._unk06
+// bdc-fix	V	unsigned char	0x265b90	1	0	[42].noGuardFlag
+// bdc-fix	V	short	0x265b94	2	0	[42]._unk0c
+// bdc-fix	V	unsigned char	0x265b97	1	0	[42].hitCount
+// bdc-fix	V	int	0x265b98	4	0	[42].power
+// bdc-fix	V	int	0x265b9c	4	0	[42].specialPower
+// bdc-fix	V	int	0x265ba0	4	0	[42].knockdownPower
+// bdc-fix	V	int	0x265ba4	4	0	[42].flinchPower
+// bdc-fix	V	int	0x265ba8	4	0	[42].hitEnergy
+// bdc-fix	V	float	0x265bac	4	0	[42]._unk24
+// bdc-fix	V	float	0x265bb4	4	0	[42]._unk2c
+// bdc-fix	V	float	0x265bb8	4	0	[42]._unk30
+// bdc-fix	BYTES	unsigned char	0x265bbc	4	0	[42]._unk34
+// bdc-fix	V	int	0x265bc0	4	0	[42].launchSound
+// bdc-fix	V	int	0x265bc4	4	0	[42].hitSound
+// bdc-fix	V	int	0x265bc8	4	0	[42]._unk40
+// bdc-fix	BYTES	unsigned char	0x265bcc	3	0	[43]._unk00
+// bdc-fix	V	short	0x265bd0	2	0	[43]._unk04
+// bdc-fix	V	short	0x265bd2	2	0	[43]._unk06
+// bdc-fix	V	unsigned char	0x265bd4	1	0	[43].noGuardFlag
+// bdc-fix	V	short	0x265bd8	2	0	[43]._unk0c
+// bdc-fix	V	unsigned char	0x265bdb	1	0	[43].hitCount
+// bdc-fix	V	int	0x265bec	4	0	[43].hitEnergy
+// bdc-fix	V	float	0x265bf0	4	0	[43]._unk24
+// bdc-fix	V	float	0x265bf8	4	0	[43]._unk2c
+// bdc-fix	V	int	0x265c04	4	0	[43].launchSound
+// bdc-fix	V	int	0x265c08	4	0	[43].hitSound
+// bdc-fix	V	int	0x265c0c	4	0	[43]._unk40
+// bdc-fix	BYTES	unsigned char	0x265c10	3	0	[44]._unk00
+// bdc-fix	V	short	0x265c14	2	0	[44]._unk04
+// bdc-fix	V	short	0x265c16	2	0	[44]._unk06
+// bdc-fix	V	unsigned char	0x265c18	1	0	[44].noGuardFlag
+// bdc-fix	V	short	0x265c1c	2	0	[44]._unk0c
+// bdc-fix	V	unsigned char	0x265c1f	1	0	[44].hitCount
+// bdc-fix	V	int	0x265c20	4	0	[44].power
+// bdc-fix	V	int	0x265c24	4	0	[44].specialPower
+// bdc-fix	V	int	0x265c28	4	0	[44].knockdownPower
+// bdc-fix	V	int	0x265c2c	4	0	[44].flinchPower
+// bdc-fix	V	int	0x265c30	4	0	[44].hitEnergy
+// bdc-fix	V	float	0x265c34	4	0	[44]._unk24
+// bdc-fix	V	float	0x265c3c	4	0	[44]._unk2c
+// bdc-fix	V	float	0x265c40	4	0	[44]._unk30
+// bdc-fix	BYTES	unsigned char	0x265c44	4	0	[44]._unk34
+// bdc-fix	V	int	0x265c48	4	0	[44].launchSound
+// bdc-fix	V	int	0x265c4c	4	0	[44].hitSound
+// bdc-fix	V	int	0x265c50	4	0	[44]._unk40
+// bdc-fix	BYTES	unsigned char	0x265c54	3	0	[45]._unk00
+// bdc-fix	V	short	0x265c58	2	0	[45]._unk04
+// bdc-fix	V	short	0x265c5a	2	0	[45]._unk06
+// bdc-fix	V	unsigned char	0x265c5c	1	0	[45].noGuardFlag
+// bdc-fix	V	short	0x265c60	2	0	[45]._unk0c
+// bdc-fix	V	unsigned char	0x265c63	1	0	[45].hitCount
+// bdc-fix	V	int	0x265c64	4	0	[45].power
+// bdc-fix	V	int	0x265c68	4	0	[45].specialPower
+// bdc-fix	V	int	0x265c6c	4	0	[45].knockdownPower
+// bdc-fix	V	int	0x265c70	4	0	[45].flinchPower
+// bdc-fix	V	int	0x265c74	4	0	[45].hitEnergy
+// bdc-fix	V	float	0x265c78	4	0	[45]._unk24
+// bdc-fix	V	float	0x265c80	4	0	[45]._unk2c
+// bdc-fix	V	float	0x265c84	4	0	[45]._unk30
+// bdc-fix	V	int	0x265c8c	4	0	[45].launchSound
+// bdc-fix	V	int	0x265c90	4	0	[45].hitSound
+// bdc-fix	V	int	0x265c94	4	0	[45]._unk40
+// bdc-fix	BYTES	unsigned char	0x265c98	3	0	[46]._unk00
+// bdc-fix	V	short	0x265c9c	2	0	[46]._unk04
+// bdc-fix	V	short	0x265c9e	2	0	[46]._unk06
+// bdc-fix	V	short	0x265ca4	2	0	[46]._unk0c
+// bdc-fix	V	unsigned char	0x265ca6	1	0	[46].reflectMode
+// bdc-fix	V	unsigned char	0x265ca7	1	0	[46].hitCount
+// bdc-fix	V	int	0x265ca8	4	0	[46].power
+// bdc-fix	V	int	0x265cac	4	0	[46].specialPower
+// bdc-fix	V	int	0x265cb0	4	0	[46].knockdownPower
+// bdc-fix	V	int	0x265cb4	4	0	[46].flinchPower
+// bdc-fix	V	float	0x265cbc	4	0	[46]._unk24
+// bdc-fix	V	float	0x265cc0	4	0	[46]._unk28
+// bdc-fix	V	float	0x265cc4	4	0	[46]._unk2c
+// bdc-fix	V	float	0x265cc8	4	0	[46]._unk30
+// bdc-fix	V	int	0x265cd0	4	0	[46].launchSound
+// bdc-fix	V	int	0x265cd4	4	0	[46].hitSound
+// bdc-fix	V	int	0x265cd8	4	0	[46]._unk40
+// bdc-fix	BYTES	unsigned char	0x265cdc	3	0	[47]._unk00
+// bdc-fix	V	short	0x265ce0	2	0	[47]._unk04
+// bdc-fix	V	short	0x265ce2	2	0	[47]._unk06
+// bdc-fix	V	unsigned char	0x265ce4	1	0	[47].noGuardFlag
+// bdc-fix	V	short	0x265ce8	2	0	[47]._unk0c
+// bdc-fix	V	unsigned char	0x265ceb	1	0	[47].hitCount
+// bdc-fix	V	int	0x265cec	4	0	[47].power
+// bdc-fix	V	int	0x265cf0	4	0	[47].specialPower
+// bdc-fix	V	int	0x265cf4	4	0	[47].knockdownPower
+// bdc-fix	V	int	0x265cf8	4	0	[47].flinchPower
+// bdc-fix	V	int	0x265cfc	4	0	[47].hitEnergy
+// bdc-fix	V	float	0x265d00	4	0	[47]._unk24
+// bdc-fix	V	float	0x265d04	4	0	[47]._unk28
+// bdc-fix	V	float	0x265d08	4	0	[47]._unk2c
+// bdc-fix	V	float	0x265d0c	4	0	[47]._unk30
+// bdc-fix	V	int	0x265d14	4	0	[47].launchSound
+// bdc-fix	V	int	0x265d18	4	0	[47].hitSound
+// bdc-fix	V	int	0x265d1c	4	0	[47]._unk40
+// bdc-fix	BYTES	unsigned char	0x265d20	3	0	[48]._unk00
+// bdc-fix	V	short	0x265d24	2	0	[48]._unk04
+// bdc-fix	V	short	0x265d26	2	0	[48]._unk06
+// bdc-fix	V	unsigned char	0x265d28	1	0	[48].noGuardFlag
+// bdc-fix	V	short	0x265d2c	2	0	[48]._unk0c
+// bdc-fix	V	unsigned char	0x265d2f	1	0	[48].hitCount
+// bdc-fix	V	int	0x265d40	4	0	[48].hitEnergy
+// bdc-fix	V	float	0x265d44	4	0	[48]._unk24
+// bdc-fix	V	float	0x265d4c	4	0	[48]._unk2c
+// bdc-fix	V	int	0x265d58	4	0	[48].launchSound
+// bdc-fix	V	int	0x265d5c	4	0	[48].hitSound
+// bdc-fix	V	int	0x265d60	4	0	[48]._unk40
+// bdc-fix	BYTES	unsigned char	0x265d64	3	0	[49]._unk00
+// bdc-fix	V	short	0x265d68	2	0	[49]._unk04
+// bdc-fix	V	short	0x265d6a	2	0	[49]._unk06
+// bdc-fix	V	unsigned char	0x265d6c	1	0	[49].noGuardFlag
+// bdc-fix	V	short	0x265d70	2	0	[49]._unk0c
+// bdc-fix	V	unsigned char	0x265d73	1	0	[49].hitCount
+// bdc-fix	V	int	0x265d74	4	0	[49].power
+// bdc-fix	V	int	0x265d78	4	0	[49].specialPower
+// bdc-fix	V	int	0x265d7c	4	0	[49].knockdownPower
+// bdc-fix	V	int	0x265d80	4	0	[49].flinchPower
+// bdc-fix	V	int	0x265d84	4	0	[49].hitEnergy
+// bdc-fix	V	float	0x265d88	4	0	[49]._unk24
+// bdc-fix	V	float	0x265d90	4	0	[49]._unk2c
+// bdc-fix	V	float	0x265d94	4	0	[49]._unk30
+// bdc-fix	V	int	0x265d9c	4	0	[49].launchSound
+// bdc-fix	V	int	0x265da0	4	0	[49].hitSound
+// bdc-fix	V	int	0x265da4	4	0	[49]._unk40
+// bdc-fix	BYTES	unsigned char	0x265da8	3	0	[50]._unk00
+// bdc-fix	V	short	0x265dac	2	0	[50]._unk04
+// bdc-fix	V	short	0x265dae	2	0	[50]._unk06
+// bdc-fix	V	short	0x265db4	2	0	[50]._unk0c
+// bdc-fix	V	unsigned char	0x265db6	1	0	[50].reflectMode
+// bdc-fix	V	unsigned char	0x265db7	1	0	[50].hitCount
+// bdc-fix	V	int	0x265db8	4	0	[50].power
+// bdc-fix	V	int	0x265dbc	4	0	[50].specialPower
+// bdc-fix	V	int	0x265dc0	4	0	[50].knockdownPower
+// bdc-fix	V	int	0x265dc4	4	0	[50].flinchPower
+// bdc-fix	V	int	0x265dc8	4	0	[50].hitEnergy
+// bdc-fix	V	float	0x265dcc	4	0	[50]._unk24
+// bdc-fix	V	float	0x265dd0	4	0	[50]._unk28
+// bdc-fix	V	float	0x265dd4	4	0	[50]._unk2c
+// bdc-fix	V	float	0x265dd8	4	0	[50]._unk30
+// bdc-fix	V	int	0x265de0	4	0	[50].launchSound
+// bdc-fix	V	int	0x265de4	4	0	[50].hitSound
+// bdc-fix	V	int	0x265de8	4	0	[50]._unk40
+// bdc-fix	BYTES	unsigned char	0x265dec	3	0	[51]._unk00
+// bdc-fix	V	unsigned char	0x265def	1	0	[51].hitEffect
+// bdc-fix	V	short	0x265df0	2	0	[51]._unk04
+// bdc-fix	V	short	0x265df2	2	0	[51]._unk06
+// bdc-fix	V	unsigned char	0x265df4	1	0	[51].noGuardFlag
+// bdc-fix	V	short	0x265df8	2	0	[51]._unk0c
+// bdc-fix	V	unsigned char	0x265dfb	1	0	[51].hitCount
+// bdc-fix	V	int	0x265dfc	4	0	[51].power
+// bdc-fix	V	int	0x265e00	4	0	[51].specialPower
+// bdc-fix	V	int	0x265e04	4	0	[51].knockdownPower
+// bdc-fix	V	int	0x265e08	4	0	[51].flinchPower
+// bdc-fix	V	int	0x265e0c	4	0	[51].hitEnergy
+// bdc-fix	V	float	0x265e10	4	0	[51]._unk24
+// bdc-fix	V	float	0x265e18	4	0	[51]._unk2c
+// bdc-fix	V	float	0x265e1c	4	0	[51]._unk30
+// bdc-fix	BYTES	unsigned char	0x265e20	4	0	[51]._unk34
+// bdc-fix	V	int	0x265e24	4	0	[51].launchSound
+// bdc-fix	V	int	0x265e28	4	0	[51].hitSound
+// bdc-fix	V	int	0x265e2c	4	0	[51]._unk40
+// bdc-fix	BYTES	unsigned char	0x265e30	3	0	[52]._unk00
+// bdc-fix	V	unsigned char	0x265e33	1	0	[52].hitEffect
+// bdc-fix	V	short	0x265e34	2	0	[52]._unk04
+// bdc-fix	V	short	0x265e36	2	0	[52]._unk06
+// bdc-fix	V	unsigned char	0x265e38	1	0	[52].noGuardFlag
+// bdc-fix	V	short	0x265e3c	2	0	[52]._unk0c
+// bdc-fix	V	unsigned char	0x265e3f	1	0	[52].hitCount
+// bdc-fix	V	int	0x265e40	4	0	[52].power
+// bdc-fix	V	int	0x265e44	4	0	[52].specialPower
+// bdc-fix	V	int	0x265e48	4	0	[52].knockdownPower
+// bdc-fix	V	int	0x265e4c	4	0	[52].flinchPower
+// bdc-fix	V	int	0x265e50	4	0	[52].hitEnergy
+// bdc-fix	V	float	0x265e54	4	0	[52]._unk24
+// bdc-fix	V	float	0x265e58	4	0	[52]._unk28
+// bdc-fix	V	float	0x265e5c	4	0	[52]._unk2c
+// bdc-fix	V	float	0x265e60	4	0	[52]._unk30
+// bdc-fix	V	int	0x265e68	4	0	[52].launchSound
+// bdc-fix	V	int	0x265e6c	4	0	[52].hitSound
+// bdc-fix	V	int	0x265e70	4	0	[52]._unk40
+// bdc-fix	BYTES	unsigned char	0x265e74	3	0	[53]._unk00
+// bdc-fix	V	short	0x265e78	2	0	[53]._unk04
+// bdc-fix	V	short	0x265e7a	2	0	[53]._unk06
+// bdc-fix	V	unsigned char	0x265e7c	1	0	[53].noGuardFlag
+// bdc-fix	V	short	0x265e80	2	0	[53]._unk0c
+// bdc-fix	V	unsigned char	0x265e83	1	0	[53].hitCount
+// bdc-fix	V	int	0x265e94	4	0	[53].hitEnergy
+// bdc-fix	V	float	0x265e98	4	0	[53]._unk24
+// bdc-fix	V	float	0x265ea0	4	0	[53]._unk2c
+// bdc-fix	V	int	0x265eac	4	0	[53].launchSound
+// bdc-fix	V	int	0x265eb0	4	0	[53].hitSound
+// bdc-fix	V	int	0x265eb4	4	0	[53]._unk40
+// bdc-fix	BYTES	unsigned char	0x265eb8	3	0	[54]._unk00
+// bdc-fix	V	short	0x265ebc	2	0	[54]._unk04
+// bdc-fix	V	short	0x265ebe	2	0	[54]._unk06
+// bdc-fix	V	short	0x265ec4	2	0	[54]._unk0c
+// bdc-fix	V	unsigned char	0x265ec7	1	0	[54].hitCount
+// bdc-fix	V	int	0x265ec8	4	0	[54].power
+// bdc-fix	V	int	0x265ecc	4	0	[54].specialPower
+// bdc-fix	V	int	0x265ed0	4	0	[54].knockdownPower
+// bdc-fix	V	int	0x265ed4	4	0	[54].flinchPower
+// bdc-fix	V	int	0x265ed8	4	0	[54].hitEnergy
+// bdc-fix	V	float	0x265edc	4	0	[54]._unk24
+// bdc-fix	V	float	0x265ee4	4	0	[54]._unk2c
+// bdc-fix	V	float	0x265ee8	4	0	[54]._unk30
+// bdc-fix	V	int	0x265ef0	4	0	[54].launchSound
+// bdc-fix	V	int	0x265ef4	4	0	[54].hitSound
+// bdc-fix	V	int	0x265ef8	4	0	[54]._unk40
+// bdc-fix	BYTES	unsigned char	0x265efc	3	0	[55]._unk00
+// bdc-fix	V	short	0x265f00	2	0	[55]._unk04
+// bdc-fix	V	short	0x265f02	2	0	[55]._unk06
+// bdc-fix	V	unsigned char	0x265f04	1	0	[55].noGuardFlag
+// bdc-fix	V	short	0x265f08	2	0	[55]._unk0c
+// bdc-fix	V	unsigned char	0x265f0b	1	0	[55].hitCount
+// bdc-fix	V	int	0x265f0c	4	0	[55].power
+// bdc-fix	V	int	0x265f10	4	0	[55].specialPower
+// bdc-fix	V	int	0x265f14	4	0	[55].knockdownPower
+// bdc-fix	V	int	0x265f18	4	0	[55].flinchPower
+// bdc-fix	V	int	0x265f1c	4	0	[55].hitEnergy
+// bdc-fix	V	float	0x265f20	4	0	[55]._unk24
+// bdc-fix	V	float	0x265f28	4	0	[55]._unk2c
+// bdc-fix	V	float	0x265f2c	4	0	[55]._unk30
+// bdc-fix	BYTES	unsigned char	0x265f30	4	0	[55]._unk34
+// bdc-fix	V	int	0x265f34	4	0	[55].launchSound
+// bdc-fix	V	int	0x265f38	4	0	[55].hitSound
+// bdc-fix	V	int	0x265f3c	4	0	[55]._unk40
+// bdc-fix	BYTES	unsigned char	0x265f40	3	0	[56]._unk00
+// bdc-fix	V	short	0x265f44	2	0	[56]._unk04
+// bdc-fix	V	short	0x265f46	2	0	[56]._unk06
+// bdc-fix	V	unsigned char	0x265f48	1	0	[56].noGuardFlag
+// bdc-fix	V	short	0x265f4c	2	0	[56]._unk0c
+// bdc-fix	V	unsigned char	0x265f4f	1	0	[56].hitCount
+// bdc-fix	V	int	0x265f50	4	0	[56].power
+// bdc-fix	V	int	0x265f54	4	0	[56].specialPower
+// bdc-fix	V	int	0x265f58	4	0	[56].knockdownPower
+// bdc-fix	V	int	0x265f5c	4	0	[56].flinchPower
+// bdc-fix	V	int	0x265f60	4	0	[56].hitEnergy
+// bdc-fix	V	float	0x265f64	4	0	[56]._unk24
+// bdc-fix	V	float	0x265f68	4	0	[56]._unk28
+// bdc-fix	V	float	0x265f6c	4	0	[56]._unk2c
+// bdc-fix	V	float	0x265f70	4	0	[56]._unk30
+// bdc-fix	V	int	0x265f78	4	0	[56].launchSound
+// bdc-fix	V	int	0x265f7c	4	0	[56].hitSound
+// bdc-fix	V	int	0x265f80	4	0	[56]._unk40
+// bdc-fix	BYTES	unsigned char	0x265f84	3	0	[57]._unk00
+// bdc-fix	V	short	0x265f88	2	0	[57]._unk04
+// bdc-fix	V	short	0x265f8a	2	0	[57]._unk06
+// bdc-fix	V	unsigned char	0x265f8c	1	0	[57].noGuardFlag
+// bdc-fix	V	short	0x265f90	2	0	[57]._unk0c
+// bdc-fix	V	unsigned char	0x265f93	1	0	[57].hitCount
+// bdc-fix	V	int	0x265f94	4	0	[57].power
+// bdc-fix	V	int	0x265f98	4	0	[57].specialPower
+// bdc-fix	V	int	0x265f9c	4	0	[57].knockdownPower
+// bdc-fix	V	int	0x265fa0	4	0	[57].flinchPower
+// bdc-fix	V	int	0x265fa4	4	0	[57].hitEnergy
+// bdc-fix	V	float	0x265fa8	4	0	[57]._unk24
+// bdc-fix	V	float	0x265fb0	4	0	[57]._unk2c
+// bdc-fix	V	float	0x265fb4	4	0	[57]._unk30
+// bdc-fix	V	int	0x265fbc	4	0	[57].launchSound
+// bdc-fix	V	int	0x265fc0	4	0	[57].hitSound
+// bdc-fix	V	int	0x265fc4	4	0	[57]._unk40
+// bdc-fix	BYTES	unsigned char	0x265fc8	3	0	[58]._unk00
+// bdc-fix	V	short	0x265fcc	2	0	[58]._unk04
+// bdc-fix	V	short	0x265fce	2	0	[58]._unk06
+// bdc-fix	V	short	0x265fd4	2	0	[58]._unk0c
+// bdc-fix	V	unsigned char	0x265fd6	1	0	[58].reflectMode
+// bdc-fix	V	unsigned char	0x265fd7	1	0	[58].hitCount
+// bdc-fix	V	int	0x265fd8	4	0	[58].power
+// bdc-fix	V	int	0x265fdc	4	0	[58].specialPower
+// bdc-fix	V	int	0x265fe0	4	0	[58].knockdownPower
+// bdc-fix	V	int	0x265fe4	4	0	[58].flinchPower
+// bdc-fix	V	int	0x265fe8	4	0	[58].hitEnergy
+// bdc-fix	V	float	0x265fec	4	0	[58]._unk24
+// bdc-fix	V	float	0x265ff0	4	0	[58]._unk28
+// bdc-fix	V	float	0x265ff4	4	0	[58]._unk2c
+// bdc-fix	V	float	0x265ff8	4	0	[58]._unk30
+// bdc-fix	V	int	0x266000	4	0	[58].launchSound
+// bdc-fix	V	int	0x266004	4	0	[58].hitSound
+// bdc-fix	V	int	0x266008	4	0	[58]._unk40
+// bdc-fix	BYTES	unsigned char	0x26600c	3	0	[59]._unk00
+// bdc-fix	V	short	0x266010	2	0	[59]._unk04
+// bdc-fix	V	short	0x266012	2	0	[59]._unk06
+// bdc-fix	V	unsigned char	0x266014	1	0	[59].noGuardFlag
+// bdc-fix	V	short	0x266018	2	0	[59]._unk0c
+// bdc-fix	V	unsigned char	0x26601b	1	0	[59].hitCount
+// bdc-fix	V	int	0x26601c	4	0	[59].power
+// bdc-fix	V	int	0x266020	4	0	[59].specialPower
+// bdc-fix	V	int	0x266024	4	0	[59].knockdownPower
+// bdc-fix	V	int	0x266028	4	0	[59].flinchPower
+// bdc-fix	V	int	0x26602c	4	0	[59].hitEnergy
+// bdc-fix	V	float	0x266030	4	0	[59]._unk24
+// bdc-fix	V	float	0x266038	4	0	[59]._unk2c
+// bdc-fix	V	float	0x26603c	4	0	[59]._unk30
+// bdc-fix	V	int	0x266044	4	0	[59].launchSound
+// bdc-fix	V	int	0x266048	4	0	[59].hitSound
+// bdc-fix	V	int	0x26604c	4	0	[59]._unk40
+// bdc-fix	BYTES	unsigned char	0x266050	3	0	[60]._unk00
+// bdc-fix	V	short	0x266054	2	0	[60]._unk04
+// bdc-fix	V	short	0x266056	2	0	[60]._unk06
+// bdc-fix	V	short	0x26605c	2	0	[60]._unk0c
+// bdc-fix	V	unsigned char	0x26605e	1	0	[60].reflectMode
+// bdc-fix	V	unsigned char	0x26605f	1	0	[60].hitCount
+// bdc-fix	V	int	0x266060	4	0	[60].power
+// bdc-fix	V	int	0x266064	4	0	[60].specialPower
+// bdc-fix	V	int	0x26606c	4	0	[60].flinchPower
+// bdc-fix	V	int	0x266070	4	0	[60].hitEnergy
+// bdc-fix	V	float	0x266074	4	0	[60]._unk24
+// bdc-fix	V	float	0x266078	4	0	[60]._unk28
+// bdc-fix	V	float	0x26607c	4	0	[60]._unk2c
+// bdc-fix	V	float	0x266080	4	0	[60]._unk30
+// bdc-fix	V	int	0x266088	4	0	[60].launchSound
+// bdc-fix	V	int	0x26608c	4	0	[60].hitSound
+// bdc-fix	V	int	0x266090	4	0	[60]._unk40
+// bdc-fix	BYTES	unsigned char	0x266094	3	0	[61]._unk00
+// bdc-fix	V	short	0x266098	2	0	[61]._unk04
+// bdc-fix	V	short	0x26609a	2	0	[61]._unk06
+// bdc-fix	V	short	0x2660a0	2	0	[61]._unk0c
+// bdc-fix	V	unsigned char	0x2660a2	1	0	[61].reflectMode
+// bdc-fix	V	unsigned char	0x2660a3	1	0	[61].hitCount
+// bdc-fix	V	int	0x2660a4	4	0	[61].power
+// bdc-fix	V	int	0x2660a8	4	0	[61].specialPower
+// bdc-fix	V	int	0x2660ac	4	0	[61].knockdownPower
+// bdc-fix	V	int	0x2660b0	4	0	[61].flinchPower
+// bdc-fix	V	int	0x2660b4	4	0	[61].hitEnergy
+// bdc-fix	V	float	0x2660b8	4	0	[61]._unk24
+// bdc-fix	V	float	0x2660bc	4	0	[61]._unk28
+// bdc-fix	V	float	0x2660c0	4	0	[61]._unk2c
+// bdc-fix	V	float	0x2660c4	4	0	[61]._unk30
+// bdc-fix	V	int	0x2660cc	4	0	[61].launchSound
+// bdc-fix	V	int	0x2660d0	4	0	[61].hitSound
+// bdc-fix	V	int	0x2660d4	4	0	[61]._unk40
+// bdc-fix	BYTES	unsigned char	0x2660d8	3	0	[62]._unk00
+// bdc-fix	V	unsigned char	0x2660db	1	0	[62].hitEffect
+// bdc-fix	V	short	0x2660dc	2	0	[62]._unk04
+// bdc-fix	V	short	0x2660de	2	0	[62]._unk06
+// bdc-fix	V	unsigned char	0x2660e0	1	0	[62].noGuardFlag
+// bdc-fix	V	short	0x2660e4	2	0	[62]._unk0c
+// bdc-fix	V	unsigned char	0x2660e7	1	0	[62].hitCount
+// bdc-fix	V	int	0x2660e8	4	0	[62].power
+// bdc-fix	V	int	0x2660ec	4	0	[62].specialPower
+// bdc-fix	V	int	0x2660f8	4	0	[62].hitEnergy
+// bdc-fix	V	float	0x2660fc	4	0	[62]._unk24
+// bdc-fix	V	float	0x266100	4	0	[62]._unk28
+// bdc-fix	V	float	0x266104	4	0	[62]._unk2c
+// bdc-fix	V	float	0x266108	4	0	[62]._unk30
+// bdc-fix	V	int	0x266110	4	0	[62].launchSound
+// bdc-fix	V	int	0x266114	4	0	[62].hitSound
+// bdc-fix	V	int	0x266118	4	0	[62]._unk40
+// bdc-fix	BYTES	unsigned char	0x26611c	3	0	[63]._unk00
+// bdc-fix	V	short	0x266120	2	0	[63]._unk04
+// bdc-fix	V	short	0x266122	2	0	[63]._unk06
+// bdc-fix	V	unsigned char	0x266124	1	0	[63].noGuardFlag
+// bdc-fix	V	short	0x266128	2	0	[63]._unk0c
+// bdc-fix	V	unsigned char	0x26612b	1	0	[63].hitCount
+// bdc-fix	V	int	0x26612c	4	0	[63].power
+// bdc-fix	V	int	0x266130	4	0	[63].specialPower
+// bdc-fix	V	int	0x266134	4	0	[63].knockdownPower
+// bdc-fix	V	int	0x266138	4	0	[63].flinchPower
+// bdc-fix	V	int	0x26613c	4	0	[63].hitEnergy
+// bdc-fix	V	float	0x266140	4	0	[63]._unk24
+// bdc-fix	V	float	0x266148	4	0	[63]._unk2c
+// bdc-fix	V	float	0x26614c	4	0	[63]._unk30
+// bdc-fix	V	int	0x266154	4	0	[63].launchSound
+// bdc-fix	V	int	0x266158	4	0	[63].hitSound
+// bdc-fix	V	int	0x26615c	4	0	[63]._unk40
+// bdc-fix	BYTES	unsigned char	0x266160	3	0	[64]._unk00
+// bdc-fix	V	short	0x266164	2	0	[64]._unk04
+// bdc-fix	V	short	0x266166	2	0	[64]._unk06
+// bdc-fix	V	short	0x26616c	2	0	[64]._unk0c
+// bdc-fix	V	unsigned char	0x26616e	1	0	[64].reflectMode
+// bdc-fix	V	unsigned char	0x26616f	1	0	[64].hitCount
+// bdc-fix	V	int	0x266170	4	0	[64].power
+// bdc-fix	V	int	0x266174	4	0	[64].specialPower
+// bdc-fix	V	int	0x266178	4	0	[64].knockdownPower
+// bdc-fix	V	int	0x26617c	4	0	[64].flinchPower
+// bdc-fix	V	int	0x266180	4	0	[64].hitEnergy
+// bdc-fix	V	float	0x266184	4	0	[64]._unk24
+// bdc-fix	V	float	0x266188	4	0	[64]._unk28
+// bdc-fix	V	float	0x26618c	4	0	[64]._unk2c
+// bdc-fix	V	float	0x266190	4	0	[64]._unk30
+// bdc-fix	V	int	0x266198	4	0	[64].launchSound
+// bdc-fix	V	int	0x26619c	4	0	[64].hitSound
+// bdc-fix	V	int	0x2661a0	4	0	[64]._unk40
+// bdc-fix	BYTES	unsigned char	0x2661a4	3	0	[65]._unk00
+// bdc-fix	V	short	0x2661a8	2	0	[65]._unk04
+// bdc-fix	V	short	0x2661aa	2	0	[65]._unk06
+// bdc-fix	V	unsigned char	0x2661ac	1	0	[65].noGuardFlag
+// bdc-fix	V	short	0x2661b0	2	0	[65]._unk0c
+// bdc-fix	V	unsigned char	0x2661b3	1	0	[65].hitCount
+// bdc-fix	V	int	0x2661b4	4	0	[65].power
+// bdc-fix	V	int	0x2661b8	4	0	[65].specialPower
+// bdc-fix	V	int	0x2661bc	4	0	[65].knockdownPower
+// bdc-fix	V	int	0x2661c0	4	0	[65].flinchPower
+// bdc-fix	V	int	0x2661c4	4	0	[65].hitEnergy
+// bdc-fix	V	float	0x2661c8	4	0	[65]._unk24
+// bdc-fix	V	float	0x2661cc	4	0	[65]._unk28
+// bdc-fix	V	float	0x2661d0	4	0	[65]._unk2c
+// bdc-fix	V	float	0x2661d4	4	0	[65]._unk30
+// bdc-fix	V	int	0x2661dc	4	0	[65].launchSound
+// bdc-fix	V	int	0x2661e0	4	0	[65].hitSound
+// bdc-fix	V	int	0x2661e4	4	0	[65]._unk40
+// bdc-fix	BYTES	unsigned char	0x2661e8	3	0	[66]._unk00
+// bdc-fix	V	short	0x2661ec	2	0	[66]._unk04
+// bdc-fix	V	short	0x2661ee	2	0	[66]._unk06
+// bdc-fix	V	unsigned char	0x2661f0	1	0	[66].noGuardFlag
+// bdc-fix	V	short	0x2661f4	2	0	[66]._unk0c
+// bdc-fix	V	unsigned char	0x2661f7	1	0	[66].hitCount
+// bdc-fix	V	int	0x2661f8	4	0	[66].power
+// bdc-fix	V	int	0x2661fc	4	0	[66].specialPower
+// bdc-fix	V	int	0x266200	4	0	[66].knockdownPower
+// bdc-fix	V	int	0x266204	4	0	[66].flinchPower
+// bdc-fix	V	int	0x266208	4	0	[66].hitEnergy
+// bdc-fix	V	float	0x26620c	4	0	[66]._unk24
+// bdc-fix	V	float	0x266210	4	0	[66]._unk28
+// bdc-fix	V	float	0x266214	4	0	[66]._unk2c
+// bdc-fix	V	float	0x266218	4	0	[66]._unk30
+// bdc-fix	V	int	0x266220	4	0	[66].launchSound
+// bdc-fix	V	int	0x266224	4	0	[66].hitSound
+// bdc-fix	V	int	0x266228	4	0	[66]._unk40
+// bdc-fix	BYTES	unsigned char	0x26622c	3	0	[67]._unk00
+// bdc-fix	V	short	0x266230	2	0	[67]._unk04
+// bdc-fix	V	short	0x266232	2	0	[67]._unk06
+// bdc-fix	V	unsigned char	0x266234	1	0	[67].noGuardFlag
+// bdc-fix	V	short	0x266238	2	0	[67]._unk0c
+// bdc-fix	V	unsigned char	0x26623b	1	0	[67].hitCount
+// bdc-fix	V	int	0x26623c	4	0	[67].power
+// bdc-fix	V	int	0x266240	4	0	[67].specialPower
+// bdc-fix	V	int	0x266244	4	0	[67].knockdownPower
+// bdc-fix	V	int	0x266248	4	0	[67].flinchPower
+// bdc-fix	V	int	0x26624c	4	0	[67].hitEnergy
+// bdc-fix	V	float	0x266250	4	0	[67]._unk24
+// bdc-fix	V	float	0x266258	4	0	[67]._unk2c
+// bdc-fix	V	float	0x26625c	4	0	[67]._unk30
+// bdc-fix	BYTES	unsigned char	0x266260	4	0	[67]._unk34
+// bdc-fix	V	int	0x266264	4	0	[67].launchSound
+// bdc-fix	V	int	0x266268	4	0	[67].hitSound
+// bdc-fix	V	int	0x26626c	4	0	[67]._unk40
+// bdc-fix	BYTES	unsigned char	0x266270	3	0	[68]._unk00
+// bdc-fix	V	short	0x266274	2	0	[68]._unk04
+// bdc-fix	V	short	0x266276	2	0	[68]._unk06
+// bdc-fix	V	unsigned char	0x266278	1	0	[68].noGuardFlag
+// bdc-fix	V	short	0x26627c	2	0	[68]._unk0c
+// bdc-fix	V	unsigned char	0x26627f	1	0	[68].hitCount
+// bdc-fix	V	int	0x266290	4	0	[68].hitEnergy
+// bdc-fix	V	float	0x266294	4	0	[68]._unk24
+// bdc-fix	V	float	0x26629c	4	0	[68]._unk2c
+// bdc-fix	V	int	0x2662a8	4	0	[68].launchSound
+// bdc-fix	V	int	0x2662ac	4	0	[68].hitSound
+// bdc-fix	V	int	0x2662b0	4	0	[68]._unk40
+// bdc-fix	BYTES	unsigned char	0x2662b4	3	0	[69]._unk00
+// bdc-fix	V	short	0x2662b8	2	0	[69]._unk04
+// bdc-fix	V	short	0x2662ba	2	0	[69]._unk06
+// bdc-fix	V	unsigned char	0x2662bc	1	0	[69].noGuardFlag
+// bdc-fix	V	short	0x2662c0	2	0	[69]._unk0c
+// bdc-fix	V	unsigned char	0x2662c3	1	0	[69].hitCount
+// bdc-fix	V	int	0x2662c4	4	0	[69].power
+// bdc-fix	V	int	0x2662c8	4	0	[69].specialPower
+// bdc-fix	V	int	0x2662d0	4	0	[69].flinchPower
+// bdc-fix	V	int	0x2662d4	4	0	[69].hitEnergy
+// bdc-fix	V	float	0x2662d8	4	0	[69]._unk24
+// bdc-fix	V	float	0x2662dc	4	0	[69]._unk28
+// bdc-fix	V	float	0x2662e0	4	0	[69]._unk2c
+// bdc-fix	V	float	0x2662e4	4	0	[69]._unk30
+// bdc-fix	BYTES	unsigned char	0x2662e8	4	0	[69]._unk34
+// bdc-fix	V	int	0x2662ec	4	0	[69].launchSound
+// bdc-fix	V	int	0x2662f0	4	0	[69].hitSound
+// bdc-fix	V	int	0x2662f4	4	0	[69]._unk40
+// bdc-fix	BYTES	unsigned char	0x2662f8	3	0	[70]._unk00
+// bdc-fix	V	short	0x2662fc	2	0	[70]._unk04
+// bdc-fix	V	short	0x2662fe	2	0	[70]._unk06
+// bdc-fix	V	unsigned char	0x266300	1	0	[70].noGuardFlag
+// bdc-fix	V	short	0x266304	2	0	[70]._unk0c
+// bdc-fix	V	unsigned char	0x266307	1	0	[70].hitCount
+// bdc-fix	V	int	0x266308	4	0	[70].power
+// bdc-fix	V	int	0x26630c	4	0	[70].specialPower
+// bdc-fix	V	int	0x266314	4	0	[70].flinchPower
+// bdc-fix	V	int	0x266318	4	0	[70].hitEnergy
+// bdc-fix	V	float	0x26631c	4	0	[70]._unk24
+// bdc-fix	V	float	0x266324	4	0	[70]._unk2c
+// bdc-fix	V	float	0x266328	4	0	[70]._unk30
+// bdc-fix	V	int	0x266330	4	0	[70].launchSound
+// bdc-fix	V	int	0x266334	4	0	[70].hitSound
+// bdc-fix	V	int	0x266338	4	0	[70]._unk40
+// bdc-fix	V	short	0x266340	2	0	[71]._unk04
+// bdc-fix	V	short	0x266342	2	0	[71]._unk06
+// bdc-fix	V	short	0x266348	2	0	[71]._unk0c
+// bdc-fix	V	unsigned char	0x26634a	1	0	[71].reflectMode
+// bdc-fix	V	unsigned char	0x26634b	1	0	[71].hitCount
+// bdc-fix	V	int	0x26634c	4	0	[71].power
+// bdc-fix	V	int	0x266350	4	0	[71].specialPower
+// bdc-fix	V	int	0x266354	4	0	[71].knockdownPower
+// bdc-fix	V	int	0x266358	4	0	[71].flinchPower
+// bdc-fix	V	int	0x26635c	4	0	[71].hitEnergy
+// bdc-fix	V	float	0x266360	4	0	[71]._unk24
+// bdc-fix	V	float	0x266364	4	0	[71]._unk28
+// bdc-fix	V	float	0x266368	4	0	[71]._unk2c
+// bdc-fix	V	float	0x26636c	4	0	[71]._unk30
+// bdc-fix	V	int	0x266374	4	0	[71].launchSound
+// bdc-fix	V	int	0x266378	4	0	[71].hitSound
+// bdc-fix	V	int	0x26637c	4	0	[71]._unk40
+// bdc-fix	BYTES	unsigned char	0x266380	3	0	[72]._unk00
+// bdc-fix	V	short	0x266384	2	0	[72]._unk04
+// bdc-fix	V	short	0x266386	2	0	[72]._unk06
+// bdc-fix	V	unsigned char	0x266388	1	0	[72].noGuardFlag
+// bdc-fix	V	short	0x26638c	2	0	[72]._unk0c
+// bdc-fix	V	unsigned char	0x26638f	1	0	[72].hitCount
+// bdc-fix	V	int	0x2663a0	4	0	[72].hitEnergy
+// bdc-fix	V	float	0x2663a4	4	0	[72]._unk24
+// bdc-fix	V	float	0x2663ac	4	0	[72]._unk2c
+// bdc-fix	V	int	0x2663b8	4	0	[72].launchSound
+// bdc-fix	V	int	0x2663bc	4	0	[72].hitSound
+// bdc-fix	V	int	0x2663c0	4	0	[72]._unk40
+// bdc-fix	BYTES	unsigned char	0x2663c4	3	0	[73]._unk00
+// bdc-fix	V	short	0x2663c8	2	0	[73]._unk04
+// bdc-fix	V	short	0x2663ca	2	0	[73]._unk06
+// bdc-fix	V	unsigned char	0x2663cc	1	0	[73].noGuardFlag
+// bdc-fix	V	short	0x2663d0	2	0	[73]._unk0c
+// bdc-fix	V	unsigned char	0x2663d3	1	0	[73].hitCount
+// bdc-fix	V	int	0x2663d4	4	0	[73].power
+// bdc-fix	V	int	0x2663d8	4	0	[73].specialPower
+// bdc-fix	V	int	0x2663dc	4	0	[73].knockdownPower
+// bdc-fix	V	int	0x2663e0	4	0	[73].flinchPower
+// bdc-fix	V	int	0x2663e4	4	0	[73].hitEnergy
+// bdc-fix	V	float	0x2663e8	4	0	[73]._unk24
+// bdc-fix	V	float	0x2663f0	4	0	[73]._unk2c
+// bdc-fix	V	float	0x2663f4	4	0	[73]._unk30
+// bdc-fix	V	int	0x2663fc	4	0	[73].launchSound
+// bdc-fix	V	int	0x266400	4	0	[73].hitSound
+// bdc-fix	V	int	0x266404	4	0	[73]._unk40
+// bdc-fix	BYTES	unsigned char	0x266408	3	0	[74]._unk00
+// bdc-fix	V	short	0x26640c	2	0	[74]._unk04
+// bdc-fix	V	short	0x26640e	2	0	[74]._unk06
+// bdc-fix	V	short	0x266414	2	0	[74]._unk0c
+// bdc-fix	V	unsigned char	0x266416	1	0	[74].reflectMode
+// bdc-fix	V	unsigned char	0x266417	1	0	[74].hitCount
+// bdc-fix	V	int	0x266418	4	0	[74].power
+// bdc-fix	V	int	0x26641c	4	0	[74].specialPower
+// bdc-fix	V	int	0x266420	4	0	[74].knockdownPower
+// bdc-fix	V	int	0x266424	4	0	[74].flinchPower
+// bdc-fix	V	int	0x266428	4	0	[74].hitEnergy
+// bdc-fix	V	float	0x26642c	4	0	[74]._unk24
+// bdc-fix	V	float	0x266434	4	0	[74]._unk2c
+// bdc-fix	V	float	0x266438	4	0	[74]._unk30
+// bdc-fix	V	int	0x266440	4	0	[74].launchSound
+// bdc-fix	V	int	0x266444	4	0	[74].hitSound
+// bdc-fix	V	int	0x266448	4	0	[74]._unk40
+// bdc-fix	BYTES	unsigned char	0x26644c	3	0	[75]._unk00
+// bdc-fix	V	short	0x266450	2	0	[75]._unk04
+// bdc-fix	V	short	0x266452	2	0	[75]._unk06
+// bdc-fix	V	unsigned char	0x266455	1	0	[75].statusEffect
+// bdc-fix	BYTES	unsigned char	0x266456	2	0	[75]._unk0a
+// bdc-fix	V	short	0x266458	2	0	[75]._unk0c
+// bdc-fix	V	unsigned char	0x26645a	1	0	[75].reflectMode
+// bdc-fix	V	unsigned char	0x26645b	1	0	[75].hitCount
+// bdc-fix	V	int	0x26645c	4	0	[75].power
+// bdc-fix	V	int	0x266460	4	0	[75].specialPower
+// bdc-fix	V	int	0x266464	4	0	[75].knockdownPower
+// bdc-fix	V	int	0x266468	4	0	[75].flinchPower
+// bdc-fix	V	int	0x26646c	4	0	[75].hitEnergy
+// bdc-fix	V	float	0x266470	4	0	[75]._unk24
+// bdc-fix	V	float	0x266478	4	0	[75]._unk2c
+// bdc-fix	V	float	0x26647c	4	0	[75]._unk30
+// bdc-fix	V	int	0x266484	4	0	[75].launchSound
+// bdc-fix	V	int	0x266488	4	0	[75].hitSound
+// bdc-fix	V	int	0x26648c	4	0	[75]._unk40
+// bdc-fix	BYTES	unsigned char	0x266490	3	0	[76]._unk00
+// bdc-fix	V	short	0x266494	2	0	[76]._unk04
+// bdc-fix	V	short	0x266496	2	0	[76]._unk06
+// bdc-fix	V	short	0x26649c	2	0	[76]._unk0c
+// bdc-fix	V	unsigned char	0x26649e	1	0	[76].reflectMode
+// bdc-fix	V	unsigned char	0x26649f	1	0	[76].hitCount
+// bdc-fix	V	int	0x2664a0	4	0	[76].power
+// bdc-fix	V	int	0x2664a4	4	0	[76].specialPower
+// bdc-fix	V	int	0x2664a8	4	0	[76].knockdownPower
+// bdc-fix	V	int	0x2664ac	4	0	[76].flinchPower
+// bdc-fix	V	int	0x2664b0	4	0	[76].hitEnergy
+// bdc-fix	V	float	0x2664b4	4	0	[76]._unk24
+// bdc-fix	V	float	0x2664bc	4	0	[76]._unk2c
+// bdc-fix	V	float	0x2664c0	4	0	[76]._unk30
+// bdc-fix	V	int	0x2664c8	4	0	[76].launchSound
+// bdc-fix	V	int	0x2664cc	4	0	[76].hitSound
+// bdc-fix	V	int	0x2664d0	4	0	[76]._unk40
+// bdc-fix	BYTES	unsigned char	0x2664d4	3	0	[77]._unk00
+// bdc-fix	V	short	0x2664d8	2	0	[77]._unk04
+// bdc-fix	V	short	0x2664da	2	0	[77]._unk06
+// bdc-fix	V	unsigned char	0x2664dd	1	0	[77].statusEffect
+// bdc-fix	BYTES	unsigned char	0x2664de	2	0	[77]._unk0a
+// bdc-fix	V	short	0x2664e0	2	0	[77]._unk0c
+// bdc-fix	V	unsigned char	0x2664e2	1	0	[77].reflectMode
+// bdc-fix	V	unsigned char	0x2664e3	1	0	[77].hitCount
+// bdc-fix	V	int	0x2664e4	4	0	[77].power
+// bdc-fix	V	int	0x2664e8	4	0	[77].specialPower
+// bdc-fix	V	int	0x2664ec	4	0	[77].knockdownPower
+// bdc-fix	V	int	0x2664f0	4	0	[77].flinchPower
+// bdc-fix	V	int	0x2664f4	4	0	[77].hitEnergy
+// bdc-fix	V	float	0x2664f8	4	0	[77]._unk24
+// bdc-fix	V	float	0x266500	4	0	[77]._unk2c
+// bdc-fix	V	float	0x266504	4	0	[77]._unk30
+// bdc-fix	V	int	0x26650c	4	0	[77].launchSound
+// bdc-fix	V	int	0x266510	4	0	[77].hitSound
+// bdc-fix	V	int	0x266514	4	0	[77]._unk40
+// bdc-fix	BYTES	unsigned char	0x266518	3	0	[78]._unk00
+// bdc-fix	V	short	0x26651c	2	0	[78]._unk04
+// bdc-fix	V	short	0x26651e	2	0	[78]._unk06
+// bdc-fix	V	short	0x266524	2	0	[78]._unk0c
+// bdc-fix	V	unsigned char	0x266526	1	0	[78].reflectMode
+// bdc-fix	V	unsigned char	0x266527	1	0	[78].hitCount
+// bdc-fix	V	int	0x266528	4	0	[78].power
+// bdc-fix	V	int	0x26652c	4	0	[78].specialPower
+// bdc-fix	V	int	0x266530	4	0	[78].knockdownPower
+// bdc-fix	V	int	0x266534	4	0	[78].flinchPower
+// bdc-fix	V	int	0x266538	4	0	[78].hitEnergy
+// bdc-fix	V	float	0x26653c	4	0	[78]._unk24
+// bdc-fix	V	float	0x266544	4	0	[78]._unk2c
+// bdc-fix	V	float	0x266548	4	0	[78]._unk30
+// bdc-fix	V	int	0x266550	4	0	[78].launchSound
+// bdc-fix	V	int	0x266554	4	0	[78].hitSound
+// bdc-fix	V	int	0x266558	4	0	[78]._unk40
+// bdc-fix	BYTES	unsigned char	0x26655c	3	0	[79]._unk00
+// bdc-fix	V	short	0x266560	2	0	[79]._unk04
+// bdc-fix	V	short	0x266562	2	0	[79]._unk06
+// bdc-fix	V	unsigned char	0x266565	1	0	[79].statusEffect
+// bdc-fix	BYTES	unsigned char	0x266566	2	0	[79]._unk0a
+// bdc-fix	V	short	0x266568	2	0	[79]._unk0c
+// bdc-fix	V	unsigned char	0x26656a	1	0	[79].reflectMode
+// bdc-fix	V	unsigned char	0x26656b	1	0	[79].hitCount
+// bdc-fix	V	int	0x26656c	4	0	[79].power
+// bdc-fix	V	int	0x266570	4	0	[79].specialPower
+// bdc-fix	V	int	0x266574	4	0	[79].knockdownPower
+// bdc-fix	V	int	0x266578	4	0	[79].flinchPower
+// bdc-fix	V	int	0x26657c	4	0	[79].hitEnergy
+// bdc-fix	V	float	0x266580	4	0	[79]._unk24
+// bdc-fix	V	float	0x266588	4	0	[79]._unk2c
+// bdc-fix	V	float	0x26658c	4	0	[79]._unk30
+// bdc-fix	V	int	0x266594	4	0	[79].launchSound
+// bdc-fix	V	int	0x266598	4	0	[79].hitSound
+// bdc-fix	V	int	0x26659c	4	0	[79]._unk40
+// bdc-fix	BYTES	unsigned char	0x2665a0	3	0	[80]._unk00
+// bdc-fix	V	short	0x2665a4	2	0	[80]._unk04
+// bdc-fix	V	short	0x2665a6	2	0	[80]._unk06
+// bdc-fix	V	short	0x2665ac	2	0	[80]._unk0c
+// bdc-fix	V	unsigned char	0x2665ae	1	0	[80].reflectMode
+// bdc-fix	V	unsigned char	0x2665af	1	0	[80].hitCount
+// bdc-fix	V	int	0x2665b0	4	0	[80].power
+// bdc-fix	V	int	0x2665b4	4	0	[80].specialPower
+// bdc-fix	V	int	0x2665b8	4	0	[80].knockdownPower
+// bdc-fix	V	int	0x2665bc	4	0	[80].flinchPower
+// bdc-fix	V	int	0x2665c0	4	0	[80].hitEnergy
+// bdc-fix	V	float	0x2665c4	4	0	[80]._unk24
+// bdc-fix	V	float	0x2665cc	4	0	[80]._unk2c
+// bdc-fix	V	float	0x2665d0	4	0	[80]._unk30
+// bdc-fix	V	int	0x2665d8	4	0	[80].launchSound
+// bdc-fix	V	int	0x2665dc	4	0	[80].hitSound
+// bdc-fix	V	int	0x2665e0	4	0	[80]._unk40
+// bdc-fix	BYTES	unsigned char	0x2665e4	3	0	[81]._unk00
+// bdc-fix	V	short	0x2665e8	2	0	[81]._unk04
+// bdc-fix	V	short	0x2665ea	2	0	[81]._unk06
+// bdc-fix	V	unsigned char	0x2665ec	1	0	[81].noGuardFlag
+// bdc-fix	V	short	0x2665f0	2	0	[81]._unk0c
+// bdc-fix	V	unsigned char	0x2665f3	1	0	[81].hitCount
+// bdc-fix	V	int	0x2665f4	4	0	[81].power
+// bdc-fix	V	int	0x2665f8	4	0	[81].specialPower
+// bdc-fix	V	int	0x2665fc	4	0	[81].knockdownPower
+// bdc-fix	V	int	0x266600	4	0	[81].flinchPower
+// bdc-fix	V	int	0x266604	4	0	[81].hitEnergy
+// bdc-fix	V	float	0x266608	4	0	[81]._unk24
+// bdc-fix	V	float	0x266610	4	0	[81]._unk2c
+// bdc-fix	V	float	0x266614	4	0	[81]._unk30
+// bdc-fix	V	int	0x26661c	4	0	[81].launchSound
+// bdc-fix	V	int	0x266620	4	0	[81].hitSound
+// bdc-fix	V	int	0x266624	4	0	[81]._unk40
+// bdc-fix	BYTES	unsigned char	0x266628	3	0	[82]._unk00
+// bdc-fix	V	short	0x26662c	2	0	[82]._unk04
+// bdc-fix	V	short	0x26662e	2	0	[82]._unk06
+// bdc-fix	V	short	0x266634	2	0	[82]._unk0c
+// bdc-fix	V	unsigned char	0x266637	1	0	[82].hitCount
+// bdc-fix	V	int	0x266638	4	0	[82].power
+// bdc-fix	V	int	0x26663c	4	0	[82].specialPower
+// bdc-fix	V	int	0x266640	4	0	[82].knockdownPower
+// bdc-fix	V	int	0x266644	4	0	[82].flinchPower
+// bdc-fix	V	int	0x266648	4	0	[82].hitEnergy
+// bdc-fix	V	float	0x26664c	4	0	[82]._unk24
+// bdc-fix	V	float	0x266654	4	0	[82]._unk2c
+// bdc-fix	V	float	0x266658	4	0	[82]._unk30
+// bdc-fix	V	int	0x266660	4	0	[82].launchSound
+// bdc-fix	V	int	0x266664	4	0	[82].hitSound
+// bdc-fix	V	int	0x266668	4	0	[82]._unk40
+// bdc-fix	BYTES	unsigned char	0x26666c	3	0	[83]._unk00
+// bdc-fix	V	short	0x266670	2	0	[83]._unk04
+// bdc-fix	V	short	0x266672	2	0	[83]._unk06
+// bdc-fix	V	short	0x266678	2	0	[83]._unk0c
+// bdc-fix	V	unsigned char	0x26667a	1	0	[83].reflectMode
+// bdc-fix	V	unsigned char	0x26667b	1	0	[83].hitCount
+// bdc-fix	V	int	0x26667c	4	0	[83].power
+// bdc-fix	V	int	0x266680	4	0	[83].specialPower
+// bdc-fix	V	int	0x266684	4	0	[83].knockdownPower
+// bdc-fix	V	int	0x266688	4	0	[83].flinchPower
+// bdc-fix	V	int	0x26668c	4	0	[83].hitEnergy
+// bdc-fix	V	float	0x266690	4	0	[83]._unk24
+// bdc-fix	V	float	0x266694	4	0	[83]._unk28
+// bdc-fix	V	float	0x266698	4	0	[83]._unk2c
+// bdc-fix	V	float	0x26669c	4	0	[83]._unk30
+// bdc-fix	V	int	0x2666a4	4	0	[83].launchSound
+// bdc-fix	V	int	0x2666a8	4	0	[83].hitSound
+// bdc-fix	V	int	0x2666ac	4	0	[83]._unk40
+// bdc-fix	BYTES	unsigned char	0x2666b0	3	0	[84]._unk00
+// bdc-fix	V	unsigned char	0x2666b3	1	0	[84].hitEffect
+// bdc-fix	V	short	0x2666b4	2	0	[84]._unk04
+// bdc-fix	V	short	0x2666b6	2	0	[84]._unk06
+// bdc-fix	V	short	0x2666bc	2	0	[84]._unk0c
+// bdc-fix	V	unsigned char	0x2666bf	1	0	[84].hitCount
+// bdc-fix	V	int	0x2666c0	4	0	[84].power
+// bdc-fix	V	int	0x2666c4	4	0	[84].specialPower
+// bdc-fix	V	int	0x2666c8	4	0	[84].knockdownPower
+// bdc-fix	V	int	0x2666cc	4	0	[84].flinchPower
+// bdc-fix	V	int	0x2666d0	4	0	[84].hitEnergy
+// bdc-fix	V	float	0x2666d4	4	0	[84]._unk24
+// bdc-fix	V	float	0x2666dc	4	0	[84]._unk2c
+// bdc-fix	V	float	0x2666e0	4	0	[84]._unk30
+// bdc-fix	BYTES	unsigned char	0x2666e4	4	0	[84]._unk34
+// bdc-fix	V	int	0x2666e8	4	0	[84].launchSound
+// bdc-fix	V	int	0x2666ec	4	0	[84].hitSound
+// bdc-fix	V	int	0x2666f0	4	0	[84]._unk40
+// bdc-fix	BYTES	unsigned char	0x2666f4	3	0	[85]._unk00
+// bdc-fix	V	short	0x2666f8	2	0	[85]._unk04
+// bdc-fix	V	short	0x2666fa	2	0	[85]._unk06
+// bdc-fix	V	short	0x266700	2	0	[85]._unk0c
+// bdc-fix	V	unsigned char	0x266702	1	0	[85].reflectMode
+// bdc-fix	V	unsigned char	0x266703	1	0	[85].hitCount
+// bdc-fix	V	int	0x266704	4	0	[85].power
+// bdc-fix	V	int	0x266708	4	0	[85].specialPower
+// bdc-fix	V	int	0x26670c	4	0	[85].knockdownPower
+// bdc-fix	V	int	0x266710	4	0	[85].flinchPower
+// bdc-fix	V	int	0x266714	4	0	[85].hitEnergy
+// bdc-fix	V	float	0x266718	4	0	[85]._unk24
+// bdc-fix	V	float	0x266720	4	0	[85]._unk2c
+// bdc-fix	V	float	0x266724	4	0	[85]._unk30
+// bdc-fix	V	int	0x26672c	4	0	[85].launchSound
+// bdc-fix	V	int	0x266730	4	0	[85].hitSound
+// bdc-fix	V	int	0x266734	4	0	[85]._unk40
+// bdc-fix	BYTES	unsigned char	0x266738	3	0	[86]._unk00
+// bdc-fix	V	short	0x26673c	2	0	[86]._unk04
+// bdc-fix	V	short	0x26673e	2	0	[86]._unk06
+// bdc-fix	V	short	0x266744	2	0	[86]._unk0c
+// bdc-fix	V	unsigned char	0x266746	1	0	[86].reflectMode
+// bdc-fix	V	unsigned char	0x266747	1	0	[86].hitCount
+// bdc-fix	V	int	0x266748	4	0	[86].power
+// bdc-fix	V	int	0x26674c	4	0	[86].specialPower
+// bdc-fix	V	int	0x266750	4	0	[86].knockdownPower
+// bdc-fix	V	int	0x266754	4	0	[86].flinchPower
+// bdc-fix	V	int	0x266758	4	0	[86].hitEnergy
+// bdc-fix	V	float	0x26675c	4	0	[86]._unk24
+// bdc-fix	V	float	0x266764	4	0	[86]._unk2c
+// bdc-fix	V	float	0x266768	4	0	[86]._unk30
+// bdc-fix	V	int	0x266770	4	0	[86].launchSound
+// bdc-fix	V	int	0x266774	4	0	[86].hitSound
+// bdc-fix	V	int	0x266778	4	0	[86]._unk40
+// bdc-fix	BYTES	unsigned char	0x26677c	3	0	[87]._unk00
+// bdc-fix	V	short	0x266780	2	0	[87]._unk04
+// bdc-fix	V	short	0x266782	2	0	[87]._unk06
+// bdc-fix	V	short	0x266788	2	0	[87]._unk0c
+// bdc-fix	V	unsigned char	0x26678a	1	0	[87].reflectMode
+// bdc-fix	V	unsigned char	0x26678b	1	0	[87].hitCount
+// bdc-fix	V	int	0x26678c	4	0	[87].power
+// bdc-fix	V	int	0x266790	4	0	[87].specialPower
+// bdc-fix	V	int	0x266794	4	0	[87].knockdownPower
+// bdc-fix	V	int	0x266798	4	0	[87].flinchPower
+// bdc-fix	V	int	0x26679c	4	0	[87].hitEnergy
+// bdc-fix	V	float	0x2667a0	4	0	[87]._unk24
+// bdc-fix	V	float	0x2667a8	4	0	[87]._unk2c
+// bdc-fix	V	float	0x2667ac	4	0	[87]._unk30
+// bdc-fix	V	int	0x2667b4	4	0	[87].launchSound
+// bdc-fix	V	int	0x2667b8	4	0	[87].hitSound
+// bdc-fix	V	int	0x2667bc	4	0	[87]._unk40
+// bdc-fix	V	short	0x2667c4	2	0	[88]._unk04
+// bdc-fix	V	short	0x2667c6	2	0	[88]._unk06
+// bdc-fix	V	short	0x2667cc	2	0	[88]._unk0c
+// bdc-fix	V	unsigned char	0x2667ce	1	0	[88].reflectMode
+// bdc-fix	V	unsigned char	0x2667cf	1	0	[88].hitCount
+// bdc-fix	V	int	0x2667d0	4	0	[88].power
+// bdc-fix	V	int	0x2667d4	4	0	[88].specialPower
+// bdc-fix	V	int	0x2667d8	4	0	[88].knockdownPower
+// bdc-fix	V	int	0x2667dc	4	0	[88].flinchPower
+// bdc-fix	V	int	0x2667e0	4	0	[88].hitEnergy
+// bdc-fix	V	float	0x2667e4	4	0	[88]._unk24
+// bdc-fix	V	float	0x2667e8	4	0	[88]._unk28
+// bdc-fix	V	float	0x2667ec	4	0	[88]._unk2c
+// bdc-fix	V	float	0x2667f0	4	0	[88]._unk30
+// bdc-fix	V	int	0x2667f8	4	0	[88].launchSound
+// bdc-fix	V	int	0x2667fc	4	0	[88].hitSound
+// bdc-fix	V	int	0x266800	4	0	[88]._unk40
+// bdc-fix	BYTES	unsigned char	0x266804	3	0	[89]._unk00
+// bdc-fix	V	short	0x266808	2	0	[89]._unk04
+// bdc-fix	V	short	0x26680a	2	0	[89]._unk06
+// bdc-fix	V	unsigned char	0x26680c	1	0	[89].noGuardFlag
+// bdc-fix	V	short	0x266810	2	0	[89]._unk0c
+// bdc-fix	V	unsigned char	0x266813	1	0	[89].hitCount
+// bdc-fix	V	int	0x266814	4	0	[89].power
+// bdc-fix	V	int	0x266818	4	0	[89].specialPower
+// bdc-fix	V	int	0x26681c	4	0	[89].knockdownPower
+// bdc-fix	V	int	0x266820	4	0	[89].flinchPower
+// bdc-fix	V	int	0x266824	4	0	[89].hitEnergy
+// bdc-fix	V	float	0x266828	4	0	[89]._unk24
+// bdc-fix	V	float	0x266830	4	0	[89]._unk2c
+// bdc-fix	V	float	0x266834	4	0	[89]._unk30
+// bdc-fix	V	int	0x26683c	4	0	[89].launchSound
+// bdc-fix	V	int	0x266840	4	0	[89].hitSound
+// bdc-fix	V	int	0x266844	4	0	[89]._unk40
+// bdc-fix	BYTES	unsigned char	0x266848	3	0	[90]._unk00
+// bdc-fix	V	short	0x26684c	2	0	[90]._unk04
+// bdc-fix	V	short	0x26684e	2	0	[90]._unk06
+// bdc-fix	V	unsigned char	0x266850	1	0	[90].noGuardFlag
+// bdc-fix	V	short	0x266854	2	0	[90]._unk0c
+// bdc-fix	V	unsigned char	0x266857	1	0	[90].hitCount
+// bdc-fix	V	int	0x266858	4	0	[90].power
+// bdc-fix	V	int	0x26685c	4	0	[90].specialPower
+// bdc-fix	V	int	0x266864	4	0	[90].flinchPower
+// bdc-fix	V	int	0x266868	4	0	[90].hitEnergy
+// bdc-fix	V	float	0x26686c	4	0	[90]._unk24
+// bdc-fix	V	float	0x266874	4	0	[90]._unk2c
+// bdc-fix	V	float	0x266878	4	0	[90]._unk30
+// bdc-fix	BYTES	unsigned char	0x26687c	4	0	[90]._unk34
+// bdc-fix	V	int	0x266880	4	0	[90].launchSound
+// bdc-fix	V	int	0x266884	4	0	[90].hitSound
+// bdc-fix	V	int	0x266888	4	0	[90]._unk40
+// bdc-fix	BYTES	unsigned char	0x26688c	3	0	[91]._unk00
+// bdc-fix	V	short	0x266890	2	0	[91]._unk04
+// bdc-fix	V	short	0x266892	2	0	[91]._unk06
+// bdc-fix	V	unsigned char	0x266894	1	0	[91].noGuardFlag
+// bdc-fix	V	short	0x266898	2	0	[91]._unk0c
+// bdc-fix	V	unsigned char	0x26689b	1	0	[91].hitCount
+// bdc-fix	V	int	0x2668ac	4	0	[91].hitEnergy
+// bdc-fix	V	float	0x2668b0	4	0	[91]._unk24
+// bdc-fix	V	float	0x2668b8	4	0	[91]._unk2c
+// bdc-fix	V	int	0x2668c4	4	0	[91].launchSound
+// bdc-fix	V	int	0x2668c8	4	0	[91].hitSound
+// bdc-fix	V	int	0x2668cc	4	0	[91]._unk40
+// bdc-fix	BYTES	unsigned char	0x2668d0	3	0	[92]._unk00
+// bdc-fix	V	short	0x2668d4	2	0	[92]._unk04
+// bdc-fix	V	short	0x2668d6	2	0	[92]._unk06
+// bdc-fix	V	unsigned char	0x2668d8	1	0	[92].noGuardFlag
+// bdc-fix	V	short	0x2668dc	2	0	[92]._unk0c
+// bdc-fix	V	unsigned char	0x2668df	1	0	[92].hitCount
+// bdc-fix	V	int	0x2668e0	4	0	[92].power
+// bdc-fix	V	int	0x2668e4	4	0	[92].specialPower
+// bdc-fix	V	int	0x2668e8	4	0	[92].knockdownPower
+// bdc-fix	V	int	0x2668ec	4	0	[92].flinchPower
+// bdc-fix	V	int	0x2668f0	4	0	[92].hitEnergy
+// bdc-fix	V	float	0x2668f4	4	0	[92]._unk24
+// bdc-fix	V	float	0x2668fc	4	0	[92]._unk2c
+// bdc-fix	V	float	0x266900	4	0	[92]._unk30
+// bdc-fix	V	int	0x266908	4	0	[92].launchSound
+// bdc-fix	V	int	0x26690c	4	0	[92].hitSound
+// bdc-fix	V	int	0x266910	4	0	[92]._unk40
+// bdc-fix	BYTES	unsigned char	0x266914	3	0	[93]._unk00
+// bdc-fix	V	short	0x266918	2	0	[93]._unk04
+// bdc-fix	V	short	0x26691a	2	0	[93]._unk06
+// bdc-fix	V	unsigned char	0x26691c	1	0	[93].noGuardFlag
+// bdc-fix	V	short	0x266920	2	0	[93]._unk0c
+// bdc-fix	V	unsigned char	0x266923	1	0	[93].hitCount
+// bdc-fix	V	int	0x266924	4	0	[93].power
+// bdc-fix	V	int	0x266928	4	0	[93].specialPower
+// bdc-fix	V	int	0x26692c	4	0	[93].knockdownPower
+// bdc-fix	V	int	0x266930	4	0	[93].flinchPower
+// bdc-fix	V	int	0x266934	4	0	[93].hitEnergy
+// bdc-fix	V	float	0x266938	4	0	[93]._unk24
+// bdc-fix	V	float	0x266940	4	0	[93]._unk2c
+// bdc-fix	V	float	0x266944	4	0	[93]._unk30
+// bdc-fix	V	int	0x26694c	4	0	[93].launchSound
+// bdc-fix	V	int	0x266950	4	0	[93].hitSound
+// bdc-fix	V	int	0x266954	4	0	[93]._unk40
+// bdc-fix	V	short	0x26695c	2	0	[94]._unk04
+// bdc-fix	V	short	0x26695e	2	0	[94]._unk06
+// bdc-fix	V	short	0x266964	2	0	[94]._unk0c
+// bdc-fix	V	unsigned char	0x266966	1	0	[94].reflectMode
+// bdc-fix	V	unsigned char	0x266967	1	0	[94].hitCount
+// bdc-fix	V	int	0x266968	4	0	[94].power
+// bdc-fix	V	int	0x26696c	4	0	[94].specialPower
+// bdc-fix	V	int	0x266970	4	0	[94].knockdownPower
+// bdc-fix	V	int	0x266974	4	0	[94].flinchPower
+// bdc-fix	V	int	0x266978	4	0	[94].hitEnergy
+// bdc-fix	V	float	0x26697c	4	0	[94]._unk24
+// bdc-fix	V	float	0x266980	4	0	[94]._unk28
+// bdc-fix	V	float	0x266984	4	0	[94]._unk2c
+// bdc-fix	V	float	0x266988	4	0	[94]._unk30
+// bdc-fix	V	int	0x266990	4	0	[94].launchSound
+// bdc-fix	V	int	0x266994	4	0	[94].hitSound
+// bdc-fix	V	int	0x266998	4	0	[94]._unk40
+// bdc-fix	BYTES	unsigned char	0x26699c	3	0	[95]._unk00
+// bdc-fix	V	short	0x2669a0	2	0	[95]._unk04
+// bdc-fix	V	short	0x2669a2	2	0	[95]._unk06
+// bdc-fix	V	short	0x2669a8	2	0	[95]._unk0c
+// bdc-fix	V	unsigned char	0x2669aa	1	0	[95].reflectMode
+// bdc-fix	V	unsigned char	0x2669ab	1	0	[95].hitCount
+// bdc-fix	V	int	0x2669ac	4	0	[95].power
+// bdc-fix	V	int	0x2669b0	4	0	[95].specialPower
+// bdc-fix	V	int	0x2669b4	4	0	[95].knockdownPower
+// bdc-fix	V	int	0x2669b8	4	0	[95].flinchPower
+// bdc-fix	V	int	0x2669bc	4	0	[95].hitEnergy
+// bdc-fix	V	float	0x2669c0	4	0	[95]._unk24
+// bdc-fix	V	float	0x2669c4	4	0	[95]._unk28
+// bdc-fix	V	float	0x2669c8	4	0	[95]._unk2c
+// bdc-fix	V	float	0x2669cc	4	0	[95]._unk30
+// bdc-fix	V	int	0x2669d4	4	0	[95].launchSound
+// bdc-fix	V	int	0x2669d8	4	0	[95].hitSound
+// bdc-fix	V	int	0x2669dc	4	0	[95]._unk40
+// bdc-fix	BYTES	unsigned char	0x2669e0	3	0	[96]._unk00
+// bdc-fix	V	short	0x2669e4	2	0	[96]._unk04
+// bdc-fix	V	short	0x2669e6	2	0	[96]._unk06
+// bdc-fix	V	unsigned char	0x2669e8	1	0	[96].noGuardFlag
+// bdc-fix	V	short	0x2669ec	2	0	[96]._unk0c
+// bdc-fix	V	unsigned char	0x2669ef	1	0	[96].hitCount
+// bdc-fix	V	int	0x2669f0	4	0	[96].power
+// bdc-fix	V	int	0x2669f4	4	0	[96].specialPower
+// bdc-fix	V	int	0x2669f8	4	0	[96].knockdownPower
+// bdc-fix	V	int	0x2669fc	4	0	[96].flinchPower
+// bdc-fix	V	int	0x266a00	4	0	[96].hitEnergy
+// bdc-fix	V	float	0x266a04	4	0	[96]._unk24
+// bdc-fix	V	float	0x266a08	4	0	[96]._unk28
+// bdc-fix	V	float	0x266a0c	4	0	[96]._unk2c
+// bdc-fix	V	float	0x266a10	4	0	[96]._unk30
+// bdc-fix	V	int	0x266a18	4	0	[96].launchSound
+// bdc-fix	V	int	0x266a1c	4	0	[96].hitSound
+// bdc-fix	V	int	0x266a20	4	0	[96]._unk40
+// bdc-fix	BYTES	unsigned char	0x266a24	3	0	[97]._unk00
+// bdc-fix	V	short	0x266a28	2	0	[97]._unk04
+// bdc-fix	V	short	0x266a2a	2	0	[97]._unk06
+// bdc-fix	V	unsigned char	0x266a2c	1	0	[97].noGuardFlag
+// bdc-fix	V	short	0x266a30	2	0	[97]._unk0c
+// bdc-fix	V	unsigned char	0x266a33	1	0	[97].hitCount
+// bdc-fix	V	int	0x266a44	4	0	[97].hitEnergy
+// bdc-fix	V	float	0x266a48	4	0	[97]._unk24
+// bdc-fix	V	float	0x266a50	4	0	[97]._unk2c
+// bdc-fix	V	int	0x266a5c	4	0	[97].launchSound
+// bdc-fix	V	int	0x266a60	4	0	[97].hitSound
+// bdc-fix	V	int	0x266a64	4	0	[97]._unk40
+// bdc-fix	BYTES	unsigned char	0x266a68	3	0	[98]._unk00
+// bdc-fix	V	short	0x266a6c	2	0	[98]._unk04
+// bdc-fix	V	short	0x266a6e	2	0	[98]._unk06
+// bdc-fix	V	unsigned char	0x266a70	1	0	[98].noGuardFlag
+// bdc-fix	V	short	0x266a74	2	0	[98]._unk0c
+// bdc-fix	V	unsigned char	0x266a77	1	0	[98].hitCount
+// bdc-fix	V	int	0x266a78	4	0	[98].power
+// bdc-fix	V	int	0x266a7c	4	0	[98].specialPower
+// bdc-fix	V	int	0x266a80	4	0	[98].knockdownPower
+// bdc-fix	V	int	0x266a84	4	0	[98].flinchPower
+// bdc-fix	V	int	0x266a88	4	0	[98].hitEnergy
+// bdc-fix	V	float	0x266a8c	4	0	[98]._unk24
+// bdc-fix	V	float	0x266a90	4	0	[98]._unk28
+// bdc-fix	V	float	0x266a94	4	0	[98]._unk2c
+// bdc-fix	V	float	0x266a98	4	0	[98]._unk30
+// bdc-fix	BYTES	unsigned char	0x266a9c	4	0	[98]._unk34
+// bdc-fix	V	int	0x266aa0	4	0	[98].launchSound
+// bdc-fix	V	int	0x266aa4	4	0	[98].hitSound
+// bdc-fix	V	int	0x266aa8	4	0	[98]._unk40
+// bdc-fix	BYTES	unsigned char	0x266aac	3	0	[99]._unk00
+// bdc-fix	V	short	0x266ab0	2	0	[99]._unk04
+// bdc-fix	V	short	0x266ab2	2	0	[99]._unk06
+// bdc-fix	V	unsigned char	0x266ab4	1	0	[99].noGuardFlag
+// bdc-fix	V	short	0x266ab8	2	0	[99]._unk0c
+// bdc-fix	V	unsigned char	0x266abb	1	0	[99].hitCount
+// bdc-fix	V	int	0x266acc	4	0	[99].hitEnergy
+// bdc-fix	V	float	0x266ad0	4	0	[99]._unk24
+// bdc-fix	V	float	0x266ad8	4	0	[99]._unk2c
+// bdc-fix	V	int	0x266ae4	4	0	[99].launchSound
+// bdc-fix	V	int	0x266ae8	4	0	[99].hitSound
+// bdc-fix	V	int	0x266aec	4	0	[99]._unk40
+// bdc-fix	BYTES	unsigned char	0x266af0	3	0	[100]._unk00
+// bdc-fix	V	short	0x266af4	2	0	[100]._unk04
+// bdc-fix	V	short	0x266af6	2	0	[100]._unk06
+// bdc-fix	V	unsigned char	0x266af8	1	0	[100].noGuardFlag
+// bdc-fix	V	short	0x266afc	2	0	[100]._unk0c
+// bdc-fix	V	unsigned char	0x266aff	1	0	[100].hitCount
+// bdc-fix	V	int	0x266b10	4	0	[100].hitEnergy
+// bdc-fix	V	float	0x266b14	4	0	[100]._unk24
+// bdc-fix	V	float	0x266b1c	4	0	[100]._unk2c
+// bdc-fix	V	int	0x266b28	4	0	[100].launchSound
+// bdc-fix	V	int	0x266b2c	4	0	[100].hitSound
+// bdc-fix	V	int	0x266b30	4	0	[100]._unk40
+// bdc-fix	BYTES	unsigned char	0x266b34	3	0	[101]._unk00
+// bdc-fix	V	short	0x266b38	2	0	[101]._unk04
+// bdc-fix	V	short	0x266b3a	2	0	[101]._unk06
+// bdc-fix	V	short	0x266b40	2	0	[101]._unk0c
+// bdc-fix	V	unsigned char	0x266b42	1	0	[101].reflectMode
+// bdc-fix	V	unsigned char	0x266b43	1	0	[101].hitCount
+// bdc-fix	V	int	0x266b44	4	0	[101].power
+// bdc-fix	V	int	0x266b48	4	0	[101].specialPower
+// bdc-fix	V	int	0x266b4c	4	0	[101].knockdownPower
+// bdc-fix	V	int	0x266b50	4	0	[101].flinchPower
+// bdc-fix	V	int	0x266b54	4	0	[101].hitEnergy
+// bdc-fix	V	float	0x266b58	4	0	[101]._unk24
+// bdc-fix	V	float	0x266b60	4	0	[101]._unk2c
+// bdc-fix	V	float	0x266b64	4	0	[101]._unk30
+// bdc-fix	V	int	0x266b6c	4	0	[101].launchSound
+// bdc-fix	V	int	0x266b70	4	0	[101].hitSound
+// bdc-fix	V	int	0x266b74	4	0	[101]._unk40
+// bdc-fix	BYTES	unsigned char	0x266b78	3	0	[102]._unk00
+// bdc-fix	V	short	0x266b7c	2	0	[102]._unk04
+// bdc-fix	V	short	0x266b7e	2	0	[102]._unk06
+// bdc-fix	V	unsigned char	0x266b80	1	0	[102].noGuardFlag
+// bdc-fix	V	short	0x266b84	2	0	[102]._unk0c
+// bdc-fix	V	unsigned char	0x266b87	1	0	[102].hitCount
+// bdc-fix	V	int	0x266b88	4	0	[102].power
+// bdc-fix	V	int	0x266b8c	4	0	[102].specialPower
+// bdc-fix	V	int	0x266b90	4	0	[102].knockdownPower
+// bdc-fix	V	int	0x266b94	4	0	[102].flinchPower
+// bdc-fix	V	int	0x266b98	4	0	[102].hitEnergy
+// bdc-fix	V	float	0x266b9c	4	0	[102]._unk24
+// bdc-fix	V	float	0x266ba0	4	0	[102]._unk28
+// bdc-fix	V	float	0x266ba4	4	0	[102]._unk2c
+// bdc-fix	V	float	0x266ba8	4	0	[102]._unk30
+// bdc-fix	V	int	0x266bb0	4	0	[102].launchSound
+// bdc-fix	V	int	0x266bb4	4	0	[102].hitSound
+// bdc-fix	V	int	0x266bb8	4	0	[102]._unk40
+// bdc-fix	BYTES	unsigned char	0x266bbc	3	0	[103]._unk00
+// bdc-fix	V	short	0x266bc0	2	0	[103]._unk04
+// bdc-fix	V	short	0x266bc2	2	0	[103]._unk06
+// bdc-fix	V	unsigned char	0x266bc4	1	0	[103].noGuardFlag
+// bdc-fix	V	short	0x266bc8	2	0	[103]._unk0c
+// bdc-fix	V	unsigned char	0x266bcb	1	0	[103].hitCount
+// bdc-fix	V	int	0x266bcc	4	0	[103].power
+// bdc-fix	V	int	0x266bd0	4	0	[103].specialPower
+// bdc-fix	V	int	0x266bd4	4	0	[103].knockdownPower
+// bdc-fix	V	int	0x266bd8	4	0	[103].flinchPower
+// bdc-fix	V	int	0x266bdc	4	0	[103].hitEnergy
+// bdc-fix	V	float	0x266be0	4	0	[103]._unk24
+// bdc-fix	V	float	0x266be8	4	0	[103]._unk2c
+// bdc-fix	V	float	0x266bec	4	0	[103]._unk30
+// bdc-fix	V	int	0x266bf4	4	0	[103].launchSound
+// bdc-fix	V	int	0x266bf8	4	0	[103].hitSound
+// bdc-fix	V	int	0x266bfc	4	0	[103]._unk40
+// bdc-fix	BYTES	unsigned char	0x266c00	3	0	[104]._unk00
+// bdc-fix	V	short	0x266c04	2	0	[104]._unk04
+// bdc-fix	V	short	0x266c06	2	0	[104]._unk06
+// bdc-fix	V	unsigned char	0x266c08	1	0	[104].noGuardFlag
+// bdc-fix	V	short	0x266c0c	2	0	[104]._unk0c
+// bdc-fix	V	unsigned char	0x266c0f	1	0	[104].hitCount
+// bdc-fix	V	int	0x266c10	4	0	[104].power
+// bdc-fix	V	int	0x266c14	4	0	[104].specialPower
+// bdc-fix	V	int	0x266c1c	4	0	[104].flinchPower
+// bdc-fix	V	int	0x266c20	4	0	[104].hitEnergy
+// bdc-fix	V	float	0x266c24	4	0	[104]._unk24
+// bdc-fix	V	float	0x266c2c	4	0	[104]._unk2c
+// bdc-fix	V	float	0x266c30	4	0	[104]._unk30
+// bdc-fix	BYTES	unsigned char	0x266c34	4	0	[104]._unk34
+// bdc-fix	V	int	0x266c38	4	0	[104].launchSound
+// bdc-fix	V	int	0x266c3c	4	0	[104].hitSound
+// bdc-fix	V	int	0x266c40	4	0	[104]._unk40
+// bdc-fix	BYTES	unsigned char	0x266c44	3	0	[105]._unk00
+// bdc-fix	V	short	0x266c48	2	0	[105]._unk04
+// bdc-fix	V	short	0x266c4a	2	0	[105]._unk06
+// bdc-fix	V	unsigned char	0x266c4c	1	0	[105].noGuardFlag
+// bdc-fix	V	short	0x266c50	2	0	[105]._unk0c
+// bdc-fix	V	unsigned char	0x266c53	1	0	[105].hitCount
+// bdc-fix	V	int	0x266c64	4	0	[105].hitEnergy
+// bdc-fix	V	float	0x266c68	4	0	[105]._unk24
+// bdc-fix	V	float	0x266c70	4	0	[105]._unk2c
+// bdc-fix	V	int	0x266c7c	4	0	[105].launchSound
+// bdc-fix	V	int	0x266c80	4	0	[105].hitSound
+// bdc-fix	V	int	0x266c84	4	0	[105]._unk40
+// bdc-fix	BYTES	unsigned char	0x266c88	3	0	[106]._unk00
+// bdc-fix	V	short	0x266c8c	2	0	[106]._unk04
+// bdc-fix	V	short	0x266c8e	2	0	[106]._unk06
+// bdc-fix	V	unsigned char	0x266c90	1	0	[106].noGuardFlag
+// bdc-fix	V	short	0x266c94	2	0	[106]._unk0c
+// bdc-fix	V	unsigned char	0x266c97	1	0	[106].hitCount
+// bdc-fix	V	int	0x266c98	4	0	[106].power
+// bdc-fix	V	int	0x266c9c	4	0	[106].specialPower
+// bdc-fix	V	int	0x266ca0	4	0	[106].knockdownPower
+// bdc-fix	V	int	0x266ca4	4	0	[106].flinchPower
+// bdc-fix	V	int	0x266ca8	4	0	[106].hitEnergy
+// bdc-fix	V	float	0x266cac	4	0	[106]._unk24
+// bdc-fix	V	float	0x266cb4	4	0	[106]._unk2c
+// bdc-fix	V	float	0x266cb8	4	0	[106]._unk30
+// bdc-fix	BYTES	unsigned char	0x266cbc	4	0	[106]._unk34
+// bdc-fix	V	int	0x266cc0	4	0	[106].launchSound
+// bdc-fix	V	int	0x266cc4	4	0	[106].hitSound
+// bdc-fix	V	int	0x266cc8	4	0	[106]._unk40
+// bdc-fix	BYTES	unsigned char	0x266ccc	3	0	[107]._unk00
+// bdc-fix	V	short	0x266cd0	2	0	[107]._unk04
+// bdc-fix	V	short	0x266cd2	2	0	[107]._unk06
+// bdc-fix	V	unsigned char	0x266cd4	1	0	[107].noGuardFlag
+// bdc-fix	V	short	0x266cd8	2	0	[107]._unk0c
+// bdc-fix	V	unsigned char	0x266cdb	1	0	[107].hitCount
+// bdc-fix	V	int	0x266cdc	4	0	[107].power
+// bdc-fix	V	int	0x266ce0	4	0	[107].specialPower
+// bdc-fix	V	int	0x266ce4	4	0	[107].knockdownPower
+// bdc-fix	V	int	0x266ce8	4	0	[107].flinchPower
+// bdc-fix	V	int	0x266cec	4	0	[107].hitEnergy
+// bdc-fix	V	float	0x266cf0	4	0	[107]._unk24
+// bdc-fix	V	float	0x266cf8	4	0	[107]._unk2c
+// bdc-fix	V	float	0x266cfc	4	0	[107]._unk30
+// bdc-fix	V	int	0x266d04	4	0	[107].launchSound
+// bdc-fix	V	int	0x266d08	4	0	[107].hitSound
+// bdc-fix	V	int	0x266d0c	4	0	[107]._unk40
+// bdc-fix	BYTES	unsigned char	0x266d10	3	0	[108]._unk00
+// bdc-fix	V	short	0x266d14	2	0	[108]._unk04
+// bdc-fix	V	short	0x266d16	2	0	[108]._unk06
+// bdc-fix	V	short	0x266d1c	2	0	[108]._unk0c
+// bdc-fix	V	unsigned char	0x266d1e	1	0	[108].reflectMode
+// bdc-fix	V	unsigned char	0x266d1f	1	0	[108].hitCount
+// bdc-fix	V	int	0x266d20	4	0	[108].power
+// bdc-fix	V	int	0x266d24	4	0	[108].specialPower
+// bdc-fix	V	int	0x266d28	4	0	[108].knockdownPower
+// bdc-fix	V	int	0x266d2c	4	0	[108].flinchPower
+// bdc-fix	V	int	0x266d30	4	0	[108].hitEnergy
+// bdc-fix	V	float	0x266d34	4	0	[108]._unk24
+// bdc-fix	V	float	0x266d38	4	0	[108]._unk28
+// bdc-fix	V	float	0x266d3c	4	0	[108]._unk2c
+// bdc-fix	V	float	0x266d40	4	0	[108]._unk30
+// bdc-fix	V	int	0x266d48	4	0	[108].launchSound
+// bdc-fix	V	int	0x266d4c	4	0	[108].hitSound
+// bdc-fix	V	int	0x266d50	4	0	[108]._unk40
+// bdc-fix	BYTES	unsigned char	0x266d54	3	0	[109]._unk00
+// bdc-fix	V	short	0x266d58	2	0	[109]._unk04
+// bdc-fix	V	short	0x266d5a	2	0	[109]._unk06
+// bdc-fix	V	unsigned char	0x266d5c	1	0	[109].noGuardFlag
+// bdc-fix	V	short	0x266d60	2	0	[109]._unk0c
+// bdc-fix	V	unsigned char	0x266d63	1	0	[109].hitCount
+// bdc-fix	V	int	0x266d64	4	0	[109].power
+// bdc-fix	V	int	0x266d68	4	0	[109].specialPower
+// bdc-fix	V	int	0x266d6c	4	0	[109].knockdownPower
+// bdc-fix	V	int	0x266d70	4	0	[109].flinchPower
+// bdc-fix	V	int	0x266d74	4	0	[109].hitEnergy
+// bdc-fix	V	float	0x266d78	4	0	[109]._unk24
+// bdc-fix	V	float	0x266d7c	4	0	[109]._unk28
+// bdc-fix	V	float	0x266d80	4	0	[109]._unk2c
+// bdc-fix	V	float	0x266d84	4	0	[109]._unk30
+// bdc-fix	V	int	0x266d8c	4	0	[109].launchSound
+// bdc-fix	V	int	0x266d90	4	0	[109].hitSound
+// bdc-fix	V	int	0x266d94	4	0	[109]._unk40
+// bdc-fix	BYTES	unsigned char	0x266d98	3	0	[110]._unk00
+// bdc-fix	V	short	0x266d9c	2	0	[110]._unk04
+// bdc-fix	V	short	0x266d9e	2	0	[110]._unk06
+// bdc-fix	V	unsigned char	0x266da0	1	0	[110].noGuardFlag
+// bdc-fix	V	short	0x266da4	2	0	[110]._unk0c
+// bdc-fix	V	unsigned char	0x266da7	1	0	[110].hitCount
+// bdc-fix	V	int	0x266da8	4	0	[110].power
+// bdc-fix	V	int	0x266dac	4	0	[110].specialPower
+// bdc-fix	V	int	0x266db0	4	0	[110].knockdownPower
+// bdc-fix	V	int	0x266db4	4	0	[110].flinchPower
+// bdc-fix	V	int	0x266db8	4	0	[110].hitEnergy
+// bdc-fix	V	float	0x266dbc	4	0	[110]._unk24
+// bdc-fix	V	float	0x266dc4	4	0	[110]._unk2c
+// bdc-fix	V	float	0x266dc8	4	0	[110]._unk30
+// bdc-fix	V	int	0x266dd0	4	0	[110].launchSound
+// bdc-fix	V	int	0x266dd4	4	0	[110].hitSound
+// bdc-fix	V	int	0x266dd8	4	0	[110]._unk40
+// bdc-fix	BYTES	unsigned char	0x266ddc	3	0	[111]._unk00
+// bdc-fix	V	short	0x266de0	2	0	[111]._unk04
+// bdc-fix	V	short	0x266de2	2	0	[111]._unk06
+// bdc-fix	V	unsigned char	0x266de4	1	0	[111].noGuardFlag
+// bdc-fix	V	short	0x266de8	2	0	[111]._unk0c
+// bdc-fix	V	unsigned char	0x266deb	1	0	[111].hitCount
+// bdc-fix	V	int	0x266dfc	4	0	[111].hitEnergy
+// bdc-fix	V	float	0x266e00	4	0	[111]._unk24
+// bdc-fix	V	float	0x266e08	4	0	[111]._unk2c
+// bdc-fix	V	int	0x266e14	4	0	[111].launchSound
+// bdc-fix	V	int	0x266e18	4	0	[111].hitSound
+// bdc-fix	V	int	0x266e1c	4	0	[111]._unk40
+// bdc-fix	BYTES	unsigned char	0x266e20	3	0	[112]._unk00
+// bdc-fix	V	short	0x266e24	2	0	[112]._unk04
+// bdc-fix	V	short	0x266e26	2	0	[112]._unk06
+// bdc-fix	V	unsigned char	0x266e28	1	0	[112].noGuardFlag
+// bdc-fix	V	short	0x266e2c	2	0	[112]._unk0c
+// bdc-fix	V	unsigned char	0x266e2f	1	0	[112].hitCount
+// bdc-fix	V	int	0x266e40	4	0	[112].hitEnergy
+// bdc-fix	V	float	0x266e44	4	0	[112]._unk24
+// bdc-fix	V	float	0x266e4c	4	0	[112]._unk2c
+// bdc-fix	V	int	0x266e58	4	0	[112].launchSound
+// bdc-fix	V	int	0x266e5c	4	0	[112].hitSound
+// bdc-fix	V	int	0x266e60	4	0	[112]._unk40
+// bdc-fix	BYTES	unsigned char	0x266e64	3	0	[113]._unk00
+// bdc-fix	V	short	0x266e68	2	0	[113]._unk04
+// bdc-fix	V	short	0x266e6a	2	0	[113]._unk06
+// bdc-fix	V	unsigned char	0x266e6c	1	0	[113].noGuardFlag
+// bdc-fix	V	short	0x266e70	2	0	[113]._unk0c
+// bdc-fix	V	unsigned char	0x266e72	1	0	[113].reflectMode
+// bdc-fix	V	unsigned char	0x266e73	1	0	[113].hitCount
+// bdc-fix	V	int	0x266e74	4	0	[113].power
+// bdc-fix	V	int	0x266e78	4	0	[113].specialPower
+// bdc-fix	V	int	0x266e7c	4	0	[113].knockdownPower
+// bdc-fix	V	int	0x266e80	4	0	[113].flinchPower
+// bdc-fix	V	int	0x266e84	4	0	[113].hitEnergy
+// bdc-fix	V	float	0x266e88	4	0	[113]._unk24
+// bdc-fix	V	float	0x266e90	4	0	[113]._unk2c
+// bdc-fix	V	float	0x266e94	4	0	[113]._unk30
+// bdc-fix	V	int	0x266e9c	4	0	[113].launchSound
+// bdc-fix	V	int	0x266ea0	4	0	[113].hitSound
+// bdc-fix	V	int	0x266ea4	4	0	[113]._unk40
+// bdc-fix	BYTES	unsigned char	0x266ea8	3	0	[114]._unk00
+// bdc-fix	V	short	0x266eac	2	0	[114]._unk04
+// bdc-fix	V	short	0x266eae	2	0	[114]._unk06
+// bdc-fix	V	short	0x266eb4	2	0	[114]._unk0c
+// bdc-fix	V	unsigned char	0x266eb6	1	0	[114].reflectMode
+// bdc-fix	V	unsigned char	0x266eb7	1	0	[114].hitCount
+// bdc-fix	V	int	0x266eb8	4	0	[114].power
+// bdc-fix	V	int	0x266ebc	4	0	[114].specialPower
+// bdc-fix	V	int	0x266ec0	4	0	[114].knockdownPower
+// bdc-fix	V	int	0x266ec4	4	0	[114].flinchPower
+// bdc-fix	V	int	0x266ec8	4	0	[114].hitEnergy
+// bdc-fix	V	float	0x266ecc	4	0	[114]._unk24
+// bdc-fix	V	float	0x266ed0	4	0	[114]._unk28
+// bdc-fix	V	float	0x266ed4	4	0	[114]._unk2c
+// bdc-fix	V	float	0x266ed8	4	0	[114]._unk30
+// bdc-fix	V	int	0x266ee0	4	0	[114].launchSound
+// bdc-fix	V	int	0x266ee4	4	0	[114].hitSound
+// bdc-fix	V	int	0x266ee8	4	0	[114]._unk40
+// bdc-fix	BYTES	unsigned char	0x266eec	3	0	[115]._unk00
+// bdc-fix	V	short	0x266ef0	2	0	[115]._unk04
+// bdc-fix	V	short	0x266ef2	2	0	[115]._unk06
+// bdc-fix	V	unsigned char	0x266ef4	1	0	[115].noGuardFlag
+// bdc-fix	V	short	0x266ef8	2	0	[115]._unk0c
+// bdc-fix	V	unsigned char	0x266efb	1	0	[115].hitCount
+// bdc-fix	V	int	0x266efc	4	0	[115].power
+// bdc-fix	V	int	0x266f00	4	0	[115].specialPower
+// bdc-fix	V	int	0x266f04	4	0	[115].knockdownPower
+// bdc-fix	V	int	0x266f08	4	0	[115].flinchPower
+// bdc-fix	V	int	0x266f0c	4	0	[115].hitEnergy
+// bdc-fix	V	float	0x266f10	4	0	[115]._unk24
+// bdc-fix	V	float	0x266f14	4	0	[115]._unk28
+// bdc-fix	V	float	0x266f18	4	0	[115]._unk2c
+// bdc-fix	V	float	0x266f1c	4	0	[115]._unk30
+// bdc-fix	V	int	0x266f24	4	0	[115].launchSound
+// bdc-fix	V	int	0x266f28	4	0	[115].hitSound
+// bdc-fix	V	int	0x266f2c	4	0	[115]._unk40
+// bdc-fix	BYTES	unsigned char	0x266f30	3	0	[116]._unk00
+// bdc-fix	V	short	0x266f34	2	0	[116]._unk04
+// bdc-fix	V	short	0x266f36	2	0	[116]._unk06
+// bdc-fix	V	unsigned char	0x266f38	1	0	[116].noGuardFlag
+// bdc-fix	V	short	0x266f3c	2	0	[116]._unk0c
+// bdc-fix	V	unsigned char	0x266f3f	1	0	[116].hitCount
+// bdc-fix	V	int	0x266f40	4	0	[116].power
+// bdc-fix	V	int	0x266f44	4	0	[116].specialPower
+// bdc-fix	V	int	0x266f48	4	0	[116].knockdownPower
+// bdc-fix	V	int	0x266f4c	4	0	[116].flinchPower
+// bdc-fix	V	int	0x266f50	4	0	[116].hitEnergy
+// bdc-fix	V	float	0x266f54	4	0	[116]._unk24
+// bdc-fix	V	float	0x266f5c	4	0	[116]._unk2c
+// bdc-fix	V	float	0x266f60	4	0	[116]._unk30
+// bdc-fix	V	int	0x266f68	4	0	[116].launchSound
+// bdc-fix	V	int	0x266f6c	4	0	[116].hitSound
+// bdc-fix	V	int	0x266f70	4	0	[116]._unk40
+// bdc-fix	BYTES	unsigned char	0x266f74	3	0	[117]._unk00
+// bdc-fix	V	short	0x266f78	2	0	[117]._unk04
+// bdc-fix	V	short	0x266f7a	2	0	[117]._unk06
+// bdc-fix	V	unsigned char	0x266f7c	1	0	[117].noGuardFlag
+// bdc-fix	V	short	0x266f80	2	0	[117]._unk0c
+// bdc-fix	V	unsigned char	0x266f83	1	0	[117].hitCount
+// bdc-fix	V	int	0x266f84	4	0	[117].power
+// bdc-fix	V	int	0x266f88	4	0	[117].specialPower
+// bdc-fix	V	int	0x266f8c	4	0	[117].knockdownPower
+// bdc-fix	V	int	0x266f90	4	0	[117].flinchPower
+// bdc-fix	V	int	0x266f94	4	0	[117].hitEnergy
+// bdc-fix	V	float	0x266f98	4	0	[117]._unk24
+// bdc-fix	V	float	0x266fa0	4	0	[117]._unk2c
+// bdc-fix	V	float	0x266fa4	4	0	[117]._unk30
+// bdc-fix	V	int	0x266fac	4	0	[117].launchSound
+// bdc-fix	V	int	0x266fb0	4	0	[117].hitSound
+// bdc-fix	V	int	0x266fb4	4	0	[117]._unk40
+// bdc-fix	BYTES	unsigned char	0x266fb8	3	0	[118]._unk00
+// bdc-fix	V	short	0x266fbc	2	0	[118]._unk04
+// bdc-fix	V	short	0x266fbe	2	0	[118]._unk06
+// bdc-fix	V	unsigned char	0x266fc0	1	0	[118].noGuardFlag
+// bdc-fix	V	short	0x266fc4	2	0	[118]._unk0c
+// bdc-fix	V	unsigned char	0x266fc7	1	0	[118].hitCount
+// bdc-fix	V	int	0x266fd8	4	0	[118].hitEnergy
+// bdc-fix	V	float	0x266fdc	4	0	[118]._unk24
+// bdc-fix	V	float	0x266fe4	4	0	[118]._unk2c
+// bdc-fix	V	int	0x266ff0	4	0	[118].launchSound
+// bdc-fix	V	int	0x266ff4	4	0	[118].hitSound
+// bdc-fix	V	int	0x266ff8	4	0	[118]._unk40
+// bdc-fix	BYTES	unsigned char	0x266ffc	3	0	[119]._unk00
+// bdc-fix	V	short	0x267000	2	0	[119]._unk04
+// bdc-fix	V	short	0x267002	2	0	[119]._unk06
+// bdc-fix	V	short	0x267008	2	0	[119]._unk0c
+// bdc-fix	V	unsigned char	0x26700a	1	0	[119].reflectMode
+// bdc-fix	V	unsigned char	0x26700b	1	0	[119].hitCount
+// bdc-fix	V	int	0x26700c	4	0	[119].power
+// bdc-fix	V	int	0x267010	4	0	[119].specialPower
+// bdc-fix	V	int	0x267014	4	0	[119].knockdownPower
+// bdc-fix	V	int	0x267018	4	0	[119].flinchPower
+// bdc-fix	V	int	0x26701c	4	0	[119].hitEnergy
+// bdc-fix	V	float	0x267020	4	0	[119]._unk24
+// bdc-fix	V	float	0x267028	4	0	[119]._unk2c
+// bdc-fix	V	float	0x26702c	4	0	[119]._unk30
+// bdc-fix	V	int	0x267034	4	0	[119].launchSound
+// bdc-fix	V	int	0x267038	4	0	[119].hitSound
+// bdc-fix	V	int	0x26703c	4	0	[119]._unk40
+// bdc-fix	BYTES	unsigned char	0x267040	3	0	[120]._unk00
+// bdc-fix	V	short	0x267044	2	0	[120]._unk04
+// bdc-fix	V	short	0x267046	2	0	[120]._unk06
+// bdc-fix	V	unsigned char	0x267048	1	0	[120].noGuardFlag
+// bdc-fix	V	short	0x26704c	2	0	[120]._unk0c
+// bdc-fix	V	unsigned char	0x26704f	1	0	[120].hitCount
+// bdc-fix	V	int	0x267050	4	0	[120].power
+// bdc-fix	V	int	0x267054	4	0	[120].specialPower
+// bdc-fix	V	int	0x267058	4	0	[120].knockdownPower
+// bdc-fix	V	int	0x26705c	4	0	[120].flinchPower
+// bdc-fix	V	int	0x267060	4	0	[120].hitEnergy
+// bdc-fix	V	float	0x267064	4	0	[120]._unk24
+// bdc-fix	V	float	0x267068	4	0	[120]._unk28
+// bdc-fix	V	float	0x26706c	4	0	[120]._unk2c
+// bdc-fix	V	float	0x267070	4	0	[120]._unk30
+// bdc-fix	V	int	0x267078	4	0	[120].launchSound
+// bdc-fix	V	int	0x26707c	4	0	[120].hitSound
+// bdc-fix	V	int	0x267080	4	0	[120]._unk40
+// bdc-fix	BYTES	unsigned char	0x267084	3	0	[121]._unk00
+// bdc-fix	V	short	0x267088	2	0	[121]._unk04
+// bdc-fix	V	short	0x26708a	2	0	[121]._unk06
+// bdc-fix	V	unsigned char	0x26708c	1	0	[121].noGuardFlag
+// bdc-fix	V	short	0x267090	2	0	[121]._unk0c
+// bdc-fix	V	unsigned char	0x267093	1	0	[121].hitCount
+// bdc-fix	V	int	0x267094	4	0	[121].power
+// bdc-fix	V	int	0x267098	4	0	[121].specialPower
+// bdc-fix	V	int	0x26709c	4	0	[121].knockdownPower
+// bdc-fix	V	int	0x2670a0	4	0	[121].flinchPower
+// bdc-fix	V	int	0x2670a4	4	0	[121].hitEnergy
+// bdc-fix	V	float	0x2670a8	4	0	[121]._unk24
+// bdc-fix	V	float	0x2670b0	4	0	[121]._unk2c
+// bdc-fix	V	float	0x2670b4	4	0	[121]._unk30
+// bdc-fix	V	int	0x2670bc	4	0	[121].launchSound
+// bdc-fix	V	int	0x2670c0	4	0	[121].hitSound
+// bdc-fix	V	int	0x2670c4	4	0	[121]._unk40
+// bdc-fix	BYTES	unsigned char	0x2670c8	3	0	[122]._unk00
+// bdc-fix	V	short	0x2670cc	2	0	[122]._unk04
+// bdc-fix	V	short	0x2670ce	2	0	[122]._unk06
+// bdc-fix	V	unsigned char	0x2670d0	1	0	[122].noGuardFlag
+// bdc-fix	V	short	0x2670d4	2	0	[122]._unk0c
+// bdc-fix	V	unsigned char	0x2670d7	1	0	[122].hitCount
+// bdc-fix	V	int	0x2670e8	4	0	[122].hitEnergy
+// bdc-fix	V	float	0x2670ec	4	0	[122]._unk24
+// bdc-fix	V	float	0x2670f4	4	0	[122]._unk2c
+// bdc-fix	V	int	0x267100	4	0	[122].launchSound
+// bdc-fix	V	int	0x267104	4	0	[122].hitSound
+// bdc-fix	V	int	0x267108	4	0	[122]._unk40
+// bdc-fix	BYTES	unsigned char	0x26710c	3	0	[123]._unk00
+// bdc-fix	V	short	0x267110	2	0	[123]._unk04
+// bdc-fix	V	short	0x267112	2	0	[123]._unk06
+// bdc-fix	V	unsigned char	0x267114	1	0	[123].noGuardFlag
+// bdc-fix	V	short	0x267118	2	0	[123]._unk0c
+// bdc-fix	V	unsigned char	0x26711b	1	0	[123].hitCount
+// bdc-fix	V	int	0x26712c	4	0	[123].hitEnergy
+// bdc-fix	V	float	0x267130	4	0	[123]._unk24
+// bdc-fix	V	float	0x267138	4	0	[123]._unk2c
+// bdc-fix	V	int	0x267144	4	0	[123].launchSound
+// bdc-fix	V	int	0x267148	4	0	[123].hitSound
+// bdc-fix	V	int	0x26714c	4	0	[123]._unk40
+// bdc-fix	BYTES	unsigned char	0x267150	3	0	[124]._unk00
+// bdc-fix	V	short	0x267154	2	0	[124]._unk04
+// bdc-fix	V	short	0x267156	2	0	[124]._unk06
+// bdc-fix	V	unsigned char	0x267158	1	0	[124].noGuardFlag
+// bdc-fix	V	short	0x26715c	2	0	[124]._unk0c
+// bdc-fix	V	unsigned char	0x26715f	1	0	[124].hitCount
+// bdc-fix	V	int	0x267160	4	0	[124].power
+// bdc-fix	V	int	0x267164	4	0	[124].specialPower
+// bdc-fix	V	int	0x267168	4	0	[124].knockdownPower
+// bdc-fix	V	int	0x26716c	4	0	[124].flinchPower
+// bdc-fix	V	int	0x267170	4	0	[124].hitEnergy
+// bdc-fix	V	float	0x267174	4	0	[124]._unk24
+// bdc-fix	V	float	0x267178	4	0	[124]._unk28
+// bdc-fix	V	float	0x26717c	4	0	[124]._unk2c
+// bdc-fix	V	float	0x267180	4	0	[124]._unk30
+// bdc-fix	BYTES	unsigned char	0x267184	4	0	[124]._unk34
+// bdc-fix	V	int	0x267188	4	0	[124].launchSound
+// bdc-fix	V	int	0x26718c	4	0	[124].hitSound
+// bdc-fix	V	int	0x267190	4	0	[124]._unk40
+// bdc-fix	BYTES	unsigned char	0x267194	3	0	[125]._unk00
+// bdc-fix	V	short	0x267198	2	0	[125]._unk04
+// bdc-fix	V	short	0x26719a	2	0	[125]._unk06
+// bdc-fix	V	unsigned char	0x26719c	1	0	[125].noGuardFlag
+// bdc-fix	V	short	0x2671a0	2	0	[125]._unk0c
+// bdc-fix	V	unsigned char	0x2671a3	1	0	[125].hitCount
+// bdc-fix	V	int	0x2671a4	4	0	[125].power
+// bdc-fix	V	int	0x2671a8	4	0	[125].specialPower
+// bdc-fix	V	int	0x2671ac	4	0	[125].knockdownPower
+// bdc-fix	V	int	0x2671b0	4	0	[125].flinchPower
+// bdc-fix	V	int	0x2671b4	4	0	[125].hitEnergy
+// bdc-fix	V	float	0x2671b8	4	0	[125]._unk24
+// bdc-fix	V	float	0x2671bc	4	0	[125]._unk28
+// bdc-fix	V	float	0x2671c0	4	0	[125]._unk2c
+// bdc-fix	V	float	0x2671c4	4	0	[125]._unk30
+// bdc-fix	BYTES	unsigned char	0x2671c8	4	0	[125]._unk34
+// bdc-fix	V	int	0x2671cc	4	0	[125].launchSound
+// bdc-fix	V	int	0x2671d0	4	0	[125].hitSound
+// bdc-fix	V	int	0x2671d4	4	0	[125]._unk40
+// bdc-fix	BYTES	unsigned char	0x2671d8	3	0	[126]._unk00
+// bdc-fix	V	short	0x2671dc	2	0	[126]._unk04
+// bdc-fix	V	short	0x2671de	2	0	[126]._unk06
+// bdc-fix	V	short	0x2671e4	2	0	[126]._unk0c
+// bdc-fix	V	unsigned char	0x2671e7	1	0	[126].hitCount
+// bdc-fix	V	int	0x2671e8	4	0	[126].power
+// bdc-fix	V	int	0x2671f0	4	0	[126].knockdownPower
+// bdc-fix	V	int	0x2671f4	4	0	[126].flinchPower
+// bdc-fix	V	int	0x2671f8	4	0	[126].hitEnergy
+// bdc-fix	V	float	0x2671fc	4	0	[126]._unk24
+// bdc-fix	V	float	0x267200	4	0	[126]._unk28
+// bdc-fix	V	float	0x267204	4	0	[126]._unk2c
+// bdc-fix	V	float	0x267208	4	0	[126]._unk30
+// bdc-fix	V	int	0x267210	4	0	[126].launchSound
+// bdc-fix	V	int	0x267214	4	0	[126].hitSound
+// bdc-fix	V	int	0x267218	4	0	[126]._unk40
+// bdc-fix	BYTES	unsigned char	0x26721c	3	0	[127]._unk00
+// bdc-fix	V	short	0x267220	2	0	[127]._unk04
+// bdc-fix	V	short	0x267222	2	0	[127]._unk06
+// bdc-fix	V	short	0x267228	2	0	[127]._unk0c
+// bdc-fix	V	unsigned char	0x26722b	1	0	[127].hitCount
+// bdc-fix	V	int	0x26722c	4	0	[127].power
+// bdc-fix	V	int	0x267234	4	0	[127].knockdownPower
+// bdc-fix	V	int	0x267238	4	0	[127].flinchPower
+// bdc-fix	V	int	0x26723c	4	0	[127].hitEnergy
+// bdc-fix	V	float	0x267240	4	0	[127]._unk24
+// bdc-fix	V	float	0x267244	4	0	[127]._unk28
+// bdc-fix	V	float	0x267248	4	0	[127]._unk2c
+// bdc-fix	V	float	0x26724c	4	0	[127]._unk30
+// bdc-fix	V	int	0x267254	4	0	[127].launchSound
+// bdc-fix	V	int	0x267258	4	0	[127].hitSound
+// bdc-fix	V	int	0x26725c	4	0	[127]._unk40
+// bdc-fix	BYTES	unsigned char	0x267260	3	0	[128]._unk00
+// bdc-fix	V	short	0x267264	2	0	[128]._unk04
+// bdc-fix	V	short	0x267266	2	0	[128]._unk06
+// bdc-fix	V	short	0x26726c	2	0	[128]._unk0c
+// bdc-fix	V	unsigned char	0x26726f	1	0	[128].hitCount
+// bdc-fix	V	int	0x267278	4	0	[128].knockdownPower
+// bdc-fix	V	int	0x26727c	4	0	[128].flinchPower
+// bdc-fix	V	int	0x267280	4	0	[128].hitEnergy
+// bdc-fix	V	float	0x267284	4	0	[128]._unk24
+// bdc-fix	V	float	0x267288	4	0	[128]._unk28
+// bdc-fix	V	float	0x26728c	4	0	[128]._unk2c
+// bdc-fix	V	float	0x267290	4	0	[128]._unk30
+// bdc-fix	V	int	0x267298	4	0	[128].launchSound
+// bdc-fix	V	int	0x26729c	4	0	[128].hitSound
+// bdc-fix	V	int	0x2672a0	4	0	[128]._unk40
+// bdc-fix	BYTES	unsigned char	0x2672a4	3	0	[129]._unk00
+// bdc-fix	V	short	0x2672a8	2	0	[129]._unk04
+// bdc-fix	V	short	0x2672aa	2	0	[129]._unk06
+// bdc-fix	V	short	0x2672b0	2	0	[129]._unk0c
+// bdc-fix	V	unsigned char	0x2672b3	1	0	[129].hitCount
+// bdc-fix	V	int	0x2672bc	4	0	[129].knockdownPower
+// bdc-fix	V	int	0x2672c0	4	0	[129].flinchPower
+// bdc-fix	V	int	0x2672c4	4	0	[129].hitEnergy
+// bdc-fix	V	float	0x2672c8	4	0	[129]._unk24
+// bdc-fix	V	float	0x2672cc	4	0	[129]._unk28
+// bdc-fix	V	float	0x2672d0	4	0	[129]._unk2c
+// bdc-fix	V	float	0x2672d4	4	0	[129]._unk30
+// bdc-fix	V	int	0x2672dc	4	0	[129].launchSound
+// bdc-fix	V	int	0x2672e0	4	0	[129].hitSound
+// bdc-fix	V	int	0x2672e4	4	0	[129]._unk40
+// bdc-fix	BYTES	unsigned char	0x2672e8	3	0	[130]._unk00
+// bdc-fix	V	short	0x2672ec	2	0	[130]._unk04
+// bdc-fix	V	short	0x2672ee	2	0	[130]._unk06
+// bdc-fix	V	short	0x2672f4	2	0	[130]._unk0c
+// bdc-fix	V	unsigned char	0x2672f7	1	0	[130].hitCount
+// bdc-fix	V	int	0x267300	4	0	[130].knockdownPower
+// bdc-fix	V	int	0x267304	4	0	[130].flinchPower
+// bdc-fix	V	int	0x267308	4	0	[130].hitEnergy
+// bdc-fix	V	float	0x26730c	4	0	[130]._unk24
+// bdc-fix	V	float	0x267310	4	0	[130]._unk28
+// bdc-fix	V	float	0x267314	4	0	[130]._unk2c
+// bdc-fix	V	float	0x267318	4	0	[130]._unk30
+// bdc-fix	V	int	0x267320	4	0	[130].launchSound
+// bdc-fix	V	int	0x267324	4	0	[130].hitSound
+// bdc-fix	V	int	0x267328	4	0	[130]._unk40
+// bdc-fix	BYTES	unsigned char	0x26732c	3	0	[131]._unk00
+// bdc-fix	V	short	0x267330	2	0	[131]._unk04
+// bdc-fix	V	short	0x267332	2	0	[131]._unk06
+// bdc-fix	V	short	0x267338	2	0	[131]._unk0c
+// bdc-fix	V	unsigned char	0x26733b	1	0	[131].hitCount
+// bdc-fix	V	int	0x26733c	4	0	[131].power
+// bdc-fix	V	int	0x267344	4	0	[131].knockdownPower
+// bdc-fix	V	int	0x267348	4	0	[131].flinchPower
+// bdc-fix	V	int	0x26734c	4	0	[131].hitEnergy
+// bdc-fix	V	float	0x267350	4	0	[131]._unk24
+// bdc-fix	V	float	0x267354	4	0	[131]._unk28
+// bdc-fix	V	float	0x267358	4	0	[131]._unk2c
+// bdc-fix	V	float	0x26735c	4	0	[131]._unk30
+// bdc-fix	V	int	0x267364	4	0	[131].launchSound
+// bdc-fix	V	int	0x267368	4	0	[131].hitSound
+// bdc-fix	V	int	0x26736c	4	0	[131]._unk40
+// bdc-fix	BYTES	unsigned char	0x267370	3	0	[132]._unk00
+// bdc-fix	V	short	0x267374	2	0	[132]._unk04
+// bdc-fix	V	short	0x267376	2	0	[132]._unk06
+// bdc-fix	V	unsigned char	0x267378	1	0	[132].noGuardFlag
+// bdc-fix	V	short	0x26737c	2	0	[132]._unk0c
+// bdc-fix	V	unsigned char	0x26737f	1	0	[132].hitCount
+// bdc-fix	V	int	0x267380	4	0	[132].power
+// bdc-fix	V	int	0x267384	4	0	[132].specialPower
+// bdc-fix	V	int	0x267388	4	0	[132].knockdownPower
+// bdc-fix	V	int	0x26738c	4	0	[132].flinchPower
+// bdc-fix	V	int	0x267390	4	0	[132].hitEnergy
+// bdc-fix	V	float	0x267394	4	0	[132]._unk24
+// bdc-fix	V	float	0x26739c	4	0	[132]._unk2c
+// bdc-fix	V	float	0x2673a0	4	0	[132]._unk30
+// bdc-fix	V	int	0x2673a8	4	0	[132].launchSound
+// bdc-fix	V	int	0x2673ac	4	0	[132].hitSound
+// bdc-fix	V	int	0x2673b0	4	0	[132]._unk40
+// bdc-fix	BYTES	unsigned char	0x2673b4	3	0	[133]._unk00
+// bdc-fix	V	short	0x2673b8	2	0	[133]._unk04
+// bdc-fix	V	short	0x2673ba	2	0	[133]._unk06
+// bdc-fix	V	unsigned char	0x2673bc	1	0	[133].noGuardFlag
+// bdc-fix	V	short	0x2673c0	2	0	[133]._unk0c
+// bdc-fix	V	unsigned char	0x2673c3	1	0	[133].hitCount
+// bdc-fix	V	int	0x2673c4	4	0	[133].power
+// bdc-fix	V	int	0x2673c8	4	0	[133].specialPower
+// bdc-fix	V	int	0x2673cc	4	0	[133].knockdownPower
+// bdc-fix	V	int	0x2673d0	4	0	[133].flinchPower
+// bdc-fix	V	int	0x2673d4	4	0	[133].hitEnergy
+// bdc-fix	V	float	0x2673d8	4	0	[133]._unk24
+// bdc-fix	V	float	0x2673e0	4	0	[133]._unk2c
+// bdc-fix	V	float	0x2673e4	4	0	[133]._unk30
+// bdc-fix	V	int	0x2673ec	4	0	[133].launchSound
+// bdc-fix	V	int	0x2673f0	4	0	[133].hitSound
+// bdc-fix	V	int	0x2673f4	4	0	[133]._unk40
+// bdc-fix	BYTES	unsigned char	0x2673f8	3	0	[134]._unk00
+// bdc-fix	V	unsigned char	0x2673fb	1	0	[134].hitEffect
+// bdc-fix	V	short	0x2673fc	2	0	[134]._unk04
+// bdc-fix	V	short	0x2673fe	2	0	[134]._unk06
+// bdc-fix	V	unsigned char	0x267400	1	0	[134].noGuardFlag
+// bdc-fix	V	short	0x267404	2	0	[134]._unk0c
+// bdc-fix	V	unsigned char	0x267407	1	0	[134].hitCount
+// bdc-fix	V	int	0x267408	4	0	[134].power
+// bdc-fix	V	int	0x26740c	4	0	[134].specialPower
+// bdc-fix	V	int	0x267418	4	0	[134].hitEnergy
+// bdc-fix	V	float	0x26741c	4	0	[134]._unk24
+// bdc-fix	V	float	0x267424	4	0	[134]._unk2c
+// bdc-fix	V	float	0x267428	4	0	[134]._unk30
+// bdc-fix	V	int	0x267430	4	0	[134].launchSound
+// bdc-fix	V	int	0x267434	4	0	[134].hitSound
+// bdc-fix	V	int	0x267438	4	0	[134]._unk40
+// bdc-fix	BYTES	unsigned char	0x26743c	3	0	[135]._unk00
+// bdc-fix	V	unsigned char	0x26743f	1	0	[135].hitEffect
+// bdc-fix	V	short	0x267440	2	0	[135]._unk04
+// bdc-fix	V	short	0x267442	2	0	[135]._unk06
+// bdc-fix	V	unsigned char	0x267444	1	0	[135].noGuardFlag
+// bdc-fix	V	short	0x267448	2	0	[135]._unk0c
+// bdc-fix	V	unsigned char	0x26744b	1	0	[135].hitCount
+// bdc-fix	V	int	0x26745c	4	0	[135].hitEnergy
+// bdc-fix	V	float	0x267460	4	0	[135]._unk24
+// bdc-fix	V	float	0x267468	4	0	[135]._unk2c
+// bdc-fix	V	float	0x26746c	4	0	[135]._unk30
+// bdc-fix	V	int	0x267474	4	0	[135].launchSound
+// bdc-fix	V	int	0x267478	4	0	[135].hitSound
+// bdc-fix	V	int	0x26747c	4	0	[135]._unk40
+// bdc-fix	BYTES	unsigned char	0x267480	3	0	[136]._unk00
+// bdc-fix	V	unsigned char	0x267483	1	0	[136].hitEffect
+// bdc-fix	V	short	0x267484	2	0	[136]._unk04
+// bdc-fix	V	short	0x267486	2	0	[136]._unk06
+// bdc-fix	V	unsigned char	0x267488	1	0	[136].noGuardFlag
+// bdc-fix	V	short	0x26748c	2	0	[136]._unk0c
+// bdc-fix	V	unsigned char	0x26748f	1	0	[136].hitCount
+// bdc-fix	V	int	0x26749c	4	0	[136].flinchPower
+// bdc-fix	V	int	0x2674a0	4	0	[136].hitEnergy
+// bdc-fix	V	float	0x2674a4	4	0	[136]._unk24
+// bdc-fix	V	float	0x2674ac	4	0	[136]._unk2c
+// bdc-fix	V	float	0x2674b0	4	0	[136]._unk30
+// bdc-fix	V	int	0x2674b8	4	0	[136].launchSound
+// bdc-fix	V	int	0x2674bc	4	0	[136].hitSound
+// bdc-fix	V	int	0x2674c0	4	0	[136]._unk40
+// bdc-fix	V	short	0x2674c8	2	0	[137]._unk04
+// bdc-fix	V	short	0x2674ca	2	0	[137]._unk06
+// bdc-fix	V	short	0x2674d0	2	0	[137]._unk0c
+// bdc-fix	V	unsigned char	0x2674d2	1	0	[137].reflectMode
+// bdc-fix	V	unsigned char	0x2674d3	1	0	[137].hitCount
+// bdc-fix	V	int	0x2674d4	4	0	[137].power
+// bdc-fix	V	int	0x2674d8	4	0	[137].specialPower
+// bdc-fix	V	int	0x2674dc	4	0	[137].knockdownPower
+// bdc-fix	V	int	0x2674e0	4	0	[137].flinchPower
+// bdc-fix	V	int	0x2674e4	4	0	[137].hitEnergy
+// bdc-fix	V	float	0x2674e8	4	0	[137]._unk24
+// bdc-fix	V	float	0x2674ec	4	0	[137]._unk28
+// bdc-fix	V	float	0x2674f0	4	0	[137]._unk2c
+// bdc-fix	V	float	0x2674f4	4	0	[137]._unk30
+// bdc-fix	V	int	0x2674fc	4	0	[137].launchSound
+// bdc-fix	V	int	0x267500	4	0	[137].hitSound
+// bdc-fix	V	int	0x267504	4	0	[137]._unk40
+// bdc-fix	V	short	0x26750c	2	0	[138]._unk04
+// bdc-fix	V	short	0x26750e	2	0	[138]._unk06
+// bdc-fix	V	short	0x267514	2	0	[138]._unk0c
+// bdc-fix	V	unsigned char	0x267516	1	0	[138].reflectMode
+// bdc-fix	V	unsigned char	0x267517	1	0	[138].hitCount
+// bdc-fix	V	int	0x267518	4	0	[138].power
+// bdc-fix	V	int	0x26751c	4	0	[138].specialPower
+// bdc-fix	V	int	0x267520	4	0	[138].knockdownPower
+// bdc-fix	V	int	0x267524	4	0	[138].flinchPower
+// bdc-fix	V	int	0x267528	4	0	[138].hitEnergy
+// bdc-fix	V	float	0x26752c	4	0	[138]._unk24
+// bdc-fix	V	float	0x267530	4	0	[138]._unk28
+// bdc-fix	V	float	0x267534	4	0	[138]._unk2c
+// bdc-fix	V	float	0x267538	4	0	[138]._unk30
+// bdc-fix	V	int	0x267540	4	0	[138].launchSound
+// bdc-fix	V	int	0x267544	4	0	[138].hitSound
+// bdc-fix	V	int	0x267548	4	0	[138]._unk40
+// bdc-fix	V	short	0x267550	2	0	[139]._unk04
+// bdc-fix	V	short	0x267552	2	0	[139]._unk06
+// bdc-fix	V	short	0x267558	2	0	[139]._unk0c
+// bdc-fix	V	unsigned char	0x26755a	1	0	[139].reflectMode
+// bdc-fix	V	unsigned char	0x26755b	1	0	[139].hitCount
+// bdc-fix	V	int	0x26755c	4	0	[139].power
+// bdc-fix	V	int	0x267560	4	0	[139].specialPower
+// bdc-fix	V	int	0x267564	4	0	[139].knockdownPower
+// bdc-fix	V	int	0x267568	4	0	[139].flinchPower
+// bdc-fix	V	int	0x26756c	4	0	[139].hitEnergy
+// bdc-fix	V	float	0x267570	4	0	[139]._unk24
+// bdc-fix	V	float	0x267574	4	0	[139]._unk28
+// bdc-fix	V	float	0x267578	4	0	[139]._unk2c
+// bdc-fix	V	float	0x26757c	4	0	[139]._unk30
+// bdc-fix	V	int	0x267584	4	0	[139].launchSound
+// bdc-fix	V	int	0x267588	4	0	[139].hitSound
+// bdc-fix	V	int	0x26758c	4	0	[139]._unk40
+// bdc-fix	BYTES	unsigned char	0x267590	3	0	[140]._unk00
+// bdc-fix	V	short	0x267594	2	0	[140]._unk04
+// bdc-fix	V	short	0x267596	2	0	[140]._unk06
+// bdc-fix	V	short	0x26759c	2	0	[140]._unk0c
+// bdc-fix	V	unsigned char	0x26759e	1	0	[140].reflectMode
+// bdc-fix	V	unsigned char	0x26759f	1	0	[140].hitCount
+// bdc-fix	V	int	0x2675a0	4	0	[140].power
+// bdc-fix	V	int	0x2675a4	4	0	[140].specialPower
+// bdc-fix	V	int	0x2675a8	4	0	[140].knockdownPower
+// bdc-fix	V	int	0x2675ac	4	0	[140].flinchPower
+// bdc-fix	V	int	0x2675b0	4	0	[140].hitEnergy
+// bdc-fix	V	float	0x2675b4	4	0	[140]._unk24
+// bdc-fix	V	float	0x2675bc	4	0	[140]._unk2c
+// bdc-fix	V	float	0x2675c0	4	0	[140]._unk30
+// bdc-fix	V	int	0x2675c8	4	0	[140].launchSound
+// bdc-fix	V	int	0x2675cc	4	0	[140].hitSound
+// bdc-fix	V	int	0x2675d0	4	0	[140]._unk40
+// bdc-fix	BYTES	unsigned char	0x2675d4	3	0	[141]._unk00
+// bdc-fix	V	short	0x2675d8	2	0	[141]._unk04
+// bdc-fix	V	short	0x2675da	2	0	[141]._unk06
+// bdc-fix	V	short	0x2675e0	2	0	[141]._unk0c
+// bdc-fix	V	unsigned char	0x2675e2	1	0	[141].reflectMode
+// bdc-fix	V	unsigned char	0x2675e3	1	0	[141].hitCount
+// bdc-fix	V	int	0x2675e4	4	0	[141].power
+// bdc-fix	V	int	0x2675e8	4	0	[141].specialPower
+// bdc-fix	V	int	0x2675ec	4	0	[141].knockdownPower
+// bdc-fix	V	int	0x2675f0	4	0	[141].flinchPower
+// bdc-fix	V	int	0x2675f4	4	0	[141].hitEnergy
+// bdc-fix	V	float	0x2675f8	4	0	[141]._unk24
+// bdc-fix	V	float	0x267600	4	0	[141]._unk2c
+// bdc-fix	V	float	0x267604	4	0	[141]._unk30
+// bdc-fix	V	int	0x26760c	4	0	[141].launchSound
+// bdc-fix	V	int	0x267610	4	0	[141].hitSound
+// bdc-fix	V	int	0x267614	4	0	[141]._unk40
 
 __typeof__(BtlAttackParams[142]) g_btlAttackParamTable = {
     {

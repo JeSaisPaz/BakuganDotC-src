@@ -3,7 +3,7 @@
 
 /* State 4 state handler of the mesh object (`GfxMeshObjCtor`) (table `0x08ab9ebc`, run by
    `GfxMeshObjRunState`): a `"kemuri1"` (smoke) textured 4×4 bezier patch
-   (`g_gfxSmokeBezierVertexData`, `g_gfxSmokeBezierIndexData`, opaque black material) that is
+   (`g_gfxSmokeBezierIndices`, `g_gfxSmokeBezierVertices`, opaque black material) that is
    visible while `g_gmoDrawDisabled` is 0. Sub-state `step` (`+0x1c`): 0 set up, 1 run, 2 hide,
    3 delete itself (virtual destructor, flags 3); any other value does nothing. */
 
@@ -13,7 +13,7 @@ void GfxMeshObjStateSmokeBezier(GfxMeshObj *self)
 
   switch (self->step) {
   case 0:
-    self->vertices = (void *)g_gfxSmokeBezierVertexData;
+    self->indices = (void *)g_gfxSmokeBezierIndices;
     self->drawKind = 2;
     self->blendMode = 1;
     self->texture = GfxFindTexture("kemuri1");
@@ -23,7 +23,7 @@ void GfxMeshObjStateSmokeBezier(GfxMeshObj *self)
     self->patchDivT = 4;
     self->vertexType = 0x12000880;
     self->buffer = (void *)0x0;
-    self->indices = (void *)g_gfxSmokeBezierIndexData;
+    self->vertices = (void *)g_gfxSmokeBezierVertices;
     self->emissive = 0;
     self->color[0] = 0.0f;
     self->texScaleU = 1.0f;

@@ -1,4 +1,5 @@
 // bdc 0x08aa55c0 g_gmoBaseMotionWeight
 #include "bdc.h"
+// bdc-fix	V	float	0x2a15c0	4	0	
 
 __typeof__(const float) g_gmoBaseMotionWeight = BDC_V(float, 0x2a15c0);

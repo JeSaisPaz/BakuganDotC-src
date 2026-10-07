@@ -1,5 +1,46 @@
 // bdc 0x08a68b60 g_btlAttackSpreadDirs
 #include "bdc.h"
+// bdc-fix	V	float	0x264b64	4	0	[0].y
+// bdc-fix	V	float	0x264b68	4	0	[0].z
+// bdc-fix	V	float	0x264b74	4	0	[1].y
+// bdc-fix	V	float	0x264b78	4	0	[1].z
+// bdc-fix	V	float	0x264b80	4	0	[2].x
+// bdc-fix	V	float	0x264b84	4	0	[2].y
+// bdc-fix	V	float	0x264b88	4	0	[2].z
+// bdc-fix	V	float	0x264b90	4	0	[3].x
+// bdc-fix	V	float	0x264b94	4	0	[3].y
+// bdc-fix	V	float	0x264b98	4	0	[3].z
+// bdc-fix	V	float	0x264ba0	4	0	[4].x
+// bdc-fix	V	float	0x264ba4	4	0	[4].y
+// bdc-fix	V	float	0x264ba8	4	0	[4].z
+// bdc-fix	V	float	0x264bb0	4	0	[5].x
+// bdc-fix	V	float	0x264bb4	4	0	[5].y
+// bdc-fix	V	float	0x264bb8	4	0	[5].z
+// bdc-fix	V	float	0x264bc8	4	0	[6].z
+// bdc-fix	V	float	0x264bd0	4	0	[7].x
+// bdc-fix	V	float	0x264bd4	4	0	[7].y
+// bdc-fix	V	float	0x264bd8	4	0	[7].z
+// bdc-fix	V	float	0x264be0	4	0	[8].x
+// bdc-fix	V	float	0x264be4	4	0	[8].y
+// bdc-fix	V	float	0x264be8	4	0	[8].z
+// bdc-fix	V	float	0x264bf0	4	0	[9].x
+// bdc-fix	V	float	0x264bf4	4	0	[9].y
+// bdc-fix	V	float	0x264bf8	4	0	[9].z
+// bdc-fix	V	float	0x264c00	4	0	[10].x
+// bdc-fix	V	float	0x264c04	4	0	[10].y
+// bdc-fix	V	float	0x264c08	4	0	[10].z
+// bdc-fix	V	float	0x264c10	4	0	[11].x
+// bdc-fix	V	float	0x264c14	4	0	[11].y
+// bdc-fix	V	float	0x264c18	4	0	[11].z
+// bdc-fix	V	float	0x264c20	4	0	[12].x
+// bdc-fix	V	float	0x264c24	4	0	[12].y
+// bdc-fix	V	float	0x264c28	4	0	[12].z
+// bdc-fix	V	float	0x264c30	4	0	[13].x
+// bdc-fix	V	float	0x264c34	4	0	[13].y
+// bdc-fix	V	float	0x264c38	4	0	[13].z
+// bdc-fix	V	float	0x264c40	4	0	[14].x
+// bdc-fix	V	float	0x264c44	4	0	[14].y
+// bdc-fix	V	float	0x264c48	4	0	[14].z
 
 __typeof__(ScePspFVector4[15]) g_btlAttackSpreadDirs = {
     { .y = BDC_V(float, 0x264b64), .z = BDC_V(float, 0x264b68) },

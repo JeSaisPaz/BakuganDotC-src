@@ -1,4 +1,5 @@
 // bdc 0x08af13b0 g_sndSsVoiceState
 #include "bdc.h"
+// bdc-fix	V	int	0x2ed3b0	4	0	
 
 __typeof__(s32) g_sndSsVoiceState = BDC_V(int, 0x2ed3b0);

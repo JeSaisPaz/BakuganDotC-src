@@ -1,5 +1,11 @@
 // bdc 0x08af1300 g_gmoWhiteTexDl
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x2ed300	4	0	[0]
+// bdc-fix	V	unsigned int	0x2ed304	4	0	[1]
+// bdc-fix	V	unsigned int	0x2ed308	4	0	[2]
+// bdc-fix	V	unsigned int	0x2ed314	4	0	[5]
+// bdc-fix	V	unsigned int	0x2ed318	4	0	[6]
+// bdc-fix	V	unsigned int	0x2ed31c	4	0	[7]
 
 __typeof__(u32[16]) g_gmoWhiteTexDl = {
     BDC_V(unsigned int, 0x2ed300), BDC_V(unsigned int, 0x2ed304), BDC_V(unsigned int, 0x2ed308), 0,

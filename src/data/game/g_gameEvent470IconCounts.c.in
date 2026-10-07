@@ -1,4 +1,6 @@
 // bdc 0x08a98fcc g_gameEvent470IconCounts
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x294fd0	4	0	[1]
+// bdc-fix	V	unsigned int	0x294fd4	4	0	[2]
 
 __typeof__(u32[3]) g_gameEvent470IconCounts = { 0, BDC_V(unsigned int, 0x294fd0), BDC_V(unsigned int, 0x294fd4) };

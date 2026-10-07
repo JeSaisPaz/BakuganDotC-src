@@ -1,5 +1,10 @@
 // bdc 0x08ac362c g_uiCollectionSphereEntryOffsets
 #include "bdc.h"
+// bdc-fix	V	float	0x2bf634	4	0	[2]
+// bdc-fix	V	float	0x2bf654	4	0	[10]
+// bdc-fix	V	float	0x2bf688	4	0	[23]
+// bdc-fix	V	float	0x2bf68c	4	0	[24]
+// bdc-fix	V	float	0x2bf69c	4	0	[28]
 
 __typeof__(float[33]) g_uiCollectionSphereEntryOffsets = {
     0, 0, BDC_V(float, 0x2bf634), 0, 0, 0, 0, 0, 0, 0, BDC_V(float, 0x2bf654), 0, 0, 0, 0, 0, 0, 0,

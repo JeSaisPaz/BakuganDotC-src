@@ -1,5 +1,13 @@
 // bdc 0x08aa3b50 g_gfxQuadTemplateTopLeft
 #include "bdc.h"
+// bdc-fix	V	float	0x29fb5c	4	0	[1].u
+// bdc-fix	V	signed char	0x29fb64	1	0	[1].x
+// bdc-fix	V	float	0x29fb6c	4	0	[2].v
+// bdc-fix	V	signed char	0x29fb71	1	0	[2].y
+// bdc-fix	V	float	0x29fb74	4	0	[3].u
+// bdc-fix	V	float	0x29fb78	4	0	[3].v
+// bdc-fix	V	signed char	0x29fb7c	1	0	[3].x
+// bdc-fix	V	signed char	0x29fb7d	1	0	[3].y
 
 __typeof__(GfxSpriteVertex[4]) g_gfxQuadTemplateTopLeft = {
     {0}, { .u = BDC_V(float, 0x29fb5c), .x = BDC_V(signed char, 0x29fb64) },

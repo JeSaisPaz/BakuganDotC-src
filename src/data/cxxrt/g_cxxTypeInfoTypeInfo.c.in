@@ -1,5 +1,6 @@
 // bdc 0x08af5aec g_cxxTypeInfoTypeInfo
 #include "bdc.h"
+// bdc-fix	STR	char *	0x2a0458	0	0	.typeName
 
 __typeof__(CxxTypeInfo) g_cxxTypeInfoTypeInfo = {
     .vtbl = (void **)&g_cxxTypeInfoVtable,

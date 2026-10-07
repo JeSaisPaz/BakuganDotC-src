@@ -1,4 +1,5 @@
 // bdc 0x08a65c20 g_btlTutorialActionMasks
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x261c24	4	0	[1]
 
 __typeof__(u32[2]) g_btlTutorialActionMasks = { 0, BDC_V(unsigned int, 0x261c24) };

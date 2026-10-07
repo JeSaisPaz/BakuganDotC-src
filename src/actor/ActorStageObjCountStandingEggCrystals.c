@@ -5,17 +5,6 @@
    `ActorCrystalUpdateSpellCast`, `BtlBakuganRunBallEntry` and `ActorStageObjEggCrystalSummon`
    (camera focus on the first one). */
 
-/* vtable slot: this-adjust + function pointer */
-typedef struct StageObjVirtEntry {
-  short adj;
-  short pad;
-  int (*fn)(void *self);
-} StageObjVirtEntry;
-
-typedef struct StageObjVtable {
-  StageObjVirtEntry slot[15];
-} StageObjVtable;
-
 int ActorStageObjCountStandingEggCrystals(void)
 
 {
@@ -27,8 +16,8 @@ int ActorStageObjCountStandingEggCrystals(void)
   }
   count = 0;
   while (obj != (CoreObject *)0x0) {
-    const StageObjVirtEntry *ent = (const StageObjVirtEntry *)&((const StageObjVtable *)obj->vtable)->slot[14];
-    if (ent->fn((char *)obj + ent->adj) != 0 && ((ActorStageObjBase *)obj)->dead == 0) {
+    const VtblEntry *ent = &((const VtblEntry *)obj->vtable)[14];
+    if (((int (*)(void *))ent->fn)((char *)obj + ent->delta) != 0 && ((ActorStageObjBase *)obj)->dead == 0) {
       count = count + 1;
     }
     obj = obj->next;

@@ -5,38 +5,22 @@
    partner-select screen (`UiAdvSelectCtor`, task 376) through their virtual destructors
    (vtable at object `+0x14`, slot at vtable `+8`, called with flag 3), clearing both pointers. */
 
-typedef struct AdvSelectVSlot {
-  s16 adjust;
-  s16 pad;
-  void (*fn)(void *, s32);
-} AdvSelectVSlot;
-
-typedef struct AdvSelectVTable {
-  u8 unk00[8];
-  AdvSelectVSlot dtor;
-} AdvSelectVTable;
-
-typedef struct AdvSelectVObj {
-  u8 unk00[0x14];
-  AdvSelectVTable *vtable;
-} AdvSelectVObj;
-
 void UiAdvSelectFreeModels(UiAdvSelect *self)
 {
-  AdvSelectVObj *obj;
-  AdvSelectVSlot *slot;
+  GfxModel *obj;
+  const VtblEntry *slot;
 
-  obj = (AdvSelectVObj *)self->model;
+  obj = (GfxModel *)self->model;
   if (obj != NULL) {
-    slot = &obj->vtable->dtor;
-    slot->fn((void *)((u8 *)obj + slot->adjust), 3);
+    slot = &((const VtblEntry *)obj->base.vtable)[1];
+    ((void (*)(void *, s32))slot->fn)((u8 *)obj + slot->delta, 3);
     self->model = NULL;
     self->model = NULL;
   }
-  obj = (AdvSelectVObj *)self->pedestal;
+  obj = (GfxModel *)self->pedestal;
   if (obj != NULL) {
-    slot = &obj->vtable->dtor;
-    slot->fn((void *)((u8 *)obj + slot->adjust), 3);
+    slot = &((const VtblEntry *)obj->base.vtable)[1];
+    ((void (*)(void *, s32))slot->fn)((u8 *)obj + slot->delta, 3);
     self->pedestal = NULL;
     self->pedestal = NULL;
   }

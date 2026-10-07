@@ -1,5 +1,11 @@
 // bdc 0x08a9b438 g_uiLoadingBandYs
 #include "bdc.h"
+// bdc-fix	V	short	0x29743a	2	0	[0][1]
+// bdc-fix	V	short	0x297444	2	0	[1][1]
+// bdc-fix	V	short	0x29744e	2	0	[2][1]
+// bdc-fix	V	short	0x297450	2	0	[2][2]
+// bdc-fix	V	short	0x297452	2	0	[2][3]
+// bdc-fix	V	short	0x297454	2	0	[2][4]
 
 __typeof__(s16[3][5]) g_uiLoadingBandYs = {
     { 0, BDC_V(short, 0x29743a) }, { 0, BDC_V(short, 0x297444) },

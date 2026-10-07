@@ -1,4 +1,5 @@
 // bdc 0x08ac11d8 g_uiHologramBakuganOrder
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2bd1d8	23	0	
 
 __typeof__(u8[23]) g_uiHologramBakuganOrder = BDC_BYTES(0x2bd1d8, 23);

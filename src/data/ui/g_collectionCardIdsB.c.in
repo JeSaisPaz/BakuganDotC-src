@@ -1,4 +1,5 @@
 // bdc 0x08ac39dd g_collectionCardIdsB
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2bf9dd	20	0	
 
 __typeof__(u8[20]) g_collectionCardIdsB = BDC_BYTES(0x2bf9dd, 20);

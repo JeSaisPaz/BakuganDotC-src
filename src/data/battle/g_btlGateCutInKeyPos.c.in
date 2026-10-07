@@ -1,5 +1,11 @@
 // bdc 0x08aba0b4 g_btlGateCutInKeyPos
 #include "bdc.h"
+// bdc-fix	V	int	0x2b60b4	4	0	[0][0]
+// bdc-fix	V	int	0x2b60b8	4	0	[0][1]
+// bdc-fix	V	int	0x2b60c0	4	0	[1][0]
+// bdc-fix	V	int	0x2b60c4	4	0	[1][1]
+// bdc-fix	V	int	0x2b60cc	4	0	[2][0]
+// bdc-fix	V	int	0x2b60d0	4	0	[2][1]
 
 __typeof__(s32[3][3]) g_btlGateCutInKeyPos = {
     { BDC_V(int, 0x2b60b4), BDC_V(int, 0x2b60b8) }, { BDC_V(int, 0x2b60c0), BDC_V(int, 0x2b60c4) },

@@ -1,5 +1,17 @@
 // bdc 0x08aa37b8 g_gfxRect3DStateList
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x29f7b8	4	0	[0]
+// bdc-fix	V	unsigned int	0x29f7bc	4	0	[1]
+// bdc-fix	V	unsigned int	0x29f7c0	4	0	[2]
+// bdc-fix	V	unsigned int	0x29f7c4	4	0	[3]
+// bdc-fix	V	unsigned int	0x29f7c8	4	0	[4]
+// bdc-fix	V	unsigned int	0x29f7cc	4	0	[5]
+// bdc-fix	V	unsigned int	0x29f7d0	4	0	[6]
+// bdc-fix	V	unsigned int	0x29f7d4	4	0	[7]
+// bdc-fix	V	unsigned int	0x29f7d8	4	0	[8]
+// bdc-fix	V	unsigned int	0x29f7dc	4	0	[9]
+// bdc-fix	V	unsigned int	0x29f7e0	4	0	[10]
+// bdc-fix	V	unsigned int	0x29f7e4	4	0	[11]
 
 __typeof__(const u32[12]) g_gfxRect3DStateList = {
     BDC_V(unsigned int, 0x29f7b8), BDC_V(unsigned int, 0x29f7bc), BDC_V(unsigned int, 0x29f7c0),

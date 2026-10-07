@@ -1,4 +1,5 @@
 // bdc 0x08ac352c g_uiCollectionSphereCat1IdsNormal
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2bf52c	33	0	
 
 __typeof__(u8[33]) g_uiCollectionSphereCat1IdsNormal = BDC_BYTES(0x2bf52c, 33);

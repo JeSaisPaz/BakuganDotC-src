@@ -1,4 +1,5 @@
 // bdc 0x08ac34a8 g_uiCardEquipHelpFontNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x29999c	0	0	[0]
 
 __typeof__(char *[2]) g_uiCardEquipHelpFontNames = { (char *)BDC_STR(0x29999c) };

@@ -1,5 +1,13 @@
 // bdc 0x08aa4de0 g_kernelRemPio2PIo2
 #include "bdc.h"
+// bdc-fix	V	double	0x2a0de0	8	0	[0]
+// bdc-fix	V	double	0x2a0de8	8	0	[1]
+// bdc-fix	V	double	0x2a0df0	8	0	[2]
+// bdc-fix	V	double	0x2a0df8	8	0	[3]
+// bdc-fix	V	double	0x2a0e00	8	0	[4]
+// bdc-fix	V	double	0x2a0e08	8	0	[5]
+// bdc-fix	V	double	0x2a0e10	8	0	[6]
+// bdc-fix	V	double	0x2a0e18	8	0	[7]
 
 __typeof__(double[8]) g_kernelRemPio2PIo2 = {
     BDC_V(double, 0x2a0de0), BDC_V(double, 0x2a0de8), BDC_V(double, 0x2a0df0),

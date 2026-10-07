@@ -1,5 +1,29 @@
 // bdc 0x08ab9fa0 g_btlHudAttributeColours
 #include "bdc.h"
+// bdc-fix	V	int	0x2b5fa0	4	0	[0][0]
+// bdc-fix	V	int	0x2b5fa4	4	0	[0][1]
+// bdc-fix	V	int	0x2b5fa8	4	0	[0][2]
+// bdc-fix	V	int	0x2b5fac	4	0	[0][3]
+// bdc-fix	V	int	0x2b5fb0	4	0	[1][0]
+// bdc-fix	V	int	0x2b5fb4	4	0	[1][1]
+// bdc-fix	V	int	0x2b5fb8	4	0	[1][2]
+// bdc-fix	V	int	0x2b5fbc	4	0	[1][3]
+// bdc-fix	V	int	0x2b5fc0	4	0	[2][0]
+// bdc-fix	V	int	0x2b5fc4	4	0	[2][1]
+// bdc-fix	V	int	0x2b5fc8	4	0	[2][2]
+// bdc-fix	V	int	0x2b5fcc	4	0	[2][3]
+// bdc-fix	V	int	0x2b5fd0	4	0	[3][0]
+// bdc-fix	V	int	0x2b5fd4	4	0	[3][1]
+// bdc-fix	V	int	0x2b5fd8	4	0	[3][2]
+// bdc-fix	V	int	0x2b5fdc	4	0	[3][3]
+// bdc-fix	V	int	0x2b5fe0	4	0	[4][0]
+// bdc-fix	V	int	0x2b5fe4	4	0	[4][1]
+// bdc-fix	V	int	0x2b5fe8	4	0	[4][2]
+// bdc-fix	V	int	0x2b5fec	4	0	[4][3]
+// bdc-fix	V	int	0x2b5ff0	4	0	[5][0]
+// bdc-fix	V	int	0x2b5ff4	4	0	[5][1]
+// bdc-fix	V	int	0x2b5ff8	4	0	[5][2]
+// bdc-fix	V	int	0x2b5ffc	4	0	[5][3]
 
 __typeof__(s32[6][4]) g_btlHudAttributeColours = {
     { BDC_V(int, 0x2b5fa0), BDC_V(int, 0x2b5fa4), BDC_V(int, 0x2b5fa8), BDC_V(int, 0x2b5fac) },

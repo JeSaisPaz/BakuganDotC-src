@@ -1,5 +1,21 @@
 // bdc 0x08a67c70 g_btlArtHitWindows
 #include "bdc.h"
+// bdc-fix	V	short	0x263c70	2	0	[0].attackId
+// bdc-fix	V	short	0x263c72	2	0	[0].flags
+// bdc-fix	V	float	0x263c74	4	0	[0].size
+// bdc-fix	V	float	0x263c78	4	0	[0].reach
+// bdc-fix	V	short	0x263c7c	2	0	[1].attackId
+// bdc-fix	V	short	0x263c7e	2	0	[1].flags
+// bdc-fix	V	float	0x263c80	4	0	[1].size
+// bdc-fix	V	float	0x263c84	4	0	[1].reach
+// bdc-fix	V	short	0x263c88	2	0	[2].attackId
+// bdc-fix	V	short	0x263c8a	2	0	[2].flags
+// bdc-fix	V	float	0x263c8c	4	0	[2].size
+// bdc-fix	V	float	0x263c90	4	0	[2].reach
+// bdc-fix	V	short	0x263c94	2	0	[3].attackId
+// bdc-fix	V	short	0x263c96	2	0	[3].flags
+// bdc-fix	V	float	0x263c98	4	0	[3].size
+// bdc-fix	V	float	0x263c9c	4	0	[3].reach
 
 __typeof__(BtlHitWindowDef[4]) g_btlArtHitWindows = {
     {

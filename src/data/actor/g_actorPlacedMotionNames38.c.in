@@ -1,4 +1,7 @@
 // bdc 0x08abf4b8 g_actorPlacedMotionNames38
 #include "bdc.h"
+// bdc-fix	STR	char *	0x294388	0	0	[0]
+// bdc-fix	STR	char *	0x29439c	0	0	[1]
+// bdc-fix	STR	char *	0x293708	0	0	[2]
 
 __typeof__(char *[3]) g_actorPlacedMotionNames38 = { (char *)BDC_STR(0x294388), (char *)BDC_STR(0x29439c), (char *)BDC_STR(0x293708) };

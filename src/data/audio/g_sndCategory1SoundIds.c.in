@@ -1,5 +1,14 @@
 // bdc 0x08aa1240 g_sndCategory1SoundIds
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x29d244	4	0	[1]
+// bdc-fix	V	unsigned int	0x29d248	4	0	[2]
+// bdc-fix	V	unsigned int	0x29d24c	4	0	[3]
+// bdc-fix	V	unsigned int	0x29d250	4	0	[4]
+// bdc-fix	V	unsigned int	0x29d254	4	0	[5]
+// bdc-fix	V	unsigned int	0x29d258	4	0	[6]
+// bdc-fix	V	unsigned int	0x29d25c	4	0	[7]
+// bdc-fix	V	unsigned int	0x29d260	4	0	[8]
+// bdc-fix	V	unsigned int	0x29d264	4	0	[9]
 
 __typeof__(u32[10]) g_sndCategory1SoundIds = {
     0, BDC_V(unsigned int, 0x29d244), BDC_V(unsigned int, 0x29d248), BDC_V(unsigned int, 0x29d24c),

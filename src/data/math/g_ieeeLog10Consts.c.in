@@ -1,5 +1,8 @@
 // bdc 0x08aa0250 g_ieeeLog10Consts
 #include "bdc.h"
+// bdc-fix	V	double	0x29c250	8	0	.ivln10
+// bdc-fix	V	double	0x29c258	8	0	.log10_2hi
+// bdc-fix	V	double	0x29c260	8	0	.log10_2lo
 
 __typeof__(IeeeLog10Consts) g_ieeeLog10Consts = {
     .ivln10 = BDC_V(double, 0x29c250),

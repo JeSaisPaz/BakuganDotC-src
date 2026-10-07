@@ -1,5 +1,22 @@
 // bdc 0x08a655d8 g_btlClearBonusTable
 #include "bdc.h"
+// bdc-fix	V	int	0x2615d8	4	0	[0]
+// bdc-fix	V	int	0x2615dc	4	0	[1]
+// bdc-fix	V	int	0x2615e0	4	0	[2]
+// bdc-fix	V	int	0x2615e8	4	0	[4]
+// bdc-fix	V	int	0x2615ec	4	0	[5]
+// bdc-fix	V	int	0x2615f0	4	0	[6]
+// bdc-fix	V	int	0x2615f8	4	0	[8]
+// bdc-fix	V	int	0x2615fc	4	0	[9]
+// bdc-fix	V	int	0x261600	4	0	[10]
+// bdc-fix	V	int	0x261608	4	0	[12]
+// bdc-fix	V	int	0x26160c	4	0	[13]
+// bdc-fix	V	int	0x261610	4	0	[14]
+// bdc-fix	V	int	0x261618	4	0	[16]
+// bdc-fix	V	int	0x26161c	4	0	[17]
+// bdc-fix	V	int	0x261620	4	0	[18]
+// bdc-fix	V	int	0x261638	4	0	[24]
+// bdc-fix	V	int	0x26166c	4	0	[37]
 
 __typeof__(s32[41]) g_btlClearBonusTable = {
     BDC_V(int, 0x2615d8), BDC_V(int, 0x2615dc), BDC_V(int, 0x2615e0), 0, BDC_V(int, 0x2615e8),

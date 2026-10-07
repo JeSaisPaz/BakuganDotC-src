@@ -1,5 +1,49 @@
 // bdc 0x08a680dc g_btlBakuganStateTable
 #include "bdc.h"
+// bdc-fix	V	short	0x2640de	2	0	[0].index
+// bdc-fix	V	int	0x2640e0	4	0	[0].delta2
+// bdc-fix	V	short	0x2640e6	2	0	[1].index
+// bdc-fix	V	int	0x2640e8	4	0	[1].delta2
+// bdc-fix	V	short	0x2640ee	2	0	[2].index
+// bdc-fix	V	int	0x2640f0	4	0	[2].delta2
+// bdc-fix	V	short	0x2640f6	2	0	[3].index
+// bdc-fix	V	int	0x2640f8	4	0	[3].delta2
+// bdc-fix	V	short	0x2640fe	2	0	[4].index
+// bdc-fix	V	int	0x264100	4	0	[4].delta2
+// bdc-fix	V	short	0x264106	2	0	[5].index
+// bdc-fix	V	int	0x264108	4	0	[5].delta2
+// bdc-fix	V	short	0x26410e	2	0	[6].index
+// bdc-fix	V	int	0x264110	4	0	[6].delta2
+// bdc-fix	V	short	0x264116	2	0	[7].index
+// bdc-fix	V	int	0x264118	4	0	[7].delta2
+// bdc-fix	V	short	0x26411e	2	0	[8].index
+// bdc-fix	V	int	0x264120	4	0	[8].delta2
+// bdc-fix	V	short	0x264126	2	0	[9].index
+// bdc-fix	V	int	0x264128	4	0	[9].delta2
+// bdc-fix	V	short	0x26412e	2	0	[10].index
+// bdc-fix	V	int	0x264130	4	0	[10].delta2
+// bdc-fix	V	short	0x264136	2	0	[11].index
+// bdc-fix	V	int	0x264138	4	0	[11].delta2
+// bdc-fix	V	short	0x26413e	2	0	[12].index
+// bdc-fix	V	int	0x264140	4	0	[12].delta2
+// bdc-fix	V	short	0x264146	2	0	[13].index
+// bdc-fix	V	int	0x264148	4	0	[13].delta2
+// bdc-fix	V	short	0x26414e	2	0	[14].index
+// bdc-fix	V	int	0x264150	4	0	[14].delta2
+// bdc-fix	V	short	0x264156	2	0	[15].index
+// bdc-fix	V	int	0x264158	4	0	[15].delta2
+// bdc-fix	V	short	0x26415e	2	0	[16].index
+// bdc-fix	V	int	0x264160	4	0	[16].delta2
+// bdc-fix	V	short	0x264166	2	0	[17].index
+// bdc-fix	V	int	0x264168	4	0	[17].delta2
+// bdc-fix	V	short	0x26416e	2	0	[18].index
+// bdc-fix	V	int	0x264170	4	0	[18].delta2
+// bdc-fix	V	short	0x264176	2	0	[19].index
+// bdc-fix	V	int	0x264178	4	0	[19].delta2
+// bdc-fix	V	short	0x26417e	2	0	[20].index
+// bdc-fix	V	int	0x264180	4	0	[20].delta2
+// bdc-fix	V	short	0x264186	2	0	[21].index
+// bdc-fix	V	int	0x264188	4	0	[21].delta2
 
 __typeof__(MemberFnPtr[22]) g_btlBakuganStateTable = {
     { .index = BDC_V(short, 0x2640de), .delta2 = BDC_V(int, 0x2640e0) },

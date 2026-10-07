@@ -1,4 +1,6 @@
 // bdc 0x08ab0138 g_uiFontTextureLists02
 #include "bdc.h"
+// bdc-fix	STR	char *	0x236150	0	0	[0]
+// bdc-fix	STR	char *	0x23615c	0	0	[1]
 
 __typeof__(char *[4]) g_uiFontTextureLists02 = { (char *)BDC_STR(0x236150), (char *)BDC_STR(0x23615c) };

@@ -1,4 +1,5 @@
 // bdc 0x08ab02f0 g_collisionAttackFlags
 #include "bdc.h"
+// bdc-fix	V	int	0x2ac2f0	4	0	
 
 __typeof__(s32) g_collisionAttackFlags = BDC_V(int, 0x2ac2f0);

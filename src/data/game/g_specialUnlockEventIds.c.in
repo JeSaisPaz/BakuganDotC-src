@@ -1,5 +1,17 @@
 // bdc 0x08a92c94 g_specialUnlockEventIds
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x28ec94	4	0	[0]
+// bdc-fix	V	unsigned int	0x28ec98	4	0	[1]
+// bdc-fix	V	unsigned int	0x28ec9c	4	0	[2]
+// bdc-fix	V	unsigned int	0x28eca0	4	0	[3]
+// bdc-fix	V	unsigned int	0x28eca4	4	0	[4]
+// bdc-fix	V	unsigned int	0x28eca8	4	0	[5]
+// bdc-fix	V	unsigned int	0x28ecac	4	0	[6]
+// bdc-fix	V	unsigned int	0x28ecb0	4	0	[7]
+// bdc-fix	V	unsigned int	0x28ecb4	4	0	[8]
+// bdc-fix	V	unsigned int	0x28ecb8	4	0	[9]
+// bdc-fix	V	unsigned int	0x28ecbc	4	0	[10]
+// bdc-fix	V	unsigned int	0x28ecc0	4	0	[11]
 
 __typeof__(const u32[12]) g_specialUnlockEventIds = {
     BDC_V(unsigned int, 0x28ec94), BDC_V(unsigned int, 0x28ec98), BDC_V(unsigned int, 0x28ec9c),

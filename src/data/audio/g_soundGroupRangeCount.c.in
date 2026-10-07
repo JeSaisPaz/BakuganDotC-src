@@ -1,4 +1,5 @@
 // bdc 0x08aa12d4 g_soundGroupRangeCount
 #include "bdc.h"
+// bdc-fix	V	int	0x29d2d4	4	0	
 
 __typeof__(s32) g_soundGroupRangeCount = BDC_V(int, 0x29d2d4);

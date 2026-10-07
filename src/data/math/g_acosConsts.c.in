@@ -1,5 +1,21 @@
 // bdc 0x08aa4548 g_acosConsts
 #include "bdc.h"
+// bdc-fix	V	double	0x2a0548	8	0	.one
+// bdc-fix	V	double	0x2a0550	8	0	.pi
+// bdc-fix	V	double	0x2a0558	8	0	.pio2Hi
+// bdc-fix	V	double	0x2a0560	8	0	.pio2Lo
+// bdc-fix	V	double	0x2a0568	8	0	.pS0
+// bdc-fix	V	double	0x2a0570	8	0	.pS1
+// bdc-fix	V	double	0x2a0578	8	0	.pS2
+// bdc-fix	V	double	0x2a0580	8	0	.pS3
+// bdc-fix	V	double	0x2a0588	8	0	.pS4
+// bdc-fix	V	double	0x2a0590	8	0	.pS5
+// bdc-fix	V	double	0x2a0598	8	0	.qS1
+// bdc-fix	V	double	0x2a05a0	8	0	.qS2
+// bdc-fix	V	double	0x2a05a8	8	0	.qS3
+// bdc-fix	V	double	0x2a05b0	8	0	.qS4
+// bdc-fix	V	double	0x2a05c0	8	0	.half
+// bdc-fix	V	double	0x2a05c8	8	0	.two
 
 __typeof__(AcosConsts) g_acosConsts = {
     .one = BDC_V(double, 0x2a0548),

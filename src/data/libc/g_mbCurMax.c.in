@@ -1,4 +1,5 @@
 // bdc 0x08ac4b60 g_mbCurMax
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x2c0b60	4	0	
 
 __typeof__(u32) g_mbCurMax = BDC_V(unsigned int, 0x2c0b60);

@@ -1,4 +1,5 @@
 // bdc 0x08aa33cc g_collisionPhysBoxNegInf
 #include "bdc.h"
+// bdc-fix	V	float	0x29f3cc	4	0	
 
 __typeof__(float) g_collisionPhysBoxNegInf = BDC_V(float, 0x29f3cc);

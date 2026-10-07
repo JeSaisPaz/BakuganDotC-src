@@ -1,5 +1,16 @@
 // bdc 0x08a74e6c g_btlKind08MotionSet16
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x270e6c	4	0	.head.flags
+// bdc-fix	V	short	0x270e70	2	0	.head.startMotion
+// bdc-fix	V	short	0x270e72	2	0	.head.loopMotion
+// bdc-fix	V	short	0x270e74	2	0	.head.mainMotion
+// bdc-fix	V	short	0x270e76	2	0	.head.endMotion
+// bdc-fix	V	unsigned char	0x270e78	1	0	.events[0].type
+// bdc-fix	V	unsigned char	0x270e79	1	0	.events[0].startFrame
+// bdc-fix	V	unsigned char	0x270e7a	1	0	.events[0].endFrame
+// bdc-fix	V	int	0x270e7c	4	0	.events[0].param.soundId
+// bdc-fix	V	float	0x270e84	4	0	.events[0].reach
+// bdc-fix	V	float	0x270e88	4	0	.events[0].launchDist
 
 __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet16 = {
     .head = {

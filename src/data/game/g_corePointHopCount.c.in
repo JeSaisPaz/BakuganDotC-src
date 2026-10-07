@@ -1,4 +1,5 @@
 // bdc 0x08abd514 g_corePointHopCount
 #include "bdc.h"
+// bdc-fix	V	unsigned char	0x2b9514	1	0	
 
 __typeof__(u8) g_corePointHopCount = BDC_V(unsigned char, 0x2b9514);

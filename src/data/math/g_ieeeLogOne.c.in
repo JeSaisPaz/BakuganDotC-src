@@ -1,4 +1,5 @@
 // bdc 0x08aa01e0 g_ieeeLogOne
 #include "bdc.h"
+// bdc-fix	V	double	0x29c1e0	8	0	
 
 __typeof__(double) g_ieeeLogOne = BDC_V(double, 0x29c1e0);

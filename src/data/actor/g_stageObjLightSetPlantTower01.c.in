@@ -1,5 +1,19 @@
 // bdc 0x08a827e0 g_stageObjLightSetPlantTower01
 #include "bdc.h"
+// bdc-fix	STR	char *	0x27e7cc	0	0	.modelName
+// bdc-fix	V	int	0x27e7e4	4	0	.count
+// bdc-fix	V	float	0x27e7f0	4	0	.lights[0].pos[0]
+// bdc-fix	V	float	0x27e7f4	4	0	.lights[0].pos[1]
+// bdc-fix	V	float	0x27e7f8	4	0	.lights[0].pos[2]
+// bdc-fix	V	float	0x27e7fc	4	0	.lights[0].texIndex
+// bdc-fix	V	float	0x27e800	4	0	.lights[1].pos[0]
+// bdc-fix	V	float	0x27e804	4	0	.lights[1].pos[1]
+// bdc-fix	V	float	0x27e808	4	0	.lights[1].pos[2]
+// bdc-fix	V	float	0x27e80c	4	0	.lights[1].texIndex
+// bdc-fix	V	float	0x27e810	4	0	.lights[2].pos[0]
+// bdc-fix	V	float	0x27e814	4	0	.lights[2].pos[1]
+// bdc-fix	V	float	0x27e818	4	0	.lights[2].pos[2]
+// bdc-fix	V	float	0x27e81c	4	0	.lights[2].texIndex
 
 __typeof__(const StageObjLightSet3) g_stageObjLightSetPlantTower01 = {
     .modelName = (const char *)BDC_STR(0x27e7cc),

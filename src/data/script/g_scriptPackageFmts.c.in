@@ -1,5 +1,19 @@
 // bdc 0x08aacb58 g_scriptPackageFmts
 #include "bdc.h"
+// bdc-fix	STR	char *	0x230a80	0	0	[0]
+// bdc-fix	STR	char *	0x230a84	0	0	[1]
+// bdc-fix	STR	char *	0x230a94	0	0	[2]
+// bdc-fix	STR	char *	0x230aac	0	0	[3]
+// bdc-fix	STR	char *	0x230ac4	0	0	[4]
+// bdc-fix	STR	char *	0x230ae8	0	0	[5]
+// bdc-fix	STR	char *	0x230af8	0	0	[6]
+// bdc-fix	STR	char *	0x230b10	0	0	[7]
+// bdc-fix	STR	char *	0x230b28	0	0	[8]
+// bdc-fix	STR	char *	0x230b44	0	0	[9]
+// bdc-fix	STR	char *	0x230b60	0	0	[10]
+// bdc-fix	STR	char *	0x230b7c	0	0	[11]
+// bdc-fix	STR	char *	0x230b9c	0	0	[12]
+// bdc-fix	STR	char *	0x230bb4	0	0	[13]
 
 __typeof__(const char *[14]) g_scriptPackageFmts = {
     (const char *)BDC_STR(0x230a80), (const char *)BDC_STR(0x230a84),

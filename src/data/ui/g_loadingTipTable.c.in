@@ -1,5 +1,20 @@
 // bdc 0x08a9b358 g_loadingTipTable
 #include "bdc.h"
+// bdc-fix	V	int	0x29735c	4	0	[0][1]
+// bdc-fix	V	int	0x297360	4	0	[1][0]
+// bdc-fix	V	int	0x297364	4	0	[1][1]
+// bdc-fix	V	int	0x297368	4	0	[2][0]
+// bdc-fix	V	int	0x29736c	4	0	[2][1]
+// bdc-fix	V	int	0x297370	4	0	[3][0]
+// bdc-fix	V	int	0x297374	4	0	[3][1]
+// bdc-fix	V	int	0x297378	4	0	[4][0]
+// bdc-fix	V	int	0x29737c	4	0	[4][1]
+// bdc-fix	V	int	0x297380	4	0	[5][0]
+// bdc-fix	V	int	0x297384	4	0	[5][1]
+// bdc-fix	V	int	0x297388	4	0	[6][0]
+// bdc-fix	V	int	0x29738c	4	0	[6][1]
+// bdc-fix	V	int	0x297390	4	0	[7][0]
+// bdc-fix	V	int	0x297394	4	0	[7][1]
 
 __typeof__(s32[8][2]) g_loadingTipTable = {
     { 0, BDC_V(int, 0x29735c) }, { BDC_V(int, 0x297360), BDC_V(int, 0x297364) },

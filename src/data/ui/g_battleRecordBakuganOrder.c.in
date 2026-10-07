@@ -1,5 +1,24 @@
 // bdc 0x08a9d14c g_battleRecordBakuganOrder
 #include "bdc.h"
+// bdc-fix	V	int	0x299150	4	0	[1]
+// bdc-fix	V	int	0x299154	4	0	[2]
+// bdc-fix	V	int	0x299158	4	0	[3]
+// bdc-fix	V	int	0x29915c	4	0	[4]
+// bdc-fix	V	int	0x299160	4	0	[5]
+// bdc-fix	V	int	0x299164	4	0	[6]
+// bdc-fix	V	int	0x299168	4	0	[7]
+// bdc-fix	V	int	0x29916c	4	0	[8]
+// bdc-fix	V	int	0x299170	4	0	[9]
+// bdc-fix	V	int	0x299174	4	0	[10]
+// bdc-fix	V	int	0x299178	4	0	[11]
+// bdc-fix	V	int	0x29917c	4	0	[12]
+// bdc-fix	V	int	0x299180	4	0	[13]
+// bdc-fix	V	int	0x299184	4	0	[14]
+// bdc-fix	V	int	0x299188	4	0	[15]
+// bdc-fix	V	int	0x29918c	4	0	[16]
+// bdc-fix	V	int	0x299190	4	0	[17]
+// bdc-fix	V	int	0x299194	4	0	[18]
+// bdc-fix	V	int	0x299198	4	0	[19]
 
 __typeof__(const s32[20]) g_battleRecordBakuganOrder = {
     0, BDC_V(int, 0x299150), BDC_V(int, 0x299154), BDC_V(int, 0x299158), BDC_V(int, 0x29915c),

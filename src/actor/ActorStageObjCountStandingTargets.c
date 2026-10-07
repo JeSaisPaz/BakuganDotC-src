@@ -5,17 +5,6 @@
    stage-object chain `0x08abd5bc`. Used by the battle intro (`BtlMainCheckPlayerDefeated`, `BtlMainPhaseIntro`)
    and `ActorStageObjUpdateScripted`. */
 
-/* vtable slot: this-adjust + function pointer */
-typedef struct StageObjVirtEntry {
-  short adj;
-  short pad;
-  int (*fn)(void *self);
-} StageObjVirtEntry;
-
-typedef struct StageObjVtable {
-  StageObjVirtEntry slot[15];
-} StageObjVtable;
-
 int ActorStageObjCountStandingTargets(void)
 
 {
@@ -27,8 +16,8 @@ int ActorStageObjCountStandingTargets(void)
   }
   count = 0;
   while (obj != (CoreObject *)0x0) {
-    const StageObjVirtEntry *ent = (const StageObjVirtEntry *)&((const StageObjVtable *)obj->vtable)->slot[13];
-    if (ent->fn((char *)obj + ent->adj) != 0 && ((ActorStageObjBase *)obj)->dead == 0) {
+    const VtblEntry *ent = &((const VtblEntry *)obj->vtable)[13];
+    if (((int (*)(void *))ent->fn)((char *)obj + ent->delta) != 0 && ((ActorStageObjBase *)obj)->dead == 0) {
       count = count + 1;
     }
     obj = obj->next;

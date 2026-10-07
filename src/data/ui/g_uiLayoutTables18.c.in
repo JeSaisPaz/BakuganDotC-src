@@ -1,4 +1,7 @@
 // bdc 0x08a3dd84 g_uiLayoutTables18
 #include "bdc.h"
+// bdc-fix	V	short	0x239d88	2	0	[2]
+// bdc-fix	V	short	0x239d8e	2	0	[5]
+// bdc-fix	V	short	0x239d90	2	0	[6]
 
 __typeof__(s16[8]) g_uiLayoutTables18 = { 0, 0, BDC_V(short, 0x239d88), 0, 0, BDC_V(short, 0x239d8e), BDC_V(short, 0x239d90) };

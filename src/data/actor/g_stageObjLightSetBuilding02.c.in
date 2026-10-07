@@ -1,5 +1,27 @@
 // bdc 0x08a829c0 g_stageObjLightSetBuilding02
 #include "bdc.h"
+// bdc-fix	STR	char *	0x27e9a4	0	0	.modelName
+// bdc-fix	V	int	0x27e9c4	4	0	.count
+// bdc-fix	V	float	0x27e9d0	4	0	.lights[0].pos[0]
+// bdc-fix	V	float	0x27e9d4	4	0	.lights[0].pos[1]
+// bdc-fix	V	float	0x27e9d8	4	0	.lights[0].pos[2]
+// bdc-fix	V	float	0x27e9dc	4	0	.lights[0].texIndex
+// bdc-fix	V	float	0x27e9e0	4	0	.lights[1].pos[0]
+// bdc-fix	V	float	0x27e9e4	4	0	.lights[1].pos[1]
+// bdc-fix	V	float	0x27e9e8	4	0	.lights[1].pos[2]
+// bdc-fix	V	float	0x27e9ec	4	0	.lights[1].texIndex
+// bdc-fix	V	float	0x27e9f0	4	0	.lights[2].pos[0]
+// bdc-fix	V	float	0x27e9f4	4	0	.lights[2].pos[1]
+// bdc-fix	V	float	0x27e9f8	4	0	.lights[2].pos[2]
+// bdc-fix	V	float	0x27ea00	4	0	.lights[3].pos[0]
+// bdc-fix	V	float	0x27ea04	4	0	.lights[3].pos[1]
+// bdc-fix	V	float	0x27ea08	4	0	.lights[3].pos[2]
+// bdc-fix	V	float	0x27ea10	4	0	.lights[4].pos[0]
+// bdc-fix	V	float	0x27ea14	4	0	.lights[4].pos[1]
+// bdc-fix	V	float	0x27ea18	4	0	.lights[4].pos[2]
+// bdc-fix	V	float	0x27ea20	4	0	.lights[5].pos[0]
+// bdc-fix	V	float	0x27ea24	4	0	.lights[5].pos[1]
+// bdc-fix	V	float	0x27ea28	4	0	.lights[5].pos[2]
 
 __typeof__(const StageObjLightSet6) g_stageObjLightSetBuilding02 = {
     .modelName = (const char *)BDC_STR(0x27e9a4),

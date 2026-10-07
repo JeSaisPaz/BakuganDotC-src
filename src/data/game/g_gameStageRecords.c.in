@@ -1,4 +1,5 @@
 // bdc 0x08ac3efa g_gameStageRecords
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2bfefa	1080	0	
 
 __typeof__(u8[1080]) g_gameStageRecords = BDC_BYTES(0x2bfefa, 1080);

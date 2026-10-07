@@ -1,5 +1,6 @@
 // bdc 0x08a7fed0 g_btlKindComboSteps26
 #include "bdc.h"
+// bdc-fix	V	short	0x27bed2	2	0	[0].input
 
 __typeof__(BtlComboStep[2]) g_btlKindComboSteps26 = {
     {

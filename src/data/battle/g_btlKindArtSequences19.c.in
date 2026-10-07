@@ -1,5 +1,30 @@
 // bdc 0x08a7ed2c g_btlKindArtSequences19
 #include "bdc.h"
+// bdc-fix	V	unsigned char	0x27ad2c	1	0	[0].flags
+// bdc-fix	V	short	0x27ad2e	2	0	[0].motion
+// bdc-fix	V	float	0x27ad30	4	0	[0].speed
+// bdc-fix	V	short	0x27ad36	2	0	[1].motion
+// bdc-fix	V	float	0x27ad38	4	0	[1].speed
+// bdc-fix	V	short	0x27ad3e	2	0	[2].motion
+// bdc-fix	V	float	0x27ad40	4	0	[2].speed
+// bdc-fix	V	short	0x27ad46	2	0	[3].motion
+// bdc-fix	V	float	0x27ad48	4	0	[3].speed
+// bdc-fix	V	short	0x27ad4e	2	0	[4].motion
+// bdc-fix	V	float	0x27ad50	4	0	[4].speed
+// bdc-fix	V	short	0x27ad56	2	0	[5].motion
+// bdc-fix	V	float	0x27ad58	4	0	[5].speed
+// bdc-fix	V	short	0x27ad5e	2	0	[6].motion
+// bdc-fix	V	float	0x27ad60	4	0	[6].speed
+// bdc-fix	V	short	0x27ad66	2	0	[7].motion
+// bdc-fix	V	float	0x27ad68	4	0	[7].speed
+// bdc-fix	V	unsigned char	0x27ad6c	1	0	[8].flags
+// bdc-fix	V	short	0x27ad6e	2	0	[8].motion
+// bdc-fix	V	float	0x27ad70	4	0	[8].speed
+// bdc-fix	V	short	0x27ad76	2	0	[9].motion
+// bdc-fix	V	float	0x27ad78	4	0	[9].speed
+// bdc-fix	V	unsigned char	0x27ad7c	1	0	[10].flags
+// bdc-fix	V	short	0x27ad7e	2	0	[10].motion
+// bdc-fix	V	float	0x27ad80	4	0	[10].speed
 
 __typeof__(BtlArtSeqStep[11]) g_btlKindArtSequences19 = {
     {

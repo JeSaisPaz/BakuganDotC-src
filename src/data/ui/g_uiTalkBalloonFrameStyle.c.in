@@ -1,4 +1,5 @@
 // bdc 0x08abea26 g_uiTalkBalloonFrameStyle
 #include "bdc.h"
+// bdc-fix	V	unsigned char	0x2baa26	1	0	
 
 __typeof__(u8) g_uiTalkBalloonFrameStyle = BDC_V(unsigned char, 0x2baa26);

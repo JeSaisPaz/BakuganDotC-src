@@ -1,5 +1,22 @@
 // bdc 0x08a33898 g_gfxEffectTintTable
 #include "bdc.h"
+// bdc-fix	STR	char *	0x22f854	0	0	[0].textureName
+// bdc-fix	V	unsigned short	0x22f89e	2	0	[0].entryCount
+// bdc-fix	STR	char *	0x22f864	0	0	[1].textureName
+// bdc-fix	V	unsigned short	0x22f8a4	2	0	[1].backupIndex
+// bdc-fix	V	unsigned short	0x22f8a6	2	0	[1].entryCount
+// bdc-fix	STR	char *	0x22f870	0	0	[2].textureName
+// bdc-fix	V	unsigned short	0x22f8ac	2	0	[2].backupIndex
+// bdc-fix	V	unsigned short	0x22f8ae	2	0	[2].entryCount
+// bdc-fix	STR	char *	0x22f87c	0	0	[3].textureName
+// bdc-fix	V	unsigned short	0x22f8b4	2	0	[3].backupIndex
+// bdc-fix	V	unsigned short	0x22f8b6	2	0	[3].entryCount
+// bdc-fix	STR	char *	0x22f884	0	0	[4].textureName
+// bdc-fix	V	unsigned short	0x22f8bc	2	0	[4].backupIndex
+// bdc-fix	V	unsigned short	0x22f8be	2	0	[4].entryCount
+// bdc-fix	STR	char *	0x22f890	0	0	[5].textureName
+// bdc-fix	V	unsigned short	0x22f8c4	2	0	[5].backupIndex
+// bdc-fix	V	unsigned short	0x22f8c6	2	0	[5].entryCount
 
 __typeof__(GfxEffectTintEntry[6]) g_gfxEffectTintTable = {
     {

@@ -1,4 +1,7 @@
 // bdc 0x08a9d034 g_staffCreditStyleFontSize
 #include "bdc.h"
+// bdc-fix	V	float	0x299034	4	0	[0]
+// bdc-fix	V	float	0x299038	4	0	[1]
+// bdc-fix	V	float	0x29903c	4	0	[2]
 
 __typeof__(const float[4]) g_staffCreditStyleFontSize = { BDC_V(float, 0x299034), BDC_V(float, 0x299038), BDC_V(float, 0x29903c) };

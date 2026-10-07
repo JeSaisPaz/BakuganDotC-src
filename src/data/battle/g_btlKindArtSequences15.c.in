@@ -1,5 +1,27 @@
 // bdc 0x08a78a64 g_btlKindArtSequences15
 #include "bdc.h"
+// bdc-fix	V	unsigned char	0x274a64	1	0	[0].flags
+// bdc-fix	V	short	0x274a66	2	0	[0].motion
+// bdc-fix	V	float	0x274a68	4	0	[0].speed
+// bdc-fix	V	unsigned char	0x274a6c	1	0	[1].flags
+// bdc-fix	V	short	0x274a6e	2	0	[1].motion
+// bdc-fix	V	float	0x274a70	4	0	[1].speed
+// bdc-fix	V	short	0x274a76	2	0	[2].motion
+// bdc-fix	V	float	0x274a78	4	0	[2].speed
+// bdc-fix	V	short	0x274a7e	2	0	[3].motion
+// bdc-fix	V	float	0x274a80	4	0	[3].speed
+// bdc-fix	V	short	0x274a86	2	0	[4].motion
+// bdc-fix	V	float	0x274a88	4	0	[4].speed
+// bdc-fix	V	short	0x274a8e	2	0	[5].motion
+// bdc-fix	V	float	0x274a90	4	0	[5].speed
+// bdc-fix	V	unsigned char	0x274a94	1	0	[6].flags
+// bdc-fix	V	short	0x274a96	2	0	[6].motion
+// bdc-fix	V	float	0x274a98	4	0	[6].speed
+// bdc-fix	V	short	0x274a9e	2	0	[7].motion
+// bdc-fix	V	float	0x274aa0	4	0	[7].speed
+// bdc-fix	V	unsigned char	0x274aa4	1	0	[8].flags
+// bdc-fix	V	short	0x274aa6	2	0	[8].motion
+// bdc-fix	V	float	0x274aa8	4	0	[8].speed
 
 __typeof__(BtlArtSeqStep[9]) g_btlKindArtSequences15 = {
     {

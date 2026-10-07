@@ -1,5 +1,13 @@
 // bdc 0x08ac5228 g_vfpuRandState
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x2c1228	4	0	[0]
+// bdc-fix	V	unsigned int	0x2c122c	4	0	[1]
+// bdc-fix	V	unsigned int	0x2c1230	4	0	[2]
+// bdc-fix	V	unsigned int	0x2c1234	4	0	[3]
+// bdc-fix	V	unsigned int	0x2c1238	4	0	[4]
+// bdc-fix	V	unsigned int	0x2c123c	4	0	[5]
+// bdc-fix	V	unsigned int	0x2c1240	4	0	[6]
+// bdc-fix	V	unsigned int	0x2c1244	4	0	[7]
 
 __typeof__(u32[8]) g_vfpuRandState = {
     BDC_V(unsigned int, 0x2c1228), BDC_V(unsigned int, 0x2c122c), BDC_V(unsigned int, 0x2c1230),

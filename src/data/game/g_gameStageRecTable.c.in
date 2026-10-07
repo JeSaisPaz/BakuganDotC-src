@@ -1,5 +1,23 @@
 // bdc 0x08ac4332 g_gameStageRecTable
 #include "bdc.h"
+// bdc-fix	V	short	0x2c0332	2	0	[0]
+// bdc-fix	V	short	0x2c0334	2	0	[1]
+// bdc-fix	V	short	0x2c0336	2	0	[2]
+// bdc-fix	V	short	0x2c0338	2	0	[3]
+// bdc-fix	V	short	0x2c033a	2	0	[4]
+// bdc-fix	V	short	0x2c033c	2	0	[5]
+// bdc-fix	V	short	0x2c033e	2	0	[6]
+// bdc-fix	V	short	0x2c0340	2	0	[7]
+// bdc-fix	V	short	0x2c0342	2	0	[8]
+// bdc-fix	V	short	0x2c0344	2	0	[9]
+// bdc-fix	V	short	0x2c0346	2	0	[10]
+// bdc-fix	V	short	0x2c0348	2	0	[11]
+// bdc-fix	V	short	0x2c034a	2	0	[12]
+// bdc-fix	V	short	0x2c034c	2	0	[13]
+// bdc-fix	V	short	0x2c034e	2	0	[14]
+// bdc-fix	V	short	0x2c0350	2	0	[15]
+// bdc-fix	V	short	0x2c0352	2	0	[16]
+// bdc-fix	V	short	0x2c0354	2	0	[17]
 
 __typeof__(s16[18]) g_gameStageRecTable = {
     BDC_V(short, 0x2c0332), BDC_V(short, 0x2c0334), BDC_V(short, 0x2c0336), BDC_V(short, 0x2c0338),

@@ -1,5 +1,11 @@
 // bdc 0x08aa1f2c g_coreModuleUtilityIds
 #include "bdc.h"
+// bdc-fix	V	int	0x29df2c	4	0	[0]
+// bdc-fix	V	int	0x29df30	4	0	[1]
+// bdc-fix	V	int	0x29df34	4	0	[2]
+// bdc-fix	V	int	0x29df38	4	0	[3]
+// bdc-fix	V	int	0x29df3c	4	0	[4]
+// bdc-fix	V	int	0x29df40	4	0	[5]
 
 __typeof__(s32[6]) g_coreModuleUtilityIds = {
     BDC_V(int, 0x29df2c), BDC_V(int, 0x29df30), BDC_V(int, 0x29df34), BDC_V(int, 0x29df38),

@@ -1,5 +1,24 @@
 // bdc 0x08ac3ca8 g_uiWorldMapAreaRotations
 #include "bdc.h"
+// bdc-fix	V	float	0x2bfca8	4	0	[0][0]
+// bdc-fix	V	float	0x2bfcb4	4	0	[1][0]
+// bdc-fix	V	float	0x2bfcb8	4	0	[1][1]
+// bdc-fix	V	float	0x2bfcbc	4	0	[1][2]
+// bdc-fix	V	float	0x2bfcc0	4	0	[2][0]
+// bdc-fix	V	float	0x2bfcc4	4	0	[2][1]
+// bdc-fix	V	float	0x2bfcc8	4	0	[2][2]
+// bdc-fix	V	float	0x2bfccc	4	0	[3][0]
+// bdc-fix	V	float	0x2bfcd0	4	0	[3][1]
+// bdc-fix	V	float	0x2bfcd4	4	0	[3][2]
+// bdc-fix	V	float	0x2bfcd8	4	0	[4][0]
+// bdc-fix	V	float	0x2bfcdc	4	0	[4][1]
+// bdc-fix	V	float	0x2bfce0	4	0	[4][2]
+// bdc-fix	V	float	0x2bfce4	4	0	[5][0]
+// bdc-fix	V	float	0x2bfce8	4	0	[5][1]
+// bdc-fix	V	float	0x2bfcec	4	0	[5][2]
+// bdc-fix	V	float	0x2bfcf0	4	0	[6][0]
+// bdc-fix	V	float	0x2bfcf4	4	0	[6][1]
+// bdc-fix	V	float	0x2bfcf8	4	0	[6][2]
 
 __typeof__(float[10][3]) g_uiWorldMapAreaRotations = {
     { BDC_V(float, 0x2bfca8) },

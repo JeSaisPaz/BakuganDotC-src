@@ -1,5 +1,9 @@
 // bdc 0x08aa0268 g_ieeeLogLiterals
 #include "bdc.h"
+// bdc-fix	V	double	0x29c268	8	0	.negTwo54
+// bdc-fix	V	double	0x29c270	8	0	.third
+// bdc-fix	V	double	0x29c278	8	0	.half
+// bdc-fix	V	double	0x29c280	8	0	.two
 
 __typeof__(IeeeLogLiterals) g_ieeeLogLiterals = {
     .negTwo54 = BDC_V(double, 0x29c268),

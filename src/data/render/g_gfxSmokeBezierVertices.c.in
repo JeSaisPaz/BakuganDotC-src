@@ -1,0 +1,5 @@
+// bdc 0x08a6448c g_gfxSmokeBezierVertices
+#include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x26048c	36	0	
+
+__typeof__(u8[36]) g_gfxSmokeBezierVertices = BDC_BYTES(0x26048c, 36);

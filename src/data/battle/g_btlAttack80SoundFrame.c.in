@@ -1,4 +1,5 @@
 // bdc 0x08aba988 g_btlAttack80SoundFrame
 #include "bdc.h"
+// bdc-fix	V	int	0x2b6988	4	0	
 
 __typeof__(s32) g_btlAttack80SoundFrame = BDC_V(int, 0x2b6988);

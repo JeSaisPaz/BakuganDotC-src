@@ -1,5 +1,24 @@
 // bdc 0x08ac5c9c g_collisionSurfaceNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x29f208	0	0	[0]
+// bdc-fix	STR	char *	0x29f218	0	0	[1]
+// bdc-fix	STR	char *	0x29f228	0	0	[2]
+// bdc-fix	STR	char *	0x29f234	0	0	[3]
+// bdc-fix	STR	char *	0x29f240	0	0	[4]
+// bdc-fix	STR	char *	0x29f250	0	0	[5]
+// bdc-fix	STR	char *	0x29f260	0	0	[6]
+// bdc-fix	STR	char *	0x29f268	0	0	[7]
+// bdc-fix	STR	char *	0x29f274	0	0	[8]
+// bdc-fix	STR	char *	0x29f284	0	0	[9]
+// bdc-fix	STR	char *	0x29f294	0	0	[10]
+// bdc-fix	STR	char *	0x29f2a8	0	0	[11]
+// bdc-fix	STR	char *	0x29f2b8	0	0	[12]
+// bdc-fix	STR	char *	0x29f2c8	0	0	[13]
+// bdc-fix	STR	char *	0x29f2d4	0	0	[14]
+// bdc-fix	STR	char *	0x29f2e0	0	0	[15]
+// bdc-fix	STR	char *	0x29f2f0	0	0	[16]
+// bdc-fix	STR	char *	0x29f2fc	0	0	[17]
+// bdc-fix	STR	char *	0x29f310	0	0	[18]
 
 __typeof__(const char *[19]) g_collisionSurfaceNames = {
     (const char *)BDC_STR(0x29f208), (const char *)BDC_STR(0x29f218),

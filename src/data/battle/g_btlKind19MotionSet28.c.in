@@ -1,5 +1,21 @@
 // bdc 0x08a7e43c g_btlKind19MotionSet28
 #include "bdc.h"
+// bdc-fix	V	short	0x27a440	2	0	.head.startMotion
+// bdc-fix	V	short	0x27a442	2	0	.head.loopMotion
+// bdc-fix	V	short	0x27a444	2	0	.head.mainMotion
+// bdc-fix	V	short	0x27a446	2	0	.head.endMotion
+// bdc-fix	V	unsigned char	0x27a448	1	0	.events[0].type
+// bdc-fix	V	unsigned char	0x27a449	1	0	.events[0].startFrame
+// bdc-fix	V	unsigned char	0x27a44a	1	0	.events[0].endFrame
+// bdc-fix	V	int	0x27a44c	4	0	.events[0].param.soundId
+// bdc-fix	V	float	0x27a450	4	0	.events[0].value
+// bdc-fix	V	float	0x27a458	4	0	.events[0].launchDist
+// bdc-fix	V	unsigned char	0x27a45c	1	0	.events[1].type
+// bdc-fix	V	unsigned char	0x27a45d	1	0	.events[1].startFrame
+// bdc-fix	V	unsigned char	0x27a45e	1	0	.events[1].endFrame
+// bdc-fix	V	int	0x27a460	4	0	.events[1].param.soundId
+// bdc-fix	V	float	0x27a464	4	0	.events[1].value
+// bdc-fix	V	float	0x27a46c	4	0	.events[1].launchDist
 
 __typeof__(BtlAttackMotionSetEv3) g_btlKind19MotionSet28 = {
     .head = {

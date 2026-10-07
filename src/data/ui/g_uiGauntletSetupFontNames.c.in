@@ -1,4 +1,5 @@
 // bdc 0x08ac19e8 g_uiGauntletSetupFontNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x298720	0	0	[0]
 
 __typeof__(char *[2]) g_uiGauntletSetupFontNames = { (char *)BDC_STR(0x298720) };

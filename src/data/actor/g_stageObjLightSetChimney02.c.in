@@ -1,5 +1,23 @@
 // bdc 0x08a82950 g_stageObjLightSetChimney02
 #include "bdc.h"
+// bdc-fix	STR	char *	0x27e934	0	0	.modelName
+// bdc-fix	V	int	0x27e954	4	0	.count
+// bdc-fix	V	float	0x27e960	4	0	.lights[0].pos[0]
+// bdc-fix	V	float	0x27e964	4	0	.lights[0].pos[1]
+// bdc-fix	V	float	0x27e968	4	0	.lights[0].pos[2]
+// bdc-fix	V	float	0x27e96c	4	0	.lights[0].texIndex
+// bdc-fix	V	float	0x27e970	4	0	.lights[1].pos[0]
+// bdc-fix	V	float	0x27e974	4	0	.lights[1].pos[1]
+// bdc-fix	V	float	0x27e978	4	0	.lights[1].pos[2]
+// bdc-fix	V	float	0x27e97c	4	0	.lights[1].texIndex
+// bdc-fix	V	float	0x27e980	4	0	.lights[2].pos[0]
+// bdc-fix	V	float	0x27e984	4	0	.lights[2].pos[1]
+// bdc-fix	V	float	0x27e988	4	0	.lights[2].pos[2]
+// bdc-fix	V	float	0x27e98c	4	0	.lights[2].texIndex
+// bdc-fix	V	float	0x27e990	4	0	.lights[3].pos[0]
+// bdc-fix	V	float	0x27e994	4	0	.lights[3].pos[1]
+// bdc-fix	V	float	0x27e998	4	0	.lights[3].pos[2]
+// bdc-fix	V	float	0x27e99c	4	0	.lights[3].texIndex
 
 __typeof__(const StageObjLightSet4) g_stageObjLightSetChimney02 = {
     .modelName = (const char *)BDC_STR(0x27e934),

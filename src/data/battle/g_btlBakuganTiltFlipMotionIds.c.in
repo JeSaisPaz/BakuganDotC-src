@@ -1,4 +1,5 @@
 // bdc 0x08a67838 g_btlBakuganTiltFlipMotionIds
 #include "bdc.h"
+// bdc-fix	V	int	0x263838	4	0	[0]
 
 __typeof__(s32[2]) g_btlBakuganTiltFlipMotionIds = { BDC_V(int, 0x263838) };

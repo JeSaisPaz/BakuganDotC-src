@@ -1,5 +1,26 @@
 // bdc 0x08ac3a30 g_figureModelNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x29aa20	0	0	[0]
+// bdc-fix	STR	char *	0x29aa20	0	0	[1]
+// bdc-fix	STR	char *	0x29aa40	0	0	[2]
+// bdc-fix	STR	char *	0x29aa60	0	0	[3]
+// bdc-fix	STR	char *	0x29aa7c	0	0	[4]
+// bdc-fix	STR	char *	0x29aa98	0	0	[5]
+// bdc-fix	STR	char *	0x29aab4	0	0	[6]
+// bdc-fix	STR	char *	0x29aad4	0	0	[7]
+// bdc-fix	STR	char *	0x29aaf0	0	0	[8]
+// bdc-fix	STR	char *	0x29ab0c	0	0	[9]
+// bdc-fix	STR	char *	0x29ab28	0	0	[10]
+// bdc-fix	STR	char *	0x29ab44	0	0	[11]
+// bdc-fix	STR	char *	0x29ab60	0	0	[12]
+// bdc-fix	STR	char *	0x29ab7c	0	0	[13]
+// bdc-fix	STR	char *	0x29ab98	0	0	[14]
+// bdc-fix	STR	char *	0x29abb4	0	0	[15]
+// bdc-fix	STR	char *	0x29abd0	0	0	[16]
+// bdc-fix	STR	char *	0x29abf0	0	0	[17]
+// bdc-fix	STR	char *	0x29ac0c	0	0	[18]
+// bdc-fix	STR	char *	0x29ac2c	0	0	[19]
+// bdc-fix	STR	char *	0x29ac48	0	0	[20]
 
 __typeof__(const char *[21]) g_figureModelNames = {
     (const char *)BDC_STR(0x29aa20), (const char *)BDC_STR(0x29aa20),

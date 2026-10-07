@@ -1,5 +1,10 @@
 // bdc 0x08a83e98 g_eggCrystalAttrElementTable
 #include "bdc.h"
+// bdc-fix	V	int	0x27fe98	4	0	[0]
+// bdc-fix	V	int	0x27fe9c	4	0	[1]
+// bdc-fix	V	int	0x27fea0	4	0	[2]
+// bdc-fix	V	int	0x27fea4	4	0	[3]
+// bdc-fix	V	int	0x27feac	4	0	[5]
 
 __typeof__(const s32[6]) g_eggCrystalAttrElementTable = {
     BDC_V(int, 0x27fe98), BDC_V(int, 0x27fe9c), BDC_V(int, 0x27fea0), BDC_V(int, 0x27fea4), 0,

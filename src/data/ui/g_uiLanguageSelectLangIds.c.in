@@ -1,5 +1,12 @@
 // bdc 0x08a34008 g_uiLanguageSelectLangIds
 #include "bdc.h"
+// bdc-fix	V	int	0x230008	4	0	[0]
+// bdc-fix	V	int	0x23000c	4	0	[1]
+// bdc-fix	V	int	0x230010	4	0	[2]
+// bdc-fix	V	int	0x230014	4	0	[3]
+// bdc-fix	V	int	0x230018	4	0	[4]
+// bdc-fix	V	int	0x23001c	4	0	[5]
+// bdc-fix	V	int	0x230020	4	0	[6]
 
 __typeof__(const s32[7]) g_uiLanguageSelectLangIds = {
     BDC_V(int, 0x230008), BDC_V(int, 0x23000c), BDC_V(int, 0x230010), BDC_V(int, 0x230014),

@@ -1,4 +1,5 @@
 // bdc 0x08aba8b0 g_btlBakuganDirPath
 #include "bdc.h"
+// bdc-fix	STR	char *	0x263cd8	0	0	
 
 __typeof__(char *) g_btlBakuganDirPath = (char *)BDC_STR(0x263cd8);

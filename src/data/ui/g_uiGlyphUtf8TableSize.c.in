@@ -1,4 +1,5 @@
 // bdc 0x08aa37b0 g_uiGlyphUtf8TableSize
 #include "bdc.h"
+// bdc-fix	V	int	0x29f7b0	4	0	
 
 __typeof__(s32) g_uiGlyphUtf8TableSize = BDC_V(int, 0x29f7b0);

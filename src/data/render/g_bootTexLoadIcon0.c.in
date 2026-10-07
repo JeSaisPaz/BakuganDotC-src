@@ -1,4 +1,5 @@
 // bdc 0x08ae0250 g_bootTexLoadIcon0
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2dc250	425	0	
 
 __typeof__(u8[425]) g_bootTexLoadIcon0 = BDC_BYTES(0x2dc250, 425);

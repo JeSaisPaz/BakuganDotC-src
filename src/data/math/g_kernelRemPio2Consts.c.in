@@ -1,5 +1,11 @@
 // bdc 0x08aa4e20 g_kernelRemPio2Consts
 #include "bdc.h"
+// bdc-fix	V	double	0x2a0e28	8	0	.one
+// bdc-fix	V	double	0x2a0e30	8	0	.two24
+// bdc-fix	V	double	0x2a0e38	8	0	.twon24
+// bdc-fix	V	double	0x2a0e40	8	0	.eighth
+// bdc-fix	V	double	0x2a0e48	8	0	.eight
+// bdc-fix	V	double	0x2a0e50	8	0	.half
 
 __typeof__(KernelRemPio2Consts) g_kernelRemPio2Consts = {
     .one = BDC_V(double, 0x2a0e28),

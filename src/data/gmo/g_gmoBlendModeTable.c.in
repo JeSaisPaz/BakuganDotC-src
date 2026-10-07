@@ -1,5 +1,12 @@
 // bdc 0x08aa51c0 g_gmoBlendModeTable
 #include "bdc.h"
+// bdc-fix	BYTES	signed char	0x2a11c0	4	0	[0]
+// bdc-fix	BYTES	signed char	0x2a11c4	4	0	[1]
+// bdc-fix	BYTES	signed char	0x2a11c8	4	0	[2]
+// bdc-fix	BYTES	signed char	0x2a11cc	4	0	[3]
+// bdc-fix	BYTES	signed char	0x2a11d0	4	0	[4]
+// bdc-fix	BYTES	signed char	0x2a11d4	4	0	[5]
+// bdc-fix	BYTES	signed char	0x2a11d8	4	0	[6]
 
 __typeof__(s8[7][4]) g_gmoBlendModeTable = {
     BDC_BYTES(0x2a11c0, 4), BDC_BYTES(0x2a11c4, 4), BDC_BYTES(0x2a11c8, 4), BDC_BYTES(0x2a11cc, 4),

@@ -1,5 +1,17 @@
 // bdc 0x08aa37f0 g_collisionDebugRingYZ
 #include "bdc.h"
+// bdc-fix	V	float	0x29f7f4	4	0	[0][1]
+// bdc-fix	V	float	0x29f7f8	4	0	[0][2]
+// bdc-fix	V	float	0x29f800	4	0	[1][1]
+// bdc-fix	V	float	0x29f804	4	0	[1][2]
+// bdc-fix	V	float	0x29f80c	4	0	[2][1]
+// bdc-fix	V	float	0x29f810	4	0	[2][2]
+// bdc-fix	V	float	0x29f818	4	0	[3][1]
+// bdc-fix	V	float	0x29f81c	4	0	[3][2]
+// bdc-fix	V	float	0x29f824	4	0	[4][1]
+// bdc-fix	V	float	0x29f828	4	0	[4][2]
+// bdc-fix	V	float	0x29f830	4	0	[5][1]
+// bdc-fix	V	float	0x29f834	4	0	[5][2]
 
 __typeof__(float[6][3]) g_collisionDebugRingYZ = {
     { 0, BDC_V(float, 0x29f7f4), BDC_V(float, 0x29f7f8) },

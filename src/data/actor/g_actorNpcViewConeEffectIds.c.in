@@ -1,5 +1,11 @@
 // bdc 0x08a98e90 g_actorNpcViewConeEffectIds
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x294e90	4	0	[0]
+// bdc-fix	V	unsigned int	0x294e94	4	0	[1]
+// bdc-fix	V	unsigned int	0x294e98	4	0	[2]
+// bdc-fix	V	unsigned int	0x294e9c	4	0	[3]
+// bdc-fix	V	unsigned int	0x294ea0	4	0	[4]
+// bdc-fix	V	unsigned int	0x294ea4	4	0	[5]
 
 __typeof__(u32[6]) g_actorNpcViewConeEffectIds = {
     BDC_V(unsigned int, 0x294e90), BDC_V(unsigned int, 0x294e94), BDC_V(unsigned int, 0x294e98),

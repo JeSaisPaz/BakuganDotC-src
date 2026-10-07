@@ -1,4 +1,5 @@
 // bdc 0x08ac179c g_uiBakuganPairTable
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2bd79c	42	0	
 
 __typeof__(u8[42]) g_uiBakuganPairTable = BDC_BYTES(0x2bd79c, 42);

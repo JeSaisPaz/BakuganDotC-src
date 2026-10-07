@@ -1,4 +1,6 @@
 // bdc 0x08aa4538 g_rintTwo52
 #include "bdc.h"
+// bdc-fix	V	double	0x2a0538	8	0	[0]
+// bdc-fix	V	double	0x2a0540	8	0	[1]
 
 __typeof__(double[2]) g_rintTwo52 = { BDC_V(double, 0x2a0538), BDC_V(double, 0x2a0540) };

@@ -1,4 +1,6 @@
 // bdc 0x08ac0e54 g_btlDemoVoiceMotions
 #include "bdc.h"
+// bdc-fix	V	int	0x2bce54	4	0	[0]
+// bdc-fix	V	int	0x2bce58	4	0	[1]
 
 __typeof__(s32[2]) g_btlDemoVoiceMotions = { BDC_V(int, 0x2bce54), BDC_V(int, 0x2bce58) };

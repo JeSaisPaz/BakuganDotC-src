@@ -1,5 +1,23 @@
 // bdc 0x08a98ae0 g_playerStateFns
 #include "bdc.h"
+// bdc-fix	V	short	0x294ae2	2	0	[0].index
+// bdc-fix	V	int	0x294ae4	4	0	[0].delta2
+// bdc-fix	V	short	0x294aea	2	0	[1].index
+// bdc-fix	V	int	0x294aec	4	0	[1].delta2
+// bdc-fix	V	short	0x294af2	2	0	[2].index
+// bdc-fix	V	int	0x294af4	4	0	[2].delta2
+// bdc-fix	V	short	0x294afa	2	0	[3].index
+// bdc-fix	V	int	0x294afc	4	0	[3].delta2
+// bdc-fix	V	short	0x294b02	2	0	[4].index
+// bdc-fix	V	int	0x294b04	4	0	[4].delta2
+// bdc-fix	V	short	0x294b0a	2	0	[5].index
+// bdc-fix	V	int	0x294b0c	4	0	[5].delta2
+// bdc-fix	V	short	0x294b12	2	0	[6].index
+// bdc-fix	V	int	0x294b14	4	0	[6].delta2
+// bdc-fix	V	short	0x294b1a	2	0	[7].index
+// bdc-fix	V	int	0x294b1c	4	0	[7].delta2
+// bdc-fix	V	short	0x294b22	2	0	[8].index
+// bdc-fix	V	int	0x294b24	4	0	[8].delta2
 
 __typeof__(MemberFnPtr[14]) g_playerStateFns = {
     { .index = BDC_V(short, 0x294ae2), .delta2 = BDC_V(int, 0x294ae4) },

@@ -1,4 +1,8 @@
 // bdc 0x08aa4f70 g_atanfHi
 #include "bdc.h"
+// bdc-fix	V	float	0x2a0f70	4	0	[0]
+// bdc-fix	V	float	0x2a0f74	4	0	[1]
+// bdc-fix	V	float	0x2a0f78	4	0	[2]
+// bdc-fix	V	float	0x2a0f7c	4	0	[3]
 
 __typeof__(float[4]) g_atanfHi = { BDC_V(float, 0x2a0f70), BDC_V(float, 0x2a0f74), BDC_V(float, 0x2a0f78), BDC_V(float, 0x2a0f7c) };

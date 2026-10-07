@@ -1,4 +1,6 @@
 // bdc 0x08a93594 g_talkBalloonTailPivot
 #include "bdc.h"
+// bdc-fix	V	float	0x28f594	4	0	[0]
+// bdc-fix	V	float	0x28f598	4	0	[1]
 
 __typeof__(float[2]) g_talkBalloonTailPivot = { BDC_V(float, 0x28f594), BDC_V(float, 0x28f598) };

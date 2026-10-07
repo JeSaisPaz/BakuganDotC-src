@@ -6,13 +6,6 @@
    a virtual predicate (vtable `+0x6c`, `this` adjusted by the short at `+0x68`) returns non-zero;
    NULL if none. */
 
-typedef struct StageObjVtbl {
-  u8 _pad[0x68];
-  s16 adjust;
-  s16 pad6a;
-  int (*pred)(void *);
-} StageObjVtbl;
-
 void *ActorStageObjFindByInstanceId(u32 instanceId)
 {
   CoreObject *obj;
@@ -22,12 +15,12 @@ void *ActorStageObjFindByInstanceId(u32 instanceId)
   }
   for (obj = g_actorStageObjList->head; obj != NULL; obj = obj->next) {
     ActorStageObjBase *o = (ActorStageObjBase *)obj;
-    const StageObjVtbl *vt = obj->vtable;
+    const VtblEntry *pred = &((const VtblEntry *)obj->vtable)[13];
 
     if (o->dead != 0) {
       continue;
     }
-    if (vt->pred((u8 *)obj + vt->adjust) == 0) {
+    if (((int (*)(void *))pred->fn)((u8 *)obj + pred->delta) == 0) {
       continue;
     }
     if (o->instanceId == instanceId) {

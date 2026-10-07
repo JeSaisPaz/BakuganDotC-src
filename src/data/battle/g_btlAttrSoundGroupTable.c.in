@@ -1,5 +1,10 @@
 // bdc 0x08a34270 g_btlAttrSoundGroupTable
 #include "bdc.h"
+// bdc-fix	V	int	0x230274	4	0	[1]
+// bdc-fix	V	int	0x230278	4	0	[2]
+// bdc-fix	V	int	0x23027c	4	0	[3]
+// bdc-fix	V	int	0x230280	4	0	[4]
+// bdc-fix	V	int	0x230284	4	0	[5]
 
 __typeof__(s32[6]) g_btlAttrSoundGroupTable = {
     0, BDC_V(int, 0x230274), BDC_V(int, 0x230278), BDC_V(int, 0x23027c), BDC_V(int, 0x230280),

@@ -1,5 +1,17 @@
 // bdc 0x08aa3b80 g_gfxQuadTemplateCentre
 #include "bdc.h"
+// bdc-fix	V	signed char	0x29fb88	1	0	[0].x
+// bdc-fix	V	signed char	0x29fb89	1	0	[0].y
+// bdc-fix	V	float	0x29fb8c	4	0	[1].u
+// bdc-fix	V	signed char	0x29fb94	1	0	[1].x
+// bdc-fix	V	signed char	0x29fb95	1	0	[1].y
+// bdc-fix	V	float	0x29fb9c	4	0	[2].v
+// bdc-fix	V	signed char	0x29fba0	1	0	[2].x
+// bdc-fix	V	signed char	0x29fba1	1	0	[2].y
+// bdc-fix	V	float	0x29fba4	4	0	[3].u
+// bdc-fix	V	float	0x29fba8	4	0	[3].v
+// bdc-fix	V	signed char	0x29fbac	1	0	[3].x
+// bdc-fix	V	signed char	0x29fbad	1	0	[3].y
 
 __typeof__(GfxSpriteVertex[4]) g_gfxQuadTemplateCentre = {
     { .x = BDC_V(signed char, 0x29fb88), .y = BDC_V(signed char, 0x29fb89) },

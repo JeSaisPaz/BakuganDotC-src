@@ -1,5 +1,12 @@
 // bdc 0x08aa5330 g_gmoNodeAttrSlots
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2a1330	5	0	[0]
+// bdc-fix	BYTES	unsigned char	0x2a1335	5	0	[1]
+// bdc-fix	BYTES	unsigned char	0x2a133a	5	0	[2]
+// bdc-fix	BYTES	unsigned char	0x2a133f	5	0	[3]
+// bdc-fix	BYTES	unsigned char	0x2a1344	5	0	[4]
+// bdc-fix	BYTES	unsigned char	0x2a1349	5	0	[5]
+// bdc-fix	BYTES	unsigned char	0x2a134e	5	0	[6]
 
 __typeof__(const u8[7][5]) g_gmoNodeAttrSlots = {
     BDC_BYTES(0x2a1330, 5), BDC_BYTES(0x2a1335, 5), BDC_BYTES(0x2a133a, 5), BDC_BYTES(0x2a133f, 5),

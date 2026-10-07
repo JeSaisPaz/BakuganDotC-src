@@ -1,4 +1,5 @@
 // bdc 0x08a9fb3c g_crt0LocaleC
 #include "bdc.h"
+// bdc-fix	BYTES	char	0x29bb3c	2	0	
 
 __typeof__(const char[2]) g_crt0LocaleC = BDC_BYTES(0x29bb3c, 2);

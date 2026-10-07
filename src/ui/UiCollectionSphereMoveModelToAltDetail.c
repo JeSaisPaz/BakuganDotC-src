@@ -13,17 +13,6 @@
    `detailScaleTo`. Then updates the camera (`GfxCameraUpdate`, all flags) and calls its
    update hook (vtable `+0x10`, `GfxCameraOnUpdate`). Returns true once the move is done. */
 
-typedef struct SphereCamSlot {
-  s16 adjust;
-  s16 pad;
-  void (*fn)(void *);
-} SphereCamSlot;
-
-typedef struct SphereCamVTable {
-  u8 unk00[0x10];
-  SphereCamSlot update;
-} SphereCamVTable;
-
 bool UiCollectionSphereMoveModelToAltDetail(UiCollectionSphere *self, bool back)
 {
   float vec[4];
@@ -32,7 +21,7 @@ bool UiCollectionSphereMoveModelToAltDetail(UiCollectionSphere *self, bool back)
   int row;
   int col;
   UiCollectionSphereCell *cell;
-  const SphereCamSlot *slot;
+  const VtblEntry *slot;
   GfxCamera *cam;
   float *mtx;
   float t;
@@ -115,7 +104,7 @@ bool UiCollectionSphereMoveModelToAltDetail(UiCollectionSphere *self, bool back)
 
   GfxCameraUpdate((GfxCamera *)self->cameras[self->detailCell], 0xffffffffu);
   cam = (GfxCamera *)self->cameras[self->detailCell];
-  slot = &((const SphereCamVTable *)cam->base.vtable)->update;
-  slot->fn((u8 *)cam + slot->adjust);
+  slot = &((const VtblEntry *)cam->base.vtable)[2];
+  ((void (*)(void *))slot->fn)((u8 *)cam + slot->delta);
   return done;
 }

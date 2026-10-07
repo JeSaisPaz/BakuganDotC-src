@@ -1,4 +1,5 @@
 // bdc 0x08ac4ec8 g_bootUserMainStackKb
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x2c0ec8	4	0	
 
 __typeof__(u32) g_bootUserMainStackKb = BDC_V(unsigned int, 0x2c0ec8);

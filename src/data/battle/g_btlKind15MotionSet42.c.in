@@ -1,5 +1,39 @@
 // bdc 0x08a78614 g_btlKind15MotionSet42
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x274614	4	0	.head.flags
+// bdc-fix	V	short	0x274618	2	0	.head.startMotion
+// bdc-fix	V	short	0x27461a	2	0	.head.loopMotion
+// bdc-fix	V	short	0x27461c	2	0	.head.mainMotion
+// bdc-fix	V	short	0x27461e	2	0	.head.endMotion
+// bdc-fix	V	unsigned char	0x274620	1	0	.events[0].type
+// bdc-fix	V	unsigned char	0x274621	1	0	.events[0].startFrame
+// bdc-fix	V	unsigned char	0x274622	1	0	.events[0].endFrame
+// bdc-fix	V	int	0x274624	4	0	.events[0].param.soundId
+// bdc-fix	V	unsigned char	0x274634	1	0	.events[1].type
+// bdc-fix	V	unsigned char	0x274635	1	0	.events[1].startFrame
+// bdc-fix	V	unsigned char	0x274636	1	0	.events[1].endFrame
+// bdc-fix	V	int	0x274638	4	0	.events[1].param.soundId
+// bdc-fix	V	float	0x27463c	4	0	.events[1].value
+// bdc-fix	V	unsigned char	0x274648	1	0	.events[2].type
+// bdc-fix	V	unsigned char	0x274649	1	0	.events[2].startFrame
+// bdc-fix	V	unsigned char	0x27464a	1	0	.events[2].endFrame
+// bdc-fix	V	int	0x27464c	4	0	.events[2].param.soundId
+// bdc-fix	V	unsigned char	0x27465c	1	0	.events[3].type
+// bdc-fix	V	unsigned char	0x27465d	1	0	.events[3].startFrame
+// bdc-fix	V	unsigned char	0x27465e	1	0	.events[3].endFrame
+// bdc-fix	V	float	0x274664	4	0	.events[3].value
+// bdc-fix	V	unsigned char	0x274670	1	0	.events[4].type
+// bdc-fix	V	unsigned char	0x274671	1	0	.events[4].startFrame
+// bdc-fix	V	unsigned char	0x274672	1	0	.events[4].endFrame
+// bdc-fix	V	float	0x274678	4	0	.events[4].value
+// bdc-fix	V	unsigned char	0x274684	1	0	.events[5].type
+// bdc-fix	V	unsigned char	0x274685	1	0	.events[5].startFrame
+// bdc-fix	V	unsigned char	0x274686	1	0	.events[5].endFrame
+// bdc-fix	V	int	0x274688	4	0	.events[5].param.soundId
+// bdc-fix	V	unsigned char	0x274698	1	0	.events[6].type
+// bdc-fix	V	unsigned char	0x274699	1	0	.events[6].startFrame
+// bdc-fix	V	unsigned char	0x27469a	1	0	.events[6].endFrame
+// bdc-fix	V	int	0x27469c	4	0	.events[6].param.soundId
 
 __typeof__(BtlAttackMotionSetEv8) g_btlKind15MotionSet42 = {
     .head = {

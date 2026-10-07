@@ -1,5 +1,16 @@
 // bdc 0x08a60cec g_npcMotionLists08
 #include "bdc.h"
+// bdc-fix	STR	char *	0x25cc98	0	0	[0].name
+// bdc-fix	V	int	0x25ccf4	4	0	[1].slot
+// bdc-fix	STR	char *	0x25cca8	0	0	[1].name
+// bdc-fix	V	int	0x25ccfc	4	0	[2].slot
+// bdc-fix	STR	char *	0x25ccb8	0	0	[2].name
+// bdc-fix	V	int	0x25cd04	4	0	[3].slot
+// bdc-fix	STR	char *	0x25ccc8	0	0	[3].name
+// bdc-fix	V	int	0x25cd0c	4	0	[4].slot
+// bdc-fix	STR	char *	0x25ccd8	0	0	[4].name
+// bdc-fix	V	int	0x25cd14	4	0	[5].slot
+// bdc-fix	STR	char *	0x25c3a4	0	0	[5].name
 
 __typeof__(const ActorNpcMotionEntry[6]) g_npcMotionLists08 = {
     { .name = (const char *)BDC_STR(0x25cc98) },

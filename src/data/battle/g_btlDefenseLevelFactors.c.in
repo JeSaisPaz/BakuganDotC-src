@@ -1,5 +1,15 @@
 // bdc 0x08a6f850 g_btlDefenseLevelFactors
 #include "bdc.h"
+// bdc-fix	V	float	0x26b850	4	0	[0]
+// bdc-fix	V	float	0x26b854	4	0	[1]
+// bdc-fix	V	float	0x26b858	4	0	[2]
+// bdc-fix	V	float	0x26b85c	4	0	[3]
+// bdc-fix	V	float	0x26b860	4	0	[4]
+// bdc-fix	V	float	0x26b864	4	0	[5]
+// bdc-fix	V	float	0x26b868	4	0	[6]
+// bdc-fix	V	float	0x26b86c	4	0	[7]
+// bdc-fix	V	float	0x26b870	4	0	[8]
+// bdc-fix	V	float	0x26b874	4	0	[9]
 
 __typeof__(float[10]) g_btlDefenseLevelFactors = {
     BDC_V(float, 0x26b850), BDC_V(float, 0x26b854), BDC_V(float, 0x26b858), BDC_V(float, 0x26b85c),

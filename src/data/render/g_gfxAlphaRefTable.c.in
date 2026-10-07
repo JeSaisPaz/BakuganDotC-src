@@ -1,5 +1,14 @@
 // bdc 0x08aa30e4 g_gfxAlphaRefTable
 #include "bdc.h"
+// bdc-fix	V	unsigned short	0x29f0e6	2	0	[1]
+// bdc-fix	V	unsigned short	0x29f0e8	2	0	[2]
+// bdc-fix	V	unsigned short	0x29f0ea	2	0	[3]
+// bdc-fix	V	unsigned short	0x29f0ec	2	0	[4]
+// bdc-fix	V	unsigned short	0x29f0ee	2	0	[5]
+// bdc-fix	V	unsigned short	0x29f0f0	2	0	[6]
+// bdc-fix	V	unsigned short	0x29f0f2	2	0	[7]
+// bdc-fix	V	unsigned short	0x29f0f4	2	0	[8]
+// bdc-fix	V	unsigned short	0x29f0f6	2	0	[9]
 
 __typeof__(const u16[10]) g_gfxAlphaRefTable = {
     0, BDC_V(unsigned short, 0x29f0e6), BDC_V(unsigned short, 0x29f0e8),

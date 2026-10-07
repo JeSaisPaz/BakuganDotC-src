@@ -1,5 +1,10 @@
 // bdc 0x08a9b100 g_loadingLangCells
 #include "bdc.h"
+// bdc-fix	V	int	0x297108	4	0	[2]
+// bdc-fix	V	int	0x29710c	4	0	[3]
+// bdc-fix	V	int	0x297110	4	0	[4]
+// bdc-fix	V	int	0x297114	4	0	[5]
+// bdc-fix	V	int	0x297118	4	0	[6]
 
 __typeof__(s32[8]) g_loadingLangCells = {
     0, 0, BDC_V(int, 0x297108), BDC_V(int, 0x29710c), BDC_V(int, 0x297110), BDC_V(int, 0x297114),

@@ -1,5 +1,45 @@
 // bdc 0x08a66f90 g_btlSpawnPointSets
 #include "bdc.h"
+// bdc-fix	V	int	0x262f90	4	0	[0].count
+// bdc-fix	V	int	0x262f98	4	0	[1].count
+// bdc-fix	V	int	0x262fa0	4	0	[2].count
+// bdc-fix	V	int	0x262fa8	4	0	[3].count
+// bdc-fix	V	int	0x262fb0	4	0	[4].count
+// bdc-fix	V	int	0x262fb8	4	0	[5].count
+// bdc-fix	V	int	0x262fc0	4	0	[6].count
+// bdc-fix	V	int	0x262fc8	4	0	[7].count
+// bdc-fix	V	int	0x262fd0	4	0	[8].count
+// bdc-fix	V	int	0x262fd8	4	0	[9].count
+// bdc-fix	V	int	0x262fe0	4	0	[10].count
+// bdc-fix	V	int	0x262fe8	4	0	[11].count
+// bdc-fix	V	int	0x262ff0	4	0	[12].count
+// bdc-fix	V	int	0x262ff8	4	0	[13].count
+// bdc-fix	V	int	0x263000	4	0	[14].count
+// bdc-fix	V	int	0x263008	4	0	[15].count
+// bdc-fix	V	int	0x263010	4	0	[16].count
+// bdc-fix	V	int	0x263018	4	0	[17].count
+// bdc-fix	V	int	0x263020	4	0	[18].count
+// bdc-fix	V	int	0x263028	4	0	[19].count
+// bdc-fix	V	int	0x263030	4	0	[20].count
+// bdc-fix	V	int	0x263038	4	0	[21].count
+// bdc-fix	V	int	0x263040	4	0	[22].count
+// bdc-fix	V	int	0x263048	4	0	[23].count
+// bdc-fix	V	int	0x263050	4	0	[24].count
+// bdc-fix	V	int	0x263058	4	0	[25].count
+// bdc-fix	V	int	0x263060	4	0	[26].count
+// bdc-fix	V	int	0x263068	4	0	[27].count
+// bdc-fix	V	int	0x263070	4	0	[28].count
+// bdc-fix	V	int	0x263078	4	0	[29].count
+// bdc-fix	V	int	0x263080	4	0	[30].count
+// bdc-fix	V	int	0x263088	4	0	[31].count
+// bdc-fix	V	int	0x263090	4	0	[32].count
+// bdc-fix	V	int	0x263098	4	0	[33].count
+// bdc-fix	V	int	0x2630a0	4	0	[34].count
+// bdc-fix	V	int	0x2630a8	4	0	[35].count
+// bdc-fix	V	int	0x2630b0	4	0	[36].count
+// bdc-fix	V	int	0x2630b8	4	0	[37].count
+// bdc-fix	V	int	0x2630c0	4	0	[38].count
+// bdc-fix	V	int	0x2630c8	4	0	[39].count
 
 __typeof__(BtlStagePointSet[41]) g_btlSpawnPointSets = {
     { .count = BDC_V(int, 0x262f90), .points = (struct ScePspFVector4 *)&g_btlSpawnPoints },

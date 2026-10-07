@@ -1,4 +1,5 @@
 // bdc 0x08aba77f g_btlHudHidden
 #include "bdc.h"
+// bdc-fix	V	unsigned char	0x2b677f	1	0	
 
 __typeof__(u8) g_btlHudHidden = BDC_V(unsigned char, 0x2b677f);

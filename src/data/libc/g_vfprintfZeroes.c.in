@@ -1,4 +1,5 @@
 // bdc 0x08a9fbf8 g_vfprintfZeroes
 #include "bdc.h"
+// bdc-fix	BYTES	char	0x29bbf8	16	0	
 
 __typeof__(const char[16]) g_vfprintfZeroes = BDC_BYTES(0x29bbf8, 16);

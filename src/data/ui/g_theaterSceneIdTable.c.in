@@ -1,5 +1,27 @@
 // bdc 0x08ac3a00 g_theaterSceneIdTable
 #include "bdc.h"
+// bdc-fix	V	unsigned short	0x2bfa00	2	0	[0]
+// bdc-fix	V	unsigned short	0x2bfa02	2	0	[1]
+// bdc-fix	V	unsigned short	0x2bfa04	2	0	[2]
+// bdc-fix	V	unsigned short	0x2bfa06	2	0	[3]
+// bdc-fix	V	unsigned short	0x2bfa08	2	0	[4]
+// bdc-fix	V	unsigned short	0x2bfa0a	2	0	[5]
+// bdc-fix	V	unsigned short	0x2bfa0c	2	0	[6]
+// bdc-fix	V	unsigned short	0x2bfa0e	2	0	[7]
+// bdc-fix	V	unsigned short	0x2bfa10	2	0	[8]
+// bdc-fix	V	unsigned short	0x2bfa12	2	0	[9]
+// bdc-fix	V	unsigned short	0x2bfa14	2	0	[10]
+// bdc-fix	V	unsigned short	0x2bfa16	2	0	[11]
+// bdc-fix	V	unsigned short	0x2bfa18	2	0	[12]
+// bdc-fix	V	unsigned short	0x2bfa1a	2	0	[13]
+// bdc-fix	V	unsigned short	0x2bfa1c	2	0	[14]
+// bdc-fix	V	unsigned short	0x2bfa1e	2	0	[15]
+// bdc-fix	V	unsigned short	0x2bfa20	2	0	[16]
+// bdc-fix	V	unsigned short	0x2bfa22	2	0	[17]
+// bdc-fix	V	unsigned short	0x2bfa24	2	0	[18]
+// bdc-fix	V	unsigned short	0x2bfa26	2	0	[19]
+// bdc-fix	V	unsigned short	0x2bfa28	2	0	[20]
+// bdc-fix	V	unsigned short	0x2bfa2a	2	0	[21]
 
 __typeof__(u16[22]) g_theaterSceneIdTable = {
     BDC_V(unsigned short, 0x2bfa00), BDC_V(unsigned short, 0x2bfa02),

@@ -1,5 +1,16 @@
 // bdc 0x08aba724 g_btlRatingFadeSprites
 #include "bdc.h"
+// bdc-fix	V	int	0x2b6724	4	0	[0]
+// bdc-fix	V	int	0x2b6728	4	0	[1]
+// bdc-fix	V	int	0x2b672c	4	0	[2]
+// bdc-fix	V	int	0x2b6730	4	0	[3]
+// bdc-fix	V	int	0x2b6734	4	0	[4]
+// bdc-fix	V	int	0x2b6738	4	0	[5]
+// bdc-fix	V	int	0x2b673c	4	0	[6]
+// bdc-fix	V	int	0x2b6740	4	0	[7]
+// bdc-fix	V	int	0x2b6744	4	0	[8]
+// bdc-fix	V	int	0x2b6748	4	0	[9]
+// bdc-fix	V	int	0x2b674c	4	0	[10]
 
 __typeof__(s32[11]) g_btlRatingFadeSprites = {
     BDC_V(int, 0x2b6724), BDC_V(int, 0x2b6728), BDC_V(int, 0x2b672c), BDC_V(int, 0x2b6730),

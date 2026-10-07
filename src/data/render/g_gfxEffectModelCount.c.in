@@ -1,4 +1,5 @@
 // bdc 0x08ab9e2c g_gfxEffectModelCount
 #include "bdc.h"
+// bdc-fix	V	int	0x2b5e2c	4	0	
 
 __typeof__(s32) g_gfxEffectModelCount = BDC_V(int, 0x2b5e2c);

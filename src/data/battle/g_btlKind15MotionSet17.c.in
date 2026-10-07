@@ -1,5 +1,17 @@
 // bdc 0x08a780b0 g_btlKind15MotionSet17
 #include "bdc.h"
+// bdc-fix	V	short	0x2740b4	2	0	.head.startMotion
+// bdc-fix	V	short	0x2740b6	2	0	.head.loopMotion
+// bdc-fix	V	short	0x2740b8	2	0	.head.mainMotion
+// bdc-fix	V	short	0x2740ba	2	0	.head.endMotion
+// bdc-fix	V	unsigned char	0x2740bc	1	0	.events[0].type
+// bdc-fix	V	unsigned char	0x2740bd	1	0	.events[0].startFrame
+// bdc-fix	V	unsigned char	0x2740be	1	0	.events[0].endFrame
+// bdc-fix	V	float	0x2740c4	4	0	.events[0].value
+// bdc-fix	V	unsigned char	0x2740d0	1	0	.events[1].type
+// bdc-fix	V	unsigned char	0x2740d1	1	0	.events[1].startFrame
+// bdc-fix	V	unsigned char	0x2740d2	1	0	.events[1].endFrame
+// bdc-fix	V	int	0x2740d4	4	0	.events[1].param.soundId
 
 __typeof__(BtlAttackMotionSetEv3) g_btlKind15MotionSet17 = {
     .head = {

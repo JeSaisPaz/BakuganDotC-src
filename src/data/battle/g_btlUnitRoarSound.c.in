@@ -1,5 +1,20 @@
 // bdc 0x08a8133c g_btlUnitRoarSound
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x27d340	4	0	[1]
+// bdc-fix	V	unsigned int	0x27d344	4	0	[2]
+// bdc-fix	V	unsigned int	0x27d348	4	0	[3]
+// bdc-fix	V	unsigned int	0x27d34c	4	0	[4]
+// bdc-fix	V	unsigned int	0x27d350	4	0	[5]
+// bdc-fix	V	unsigned int	0x27d354	4	0	[6]
+// bdc-fix	V	unsigned int	0x27d358	4	0	[7]
+// bdc-fix	V	unsigned int	0x27d35c	4	0	[8]
+// bdc-fix	V	unsigned int	0x27d360	4	0	[9]
+// bdc-fix	V	unsigned int	0x27d364	4	0	[10]
+// bdc-fix	V	unsigned int	0x27d368	4	0	[11]
+// bdc-fix	V	unsigned int	0x27d36c	4	0	[12]
+// bdc-fix	V	unsigned int	0x27d370	4	0	[13]
+// bdc-fix	V	unsigned int	0x27d374	4	0	[14]
+// bdc-fix	V	unsigned int	0x27d378	4	0	[15]
 
 __typeof__(u32[21]) g_btlUnitRoarSound = {
     0, BDC_V(unsigned int, 0x27d340), BDC_V(unsigned int, 0x27d344), BDC_V(unsigned int, 0x27d348),

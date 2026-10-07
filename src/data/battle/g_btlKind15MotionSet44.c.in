@@ -1,5 +1,31 @@
 // bdc 0x08a78708 g_btlKind15MotionSet44
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x274708	4	0	.head.flags
+// bdc-fix	V	short	0x27470c	2	0	.head.startMotion
+// bdc-fix	V	short	0x27470e	2	0	.head.loopMotion
+// bdc-fix	V	short	0x274710	2	0	.head.mainMotion
+// bdc-fix	V	short	0x274712	2	0	.head.endMotion
+// bdc-fix	V	unsigned char	0x274714	1	0	.events[0].type
+// bdc-fix	V	unsigned char	0x274715	1	0	.events[0].startFrame
+// bdc-fix	V	unsigned char	0x274716	1	0	.events[0].endFrame
+// bdc-fix	V	int	0x274718	4	0	.events[0].param.soundId
+// bdc-fix	V	unsigned char	0x274728	1	0	.events[1].type
+// bdc-fix	V	unsigned char	0x274729	1	0	.events[1].startFrame
+// bdc-fix	V	unsigned char	0x27472a	1	0	.events[1].endFrame
+// bdc-fix	V	float	0x274730	4	0	.events[1].value
+// bdc-fix	V	unsigned char	0x27473c	1	0	.events[2].type
+// bdc-fix	V	unsigned char	0x27473d	1	0	.events[2].startFrame
+// bdc-fix	V	unsigned char	0x27473e	1	0	.events[2].endFrame
+// bdc-fix	V	float	0x274744	4	0	.events[2].value
+// bdc-fix	V	unsigned char	0x274750	1	0	.events[3].type
+// bdc-fix	V	unsigned char	0x274751	1	0	.events[3].startFrame
+// bdc-fix	V	unsigned char	0x274752	1	0	.events[3].endFrame
+// bdc-fix	V	int	0x274754	4	0	.events[3].param.soundId
+// bdc-fix	V	float	0x274760	4	0	.events[3].launchDist
+// bdc-fix	V	unsigned char	0x274764	1	0	.events[4].type
+// bdc-fix	V	unsigned char	0x274765	1	0	.events[4].startFrame
+// bdc-fix	V	unsigned char	0x274766	1	0	.events[4].endFrame
+// bdc-fix	V	int	0x274768	4	0	.events[4].param.soundId
 
 __typeof__(BtlAttackMotionSetEv6) g_btlKind15MotionSet44 = {
     .head = {

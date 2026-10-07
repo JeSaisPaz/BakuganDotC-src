@@ -1,4 +1,5 @@
 // bdc 0x08aa5310 g_gmoMorphDefaultWeights
 #include "bdc.h"
+// bdc-fix	V	float	0x2a1310	4	0	[0]
 
 __typeof__(const float[8]) g_gmoMorphDefaultWeights = { BDC_V(float, 0x2a1310) };

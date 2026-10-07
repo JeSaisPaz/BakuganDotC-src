@@ -1,5 +1,17 @@
 // bdc 0x08ab04e8 g_uiMaxusPartModelNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x24d148	0	0	[0]
+// bdc-fix	STR	char *	0x24d168	0	0	[1]
+// bdc-fix	STR	char *	0x24d188	0	0	[2]
+// bdc-fix	STR	char *	0x24d1a8	0	0	[3]
+// bdc-fix	STR	char *	0x24d1c8	0	0	[4]
+// bdc-fix	STR	char *	0x24d1e8	0	0	[5]
+// bdc-fix	STR	char *	0x24d208	0	0	[6]
+// bdc-fix	STR	char *	0x24d224	0	0	[7]
+// bdc-fix	STR	char *	0x24d240	0	0	[8]
+// bdc-fix	STR	char *	0x24d25c	0	0	[9]
+// bdc-fix	STR	char *	0x24d278	0	0	[10]
+// bdc-fix	STR	char *	0x24d294	0	0	[11]
 
 __typeof__(const char *[12]) g_uiMaxusPartModelNames = {
     (const char *)BDC_STR(0x24d148), (const char *)BDC_STR(0x24d168),

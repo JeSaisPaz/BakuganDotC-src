@@ -1,5 +1,23 @@
 // bdc 0x08aa0190 g_lconv
 #include "bdc.h"
+// bdc-fix	STR	char *	0x29c188	0	0	.decimal_point
+// bdc-fix	STR	char *	0x29c18c	0	0	.thousands_sep
+// bdc-fix	STR	char *	0x29c18c	0	0	.grouping
+// bdc-fix	STR	char *	0x29c18c	0	0	.int_curr_symbol
+// bdc-fix	STR	char *	0x29c18c	0	0	.currency_symbol
+// bdc-fix	STR	char *	0x29c18c	0	0	.mon_decimal_point
+// bdc-fix	STR	char *	0x29c18c	0	0	.mon_thousands_sep
+// bdc-fix	STR	char *	0x29c18c	0	0	.mon_grouping
+// bdc-fix	STR	char *	0x29c18c	0	0	.positive_sign
+// bdc-fix	STR	char *	0x29c18c	0	0	.negative_sign
+// bdc-fix	V	char	0x29c1b8	1	0	.int_frac_digits
+// bdc-fix	V	char	0x29c1b9	1	0	.frac_digits
+// bdc-fix	V	char	0x29c1ba	1	0	.p_cs_precedes
+// bdc-fix	V	char	0x29c1bb	1	0	.p_sep_by_space
+// bdc-fix	V	char	0x29c1bc	1	0	.n_cs_precedes
+// bdc-fix	V	char	0x29c1bd	1	0	.n_sep_by_space
+// bdc-fix	V	char	0x29c1be	1	0	.p_sign_posn
+// bdc-fix	V	char	0x29c1bf	1	0	.n_sign_posn
 
 __typeof__(const lconv) g_lconv = {
     .decimal_point = (char *)BDC_STR(0x29c188),

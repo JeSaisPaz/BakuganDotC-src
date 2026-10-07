@@ -1,4 +1,7 @@
 // bdc 0x08aa2d3c g_movieModuleSlots
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x29ed3c	4	0	[0]
+// bdc-fix	V	unsigned int	0x29ed40	4	0	[1]
+// bdc-fix	V	unsigned int	0x29ed44	4	0	[2]
 
 __typeof__(u32[3]) g_movieModuleSlots = { BDC_V(unsigned int, 0x29ed3c), BDC_V(unsigned int, 0x29ed40), BDC_V(unsigned int, 0x29ed44) };

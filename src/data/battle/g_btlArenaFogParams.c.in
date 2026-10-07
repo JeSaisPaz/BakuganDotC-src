@@ -1,5 +1,105 @@
 // bdc 0x08a81c08 g_btlArenaFogParams
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x27dc08	4	0	[0].color
+// bdc-fix	V	float	0x27dc0c	4	0	[0].range
+// bdc-fix	V	float	0x27dc10	4	0	[0].scale
+// bdc-fix	V	unsigned int	0x27dc14	4	0	[1].color
+// bdc-fix	V	float	0x27dc18	4	0	[1].range
+// bdc-fix	V	float	0x27dc1c	4	0	[1].scale
+// bdc-fix	V	unsigned int	0x27dc20	4	0	[2].color
+// bdc-fix	V	float	0x27dc24	4	0	[2].range
+// bdc-fix	V	float	0x27dc28	4	0	[2].scale
+// bdc-fix	V	unsigned int	0x27dc2c	4	0	[3].color
+// bdc-fix	V	float	0x27dc30	4	0	[3].range
+// bdc-fix	V	float	0x27dc34	4	0	[3].scale
+// bdc-fix	V	unsigned int	0x27dc38	4	0	[4].color
+// bdc-fix	V	float	0x27dc3c	4	0	[4].range
+// bdc-fix	V	float	0x27dc40	4	0	[4].scale
+// bdc-fix	V	unsigned int	0x27dc44	4	0	[5].color
+// bdc-fix	V	float	0x27dc48	4	0	[5].range
+// bdc-fix	V	float	0x27dc4c	4	0	[5].scale
+// bdc-fix	V	unsigned int	0x27dc50	4	0	[6].color
+// bdc-fix	V	float	0x27dc54	4	0	[6].range
+// bdc-fix	V	float	0x27dc58	4	0	[6].scale
+// bdc-fix	V	unsigned int	0x27dc5c	4	0	[7].color
+// bdc-fix	V	float	0x27dc60	4	0	[7].range
+// bdc-fix	V	float	0x27dc64	4	0	[7].scale
+// bdc-fix	V	unsigned int	0x27dc68	4	0	[8].color
+// bdc-fix	V	float	0x27dc6c	4	0	[8].range
+// bdc-fix	V	float	0x27dc70	4	0	[8].scale
+// bdc-fix	V	unsigned int	0x27dc74	4	0	[9].color
+// bdc-fix	V	float	0x27dc78	4	0	[9].range
+// bdc-fix	V	float	0x27dc7c	4	0	[9].scale
+// bdc-fix	V	unsigned int	0x27dc80	4	0	[10].color
+// bdc-fix	V	float	0x27dc84	4	0	[10].range
+// bdc-fix	V	float	0x27dc88	4	0	[10].scale
+// bdc-fix	V	unsigned int	0x27dc8c	4	0	[11].color
+// bdc-fix	V	float	0x27dc90	4	0	[11].range
+// bdc-fix	V	float	0x27dc94	4	0	[11].scale
+// bdc-fix	V	unsigned int	0x27dc98	4	0	[12].color
+// bdc-fix	V	float	0x27dc9c	4	0	[12].range
+// bdc-fix	V	float	0x27dca0	4	0	[12].scale
+// bdc-fix	V	unsigned int	0x27dca4	4	0	[13].color
+// bdc-fix	V	float	0x27dca8	4	0	[13].range
+// bdc-fix	V	float	0x27dcac	4	0	[13].scale
+// bdc-fix	V	unsigned int	0x27dcb0	4	0	[14].color
+// bdc-fix	V	float	0x27dcb4	4	0	[14].range
+// bdc-fix	V	float	0x27dcb8	4	0	[14].scale
+// bdc-fix	V	unsigned int	0x27dcbc	4	0	[15].color
+// bdc-fix	V	float	0x27dcc0	4	0	[15].range
+// bdc-fix	V	float	0x27dcc4	4	0	[15].scale
+// bdc-fix	V	unsigned int	0x27dcc8	4	0	[16].color
+// bdc-fix	V	float	0x27dccc	4	0	[16].range
+// bdc-fix	V	float	0x27dcd0	4	0	[16].scale
+// bdc-fix	V	unsigned int	0x27dcd4	4	0	[17].color
+// bdc-fix	V	float	0x27dcd8	4	0	[17].range
+// bdc-fix	V	float	0x27dcdc	4	0	[17].scale
+// bdc-fix	V	unsigned int	0x27dce0	4	0	[18].color
+// bdc-fix	V	float	0x27dce4	4	0	[18].range
+// bdc-fix	V	float	0x27dce8	4	0	[18].scale
+// bdc-fix	V	unsigned int	0x27dcec	4	0	[19].color
+// bdc-fix	V	float	0x27dcf0	4	0	[19].range
+// bdc-fix	V	float	0x27dcf4	4	0	[19].scale
+// bdc-fix	V	unsigned int	0x27dcf8	4	0	[20].color
+// bdc-fix	V	float	0x27dcfc	4	0	[20].range
+// bdc-fix	V	float	0x27dd00	4	0	[20].scale
+// bdc-fix	V	unsigned int	0x27dd04	4	0	[21].color
+// bdc-fix	V	float	0x27dd08	4	0	[21].range
+// bdc-fix	V	float	0x27dd0c	4	0	[21].scale
+// bdc-fix	V	unsigned int	0x27dd10	4	0	[22].color
+// bdc-fix	V	float	0x27dd14	4	0	[22].range
+// bdc-fix	V	float	0x27dd18	4	0	[22].scale
+// bdc-fix	V	unsigned int	0x27dd1c	4	0	[23].color
+// bdc-fix	V	float	0x27dd20	4	0	[23].range
+// bdc-fix	V	float	0x27dd24	4	0	[23].scale
+// bdc-fix	V	unsigned int	0x27dd28	4	0	[24].color
+// bdc-fix	V	float	0x27dd2c	4	0	[24].range
+// bdc-fix	V	float	0x27dd30	4	0	[24].scale
+// bdc-fix	V	unsigned int	0x27dd34	4	0	[25].color
+// bdc-fix	V	float	0x27dd38	4	0	[25].range
+// bdc-fix	V	float	0x27dd3c	4	0	[25].scale
+// bdc-fix	V	unsigned int	0x27dd40	4	0	[26].color
+// bdc-fix	V	float	0x27dd44	4	0	[26].range
+// bdc-fix	V	float	0x27dd48	4	0	[26].scale
+// bdc-fix	V	unsigned int	0x27dd4c	4	0	[27].color
+// bdc-fix	V	float	0x27dd50	4	0	[27].range
+// bdc-fix	V	float	0x27dd54	4	0	[27].scale
+// bdc-fix	V	float	0x27dd5c	4	0	[28].range
+// bdc-fix	V	float	0x27dd60	4	0	[28].scale
+// bdc-fix	V	float	0x27dd68	4	0	[29].range
+// bdc-fix	V	float	0x27dd6c	4	0	[29].scale
+// bdc-fix	V	float	0x27dd74	4	0	[30].range
+// bdc-fix	V	float	0x27dd78	4	0	[30].scale
+// bdc-fix	V	float	0x27dd80	4	0	[31].range
+// bdc-fix	V	float	0x27dd84	4	0	[31].scale
+// bdc-fix	V	float	0x27dd8c	4	0	[32].range
+// bdc-fix	V	float	0x27dd90	4	0	[32].scale
+// bdc-fix	V	float	0x27dd98	4	0	[33].range
+// bdc-fix	V	float	0x27dd9c	4	0	[33].scale
+// bdc-fix	V	float	0x27dda4	4	0	[34].range
+// bdc-fix	V	float	0x27dda8	4	0	[34].scale
+// bdc-fix	V	float	0x27ddb0	4	0	[35].range
+// bdc-fix	V	float	0x27ddb4	4	0	[35].scale
 
 __typeof__(BtlArenaFog[36]) g_btlArenaFogParams = {
     {

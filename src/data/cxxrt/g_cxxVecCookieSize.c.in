@@ -1,4 +1,5 @@
 // bdc 0x08af1178 g_cxxVecCookieSize
 #include "bdc.h"
+// bdc-fix	V	int	0x2ed178	4	0	
 
 __typeof__(s32) g_cxxVecCookieSize = BDC_V(int, 0x2ed178);

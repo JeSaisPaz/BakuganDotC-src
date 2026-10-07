@@ -1,5 +1,17 @@
 // bdc 0x08a9cdf0 g_uiPasscodeAnswers
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x298df0	4	0	[0].code
+// bdc-fix	V	unsigned char	0x298df4	1	0	[0].len
+// bdc-fix	V	unsigned int	0x298df8	4	0	[1].code
+// bdc-fix	V	unsigned char	0x298dfc	1	0	[1].len
+// bdc-fix	V	unsigned int	0x298e00	4	0	[2].code
+// bdc-fix	V	unsigned char	0x298e04	1	0	[2].len
+// bdc-fix	V	unsigned int	0x298e08	4	0	[3].code
+// bdc-fix	V	unsigned char	0x298e0c	1	0	[3].len
+// bdc-fix	V	unsigned int	0x298e10	4	0	[4].code
+// bdc-fix	V	unsigned char	0x298e14	1	0	[4].len
+// bdc-fix	V	unsigned int	0x298e18	4	0	[5].code
+// bdc-fix	V	unsigned char	0x298e1c	1	0	[5].len
 
 __typeof__(UiPasscodeAnswerEntry[6]) g_uiPasscodeAnswers = {
     { .code = BDC_V(unsigned int, 0x298df0), .len = BDC_V(unsigned char, 0x298df4) },

@@ -1,4 +1,6 @@
 // bdc 0x08ac5918 g_coreModulePrxPaths
 #include "bdc.h"
+// bdc-fix	STR	char *	0x29df00	0	0	[0]
+// bdc-fix	STR	char *	0x29df10	0	0	[1]
 
 __typeof__(char *[2]) g_coreModulePrxPaths = { (char *)BDC_STR(0x29df00), (char *)BDC_STR(0x29df10) };

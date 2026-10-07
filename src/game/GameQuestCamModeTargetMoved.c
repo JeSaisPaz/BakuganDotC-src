@@ -5,14 +5,9 @@
    of `*(cam+8)`) and the captured `targetPos` (`GameQuestCamModeCaptureTargetPos`) is below
    FLT_EPSILON, else 1 (also 1 for a NaN distance). */
 
-typedef struct CamMovedOwnerVtbl {
-  char pad[0x10];
-  VtblEntry getPos;
-} CamMovedOwnerVtbl;
-
 typedef struct CamMovedOwner {
   void *unk0;
-  CamMovedOwnerVtbl *vtbl;
+  const VtblEntry *vtbl; /* +0x04 */
 } CamMovedOwner;
 
 int GameQuestCamModeTargetMoved(GameQuestCamModeBase *self)
@@ -26,7 +21,7 @@ int GameQuestCamModeTargetMoved(GameQuestCamModeBase *self)
   float dist;
 
   owner = (CamMovedOwner *)self->base.base.followed;
-  e = &owner->vtbl->getPos;
+  e = &owner->vtbl[2];
   pos = ((const float *(*)(void *))e->fn)((char *)owner + e->delta);
   dx = self->targetPos.x - pos[0];
   dy = self->targetPos.y - pos[1];

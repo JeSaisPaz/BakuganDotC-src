@@ -1,4 +1,5 @@
 // bdc 0x08a993c0 g_gameEventFixedRound64
 #include "bdc.h"
+// bdc-fix	V	long long	0x2953c0	8	0	
 
 __typeof__(s64) g_gameEventFixedRound64 = BDC_V(long long, 0x2953c0);

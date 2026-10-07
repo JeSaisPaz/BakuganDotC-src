@@ -1,5 +1,37 @@
 // bdc 0x08a83ce8 g_gfxLensFlareElems
 #include "bdc.h"
+// bdc-fix	STR	char *	0x27fcb8	0	0	[0].texName
+// bdc-fix	V	float	0x27fcec	4	0	[0].size
+// bdc-fix	V	float	0x27fcf0	4	0	[0].step
+// bdc-fix	V	float	0x27fcf4	4	0	[0].alpha
+// bdc-fix	STR	char *	0x27fcc0	0	0	[1].texName
+// bdc-fix	V	float	0x27fcfc	4	0	[1].size
+// bdc-fix	V	float	0x27fd00	4	0	[1].step
+// bdc-fix	V	float	0x27fd04	4	0	[1].alpha
+// bdc-fix	STR	char *	0x27fcc8	0	0	[2].texName
+// bdc-fix	V	float	0x27fd0c	4	0	[2].size
+// bdc-fix	V	float	0x27fd10	4	0	[2].step
+// bdc-fix	V	float	0x27fd14	4	0	[2].alpha
+// bdc-fix	STR	char *	0x27fcd0	0	0	[3].texName
+// bdc-fix	V	float	0x27fd1c	4	0	[3].size
+// bdc-fix	V	float	0x27fd20	4	0	[3].step
+// bdc-fix	V	float	0x27fd24	4	0	[3].alpha
+// bdc-fix	STR	char *	0x27fcd8	0	0	[4].texName
+// bdc-fix	V	float	0x27fd2c	4	0	[4].size
+// bdc-fix	V	float	0x27fd30	4	0	[4].step
+// bdc-fix	V	float	0x27fd34	4	0	[4].alpha
+// bdc-fix	STR	char *	0x27fce0	0	0	[5].texName
+// bdc-fix	V	float	0x27fd3c	4	0	[5].size
+// bdc-fix	V	float	0x27fd40	4	0	[5].step
+// bdc-fix	V	float	0x27fd44	4	0	[5].alpha
+// bdc-fix	STR	char *	0x27fcb8	0	0	[6].texName
+// bdc-fix	V	float	0x27fd4c	4	0	[6].size
+// bdc-fix	V	float	0x27fd50	4	0	[6].step
+// bdc-fix	V	float	0x27fd54	4	0	[6].alpha
+// bdc-fix	STR	char *	0x27fcc0	0	0	[7].texName
+// bdc-fix	V	float	0x27fd5c	4	0	[7].size
+// bdc-fix	V	float	0x27fd60	4	0	[7].step
+// bdc-fix	V	float	0x27fd64	4	0	[7].alpha
 
 __typeof__(const GfxLensFlareElem[8]) g_gfxLensFlareElems = {
     {

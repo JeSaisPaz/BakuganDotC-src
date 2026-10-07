@@ -1,4 +1,5 @@
 // bdc 0x08acb360 g_bootTexWdFont16
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2c7360	31275	0	
 
 __typeof__(u8[31275]) g_bootTexWdFont16 = BDC_BYTES(0x2c7360, 31275);

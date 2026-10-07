@@ -1,5 +1,26 @@
 // bdc 0x08aacaa0 g_gameSfoStrings
 #include "bdc.h"
+// bdc-fix	STR	char *	0x2303b0	0	0	[0][0]
+// bdc-fix	STR	char *	0x2303d4	0	0	[0][1]
+// bdc-fix	STR	char *	0x2303d8	0	0	[0][2]
+// bdc-fix	STR	char *	0x23040c	0	0	[1][0]
+// bdc-fix	STR	char *	0x2303d4	0	0	[1][1]
+// bdc-fix	STR	char *	0x230434	0	0	[1][2]
+// bdc-fix	STR	char *	0x230468	0	0	[2][0]
+// bdc-fix	STR	char *	0x2303d4	0	0	[2][1]
+// bdc-fix	STR	char *	0x23048c	0	0	[2][2]
+// bdc-fix	STR	char *	0x2304c0	0	0	[3][0]
+// bdc-fix	STR	char *	0x2303d4	0	0	[3][1]
+// bdc-fix	STR	char *	0x2304e4	0	0	[3][2]
+// bdc-fix	STR	char *	0x230518	0	0	[4][0]
+// bdc-fix	STR	char *	0x2303d4	0	0	[4][1]
+// bdc-fix	STR	char *	0x23053c	0	0	[4][2]
+// bdc-fix	STR	char *	0x2303b0	0	0	[5][0]
+// bdc-fix	STR	char *	0x2303d4	0	0	[5][1]
+// bdc-fix	STR	char *	0x230578	0	0	[5][2]
+// bdc-fix	STR	char *	0x2303b0	0	0	[6][0]
+// bdc-fix	STR	char *	0x2303d4	0	0	[6][1]
+// bdc-fix	STR	char *	0x2305ac	0	0	[6][2]
 
 __typeof__(const char *[7][3]) g_gameSfoStrings = {
     {

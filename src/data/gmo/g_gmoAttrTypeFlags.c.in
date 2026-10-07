@@ -1,5 +1,9 @@
 // bdc 0x08aa52b0 g_gmoAttrTypeFlags
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x2a12b4	4	0	[1]
+// bdc-fix	V	unsigned int	0x2a12b8	4	0	[2]
+// bdc-fix	V	unsigned int	0x2a12bc	4	0	[3]
+// bdc-fix	V	unsigned int	0x2a12c0	4	0	[4]
 
 __typeof__(const u32[5]) g_gmoAttrTypeFlags = {
     0, BDC_V(unsigned int, 0x2a12b4), BDC_V(unsigned int, 0x2a12b8), BDC_V(unsigned int, 0x2a12bc),

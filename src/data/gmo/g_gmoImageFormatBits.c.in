@@ -1,4 +1,5 @@
 // bdc 0x08aa51f4 g_gmoImageFormatBits
 #include "bdc.h"
+// bdc-fix	BYTES	signed char	0x2a11f4	16	0	
 
 __typeof__(s8[16]) g_gmoImageFormatBits = BDC_BYTES(0x2a11f4, 16);

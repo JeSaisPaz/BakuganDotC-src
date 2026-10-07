@@ -1,5 +1,25 @@
 // bdc 0x08a93274 g_uiTalkBalloonBarVerts
 #include "bdc.h"
+// bdc-fix	V	float	0x28f28c	4	0	[6]
+// bdc-fix	V	float	0x28f294	4	0	[8]
+// bdc-fix	V	float	0x28f29c	4	0	[10]
+// bdc-fix	V	float	0x28f2a4	4	0	[12]
+// bdc-fix	V	float	0x28f2b0	4	0	[15]
+// bdc-fix	V	float	0x28f2b4	4	0	[16]
+// bdc-fix	V	float	0x28f2b8	4	0	[17]
+// bdc-fix	V	float	0x28f2bc	4	0	[18]
+// bdc-fix	V	float	0x28f2c4	4	0	[20]
+// bdc-fix	V	float	0x28f2cc	4	0	[22]
+// bdc-fix	V	float	0x28f2d8	4	0	[25]
+// bdc-fix	V	float	0x28f2dc	4	0	[26]
+// bdc-fix	V	float	0x28f2e0	4	0	[27]
+// bdc-fix	V	float	0x28f2e4	4	0	[28]
+// bdc-fix	V	float	0x28f2ec	4	0	[30]
+// bdc-fix	V	float	0x28f2f4	4	0	[32]
+// bdc-fix	V	float	0x28f300	4	0	[35]
+// bdc-fix	V	float	0x28f304	4	0	[36]
+// bdc-fix	V	float	0x28f308	4	0	[37]
+// bdc-fix	V	float	0x28f30c	4	0	[38]
 
 __typeof__(const float[40]) g_uiTalkBalloonBarVerts = {
     0, 0, 0, 0, 0, 0, BDC_V(float, 0x28f28c), 0, BDC_V(float, 0x28f294), 0, BDC_V(float, 0x28f29c),

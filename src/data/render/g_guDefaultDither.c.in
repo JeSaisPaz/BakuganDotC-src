@@ -1,5 +1,19 @@
 // bdc 0x08aa5c00 g_guDefaultDither
 #include "bdc.h"
+// bdc-fix	V	int	0x2a1c00	4	0	[0]
+// bdc-fix	V	int	0x2a1c08	4	0	[2]
+// bdc-fix	V	int	0x2a1c0c	4	0	[3]
+// bdc-fix	V	int	0x2a1c10	4	0	[4]
+// bdc-fix	V	int	0x2a1c14	4	0	[5]
+// bdc-fix	V	int	0x2a1c18	4	0	[6]
+// bdc-fix	V	int	0x2a1c1c	4	0	[7]
+// bdc-fix	V	int	0x2a1c20	4	0	[8]
+// bdc-fix	V	int	0x2a1c24	4	0	[9]
+// bdc-fix	V	int	0x2a1c28	4	0	[10]
+// bdc-fix	V	int	0x2a1c30	4	0	[12]
+// bdc-fix	V	int	0x2a1c34	4	0	[13]
+// bdc-fix	V	int	0x2a1c38	4	0	[14]
+// bdc-fix	V	int	0x2a1c3c	4	0	[15]
 
 __typeof__(const s32[16]) g_guDefaultDither = {
     BDC_V(int, 0x2a1c00), 0, BDC_V(int, 0x2a1c08), BDC_V(int, 0x2a1c0c), BDC_V(int, 0x2a1c10),

@@ -1,4 +1,5 @@
 // bdc 0x08aa3330 g_vertChunkTag
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x29f330	4	0	
 
 __typeof__(u32) g_vertChunkTag = BDC_V(unsigned int, 0x29f330);

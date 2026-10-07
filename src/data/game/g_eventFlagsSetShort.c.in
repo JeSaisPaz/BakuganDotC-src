@@ -1,5 +1,26 @@
 // bdc 0x08a99492 g_eventFlagsSetShort
 #include "bdc.h"
+// bdc-fix	V	unsigned short	0x295492	2	0	[0]
+// bdc-fix	V	unsigned short	0x295494	2	0	[1]
+// bdc-fix	V	unsigned short	0x295496	2	0	[2]
+// bdc-fix	V	unsigned short	0x295498	2	0	[3]
+// bdc-fix	V	unsigned short	0x29549a	2	0	[4]
+// bdc-fix	V	unsigned short	0x29549c	2	0	[5]
+// bdc-fix	V	unsigned short	0x29549e	2	0	[6]
+// bdc-fix	V	unsigned short	0x2954a0	2	0	[7]
+// bdc-fix	V	unsigned short	0x2954a2	2	0	[8]
+// bdc-fix	V	unsigned short	0x2954a4	2	0	[9]
+// bdc-fix	V	unsigned short	0x2954a6	2	0	[10]
+// bdc-fix	V	unsigned short	0x2954a8	2	0	[11]
+// bdc-fix	V	unsigned short	0x2954aa	2	0	[12]
+// bdc-fix	V	unsigned short	0x2954ac	2	0	[13]
+// bdc-fix	V	unsigned short	0x2954ae	2	0	[14]
+// bdc-fix	V	unsigned short	0x2954b0	2	0	[15]
+// bdc-fix	V	unsigned short	0x2954b2	2	0	[16]
+// bdc-fix	V	unsigned short	0x2954b4	2	0	[17]
+// bdc-fix	V	unsigned short	0x2954b6	2	0	[18]
+// bdc-fix	V	unsigned short	0x2954b8	2	0	[19]
+// bdc-fix	V	unsigned short	0x2954ba	2	0	[20]
 
 __typeof__(u16[21]) g_eventFlagsSetShort = {
     BDC_V(unsigned short, 0x295492), BDC_V(unsigned short, 0x295494),

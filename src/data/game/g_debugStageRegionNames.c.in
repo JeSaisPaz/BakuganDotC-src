@@ -1,5 +1,14 @@
 // bdc 0x08abeaa8 g_debugStageRegionNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x28f5e0	0	0	[0]
+// bdc-fix	STR	char *	0x28f5e8	0	0	[1]
+// bdc-fix	STR	char *	0x28f5ec	0	0	[2]
+// bdc-fix	STR	char *	0x28f5f0	0	0	[3]
+// bdc-fix	STR	char *	0x28f5f8	0	0	[4]
+// bdc-fix	STR	char *	0x28f600	0	0	[5]
+// bdc-fix	STR	char *	0x28f60c	0	0	[6]
+// bdc-fix	STR	char *	0x28f614	0	0	[7]
+// bdc-fix	STR	char *	0x28f61c	0	0	[8]
 
 __typeof__(const char *[9]) g_debugStageRegionNames = {
     (const char *)BDC_STR(0x28f5e0), (const char *)BDC_STR(0x28f5e8),

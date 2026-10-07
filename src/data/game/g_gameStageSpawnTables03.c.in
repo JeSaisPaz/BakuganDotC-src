@@ -1,4 +1,5 @@
 // bdc 0x08a97090 g_gameStageSpawnTables03
 #include "bdc.h"
+// bdc-fix	V	int	0x293090	4	0	[0]
 
 __typeof__(s32[1]) g_gameStageSpawnTables03 = { BDC_V(int, 0x293090) };

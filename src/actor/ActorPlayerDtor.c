@@ -5,25 +5,18 @@
    destroys the ball `+0x418` (`ActorBallCreate`) and the trail `+0x4a4`, then runs `ActorDtor`.
     */
 
-typedef struct PlayerBallVtbl {
-  u8 head[8];
-  s16 adjust;
-  s16 pad;
-  void (*fn)(void *, s32);
-} PlayerBallVtbl;
-
 void ActorPlayerDtor(ActorPlayer *self, u32 flags)
 
 {
   CoreObject *ball;
-  const PlayerBallVtbl *entry;
+  const VtblEntry *entry;
 
   if (self != (ActorPlayer *)0x0) {
     ball = (CoreObject *)self->ball;
     (self->base).base.base.vtable = &g_actorPlayerVtbl;
     if (ball != (CoreObject *)0x0) {
-      entry = (const PlayerBallVtbl *)ball->vtable;
-      entry->fn((void *)((uintptr_t)ball + entry->adjust), 3);
+      entry = &((const VtblEntry *)ball->vtable)[1];
+      ((void (*)(void *, s32))entry->fn)((void *)((uintptr_t)ball + entry->delta), 3);
       self->ball = (void *)0x0;
     }
     if (self->trail != (void *)0x0) {

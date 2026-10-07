@@ -1,4 +1,0 @@
-// bdc 0x08a64578 g_gfxMaskSplineVerts
-#include "bdc.h"
-
-__typeof__(u8[40]) g_gfxMaskSplineVerts = BDC_BYTES(0x260578, 40);

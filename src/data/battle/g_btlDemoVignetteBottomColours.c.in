@@ -1,4 +1,6 @@
 // bdc 0x08a99d64 g_btlDemoVignetteBottomColours
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x295d64	4	0	[0]
+// bdc-fix	V	unsigned int	0x295d68	4	0	[1]
 
 __typeof__(u32[2]) g_btlDemoVignetteBottomColours = { BDC_V(unsigned int, 0x295d64), BDC_V(unsigned int, 0x295d68) };

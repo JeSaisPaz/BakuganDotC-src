@@ -1,4 +1,5 @@
 // bdc 0x08aa5204 g_gmoTextureDefaultScale
 #include "bdc.h"
+// bdc-fix	V	float	0x2a1204	4	0	
 
 __typeof__(float) g_gmoTextureDefaultScale = BDC_V(float, 0x2a1204);

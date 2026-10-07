@@ -1,4 +1,6 @@
 // bdc 0x08ac34e0 g_uiCollectionMenuSubEntryTable
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2bf4e0	4	0	[0]
+// bdc-fix	BYTES	unsigned char	0x2bf4e8	4	0	[2]
 
 __typeof__(u8[5][4]) g_uiCollectionMenuSubEntryTable = { BDC_BYTES(0x2bf4e0, 4), {0}, BDC_BYTES(0x2bf4e8, 4) };

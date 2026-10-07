@@ -1,5 +1,22 @@
 // bdc 0x08a716a8 g_btlKind03MotionSet05
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x26d6a8	4	0	.head.flags
+// bdc-fix	V	short	0x26d6ac	2	0	.head.startMotion
+// bdc-fix	V	short	0x26d6ae	2	0	.head.loopMotion
+// bdc-fix	V	short	0x26d6b0	2	0	.head.mainMotion
+// bdc-fix	V	short	0x26d6b2	2	0	.head.endMotion
+// bdc-fix	V	unsigned char	0x26d6b4	1	0	.events[0].type
+// bdc-fix	V	unsigned char	0x26d6b5	1	0	.events[0].startFrame
+// bdc-fix	V	unsigned char	0x26d6b6	1	0	.events[0].endFrame
+// bdc-fix	V	int	0x26d6b8	4	0	.events[0].param.soundId
+// bdc-fix	V	unsigned char	0x26d6c8	1	0	.events[1].type
+// bdc-fix	V	unsigned char	0x26d6c9	1	0	.events[1].startFrame
+// bdc-fix	V	unsigned char	0x26d6ca	1	0	.events[1].endFrame
+// bdc-fix	V	int	0x26d6cc	4	0	.events[1].param.soundId
+// bdc-fix	V	unsigned char	0x26d6dc	1	0	.events[2].type
+// bdc-fix	V	unsigned char	0x26d6dd	1	0	.events[2].startFrame
+// bdc-fix	V	unsigned char	0x26d6de	1	0	.events[2].endFrame
+// bdc-fix	V	int	0x26d6e0	4	0	.events[2].param.soundId
 
 __typeof__(BtlAttackMotionSetEv4) g_btlKind03MotionSet05 = {
     .head = {

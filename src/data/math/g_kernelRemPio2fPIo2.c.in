@@ -1,5 +1,16 @@
 // bdc 0x08aa4ebc g_kernelRemPio2fPIo2
 #include "bdc.h"
+// bdc-fix	V	float	0x2a0ebc	4	0	[0]
+// bdc-fix	V	float	0x2a0ec0	4	0	[1]
+// bdc-fix	V	float	0x2a0ec4	4	0	[2]
+// bdc-fix	V	float	0x2a0ec8	4	0	[3]
+// bdc-fix	V	float	0x2a0ecc	4	0	[4]
+// bdc-fix	V	float	0x2a0ed0	4	0	[5]
+// bdc-fix	V	float	0x2a0ed4	4	0	[6]
+// bdc-fix	V	float	0x2a0ed8	4	0	[7]
+// bdc-fix	V	float	0x2a0edc	4	0	[8]
+// bdc-fix	V	float	0x2a0ee0	4	0	[9]
+// bdc-fix	V	float	0x2a0ee4	4	0	[10]
 
 __typeof__(float[11]) g_kernelRemPio2fPIo2 = {
     BDC_V(float, 0x2a0ebc), BDC_V(float, 0x2a0ec0), BDC_V(float, 0x2a0ec4), BDC_V(float, 0x2a0ec8),

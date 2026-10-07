@@ -1,5 +1,17 @@
 // bdc 0x08aa5cf8 g_sndSsSemitonePitchTable
 #include "bdc.h"
+// bdc-fix	V	unsigned short	0x2a1cf8	2	0	[0]
+// bdc-fix	V	unsigned short	0x2a1cfa	2	0	[1]
+// bdc-fix	V	unsigned short	0x2a1cfc	2	0	[2]
+// bdc-fix	V	unsigned short	0x2a1cfe	2	0	[3]
+// bdc-fix	V	unsigned short	0x2a1d00	2	0	[4]
+// bdc-fix	V	unsigned short	0x2a1d02	2	0	[5]
+// bdc-fix	V	unsigned short	0x2a1d04	2	0	[6]
+// bdc-fix	V	unsigned short	0x2a1d06	2	0	[7]
+// bdc-fix	V	unsigned short	0x2a1d08	2	0	[8]
+// bdc-fix	V	unsigned short	0x2a1d0a	2	0	[9]
+// bdc-fix	V	unsigned short	0x2a1d0c	2	0	[10]
+// bdc-fix	V	unsigned short	0x2a1d0e	2	0	[11]
 
 __typeof__(const u16[12]) g_sndSsSemitonePitchTable = {
     BDC_V(unsigned short, 0x2a1cf8), BDC_V(unsigned short, 0x2a1cfa),

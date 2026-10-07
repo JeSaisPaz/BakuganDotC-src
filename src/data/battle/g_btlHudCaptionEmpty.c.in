@@ -1,4 +1,5 @@
 // bdc 0x08ab9f80 g_btlHudCaptionEmpty
 #include "bdc.h"
+// bdc-fix	STR	char *	0x260a30	0	0	
 
 __typeof__(char *) g_btlHudCaptionEmpty = (char *)BDC_STR(0x260a30);

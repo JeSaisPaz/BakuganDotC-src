@@ -1,4 +1,5 @@
 // bdc 0x08ac3c80 g_worldMapStageDest
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2bfc80	40	0	
 
 __typeof__(u8[40]) g_worldMapStageDest = BDC_BYTES(0x2bfc80, 40);

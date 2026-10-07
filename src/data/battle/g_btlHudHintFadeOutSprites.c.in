@@ -1,5 +1,17 @@
 // bdc 0x08aba170 g_btlHudHintFadeOutSprites
 #include "bdc.h"
+// bdc-fix	V	int	0x2b6170	4	0	[0]
+// bdc-fix	V	int	0x2b6174	4	0	[1]
+// bdc-fix	V	int	0x2b6178	4	0	[2]
+// bdc-fix	V	int	0x2b617c	4	0	[3]
+// bdc-fix	V	int	0x2b6180	4	0	[4]
+// bdc-fix	V	int	0x2b6184	4	0	[5]
+// bdc-fix	V	int	0x2b6188	4	0	[6]
+// bdc-fix	V	int	0x2b618c	4	0	[7]
+// bdc-fix	V	int	0x2b6190	4	0	[8]
+// bdc-fix	V	int	0x2b6194	4	0	[9]
+// bdc-fix	V	int	0x2b6198	4	0	[10]
+// bdc-fix	V	int	0x2b619c	4	0	[11]
 
 __typeof__(const s32[12]) g_btlHudHintFadeOutSprites = {
     BDC_V(int, 0x2b6170), BDC_V(int, 0x2b6174), BDC_V(int, 0x2b6178), BDC_V(int, 0x2b617c),

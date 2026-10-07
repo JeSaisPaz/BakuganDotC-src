@@ -4,23 +4,11 @@
 /* Deletes the main menu's 3D models through their virtual destructors (flag 3): the
    `menu_daiza.gmo` base `baseModel` and the five item models `models[]`, clearing the pointers. */
 
-typedef struct MenuModelVt {
-  u8 pad[8];
-  s16 adj;
-  s16 pad2;
-  void (*dtor)(void *obj, int flags);
-} MenuModelVt;
-
-typedef struct MenuModelObj {
-  u8 pad[0x14];
-  MenuModelVt *vt;
-} MenuModelObj;
-
-static void MenuModelDelete(MenuModelObj *obj)
+static void MenuModelDelete(GfxModel *obj)
 {
-  MenuModelVt *vt = obj->vt;
+  const VtblEntry *dtor = &((const VtblEntry *)obj->base.vtable)[1];
 
-  vt->dtor((char *)obj + vt->adj, 3);
+  ((void (*)(void *, s32))dtor->fn)((u8 *)obj + dtor->delta, 3);
 }
 
 void UiMainMenuReleaseModels(UiMainMenu *self)
@@ -28,12 +16,12 @@ void UiMainMenuReleaseModels(UiMainMenu *self)
   int i;
 
   if (self->baseModel != (void *)0x0) {
-    MenuModelDelete((MenuModelObj *)self->baseModel);
+    MenuModelDelete((GfxModel *)self->baseModel);
     self->baseModel = (void *)0x0;
   }
   for (i = 0; i < 5; i++) {
     if (self->models[i] != (void *)0x0) {
-      MenuModelDelete((MenuModelObj *)self->models[i]);
+      MenuModelDelete((GfxModel *)self->models[i]);
       self->models[i] = (void *)0x0;
     }
   }

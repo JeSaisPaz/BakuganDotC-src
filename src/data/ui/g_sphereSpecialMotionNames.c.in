@@ -1,5 +1,18 @@
 // bdc 0x08ac373c g_sphereSpecialMotionNames
 #include "bdc.h"
+// bdc-fix	STR	char *	0x29a424	0	0	[0]
+// bdc-fix	STR	char *	0x29a424	0	0	[1]
+// bdc-fix	STR	char *	0x29a448	0	0	[2]
+// bdc-fix	STR	char *	0x29a46c	0	0	[3]
+// bdc-fix	STR	char *	0x29a490	0	0	[4]
+// bdc-fix	STR	char *	0x29a4b4	0	0	[5]
+// bdc-fix	STR	char *	0x29a4d8	0	0	[6]
+// bdc-fix	STR	char *	0x29a4fc	0	0	[7]
+// bdc-fix	STR	char *	0x29a51c	0	0	[8]
+// bdc-fix	STR	char *	0x29a53c	0	0	[9]
+// bdc-fix	STR	char *	0x29a55c	0	0	[10]
+// bdc-fix	STR	char *	0x29a57c	0	0	[11]
+// bdc-fix	STR	char *	0x29a59c	0	0	[12]
 
 __typeof__(const char *[13]) g_sphereSpecialMotionNames = {
     (const char *)BDC_STR(0x29a424), (const char *)BDC_STR(0x29a424),

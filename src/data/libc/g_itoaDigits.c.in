@@ -1,4 +1,5 @@
 // bdc 0x08ac46e0 g_itoaDigits
 #include "bdc.h"
+// bdc-fix	BYTES	char	0x2c06e0	37	0	
 
 __typeof__(char[37]) g_itoaDigits = BDC_BYTES(0x2c06e0, 37);

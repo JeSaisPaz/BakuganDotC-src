@@ -1,5 +1,9 @@
 // bdc 0x08aa30d4 g_gfxMaterialStateDefault
 #include "bdc.h"
+// bdc-fix	V	unsigned short	0x29f0d4	2	0	.alphaRef
+// bdc-fix	V	signed char	0x29f0d6	1	0	.sortKey
+// bdc-fix	V	unsigned char	0x29f0d7	1	0	.shadeFlags
+// bdc-fix	V	unsigned char	0x29f0d8	1	0	.renderFlags
 
 __typeof__(const GfxMaterialState) g_gfxMaterialStateDefault = {
     .alphaRef = BDC_V(unsigned short, 0x29f0d4),

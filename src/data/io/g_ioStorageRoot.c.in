@@ -1,4 +1,5 @@
 // bdc 0x08ac61cc g_ioStorageRoot
 #include "bdc.h"
+// bdc-fix	V	int	0x2c21cc	4	0	
 
 __typeof__(s32) g_ioStorageRoot = BDC_V(int, 0x2c21cc);

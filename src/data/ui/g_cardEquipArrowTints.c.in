@@ -1,5 +1,12 @@
 // bdc 0x08ac34b0 g_cardEquipArrowTints
 #include "bdc.h"
+// bdc-fix	V	float	0x2bf4b4	4	0	[0][1]
+// bdc-fix	V	float	0x2bf4b8	4	0	[0][2]
+// bdc-fix	V	float	0x2bf4bc	4	0	[1][0]
+// bdc-fix	V	float	0x2bf4c8	4	0	[2][0]
+// bdc-fix	V	float	0x2bf4cc	4	0	[2][1]
+// bdc-fix	V	float	0x2bf4d4	4	0	[3][0]
+// bdc-fix	V	float	0x2bf4d8	4	0	[3][1]
 
 __typeof__(float[4][3]) g_cardEquipArrowTints = {
     { 0, BDC_V(float, 0x2bf4b4), BDC_V(float, 0x2bf4b8) }, { BDC_V(float, 0x2bf4bc) },

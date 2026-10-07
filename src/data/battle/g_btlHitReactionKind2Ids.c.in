@@ -1,5 +1,12 @@
 // bdc 0x08a67822 g_btlHitReactionKind2Ids
 #include "bdc.h"
+// bdc-fix	V	unsigned short	0x263822	2	0	[0]
+// bdc-fix	V	unsigned short	0x263824	2	0	[1]
+// bdc-fix	V	unsigned short	0x263826	2	0	[2]
+// bdc-fix	V	unsigned short	0x263828	2	0	[3]
+// bdc-fix	V	unsigned short	0x26382a	2	0	[4]
+// bdc-fix	V	unsigned short	0x26382c	2	0	[5]
+// bdc-fix	V	unsigned short	0x26382e	2	0	[6]
 
 __typeof__(unsigned short[7]) g_btlHitReactionKind2Ids = {
     BDC_V(unsigned short, 0x263822), BDC_V(unsigned short, 0x263824),

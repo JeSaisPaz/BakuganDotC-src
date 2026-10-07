@@ -1,5 +1,17 @@
 // bdc 0x08ac3428 g_equipViewport4P
 #include "bdc.h"
+// bdc-fix	V	float	0x2bf430	4	0	[2]
+// bdc-fix	V	float	0x2bf434	4	0	[3]
+// bdc-fix	V	float	0x2bf438	4	0	[4]
+// bdc-fix	V	float	0x2bf440	4	0	[6]
+// bdc-fix	V	float	0x2bf444	4	0	[7]
+// bdc-fix	V	float	0x2bf44c	4	0	[9]
+// bdc-fix	V	float	0x2bf450	4	0	[10]
+// bdc-fix	V	float	0x2bf454	4	0	[11]
+// bdc-fix	V	float	0x2bf458	4	0	[12]
+// bdc-fix	V	float	0x2bf45c	4	0	[13]
+// bdc-fix	V	float	0x2bf460	4	0	[14]
+// bdc-fix	V	float	0x2bf464	4	0	[15]
 
 __typeof__(float[16]) g_equipViewport4P = {
     0, 0, BDC_V(float, 0x2bf430), BDC_V(float, 0x2bf434), BDC_V(float, 0x2bf438), 0,

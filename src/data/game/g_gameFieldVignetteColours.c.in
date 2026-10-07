@@ -1,5 +1,9 @@
 // bdc 0x08a92cd8 g_gameFieldVignetteColours
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x28ecd8	4	0	[0]
+// bdc-fix	V	unsigned int	0x28ecdc	4	0	[1]
+// bdc-fix	V	unsigned int	0x28ece0	4	0	[2]
+// bdc-fix	V	unsigned int	0x28ece4	4	0	[3]
 
 __typeof__(const u32[4]) g_gameFieldVignetteColours = {
     BDC_V(unsigned int, 0x28ecd8), BDC_V(unsigned int, 0x28ecdc), BDC_V(unsigned int, 0x28ece0),

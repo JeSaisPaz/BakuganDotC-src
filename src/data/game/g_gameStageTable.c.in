@@ -1,5 +1,127 @@
 // bdc 0x08a95624 g_gameStageTable
 #include "bdc.h"
+// bdc-fix	STR	char *	0x290f30	0	0	[0].name
+// bdc-fix	STR	char *	0x290f3c	0	0	[0].pack
+// bdc-fix	V	int	0x291630	4	0	[1].stage
+// bdc-fix	STR	char *	0x290f5c	0	0	[1].name
+// bdc-fix	STR	char *	0x290f68	0	0	[1].pack
+// bdc-fix	V	int	0x29163c	4	0	[2].stage
+// bdc-fix	STR	char *	0x290f88	0	0	[2].name
+// bdc-fix	STR	char *	0x290f94	0	0	[2].pack
+// bdc-fix	V	int	0x291648	4	0	[3].stage
+// bdc-fix	STR	char *	0x290fb4	0	0	[3].name
+// bdc-fix	STR	char *	0x290fc0	0	0	[3].pack
+// bdc-fix	V	int	0x291654	4	0	[4].stage
+// bdc-fix	STR	char *	0x290fe0	0	0	[4].name
+// bdc-fix	STR	char *	0x290fe8	0	0	[4].pack
+// bdc-fix	V	int	0x291660	4	0	[5].stage
+// bdc-fix	STR	char *	0x291008	0	0	[5].name
+// bdc-fix	STR	char *	0x291010	0	0	[5].pack
+// bdc-fix	V	int	0x29166c	4	0	[6].stage
+// bdc-fix	STR	char *	0x291030	0	0	[6].name
+// bdc-fix	STR	char *	0x291038	0	0	[6].pack
+// bdc-fix	V	int	0x291678	4	0	[7].stage
+// bdc-fix	STR	char *	0x291058	0	0	[7].name
+// bdc-fix	STR	char *	0x291060	0	0	[7].pack
+// bdc-fix	V	int	0x291684	4	0	[8].stage
+// bdc-fix	STR	char *	0x291080	0	0	[8].name
+// bdc-fix	STR	char *	0x291088	0	0	[8].pack
+// bdc-fix	V	int	0x291690	4	0	[9].stage
+// bdc-fix	STR	char *	0x2910a8	0	0	[9].name
+// bdc-fix	STR	char *	0x2910b0	0	0	[9].pack
+// bdc-fix	V	int	0x29169c	4	0	[10].stage
+// bdc-fix	STR	char *	0x2910d0	0	0	[10].name
+// bdc-fix	STR	char *	0x2910d8	0	0	[10].pack
+// bdc-fix	V	int	0x2916a8	4	0	[11].stage
+// bdc-fix	STR	char *	0x2910f8	0	0	[11].name
+// bdc-fix	STR	char *	0x291100	0	0	[11].pack
+// bdc-fix	V	int	0x2916b4	4	0	[12].stage
+// bdc-fix	STR	char *	0x291120	0	0	[12].name
+// bdc-fix	STR	char *	0x29112c	0	0	[12].pack
+// bdc-fix	V	int	0x2916c0	4	0	[13].stage
+// bdc-fix	STR	char *	0x29114c	0	0	[13].name
+// bdc-fix	STR	char *	0x291158	0	0	[13].pack
+// bdc-fix	V	int	0x2916cc	4	0	[14].stage
+// bdc-fix	STR	char *	0x291178	0	0	[14].name
+// bdc-fix	STR	char *	0x291184	0	0	[14].pack
+// bdc-fix	V	int	0x2916d8	4	0	[15].stage
+// bdc-fix	STR	char *	0x2911a4	0	0	[15].name
+// bdc-fix	STR	char *	0x2911b0	0	0	[15].pack
+// bdc-fix	V	int	0x2916e4	4	0	[16].stage
+// bdc-fix	STR	char *	0x2911d0	0	0	[16].name
+// bdc-fix	STR	char *	0x2911dc	0	0	[16].pack
+// bdc-fix	V	int	0x2916f0	4	0	[17].stage
+// bdc-fix	STR	char *	0x2911fc	0	0	[17].name
+// bdc-fix	STR	char *	0x291208	0	0	[17].pack
+// bdc-fix	V	int	0x2916fc	4	0	[18].stage
+// bdc-fix	STR	char *	0x291228	0	0	[18].name
+// bdc-fix	STR	char *	0x291234	0	0	[18].pack
+// bdc-fix	V	int	0x291708	4	0	[19].stage
+// bdc-fix	STR	char *	0x291254	0	0	[19].name
+// bdc-fix	STR	char *	0x291260	0	0	[19].pack
+// bdc-fix	V	int	0x291714	4	0	[20].stage
+// bdc-fix	STR	char *	0x291280	0	0	[20].name
+// bdc-fix	STR	char *	0x291290	0	0	[20].pack
+// bdc-fix	V	int	0x291720	4	0	[21].stage
+// bdc-fix	STR	char *	0x2912b0	0	0	[21].name
+// bdc-fix	STR	char *	0x2912c0	0	0	[21].pack
+// bdc-fix	V	int	0x29172c	4	0	[22].stage
+// bdc-fix	STR	char *	0x2912e0	0	0	[22].name
+// bdc-fix	STR	char *	0x2912f0	0	0	[22].pack
+// bdc-fix	V	int	0x291738	4	0	[23].stage
+// bdc-fix	STR	char *	0x291310	0	0	[23].name
+// bdc-fix	STR	char *	0x291320	0	0	[23].pack
+// bdc-fix	V	int	0x291744	4	0	[24].stage
+// bdc-fix	STR	char *	0x291340	0	0	[24].name
+// bdc-fix	STR	char *	0x291348	0	0	[24].pack
+// bdc-fix	V	int	0x291750	4	0	[25].stage
+// bdc-fix	STR	char *	0x291368	0	0	[25].name
+// bdc-fix	STR	char *	0x291370	0	0	[25].pack
+// bdc-fix	V	int	0x29175c	4	0	[26].stage
+// bdc-fix	STR	char *	0x291390	0	0	[26].name
+// bdc-fix	STR	char *	0x291398	0	0	[26].pack
+// bdc-fix	V	int	0x291768	4	0	[27].stage
+// bdc-fix	STR	char *	0x2913b8	0	0	[27].name
+// bdc-fix	STR	char *	0x2913c0	0	0	[27].pack
+// bdc-fix	V	int	0x291774	4	0	[28].stage
+// bdc-fix	STR	char *	0x2913e0	0	0	[28].name
+// bdc-fix	STR	char *	0x2913ec	0	0	[28].pack
+// bdc-fix	V	int	0x291780	4	0	[29].stage
+// bdc-fix	STR	char *	0x29140c	0	0	[29].name
+// bdc-fix	STR	char *	0x291418	0	0	[29].pack
+// bdc-fix	V	int	0x29178c	4	0	[30].stage
+// bdc-fix	STR	char *	0x291438	0	0	[30].name
+// bdc-fix	STR	char *	0x291444	0	0	[30].pack
+// bdc-fix	V	int	0x291798	4	0	[31].stage
+// bdc-fix	STR	char *	0x291464	0	0	[31].name
+// bdc-fix	STR	char *	0x291470	0	0	[31].pack
+// bdc-fix	V	int	0x2917a4	4	0	[32].stage
+// bdc-fix	STR	char *	0x291490	0	0	[32].name
+// bdc-fix	STR	char *	0x29149c	0	0	[32].pack
+// bdc-fix	V	int	0x2917b0	4	0	[33].stage
+// bdc-fix	STR	char *	0x2914bc	0	0	[33].name
+// bdc-fix	STR	char *	0x2914c8	0	0	[33].pack
+// bdc-fix	V	int	0x2917bc	4	0	[34].stage
+// bdc-fix	STR	char *	0x2914e8	0	0	[34].name
+// bdc-fix	STR	char *	0x2914f4	0	0	[34].pack
+// bdc-fix	V	int	0x2917c8	4	0	[35].stage
+// bdc-fix	STR	char *	0x291514	0	0	[35].name
+// bdc-fix	STR	char *	0x291520	0	0	[35].pack
+// bdc-fix	V	int	0x2917d4	4	0	[36].stage
+// bdc-fix	STR	char *	0x291540	0	0	[36].name
+// bdc-fix	STR	char *	0x291550	0	0	[36].pack
+// bdc-fix	V	int	0x2917e0	4	0	[37].stage
+// bdc-fix	STR	char *	0x291570	0	0	[37].name
+// bdc-fix	STR	char *	0x291580	0	0	[37].pack
+// bdc-fix	V	int	0x2917ec	4	0	[38].stage
+// bdc-fix	STR	char *	0x2915a0	0	0	[38].name
+// bdc-fix	STR	char *	0x2915b0	0	0	[38].pack
+// bdc-fix	V	int	0x2917f8	4	0	[39].stage
+// bdc-fix	STR	char *	0x2915d0	0	0	[39].name
+// bdc-fix	STR	char *	0x2915e0	0	0	[39].pack
+// bdc-fix	V	int	0x291804	4	0	[40].stage
+// bdc-fix	STR	char *	0x291600	0	0	[40].name
+// bdc-fix	STR	char *	0x291604	0	0	[40].pack
 
 __typeof__(const GameStageEntry[41]) g_gameStageTable = {
     { .name = (const char *)BDC_STR(0x290f30), .pack = (const char *)BDC_STR(0x290f3c) },

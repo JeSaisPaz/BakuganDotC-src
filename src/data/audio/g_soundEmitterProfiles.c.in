@@ -1,5 +1,43 @@
 // bdc 0x08ac5640 g_soundEmitterProfiles
 #include "bdc.h"
+// bdc-fix	V	int	0x2c1640	4	0	[0].key
+// bdc-fix	STR	char *	0x29d26c	0	0	[0].name
+// bdc-fix	V	int	0x2c1648	4	0	[0].shape
+// bdc-fix	V	int	0x2c164c	4	0	[0].curve
+// bdc-fix	V	float	0x2c1650	4	0	[0].volNear
+// bdc-fix	V	float	0x2c1654	4	0	[0].volFar
+// bdc-fix	V	float	0x2c1658	4	0	[0].radius
+// bdc-fix	V	int	0x2c165c	4	0	[1].key
+// bdc-fix	STR	char *	0x29d278	0	0	[1].name
+// bdc-fix	V	int	0x2c1664	4	0	[1].shape
+// bdc-fix	V	int	0x2c1668	4	0	[1].curve
+// bdc-fix	V	float	0x2c1670	4	0	[1].volFar
+// bdc-fix	V	float	0x2c1674	4	0	[1].radius
+// bdc-fix	V	int	0x2c1678	4	0	[2].key
+// bdc-fix	STR	char *	0x29d284	0	0	[2].name
+// bdc-fix	V	int	0x2c1680	4	0	[2].shape
+// bdc-fix	V	int	0x2c1684	4	0	[2].curve
+// bdc-fix	V	float	0x2c168c	4	0	[2].volFar
+// bdc-fix	V	float	0x2c1690	4	0	[2].radius
+// bdc-fix	V	int	0x2c1694	4	0	[3].key
+// bdc-fix	STR	char *	0x29d290	0	0	[3].name
+// bdc-fix	V	int	0x2c16a0	4	0	[3].curve
+// bdc-fix	V	float	0x2c16a4	4	0	[3].volNear
+// bdc-fix	V	float	0x2c16a8	4	0	[3].volFar
+// bdc-fix	V	float	0x2c16ac	4	0	[3].radius
+// bdc-fix	V	int	0x2c16b0	4	0	[4].key
+// bdc-fix	STR	char *	0x29d298	0	0	[4].name
+// bdc-fix	V	int	0x2c16b8	4	0	[4].shape
+// bdc-fix	V	int	0x2c16bc	4	0	[4].curve
+// bdc-fix	V	float	0x2c16c4	4	0	[4].volFar
+// bdc-fix	V	float	0x2c16c8	4	0	[4].radius
+// bdc-fix	V	int	0x2c16cc	4	0	[5].key
+// bdc-fix	STR	char *	0x29d2a0	0	0	[5].name
+// bdc-fix	V	int	0x2c16d4	4	0	[5].shape
+// bdc-fix	V	int	0x2c16d8	4	0	[5].curve
+// bdc-fix	V	float	0x2c16dc	4	0	[5].volNear
+// bdc-fix	V	float	0x2c16e0	4	0	[5].volFar
+// bdc-fix	V	float	0x2c16e4	4	0	[5].radius
 
 __typeof__(SndEmitterProfile[6]) g_soundEmitterProfiles = {
     {

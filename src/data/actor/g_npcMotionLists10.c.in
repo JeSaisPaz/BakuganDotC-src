@@ -1,5 +1,38 @@
 // bdc 0x08a60e7c g_npcMotionLists10
 #include "bdc.h"
+// bdc-fix	STR	char *	0x25cd98	0	0	[0].name
+// bdc-fix	V	int	0x25ce84	4	0	[1].slot
+// bdc-fix	STR	char *	0x25cd98	0	0	[1].name
+// bdc-fix	V	int	0x25ce8c	4	0	[2].slot
+// bdc-fix	STR	char *	0x25cd98	0	0	[2].name
+// bdc-fix	V	int	0x25ce94	4	0	[3].slot
+// bdc-fix	STR	char *	0x25cd98	0	0	[3].name
+// bdc-fix	V	int	0x25ce9c	4	0	[4].slot
+// bdc-fix	STR	char *	0x25cd98	0	0	[4].name
+// bdc-fix	V	int	0x25cea4	4	0	[5].slot
+// bdc-fix	STR	char *	0x25cda8	0	0	[5].name
+// bdc-fix	V	int	0x25ceac	4	0	[6].slot
+// bdc-fix	STR	char *	0x25cdb8	0	0	[6].name
+// bdc-fix	V	int	0x25ceb4	4	0	[7].slot
+// bdc-fix	STR	char *	0x25cdc8	0	0	[7].name
+// bdc-fix	V	int	0x25cebc	4	0	[8].slot
+// bdc-fix	STR	char *	0x25cddc	0	0	[8].name
+// bdc-fix	V	int	0x25cec4	4	0	[9].slot
+// bdc-fix	STR	char *	0x25cdf0	0	0	[9].name
+// bdc-fix	V	int	0x25cecc	4	0	[10].slot
+// bdc-fix	STR	char *	0x25ce08	0	0	[10].name
+// bdc-fix	V	int	0x25ced4	4	0	[11].slot
+// bdc-fix	STR	char *	0x25ce18	0	0	[11].name
+// bdc-fix	V	int	0x25cedc	4	0	[12].slot
+// bdc-fix	STR	char *	0x25ce30	0	0	[12].name
+// bdc-fix	V	int	0x25cee4	4	0	[13].slot
+// bdc-fix	STR	char *	0x25ce40	0	0	[13].name
+// bdc-fix	V	int	0x25ceec	4	0	[14].slot
+// bdc-fix	STR	char *	0x25ce50	0	0	[14].name
+// bdc-fix	V	int	0x25cef4	4	0	[15].slot
+// bdc-fix	STR	char *	0x25ce64	0	0	[15].name
+// bdc-fix	V	int	0x25cefc	4	0	[16].slot
+// bdc-fix	STR	char *	0x25c3a4	0	0	[16].name
 
 __typeof__(const ActorNpcMotionEntry[17]) g_npcMotionLists10 = {
     { .name = (const char *)BDC_STR(0x25cd98) },

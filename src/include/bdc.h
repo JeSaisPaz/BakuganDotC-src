@@ -258,7 +258,7 @@ typedef struct GfxModel {
     float motionSpeed;         /* +0xb4 1.0 at init; negative plays backwards */
     u8 visible;                /* +0xb8 */
     u8 fogEnabled;             /* +0xb9 */
-    u8 reservedBa;                 /* +0xba */
+    u8 pauseExempt;            /* +0xba nonzero: keeps animating while g_gmoMotionPaused is set (GfxModelChainUpdateMotion) */
     u8 ownsGmo;                /* +0xbb gmo is freed by GfxModelDtor */
     u8 lighting;               /* +0xbc GE lighting enable (0x17) */
     char name[0x23];           /* +0xbd "No Name" at init */
@@ -618,8 +618,8 @@ typedef struct GfxMeshObj {
     float velocity[4];           /* +0x0c0 vec4 per-frame drift of the heat-haze puff (GfxMeshObjStateHeatPuff); vec4 data in StencilSmoke */
     float axis[4];               /* +0x0d0 vec4: the smoke-column shadow's ground normal (BtlShadowUpdate); in HeatPuff the per-frame velocity decrement (0.03 × initial velocity) */
     float color[4];              /* +0x0e0 material colour, ambient or emissive by `emissive` (GfxMeshObjDrawList) */
-    void *vertices;              /* +0x0f0 GE vertex address; freed by the destructor when flags bit 1 */
-    void *indices;               /* +0x0f4 GE index address */
+    void *indices;               /* +0x0f0 GE index address (IADDR 0x02; NULL = non-indexed prim); freed by the destructor when flags bit 1 */
+    void *vertices;              /* +0x0f4 GE vertex address (VADDR 0x01) */
     void *buffer;                /* +0x0f8 freed by the destructor */
     s32 blendMode;               /* +0x0fc 0 add-alpha, 1 normal, 2 add, 3 add-with-fix */
     GfxEffectChain effectChain;  /* +0x100 built by GfxEffectChainCtor; GfxMeshObjGetChain returns its address */
@@ -666,7 +666,7 @@ typedef struct GfxMeshObj {
     u32 primCmd;                 /* +0x1ac */
     u32 stencilTest;             /* +0x1b0 GE STST command (GfxMeshObjSetStencilTest) */
     u32 stencilOp;               /* +0x1b4 GE SOP command */
-    u32 flags;                   /* +0x1b8 bit 0 owns vertexBuffer, bit 1 owns vertices */
+    u32 flags;                   /* +0x1b8 bit 0 owns vertexBuffer, bit 1 owns indices */
     u8 _unk1bc[0x4];             /* +0x1bc */
 } GfxMeshObj;
 
@@ -8074,7 +8074,7 @@ typedef struct UiScreen {
     PadState *pad;          /* 0x20 = g_padState */
     union {
         u32 unk24;          /* 0x24 class-specific word */
-        PadState *netPad;   /* 0x24 UiPause: pad object fed from net play (UiPauseSetMenuKind, UiPauseUpdate); also becomes `pad` */
+        PadState *netPad;   /* 0x24 UiPause, UiBattleRuleSelect: pad object fed from net play (UiPauseSetMenuKind, UiPauseUpdate); also becomes `pad`; deleted by their dtors */
     };
     s32 phase;              /* 0x28 index into the class's phase table; set through vtable slot 5 index 3 */
     s32 phaseStep;          /* 0x2c sub-state of the current phase, reset to 0 whenever the phase changes */
@@ -15270,7 +15270,7 @@ void GfxMeshObjFitScreenBillboard(float scale, GfxMeshObj *self);
 GfxEffectChain *GfxMeshObjGetChain(GfxMeshObj *obj);
 void GfxMeshObjKill(GfxMeshObj *self);
 void GfxMeshObjRunState(GfxMeshObj *self);
-void GfxMeshObjRunStateDefaultIndices(GfxMeshObj *self);
+void GfxMeshObjRunStateDefaultVertices(GfxMeshObj *self);
 void GfxMeshObjSetAlphaRef(GfxMeshObj *obj, s32 ref);
 void GfxMeshObjSetPositionWithChildren(GfxMeshObj *self, const float *pos);
 void GfxMeshObjSetStencilTest(GfxMeshObj *self, bool enable, u32 ref);
@@ -20516,9 +20516,9 @@ extern __typeof__(CoreObject *) g_gfxDeferredDeleteHead;
 extern __typeof__(CoreObject *) g_gfxDeferredDeleteTail;
 extern __typeof__(float) g_gfxDepthCenter;
 extern __typeof__(GfxDisplay *) g_gfxDisplay;
-extern __typeof__(u8[2560]) g_gfxDistortionIndices;
-extern __typeof__(u8[2560]) g_gfxDistortionLargeIndices;
-extern __typeof__(u8[510]) g_gfxDistortionPatchVerts;
+extern __typeof__(u8[510]) g_gfxDistortionGridIndices;
+extern __typeof__(u8[2560]) g_gfxDistortionLargeVertices;
+extern __typeof__(u8[2560]) g_gfxDistortionVertices;
 extern __typeof__(u8) g_gfxEffectAltMeshOnce;
 extern __typeof__(float[4]) g_gfxEffectCamDir;
 extern __typeof__(float[4]) g_gfxEffectCamEye;
@@ -20577,12 +20577,12 @@ extern __typeof__(u32) g_gfxLightSelectCmd;
 extern __typeof__(s32) g_gfxLightStateInit;
 extern __typeof__(const u32[28]) g_gfxLightUnlitStateList;
 extern __typeof__(u32) g_gfxLightingCmd;
-extern __typeof__(u8[28]) g_gfxMaskSplineIndices;
-extern __typeof__(u8[40]) g_gfxMaskSplineVerts;
+extern __typeof__(u8[40]) g_gfxMaskSplineIndices;
+extern __typeof__(float[48]) g_gfxMaskSplineVertices;
 extern __typeof__(u32) g_gfxMaterialAlpha;
 extern __typeof__(const char[3]) g_gfxMaterialCodePrefix;
 extern __typeof__(const GfxMaterialState) g_gfxMaterialStateDefault;
-extern __typeof__(u16[1280]) g_gfxMeshObjDefaultIndices;
+extern __typeof__(u16[1280]) g_gfxMeshObjDefaultVertices;
 extern __typeof__(u8) g_gfxMeshObjDepthTest;
 extern __typeof__(u32[8]) g_gfxMeshObjLightList;
 extern __typeof__(CoreObjectList) g_gfxMeshObjList0;
@@ -20625,8 +20625,8 @@ extern __typeof__(VtblEntry[6]) g_gfxScreenFaderVtbl;
 extern __typeof__(float[6]) g_gfxScreenOrthoRect;
 extern __typeof__(GfxGeTexVertex16[8]) g_gfxScreenSpriteVerts;
 extern __typeof__(GfxGeTexVertex16[16]) g_gfxScreenStripVerts;
-extern __typeof__(u8[36]) g_gfxSmokeBezierIndexData;
-extern __typeof__(u8[16]) g_gfxSmokeBezierVertexData;
+extern __typeof__(u8[16]) g_gfxSmokeBezierIndices;
+extern __typeof__(u8[36]) g_gfxSmokeBezierVertices;
 extern __typeof__(u8[20]) g_gfxSmokeQuadVerts;
 extern __typeof__(u8[32]) g_gfxSpriteDefaultQuad;
 extern __typeof__(u8) g_gfxSpriteDepthTest;
@@ -21173,6 +21173,7 @@ extern __typeof__(const char *[21]) g_uiUpgradeMotionFormats;
 extern __typeof__(MemberFnPtr[4]) g_uiUpgradePhaseFns;
 extern __typeof__(VtblEntry[7]) g_uiUpgradeVtbl;
 extern __typeof__(u8[15]) g_uiWindowActive;
+extern __typeof__(u32) g_uiWindowFrameConstWord3;
 extern __typeof__(const VtblEntry[2]) g_uiWindowFrameObjectVtable;
 extern __typeof__(MemberFnPtr[3]) g_uiWindowFrameStateFns;
 extern __typeof__(const UiWindowFrameStyleSet) g_uiWindowFrameStyleSet;

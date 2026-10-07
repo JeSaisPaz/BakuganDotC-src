@@ -1,4 +1,5 @@
 // bdc 0x08aa3538 g_uiGlyphUtf8Table
 #include "bdc.h"
+// bdc-fix	BYTES	char	0x29f538	632	0	
 
 __typeof__(const char[632]) g_uiGlyphUtf8Table = BDC_BYTES(0x29f538, 632);

@@ -1,4 +1,5 @@
 // bdc 0x08aa5018 __clz_tab
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2a1018	256	0	
 
 __typeof__(const u8[256]) __clz_tab = BDC_BYTES(0x2a1018, 256);

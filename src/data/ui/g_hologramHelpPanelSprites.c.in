@@ -1,4 +1,5 @@
 // bdc 0x08ac1180 g_hologramHelpPanelSprites
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2bd180	14	0	
 
 __typeof__(u8[14]) g_hologramHelpPanelSprites = BDC_BYTES(0x2bd180, 14);

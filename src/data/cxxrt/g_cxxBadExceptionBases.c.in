@@ -1,5 +1,6 @@
 // bdc 0x08aa4408 g_cxxBadExceptionBases
 #include "bdc.h"
+// bdc-fix	V	unsigned char	0x2a040e	1	0	[0].flags
 
 __typeof__(const CxxBaseClassEntry[1]) g_cxxBadExceptionBases = {
     {

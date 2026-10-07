@@ -1,5 +1,16 @@
 // bdc 0x08a84038 g_btlItemSpawnDelays
 #include "bdc.h"
+// bdc-fix	V	int	0x280038	4	0	[0].minSeconds
+// bdc-fix	V	int	0x28003c	4	0	[0].firstDelay
+// bdc-fix	V	int	0x280040	4	0	[0].delay
+// bdc-fix	V	int	0x280044	4	0	[1].minSeconds
+// bdc-fix	V	int	0x280048	4	0	[1].firstDelay
+// bdc-fix	V	int	0x28004c	4	0	[1].delay
+// bdc-fix	V	int	0x280050	4	0	[2].minSeconds
+// bdc-fix	V	int	0x280054	4	0	[2].firstDelay
+// bdc-fix	V	int	0x280058	4	0	[2].delay
+// bdc-fix	V	int	0x280060	4	0	[3].firstDelay
+// bdc-fix	V	int	0x280064	4	0	[3].delay
 
 __typeof__(BtlItemSpawnDelayRow[4]) g_btlItemSpawnDelays = {
     {

@@ -1,4 +1,6 @@
 // bdc 0x08aa51e0 g_gmoDefaultUvTransform
 #include "bdc.h"
+// bdc-fix	V	float	0x2a11e8	4	0	[2]
+// bdc-fix	V	float	0x2a11ec	4	0	[3]
 
 __typeof__(float[4]) g_gmoDefaultUvTransform = { 0, 0, BDC_V(float, 0x2a11e8), BDC_V(float, 0x2a11ec) };

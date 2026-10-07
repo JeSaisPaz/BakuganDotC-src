@@ -1,5 +1,23 @@
 // bdc 0x08a66264 g_btlStoryUnitKinds
 #include "bdc.h"
+// bdc-fix	V	int	0x262270	4	0	[1][0]
+// bdc-fix	V	int	0x26227c	4	0	[2][0]
+// bdc-fix	V	int	0x262280	4	0	[2][1]
+// bdc-fix	V	int	0x2622ac	4	0	[6][0]
+// bdc-fix	V	int	0x2622b0	4	0	[6][1]
+// bdc-fix	V	int	0x2622c4	4	0	[8][0]
+// bdc-fix	V	int	0x2622c8	4	0	[8][1]
+// bdc-fix	V	int	0x2622d0	4	0	[9][0]
+// bdc-fix	V	int	0x2622d4	4	0	[9][1]
+// bdc-fix	V	int	0x2622dc	4	0	[10][0]
+// bdc-fix	V	int	0x262300	4	0	[13][0]
+// bdc-fix	V	int	0x26230c	4	0	[14][0]
+// bdc-fix	V	int	0x262324	4	0	[16][0]
+// bdc-fix	V	int	0x262328	4	0	[16][1]
+// bdc-fix	V	int	0x26233c	4	0	[18][0]
+// bdc-fix	V	int	0x262414	4	0	[36][0]
+// bdc-fix	V	int	0x262418	4	0	[36][1]
+// bdc-fix	V	int	0x262420	4	0	[37][0]
 
 __typeof__(s32[40][3]) g_btlStoryUnitKinds = {
     {0}, { BDC_V(int, 0x262270) }, { BDC_V(int, 0x26227c), BDC_V(int, 0x262280) }, {0}, {0}, {0},

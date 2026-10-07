@@ -1,5 +1,13 @@
 // bdc 0x08a99800 g_gameEventFlagClassBase
 #include "bdc.h"
+// bdc-fix	V	unsigned short	0x295800	2	0	[0]
+// bdc-fix	V	unsigned short	0x295802	2	0	[1]
+// bdc-fix	V	unsigned short	0x295804	2	0	[2]
+// bdc-fix	V	unsigned short	0x295806	2	0	[3]
+// bdc-fix	V	unsigned short	0x295808	2	0	[4]
+// bdc-fix	V	unsigned short	0x29580a	2	0	[5]
+// bdc-fix	V	unsigned short	0x29580c	2	0	[6]
+// bdc-fix	V	unsigned short	0x29580e	2	0	[7]
 
 __typeof__(u16[8]) g_gameEventFlagClassBase = {
     BDC_V(unsigned short, 0x295800), BDC_V(unsigned short, 0x295802),

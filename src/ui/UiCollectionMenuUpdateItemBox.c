@@ -5,31 +5,13 @@
    active (`+0x520`): advances its motion by 0.5 frame and updates it (model vtable slots at
    +0x34/+0x3c). */
 
-typedef struct GfxAdvEntry {
-  short adjust;
-  short pad;
-  void (*fn)(void *self, float frames);
-} GfxAdvEntry;
-
-typedef struct GfxUpdEntry {
-  short adjust;
-  short pad;
-  void (*fn)(void *self);
-} GfxUpdEntry;
-
-typedef struct GfxModelVt2 {
-  char slots[0x30];
-  GfxAdvEntry advance;
-  GfxUpdEntry update;
-} GfxModelVt2;
-
 void UiCollectionMenuUpdateItemBox(UiCollectionMenu *self)
 
 {
   if ((self->itemBoxClosing != 0) && (self->itemBox != (GfxModel *)0x0)) {
-    const GfxAdvEntry *a = &((const GfxModelVt2 *)self->itemBox->base.vtable)->advance;
-    a->fn((char *)self->itemBox + a->adjust, 0.5f);
-    const GfxUpdEntry *u = &((const GfxModelVt2 *)self->itemBox->base.vtable)->update;
-    u->fn((char *)self->itemBox + u->adjust);
+    const VtblEntry *a = &((const VtblEntry *)self->itemBox->base.vtable)[6];
+    ((void (*)(void *, float))a->fn)((u8 *)self->itemBox + a->delta, 0.5f);
+    const VtblEntry *u = &((const VtblEntry *)self->itemBox->base.vtable)[7];
+    ((void (*)(void *))u->fn)((u8 *)self->itemBox + u->delta);
   }
 }

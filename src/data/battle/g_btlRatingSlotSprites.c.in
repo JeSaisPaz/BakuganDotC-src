@@ -1,5 +1,17 @@
 // bdc 0x08aba6f4 g_btlRatingSlotSprites
 #include "bdc.h"
+// bdc-fix	V	int	0x2b66f4	4	0	[0]
+// bdc-fix	V	int	0x2b66f8	4	0	[1]
+// bdc-fix	V	int	0x2b66fc	4	0	[2]
+// bdc-fix	V	int	0x2b6700	4	0	[3]
+// bdc-fix	V	int	0x2b6704	4	0	[4]
+// bdc-fix	V	int	0x2b6708	4	0	[5]
+// bdc-fix	V	int	0x2b670c	4	0	[6]
+// bdc-fix	V	int	0x2b6710	4	0	[7]
+// bdc-fix	V	int	0x2b6714	4	0	[8]
+// bdc-fix	V	int	0x2b6718	4	0	[9]
+// bdc-fix	V	int	0x2b671c	4	0	[10]
+// bdc-fix	V	int	0x2b6720	4	0	[11]
 
 __typeof__(s32[12]) g_btlRatingSlotSprites = {
     BDC_V(int, 0x2b66f4), BDC_V(int, 0x2b66f8), BDC_V(int, 0x2b66fc), BDC_V(int, 0x2b6700),

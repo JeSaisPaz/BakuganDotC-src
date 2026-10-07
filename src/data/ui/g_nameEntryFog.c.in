@@ -1,5 +1,8 @@
 // bdc 0x08a33908 g_nameEntryFog
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x22f908	4	0	.color
+// bdc-fix	V	float	0x22f90c	4	0	.range
+// bdc-fix	V	float	0x22f910	4	0	.scale
 
 __typeof__(BtlArenaFog) g_nameEntryFog = {
     .color = BDC_V(unsigned int, 0x22f908),

@@ -22,7 +22,7 @@
    [0, 1], × 255 and truncated to a byte). `scaleC` = 1 / (U - 3) and `radius` = 1 / (V - 3) (ring
    kind only when both counts are >= 4); then `emissive` 1, `pos` = 0, `visible` 1, `step` + 1.
    Every frame (step 1 and after setup): `blendMode` = effect blend mode & 0xffff, `clut` = effect
-   texture slot, `texture`, `indices` = this frame's half of `buffer` (`g_gfxFrameIndex`), then
+   texture slot, `texture`, `vertices` = this frame's half of `buffer` (`g_gfxFrameIndex`), then
    kind 5: per segment the normalised direction to the next point, re-oriented by `mode`
    (0 (x,-z,y), 1 (-z,y,x), 2 (-y,x,z), 3 world up `g_vecUp`, 4 cross with the direction from the
    camera eye, >= 5 unchanged), scaled by the point's width (first third of `vertexBuffer`) gives the
@@ -38,7 +38,7 @@
    with (followed/effect matrix × Y/Z swap); other kinds as 0xc but starting from the Y/Z swap scaled
    by size and with the look-at built inline. All kinds then copy the effect position to `pos`, set
    `texScaleU` = scaleA × scaleC, `texScaleV` = scaleB × radius and copy the effect colour to `color`.
-   `vertices`/`indices` hold the GE index and vertex addresses respectively (see
+   `indices`/`vertices` hold the GE index and vertex addresses (IADDR/VADDR, see
    `GfxMeshObjDrawList`). Matrices are 16 floats, four 4-float fields (column-major). */
 
 /* dst = src, 4 floats */
@@ -282,7 +282,7 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
     self->texture = effect->texture;
     if (effect->kind == 5) {
       self->splineEdgeU = 3;
-      self->vertices = g_gfxTrailSplineIndices;
+      self->indices = g_gfxTrailSplineIndices;
       self->patchCountU = 4;
       n = self->effectChain.count - 1;
       self->patchCountV = n;
@@ -312,7 +312,7 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
       self->u158.trailLength = n;
       self->vertexType = 0x1200019c;
       self->splineEdgeU = 3;
-      self->vertices = NULL;
+      self->indices = NULL;
       MemLock();
       wasLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
@@ -320,7 +320,7 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
       MemSetAllocFromLow(wasLow);
       MemUnlock();
       self->flags |= 2;
-      self->vertices = idx;
+      self->indices = idx;
       for (i = 0; i < self->u158.trailLength; i++) {
         idx[i] = (u8)i;
       }
@@ -356,7 +356,7 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
       MemSetAllocFromLow(wasLow);
       MemUnlock();
       self->flags |= 2;
-      self->vertices = idx;
+      self->indices = idx;
       for (v = 0; v < self->patchCountV; v++) {
         for (u = 0; u < self->patchCountU + 3; u++) {
           w = u;
@@ -411,7 +411,7 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
   self->blendMode = effect->blendMode & 0xffff;
   self->clut = effect->textureSlot;
   self->texture = effect->texture;
-  self->indices = (GfxGeColorVertexF *)self->buffer + self->u158.trailLength * g_gfxFrameIndex;
+  self->vertices = (GfxGeColorVertexF *)self->buffer + self->u158.trailLength * g_gfxFrameIndex;
 
   if (effect->kind == 5) {
     widths = self->vertexBuffer;
@@ -459,16 +459,16 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
       side3[0] = p->x + dir[0];
       side3[1] = p->y + dir[1];
       side3[2] = p->z + dir[2];
-      ((GfxGeColorVertexF *)self->indices)[i * 2].x = side3[0];
-      ((GfxGeColorVertexF *)self->indices)[i * 2].y = side3[1];
-      ((GfxGeColorVertexF *)self->indices)[i * 2].z = side3[2];
+      ((GfxGeColorVertexF *)self->vertices)[i * 2].x = side3[0];
+      ((GfxGeColorVertexF *)self->vertices)[i * 2].y = side3[1];
+      ((GfxGeColorVertexF *)self->vertices)[i * 2].z = side3[2];
       p = &self->effectChain.points[i];
       side3[0] = p->x - dir[0];
       side3[1] = p->y - dir[1];
       side3[2] = p->z - dir[2];
-      ((GfxGeColorVertexF *)self->indices)[i * 2 + 1].x = side3[0];
-      ((GfxGeColorVertexF *)self->indices)[i * 2 + 1].y = side3[1];
-      ((GfxGeColorVertexF *)self->indices)[i * 2 + 1].z = side3[2];
+      ((GfxGeColorVertexF *)self->vertices)[i * 2 + 1].x = side3[0];
+      ((GfxGeColorVertexF *)self->vertices)[i * 2 + 1].y = side3[1];
+      ((GfxGeColorVertexF *)self->vertices)[i * 2 + 1].z = side3[2];
     }
     TrailCopy16(self->basis, effect->matrix);
     TrailScaleBasis(self->basis, effect->size);
@@ -477,11 +477,11 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
     for (u = 0; u < self->patchCountU; u++) {
       for (v = 0; v < self->patchCountV; v++) {
         k = v * self->patchCountU + u;
-        vert = self->indices;
+        vert = self->vertices;
         vert[k].x = self->effectChain.points[k].x;
-        vert = self->indices;
+        vert = self->vertices;
         vert[k].y = self->effectChain.points[k].y;
-        vert = self->indices;
+        vert = self->vertices;
         vert[k].z = self->effectChain.points[k].z;
       }
     }
@@ -525,7 +525,7 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
         center = self->effectChain.velocities;
       }
       for (v = 0; v < self->patchCountV; v++) {
-        vert = (GfxGeColorVertexF *)self->indices + (i + v * segs);
+        vert = (GfxGeColorVertexF *)self->vertices + (i + v * segs);
         radius = self->axis[1];
         p = &self->effectChain.points[v];
         /* x/z rotated by the Y rotation of `angle` (fields (c,0,-s), (s,0,c)), scaled by the

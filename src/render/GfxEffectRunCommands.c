@@ -450,11 +450,11 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
         break;
       case 4:
         effect->meshObj = (GfxMeshObj *)GfxMeshObjCreateList2(6, effect);
-        GfxMeshObjRunStateDefaultIndices(effect->meshObj);
+        GfxMeshObjRunStateDefaultVertices(effect->meshObj);
         break;
       case 5:
         effect->meshObj = (GfxMeshObj *)GfxMeshObjCreateList0(6, effect);
-        GfxMeshObjRunStateDefaultIndices(effect->meshObj);
+        GfxMeshObjRunStateDefaultVertices(effect->meshObj);
         break;
       default:
         break;

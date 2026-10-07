@@ -34,13 +34,13 @@ static u32 *MeshObjWritePatch(u32 *dl, const GfxMeshObj *obj, int spline)
   u32 vaddr;
 
   dl[12] = obj->vertexType;
-  iaddr = (u32)(uintptr_t)obj->vertices;
+  iaddr = (u32)(uintptr_t)obj->indices;
   dl[13] = GeBase(iaddr);
-  iaddr = (u32)(uintptr_t)obj->vertices;
+  iaddr = (u32)(uintptr_t)obj->indices;
   dl[14] = (iaddr & 0xffffff) | 0x02000000;
-  vaddr = (u32)(uintptr_t)obj->indices;
+  vaddr = (u32)(uintptr_t)obj->vertices;
   dl[15] = GeBase(vaddr);
-  vaddr = (u32)(uintptr_t)obj->indices;
+  vaddr = (u32)(uintptr_t)obj->vertices;
   dl[16] = (vaddr & 0xffffff) | 0x01000000;
   dl[17] = ((u32)obj->patchDivT << 8) | 0x36000000 | (u32)obj->patchDivS;
   dl[18] = 0x04030001;
@@ -218,8 +218,8 @@ void GfxMeshObjDrawList(void *packet, GfxMeshObj *first, u32 fog)
     case 1: {
       u32 prim = obj->primCmd;
       u32 vtype = obj->vertexType;
-      u32 iaddr = (u32)(uintptr_t)obj->vertices;
-      u32 vaddr = (u32)(uintptr_t)obj->indices;
+      u32 iaddr = (u32)(uintptr_t)obj->indices;
+      u32 vaddr = (u32)(uintptr_t)obj->vertices;
 
       dl += 11; /* the 0xe7 word is overwritten */
       if (vtype != 0) {

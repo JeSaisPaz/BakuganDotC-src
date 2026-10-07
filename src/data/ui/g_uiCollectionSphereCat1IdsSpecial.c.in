@@ -1,4 +1,5 @@
 // bdc 0x08ac354d g_uiCollectionSphereCat1IdsSpecial
 #include "bdc.h"
+// bdc-fix	BYTES	unsigned char	0x2bf54d	11	0	
 
 __typeof__(u8[11]) g_uiCollectionSphereCat1IdsSpecial = BDC_BYTES(0x2bf54d, 11);

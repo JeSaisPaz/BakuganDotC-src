@@ -1,4 +1,5 @@
 // bdc 0x08abea08 g_gameFieldTalkBlendFrames
 #include "bdc.h"
+// bdc-fix	V	int	0x2baa08	4	0	
 
 __typeof__(s32) g_gameFieldTalkBlendFrames = BDC_V(int, 0x2baa08);

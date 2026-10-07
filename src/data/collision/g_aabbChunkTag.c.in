@@ -1,4 +1,5 @@
 // bdc 0x08aa3350 g_aabbChunkTag
 #include "bdc.h"
+// bdc-fix	V	unsigned int	0x29f350	4	0	
 
 __typeof__(u32) g_aabbChunkTag = BDC_V(unsigned int, 0x29f350);
