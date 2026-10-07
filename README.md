@@ -8,7 +8,7 @@ No game files are included. See [LEGAL.md](LEGAL.md).
 ## Status
 
 Every game function in the executable has a C version: 7,492 functions, one file each, all named,
-typed, documented and reviewed. Every global is defined: zero-initialised and pointer-only definitions
+typed, documented and reviewed. Every global the code uses is defined: zero-initialised and pointer-only definitions
 are in `src/data/`, values are filled from your own ELF at build time.
 
 | What it is | What it is not |

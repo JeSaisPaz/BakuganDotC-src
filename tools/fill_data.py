@@ -1,5 +1,4 @@
-"""Fill `.c.in` data templates from the game's module ELF (spec 2026-10-07-global-data-design.md D3,
-D4, D10). Standard library only: the public release ships this file verbatim as `tools/fill_data.py`.
+"""Fill `.c.in` data templates from the game's module ELF. Standard library only: the public release ships this file verbatim as `tools/fill_data.py`.
 
     python3 fill_data.py MYTHREAD-MAIN.elf [SRC_DIR] [OUT_DIR]     (defaults: src/data build/data)
 
