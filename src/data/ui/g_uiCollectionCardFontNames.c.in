@@ -1,0 +1,4 @@
+// bdc 0x08ac39f4 g_uiCollectionCardFontNames
+#include "bdc.h"
+
+__typeof__(char *) g_uiCollectionCardFontNames = (char *)BDC_STR(0x29a8b8);

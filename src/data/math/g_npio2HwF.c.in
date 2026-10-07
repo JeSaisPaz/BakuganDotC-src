@@ -1,0 +1,16 @@
+// bdc 0x08aa4cd8 g_npio2HwF
+#include "bdc.h"
+
+__typeof__(u32[32]) g_npio2HwF = {
+    BDC_V(unsigned int, 0x2a0cd8), BDC_V(unsigned int, 0x2a0cdc), BDC_V(unsigned int, 0x2a0ce0),
+    BDC_V(unsigned int, 0x2a0ce4), BDC_V(unsigned int, 0x2a0ce8), BDC_V(unsigned int, 0x2a0cec),
+    BDC_V(unsigned int, 0x2a0cf0), BDC_V(unsigned int, 0x2a0cf4), BDC_V(unsigned int, 0x2a0cf8),
+    BDC_V(unsigned int, 0x2a0cfc), BDC_V(unsigned int, 0x2a0d00), BDC_V(unsigned int, 0x2a0d04),
+    BDC_V(unsigned int, 0x2a0d08), BDC_V(unsigned int, 0x2a0d0c), BDC_V(unsigned int, 0x2a0d10),
+    BDC_V(unsigned int, 0x2a0d14), BDC_V(unsigned int, 0x2a0d18), BDC_V(unsigned int, 0x2a0d1c),
+    BDC_V(unsigned int, 0x2a0d20), BDC_V(unsigned int, 0x2a0d24), BDC_V(unsigned int, 0x2a0d28),
+    BDC_V(unsigned int, 0x2a0d2c), BDC_V(unsigned int, 0x2a0d30), BDC_V(unsigned int, 0x2a0d34),
+    BDC_V(unsigned int, 0x2a0d38), BDC_V(unsigned int, 0x2a0d3c), BDC_V(unsigned int, 0x2a0d40),
+    BDC_V(unsigned int, 0x2a0d44), BDC_V(unsigned int, 0x2a0d48), BDC_V(unsigned int, 0x2a0d4c),
+    BDC_V(unsigned int, 0x2a0d50), BDC_V(unsigned int, 0x2a0d54),
+};

@@ -1,0 +1,21 @@
+// bdc 0x08abff88 g_btlStageCamFileNames
+#include "bdc.h"
+
+__typeof__(char *[46]) g_btlStageCamFileNames = {
+    (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296220), (char *)BDC_STR(0x296238),
+    (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296250), (char *)BDC_STR(0x296264),
+    (char *)BDC_STR(0x296278), (char *)BDC_STR(0x296208), (char *)BDC_STR(0x29628c),
+    (char *)BDC_STR(0x2962a0), (char *)BDC_STR(0x2962b4), (char *)BDC_STR(0x296208),
+    (char *)BDC_STR(0x2962c8), (char *)BDC_STR(0x2962e0), (char *)BDC_STR(0x2962f8),
+    (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296310), (char *)BDC_STR(0x296328),
+    (char *)BDC_STR(0x296340), (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296208),
+    (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296208),
+    (char *)BDC_STR(0x296358), (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296208),
+    (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296208),
+    (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296208),
+    (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296208),
+    (char *)BDC_STR(0x296370), (char *)BDC_STR(0x296370), (char *)BDC_STR(0x296208),
+    (char *)BDC_STR(0x296208), (char *)BDC_STR(0x296388), (char *)BDC_STR(0x296388),
+    (char *)BDC_STR(0x296388), (char *)BDC_STR(0x296388), (char *)BDC_STR(0x296388),
+    (char *)BDC_STR(0x296388),
+};

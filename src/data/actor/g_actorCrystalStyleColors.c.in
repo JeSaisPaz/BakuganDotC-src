@@ -1,0 +1,50 @@
+// bdc 0x08a67130 g_actorCrystalStyleColors
+#include "bdc.h"
+
+__typeof__(float[9][12]) g_actorCrystalStyleColors = {
+    {
+        BDC_V(float, 0x263130), BDC_V(float, 0x263134), BDC_V(float, 0x263138),
+        BDC_V(float, 0x26313c), BDC_V(float, 0x263140), BDC_V(float, 0x263144),
+        BDC_V(float, 0x263148), BDC_V(float, 0x26314c), BDC_V(float, 0x263150),
+    },
+    {
+        0, BDC_V(float, 0x263164), BDC_V(float, 0x263168), BDC_V(float, 0x26316c),
+        BDC_V(float, 0x263170), BDC_V(float, 0x263174), BDC_V(float, 0x263178),
+        BDC_V(float, 0x26317c), BDC_V(float, 0x263180),
+    },
+    {
+        BDC_V(float, 0x263190), BDC_V(float, 0x263194), 0, BDC_V(float, 0x26319c),
+        BDC_V(float, 0x2631a0), BDC_V(float, 0x2631a4), BDC_V(float, 0x2631a8),
+        BDC_V(float, 0x2631ac), BDC_V(float, 0x2631b0),
+    },
+    {
+        0, BDC_V(float, 0x2631c4), BDC_V(float, 0x2631c8), BDC_V(float, 0x2631cc),
+        BDC_V(float, 0x2631d0), BDC_V(float, 0x2631d4), BDC_V(float, 0x2631d8),
+        BDC_V(float, 0x2631dc), BDC_V(float, 0x2631e0),
+    },
+    {
+        BDC_V(float, 0x2631f0), BDC_V(float, 0x2631f4), BDC_V(float, 0x2631f8),
+        BDC_V(float, 0x2631fc), BDC_V(float, 0x263200), BDC_V(float, 0x263204),
+        BDC_V(float, 0x263208), BDC_V(float, 0x26320c), BDC_V(float, 0x263210),
+    },
+    {
+        0, BDC_V(float, 0x263224), BDC_V(float, 0x263228), BDC_V(float, 0x26322c),
+        BDC_V(float, 0x263230), BDC_V(float, 0x263234), BDC_V(float, 0x263238),
+        BDC_V(float, 0x26323c), BDC_V(float, 0x263240),
+    },
+    {
+        BDC_V(float, 0x263250), BDC_V(float, 0x263254), BDC_V(float, 0x263258),
+        BDC_V(float, 0x26325c), BDC_V(float, 0x263260), BDC_V(float, 0x263264),
+        BDC_V(float, 0x263268), BDC_V(float, 0x26326c), BDC_V(float, 0x263270),
+    },
+    {
+        0, BDC_V(float, 0x263284), BDC_V(float, 0x263288), BDC_V(float, 0x26328c),
+        BDC_V(float, 0x263290), BDC_V(float, 0x263294), BDC_V(float, 0x263298),
+        BDC_V(float, 0x26329c), BDC_V(float, 0x2632a0),
+    },
+    {
+        BDC_V(float, 0x2632b0), BDC_V(float, 0x2632b4), 0, BDC_V(float, 0x2632bc),
+        BDC_V(float, 0x2632c0), BDC_V(float, 0x2632c4), BDC_V(float, 0x2632c8),
+        BDC_V(float, 0x2632cc), BDC_V(float, 0x2632d0),
+    },
+};

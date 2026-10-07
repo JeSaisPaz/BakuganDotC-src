@@ -1,0 +1,17 @@
+// bdc 0x08a98d30 g_actorNpcStateFns
+#include "bdc.h"
+
+__typeof__(MemberFnPtr[12]) g_actorNpcStateFns = {
+    { .index = BDC_V(short, 0x294d32), .delta2 = BDC_V(int, 0x294d34) },
+    { .index = BDC_V(short, 0x294d3a), .delta2 = BDC_V(int, 0x294d3c) },
+    { .index = BDC_V(short, 0x294d42), .delta2 = BDC_V(int, 0x294d44) },
+    { .index = BDC_V(short, 0x294d4a), .delta2 = BDC_V(int, 0x294d4c) },
+    { .index = BDC_V(short, 0x294d52), .delta2 = BDC_V(int, 0x294d54) },
+    { .index = BDC_V(short, 0x294d5a), .delta2 = BDC_V(int, 0x294d5c) },
+    { .index = BDC_V(short, 0x294d62), .delta2 = BDC_V(int, 0x294d64) },
+    { .index = BDC_V(short, 0x294d6a), .delta2 = BDC_V(int, 0x294d6c) },
+    { .index = BDC_V(short, 0x294d72), .delta2 = BDC_V(int, 0x294d74) },
+    { .index = BDC_V(short, 0x294d7a), .delta2 = BDC_V(int, 0x294d7c) },
+    { .index = BDC_V(short, 0x294d82), .delta2 = BDC_V(int, 0x294d84) },
+    { .index = BDC_V(short, 0x294d8a), .delta2 = BDC_V(int, 0x294d8c) },
+};

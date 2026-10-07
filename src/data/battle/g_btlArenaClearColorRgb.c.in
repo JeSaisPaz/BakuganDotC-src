@@ -1,0 +1,12 @@
+// bdc 0x08a837dc g_btlArenaClearColorRgb
+#include "bdc.h"
+
+__typeof__(u8[36][3]) g_btlArenaClearColorRgb = {
+    BDC_BYTES(0x27f7dc, 3), BDC_BYTES(0x27f7df, 3), BDC_BYTES(0x27f7e2, 3), BDC_BYTES(0x27f7e5, 3),
+    BDC_BYTES(0x27f7e8, 3), BDC_BYTES(0x27f7eb, 3), BDC_BYTES(0x27f7ee, 3), BDC_BYTES(0x27f7f1, 3),
+    BDC_BYTES(0x27f7f4, 3), BDC_BYTES(0x27f7f7, 3), {0}, {0}, BDC_BYTES(0x27f800, 3),
+    BDC_BYTES(0x27f803, 3), BDC_BYTES(0x27f806, 3), BDC_BYTES(0x27f809, 3), BDC_BYTES(0x27f80c, 3),
+    BDC_BYTES(0x27f80f, 3), BDC_BYTES(0x27f812, 3), BDC_BYTES(0x27f815, 3), BDC_BYTES(0x27f818, 3),
+    BDC_BYTES(0x27f81b, 3), BDC_BYTES(0x27f81e, 3), BDC_BYTES(0x27f821, 3), BDC_BYTES(0x27f824, 3),
+    BDC_BYTES(0x27f827, 3), BDC_BYTES(0x27f82a, 3), BDC_BYTES(0x27f82d, 3),
+};

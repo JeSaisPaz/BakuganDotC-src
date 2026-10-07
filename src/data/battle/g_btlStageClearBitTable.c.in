@@ -1,0 +1,15 @@
+// bdc 0x08a660e4 g_btlStageClearBitTable
+#include "bdc.h"
+
+__typeof__(const s32[40]) g_btlStageClearBitTable = {
+    BDC_V(int, 0x2620e4), BDC_V(int, 0x2620e8), BDC_V(int, 0x2620ec), BDC_V(int, 0x2620f0),
+    BDC_V(int, 0x2620f4), BDC_V(int, 0x2620f8), BDC_V(int, 0x2620fc), BDC_V(int, 0x262100),
+    BDC_V(int, 0x262104), BDC_V(int, 0x262108), BDC_V(int, 0x26210c), BDC_V(int, 0x262110),
+    BDC_V(int, 0x262114), BDC_V(int, 0x262118), BDC_V(int, 0x26211c), BDC_V(int, 0x262120),
+    BDC_V(int, 0x262124), BDC_V(int, 0x262128), BDC_V(int, 0x26212c), BDC_V(int, 0x262130),
+    BDC_V(int, 0x262134), BDC_V(int, 0x262138), BDC_V(int, 0x26213c), BDC_V(int, 0x262140),
+    BDC_V(int, 0x262144), BDC_V(int, 0x262148), BDC_V(int, 0x26214c), BDC_V(int, 0x262150),
+    BDC_V(int, 0x262154), BDC_V(int, 0x262158), BDC_V(int, 0x26215c), BDC_V(int, 0x262160),
+    BDC_V(int, 0x262164), BDC_V(int, 0x262168), BDC_V(int, 0x26216c), BDC_V(int, 0x262170),
+    BDC_V(int, 0x262174), BDC_V(int, 0x262178), BDC_V(int, 0x26217c), BDC_V(int, 0x262180),
+};

@@ -1,0 +1,11 @@
+// bdc 0x08ab9fa0 g_btlHudAttributeColours
+#include "bdc.h"
+
+__typeof__(s32[6][4]) g_btlHudAttributeColours = {
+    { BDC_V(int, 0x2b5fa0), BDC_V(int, 0x2b5fa4), BDC_V(int, 0x2b5fa8), BDC_V(int, 0x2b5fac) },
+    { BDC_V(int, 0x2b5fb0), BDC_V(int, 0x2b5fb4), BDC_V(int, 0x2b5fb8), BDC_V(int, 0x2b5fbc) },
+    { BDC_V(int, 0x2b5fc0), BDC_V(int, 0x2b5fc4), BDC_V(int, 0x2b5fc8), BDC_V(int, 0x2b5fcc) },
+    { BDC_V(int, 0x2b5fd0), BDC_V(int, 0x2b5fd4), BDC_V(int, 0x2b5fd8), BDC_V(int, 0x2b5fdc) },
+    { BDC_V(int, 0x2b5fe0), BDC_V(int, 0x2b5fe4), BDC_V(int, 0x2b5fe8), BDC_V(int, 0x2b5fec) },
+    { BDC_V(int, 0x2b5ff0), BDC_V(int, 0x2b5ff4), BDC_V(int, 0x2b5ff8), BDC_V(int, 0x2b5ffc) },
+};

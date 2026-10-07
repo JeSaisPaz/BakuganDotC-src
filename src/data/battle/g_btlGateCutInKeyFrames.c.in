@@ -1,0 +1,4 @@
+// bdc 0x08aba0a8 g_btlGateCutInKeyFrames
+#include "bdc.h"
+
+__typeof__(s32[3]) g_btlGateCutInKeyFrames = { BDC_V(int, 0x2b60a8), BDC_V(int, 0x2b60ac), BDC_V(int, 0x2b60b0) };

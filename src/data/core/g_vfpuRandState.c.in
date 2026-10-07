@@ -1,0 +1,8 @@
+// bdc 0x08ac5228 g_vfpuRandState
+#include "bdc.h"
+
+__typeof__(u32[8]) g_vfpuRandState = {
+    BDC_V(unsigned int, 0x2c1228), BDC_V(unsigned int, 0x2c122c), BDC_V(unsigned int, 0x2c1230),
+    BDC_V(unsigned int, 0x2c1234), BDC_V(unsigned int, 0x2c1238), BDC_V(unsigned int, 0x2c123c),
+    BDC_V(unsigned int, 0x2c1240), BDC_V(unsigned int, 0x2c1244),
+};

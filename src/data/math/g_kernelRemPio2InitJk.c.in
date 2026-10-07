@@ -1,0 +1,4 @@
+// bdc 0x08aa4dd0 g_kernelRemPio2InitJk
+#include "bdc.h"
+
+__typeof__(s32[4]) g_kernelRemPio2InitJk = { BDC_V(int, 0x2a0dd0), BDC_V(int, 0x2a0dd4), BDC_V(int, 0x2a0dd8), BDC_V(int, 0x2a0ddc) };

@@ -1,0 +1,4 @@
+// bdc 0x08adf110 g_bootTexLoadFlashMoji
+#include "bdc.h"
+
+__typeof__(u8[4405]) g_bootTexLoadFlashMoji = BDC_BYTES(0x2db110, 4405);

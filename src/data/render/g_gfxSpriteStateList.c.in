@@ -1,0 +1,10 @@
+// bdc 0x08ac5e0c g_gfxSpriteStateList
+#include "bdc.h"
+
+__typeof__(u32[19]) g_gfxSpriteStateList = {
+    BDC_V(unsigned int, 0x2c1e0c), BDC_V(unsigned int, 0x2c1e10), BDC_V(unsigned int, 0x2c1e14), 0,
+    0, 0, BDC_V(unsigned int, 0x2c1e24), BDC_V(unsigned int, 0x2c1e28),
+    BDC_V(unsigned int, 0x2c1e2c), BDC_V(unsigned int, 0x2c1e30), 0, BDC_V(unsigned int, 0x2c1e38),
+    BDC_V(unsigned int, 0x2c1e3c), BDC_V(unsigned int, 0x2c1e40), BDC_V(unsigned int, 0x2c1e44), 0,
+    0, BDC_V(unsigned int, 0x2c1e50), BDC_V(unsigned int, 0x2c1e54),
+};

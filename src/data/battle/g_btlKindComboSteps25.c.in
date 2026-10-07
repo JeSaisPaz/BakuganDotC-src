@@ -1,0 +1,10 @@
+// bdc 0x08a7fe58 g_btlKindComboSteps25
+#include "bdc.h"
+
+__typeof__(BtlComboStep[2]) g_btlKindComboSteps25 = {
+    {
+        .input = BDC_V(short, 0x27be5a),
+        .motionSet = (void *)&g_btlKind21MotionSet07,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows,
+    },
+};

@@ -1,0 +1,4 @@
+// bdc 0x08aa52c4 g_gmoInv255
+#include "bdc.h"
+
+__typeof__(float) g_gmoInv255 = BDC_V(float, 0x2a12c4);

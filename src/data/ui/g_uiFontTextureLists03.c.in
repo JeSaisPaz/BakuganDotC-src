@@ -1,0 +1,4 @@
+// bdc 0x08ab0148 g_uiFontTextureLists03
+#include "bdc.h"
+
+__typeof__(char *[4]) g_uiFontTextureLists03 = { (char *)BDC_STR(0x236168), (char *)BDC_STR(0x236174) };

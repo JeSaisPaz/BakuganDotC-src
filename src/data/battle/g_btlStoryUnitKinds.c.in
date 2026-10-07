@@ -1,0 +1,12 @@
+// bdc 0x08a66264 g_btlStoryUnitKinds
+#include "bdc.h"
+
+__typeof__(s32[40][3]) g_btlStoryUnitKinds = {
+    {0}, { BDC_V(int, 0x262270) }, { BDC_V(int, 0x26227c), BDC_V(int, 0x262280) }, {0}, {0}, {0},
+    { BDC_V(int, 0x2622ac), BDC_V(int, 0x2622b0) }, {0},
+    { BDC_V(int, 0x2622c4), BDC_V(int, 0x2622c8) }, { BDC_V(int, 0x2622d0), BDC_V(int, 0x2622d4) },
+    { BDC_V(int, 0x2622dc) }, {0}, {0}, { BDC_V(int, 0x262300) }, { BDC_V(int, 0x26230c) }, {0},
+    { BDC_V(int, 0x262324), BDC_V(int, 0x262328) }, {0}, { BDC_V(int, 0x26233c) }, {0}, {0}, {0},
+    {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+    { BDC_V(int, 0x262414), BDC_V(int, 0x262418) }, { BDC_V(int, 0x262420) },
+};

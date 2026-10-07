@@ -1,0 +1,15 @@
+// bdc 0x08ac0040 g_btlDemoScbNames
+#include "bdc.h"
+
+__typeof__(char *[30]) g_btlDemoScbNames = {
+    (char *)BDC_STR(0x296398), (char *)BDC_STR(0x29639c), (char *)BDC_STR(0x2963ac),
+    (char *)BDC_STR(0x2963c0), (char *)BDC_STR(0x2963d4), (char *)BDC_STR(0x2963e8),
+    (char *)BDC_STR(0x2963fc), (char *)BDC_STR(0x29640c), (char *)BDC_STR(0x296420),
+    (char *)BDC_STR(0x296434), (char *)BDC_STR(0x296448), (char *)BDC_STR(0x296460),
+    (char *)BDC_STR(0x296474), (char *)BDC_STR(0x296488), (char *)BDC_STR(0x296498),
+    (char *)BDC_STR(0x2964ac), (char *)BDC_STR(0x2964c0), (char *)BDC_STR(0x2964d4),
+    (char *)BDC_STR(0x2964ec), (char *)BDC_STR(0x296500), (char *)BDC_STR(0x296514),
+    (char *)BDC_STR(0x296528), (char *)BDC_STR(0x29653c), (char *)BDC_STR(0x29654c),
+    (char *)BDC_STR(0x296560), (char *)BDC_STR(0x296574), (char *)BDC_STR(0x296588),
+    (char *)BDC_STR(0x29659c), (char *)BDC_STR(0x2965b0), (char *)BDC_STR(0x2965c8),
+};

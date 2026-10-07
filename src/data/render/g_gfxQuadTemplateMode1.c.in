@@ -1,0 +1,7 @@
+// bdc 0x08aa3b10 g_gfxQuadTemplateMode1
+#include "bdc.h"
+
+__typeof__(u32[8]) g_gfxQuadTemplateMode1 = {
+    BDC_V(unsigned int, 0x29fb10), BDC_V(unsigned int, 0x29fb14), BDC_V(unsigned int, 0x29fb18),
+    BDC_V(unsigned int, 0x29fb1c), BDC_V(unsigned int, 0x29fb20),
+};

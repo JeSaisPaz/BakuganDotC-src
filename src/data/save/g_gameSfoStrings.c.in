@@ -1,0 +1,33 @@
+// bdc 0x08aacaa0 g_gameSfoStrings
+#include "bdc.h"
+
+__typeof__(const char *[7][3]) g_gameSfoStrings = {
+    {
+        (const char *)BDC_STR(0x2303b0), (const char *)BDC_STR(0x2303d4),
+        (const char *)BDC_STR(0x2303d8),
+    },
+    {
+        (const char *)BDC_STR(0x23040c), (const char *)BDC_STR(0x2303d4),
+        (const char *)BDC_STR(0x230434),
+    },
+    {
+        (const char *)BDC_STR(0x230468), (const char *)BDC_STR(0x2303d4),
+        (const char *)BDC_STR(0x23048c),
+    },
+    {
+        (const char *)BDC_STR(0x2304c0), (const char *)BDC_STR(0x2303d4),
+        (const char *)BDC_STR(0x2304e4),
+    },
+    {
+        (const char *)BDC_STR(0x230518), (const char *)BDC_STR(0x2303d4),
+        (const char *)BDC_STR(0x23053c),
+    },
+    {
+        (const char *)BDC_STR(0x2303b0), (const char *)BDC_STR(0x2303d4),
+        (const char *)BDC_STR(0x230578),
+    },
+    {
+        (const char *)BDC_STR(0x2303b0), (const char *)BDC_STR(0x2303d4),
+        (const char *)BDC_STR(0x2305ac),
+    },
+};

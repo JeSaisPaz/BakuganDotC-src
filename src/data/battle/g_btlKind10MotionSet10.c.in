@@ -1,0 +1,32 @@
+// bdc 0x08a79f24 g_btlKind10MotionSet10
+#include "bdc.h"
+
+__typeof__(BtlAttackMotionSetEv4) g_btlKind10MotionSet10 = {
+    .head = {
+        .flags = BDC_V(unsigned int, 0x275f24),
+        .startMotion = BDC_V(short, 0x275f28),
+        .loopMotion = BDC_V(short, 0x275f2a),
+        .mainMotion = BDC_V(short, 0x275f2c),
+        .endMotion = BDC_V(short, 0x275f2e),
+    },
+    .events = {
+        {
+            .type = BDC_V(unsigned char, 0x275f30),
+            .startFrame = BDC_V(unsigned char, 0x275f31),
+            .endFrame = BDC_V(unsigned char, 0x275f32),
+            .value = BDC_V(float, 0x275f38),
+        },
+        {
+            .type = BDC_V(unsigned char, 0x275f44),
+            .startFrame = BDC_V(unsigned char, 0x275f45),
+            .endFrame = BDC_V(unsigned char, 0x275f46),
+            .value = BDC_V(float, 0x275f4c),
+        },
+        {
+            .type = BDC_V(unsigned char, 0x275f58),
+            .startFrame = BDC_V(unsigned char, 0x275f59),
+            .endFrame = BDC_V(unsigned char, 0x275f5a),
+            .param = { .soundId = BDC_V(int, 0x275f5c) },
+        },
+    },
+};

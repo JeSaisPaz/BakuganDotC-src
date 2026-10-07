@@ -1,0 +1,7 @@
+// bdc 0x08a83e98 g_eggCrystalAttrElementTable
+#include "bdc.h"
+
+__typeof__(const s32[6]) g_eggCrystalAttrElementTable = {
+    BDC_V(int, 0x27fe98), BDC_V(int, 0x27fe9c), BDC_V(int, 0x27fea0), BDC_V(int, 0x27fea4), 0,
+    BDC_V(int, 0x27feac),
+};

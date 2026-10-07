@@ -1,0 +1,29 @@
+// bdc 0x08a67c70 g_btlArtHitWindows
+#include "bdc.h"
+
+__typeof__(BtlHitWindowDef[4]) g_btlArtHitWindows = {
+    {
+        .attackId = BDC_V(short, 0x263c70),
+        .flags = BDC_V(short, 0x263c72),
+        .size = BDC_V(float, 0x263c74),
+        .reach = BDC_V(float, 0x263c78),
+    },
+    {
+        .attackId = BDC_V(short, 0x263c7c),
+        .flags = BDC_V(short, 0x263c7e),
+        .size = BDC_V(float, 0x263c80),
+        .reach = BDC_V(float, 0x263c84),
+    },
+    {
+        .attackId = BDC_V(short, 0x263c88),
+        .flags = BDC_V(short, 0x263c8a),
+        .size = BDC_V(float, 0x263c8c),
+        .reach = BDC_V(float, 0x263c90),
+    },
+    {
+        .attackId = BDC_V(short, 0x263c94),
+        .flags = BDC_V(short, 0x263c96),
+        .size = BDC_V(float, 0x263c98),
+        .reach = BDC_V(float, 0x263c9c),
+    },
+};

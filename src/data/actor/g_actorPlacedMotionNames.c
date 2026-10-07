@@ -1,0 +1,32 @@
+// bdc 0x08abf53c g_actorPlacedMotionNames
+#include "bdc.h"
+
+__typeof__(const char **[53]) g_actorPlacedMotionNames = {
+    (const char **)&g_actorPlacedMotionNames00, (const char **)&g_actorPlacedMotionNames01,
+    (const char **)&g_actorPlacedMotionNames02, (const char **)&g_actorPlacedMotionNames03,
+    (const char **)&g_actorPlacedMotionNames04, (const char **)&g_actorPlacedMotionNames05,
+    (const char **)&g_actorPlacedMotionNames06, (const char **)&g_actorPlacedMotionNames07,
+    (const char **)&g_actorPlacedMotionNames08, (const char **)&g_actorPlacedMotionNames09,
+    (const char **)&g_actorPlacedMotionNames10, (const char **)&g_actorPlacedMotionNames11,
+    (const char **)&g_actorPlacedMotionNames12, (const char **)&g_actorPlacedMotionNames13,
+    (const char **)&g_actorPlacedMotionNames14, (const char **)&g_actorPlacedMotionNames15,
+    (const char **)&g_actorPlacedMotionNames16, (const char **)&g_actorPlacedMotionNames17,
+    (const char **)&g_actorPlacedMotionNames18, (const char **)&g_actorPlacedMotionNames19,
+    (const char **)&g_actorPlacedMotionNames20, (const char **)&g_actorPlacedMotionNames21,
+    (const char **)&g_actorPlacedMotionNames22, (const char **)&g_actorPlacedMotionNames23,
+    (const char **)&g_actorPlacedMotionNames24, (const char **)&g_actorPlacedMotionNames25,
+    (const char **)&g_actorPlacedMotionNames26, (const char **)&g_actorPlacedMotionNames27,
+    (const char **)&g_actorPlacedMotionNames28, (const char **)&g_actorPlacedMotionNames29,
+    (const char **)&g_actorPlacedMotionNames30, (const char **)&g_actorPlacedMotionNames31,
+    (const char **)&g_actorPlacedMotionNames32, (const char **)&g_actorPlacedMotionNames33,
+    (const char **)&g_actorPlacedMotionNames34, (const char **)&g_actorPlacedMotionNames35,
+    (const char **)&g_actorPlacedMotionNames36, (const char **)&g_actorPlacedMotionNames37,
+    (const char **)&g_actorPlacedMotionNames38, (const char **)&g_actorPlacedMotionNames39,
+    (const char **)&g_actorPlacedMotionNames40, (const char **)&g_actorPlacedMotionNames41,
+    (const char **)&g_actorPlacedMotionNames42, (const char **)&g_actorPlacedMotionNames43,
+    (const char **)&g_actorPlacedMotionNames43, (const char **)&g_actorPlacedMotionNames43,
+    (const char **)&g_actorPlacedMotionNames46, (const char **)&g_actorPlacedMotionNames46,
+    (const char **)&g_actorPlacedMotionNames46, (const char **)&g_actorPlacedMotionNames49,
+    (const char **)&g_actorPlacedMotionNames50, (const char **)&g_actorPlacedMotionNames17,
+    (const char **)&g_actorPlacedMotionNames18,
+};

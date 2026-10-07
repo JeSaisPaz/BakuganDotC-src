@@ -1,0 +1,4 @@
+// bdc 0x08aba8b4 g_btlTrapBakuganDirPath
+#include "bdc.h"
+
+__typeof__(char *) g_btlTrapBakuganDirPath = (char *)BDC_STR(0x263cf0);

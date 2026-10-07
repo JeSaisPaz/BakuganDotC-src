@@ -1,0 +1,4 @@
+// bdc 0x08ac4ecc g_bootUserMainPriority
+#include "bdc.h"
+
+__typeof__(s32) g_bootUserMainPriority = BDC_V(int, 0x2c0ecc);

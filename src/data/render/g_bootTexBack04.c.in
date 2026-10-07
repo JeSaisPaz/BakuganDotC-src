@@ -1,0 +1,4 @@
+// bdc 0x08add0a0 g_bootTexBack04
+#include "bdc.h"
+
+__typeof__(u8[8295]) g_bootTexBack04 = BDC_BYTES(0x2d90a0, 8295);

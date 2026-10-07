@@ -1,0 +1,4 @@
+// bdc 0x08a99248 g_gameEvent470TransitionDefaults
+#include "bdc.h"
+
+__typeof__(u8[8]) g_gameEvent470TransitionDefaults = BDC_BYTES(0x295248, 8);

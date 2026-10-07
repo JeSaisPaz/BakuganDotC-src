@@ -1,0 +1,92 @@
+// bdc 0x08a3a1f0 g_uiWindowFrameStyles
+#include "bdc.h"
+
+__typeof__(const UiWindowFrameStyle[6]) g_uiWindowFrameStyles = {
+    {
+        .borderName = BDC_BYTES(0x2361f0, 32),
+        .borderColor = {
+            BDC_V(float, 0x236220), BDC_V(float, 0x236224), BDC_V(float, 0x236228),
+            BDC_V(float, 0x23622c),
+        },
+        .fillName = BDC_BYTES(0x236230, 32),
+        .fillColor = {
+            BDC_V(float, 0x236270), BDC_V(float, 0x236274), BDC_V(float, 0x236278),
+            BDC_V(float, 0x23627c),
+        },
+        .fillInset = {
+            BDC_V(float, 0x236280), BDC_V(float, 0x236284), BDC_V(float, 0x236288),
+            BDC_V(float, 0x23628c),
+        },
+    },
+    {
+        .borderName = BDC_BYTES(0x236290, 32),
+        .borderColor = { BDC_V(float, 0x2362c0), 0, 0, BDC_V(float, 0x2362cc) },
+        .fillName = BDC_BYTES(0x2362d0, 32),
+        .fillColor = {
+            BDC_V(float, 0x236310), BDC_V(float, 0x236314), BDC_V(float, 0x236318),
+            BDC_V(float, 0x23631c),
+        },
+        .fillInset = {
+            BDC_V(float, 0x236320), BDC_V(float, 0x236324), BDC_V(float, 0x236328),
+            BDC_V(float, 0x23632c),
+        },
+    },
+    {
+        .borderName = BDC_BYTES(0x236330, 32),
+        .borderColor = {
+            BDC_V(float, 0x236360), BDC_V(float, 0x236364), BDC_V(float, 0x236368),
+            BDC_V(float, 0x23636c),
+        },
+        .fillName = BDC_BYTES(0x236370, 32),
+        .fillParams = { 0, BDC_V(float, 0x2363a4) },
+        .fillColor = { 0, 0, 0, BDC_V(float, 0x2363bc) },
+        .fillInset = {
+            BDC_V(float, 0x2363c0), BDC_V(float, 0x2363c4), BDC_V(float, 0x2363c8),
+            BDC_V(float, 0x2363cc),
+        },
+    },
+    {
+        .borderName = BDC_BYTES(0x2363d0, 32),
+        .borderColor = {
+            BDC_V(float, 0x236400), BDC_V(float, 0x236404), BDC_V(float, 0x236408),
+            BDC_V(float, 0x23640c),
+        },
+        .fillName = BDC_BYTES(0x236410, 32),
+        .fillParams = { 0, BDC_V(float, 0x236444) },
+        .fillColor = {
+            BDC_V(float, 0x236450), BDC_V(float, 0x236454), BDC_V(float, 0x236458),
+            BDC_V(float, 0x23645c),
+        },
+        .fillInset = {
+            BDC_V(float, 0x236460), BDC_V(float, 0x236464), BDC_V(float, 0x236468),
+            BDC_V(float, 0x23646c),
+        },
+    },
+    {
+        .borderName = BDC_BYTES(0x236470, 32),
+        .borderColor = {
+            BDC_V(float, 0x2364a0), BDC_V(float, 0x2364a4), BDC_V(float, 0x2364a8),
+            BDC_V(float, 0x2364ac),
+        },
+        .fillName = BDC_BYTES(0x2364b0, 32),
+        .fillColor = { 0, BDC_V(float, 0x2364f4), 0, BDC_V(float, 0x2364fc) },
+        .fillInset = {
+            BDC_V(float, 0x236500), BDC_V(float, 0x236504), BDC_V(float, 0x236508),
+            BDC_V(float, 0x23650c),
+        },
+    },
+    {
+        .borderName = BDC_BYTES(0x236510, 32),
+        .borderColor = {
+            BDC_V(float, 0x236540), BDC_V(float, 0x236544), BDC_V(float, 0x236548),
+            BDC_V(float, 0x23654c),
+        },
+        .fillName = BDC_BYTES(0x236550, 32),
+        .fillParams = { 0, BDC_V(float, 0x236584) },
+        .fillColor = { 0, 0, 0, BDC_V(float, 0x23659c) },
+        .fillInset = {
+            BDC_V(float, 0x2365a0), BDC_V(float, 0x2365a4), BDC_V(float, 0x2365a8),
+            BDC_V(float, 0x2365ac),
+        },
+    },
+};

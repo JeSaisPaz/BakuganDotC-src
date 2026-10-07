@@ -1,0 +1,10 @@
+// bdc 0x08aa3970 g_collisionDebugStateDl
+#include "bdc.h"
+
+__typeof__(u32[13]) g_collisionDebugStateDl = {
+    BDC_V(unsigned int, 0x29f970), BDC_V(unsigned int, 0x29f974), BDC_V(unsigned int, 0x29f978),
+    BDC_V(unsigned int, 0x29f97c), BDC_V(unsigned int, 0x29f980), BDC_V(unsigned int, 0x29f984),
+    BDC_V(unsigned int, 0x29f988), BDC_V(unsigned int, 0x29f98c), BDC_V(unsigned int, 0x29f990),
+    BDC_V(unsigned int, 0x29f994), BDC_V(unsigned int, 0x29f998), BDC_V(unsigned int, 0x29f99c),
+    BDC_V(unsigned int, 0x29f9a0),
+};

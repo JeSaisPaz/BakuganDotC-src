@@ -1,0 +1,4 @@
+// bdc 0x08aa11e8 g_soundStreamSpecialIds
+#include "bdc.h"
+
+__typeof__(u32[1]) g_soundStreamSpecialIds = { BDC_V(unsigned int, 0x29d1e8) };

@@ -1,0 +1,49 @@
+// bdc 0x08abebec g_uiFieldHudMapRects
+#include "bdc.h"
+
+__typeof__(float[11][4]) g_uiFieldHudMapRects = {
+    {
+        BDC_V(float, 0x2babec), BDC_V(float, 0x2babf0), BDC_V(float, 0x2babf4),
+        BDC_V(float, 0x2babf8),
+    },
+    {
+        BDC_V(float, 0x2babfc), BDC_V(float, 0x2bac00), BDC_V(float, 0x2bac04),
+        BDC_V(float, 0x2bac08),
+    },
+    {
+        BDC_V(float, 0x2bac0c), BDC_V(float, 0x2bac10), BDC_V(float, 0x2bac14),
+        BDC_V(float, 0x2bac18),
+    },
+    {
+        BDC_V(float, 0x2bac1c), BDC_V(float, 0x2bac20), BDC_V(float, 0x2bac24),
+        BDC_V(float, 0x2bac28),
+    },
+    {
+        BDC_V(float, 0x2bac2c), BDC_V(float, 0x2bac30), BDC_V(float, 0x2bac34),
+        BDC_V(float, 0x2bac38),
+    },
+    {
+        BDC_V(float, 0x2bac3c), BDC_V(float, 0x2bac40), BDC_V(float, 0x2bac44),
+        BDC_V(float, 0x2bac48),
+    },
+    {
+        BDC_V(float, 0x2bac4c), BDC_V(float, 0x2bac50), BDC_V(float, 0x2bac54),
+        BDC_V(float, 0x2bac58),
+    },
+    {
+        BDC_V(float, 0x2bac5c), BDC_V(float, 0x2bac60), BDC_V(float, 0x2bac64),
+        BDC_V(float, 0x2bac68),
+    },
+    {
+        BDC_V(float, 0x2bac6c), BDC_V(float, 0x2bac70), BDC_V(float, 0x2bac74),
+        BDC_V(float, 0x2bac78),
+    },
+    {
+        BDC_V(float, 0x2bac7c), BDC_V(float, 0x2bac80), BDC_V(float, 0x2bac84),
+        BDC_V(float, 0x2bac88),
+    },
+    {
+        BDC_V(float, 0x2bac8c), BDC_V(float, 0x2bac90), BDC_V(float, 0x2bac94),
+        BDC_V(float, 0x2bac98),
+    },
+};

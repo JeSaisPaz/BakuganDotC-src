@@ -1,0 +1,4 @@
+// bdc 0x08a96e50 g_gameStageSpawnTables00
+#include "bdc.h"
+
+__typeof__(s32[1]) g_gameStageSpawnTables00 = { BDC_V(int, 0x292e50) };

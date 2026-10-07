@@ -1,0 +1,4 @@
+// bdc 0x08a959f0 g_gameStageLights
+#include "bdc.h"
+
+__typeof__(u8[1]) g_gameStageLights = BDC_BYTES(0x2919f0, 1);

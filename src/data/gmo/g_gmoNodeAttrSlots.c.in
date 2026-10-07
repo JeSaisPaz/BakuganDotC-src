@@ -1,0 +1,7 @@
+// bdc 0x08aa5330 g_gmoNodeAttrSlots
+#include "bdc.h"
+
+__typeof__(const u8[7][5]) g_gmoNodeAttrSlots = {
+    BDC_BYTES(0x2a1330, 5), BDC_BYTES(0x2a1335, 5), BDC_BYTES(0x2a133a, 5), BDC_BYTES(0x2a133f, 5),
+    BDC_BYTES(0x2a1344, 5), BDC_BYTES(0x2a1349, 5), BDC_BYTES(0x2a134e, 5),
+};

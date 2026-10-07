@@ -1,0 +1,4 @@
+// bdc 0x08a92cd0 g_gameFieldVignetteYs
+#include "bdc.h"
+
+__typeof__(const s16[4]) g_gameFieldVignetteYs = { 0, BDC_V(short, 0x28ecd2), BDC_V(short, 0x28ecd4), BDC_V(short, 0x28ecd6) };

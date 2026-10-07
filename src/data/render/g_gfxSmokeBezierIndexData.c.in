@@ -1,0 +1,4 @@
+// bdc 0x08a6448c g_gfxSmokeBezierIndexData
+#include "bdc.h"
+
+__typeof__(u8[36]) g_gfxSmokeBezierIndexData = BDC_BYTES(0x26048c, 36);

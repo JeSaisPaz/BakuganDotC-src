@@ -1,0 +1,4 @@
+// bdc 0x08aa529c g_gmoMotionDefaultRate
+#include "bdc.h"
+
+__typeof__(float) g_gmoMotionDefaultRate = BDC_V(float, 0x2a129c);

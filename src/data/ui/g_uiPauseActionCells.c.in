@@ -1,0 +1,12 @@
+// bdc 0x08a9b874 g_uiPauseActionCells
+#include "bdc.h"
+
+__typeof__(s32[17][2]) g_uiPauseActionCells = {
+    { BDC_V(int, 0x297874), BDC_V(int, 0x297878) }, {0}, { 0, BDC_V(int, 0x297888) },
+    { 0, BDC_V(int, 0x297890) }, { 0, BDC_V(int, 0x297898) }, { BDC_V(int, 0x29789c) },
+    { 0, BDC_V(int, 0x2978a8) }, { BDC_V(int, 0x2978ac) }, { BDC_V(int, 0x2978b4) },
+    { BDC_V(int, 0x2978bc), BDC_V(int, 0x2978c0) }, { BDC_V(int, 0x2978c4) },
+    { BDC_V(int, 0x2978cc), BDC_V(int, 0x2978d0) }, { BDC_V(int, 0x2978d4) },
+    { BDC_V(int, 0x2978dc) }, { 0, BDC_V(int, 0x2978e8) },
+    { BDC_V(int, 0x2978ec), BDC_V(int, 0x2978f0) }, { BDC_V(int, 0x2978f4), BDC_V(int, 0x2978f8) },
+};

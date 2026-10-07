@@ -1,0 +1,22 @@
+// bdc 0x08a60e7c g_npcMotionLists10
+#include "bdc.h"
+
+__typeof__(const ActorNpcMotionEntry[17]) g_npcMotionLists10 = {
+    { .name = (const char *)BDC_STR(0x25cd98) },
+    { .slot = BDC_V(int, 0x25ce84), .name = (const char *)BDC_STR(0x25cd98) },
+    { .slot = BDC_V(int, 0x25ce8c), .name = (const char *)BDC_STR(0x25cd98) },
+    { .slot = BDC_V(int, 0x25ce94), .name = (const char *)BDC_STR(0x25cd98) },
+    { .slot = BDC_V(int, 0x25ce9c), .name = (const char *)BDC_STR(0x25cd98) },
+    { .slot = BDC_V(int, 0x25cea4), .name = (const char *)BDC_STR(0x25cda8) },
+    { .slot = BDC_V(int, 0x25ceac), .name = (const char *)BDC_STR(0x25cdb8) },
+    { .slot = BDC_V(int, 0x25ceb4), .name = (const char *)BDC_STR(0x25cdc8) },
+    { .slot = BDC_V(int, 0x25cebc), .name = (const char *)BDC_STR(0x25cddc) },
+    { .slot = BDC_V(int, 0x25cec4), .name = (const char *)BDC_STR(0x25cdf0) },
+    { .slot = BDC_V(int, 0x25cecc), .name = (const char *)BDC_STR(0x25ce08) },
+    { .slot = BDC_V(int, 0x25ced4), .name = (const char *)BDC_STR(0x25ce18) },
+    { .slot = BDC_V(int, 0x25cedc), .name = (const char *)BDC_STR(0x25ce30) },
+    { .slot = BDC_V(int, 0x25cee4), .name = (const char *)BDC_STR(0x25ce40) },
+    { .slot = BDC_V(int, 0x25ceec), .name = (const char *)BDC_STR(0x25ce50) },
+    { .slot = BDC_V(int, 0x25cef4), .name = (const char *)BDC_STR(0x25ce64) },
+    { .slot = BDC_V(int, 0x25cefc), .name = (const char *)BDC_STR(0x25c3a4) },
+};

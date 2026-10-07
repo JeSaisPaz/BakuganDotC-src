@@ -1,0 +1,4 @@
+// bdc 0x08a99008 g_gameEventFixedHalf
+#include "bdc.h"
+
+__typeof__(s64) g_gameEventFixedHalf = BDC_V(long long, 0x295008);

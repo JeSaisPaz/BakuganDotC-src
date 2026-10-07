@@ -1,0 +1,9 @@
+// bdc 0x08a675c0 g_btlUnitAltActionMasks
+#include "bdc.h"
+
+__typeof__(u32[12]) g_btlUnitAltActionMasks = {
+    BDC_V(unsigned int, 0x2635c0), BDC_V(unsigned int, 0x2635c4), BDC_V(unsigned int, 0x2635c8),
+    BDC_V(unsigned int, 0x2635cc), BDC_V(unsigned int, 0x2635d0), BDC_V(unsigned int, 0x2635d4),
+    BDC_V(unsigned int, 0x2635d8), BDC_V(unsigned int, 0x2635dc), BDC_V(unsigned int, 0x2635e0),
+    BDC_V(unsigned int, 0x2635e4), BDC_V(unsigned int, 0x2635e8), BDC_V(unsigned int, 0x2635ec),
+};

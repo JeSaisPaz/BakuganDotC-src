@@ -1,0 +1,8 @@
+// bdc 0x08aba1a0 g_btlHudHintHideSprites
+#include "bdc.h"
+
+__typeof__(const s32[12]) g_btlHudHintHideSprites = {
+    BDC_V(int, 0x2b61a0), BDC_V(int, 0x2b61a4), BDC_V(int, 0x2b61a8), BDC_V(int, 0x2b61ac),
+    BDC_V(int, 0x2b61b0), BDC_V(int, 0x2b61b4), BDC_V(int, 0x2b61b8), BDC_V(int, 0x2b61bc),
+    BDC_V(int, 0x2b61c0), BDC_V(int, 0x2b61c4), BDC_V(int, 0x2b61c8), BDC_V(int, 0x2b61cc),
+};

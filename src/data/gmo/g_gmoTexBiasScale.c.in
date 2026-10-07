@@ -1,0 +1,4 @@
+// bdc 0x08aa51f0 g_gmoTexBiasScale
+#include "bdc.h"
+
+__typeof__(float) g_gmoTexBiasScale = BDC_V(float, 0x2a11f0);

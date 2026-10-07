@@ -1,0 +1,4 @@
+// bdc 0x08abf6d0 g_actorNpcHeightApartMin
+#include "bdc.h"
+
+__typeof__(float) g_actorNpcHeightApartMin = BDC_V(float, 0x2bb6d0);

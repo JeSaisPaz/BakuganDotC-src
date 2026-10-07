@@ -1,0 +1,4 @@
+// bdc 0x08abf0a0 g_gameGimmickCameraColName
+#include "bdc.h"
+
+__typeof__(const char *) g_gameGimmickCameraColName = (const char *)BDC_STR(0x292b78);

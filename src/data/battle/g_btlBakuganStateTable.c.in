@@ -1,0 +1,27 @@
+// bdc 0x08a680dc g_btlBakuganStateTable
+#include "bdc.h"
+
+__typeof__(MemberFnPtr[22]) g_btlBakuganStateTable = {
+    { .index = BDC_V(short, 0x2640de), .delta2 = BDC_V(int, 0x2640e0) },
+    { .index = BDC_V(short, 0x2640e6), .delta2 = BDC_V(int, 0x2640e8) },
+    { .index = BDC_V(short, 0x2640ee), .delta2 = BDC_V(int, 0x2640f0) },
+    { .index = BDC_V(short, 0x2640f6), .delta2 = BDC_V(int, 0x2640f8) },
+    { .index = BDC_V(short, 0x2640fe), .delta2 = BDC_V(int, 0x264100) },
+    { .index = BDC_V(short, 0x264106), .delta2 = BDC_V(int, 0x264108) },
+    { .index = BDC_V(short, 0x26410e), .delta2 = BDC_V(int, 0x264110) },
+    { .index = BDC_V(short, 0x264116), .delta2 = BDC_V(int, 0x264118) },
+    { .index = BDC_V(short, 0x26411e), .delta2 = BDC_V(int, 0x264120) },
+    { .index = BDC_V(short, 0x264126), .delta2 = BDC_V(int, 0x264128) },
+    { .index = BDC_V(short, 0x26412e), .delta2 = BDC_V(int, 0x264130) },
+    { .index = BDC_V(short, 0x264136), .delta2 = BDC_V(int, 0x264138) },
+    { .index = BDC_V(short, 0x26413e), .delta2 = BDC_V(int, 0x264140) },
+    { .index = BDC_V(short, 0x264146), .delta2 = BDC_V(int, 0x264148) },
+    { .index = BDC_V(short, 0x26414e), .delta2 = BDC_V(int, 0x264150) },
+    { .index = BDC_V(short, 0x264156), .delta2 = BDC_V(int, 0x264158) },
+    { .index = BDC_V(short, 0x26415e), .delta2 = BDC_V(int, 0x264160) },
+    { .index = BDC_V(short, 0x264166), .delta2 = BDC_V(int, 0x264168) },
+    { .index = BDC_V(short, 0x26416e), .delta2 = BDC_V(int, 0x264170) },
+    { .index = BDC_V(short, 0x264176), .delta2 = BDC_V(int, 0x264178) },
+    { .index = BDC_V(short, 0x26417e), .delta2 = BDC_V(int, 0x264180) },
+    { .index = BDC_V(short, 0x264186), .delta2 = BDC_V(int, 0x264188) },
+};

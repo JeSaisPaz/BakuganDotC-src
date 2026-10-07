@@ -1,0 +1,4 @@
+// bdc 0x08ac4384 g_playthrough2BonusGear
+#include "bdc.h"
+
+__typeof__(u8[22]) g_playthrough2BonusGear = BDC_BYTES(0x2c0384, 22);

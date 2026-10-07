@@ -8,12 +8,13 @@ No game files are included. See [LEGAL.md](LEGAL.md).
 ## Status
 
 Every game function in the executable has a C version: 7,492 functions, one file each, all named,
-typed, documented and reviewed.
+typed, documented and reviewed. Every global is defined: zero-initialised and pointer-only definitions
+are in `src/data/`, values are filled from your own ELF at build time.
 
 | What it is | What it is not |
 |---|---|
 | Readable C with recovered names, structs and comments | A matching decompilation (the C does not rebuild the original binary byte for byte) |
-| Every file compiles with clang, for MIPS (`mipsel-unknown-elf`) and x86-64 | A linkable program: 1,809 globals are declared `extern` and defined nowhere (no data section) |
+| Every file compiles with clang, for MIPS (`mipsel-unknown-elf`) and x86-64 | A linked program: the build compiles objects only |
 | A map of how the game works, function by function | A playable port: no platform layer, no asset loading |
 
 ### How it was made and checked
@@ -41,6 +42,9 @@ These are declared in `src/include/bdc.h` but not defined in `src/`:
 ```
 src/include/bdc.h      every type, global (extern) and function prototype, plus the VFPU helpers
 src/<subsystem>/*.c    one function per file; the first line is "// bdc <PSP address> <Name>"
+src/data/<subsystem>/g_*.c     global definitions with no game value (zero or pointers): complete
+src/data/<subsystem>/g_*.c.in  global definitions with value placeholders (templates), filled at build time
+tools/fill_data.py     fills the templates from your ELF (Python 3, standard library only)
 ```
 
 | Subsystem | Files | | Subsystem | Files |
@@ -65,14 +69,18 @@ IEEE float results, not the VFPU's approximations. Build with `-ffp-contract=off
 
 ## Building (compile check)
 
-Requires clang (tested with clang 19.1.7).
+Requires clang (tested with clang 19.1.7) and Python 3.
 
 ```sh
-./build.sh          # MIPS objects in build/mips/
-./build.sh host     # x86-64 objects in build/host/
+./build.sh mips path/to/MYTHREAD-MAIN.elf   # MIPS objects in build/mips/
+./build.sh host path/to/MYTHREAD-MAIN.elf   # x86-64 objects in build/host/
 ```
 
-Each run compiles all files and prints `N/7492 compiled`. Nothing links (see Status).
+The ELF is the game's main executable: decrypt `PSP_GAME/SYSDIR/EBOOT.BIN` from your own `ULES01466`
+disc image with [pspdecrypt](https://github.com/John-K/pspdecrypt). Its SHA-1 is
+`5ea4da7f8d25d18ceb1d437f0f95f42d92803ea0`. The build fills the data templates from it into `build/data/`
+and compiles everything, printing `N/N compiled`. Without the ELF (`./build.sh mips`) the complete files
+still compile and the build reports how many templates it skipped. Nothing links (see Status).
 
 ## Credits
 

@@ -1,0 +1,16 @@
+// bdc 0x08aae3b0 g_langStringsEn
+#include "bdc.h"
+
+__typeof__(char *[31]) g_langStringsEn = {
+    (char *)BDC_STR(0x231c08), (char *)BDC_STR(0x231e34), (char *)BDC_STR(0x231ee4),
+    (char *)BDC_STR(0x231f7c), (char *)BDC_STR(0x231fd0), (char *)BDC_STR(0x232018),
+    (char *)BDC_STR(0x232068), (char *)BDC_STR(0x2320c0), (char *)BDC_STR(0x23210c),
+    (char *)BDC_STR(0x232168), (char *)BDC_STR(0x232184), (char *)BDC_STR(0x23218c),
+    (char *)BDC_STR(0x2321a0), (char *)BDC_STR(0x2321c0), (char *)BDC_STR(0x2321dc),
+    (char *)BDC_STR(0x23221c), (char *)BDC_STR(0x23225c), (char *)BDC_STR(0x2322b0),
+    (char *)BDC_STR(0x2322d4), (char *)BDC_STR(0x232328), (char *)BDC_STR(0x23234c),
+    (char *)BDC_STR(0x232368), (char *)BDC_STR(0x232378), (char *)BDC_STR(0x2323a8),
+    (char *)BDC_STR(0x2323cc), (char *)BDC_STR(0x2323fc), (char *)BDC_STR(0x23243c),
+    (char *)BDC_STR(0x23247c), (char *)BDC_STR(0x2324c8), (char *)BDC_STR(0x2324dc),
+    (char *)BDC_STR(0x232514),
+};

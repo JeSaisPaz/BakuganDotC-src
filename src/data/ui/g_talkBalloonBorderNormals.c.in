@@ -1,0 +1,21 @@
+// bdc 0x08a9338c g_talkBalloonBorderNormals
+#include "bdc.h"
+
+__typeof__(float[21][2]) g_talkBalloonBorderNormals = {
+    {0}, { 0, BDC_V(float, 0x28f398) }, { BDC_V(float, 0x28f39c), BDC_V(float, 0x28f3a0) },
+    { 0, BDC_V(float, 0x28f3a8) }, { BDC_V(float, 0x28f3ac), BDC_V(float, 0x28f3b0) },
+    { 0, BDC_V(float, 0x28f3b8) }, { BDC_V(float, 0x28f3bc), BDC_V(float, 0x28f3c0) },
+    { BDC_V(float, 0x28f3c4), BDC_V(float, 0x28f3c8) },
+    { BDC_V(float, 0x28f3cc), BDC_V(float, 0x28f3d0) },
+    { BDC_V(float, 0x28f3d4), BDC_V(float, 0x28f3d8) },
+    { BDC_V(float, 0x28f3dc), BDC_V(float, 0x28f3e0) },
+    { BDC_V(float, 0x28f3e4), BDC_V(float, 0x28f3e8) },
+    { BDC_V(float, 0x28f3ec), BDC_V(float, 0x28f3f0) },
+    { BDC_V(float, 0x28f3f4), BDC_V(float, 0x28f3f8) },
+    { BDC_V(float, 0x28f3fc), BDC_V(float, 0x28f400) },
+    { BDC_V(float, 0x28f404), BDC_V(float, 0x28f408) },
+    { BDC_V(float, 0x28f40c), BDC_V(float, 0x28f410) },
+    { BDC_V(float, 0x28f414), BDC_V(float, 0x28f418) },
+    { BDC_V(float, 0x28f41c), BDC_V(float, 0x28f420) },
+    { BDC_V(float, 0x28f424), BDC_V(float, 0x28f428) }, { 0, BDC_V(float, 0x28f430) },
+};

@@ -1,0 +1,30 @@
+// bdc 0x08af3e94 g_actorNpcRobotVtbl
+#include "bdc.h"
+
+__typeof__(VtblEntry[50]) g_actorNpcRobotVtbl = {
+    {0}, { .fn = (void *)ActorNpcRobotDtor }, { .fn = (void *)GfxModelInitFields },
+    { .fn = (void *)GfxModelSetFogEnabled }, { .fn = (void *)GfxModelSetFog },
+    { .fn = (void *)ActorUpdateDistanceFade }, { .fn = (void *)GfxModelSetMotionSpeed },
+    { .fn = (void *)ActorNpcUpdatePhase }, { .fn = (void *)ActorNpcDraw },
+    { .fn = (void *)GfxModelSetToon }, { .fn = (void *)ActorUpdateMatrix },
+    { .fn = (void *)ActorIsBallTarget }, { .fn = (void *)ActorNpcRobotIsRobot },
+    { .fn = (void *)ActorNpcResetBehaviour }, { .fn = (void *)ActorSlot14Nop },
+    { .fn = (void *)ActorSlot15 }, { .fn = (void *)ActorNpcFreeze },
+    { .fn = (void *)ActorNpcHearNoise }, { .fn = (void *)ActorNpcWalkToward },
+    { .fn = (void *)ActorIsSpecialRoute }, { .fn = (void *)ActorStateIdle },
+    { .fn = (void *)ActorState01Nop }, { .fn = (void *)ActorState02Nop },
+    { .fn = (void *)ActorState03Nop }, { .fn = (void *)ActorState04Nop },
+    { .fn = (void *)ActorState05Nop }, { .fn = (void *)ActorState06Nop },
+    { .fn = (void *)ActorState07Nop }, { .fn = (void *)ActorNpcResume },
+    { .fn = (void *)ActorStateRouteWalk }, { .fn = (void *)ActorStateRouteNextStep },
+    { .fn = (void *)ActorNpcRunState }, { .fn = (void *)ActorNpcRobotFindHead },
+    { .fn = (void *)ActorNpcListensForNoise }, { .fn = (void *)ActorNpcUpdate },
+    { .fn = (void *)ActorNpcNextPatrolCommand }, { .fn = (void *)ActorNpcRobotStateWait },
+    { .fn = (void *)ActorNpcStateWalkRoute }, { .fn = (void *)ActorNpcStateLookAround },
+    { .fn = (void *)ActorNpcStateCatchPlayer }, { .fn = (void *)ActorNpcStateInvestigateBase },
+    { .fn = (void *)ActorNpcState06Nop }, { .fn = (void *)ActorNpcState07Reset },
+    { .fn = (void *)ActorNpcState08Nop }, { .fn = (void *)ActorNpcStateEventWait },
+    { .fn = (void *)ActorNpcStateReturnHome }, { .fn = (void *)ActorNpcSetAlertViewNop },
+    { .fn = (void *)ActorNpcUpdateHeadLook }, { .fn = (void *)ActorNpcSlot48Nop },
+    { .fn = (void *)ActorNpcUpdateFeetNop },
+};

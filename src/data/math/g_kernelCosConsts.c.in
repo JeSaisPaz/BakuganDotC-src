@@ -1,0 +1,14 @@
+// bdc 0x08aa4d88 g_kernelCosConsts
+#include "bdc.h"
+
+__typeof__(KernelCosConsts) g_kernelCosConsts = {
+    .one = BDC_V(double, 0x2a0d88),
+    .c1 = BDC_V(double, 0x2a0d90),
+    .c2 = BDC_V(double, 0x2a0d98),
+    .c3 = BDC_V(double, 0x2a0da0),
+    .c4 = BDC_V(double, 0x2a0da8),
+    .c5 = BDC_V(double, 0x2a0db0),
+    .c6 = BDC_V(double, 0x2a0db8),
+    .half = BDC_V(double, 0x2a0dc0),
+    .qxBig = BDC_V(double, 0x2a0dc8),
+};

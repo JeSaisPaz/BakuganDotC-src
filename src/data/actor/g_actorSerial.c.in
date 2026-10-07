@@ -1,0 +1,4 @@
+// bdc 0x08abf614 g_actorSerial
+#include "bdc.h"
+
+__typeof__(s32) g_actorSerial = BDC_V(int, 0x2bb614);

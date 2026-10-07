@@ -1,0 +1,4 @@
+// bdc 0x08ad6d70 g_bootTexBulletsLogo
+#include "bdc.h"
+
+__typeof__(u8[4100]) g_bootTexBulletsLogo = BDC_BYTES(0x2d2d70, 4100);

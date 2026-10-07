@@ -1,0 +1,12 @@
+// bdc 0x08a9b1d8 g_loadingTipTRowMap
+#include "bdc.h"
+
+__typeof__(s32[40]) g_loadingTipTRowMap = {
+    0, 0, BDC_V(int, 0x2971e0), BDC_V(int, 0x2971e4), BDC_V(int, 0x2971e8), BDC_V(int, 0x2971ec),
+    BDC_V(int, 0x2971f0), BDC_V(int, 0x2971f4), BDC_V(int, 0x2971f8), BDC_V(int, 0x2971fc),
+    BDC_V(int, 0x297200), BDC_V(int, 0x297204), BDC_V(int, 0x297208), BDC_V(int, 0x29720c),
+    BDC_V(int, 0x297210), BDC_V(int, 0x297214), BDC_V(int, 0x297218), BDC_V(int, 0x29721c),
+    BDC_V(int, 0x297220), BDC_V(int, 0x297224), BDC_V(int, 0x297228), BDC_V(int, 0x29722c),
+    BDC_V(int, 0x297230), BDC_V(int, 0x297234), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    BDC_V(int, 0x29726c),
+};

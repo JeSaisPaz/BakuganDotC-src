@@ -1,0 +1,4 @@
+// bdc 0x08ac3d61 g_uiMainMenuItemDistTable
+#include "bdc.h"
+
+__typeof__(u8[25]) g_uiMainMenuItemDistTable = BDC_BYTES(0x2bfd61, 25);

@@ -1,0 +1,4 @@
+// bdc 0x08ac4358 g_playthrough1BonusBakugan
+#include "bdc.h"
+
+__typeof__(u8[22]) g_playthrough1BonusBakugan = BDC_BYTES(0x2c0358, 22);

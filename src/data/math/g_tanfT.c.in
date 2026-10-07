@@ -1,0 +1,9 @@
+// bdc 0x08aa4f24 g_tanfT
+#include "bdc.h"
+
+__typeof__(float[13]) g_tanfT = {
+    BDC_V(float, 0x2a0f24), BDC_V(float, 0x2a0f28), BDC_V(float, 0x2a0f2c), BDC_V(float, 0x2a0f30),
+    BDC_V(float, 0x2a0f34), BDC_V(float, 0x2a0f38), BDC_V(float, 0x2a0f3c), BDC_V(float, 0x2a0f40),
+    BDC_V(float, 0x2a0f44), BDC_V(float, 0x2a0f48), BDC_V(float, 0x2a0f4c), BDC_V(float, 0x2a0f50),
+    BDC_V(float, 0x2a0f54),
+};

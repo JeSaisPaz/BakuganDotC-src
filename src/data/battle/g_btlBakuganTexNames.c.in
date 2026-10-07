@@ -1,0 +1,15 @@
+// bdc 0x08aba8bc g_btlBakuganTexNames
+#include "bdc.h"
+
+__typeof__(const char *[21]) g_btlBakuganTexNames = {
+    NULL, (const char *)BDC_STR(0x263e34), (const char *)BDC_STR(0x263e48),
+    (const char *)BDC_STR(0x263e5c), (const char *)BDC_STR(0x263e6c),
+    (const char *)BDC_STR(0x263e80), (const char *)BDC_STR(0x263e90),
+    (const char *)BDC_STR(0x263ea4), (const char *)BDC_STR(0x263eb4),
+    (const char *)BDC_STR(0x263ec4), (const char *)BDC_STR(0x263ed4),
+    (const char *)BDC_STR(0x263ee4), (const char *)BDC_STR(0x263ef4),
+    (const char *)BDC_STR(0x263f08), (const char *)BDC_STR(0x263f18),
+    (const char *)BDC_STR(0x263f28), (const char *)BDC_STR(0x263f38),
+    (const char *)BDC_STR(0x263f4c), (const char *)BDC_STR(0x263f5c),
+    (const char *)BDC_STR(0x263f70), (const char *)BDC_STR(0x263f80),
+};

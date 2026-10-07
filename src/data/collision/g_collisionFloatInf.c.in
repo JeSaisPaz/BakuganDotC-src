@@ -1,0 +1,4 @@
+// bdc 0x08aa3200 g_collisionFloatInf
+#include "bdc.h"
+
+__typeof__(float) g_collisionFloatInf = BDC_V(float, 0x29f200);

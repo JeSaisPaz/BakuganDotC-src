@@ -1,0 +1,4 @@
+// bdc 0x08aa34d0 g_uiFontGlyphTable
+#include "bdc.h"
+
+__typeof__(char [97]) g_uiFontGlyphTable = BDC_BYTES(0x29f4d0, 97);

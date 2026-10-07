@@ -1,0 +1,153 @@
+// bdc 0x08a81c08 g_btlArenaFogParams
+#include "bdc.h"
+
+__typeof__(BtlArenaFog[36]) g_btlArenaFogParams = {
+    {
+        .color = BDC_V(unsigned int, 0x27dc08),
+        .range = BDC_V(float, 0x27dc0c),
+        .scale = BDC_V(float, 0x27dc10),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc14),
+        .range = BDC_V(float, 0x27dc18),
+        .scale = BDC_V(float, 0x27dc1c),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc20),
+        .range = BDC_V(float, 0x27dc24),
+        .scale = BDC_V(float, 0x27dc28),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc2c),
+        .range = BDC_V(float, 0x27dc30),
+        .scale = BDC_V(float, 0x27dc34),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc38),
+        .range = BDC_V(float, 0x27dc3c),
+        .scale = BDC_V(float, 0x27dc40),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc44),
+        .range = BDC_V(float, 0x27dc48),
+        .scale = BDC_V(float, 0x27dc4c),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc50),
+        .range = BDC_V(float, 0x27dc54),
+        .scale = BDC_V(float, 0x27dc58),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc5c),
+        .range = BDC_V(float, 0x27dc60),
+        .scale = BDC_V(float, 0x27dc64),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc68),
+        .range = BDC_V(float, 0x27dc6c),
+        .scale = BDC_V(float, 0x27dc70),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc74),
+        .range = BDC_V(float, 0x27dc78),
+        .scale = BDC_V(float, 0x27dc7c),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc80),
+        .range = BDC_V(float, 0x27dc84),
+        .scale = BDC_V(float, 0x27dc88),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc8c),
+        .range = BDC_V(float, 0x27dc90),
+        .scale = BDC_V(float, 0x27dc94),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dc98),
+        .range = BDC_V(float, 0x27dc9c),
+        .scale = BDC_V(float, 0x27dca0),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dca4),
+        .range = BDC_V(float, 0x27dca8),
+        .scale = BDC_V(float, 0x27dcac),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dcb0),
+        .range = BDC_V(float, 0x27dcb4),
+        .scale = BDC_V(float, 0x27dcb8),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dcbc),
+        .range = BDC_V(float, 0x27dcc0),
+        .scale = BDC_V(float, 0x27dcc4),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dcc8),
+        .range = BDC_V(float, 0x27dccc),
+        .scale = BDC_V(float, 0x27dcd0),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dcd4),
+        .range = BDC_V(float, 0x27dcd8),
+        .scale = BDC_V(float, 0x27dcdc),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dce0),
+        .range = BDC_V(float, 0x27dce4),
+        .scale = BDC_V(float, 0x27dce8),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dcec),
+        .range = BDC_V(float, 0x27dcf0),
+        .scale = BDC_V(float, 0x27dcf4),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dcf8),
+        .range = BDC_V(float, 0x27dcfc),
+        .scale = BDC_V(float, 0x27dd00),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dd04),
+        .range = BDC_V(float, 0x27dd08),
+        .scale = BDC_V(float, 0x27dd0c),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dd10),
+        .range = BDC_V(float, 0x27dd14),
+        .scale = BDC_V(float, 0x27dd18),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dd1c),
+        .range = BDC_V(float, 0x27dd20),
+        .scale = BDC_V(float, 0x27dd24),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dd28),
+        .range = BDC_V(float, 0x27dd2c),
+        .scale = BDC_V(float, 0x27dd30),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dd34),
+        .range = BDC_V(float, 0x27dd38),
+        .scale = BDC_V(float, 0x27dd3c),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dd40),
+        .range = BDC_V(float, 0x27dd44),
+        .scale = BDC_V(float, 0x27dd48),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dd4c),
+        .range = BDC_V(float, 0x27dd50),
+        .scale = BDC_V(float, 0x27dd54),
+    },
+    { .range = BDC_V(float, 0x27dd5c), .scale = BDC_V(float, 0x27dd60) },
+    { .range = BDC_V(float, 0x27dd68), .scale = BDC_V(float, 0x27dd6c) },
+    { .range = BDC_V(float, 0x27dd74), .scale = BDC_V(float, 0x27dd78) },
+    { .range = BDC_V(float, 0x27dd80), .scale = BDC_V(float, 0x27dd84) },
+    { .range = BDC_V(float, 0x27dd8c), .scale = BDC_V(float, 0x27dd90) },
+    { .range = BDC_V(float, 0x27dd98), .scale = BDC_V(float, 0x27dd9c) },
+    { .range = BDC_V(float, 0x27dda4), .scale = BDC_V(float, 0x27dda8) },
+    { .range = BDC_V(float, 0x27ddb0), .scale = BDC_V(float, 0x27ddb4) },
+};

@@ -1,0 +1,9 @@
+// bdc 0x08aa4408 g_cxxBadExceptionBases
+#include "bdc.h"
+
+__typeof__(const CxxBaseClassEntry[1]) g_cxxBadExceptionBases = {
+    {
+        .type = (struct CxxTypeInfo *)&g_cxxStdExceptionTypeInfo,
+        .flags = BDC_V(unsigned char, 0x2a040e),
+    },
+};

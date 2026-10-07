@@ -1,0 +1,12 @@
+// bdc 0x08a93274 g_uiTalkBalloonBarVerts
+#include "bdc.h"
+
+__typeof__(const float[40]) g_uiTalkBalloonBarVerts = {
+    0, 0, 0, 0, 0, 0, BDC_V(float, 0x28f28c), 0, BDC_V(float, 0x28f294), 0, BDC_V(float, 0x28f29c),
+    0, BDC_V(float, 0x28f2a4), 0, 0, BDC_V(float, 0x28f2b0), BDC_V(float, 0x28f2b4),
+    BDC_V(float, 0x28f2b8), BDC_V(float, 0x28f2bc), 0, BDC_V(float, 0x28f2c4), 0,
+    BDC_V(float, 0x28f2cc), 0, 0, BDC_V(float, 0x28f2d8), BDC_V(float, 0x28f2dc),
+    BDC_V(float, 0x28f2e0), BDC_V(float, 0x28f2e4), 0, BDC_V(float, 0x28f2ec), 0,
+    BDC_V(float, 0x28f2f4), 0, 0, BDC_V(float, 0x28f300), BDC_V(float, 0x28f304),
+    BDC_V(float, 0x28f308), BDC_V(float, 0x28f30c),
+};

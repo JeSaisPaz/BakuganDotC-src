@@ -1,0 +1,33 @@
+// bdc 0x08abb9e0 g_btlKindAttackMotions13
+#include "bdc.h"
+
+__typeof__(const BtlAttackMotionSet *[64]) g_btlKindAttackMotions13 = {
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet00,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet01,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet02,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet03, NULL, NULL,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet06,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet08,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet09, NULL, NULL,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet12, NULL, NULL, NULL, NULL, NULL,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet13, NULL, NULL, NULL, NULL, NULL,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet14,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet15, NULL, NULL, NULL, NULL,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet17,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet18,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet17,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet18, NULL, NULL, NULL, NULL, NULL, NULL,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet17,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet18,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet17,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet18, NULL, NULL, NULL, NULL, NULL, NULL,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet17,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet18,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet17,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet18, NULL, NULL, NULL, NULL, NULL, NULL,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet19,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet20,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet21,
+    (const struct BtlAttackMotionSet *)&g_btlKind13MotionSet22,
+};

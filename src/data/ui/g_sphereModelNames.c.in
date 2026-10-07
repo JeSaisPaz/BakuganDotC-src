@@ -1,0 +1,22 @@
+// bdc 0x08ac3574 g_sphereModelNames
+#include "bdc.h"
+
+__typeof__(const char *[33]) g_sphereModelNames = {
+    (const char *)BDC_STR(0x299d18), (const char *)BDC_STR(0x299d18),
+    (const char *)BDC_STR(0x299d30), (const char *)BDC_STR(0x299d4c),
+    (const char *)BDC_STR(0x299d60), (const char *)BDC_STR(0x299d78),
+    (const char *)BDC_STR(0x299d8c), (const char *)BDC_STR(0x299da4),
+    (const char *)BDC_STR(0x299db8), (const char *)BDC_STR(0x299dcc),
+    (const char *)BDC_STR(0x299de0), (const char *)BDC_STR(0x299df8),
+    (const char *)BDC_STR(0x299e0c), (const char *)BDC_STR(0x299e24),
+    (const char *)BDC_STR(0x299e38), (const char *)BDC_STR(0x299e4c),
+    (const char *)BDC_STR(0x299e60), (const char *)BDC_STR(0x299e78),
+    (const char *)BDC_STR(0x299e8c), (const char *)BDC_STR(0x299ea4),
+    (const char *)BDC_STR(0x299eb8), (const char *)BDC_STR(0x299ecc),
+    (const char *)BDC_STR(0x299ee4), (const char *)BDC_STR(0x299ef8),
+    (const char *)BDC_STR(0x299f10), (const char *)BDC_STR(0x299f28),
+    (const char *)BDC_STR(0x299f40), (const char *)BDC_STR(0x299f58),
+    (const char *)BDC_STR(0x299f74), (const char *)BDC_STR(0x299f88),
+    (const char *)BDC_STR(0x299f9c), (const char *)BDC_STR(0x299fb4),
+    (const char *)BDC_STR(0x299fcc),
+};

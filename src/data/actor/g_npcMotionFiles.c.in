@@ -1,0 +1,12 @@
+// bdc 0x08ab9cb8 g_npcMotionFiles
+#include "bdc.h"
+
+__typeof__(const char *[13]) g_npcMotionFiles = {
+    (const char *)BDC_STR(0x25c5e0), (const char *)BDC_STR(0x25c5f0),
+    (const char *)BDC_STR(0x25c600), (const char *)BDC_STR(0x25c614),
+    (const char *)BDC_STR(0x25c624), (const char *)BDC_STR(0x25c634),
+    (const char *)BDC_STR(0x25c648), (const char *)BDC_STR(0x25c65c),
+    (const char *)BDC_STR(0x25c670), (const char *)BDC_STR(0x25c680),
+    (const char *)BDC_STR(0x25c690), (const char *)BDC_STR(0x25c6a4),
+    (const char *)BDC_STR(0x25c6b4),
+};

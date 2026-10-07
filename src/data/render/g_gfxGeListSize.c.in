@@ -1,0 +1,4 @@
+// bdc 0x08ac5930 g_gfxGeListSize
+#include "bdc.h"
+
+__typeof__(u32) g_gfxGeListSize = BDC_V(unsigned int, 0x2c1930);

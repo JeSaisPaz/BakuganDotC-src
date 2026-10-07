@@ -1,0 +1,7 @@
+// bdc 0x08ab9e50 g_gfxMeshObjLightList
+#include "bdc.h"
+
+__typeof__(u32[8]) g_gfxMeshObjLightList = {
+    BDC_V(unsigned int, 0x2b5e50), BDC_V(unsigned int, 0x2b5e54), BDC_V(unsigned int, 0x2b5e58),
+    BDC_V(unsigned int, 0x2b5e5c), BDC_V(unsigned int, 0x2b5e60),
+};

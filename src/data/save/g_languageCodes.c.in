@@ -1,0 +1,12 @@
+// bdc 0x08aaca2c g_languageCodes
+#include "bdc.h"
+
+__typeof__(const char *[14]) g_languageCodes = {
+    (const char *)BDC_STR(0x230180), (const char *)BDC_STR(0x230180),
+    (const char *)BDC_STR(0x2301ac), (const char *)BDC_STR(0x2301b0),
+    (const char *)BDC_STR(0x2301b4), (const char *)BDC_STR(0x2301b8),
+    (const char *)BDC_STR(0x2301bc), (const char *)BDC_STR(0x230180),
+    (const char *)BDC_STR(0x230180), (const char *)BDC_STR(0x230180),
+    (const char *)BDC_STR(0x230180), (const char *)BDC_STR(0x230180),
+    (const char *)BDC_STR(0x2301c0), (const char *)BDC_STR(0x230180),
+};

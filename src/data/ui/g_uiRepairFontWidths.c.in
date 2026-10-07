@@ -1,0 +1,29 @@
+// bdc 0x08aaff9c g_uiRepairFontWidths
+#include "bdc.h"
+
+__typeof__(float[95]) g_uiRepairFontWidths = {
+    BDC_V(float, 0x2abf9c), BDC_V(float, 0x2abfa0), BDC_V(float, 0x2abfa4), BDC_V(float, 0x2abfa8),
+    BDC_V(float, 0x2abfac), BDC_V(float, 0x2abfb0), BDC_V(float, 0x2abfb4), BDC_V(float, 0x2abfb8),
+    BDC_V(float, 0x2abfbc), BDC_V(float, 0x2abfc0), BDC_V(float, 0x2abfc4), BDC_V(float, 0x2abfc8),
+    BDC_V(float, 0x2abfcc), BDC_V(float, 0x2abfd0), BDC_V(float, 0x2abfd4), BDC_V(float, 0x2abfd8),
+    BDC_V(float, 0x2abfdc), BDC_V(float, 0x2abfe0), BDC_V(float, 0x2abfe4), BDC_V(float, 0x2abfe8),
+    BDC_V(float, 0x2abfec), BDC_V(float, 0x2abff0), BDC_V(float, 0x2abff4), BDC_V(float, 0x2abff8),
+    BDC_V(float, 0x2abffc), BDC_V(float, 0x2ac000), BDC_V(float, 0x2ac004), BDC_V(float, 0x2ac008),
+    BDC_V(float, 0x2ac00c), BDC_V(float, 0x2ac010), BDC_V(float, 0x2ac014), BDC_V(float, 0x2ac018),
+    BDC_V(float, 0x2ac01c), BDC_V(float, 0x2ac020), BDC_V(float, 0x2ac024), BDC_V(float, 0x2ac028),
+    BDC_V(float, 0x2ac02c), BDC_V(float, 0x2ac030), BDC_V(float, 0x2ac034), BDC_V(float, 0x2ac038),
+    BDC_V(float, 0x2ac03c), BDC_V(float, 0x2ac040), BDC_V(float, 0x2ac044), BDC_V(float, 0x2ac048),
+    BDC_V(float, 0x2ac04c), BDC_V(float, 0x2ac050), BDC_V(float, 0x2ac054), BDC_V(float, 0x2ac058),
+    BDC_V(float, 0x2ac05c), BDC_V(float, 0x2ac060), BDC_V(float, 0x2ac064), BDC_V(float, 0x2ac068),
+    BDC_V(float, 0x2ac06c), BDC_V(float, 0x2ac070), BDC_V(float, 0x2ac074), BDC_V(float, 0x2ac078),
+    BDC_V(float, 0x2ac07c), BDC_V(float, 0x2ac080), BDC_V(float, 0x2ac084), BDC_V(float, 0x2ac088),
+    BDC_V(float, 0x2ac08c), BDC_V(float, 0x2ac090), BDC_V(float, 0x2ac094), BDC_V(float, 0x2ac098),
+    BDC_V(float, 0x2ac09c), BDC_V(float, 0x2ac0a0), BDC_V(float, 0x2ac0a4), BDC_V(float, 0x2ac0a8),
+    BDC_V(float, 0x2ac0ac), BDC_V(float, 0x2ac0b0), BDC_V(float, 0x2ac0b4), BDC_V(float, 0x2ac0b8),
+    BDC_V(float, 0x2ac0bc), BDC_V(float, 0x2ac0c0), BDC_V(float, 0x2ac0c4), BDC_V(float, 0x2ac0c8),
+    BDC_V(float, 0x2ac0cc), BDC_V(float, 0x2ac0d0), BDC_V(float, 0x2ac0d4), BDC_V(float, 0x2ac0d8),
+    BDC_V(float, 0x2ac0dc), BDC_V(float, 0x2ac0e0), BDC_V(float, 0x2ac0e4), BDC_V(float, 0x2ac0e8),
+    BDC_V(float, 0x2ac0ec), BDC_V(float, 0x2ac0f0), BDC_V(float, 0x2ac0f4), BDC_V(float, 0x2ac0f8),
+    BDC_V(float, 0x2ac0fc), BDC_V(float, 0x2ac100), BDC_V(float, 0x2ac104), BDC_V(float, 0x2ac108),
+    BDC_V(float, 0x2ac10c), BDC_V(float, 0x2ac110), BDC_V(float, 0x2ac114),
+};

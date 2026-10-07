@@ -1,0 +1,12 @@
+// bdc 0x08aaca64 g_languageNames
+#include "bdc.h"
+
+__typeof__(const char *[14]) g_languageNames = {
+    (const char *)BDC_STR(0x2301c4), (const char *)BDC_STR(0x2301c4),
+    (const char *)BDC_STR(0x2301d0), (const char *)BDC_STR(0x2301d8),
+    (const char *)BDC_STR(0x2301e0), (const char *)BDC_STR(0x2301e8),
+    (const char *)BDC_STR(0x2301f0), (const char *)BDC_STR(0x2301c4),
+    (const char *)BDC_STR(0x2301c4), (const char *)BDC_STR(0x2301c4),
+    (const char *)BDC_STR(0x2301c4), (const char *)BDC_STR(0x2301c4),
+    (const char *)BDC_STR(0x2301f8), (const char *)BDC_STR(0x2301c4),
+};

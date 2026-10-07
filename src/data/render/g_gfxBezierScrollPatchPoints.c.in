@@ -1,0 +1,25 @@
+// bdc 0x08ac5f98 g_gfxBezierScrollPatchPoints
+#include "bdc.h"
+
+__typeof__(u16[64]) g_gfxBezierScrollPatchPoints = {
+    0, BDC_V(unsigned short, 0x2c1f9a), BDC_V(unsigned short, 0x2c1f9c), 0, 0,
+    BDC_V(unsigned short, 0x2c1fa2), BDC_V(unsigned short, 0x2c1fa4), 0, 0,
+    BDC_V(unsigned short, 0x2c1faa), BDC_V(unsigned short, 0x2c1fac), 0, 0,
+    BDC_V(unsigned short, 0x2c1fb2), BDC_V(unsigned short, 0x2c1fb4), 0,
+    BDC_V(unsigned short, 0x2c1fb8), BDC_V(unsigned short, 0x2c1fba),
+    BDC_V(unsigned short, 0x2c1fbc), 0, BDC_V(unsigned short, 0x2c1fc0),
+    BDC_V(unsigned short, 0x2c1fc2), BDC_V(unsigned short, 0x2c1fc4), 0,
+    BDC_V(unsigned short, 0x2c1fc8), BDC_V(unsigned short, 0x2c1fca),
+    BDC_V(unsigned short, 0x2c1fcc), 0, BDC_V(unsigned short, 0x2c1fd0),
+    BDC_V(unsigned short, 0x2c1fd2), BDC_V(unsigned short, 0x2c1fd4), 0,
+    BDC_V(unsigned short, 0x2c1fd8), BDC_V(unsigned short, 0x2c1fda),
+    BDC_V(unsigned short, 0x2c1fdc), 0, BDC_V(unsigned short, 0x2c1fe0),
+    BDC_V(unsigned short, 0x2c1fe2), BDC_V(unsigned short, 0x2c1fe4), 0,
+    BDC_V(unsigned short, 0x2c1fe8), BDC_V(unsigned short, 0x2c1fea),
+    BDC_V(unsigned short, 0x2c1fec), 0, BDC_V(unsigned short, 0x2c1ff0),
+    BDC_V(unsigned short, 0x2c1ff2), BDC_V(unsigned short, 0x2c1ff4), 0,
+    BDC_V(unsigned short, 0x2c1ff8), BDC_V(unsigned short, 0x2c1ffa), 0, 0,
+    BDC_V(unsigned short, 0x2c2000), BDC_V(unsigned short, 0x2c2002), 0, 0,
+    BDC_V(unsigned short, 0x2c2008), BDC_V(unsigned short, 0x2c200a), 0, 0,
+    BDC_V(unsigned short, 0x2c2010), BDC_V(unsigned short, 0x2c2012),
+};

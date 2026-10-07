@@ -1,0 +1,53 @@
+// bdc 0x08ac13ec g_bakuganAttributeTints
+#include "bdc.h"
+
+__typeof__(float[6][7][3]) g_bakuganAttributeTints = {
+    {
+        { BDC_V(float, 0x2bd3ec) }, { BDC_V(float, 0x2bd3f8) }, { BDC_V(float, 0x2bd404) },
+        { BDC_V(float, 0x2bd410), BDC_V(float, 0x2bd414), BDC_V(float, 0x2bd418) },
+        { BDC_V(float, 0x2bd41c), BDC_V(float, 0x2bd420), BDC_V(float, 0x2bd424) },
+        { BDC_V(float, 0x2bd428), BDC_V(float, 0x2bd42c) },
+        { BDC_V(float, 0x2bd434), BDC_V(float, 0x2bd438), BDC_V(float, 0x2bd43c) },
+    },
+    {
+        { 0, 0, BDC_V(float, 0x2bd448) }, { 0, 0, BDC_V(float, 0x2bd454) },
+        { 0, 0, BDC_V(float, 0x2bd460) }, { 0, BDC_V(float, 0x2bd468), BDC_V(float, 0x2bd46c) },
+        { 0, BDC_V(float, 0x2bd474), BDC_V(float, 0x2bd478) },
+        { 0, BDC_V(float, 0x2bd480), BDC_V(float, 0x2bd484) },
+        { BDC_V(float, 0x2bd488), BDC_V(float, 0x2bd48c), BDC_V(float, 0x2bd490) },
+    },
+    {
+        { BDC_V(float, 0x2bd494), BDC_V(float, 0x2bd498) },
+        { BDC_V(float, 0x2bd4a0), BDC_V(float, 0x2bd4a4) },
+        { BDC_V(float, 0x2bd4ac), BDC_V(float, 0x2bd4b0) },
+        { BDC_V(float, 0x2bd4b8), BDC_V(float, 0x2bd4bc) },
+        { BDC_V(float, 0x2bd4c4), BDC_V(float, 0x2bd4c8) },
+        { BDC_V(float, 0x2bd4d0), BDC_V(float, 0x2bd4d4), BDC_V(float, 0x2bd4d8) },
+        { BDC_V(float, 0x2bd4dc), BDC_V(float, 0x2bd4e0), BDC_V(float, 0x2bd4e4) },
+    },
+    {
+        { BDC_V(float, 0x2bd4e8), BDC_V(float, 0x2bd4ec) },
+        { BDC_V(float, 0x2bd4f4), BDC_V(float, 0x2bd4f8), BDC_V(float, 0x2bd4fc) },
+        { BDC_V(float, 0x2bd500), BDC_V(float, 0x2bd504), BDC_V(float, 0x2bd508) },
+        { BDC_V(float, 0x2bd50c), BDC_V(float, 0x2bd510) },
+        { BDC_V(float, 0x2bd518), BDC_V(float, 0x2bd51c) },
+        { BDC_V(float, 0x2bd524), BDC_V(float, 0x2bd528), BDC_V(float, 0x2bd52c) },
+        { BDC_V(float, 0x2bd530), BDC_V(float, 0x2bd534), BDC_V(float, 0x2bd538) },
+    },
+    {
+        { 0, 0, BDC_V(float, 0x2bd544) }, { BDC_V(float, 0x2bd548), 0, BDC_V(float, 0x2bd550) },
+        { BDC_V(float, 0x2bd554), 0, BDC_V(float, 0x2bd55c) },
+        { BDC_V(float, 0x2bd560), BDC_V(float, 0x2bd564), BDC_V(float, 0x2bd568) },
+        { BDC_V(float, 0x2bd56c), BDC_V(float, 0x2bd570), BDC_V(float, 0x2bd574) },
+        { BDC_V(float, 0x2bd578), BDC_V(float, 0x2bd57c), BDC_V(float, 0x2bd580) },
+        { BDC_V(float, 0x2bd584), BDC_V(float, 0x2bd588), BDC_V(float, 0x2bd58c) },
+    },
+    {
+        { 0, BDC_V(float, 0x2bd594) }, { BDC_V(float, 0x2bd59c), BDC_V(float, 0x2bd5a0) },
+        { BDC_V(float, 0x2bd5a8), BDC_V(float, 0x2bd5ac) },
+        { BDC_V(float, 0x2bd5b4), BDC_V(float, 0x2bd5b8), BDC_V(float, 0x2bd5bc) },
+        { BDC_V(float, 0x2bd5c0), BDC_V(float, 0x2bd5c4), BDC_V(float, 0x2bd5c8) },
+        { BDC_V(float, 0x2bd5cc), BDC_V(float, 0x2bd5d0), BDC_V(float, 0x2bd5d4) },
+        { BDC_V(float, 0x2bd5d8), BDC_V(float, 0x2bd5dc), BDC_V(float, 0x2bd5e0) },
+    },
+};

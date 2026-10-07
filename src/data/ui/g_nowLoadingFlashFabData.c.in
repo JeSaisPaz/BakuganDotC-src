@@ -1,0 +1,4 @@
+// bdc 0x08ae0400 g_nowLoadingFlashFabData
+#include "bdc.h"
+
+__typeof__(u8[68976]) g_nowLoadingFlashFabData = BDC_BYTES(0x2dc400, 68976);

@@ -1,0 +1,4 @@
+// bdc 0x08ac3411 g_equipAltMotionFlags
+#include "bdc.h"
+
+__typeof__(u8[22]) g_equipAltMotionFlags = BDC_BYTES(0x2bf411, 22);

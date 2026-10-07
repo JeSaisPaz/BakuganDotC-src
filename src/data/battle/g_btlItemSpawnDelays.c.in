@@ -1,0 +1,21 @@
+// bdc 0x08a84038 g_btlItemSpawnDelays
+#include "bdc.h"
+
+__typeof__(BtlItemSpawnDelayRow[4]) g_btlItemSpawnDelays = {
+    {
+        .minSeconds = BDC_V(int, 0x280038),
+        .firstDelay = BDC_V(int, 0x28003c),
+        .delay = BDC_V(int, 0x280040),
+    },
+    {
+        .minSeconds = BDC_V(int, 0x280044),
+        .firstDelay = BDC_V(int, 0x280048),
+        .delay = BDC_V(int, 0x28004c),
+    },
+    {
+        .minSeconds = BDC_V(int, 0x280050),
+        .firstDelay = BDC_V(int, 0x280054),
+        .delay = BDC_V(int, 0x280058),
+    },
+    { .firstDelay = BDC_V(int, 0x280060), .delay = BDC_V(int, 0x280064) },
+};

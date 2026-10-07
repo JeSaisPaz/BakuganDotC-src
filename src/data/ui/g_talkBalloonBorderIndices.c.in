@@ -1,0 +1,4 @@
+// bdc 0x08abea3c g_talkBalloonBorderIndices
+#include "bdc.h"
+
+__typeof__(u8[51]) g_talkBalloonBorderIndices = BDC_BYTES(0x2baa3c, 51);

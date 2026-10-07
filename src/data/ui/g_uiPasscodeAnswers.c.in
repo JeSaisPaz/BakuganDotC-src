@@ -1,0 +1,11 @@
+// bdc 0x08a9cdf0 g_uiPasscodeAnswers
+#include "bdc.h"
+
+__typeof__(UiPasscodeAnswerEntry[6]) g_uiPasscodeAnswers = {
+    { .code = BDC_V(unsigned int, 0x298df0), .len = BDC_V(unsigned char, 0x298df4) },
+    { .code = BDC_V(unsigned int, 0x298df8), .len = BDC_V(unsigned char, 0x298dfc) },
+    { .code = BDC_V(unsigned int, 0x298e00), .len = BDC_V(unsigned char, 0x298e04) },
+    { .code = BDC_V(unsigned int, 0x298e08), .len = BDC_V(unsigned char, 0x298e0c) },
+    { .code = BDC_V(unsigned int, 0x298e10), .len = BDC_V(unsigned char, 0x298e14) },
+    { .code = BDC_V(unsigned int, 0x298e18), .len = BDC_V(unsigned char, 0x298e1c) },
+};

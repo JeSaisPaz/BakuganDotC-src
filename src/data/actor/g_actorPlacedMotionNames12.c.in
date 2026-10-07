@@ -1,0 +1,17 @@
+// bdc 0x08abf2e4 g_actorPlacedMotionNames12
+#include "bdc.h"
+
+__typeof__(char *[36]) g_actorPlacedMotionNames12 = {
+    (char *)BDC_STR(0x293ce8), (char *)BDC_STR(0x293cf8), (char *)BDC_STR(0x293d08),
+    (char *)BDC_STR(0x293d18), (char *)BDC_STR(0x293d2c), (char *)BDC_STR(0x293d40),
+    (char *)BDC_STR(0x293d54), (char *)BDC_STR(0x293d68), (char *)BDC_STR(0x293d7c),
+    (char *)BDC_STR(0x293d90), (char *)BDC_STR(0x293da8), (char *)BDC_STR(0x293dbc),
+    (char *)BDC_STR(0x293dd8), (char *)BDC_STR(0x293df4), (char *)BDC_STR(0x293e14),
+    (char *)BDC_STR(0x293e34), (char *)BDC_STR(0x293e54), (char *)BDC_STR(0x293e70),
+    (char *)BDC_STR(0x293e90), (char *)BDC_STR(0x293eb0), (char *)BDC_STR(0x293dbc),
+    (char *)BDC_STR(0x293dd8), (char *)BDC_STR(0x293df4), (char *)BDC_STR(0x293e14),
+    (char *)BDC_STR(0x293e34), (char *)BDC_STR(0x293e54), (char *)BDC_STR(0x293e70),
+    (char *)BDC_STR(0x293e90), (char *)BDC_STR(0x293eb0), (char *)BDC_STR(0x293ce8),
+    (char *)BDC_STR(0x293ed0), (char *)BDC_STR(0x293ee4), (char *)BDC_STR(0x293ef8),
+    (char *)BDC_STR(0x293f08), (char *)BDC_STR(0x293f1c), (char *)BDC_STR(0x293708),
+};

@@ -1,0 +1,56 @@
+// bdc 0x08ac11f0 g_hologramViewKindTable
+#include "bdc.h"
+
+__typeof__(s16[10][16]) g_hologramViewKindTable = {
+    {
+        BDC_V(short, 0x2bd1f0), 0, BDC_V(short, 0x2bd1f4), 0, BDC_V(short, 0x2bd1f8), 0,
+        BDC_V(short, 0x2bd1fc), 0, BDC_V(short, 0x2bd200), 0, BDC_V(short, 0x2bd204), 0,
+        BDC_V(short, 0x2bd208), 0, BDC_V(short, 0x2bd20c),
+    },
+    {
+        0, BDC_V(short, 0x2bd212), BDC_V(short, 0x2bd214), 0, 0, BDC_V(short, 0x2bd21a),
+        BDC_V(short, 0x2bd21c), BDC_V(short, 0x2bd21e), BDC_V(short, 0x2bd220),
+        BDC_V(short, 0x2bd222), BDC_V(short, 0x2bd224), 0, BDC_V(short, 0x2bd228), 0,
+        BDC_V(short, 0x2bd22c),
+    },
+    {
+        0, BDC_V(short, 0x2bd232), BDC_V(short, 0x2bd234), BDC_V(short, 0x2bd236),
+        BDC_V(short, 0x2bd238), 0, BDC_V(short, 0x2bd23c), 0, BDC_V(short, 0x2bd240), 0,
+        BDC_V(short, 0x2bd244), 0, BDC_V(short, 0x2bd248), 0, BDC_V(short, 0x2bd24c),
+    },
+    {
+        0, BDC_V(short, 0x2bd252), BDC_V(short, 0x2bd254), BDC_V(short, 0x2bd256),
+        BDC_V(short, 0x2bd258), 0, BDC_V(short, 0x2bd25c), 0, BDC_V(short, 0x2bd260), 0,
+        BDC_V(short, 0x2bd264), 0, BDC_V(short, 0x2bd268), 0, BDC_V(short, 0x2bd26c),
+    },
+    {
+        0, BDC_V(short, 0x2bd272), BDC_V(short, 0x2bd274), BDC_V(short, 0x2bd276),
+        BDC_V(short, 0x2bd278), 0, BDC_V(short, 0x2bd27c), 0, BDC_V(short, 0x2bd280), 0,
+        BDC_V(short, 0x2bd284), 0, BDC_V(short, 0x2bd288), 0, BDC_V(short, 0x2bd28c),
+    },
+    {
+        BDC_V(short, 0x2bd290), BDC_V(short, 0x2bd292), BDC_V(short, 0x2bd294), 0,
+        BDC_V(short, 0x2bd298), 0, BDC_V(short, 0x2bd29c), 0, BDC_V(short, 0x2bd2a0), 0,
+        BDC_V(short, 0x2bd2a4), 0, BDC_V(short, 0x2bd2a8), 0, BDC_V(short, 0x2bd2ac),
+    },
+    {
+        BDC_V(short, 0x2bd2b0), 0, BDC_V(short, 0x2bd2b4), 0, BDC_V(short, 0x2bd2b8), 0,
+        BDC_V(short, 0x2bd2bc), 0, BDC_V(short, 0x2bd2c0), 0, BDC_V(short, 0x2bd2c4), 0,
+        BDC_V(short, 0x2bd2c8), 0, BDC_V(short, 0x2bd2cc),
+    },
+    {
+        BDC_V(short, 0x2bd2d0), BDC_V(short, 0x2bd2d2), BDC_V(short, 0x2bd2d4), 0,
+        BDC_V(short, 0x2bd2d8), 0, BDC_V(short, 0x2bd2dc), 0, BDC_V(short, 0x2bd2e0), 0,
+        BDC_V(short, 0x2bd2e4), 0, BDC_V(short, 0x2bd2e8), 0, BDC_V(short, 0x2bd2ec),
+    },
+    {
+        BDC_V(short, 0x2bd2f0), 0, BDC_V(short, 0x2bd2f4), 0, BDC_V(short, 0x2bd2f8), 0,
+        BDC_V(short, 0x2bd2fc), 0, BDC_V(short, 0x2bd300), 0, BDC_V(short, 0x2bd304), 0,
+        BDC_V(short, 0x2bd308), 0, BDC_V(short, 0x2bd30c),
+    },
+    {
+        BDC_V(short, 0x2bd310), BDC_V(short, 0x2bd312), BDC_V(short, 0x2bd314), 0,
+        BDC_V(short, 0x2bd318), 0, BDC_V(short, 0x2bd31c), 0, BDC_V(short, 0x2bd320), 0,
+        BDC_V(short, 0x2bd324), 0, BDC_V(short, 0x2bd328), 0, BDC_V(short, 0x2bd32c),
+    },
+};

@@ -1,0 +1,22 @@
+// bdc 0x08aba9e0 g_btlKindStatTables
+#include "bdc.h"
+
+__typeof__(s8 *[35]) g_btlKindStatTables = {
+    NULL, (signed char *)BDC_STR(0x267620), (signed char *)BDC_STR(0x267730),
+    (signed char *)BDC_STR(0x267840), (signed char *)BDC_STR(0x267950),
+    (signed char *)BDC_STR(0x267a60), (signed char *)BDC_STR(0x267b70),
+    (signed char *)BDC_STR(0x267c80), (signed char *)BDC_STR(0x267d90),
+    (signed char *)BDC_STR(0x267ea0), (signed char *)BDC_STR(0x267fb0),
+    (signed char *)BDC_STR(0x2680c0), (signed char *)BDC_STR(0x2681d0),
+    (signed char *)BDC_STR(0x2682e0), (signed char *)BDC_STR(0x2683f0),
+    (signed char *)BDC_STR(0x268500), (signed char *)BDC_STR(0x268610),
+    (signed char *)BDC_STR(0x268720), (signed char *)BDC_STR(0x268830),
+    (signed char *)BDC_STR(0x268940), (signed char *)BDC_STR(0x268a50),
+    (signed char *)BDC_STR(0x2693e0), (signed char *)BDC_STR(0x2690b0),
+    (signed char *)BDC_STR(0x2694f0), (signed char *)BDC_STR(0x268d80),
+    (signed char *)BDC_STR(0x268b60), (signed char *)BDC_STR(0x2692d0),
+    (signed char *)BDC_STR(0x2691c0), (signed char *)BDC_STR(0x269600),
+    (signed char *)BDC_STR(0x268c70), (signed char *)BDC_STR(0x268fa0),
+    (signed char *)BDC_STR(0x268e90), (signed char *)BDC_STR(0x269710),
+    (signed char *)BDC_STR(0x2693e0), (signed char *)BDC_STR(0x2693e0),
+};

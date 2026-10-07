@@ -1,0 +1,4 @@
+// bdc 0x08abf47c g_actorPlacedMotionNames33
+#include "bdc.h"
+
+__typeof__(char *[3]) g_actorPlacedMotionNames33 = { (char *)BDC_STR(0x2942c0), (char *)BDC_STR(0x2942d4), (char *)BDC_STR(0x293708) };

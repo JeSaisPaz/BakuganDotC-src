@@ -1,0 +1,10 @@
+// bdc 0x08ac43f0 g_impureData
+#include "bdc.h"
+
+__typeof__(_reent) g_impureData = {
+    ._stdin = (struct FILE *)&g_impureData.__sf,
+    ._stdout = (struct FILE *)&g_impureData.__sf[1],
+    ._stderr = (struct FILE *)&g_impureData.__sf[2],
+    ._current_locale = (char *)BDC_STR(0x29bba8),
+    ._unused_rand = BDC_V(unsigned int, 0x2c0448),
+};

@@ -1,0 +1,11 @@
+// bdc 0x08aa3880 g_collisionDebugRingXY
+#include "bdc.h"
+
+__typeof__(float[6][3]) g_collisionDebugRingXY = {
+    { BDC_V(float, 0x29f880), BDC_V(float, 0x29f884) },
+    { BDC_V(float, 0x29f88c), BDC_V(float, 0x29f890) },
+    { BDC_V(float, 0x29f898), BDC_V(float, 0x29f89c) },
+    { BDC_V(float, 0x29f8a4), BDC_V(float, 0x29f8a8) },
+    { BDC_V(float, 0x29f8b0), BDC_V(float, 0x29f8b4) },
+    { BDC_V(float, 0x29f8bc), BDC_V(float, 0x29f8c0) },
+};

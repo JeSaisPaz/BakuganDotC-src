@@ -1,0 +1,4 @@
+// bdc 0x08aa30f8 g_gfxMaterialCodePrefix
+#include "bdc.h"
+
+__typeof__(const char[3]) g_gfxMaterialCodePrefix = BDC_BYTES(0x29f0f8, 3);

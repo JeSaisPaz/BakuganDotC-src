@@ -1,0 +1,13 @@
+// bdc 0x08abd5c0 g_actorStageObjShakeTable
+#include "bdc.h"
+
+__typeof__(s16[32]) g_actorStageObjShakeTable = {
+    BDC_V(short, 0x2b95c0), BDC_V(short, 0x2b95c2), BDC_V(short, 0x2b95c4), BDC_V(short, 0x2b95c6),
+    BDC_V(short, 0x2b95c8), BDC_V(short, 0x2b95ca), BDC_V(short, 0x2b95cc), BDC_V(short, 0x2b95ce),
+    BDC_V(short, 0x2b95d0), BDC_V(short, 0x2b95d2), BDC_V(short, 0x2b95d4), BDC_V(short, 0x2b95d6),
+    BDC_V(short, 0x2b95d8), BDC_V(short, 0x2b95da), BDC_V(short, 0x2b95dc), BDC_V(short, 0x2b95de),
+    BDC_V(short, 0x2b95e0), BDC_V(short, 0x2b95e2), BDC_V(short, 0x2b95e4), BDC_V(short, 0x2b95e6),
+    BDC_V(short, 0x2b95e8), BDC_V(short, 0x2b95ea), BDC_V(short, 0x2b95ec), BDC_V(short, 0x2b95ee),
+    BDC_V(short, 0x2b95f0), BDC_V(short, 0x2b95f2), BDC_V(short, 0x2b95f4), BDC_V(short, 0x2b95f6),
+    BDC_V(short, 0x2b95f8), BDC_V(short, 0x2b95fa), BDC_V(short, 0x2b95fc), BDC_V(short, 0x2b95fe),
+};

@@ -1,0 +1,12 @@
+// bdc 0x08aac9f4 g_languageDirNames
+#include "bdc.h"
+
+__typeof__(const char *[14]) g_languageDirNames = {
+    (const char *)BDC_STR(0x23018c), (const char *)BDC_STR(0x23018c),
+    (const char *)BDC_STR(0x230190), (const char *)BDC_STR(0x230198),
+    (const char *)BDC_STR(0x23019c), (const char *)BDC_STR(0x2301a0),
+    (const char *)BDC_STR(0x2301a4), (const char *)BDC_STR(0x23018c),
+    (const char *)BDC_STR(0x23018c), (const char *)BDC_STR(0x23018c),
+    (const char *)BDC_STR(0x23018c), (const char *)BDC_STR(0x23018c),
+    (const char *)BDC_STR(0x2301a8), (const char *)BDC_STR(0x23018c),
+};

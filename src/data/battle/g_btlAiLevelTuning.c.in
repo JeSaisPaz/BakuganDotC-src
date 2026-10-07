@@ -1,0 +1,12 @@
+// bdc 0x08a803e4 g_btlAiLevelTuning
+#include "bdc.h"
+
+__typeof__(BtlAiLevelTuning) g_btlAiLevelTuning = {
+    .guardDelayMin = { BDC_V(float, 0x27c3e4), BDC_V(float, 0x27c3e8) },
+    .guardDelayMax = { BDC_V(float, 0x27c3ec), BDC_V(float, 0x27c3f0) },
+    ._unk10 = BDC_BYTES(0x27c3f4, 8),
+    .seekItemChance = BDC_BYTES(0x27c3fc, 2),
+    .comboFalloff = { BDC_V(float, 0x27c400), BDC_V(float, 0x27c404) },
+    ._unk24 = BDC_BYTES(0x27c408, 8),
+    .guardDelayChance = BDC_BYTES(0x27c410, 2),
+};

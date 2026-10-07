@@ -1,0 +1,15 @@
+// bdc 0x08a9b2b8 g_loadingTipRowMap
+#include "bdc.h"
+
+__typeof__(s32[40]) g_loadingTipRowMap = {
+    0, BDC_V(int, 0x2972bc), BDC_V(int, 0x2972c0), BDC_V(int, 0x2972c4), BDC_V(int, 0x2972c8),
+    BDC_V(int, 0x2972cc), BDC_V(int, 0x2972d0), BDC_V(int, 0x2972d4), BDC_V(int, 0x2972d8),
+    BDC_V(int, 0x2972dc), BDC_V(int, 0x2972e0), BDC_V(int, 0x2972e4), BDC_V(int, 0x2972e8),
+    BDC_V(int, 0x2972ec), BDC_V(int, 0x2972f0), BDC_V(int, 0x2972f4), BDC_V(int, 0x2972f8),
+    BDC_V(int, 0x2972fc), BDC_V(int, 0x297300), BDC_V(int, 0x297304), BDC_V(int, 0x297308),
+    BDC_V(int, 0x29730c), BDC_V(int, 0x297310), BDC_V(int, 0x297314), BDC_V(int, 0x297318),
+    BDC_V(int, 0x29731c), BDC_V(int, 0x297320), BDC_V(int, 0x297324), BDC_V(int, 0x297328),
+    BDC_V(int, 0x29732c), BDC_V(int, 0x297330), BDC_V(int, 0x297334), BDC_V(int, 0x297338),
+    BDC_V(int, 0x29733c), BDC_V(int, 0x297340), BDC_V(int, 0x297344), BDC_V(int, 0x297348),
+    BDC_V(int, 0x29734c), BDC_V(int, 0x297350), BDC_V(int, 0x297354),
+};

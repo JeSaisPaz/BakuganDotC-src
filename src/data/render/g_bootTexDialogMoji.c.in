@@ -1,0 +1,4 @@
+// bdc 0x08adcbe0 g_bootTexDialogMoji
+#include "bdc.h"
+
+__typeof__(u8[1216]) g_bootTexDialogMoji = BDC_BYTES(0x2d8be0, 1216);

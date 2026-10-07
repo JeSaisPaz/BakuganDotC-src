@@ -1,0 +1,7 @@
+// bdc 0x08a92cd8 g_gameFieldVignetteColours
+#include "bdc.h"
+
+__typeof__(const u32[4]) g_gameFieldVignetteColours = {
+    BDC_V(unsigned int, 0x28ecd8), BDC_V(unsigned int, 0x28ecdc), BDC_V(unsigned int, 0x28ece0),
+    BDC_V(unsigned int, 0x28ece4),
+};

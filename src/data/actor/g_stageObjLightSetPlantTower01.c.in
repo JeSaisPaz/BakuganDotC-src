@@ -1,0 +1,21 @@
+// bdc 0x08a827e0 g_stageObjLightSetPlantTower01
+#include "bdc.h"
+
+__typeof__(const StageObjLightSet3) g_stageObjLightSetPlantTower01 = {
+    .modelName = (const char *)BDC_STR(0x27e7cc),
+    .count = BDC_V(int, 0x27e7e4),
+    .lights = {
+        {
+            .pos = { BDC_V(float, 0x27e7f0), BDC_V(float, 0x27e7f4), BDC_V(float, 0x27e7f8) },
+            .texIndex = BDC_V(float, 0x27e7fc),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e800), BDC_V(float, 0x27e804), BDC_V(float, 0x27e808) },
+            .texIndex = BDC_V(float, 0x27e80c),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e810), BDC_V(float, 0x27e814), BDC_V(float, 0x27e818) },
+            .texIndex = BDC_V(float, 0x27e81c),
+        },
+    },
+};

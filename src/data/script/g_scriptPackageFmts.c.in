@@ -1,0 +1,12 @@
+// bdc 0x08aacb58 g_scriptPackageFmts
+#include "bdc.h"
+
+__typeof__(const char *[14]) g_scriptPackageFmts = {
+    (const char *)BDC_STR(0x230a80), (const char *)BDC_STR(0x230a84),
+    (const char *)BDC_STR(0x230a94), (const char *)BDC_STR(0x230aac),
+    (const char *)BDC_STR(0x230ac4), (const char *)BDC_STR(0x230ae8),
+    (const char *)BDC_STR(0x230af8), (const char *)BDC_STR(0x230b10),
+    (const char *)BDC_STR(0x230b28), (const char *)BDC_STR(0x230b44),
+    (const char *)BDC_STR(0x230b60), (const char *)BDC_STR(0x230b7c),
+    (const char *)BDC_STR(0x230b9c), (const char *)BDC_STR(0x230bb4),
+};

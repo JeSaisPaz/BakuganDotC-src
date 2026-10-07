@@ -1,0 +1,14 @@
+// bdc 0x08aacaf8 g_languageSfoStrings
+#include "bdc.h"
+
+__typeof__(const char *[17]) g_languageSfoStrings = {
+    (const char *)BDC_STR(0x2305dc), (const char *)BDC_STR(0x2305f0),
+    (const char *)BDC_STR(0x230604), (const char *)BDC_STR(0x230608),
+    (const char *)BDC_STR(0x230614), (const char *)BDC_STR(0x23061c),
+    (const char *)BDC_STR(0x230628), (const char *)BDC_STR(0x230634),
+    (const char *)BDC_STR(0x23063c), (const char *)BDC_STR(0x230648),
+    (const char *)BDC_STR(0x230654), (const char *)BDC_STR(0x230660),
+    (const char *)BDC_STR(0x230670), (const char *)BDC_STR(0x23067c),
+    (const char *)BDC_STR(0x230690), (const char *)BDC_STR(0x2306a4),
+    (const char *)BDC_STR(0x2306ac),
+};

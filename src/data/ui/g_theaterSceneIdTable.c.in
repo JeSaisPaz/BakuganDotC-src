@@ -1,0 +1,16 @@
+// bdc 0x08ac3a00 g_theaterSceneIdTable
+#include "bdc.h"
+
+__typeof__(u16[22]) g_theaterSceneIdTable = {
+    BDC_V(unsigned short, 0x2bfa00), BDC_V(unsigned short, 0x2bfa02),
+    BDC_V(unsigned short, 0x2bfa04), BDC_V(unsigned short, 0x2bfa06),
+    BDC_V(unsigned short, 0x2bfa08), BDC_V(unsigned short, 0x2bfa0a),
+    BDC_V(unsigned short, 0x2bfa0c), BDC_V(unsigned short, 0x2bfa0e),
+    BDC_V(unsigned short, 0x2bfa10), BDC_V(unsigned short, 0x2bfa12),
+    BDC_V(unsigned short, 0x2bfa14), BDC_V(unsigned short, 0x2bfa16),
+    BDC_V(unsigned short, 0x2bfa18), BDC_V(unsigned short, 0x2bfa1a),
+    BDC_V(unsigned short, 0x2bfa1c), BDC_V(unsigned short, 0x2bfa1e),
+    BDC_V(unsigned short, 0x2bfa20), BDC_V(unsigned short, 0x2bfa22),
+    BDC_V(unsigned short, 0x2bfa24), BDC_V(unsigned short, 0x2bfa26),
+    BDC_V(unsigned short, 0x2bfa28), BDC_V(unsigned short, 0x2bfa2a),
+};

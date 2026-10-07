@@ -1,0 +1,4 @@
+// bdc 0x08aa4f80 g_atanfLo
+#include "bdc.h"
+
+__typeof__(float[4]) g_atanfLo = { BDC_V(float, 0x2a0f80), BDC_V(float, 0x2a0f84), BDC_V(float, 0x2a0f88), BDC_V(float, 0x2a0f8c) };

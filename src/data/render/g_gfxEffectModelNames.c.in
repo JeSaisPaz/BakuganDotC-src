@@ -1,0 +1,8 @@
+// bdc 0x08ab9e14 g_gfxEffectModelNames
+#include "bdc.h"
+
+__typeof__(const char *[6]) g_gfxEffectModelNames = {
+    (const char *)BDC_STR(0x25e358), (const char *)BDC_STR(0x25e368),
+    (const char *)BDC_STR(0x25e374), (const char *)BDC_STR(0x25e384),
+    (const char *)BDC_STR(0x25e398), (const char *)BDC_STR(0x25e3ac),
+};

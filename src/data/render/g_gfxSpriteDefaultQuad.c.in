@@ -1,0 +1,4 @@
+// bdc 0x08aa3af0 g_gfxSpriteDefaultQuad
+#include "bdc.h"
+
+__typeof__(u8[32]) g_gfxSpriteDefaultQuad = BDC_BYTES(0x29faf0, 32);

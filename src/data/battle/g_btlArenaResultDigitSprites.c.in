@@ -1,0 +1,21 @@
+// bdc 0x08aba5b0 g_btlArenaResultDigitSprites
+#include "bdc.h"
+
+__typeof__(s32[16][3]) g_btlArenaResultDigitSprites = {
+    { BDC_V(int, 0x2b65b0), BDC_V(int, 0x2b65b4), BDC_V(int, 0x2b65b8) },
+    { BDC_V(int, 0x2b65bc), BDC_V(int, 0x2b65c0), BDC_V(int, 0x2b65c4) },
+    { BDC_V(int, 0x2b65c8), BDC_V(int, 0x2b65cc), BDC_V(int, 0x2b65d0) },
+    { BDC_V(int, 0x2b65d4), BDC_V(int, 0x2b65d8), BDC_V(int, 0x2b65dc) },
+    { BDC_V(int, 0x2b65e0), BDC_V(int, 0x2b65e4), BDC_V(int, 0x2b65e8) },
+    { BDC_V(int, 0x2b65ec), BDC_V(int, 0x2b65f0), BDC_V(int, 0x2b65f4) },
+    { BDC_V(int, 0x2b65f8), BDC_V(int, 0x2b65fc), BDC_V(int, 0x2b6600) },
+    { BDC_V(int, 0x2b6604), BDC_V(int, 0x2b6608), BDC_V(int, 0x2b660c) },
+    { BDC_V(int, 0x2b6610), BDC_V(int, 0x2b6614), BDC_V(int, 0x2b6618) },
+    { BDC_V(int, 0x2b661c), BDC_V(int, 0x2b6620), BDC_V(int, 0x2b6624) },
+    { BDC_V(int, 0x2b6628), BDC_V(int, 0x2b662c), BDC_V(int, 0x2b6630) },
+    { BDC_V(int, 0x2b6634), BDC_V(int, 0x2b6638), BDC_V(int, 0x2b663c) },
+    { BDC_V(int, 0x2b6640), BDC_V(int, 0x2b6644), BDC_V(int, 0x2b6648) },
+    { BDC_V(int, 0x2b664c), BDC_V(int, 0x2b6650), BDC_V(int, 0x2b6654) },
+    { BDC_V(int, 0x2b6658), BDC_V(int, 0x2b665c), BDC_V(int, 0x2b6660) },
+    { BDC_V(int, 0x2b6664), BDC_V(int, 0x2b6668), BDC_V(int, 0x2b666c) },
+};

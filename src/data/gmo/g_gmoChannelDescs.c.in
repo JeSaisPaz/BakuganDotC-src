@@ -1,0 +1,29 @@
+// bdc 0x08aa30af g_gmoChannelDescs
+#include "bdc.h"
+
+__typeof__(const GmoChannelDesc[7]) g_gmoChannelDescs = {
+    { .offset = BDC_V(unsigned char, 0x29f0af), .unk04 = BDC_V(unsigned char, 0x29f0b3) },
+    { .offset = BDC_V(unsigned char, 0x29f0b4), .unk04 = BDC_V(unsigned char, 0x29f0b8) },
+    { .offset = BDC_V(unsigned char, 0x29f0b9), .unk04 = BDC_V(unsigned char, 0x29f0bd) },
+    { .offset = BDC_V(unsigned char, 0x29f0be), .unk04 = BDC_V(unsigned char, 0x29f0c2) },
+    {
+        .offset = BDC_V(unsigned char, 0x29f0c3),
+        .clearMask = BDC_V(unsigned char, 0x29f0c4),
+        .unk03 = BDC_V(unsigned char, 0x29f0c6),
+        .unk04 = BDC_V(unsigned char, 0x29f0c7),
+    },
+    {
+        .offset = BDC_V(unsigned char, 0x29f0c8),
+        .clearMask = BDC_V(unsigned char, 0x29f0c9),
+        .setMask = BDC_V(unsigned char, 0x29f0ca),
+        .unk03 = BDC_V(unsigned char, 0x29f0cb),
+        .unk04 = BDC_V(unsigned char, 0x29f0cc),
+    },
+    {
+        .offset = BDC_V(unsigned char, 0x29f0cd),
+        .clearMask = BDC_V(unsigned char, 0x29f0ce),
+        .setMask = BDC_V(unsigned char, 0x29f0cf),
+        .unk03 = BDC_V(unsigned char, 0x29f0d0),
+        .unk04 = BDC_V(unsigned char, 0x29f0d1),
+    },
+};

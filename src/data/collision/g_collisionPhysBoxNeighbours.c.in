@@ -1,0 +1,4 @@
+// bdc 0x08aa33d0 g_collisionPhysBoxNeighbours
+#include "bdc.h"
+
+__typeof__(u8[24]) g_collisionPhysBoxNeighbours = BDC_BYTES(0x29f3d0, 24);

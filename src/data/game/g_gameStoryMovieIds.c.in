@@ -1,0 +1,81 @@
+// bdc 0x08a936c8 g_gameStoryMovieIds
+#include "bdc.h"
+
+__typeof__(s8[19][4][6]) g_gameStoryMovieIds = {
+    {
+        BDC_BYTES(0x28f6c8, 6), BDC_BYTES(0x28f6ce, 6), BDC_BYTES(0x28f6d4, 6),
+        BDC_BYTES(0x28f6da, 6),
+    },
+    {
+        BDC_BYTES(0x28f6e0, 6), BDC_BYTES(0x28f6e6, 6), BDC_BYTES(0x28f6ec, 6),
+        BDC_BYTES(0x28f6f2, 6),
+    },
+    {
+        BDC_BYTES(0x28f6f8, 6), BDC_BYTES(0x28f6fe, 6), BDC_BYTES(0x28f704, 6),
+        BDC_BYTES(0x28f70a, 6),
+    },
+    {
+        BDC_BYTES(0x28f710, 6), BDC_BYTES(0x28f716, 6), BDC_BYTES(0x28f71c, 6),
+        BDC_BYTES(0x28f722, 6),
+    },
+    {
+        BDC_BYTES(0x28f728, 6), BDC_BYTES(0x28f72e, 6), BDC_BYTES(0x28f734, 6),
+        BDC_BYTES(0x28f73a, 6),
+    },
+    {
+        BDC_BYTES(0x28f740, 6), BDC_BYTES(0x28f746, 6), BDC_BYTES(0x28f74c, 6),
+        BDC_BYTES(0x28f752, 6),
+    },
+    {
+        BDC_BYTES(0x28f758, 6), BDC_BYTES(0x28f75e, 6), BDC_BYTES(0x28f764, 6),
+        BDC_BYTES(0x28f76a, 6),
+    },
+    {
+        BDC_BYTES(0x28f770, 6), BDC_BYTES(0x28f776, 6), BDC_BYTES(0x28f77c, 6),
+        BDC_BYTES(0x28f782, 6),
+    },
+    {
+        BDC_BYTES(0x28f788, 6), BDC_BYTES(0x28f78e, 6), BDC_BYTES(0x28f794, 6),
+        BDC_BYTES(0x28f79a, 6),
+    },
+    {
+        BDC_BYTES(0x28f7a0, 6), BDC_BYTES(0x28f7a6, 6), BDC_BYTES(0x28f7ac, 6),
+        BDC_BYTES(0x28f7b2, 6),
+    },
+    {
+        BDC_BYTES(0x28f7b8, 6), BDC_BYTES(0x28f7be, 6), BDC_BYTES(0x28f7c4, 6),
+        BDC_BYTES(0x28f7ca, 6),
+    },
+    {
+        BDC_BYTES(0x28f7d0, 6), BDC_BYTES(0x28f7d6, 6), BDC_BYTES(0x28f7dc, 6),
+        BDC_BYTES(0x28f7e2, 6),
+    },
+    {
+        BDC_BYTES(0x28f7e8, 6), BDC_BYTES(0x28f7ee, 6), BDC_BYTES(0x28f7f4, 6),
+        BDC_BYTES(0x28f7fa, 6),
+    },
+    {
+        BDC_BYTES(0x28f800, 6), BDC_BYTES(0x28f806, 6), BDC_BYTES(0x28f80c, 6),
+        BDC_BYTES(0x28f812, 6),
+    },
+    {
+        BDC_BYTES(0x28f818, 6), BDC_BYTES(0x28f81e, 6), BDC_BYTES(0x28f824, 6),
+        BDC_BYTES(0x28f82a, 6),
+    },
+    {
+        BDC_BYTES(0x28f830, 6), BDC_BYTES(0x28f836, 6), BDC_BYTES(0x28f83c, 6),
+        BDC_BYTES(0x28f842, 6),
+    },
+    {
+        BDC_BYTES(0x28f848, 6), BDC_BYTES(0x28f84e, 6), BDC_BYTES(0x28f854, 6),
+        BDC_BYTES(0x28f85a, 6),
+    },
+    {
+        BDC_BYTES(0x28f860, 6), BDC_BYTES(0x28f866, 6), BDC_BYTES(0x28f86c, 6),
+        BDC_BYTES(0x28f872, 6),
+    },
+    {
+        BDC_BYTES(0x28f878, 6), BDC_BYTES(0x28f87e, 6), BDC_BYTES(0x28f884, 6),
+        BDC_BYTES(0x28f88a, 6),
+    },
+};

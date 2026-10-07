@@ -1,0 +1,10 @@
+// bdc 0x08abd544 g_attrLandmarkParamRowTable
+#include "bdc.h"
+
+__typeof__(int[18]) g_attrLandmarkParamRowTable = {
+    0, BDC_V(int, 0x2b9548), BDC_V(int, 0x2b954c), BDC_V(int, 0x2b9550), BDC_V(int, 0x2b9554),
+    BDC_V(int, 0x2b9558), BDC_V(int, 0x2b955c), BDC_V(int, 0x2b9560), BDC_V(int, 0x2b9564),
+    BDC_V(int, 0x2b9568), BDC_V(int, 0x2b956c), BDC_V(int, 0x2b9570), BDC_V(int, 0x2b9574),
+    BDC_V(int, 0x2b9578), BDC_V(int, 0x2b957c), BDC_V(int, 0x2b9580), BDC_V(int, 0x2b9584),
+    BDC_V(int, 0x2b9588),
+};

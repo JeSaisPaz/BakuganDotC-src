@@ -1,0 +1,7 @@
+// bdc 0x08aa12ac g_soundProfileRanges
+#include "bdc.h"
+
+__typeof__(s32[6]) g_soundProfileRanges = {
+    BDC_V(int, 0x29d2ac), BDC_V(int, 0x29d2b0), BDC_V(int, 0x29d2b4), 0, BDC_V(int, 0x29d2bc),
+    BDC_V(int, 0x29d2c0),
+};

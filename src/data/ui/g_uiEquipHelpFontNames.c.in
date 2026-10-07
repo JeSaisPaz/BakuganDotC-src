@@ -1,0 +1,4 @@
+// bdc 0x08ac3494 g_uiEquipHelpFontNames
+#include "bdc.h"
+
+__typeof__(char *[2]) g_uiEquipHelpFontNames = { (char *)BDC_STR(0x2996f0) };

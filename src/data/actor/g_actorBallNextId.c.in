@@ -1,0 +1,4 @@
+// bdc 0x08abd644 g_actorBallNextId
+#include "bdc.h"
+
+__typeof__(s32) g_actorBallNextId = BDC_V(int, 0x2b9644);

@@ -1,0 +1,68 @@
+// bdc 0x08a7ca60 g_btlKind17MotionSet27
+#include "bdc.h"
+
+__typeof__(BtlAttackMotionSetEv10) g_btlKind17MotionSet27 = {
+    .head = {
+        .flags = BDC_V(unsigned int, 0x278a60),
+        .startMotion = BDC_V(short, 0x278a64),
+        .loopMotion = BDC_V(short, 0x278a66),
+        .mainMotion = BDC_V(short, 0x278a68),
+        .endMotion = BDC_V(short, 0x278a6a),
+    },
+    .events = {
+        {
+            .type = BDC_V(unsigned char, 0x278a6c),
+            .startFrame = BDC_V(unsigned char, 0x278a6d),
+            .endFrame = BDC_V(unsigned char, 0x278a6e),
+            .param = { .soundId = BDC_V(int, 0x278a70) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x278a80),
+            .startFrame = BDC_V(unsigned char, 0x278a81),
+            .endFrame = BDC_V(unsigned char, 0x278a82),
+            .param = { .soundId = BDC_V(int, 0x278a84) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x278a94),
+            .startFrame = BDC_V(unsigned char, 0x278a95),
+            .endFrame = BDC_V(unsigned char, 0x278a96),
+            .param = { .soundId = BDC_V(int, 0x278a98) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x278aa8),
+            .startFrame = BDC_V(unsigned char, 0x278aa9),
+            .endFrame = BDC_V(unsigned char, 0x278aaa),
+            .param = { .soundId = BDC_V(int, 0x278aac) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x278abc),
+            .startFrame = BDC_V(unsigned char, 0x278abd),
+            .endFrame = BDC_V(unsigned char, 0x278abe),
+            .param = { .soundId = BDC_V(int, 0x278ac0) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x278ad0),
+            .startFrame = BDC_V(unsigned char, 0x278ad1),
+            .endFrame = BDC_V(unsigned char, 0x278ad2),
+            .value = BDC_V(float, 0x278ad8),
+        },
+        {
+            .type = BDC_V(unsigned char, 0x278ae4),
+            .startFrame = BDC_V(unsigned char, 0x278ae5),
+            .endFrame = BDC_V(unsigned char, 0x278ae6),
+            .value = BDC_V(float, 0x278aec),
+        },
+        {
+            .type = BDC_V(unsigned char, 0x278af8),
+            .startFrame = BDC_V(unsigned char, 0x278af9),
+            .endFrame = BDC_V(unsigned char, 0x278afa),
+            .value = BDC_V(float, 0x278b00),
+        },
+        {
+            .type = BDC_V(unsigned char, 0x278b0c),
+            .startFrame = BDC_V(unsigned char, 0x278b0d),
+            .endFrame = BDC_V(unsigned char, 0x278b0e),
+            .value = BDC_V(float, 0x278b14),
+        },
+    },
+};

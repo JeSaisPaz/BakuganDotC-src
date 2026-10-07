@@ -1,0 +1,4 @@
+// bdc 0x08ab0128 g_uiDefaultFontNames
+#include "bdc.h"
+
+__typeof__(const char *[2]) g_uiDefaultFontNames = { (const char *)BDC_STR(0x236144) };

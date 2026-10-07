@@ -1,0 +1,4 @@
+// bdc 0x08a66690 g_btlVignetteBottomColours
+#include "bdc.h"
+
+__typeof__(u32[2]) g_btlVignetteBottomColours = { BDC_V(unsigned int, 0x262690), BDC_V(unsigned int, 0x262694) };

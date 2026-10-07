@@ -1,0 +1,26 @@
+// bdc 0x08ac17d4 g_uiBakuganModelOffsetTable
+#include "bdc.h"
+
+__typeof__(float[84]) g_uiBakuganModelOffsetTable = {
+    BDC_V(float, 0x2bd7d4), BDC_V(float, 0x2bd7d8), BDC_V(float, 0x2bd7dc), BDC_V(float, 0x2bd7e0),
+    BDC_V(float, 0x2bd7e4), BDC_V(float, 0x2bd7e8), BDC_V(float, 0x2bd7ec), BDC_V(float, 0x2bd7f0),
+    BDC_V(float, 0x2bd7f4), BDC_V(float, 0x2bd7f8), BDC_V(float, 0x2bd7fc), BDC_V(float, 0x2bd800),
+    BDC_V(float, 0x2bd804), BDC_V(float, 0x2bd808), BDC_V(float, 0x2bd80c), BDC_V(float, 0x2bd810),
+    BDC_V(float, 0x2bd814), BDC_V(float, 0x2bd818), BDC_V(float, 0x2bd81c), BDC_V(float, 0x2bd820),
+    BDC_V(float, 0x2bd824), BDC_V(float, 0x2bd828), BDC_V(float, 0x2bd82c), BDC_V(float, 0x2bd830),
+    BDC_V(float, 0x2bd834), BDC_V(float, 0x2bd838), BDC_V(float, 0x2bd83c), BDC_V(float, 0x2bd840),
+    BDC_V(float, 0x2bd844), BDC_V(float, 0x2bd848), BDC_V(float, 0x2bd84c), BDC_V(float, 0x2bd850),
+    BDC_V(float, 0x2bd854), BDC_V(float, 0x2bd858), BDC_V(float, 0x2bd85c), BDC_V(float, 0x2bd860),
+    BDC_V(float, 0x2bd864), BDC_V(float, 0x2bd868), BDC_V(float, 0x2bd86c), BDC_V(float, 0x2bd870),
+    BDC_V(float, 0x2bd874), BDC_V(float, 0x2bd878), BDC_V(float, 0x2bd87c), BDC_V(float, 0x2bd880),
+    BDC_V(float, 0x2bd884), BDC_V(float, 0x2bd888), BDC_V(float, 0x2bd88c), BDC_V(float, 0x2bd890),
+    BDC_V(float, 0x2bd894), BDC_V(float, 0x2bd898), BDC_V(float, 0x2bd89c), BDC_V(float, 0x2bd8a0),
+    BDC_V(float, 0x2bd8a4), BDC_V(float, 0x2bd8a8), BDC_V(float, 0x2bd8ac), BDC_V(float, 0x2bd8b0),
+    BDC_V(float, 0x2bd8b4), BDC_V(float, 0x2bd8b8), BDC_V(float, 0x2bd8bc), BDC_V(float, 0x2bd8c0),
+    BDC_V(float, 0x2bd8c4), BDC_V(float, 0x2bd8c8), BDC_V(float, 0x2bd8cc), BDC_V(float, 0x2bd8d0),
+    BDC_V(float, 0x2bd8d4), BDC_V(float, 0x2bd8d8), BDC_V(float, 0x2bd8dc), BDC_V(float, 0x2bd8e0),
+    BDC_V(float, 0x2bd8e4), BDC_V(float, 0x2bd8e8), BDC_V(float, 0x2bd8ec), BDC_V(float, 0x2bd8f0),
+    BDC_V(float, 0x2bd8f4), BDC_V(float, 0x2bd8f8), BDC_V(float, 0x2bd8fc), BDC_V(float, 0x2bd900),
+    BDC_V(float, 0x2bd904), BDC_V(float, 0x2bd908), BDC_V(float, 0x2bd90c), BDC_V(float, 0x2bd910),
+    BDC_V(float, 0x2bd914), BDC_V(float, 0x2bd918), BDC_V(float, 0x2bd91c), BDC_V(float, 0x2bd920),
+};

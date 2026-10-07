@@ -1,0 +1,13 @@
+// bdc 0x08aa3b50 g_gfxQuadTemplateTopLeft
+#include "bdc.h"
+
+__typeof__(GfxSpriteVertex[4]) g_gfxQuadTemplateTopLeft = {
+    {0}, { .u = BDC_V(float, 0x29fb5c), .x = BDC_V(signed char, 0x29fb64) },
+    { .v = BDC_V(float, 0x29fb6c), .y = BDC_V(signed char, 0x29fb71) },
+    {
+        .u = BDC_V(float, 0x29fb74),
+        .v = BDC_V(float, 0x29fb78),
+        .x = BDC_V(signed char, 0x29fb7c),
+        .y = BDC_V(signed char, 0x29fb7d),
+    },
+};

@@ -1,0 +1,7 @@
+// bdc 0x08ac58ec g_savedataSaveNames
+#include "bdc.h"
+
+__typeof__(const char *[3]) g_savedataSaveNames = {
+    (const char *)BDC_STR(0x29de00), (const char *)BDC_STR(0x29de0c),
+    (const char *)BDC_STR(0x29de14),
+};

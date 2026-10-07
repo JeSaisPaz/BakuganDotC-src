@@ -1,0 +1,16 @@
+// bdc 0x08ab9ba8 g_charMotionFiles
+#include "bdc.h"
+
+__typeof__(char *[33]) g_charMotionFiles = {
+    (char *)BDC_STR(0x25c3a4), (char *)BDC_STR(0x25c3a8), (char *)BDC_STR(0x25c3bc),
+    (char *)BDC_STR(0x25c3d0), (char *)BDC_STR(0x25c3e0), (char *)BDC_STR(0x25c3f4),
+    (char *)BDC_STR(0x25c404), (char *)BDC_STR(0x25c418), (char *)BDC_STR(0x25c428),
+    (char *)BDC_STR(0x25c438), (char *)BDC_STR(0x25c448), (char *)BDC_STR(0x25c45c),
+    (char *)BDC_STR(0x25c46c), (char *)BDC_STR(0x25c47c), (char *)BDC_STR(0x25c48c),
+    (char *)BDC_STR(0x25c49c), (char *)BDC_STR(0x25c4ac), (char *)BDC_STR(0x25c4c0),
+    (char *)BDC_STR(0x25c4d0), (char *)BDC_STR(0x25c4e4), (char *)BDC_STR(0x25c4f8),
+    (char *)BDC_STR(0x25c50c), (char *)BDC_STR(0x25c520), (char *)BDC_STR(0x25c530),
+    (char *)BDC_STR(0x25c540), (char *)BDC_STR(0x25c554), (char *)BDC_STR(0x25c564),
+    (char *)BDC_STR(0x25c578), (char *)BDC_STR(0x25c58c), (char *)BDC_STR(0x25c59c),
+    (char *)BDC_STR(0x25c5ac), (char *)BDC_STR(0x25c5bc), (char *)BDC_STR(0x25c5d0),
+};

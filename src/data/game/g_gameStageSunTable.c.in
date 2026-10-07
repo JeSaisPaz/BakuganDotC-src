@@ -1,0 +1,163 @@
+// bdc 0x08a96458 g_gameStageSunTable
+#include "bdc.h"
+
+__typeof__(float[32][7]) g_gameStageSunTable = {
+    {
+        BDC_V(float, 0x292458), BDC_V(float, 0x29245c), BDC_V(float, 0x292460),
+        BDC_V(float, 0x292464), BDC_V(float, 0x292468), BDC_V(float, 0x29246c),
+    },
+    {
+        BDC_V(float, 0x292474), BDC_V(float, 0x292478), BDC_V(float, 0x29247c),
+        BDC_V(float, 0x292480), BDC_V(float, 0x292484), BDC_V(float, 0x292488),
+        BDC_V(float, 0x29248c),
+    },
+    {
+        BDC_V(float, 0x292490), BDC_V(float, 0x292494), BDC_V(float, 0x292498),
+        BDC_V(float, 0x29249c), BDC_V(float, 0x2924a0), BDC_V(float, 0x2924a4),
+        BDC_V(float, 0x2924a8),
+    },
+    {
+        BDC_V(float, 0x2924ac), BDC_V(float, 0x2924b0), BDC_V(float, 0x2924b4),
+        BDC_V(float, 0x2924b8), BDC_V(float, 0x2924bc), BDC_V(float, 0x2924c0),
+        BDC_V(float, 0x2924c4),
+    },
+    {
+        BDC_V(float, 0x2924c8), BDC_V(float, 0x2924cc), BDC_V(float, 0x2924d0),
+        BDC_V(float, 0x2924d4), BDC_V(float, 0x2924d8), BDC_V(float, 0x2924dc),
+        BDC_V(float, 0x2924e0),
+    },
+    {
+        BDC_V(float, 0x2924e4), BDC_V(float, 0x2924e8), BDC_V(float, 0x2924ec),
+        BDC_V(float, 0x2924f0), BDC_V(float, 0x2924f4), BDC_V(float, 0x2924f8),
+        BDC_V(float, 0x2924fc),
+    },
+    {
+        BDC_V(float, 0x292500), BDC_V(float, 0x292504), BDC_V(float, 0x292508),
+        BDC_V(float, 0x29250c), BDC_V(float, 0x292510), BDC_V(float, 0x292514),
+        BDC_V(float, 0x292518),
+    },
+    {
+        BDC_V(float, 0x29251c), BDC_V(float, 0x292520), BDC_V(float, 0x292524),
+        BDC_V(float, 0x292528), BDC_V(float, 0x29252c), BDC_V(float, 0x292530),
+        BDC_V(float, 0x292534),
+    },
+    {
+        BDC_V(float, 0x292538), BDC_V(float, 0x29253c), BDC_V(float, 0x292540),
+        BDC_V(float, 0x292544), BDC_V(float, 0x292548), BDC_V(float, 0x29254c),
+        BDC_V(float, 0x292550),
+    },
+    {
+        BDC_V(float, 0x292554), BDC_V(float, 0x292558), BDC_V(float, 0x29255c),
+        BDC_V(float, 0x292560), BDC_V(float, 0x292564), BDC_V(float, 0x292568),
+        BDC_V(float, 0x29256c),
+    },
+    {
+        BDC_V(float, 0x292570), BDC_V(float, 0x292574), BDC_V(float, 0x292578),
+        BDC_V(float, 0x29257c), BDC_V(float, 0x292580), BDC_V(float, 0x292584),
+        BDC_V(float, 0x292588),
+    },
+    {
+        BDC_V(float, 0x29258c), BDC_V(float, 0x292590), BDC_V(float, 0x292594),
+        BDC_V(float, 0x292598), BDC_V(float, 0x29259c), BDC_V(float, 0x2925a0),
+        BDC_V(float, 0x2925a4),
+    },
+    {
+        BDC_V(float, 0x2925a8), BDC_V(float, 0x2925ac), BDC_V(float, 0x2925b0),
+        BDC_V(float, 0x2925b4), BDC_V(float, 0x2925b8), BDC_V(float, 0x2925bc),
+        BDC_V(float, 0x2925c0),
+    },
+    {
+        BDC_V(float, 0x2925c4), BDC_V(float, 0x2925c8), BDC_V(float, 0x2925cc),
+        BDC_V(float, 0x2925d0), BDC_V(float, 0x2925d4), BDC_V(float, 0x2925d8),
+    },
+    {
+        BDC_V(float, 0x2925e0), BDC_V(float, 0x2925e4), BDC_V(float, 0x2925e8),
+        BDC_V(float, 0x2925ec), BDC_V(float, 0x2925f0), BDC_V(float, 0x2925f4),
+        BDC_V(float, 0x2925f8),
+    },
+    {
+        BDC_V(float, 0x2925fc), BDC_V(float, 0x292600), BDC_V(float, 0x292604),
+        BDC_V(float, 0x292608), BDC_V(float, 0x29260c), BDC_V(float, 0x292610),
+        BDC_V(float, 0x292614),
+    },
+    {
+        BDC_V(float, 0x292618), BDC_V(float, 0x29261c), BDC_V(float, 0x292620),
+        BDC_V(float, 0x292624), BDC_V(float, 0x292628), BDC_V(float, 0x29262c),
+        BDC_V(float, 0x292630),
+    },
+    {
+        BDC_V(float, 0x292634), BDC_V(float, 0x292638), BDC_V(float, 0x29263c),
+        BDC_V(float, 0x292640), BDC_V(float, 0x292644), BDC_V(float, 0x292648),
+        BDC_V(float, 0x29264c),
+    },
+    {
+        BDC_V(float, 0x292650), BDC_V(float, 0x292654), BDC_V(float, 0x292658),
+        BDC_V(float, 0x29265c), BDC_V(float, 0x292660), BDC_V(float, 0x292664),
+        BDC_V(float, 0x292668),
+    },
+    {
+        BDC_V(float, 0x29266c), BDC_V(float, 0x292670), BDC_V(float, 0x292674),
+        BDC_V(float, 0x292678), BDC_V(float, 0x29267c), BDC_V(float, 0x292680),
+        BDC_V(float, 0x292684),
+    },
+    {
+        BDC_V(float, 0x292688), BDC_V(float, 0x29268c), BDC_V(float, 0x292690),
+        BDC_V(float, 0x292694), BDC_V(float, 0x292698), BDC_V(float, 0x29269c),
+        BDC_V(float, 0x2926a0),
+    },
+    {
+        BDC_V(float, 0x2926a4), BDC_V(float, 0x2926a8), BDC_V(float, 0x2926ac),
+        BDC_V(float, 0x2926b0), BDC_V(float, 0x2926b4), BDC_V(float, 0x2926b8),
+        BDC_V(float, 0x2926bc),
+    },
+    {
+        BDC_V(float, 0x2926c0), BDC_V(float, 0x2926c4), BDC_V(float, 0x2926c8),
+        BDC_V(float, 0x2926cc), BDC_V(float, 0x2926d0), BDC_V(float, 0x2926d4),
+        BDC_V(float, 0x2926d8),
+    },
+    {
+        BDC_V(float, 0x2926dc), BDC_V(float, 0x2926e0), BDC_V(float, 0x2926e4),
+        BDC_V(float, 0x2926e8), BDC_V(float, 0x2926ec), BDC_V(float, 0x2926f0),
+        BDC_V(float, 0x2926f4),
+    },
+    {
+        BDC_V(float, 0x2926f8), BDC_V(float, 0x2926fc), BDC_V(float, 0x292700),
+        BDC_V(float, 0x292704), BDC_V(float, 0x292708), BDC_V(float, 0x29270c),
+        BDC_V(float, 0x292710),
+    },
+    {
+        BDC_V(float, 0x292714), BDC_V(float, 0x292718), BDC_V(float, 0x29271c),
+        BDC_V(float, 0x292720), BDC_V(float, 0x292724), BDC_V(float, 0x292728),
+        BDC_V(float, 0x29272c),
+    },
+    {
+        BDC_V(float, 0x292730), BDC_V(float, 0x292734), BDC_V(float, 0x292738),
+        BDC_V(float, 0x29273c), BDC_V(float, 0x292740), BDC_V(float, 0x292744),
+        BDC_V(float, 0x292748),
+    },
+    {
+        BDC_V(float, 0x29274c), BDC_V(float, 0x292750), BDC_V(float, 0x292754),
+        BDC_V(float, 0x292758), BDC_V(float, 0x29275c), BDC_V(float, 0x292760),
+        BDC_V(float, 0x292764),
+    },
+    {
+        BDC_V(float, 0x292768), BDC_V(float, 0x29276c), BDC_V(float, 0x292770),
+        BDC_V(float, 0x292774), BDC_V(float, 0x292778), BDC_V(float, 0x29277c),
+        BDC_V(float, 0x292780),
+    },
+    {
+        BDC_V(float, 0x292784), BDC_V(float, 0x292788), BDC_V(float, 0x29278c),
+        BDC_V(float, 0x292790), BDC_V(float, 0x292794), BDC_V(float, 0x292798),
+        BDC_V(float, 0x29279c),
+    },
+    {
+        BDC_V(float, 0x2927a0), BDC_V(float, 0x2927a4), BDC_V(float, 0x2927a8),
+        BDC_V(float, 0x2927ac), BDC_V(float, 0x2927b0), BDC_V(float, 0x2927b4),
+        BDC_V(float, 0x2927b8),
+    },
+    {
+        BDC_V(float, 0x2927bc), BDC_V(float, 0x2927c0), BDC_V(float, 0x2927c4),
+        BDC_V(float, 0x2927c8), BDC_V(float, 0x2927cc), BDC_V(float, 0x2927d0),
+        BDC_V(float, 0x2927d4),
+    },
+};

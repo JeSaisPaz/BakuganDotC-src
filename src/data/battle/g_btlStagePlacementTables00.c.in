@@ -1,0 +1,109 @@
+// bdc 0x08a8d5c8 g_btlStagePlacementTables00
+#include "bdc.h"
+
+__typeof__(BtlStagePlacementList[41]) g_btlStagePlacementTables00 = {
+    { .count = BDC_V(int, 0x2895c8), .records = (struct BtlStagePlacement *)&g_btlStagePlacements },
+    {
+        .count = BDC_V(int, 0x2895d0),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[203],
+    },
+    {
+        .count = BDC_V(int, 0x2895d8),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[402],
+    },
+    {
+        .count = BDC_V(int, 0x2895e0),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[509],
+    },
+    {
+        .count = BDC_V(int, 0x2895e8),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[663],
+    },
+    {
+        .count = BDC_V(int, 0x2895f0),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[766],
+    },
+    {
+        .count = BDC_V(int, 0x2895f8),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[852],
+    },
+    {
+        .count = BDC_V(int, 0x289600),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[942],
+    },
+    {
+        .count = BDC_V(int, 0x289608),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1044],
+    },
+    {
+        .count = BDC_V(int, 0x289610),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1179],
+    },
+    {
+        .count = BDC_V(int, 0x289618),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1210],
+    },
+    {
+        .count = BDC_V(int, 0x289620),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1383],
+    },
+    {
+        .count = BDC_V(int, 0x289628),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1625],
+    },
+    {
+        .count = BDC_V(int, 0x289630),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1725],
+    },
+    {
+        .count = BDC_V(int, 0x289638),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1748],
+    },
+    {
+        .count = BDC_V(int, 0x289640),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1787],
+    },
+    {
+        .count = BDC_V(int, 0x289648),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1844],
+    },
+    {
+        .count = BDC_V(int, 0x289650),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1917],
+    },
+    {
+        .count = BDC_V(int, 0x289658),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1944],
+    },
+    {
+        .count = BDC_V(int, 0x289660),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[1995],
+    },
+    {0}, {0}, {0}, {0},
+    {
+        .count = BDC_V(int, 0x289688),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[2058],
+    },
+    {0}, {0},
+    {
+        .count = BDC_V(int, 0x2896a0),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[2067],
+    },
+    {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+    {
+        .count = BDC_V(int, 0x2896e8),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[2122],
+    },
+    {
+        .count = BDC_V(int, 0x2896f0),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[2145],
+    },
+    {
+        .count = BDC_V(int, 0x2896f8),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[2190],
+    },
+    {
+        .count = BDC_V(int, 0x289700),
+        .records = (struct BtlStagePlacement *)&g_btlStagePlacements[2225],
+    },
+};

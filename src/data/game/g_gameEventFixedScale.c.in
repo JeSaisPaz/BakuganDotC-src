@@ -1,0 +1,4 @@
+// bdc 0x08a99028 g_gameEventFixedScale
+#include "bdc.h"
+
+__typeof__(s64) g_gameEventFixedScale = BDC_V(long long, 0x295028);

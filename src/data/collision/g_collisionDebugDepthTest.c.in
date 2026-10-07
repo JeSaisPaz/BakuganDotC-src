@@ -1,0 +1,4 @@
+// bdc 0x08ac5dac g_collisionDebugDepthTest
+#include "bdc.h"
+
+__typeof__(u8) g_collisionDebugDepthTest = BDC_V(unsigned char, 0x2c1dac);

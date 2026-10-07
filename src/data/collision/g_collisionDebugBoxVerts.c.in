@@ -1,0 +1,13 @@
+// bdc 0x08aa38fc g_collisionDebugBoxVerts
+#include "bdc.h"
+
+__typeof__(float[8][3]) g_collisionDebugBoxVerts = {
+    { BDC_V(float, 0x29f8fc), BDC_V(float, 0x29f900), BDC_V(float, 0x29f904) },
+    { BDC_V(float, 0x29f908), BDC_V(float, 0x29f90c), BDC_V(float, 0x29f910) },
+    { BDC_V(float, 0x29f914), BDC_V(float, 0x29f918), BDC_V(float, 0x29f91c) },
+    { BDC_V(float, 0x29f920), BDC_V(float, 0x29f924), BDC_V(float, 0x29f928) },
+    { BDC_V(float, 0x29f92c), BDC_V(float, 0x29f930), BDC_V(float, 0x29f934) },
+    { BDC_V(float, 0x29f938), BDC_V(float, 0x29f93c), BDC_V(float, 0x29f940) },
+    { BDC_V(float, 0x29f944), BDC_V(float, 0x29f948), BDC_V(float, 0x29f94c) },
+    { BDC_V(float, 0x29f950), BDC_V(float, 0x29f954), BDC_V(float, 0x29f958) },
+};

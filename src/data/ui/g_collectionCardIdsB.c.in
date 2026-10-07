@@ -1,0 +1,4 @@
+// bdc 0x08ac39dd g_collectionCardIdsB
+#include "bdc.h"
+
+__typeof__(u8[20]) g_collectionCardIdsB = BDC_BYTES(0x2bf9dd, 20);

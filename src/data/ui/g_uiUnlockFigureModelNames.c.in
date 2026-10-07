@@ -1,0 +1,28 @@
+// bdc 0x08ac1a70 g_uiUnlockFigureModelNames
+#include "bdc.h"
+
+__typeof__(const char *[45]) g_uiUnlockFigureModelNames = {
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988f8),
+    (const char *)BDC_STR(0x298914), (const char *)BDC_STR(0x298934),
+    (const char *)BDC_STR(0x298950), (const char *)BDC_STR(0x29896c),
+    (const char *)BDC_STR(0x298988), (const char *)BDC_STR(0x2989a4),
+    (const char *)BDC_STR(0x2989c0), (const char *)BDC_STR(0x2989dc),
+    (const char *)BDC_STR(0x2989f8), (const char *)BDC_STR(0x298a14),
+    (const char *)BDC_STR(0x298a30), (const char *)BDC_STR(0x298a50),
+    (const char *)BDC_STR(0x298a6c), (const char *)BDC_STR(0x298a8c),
+    (const char *)BDC_STR(0x298aa8), (const char *)BDC_STR(0x298ac4),
+    (const char *)BDC_STR(0x298ae0), (const char *)BDC_STR(0x298b00),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8), (const char *)BDC_STR(0x2988d8),
+    (const char *)BDC_STR(0x2988d8),
+};

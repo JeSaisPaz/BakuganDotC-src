@@ -1,0 +1,4 @@
+// bdc 0x08aa396c g_collisionDebugWorldCmd
+#include "bdc.h"
+
+__typeof__(u32) g_collisionDebugWorldCmd = BDC_V(unsigned int, 0x29f96c);

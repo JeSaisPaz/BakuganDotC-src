@@ -1,0 +1,7 @@
+// bdc 0x08a9d12c g_uiBattleRecordTotalColumnSprites
+#include "bdc.h"
+
+__typeof__(s32[8]) g_uiBattleRecordTotalColumnSprites = {
+    BDC_V(int, 0x29912c), BDC_V(int, 0x299130), BDC_V(int, 0x299134), BDC_V(int, 0x299138),
+    BDC_V(int, 0x29913c), BDC_V(int, 0x299140), BDC_V(int, 0x299144), BDC_V(int, 0x299148),
+};

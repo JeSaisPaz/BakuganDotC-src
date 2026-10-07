@@ -1,0 +1,4 @@
+// bdc 0x08a9cff0 g_netStatusMessageStrings
+#include "bdc.h"
+
+__typeof__(s32[3]) g_netStatusMessageStrings = { BDC_V(int, 0x298ff0), BDC_V(int, 0x298ff4), BDC_V(int, 0x298ff8) };

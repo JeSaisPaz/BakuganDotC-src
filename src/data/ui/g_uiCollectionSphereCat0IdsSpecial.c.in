@@ -1,0 +1,4 @@
+// bdc 0x08ac3519 g_uiCollectionSphereCat0IdsSpecial
+#include "bdc.h"
+
+__typeof__(u8[19]) g_uiCollectionSphereCat0IdsSpecial = BDC_BYTES(0x2bf519, 19);

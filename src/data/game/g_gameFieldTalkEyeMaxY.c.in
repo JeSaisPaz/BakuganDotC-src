@@ -1,0 +1,4 @@
+// bdc 0x08abea0c g_gameFieldTalkEyeMaxY
+#include "bdc.h"
+
+__typeof__(float) g_gameFieldTalkEyeMaxY = BDC_V(float, 0x2baa0c);

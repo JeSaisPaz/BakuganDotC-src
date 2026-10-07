@@ -1,0 +1,4 @@
+// bdc 0x08a9ba48 g_upgradeSlotIds
+#include "bdc.h"
+
+__typeof__(u8[126]) g_upgradeSlotIds = BDC_BYTES(0x297a48, 126);

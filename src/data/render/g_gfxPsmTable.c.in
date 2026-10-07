@@ -1,0 +1,8 @@
+// bdc 0x08aa3c80 g_gfxPsmTable
+#include "bdc.h"
+
+__typeof__(u32[8]) g_gfxPsmTable = {
+    0, BDC_V(unsigned int, 0x29fc84), BDC_V(unsigned int, 0x29fc88), BDC_V(unsigned int, 0x29fc8c),
+    BDC_V(unsigned int, 0x29fc90), BDC_V(unsigned int, 0x29fc94), BDC_V(unsigned int, 0x29fc98),
+    BDC_V(unsigned int, 0x29fc9c),
+};

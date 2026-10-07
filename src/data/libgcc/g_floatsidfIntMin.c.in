@@ -1,0 +1,4 @@
+// bdc 0x08aa5e90 g_floatsidfIntMin
+#include "bdc.h"
+
+__typeof__(double) g_floatsidfIntMin = BDC_V(double, 0x2a1e90);

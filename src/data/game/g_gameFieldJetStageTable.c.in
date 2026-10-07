@@ -1,0 +1,22 @@
+// bdc 0x08a91bd0 g_gameFieldJetStageTable
+#include "bdc.h"
+
+__typeof__(u32[17][2]) g_gameFieldJetStageTable = {
+    { BDC_V(unsigned int, 0x28dbd0) },
+    { BDC_V(unsigned int, 0x28dbd8), BDC_V(unsigned int, 0x28dbdc) },
+    { BDC_V(unsigned int, 0x28dbe0), BDC_V(unsigned int, 0x28dbe4) },
+    { BDC_V(unsigned int, 0x28dbe8), BDC_V(unsigned int, 0x28dbec) },
+    { BDC_V(unsigned int, 0x28dbf0), BDC_V(unsigned int, 0x28dbf4) },
+    { BDC_V(unsigned int, 0x28dbf8), BDC_V(unsigned int, 0x28dbfc) },
+    { BDC_V(unsigned int, 0x28dc00), BDC_V(unsigned int, 0x28dc04) },
+    { BDC_V(unsigned int, 0x28dc08), BDC_V(unsigned int, 0x28dc0c) },
+    { BDC_V(unsigned int, 0x28dc10), BDC_V(unsigned int, 0x28dc14) },
+    { BDC_V(unsigned int, 0x28dc18), BDC_V(unsigned int, 0x28dc1c) },
+    { BDC_V(unsigned int, 0x28dc20), BDC_V(unsigned int, 0x28dc24) },
+    { BDC_V(unsigned int, 0x28dc28), BDC_V(unsigned int, 0x28dc2c) },
+    { BDC_V(unsigned int, 0x28dc30), BDC_V(unsigned int, 0x28dc34) },
+    { BDC_V(unsigned int, 0x28dc38), BDC_V(unsigned int, 0x28dc3c) },
+    { BDC_V(unsigned int, 0x28dc40), BDC_V(unsigned int, 0x28dc44) },
+    { BDC_V(unsigned int, 0x28dc48), BDC_V(unsigned int, 0x28dc4c) },
+    { BDC_V(unsigned int, 0x28dc50), BDC_V(unsigned int, 0x28dc54) },
+};

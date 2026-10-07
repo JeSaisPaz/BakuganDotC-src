@@ -1,0 +1,16 @@
+// bdc 0x08ac1098 g_uiUpgradeMotionFormats
+#include "bdc.h"
+
+__typeof__(const char *[21]) g_uiUpgradeMotionFormats = {
+    (const char *)BDC_STR(0x297c4c), (const char *)BDC_STR(0x297c4c),
+    (const char *)BDC_STR(0x297c58), (const char *)BDC_STR(0x297c64),
+    (const char *)BDC_STR(0x297c70), (const char *)BDC_STR(0x297c7c),
+    (const char *)BDC_STR(0x297c88), (const char *)BDC_STR(0x297c94),
+    (const char *)BDC_STR(0x297ca0), (const char *)BDC_STR(0x297cac),
+    (const char *)BDC_STR(0x297cb8), (const char *)BDC_STR(0x297cc4),
+    (const char *)BDC_STR(0x297cd0), (const char *)BDC_STR(0x297cdc),
+    (const char *)BDC_STR(0x297ce8), (const char *)BDC_STR(0x297cf4),
+    (const char *)BDC_STR(0x297d00), (const char *)BDC_STR(0x297d0c),
+    (const char *)BDC_STR(0x297d18), (const char *)BDC_STR(0x297d24),
+    (const char *)BDC_STR(0x297d30),
+};

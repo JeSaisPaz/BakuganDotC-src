@@ -1,0 +1,9 @@
+// bdc 0x08a670ec g_actorCrystalModeTable
+#include "bdc.h"
+
+__typeof__(MemberFnPtr[6]) g_actorCrystalModeTable = {
+    { .index = BDC_V(short, 0x2630ee), .delta2 = BDC_V(int, 0x2630f0) },
+    { .index = BDC_V(short, 0x2630f6), .delta2 = BDC_V(int, 0x2630f8) },
+    { .pfn = (void *)ActorCrystalMode2Update }, { .pfn = (void *)ActorCrystalMode3ReturnFalse },
+    { .pfn = (void *)ActorCrystalMode4Update }, { .pfn = (void *)ActorCrystalMode5Update },
+};

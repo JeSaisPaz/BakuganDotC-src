@@ -1,0 +1,10 @@
+// bdc 0x08ac4332 g_gameStageRecTable
+#include "bdc.h"
+
+__typeof__(s16[18]) g_gameStageRecTable = {
+    BDC_V(short, 0x2c0332), BDC_V(short, 0x2c0334), BDC_V(short, 0x2c0336), BDC_V(short, 0x2c0338),
+    BDC_V(short, 0x2c033a), BDC_V(short, 0x2c033c), BDC_V(short, 0x2c033e), BDC_V(short, 0x2c0340),
+    BDC_V(short, 0x2c0342), BDC_V(short, 0x2c0344), BDC_V(short, 0x2c0346), BDC_V(short, 0x2c0348),
+    BDC_V(short, 0x2c034a), BDC_V(short, 0x2c034c), BDC_V(short, 0x2c034e), BDC_V(short, 0x2c0350),
+    BDC_V(short, 0x2c0352), BDC_V(short, 0x2c0354),
+};

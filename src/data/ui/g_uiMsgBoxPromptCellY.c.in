@@ -1,0 +1,4 @@
+// bdc 0x08aa34b8 g_uiMsgBoxPromptCellY
+#include "bdc.h"
+
+__typeof__(float[2]) g_uiMsgBoxPromptCellY = { 0, BDC_V(float, 0x29f4bc) };

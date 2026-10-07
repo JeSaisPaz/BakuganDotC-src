@@ -1,0 +1,15 @@
+// bdc 0x08ac1108 g_hologramGalleryInfoPanelSprites
+#include "bdc.h"
+
+__typeof__(u32[30]) g_hologramGalleryInfoPanelSprites = {
+    BDC_V(unsigned int, 0x2bd108), BDC_V(unsigned int, 0x2bd10c), BDC_V(unsigned int, 0x2bd110),
+    BDC_V(unsigned int, 0x2bd114), BDC_V(unsigned int, 0x2bd118), BDC_V(unsigned int, 0x2bd11c),
+    BDC_V(unsigned int, 0x2bd120), BDC_V(unsigned int, 0x2bd124), BDC_V(unsigned int, 0x2bd128),
+    BDC_V(unsigned int, 0x2bd12c), BDC_V(unsigned int, 0x2bd130), BDC_V(unsigned int, 0x2bd134),
+    BDC_V(unsigned int, 0x2bd138), BDC_V(unsigned int, 0x2bd13c), BDC_V(unsigned int, 0x2bd140),
+    BDC_V(unsigned int, 0x2bd144), BDC_V(unsigned int, 0x2bd148), BDC_V(unsigned int, 0x2bd14c),
+    BDC_V(unsigned int, 0x2bd150), BDC_V(unsigned int, 0x2bd154), BDC_V(unsigned int, 0x2bd158),
+    BDC_V(unsigned int, 0x2bd15c), BDC_V(unsigned int, 0x2bd160), BDC_V(unsigned int, 0x2bd164),
+    BDC_V(unsigned int, 0x2bd168), BDC_V(unsigned int, 0x2bd16c), BDC_V(unsigned int, 0x2bd170),
+    BDC_V(unsigned int, 0x2bd174), BDC_V(unsigned int, 0x2bd178), BDC_V(unsigned int, 0x2bd17c),
+};

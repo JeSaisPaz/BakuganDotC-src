@@ -1,0 +1,4 @@
+// bdc 0x08ac11d8 g_uiHologramBakuganOrder
+#include "bdc.h"
+
+__typeof__(u8[23]) g_uiHologramBakuganOrder = BDC_BYTES(0x2bd1d8, 23);

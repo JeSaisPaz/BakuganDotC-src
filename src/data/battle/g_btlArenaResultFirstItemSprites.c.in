@@ -1,0 +1,9 @@
+// bdc 0x08aba6b4 g_btlArenaResultFirstItemSprites
+#include "bdc.h"
+
+__typeof__(s32[16]) g_btlArenaResultFirstItemSprites = {
+    BDC_V(int, 0x2b66b4), BDC_V(int, 0x2b66b8), BDC_V(int, 0x2b66bc), BDC_V(int, 0x2b66c0),
+    BDC_V(int, 0x2b66c4), BDC_V(int, 0x2b66c8), BDC_V(int, 0x2b66cc), BDC_V(int, 0x2b66d0),
+    BDC_V(int, 0x2b66d4), BDC_V(int, 0x2b66d8), BDC_V(int, 0x2b66dc), BDC_V(int, 0x2b66e0),
+    BDC_V(int, 0x2b66e4), BDC_V(int, 0x2b66e8), BDC_V(int, 0x2b66ec), BDC_V(int, 0x2b66f0),
+};

@@ -1,0 +1,4 @@
+// bdc 0x08ac4b28 g_mallocSbrkBase
+#include "bdc.h"
+
+__typeof__(long) g_mallocSbrkBase = BDC_V(long, 0x2c0b28);

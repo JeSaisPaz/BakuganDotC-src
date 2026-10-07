@@ -1,0 +1,24 @@
+// bdc 0x08a9b724 g_pauseActionTable
+#include "bdc.h"
+
+__typeof__(s32[77]) g_pauseActionTable = {
+    BDC_V(int, 0x297724), BDC_V(int, 0x297728), BDC_V(int, 0x29772c), BDC_V(int, 0x297730), 0,
+    BDC_V(int, 0x297738), BDC_V(int, 0x29773c), BDC_V(int, 0x297740), BDC_V(int, 0x297744),
+    BDC_V(int, 0x297748), BDC_V(int, 0x29774c), BDC_V(int, 0x297750), BDC_V(int, 0x297754),
+    BDC_V(int, 0x297758), BDC_V(int, 0x29775c), BDC_V(int, 0x297760), BDC_V(int, 0x297764),
+    BDC_V(int, 0x297768), BDC_V(int, 0x29776c), BDC_V(int, 0x297770), BDC_V(int, 0x297774),
+    BDC_V(int, 0x297778), BDC_V(int, 0x29777c), BDC_V(int, 0x297780), BDC_V(int, 0x297784),
+    BDC_V(int, 0x297788), BDC_V(int, 0x29778c), BDC_V(int, 0x297790), BDC_V(int, 0x297794),
+    BDC_V(int, 0x297798), BDC_V(int, 0x29779c), BDC_V(int, 0x2977a0), BDC_V(int, 0x2977a4),
+    BDC_V(int, 0x2977a8), BDC_V(int, 0x2977ac), BDC_V(int, 0x2977b0), BDC_V(int, 0x2977b4),
+    BDC_V(int, 0x2977b8), BDC_V(int, 0x2977bc), BDC_V(int, 0x2977c0), BDC_V(int, 0x2977c4),
+    BDC_V(int, 0x2977c8), BDC_V(int, 0x2977cc), BDC_V(int, 0x2977d0), BDC_V(int, 0x2977d4),
+    BDC_V(int, 0x2977d8), BDC_V(int, 0x2977dc), BDC_V(int, 0x2977e0), BDC_V(int, 0x2977e4),
+    BDC_V(int, 0x2977e8), BDC_V(int, 0x2977ec), BDC_V(int, 0x2977f0), BDC_V(int, 0x2977f4),
+    BDC_V(int, 0x2977f8), BDC_V(int, 0x2977fc), BDC_V(int, 0x297800), BDC_V(int, 0x297804),
+    BDC_V(int, 0x297808), BDC_V(int, 0x29780c), BDC_V(int, 0x297810), BDC_V(int, 0x297814),
+    BDC_V(int, 0x297818), BDC_V(int, 0x29781c), BDC_V(int, 0x297820), BDC_V(int, 0x297824),
+    BDC_V(int, 0x297828), BDC_V(int, 0x29782c), BDC_V(int, 0x297830), BDC_V(int, 0x297834),
+    BDC_V(int, 0x297838), BDC_V(int, 0x29783c), BDC_V(int, 0x297840), BDC_V(int, 0x297844),
+    BDC_V(int, 0x297848), BDC_V(int, 0x29784c), BDC_V(int, 0x297850), BDC_V(int, 0x297854),
+};

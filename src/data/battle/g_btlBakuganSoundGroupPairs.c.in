@@ -1,0 +1,21 @@
+// bdc 0x08a67d0c g_btlBakuganSoundGroupPairs
+#include "bdc.h"
+
+__typeof__(s32[32][2]) g_btlBakuganSoundGroupPairs = {
+    { BDC_V(int, 0x263d0c), BDC_V(int, 0x263d10) }, { BDC_V(int, 0x263d14), BDC_V(int, 0x263d18) },
+    { BDC_V(int, 0x263d1c), BDC_V(int, 0x263d20) }, { BDC_V(int, 0x263d24), BDC_V(int, 0x263d28) },
+    { BDC_V(int, 0x263d2c), BDC_V(int, 0x263d30) }, { BDC_V(int, 0x263d34), BDC_V(int, 0x263d38) },
+    { BDC_V(int, 0x263d3c), BDC_V(int, 0x263d40) }, { BDC_V(int, 0x263d44), BDC_V(int, 0x263d48) },
+    { BDC_V(int, 0x263d4c), BDC_V(int, 0x263d50) }, { BDC_V(int, 0x263d54), BDC_V(int, 0x263d58) },
+    { BDC_V(int, 0x263d5c), BDC_V(int, 0x263d60) }, { BDC_V(int, 0x263d64), BDC_V(int, 0x263d68) },
+    { BDC_V(int, 0x263d6c), BDC_V(int, 0x263d70) }, { BDC_V(int, 0x263d74), BDC_V(int, 0x263d78) },
+    { BDC_V(int, 0x263d7c), BDC_V(int, 0x263d80) }, { BDC_V(int, 0x263d84), BDC_V(int, 0x263d88) },
+    { BDC_V(int, 0x263d8c), BDC_V(int, 0x263d90) }, { BDC_V(int, 0x263d94), BDC_V(int, 0x263d98) },
+    { BDC_V(int, 0x263d9c), BDC_V(int, 0x263da0) }, { BDC_V(int, 0x263da4), BDC_V(int, 0x263da8) },
+    { BDC_V(int, 0x263dac), BDC_V(int, 0x263db0) }, { BDC_V(int, 0x263db4), BDC_V(int, 0x263db8) },
+    { BDC_V(int, 0x263dbc), BDC_V(int, 0x263dc0) }, { BDC_V(int, 0x263dc4), BDC_V(int, 0x263dc8) },
+    { BDC_V(int, 0x263dcc), BDC_V(int, 0x263dd0) }, { BDC_V(int, 0x263dd4), BDC_V(int, 0x263dd8) },
+    { BDC_V(int, 0x263ddc), BDC_V(int, 0x263de0) }, { BDC_V(int, 0x263de4), BDC_V(int, 0x263de8) },
+    { BDC_V(int, 0x263dec), BDC_V(int, 0x263df0) }, { BDC_V(int, 0x263df4), BDC_V(int, 0x263df8) },
+    { BDC_V(int, 0x263dfc), BDC_V(int, 0x263e00) }, { BDC_V(int, 0x263e04), BDC_V(int, 0x263e08) },
+};

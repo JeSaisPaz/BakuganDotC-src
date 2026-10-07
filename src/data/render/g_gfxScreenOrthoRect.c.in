@@ -1,0 +1,7 @@
+// bdc 0x08aa31d0 g_gfxScreenOrthoRect
+#include "bdc.h"
+
+__typeof__(float[6]) g_gfxScreenOrthoRect = {
+    0, BDC_V(float, 0x29f1d4), BDC_V(float, 0x29f1d8), 0, BDC_V(float, 0x29f1e0),
+    BDC_V(float, 0x29f1e4),
+};

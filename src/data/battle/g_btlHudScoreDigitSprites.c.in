@@ -1,0 +1,19 @@
+// bdc 0x08aba000 g_btlHudScoreDigitSprites
+#include "bdc.h"
+
+__typeof__(s32[14][3]) g_btlHudScoreDigitSprites = {
+    { BDC_V(int, 0x2b6000), BDC_V(int, 0x2b6004), BDC_V(int, 0x2b6008) },
+    { BDC_V(int, 0x2b600c), BDC_V(int, 0x2b6010), BDC_V(int, 0x2b6014) },
+    { BDC_V(int, 0x2b6018), BDC_V(int, 0x2b601c), BDC_V(int, 0x2b6020) },
+    { BDC_V(int, 0x2b6024), BDC_V(int, 0x2b6028), BDC_V(int, 0x2b602c) },
+    { BDC_V(int, 0x2b6030), BDC_V(int, 0x2b6034), BDC_V(int, 0x2b6038) },
+    { BDC_V(int, 0x2b603c), BDC_V(int, 0x2b6040), BDC_V(int, 0x2b6044) },
+    { BDC_V(int, 0x2b6048), BDC_V(int, 0x2b604c), BDC_V(int, 0x2b6050) },
+    { BDC_V(int, 0x2b6054), BDC_V(int, 0x2b6058), BDC_V(int, 0x2b605c) },
+    { BDC_V(int, 0x2b6060), BDC_V(int, 0x2b6064), BDC_V(int, 0x2b6068) },
+    { BDC_V(int, 0x2b606c), BDC_V(int, 0x2b6070), BDC_V(int, 0x2b6074) },
+    { BDC_V(int, 0x2b6078), BDC_V(int, 0x2b607c), BDC_V(int, 0x2b6080) },
+    { BDC_V(int, 0x2b6084), BDC_V(int, 0x2b6088), BDC_V(int, 0x2b608c) },
+    { BDC_V(int, 0x2b6090), BDC_V(int, 0x2b6094), BDC_V(int, 0x2b6098) },
+    { BDC_V(int, 0x2b609c), BDC_V(int, 0x2b60a0), BDC_V(int, 0x2b60a4) },
+};

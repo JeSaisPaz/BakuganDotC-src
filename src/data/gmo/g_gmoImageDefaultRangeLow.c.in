@@ -1,0 +1,4 @@
+// bdc 0x08aa5208 g_gmoImageDefaultRangeLow
+#include "bdc.h"
+
+__typeof__(float) g_gmoImageDefaultRangeLow = BDC_V(float, 0x2a1208);

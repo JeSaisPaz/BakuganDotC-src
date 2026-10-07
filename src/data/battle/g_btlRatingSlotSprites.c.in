@@ -1,0 +1,8 @@
+// bdc 0x08aba6f4 g_btlRatingSlotSprites
+#include "bdc.h"
+
+__typeof__(s32[12]) g_btlRatingSlotSprites = {
+    BDC_V(int, 0x2b66f4), BDC_V(int, 0x2b66f8), BDC_V(int, 0x2b66fc), BDC_V(int, 0x2b6700),
+    BDC_V(int, 0x2b6704), BDC_V(int, 0x2b6708), BDC_V(int, 0x2b670c), BDC_V(int, 0x2b6710),
+    BDC_V(int, 0x2b6714), BDC_V(int, 0x2b6718), BDC_V(int, 0x2b671c), BDC_V(int, 0x2b6720),
+};

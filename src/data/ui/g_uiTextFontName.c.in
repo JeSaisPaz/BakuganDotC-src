@@ -1,0 +1,4 @@
+// bdc 0x08ac5d70 g_uiTextFontName
+#include "bdc.h"
+
+__typeof__(const char *) g_uiTextFontName = (const char *)BDC_STR(0x29f428);

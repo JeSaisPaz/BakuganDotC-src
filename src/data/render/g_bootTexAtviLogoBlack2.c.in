@@ -1,0 +1,4 @@
+// bdc 0x08ad2d90 g_bootTexAtviLogoBlack2
+#include "bdc.h"
+
+__typeof__(u8[5443]) g_bootTexAtviLogoBlack2 = BDC_BYTES(0x2ced90, 5443);

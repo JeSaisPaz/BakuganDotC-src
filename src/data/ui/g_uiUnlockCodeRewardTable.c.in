@@ -1,0 +1,19 @@
+// bdc 0x08ac3c44 g_uiUnlockCodeRewardTable
+#include "bdc.h"
+
+__typeof__(u16[8][3]) g_uiUnlockCodeRewardTable = {
+    { 0, BDC_V(unsigned short, 0x2bfc46), BDC_V(unsigned short, 0x2bfc48) },
+    { 0, BDC_V(unsigned short, 0x2bfc4c), BDC_V(unsigned short, 0x2bfc4e) },
+    {
+        BDC_V(unsigned short, 0x2bfc50), BDC_V(unsigned short, 0x2bfc52),
+        BDC_V(unsigned short, 0x2bfc54),
+    },
+    { 0, BDC_V(unsigned short, 0x2bfc58), BDC_V(unsigned short, 0x2bfc5a) },
+    { 0, BDC_V(unsigned short, 0x2bfc5e), BDC_V(unsigned short, 0x2bfc60) },
+    {
+        BDC_V(unsigned short, 0x2bfc62), BDC_V(unsigned short, 0x2bfc64),
+        BDC_V(unsigned short, 0x2bfc66),
+    },
+    { 0, BDC_V(unsigned short, 0x2bfc6a), BDC_V(unsigned short, 0x2bfc6c) },
+    { 0, BDC_V(unsigned short, 0x2bfc70), BDC_V(unsigned short, 0x2bfc72) },
+};

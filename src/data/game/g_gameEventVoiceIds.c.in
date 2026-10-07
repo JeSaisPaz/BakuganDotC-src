@@ -1,0 +1,12 @@
+// bdc 0x08a99030 g_gameEventVoiceIds
+#include "bdc.h"
+
+__typeof__(u32[21]) g_gameEventVoiceIds = {
+    BDC_V(unsigned int, 0x295030), BDC_V(unsigned int, 0x295034), BDC_V(unsigned int, 0x295038),
+    BDC_V(unsigned int, 0x29503c), BDC_V(unsigned int, 0x295040), BDC_V(unsigned int, 0x295044),
+    BDC_V(unsigned int, 0x295048), BDC_V(unsigned int, 0x29504c), BDC_V(unsigned int, 0x295050),
+    BDC_V(unsigned int, 0x295054), BDC_V(unsigned int, 0x295058), BDC_V(unsigned int, 0x29505c),
+    BDC_V(unsigned int, 0x295060), BDC_V(unsigned int, 0x295064), BDC_V(unsigned int, 0x295068),
+    BDC_V(unsigned int, 0x29506c), BDC_V(unsigned int, 0x295070), BDC_V(unsigned int, 0x295074),
+    BDC_V(unsigned int, 0x295078), BDC_V(unsigned int, 0x29507c), BDC_V(unsigned int, 0x295080),
+};

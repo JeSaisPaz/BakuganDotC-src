@@ -1,0 +1,8 @@
+// bdc 0x08ac34b0 g_cardEquipArrowTints
+#include "bdc.h"
+
+__typeof__(float[4][3]) g_cardEquipArrowTints = {
+    { 0, BDC_V(float, 0x2bf4b4), BDC_V(float, 0x2bf4b8) }, { BDC_V(float, 0x2bf4bc) },
+    { BDC_V(float, 0x2bf4c8), BDC_V(float, 0x2bf4cc) },
+    { BDC_V(float, 0x2bf4d4), BDC_V(float, 0x2bf4d8) },
+};

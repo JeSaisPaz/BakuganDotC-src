@@ -1,0 +1,4 @@
+// bdc 0x08a9faac g_uiComboListAttrCells
+#include "bdc.h"
+
+__typeof__(const float[2]) g_uiComboListAttrCells = { 0, BDC_V(float, 0x29bab0) };

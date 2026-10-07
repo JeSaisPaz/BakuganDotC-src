@@ -1,0 +1,16 @@
+// bdc 0x08a92db0 g_gameFieldStageVoices
+#include "bdc.h"
+
+__typeof__(const s32 [11][3]) g_gameFieldStageVoices = {
+    { 0, BDC_V(int, 0x28edb4), BDC_V(int, 0x28edb8) },
+    { BDC_V(int, 0x28edbc), BDC_V(int, 0x28edc0), BDC_V(int, 0x28edc4) },
+    { BDC_V(int, 0x28edc8), BDC_V(int, 0x28edcc), BDC_V(int, 0x28edd0) },
+    { BDC_V(int, 0x28edd4), BDC_V(int, 0x28edd8), BDC_V(int, 0x28eddc) },
+    { BDC_V(int, 0x28ede0), BDC_V(int, 0x28ede4), BDC_V(int, 0x28ede8) },
+    { BDC_V(int, 0x28edec), BDC_V(int, 0x28edf0), BDC_V(int, 0x28edf4) },
+    { BDC_V(int, 0x28edf8), BDC_V(int, 0x28edfc), BDC_V(int, 0x28ee00) },
+    { BDC_V(int, 0x28ee04), BDC_V(int, 0x28ee08), BDC_V(int, 0x28ee0c) },
+    { BDC_V(int, 0x28ee10), BDC_V(int, 0x28ee14), BDC_V(int, 0x28ee18) },
+    { BDC_V(int, 0x28ee1c), BDC_V(int, 0x28ee20), BDC_V(int, 0x28ee24) },
+    { BDC_V(int, 0x28ee28), BDC_V(int, 0x28ee2c), BDC_V(int, 0x28ee30) },
+};

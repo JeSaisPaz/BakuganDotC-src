@@ -1,0 +1,9 @@
+// bdc 0x08a99800 g_gameEventFlagClassBase
+#include "bdc.h"
+
+__typeof__(u16[8]) g_gameEventFlagClassBase = {
+    BDC_V(unsigned short, 0x295800), BDC_V(unsigned short, 0x295802),
+    BDC_V(unsigned short, 0x295804), BDC_V(unsigned short, 0x295806),
+    BDC_V(unsigned short, 0x295808), BDC_V(unsigned short, 0x29580a),
+    BDC_V(unsigned short, 0x29580c), BDC_V(unsigned short, 0x29580e),
+};

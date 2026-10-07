@@ -1,0 +1,24 @@
+// bdc 0x08a99a60 g_btlStageAmbientColors
+#include "bdc.h"
+
+__typeof__(float[40][4]) g_btlStageAmbientColors = {
+    {0}, {0}, {0}, { BDC_V(float, 0x295a90), 0, BDC_V(float, 0x295a98) },
+    { BDC_V(float, 0x295aa0), BDC_V(float, 0x295aa4), BDC_V(float, 0x295aa8) },
+    { BDC_V(float, 0x295ab0), 0, BDC_V(float, 0x295ab8) },
+    { BDC_V(float, 0x295ac0), BDC_V(float, 0x295ac4), BDC_V(float, 0x295ac8) },
+    { BDC_V(float, 0x295ad0), BDC_V(float, 0x295ad4), BDC_V(float, 0x295ad8) },
+    { 0, BDC_V(float, 0x295ae4) }, {0}, {0}, {0},
+    { BDC_V(float, 0x295b20), 0, BDC_V(float, 0x295b28) },
+    { BDC_V(float, 0x295b30), 0, BDC_V(float, 0x295b38) },
+    { BDC_V(float, 0x295b40), 0, BDC_V(float, 0x295b48) },
+    { BDC_V(float, 0x295b50), 0, BDC_V(float, 0x295b58) },
+    { BDC_V(float, 0x295b60), 0, BDC_V(float, 0x295b68) }, { 0, BDC_V(float, 0x295b74) },
+    { BDC_V(float, 0x295b80), BDC_V(float, 0x295b84), BDC_V(float, 0x295b88) },
+    { BDC_V(float, 0x295b90), BDC_V(float, 0x295b94), BDC_V(float, 0x295b98) }, {0}, {0}, {0}, {0},
+    { BDC_V(float, 0x295be0), 0, BDC_V(float, 0x295be8) },
+    { BDC_V(float, 0x295bf0), 0, BDC_V(float, 0x295bf8) },
+    { BDC_V(float, 0x295c00), 0, BDC_V(float, 0x295c08) },
+    { BDC_V(float, 0x295c10), 0, BDC_V(float, 0x295c18) }, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+    { 0, BDC_V(float, 0x295ca4), BDC_V(float, 0x295ca8) }, {0}, {0},
+    { BDC_V(float, 0x295cd0), 0, BDC_V(float, 0x295cd8) },
+};

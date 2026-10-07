@@ -1,0 +1,4 @@
+// bdc 0x08a9bb1c g_upgradePrereqFlags
+#include "bdc.h"
+
+__typeof__(u8[126]) g_upgradePrereqFlags = BDC_BYTES(0x297b1c, 126);

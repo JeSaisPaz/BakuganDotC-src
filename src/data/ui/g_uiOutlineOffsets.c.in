@@ -1,0 +1,7 @@
+// bdc 0x08a3a180 g_uiOutlineOffsets
+#include "bdc.h"
+
+__typeof__(const signed char [8][2]) g_uiOutlineOffsets = {
+    BDC_BYTES(0x236180, 2), BDC_BYTES(0x236182, 2), BDC_BYTES(0x236184, 2), BDC_BYTES(0x236186, 2),
+    BDC_BYTES(0x236188, 2), BDC_BYTES(0x23618a, 2), BDC_BYTES(0x23618c, 2),
+};

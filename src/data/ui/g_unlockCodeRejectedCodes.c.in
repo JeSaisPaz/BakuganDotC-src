@@ -1,0 +1,15 @@
+// bdc 0x08ac3bf4 g_unlockCodeRejectedCodes
+#include "bdc.h"
+
+__typeof__(s32[2][10]) g_unlockCodeRejectedCodes = {
+    {
+        BDC_V(int, 0x2bfbf4), BDC_V(int, 0x2bfbf8), BDC_V(int, 0x2bfbfc), BDC_V(int, 0x2bfc00),
+        BDC_V(int, 0x2bfc04), BDC_V(int, 0x2bfc08), BDC_V(int, 0x2bfc0c), BDC_V(int, 0x2bfc10),
+        BDC_V(int, 0x2bfc14), BDC_V(int, 0x2bfc18),
+    },
+    {
+        BDC_V(int, 0x2bfc1c), BDC_V(int, 0x2bfc20), BDC_V(int, 0x2bfc24), BDC_V(int, 0x2bfc28),
+        BDC_V(int, 0x2bfc2c), BDC_V(int, 0x2bfc30), BDC_V(int, 0x2bfc34), BDC_V(int, 0x2bfc38),
+        BDC_V(int, 0x2bfc3c), BDC_V(int, 0x2bfc40),
+    },
+};

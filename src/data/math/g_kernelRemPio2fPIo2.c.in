@@ -1,0 +1,8 @@
+// bdc 0x08aa4ebc g_kernelRemPio2fPIo2
+#include "bdc.h"
+
+__typeof__(float[11]) g_kernelRemPio2fPIo2 = {
+    BDC_V(float, 0x2a0ebc), BDC_V(float, 0x2a0ec0), BDC_V(float, 0x2a0ec4), BDC_V(float, 0x2a0ec8),
+    BDC_V(float, 0x2a0ecc), BDC_V(float, 0x2a0ed0), BDC_V(float, 0x2a0ed4), BDC_V(float, 0x2a0ed8),
+    BDC_V(float, 0x2a0edc), BDC_V(float, 0x2a0ee0), BDC_V(float, 0x2a0ee4),
+};

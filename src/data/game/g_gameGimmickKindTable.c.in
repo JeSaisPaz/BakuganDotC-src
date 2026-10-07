@@ -1,0 +1,77 @@
+// bdc 0x08a97584 g_gameGimmickKindTable
+#include "bdc.h"
+
+__typeof__(const char *[18][3]) g_gameGimmickKindTable = {
+    {
+        (const char *)BDC_STR(0x293160), (const char *)BDC_STR(0x293178),
+        (const char *)BDC_STR(0x293184),
+    },
+    {
+        (const char *)BDC_STR(0x293160), (const char *)BDC_STR(0x29318c),
+        (const char *)BDC_STR(0x2931a0),
+    },
+    {
+        (const char *)BDC_STR(0x2931b0), (const char *)BDC_STR(0x2931c0),
+        (const char *)BDC_STR(0x2931d4),
+    },
+    {
+        (const char *)BDC_STR(0x2931e0), (const char *)BDC_STR(0x2931f0),
+        (const char *)BDC_STR(0x293200),
+    },
+    {
+        (const char *)BDC_STR(0x29320c), (const char *)BDC_STR(0x29321c),
+        (const char *)BDC_STR(0x293230),
+    },
+    {
+        (const char *)BDC_STR(0x293240), (const char *)BDC_STR(0x293250),
+        (const char *)BDC_STR(0x293260),
+    },
+    {
+        (const char *)BDC_STR(0x293268), (const char *)BDC_STR(0x293280),
+        (const char *)BDC_STR(0x293290),
+    },
+    {
+        (const char *)BDC_STR(0x29329c), (const char *)BDC_STR(0x2932b4),
+        (const char *)BDC_STR(0x2932c4),
+    },
+    {
+        (const char *)BDC_STR(0x2932cc), (const char *)BDC_STR(0x2932e8),
+        (const char *)BDC_STR(0x293300),
+    },
+    {
+        (const char *)BDC_STR(0x293314), (const char *)BDC_STR(0x29332c),
+        (const char *)BDC_STR(0x293340),
+    },
+    {
+        (const char *)BDC_STR(0x29334c), (const char *)BDC_STR(0x293368),
+        (const char *)BDC_STR(0x293380),
+    },
+    {
+        (const char *)BDC_STR(0x293390), (const char *)BDC_STR(0x2933ac),
+        (const char *)BDC_STR(0x2933c4),
+    },
+    {
+        (const char *)BDC_STR(0x2933d4), (const char *)BDC_STR(0x2933f0),
+        (const char *)BDC_STR(0x293408),
+    },
+    {
+        (const char *)BDC_STR(0x293418), (const char *)BDC_STR(0x293434),
+        (const char *)BDC_STR(0x293450),
+    },
+    {
+        (const char *)BDC_STR(0x293464), (const char *)BDC_STR(0x293480),
+        (const char *)BDC_STR(0x29349c),
+    },
+    {
+        (const char *)BDC_STR(0x2934b0), (const char *)BDC_STR(0x2934cc),
+        (const char *)BDC_STR(0x2934e8),
+    },
+    {
+        (const char *)BDC_STR(0x2934fc), (const char *)BDC_STR(0x293510),
+        (const char *)BDC_STR(0x29352c),
+    },
+    {
+        (const char *)BDC_STR(0x293544), (const char *)BDC_STR(0x29355c),
+        (const char *)BDC_STR(0x293578),
+    },
+};

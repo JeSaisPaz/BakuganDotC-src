@@ -1,0 +1,15 @@
+// bdc 0x08aac764 g_bootTextureTable
+#include "bdc.h"
+
+__typeof__(void *[28]) g_bootTextureTable = {
+    (void *)&g_bootTexWdFont12, (void *)BDC_STR(0x22f780), (void *)&g_bootTexWdFont16,
+    (void *)BDC_STR(0x22f78c), (void *)&g_bootTexAtviLogoBlack2, (void *)BDC_STR(0x22f798),
+    (void *)&g_bootTexNelMainLogo, (void *)BDC_STR(0x22f7ac), (void *)&g_bootTexNowLogo,
+    (void *)BDC_STR(0x22f7bc), (void *)&g_bootTexBulletsLogo, (void *)BDC_STR(0x22f7c4),
+    (void *)&g_bootTexLoadIcon0, (void *)BDC_STR(0x22f7d8), (void *)&g_bootTexLoadFlashMoji,
+    (void *)BDC_STR(0x22f7e4), (void *)&g_bootTexCoBoIta1, (void *)BDC_STR(0x22f7f4),
+    (void *)&g_bootTexCoBoIta2, (void *)BDC_STR(0x22f804), (void *)&g_bootTexCoBoItaSol,
+    (void *)BDC_STR(0x22f814), (void *)&g_bootTexCoPopWindoBeta, (void *)BDC_STR(0x22f824),
+    (void *)&g_bootTexDialogMoji, (void *)BDC_STR(0x22f838), (void *)&g_bootTexBack04,
+    (void *)BDC_STR(0x22f844),
+};

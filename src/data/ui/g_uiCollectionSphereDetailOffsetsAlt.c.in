@@ -1,0 +1,14 @@
+// bdc 0x08ac3930 g_uiCollectionSphereDetailOffsetsAlt
+#include "bdc.h"
+
+__typeof__(float[13][2]) g_uiCollectionSphereDetailOffsetsAlt = {
+    { 0, BDC_V(float, 0x2bf934) }, { 0, BDC_V(float, 0x2bf93c) },
+    { BDC_V(float, 0x2bf940), BDC_V(float, 0x2bf944) },
+    { BDC_V(float, 0x2bf948), BDC_V(float, 0x2bf94c) }, { 0, BDC_V(float, 0x2bf954) },
+    { 0, BDC_V(float, 0x2bf95c) }, { 0, BDC_V(float, 0x2bf964) },
+    { BDC_V(float, 0x2bf968), BDC_V(float, 0x2bf96c) }, { 0, BDC_V(float, 0x2bf974) },
+    { BDC_V(float, 0x2bf978), BDC_V(float, 0x2bf97c) },
+    { BDC_V(float, 0x2bf980), BDC_V(float, 0x2bf984) },
+    { BDC_V(float, 0x2bf988), BDC_V(float, 0x2bf98c) },
+    { BDC_V(float, 0x2bf990), BDC_V(float, 0x2bf994) },
+};

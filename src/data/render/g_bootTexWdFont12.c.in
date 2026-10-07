@@ -1,0 +1,4 @@
+// bdc 0x08ac62d0 g_bootTexWdFont12
+#include "bdc.h"
+
+__typeof__(u8[20613]) g_bootTexWdFont12 = BDC_BYTES(0x2c22d0, 20613);

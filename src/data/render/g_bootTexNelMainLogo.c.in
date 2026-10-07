@@ -1,0 +1,4 @@
+// bdc 0x08ad42e0 g_bootTexNelMainLogo
+#include "bdc.h"
+
+__typeof__(u8[5823]) g_bootTexNelMainLogo = BDC_BYTES(0x2d02e0, 5823);

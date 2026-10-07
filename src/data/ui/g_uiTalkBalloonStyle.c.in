@@ -1,0 +1,4 @@
+// bdc 0x08abea2c g_uiTalkBalloonStyle
+#include "bdc.h"
+
+__typeof__(const char *[2]) g_uiTalkBalloonStyle = { NULL, (const char *)BDC_STR(0x28f268) };

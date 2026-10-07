@@ -1,0 +1,9 @@
+// bdc 0x08ac1190 g_hologramAttributeColors
+#include "bdc.h"
+
+__typeof__(float[18]) g_hologramAttributeColors = {
+    BDC_V(float, 0x2bd190), 0, BDC_V(float, 0x2bd198), 0, BDC_V(float, 0x2bd1a0),
+    BDC_V(float, 0x2bd1a4), BDC_V(float, 0x2bd1a8), BDC_V(float, 0x2bd1ac), 0,
+    BDC_V(float, 0x2bd1b4), BDC_V(float, 0x2bd1b8), 0, BDC_V(float, 0x2bd1c0),
+    BDC_V(float, 0x2bd1c4), BDC_V(float, 0x2bd1c8), BDC_V(float, 0x2bd1cc), BDC_V(float, 0x2bd1d0),
+};

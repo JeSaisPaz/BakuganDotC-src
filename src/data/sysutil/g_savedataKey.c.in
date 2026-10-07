@@ -1,0 +1,4 @@
+// bdc 0x08ac58e8 g_savedataKey
+#include "bdc.h"
+
+__typeof__(const u8 *) g_savedataKey = (const unsigned char *)BDC_STR(0x29ddf0);

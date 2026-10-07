@@ -1,0 +1,4 @@
+// bdc 0x08ac5b94 g_movieRequestId
+#include "bdc.h"
+
+__typeof__(s32) g_movieRequestId = BDC_V(int, 0x2c1b94);

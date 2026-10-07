@@ -1,0 +1,4 @@
+// bdc 0x08a93229 g_uiTalkBalloonCursorFrames
+#include "bdc.h"
+
+__typeof__(const u8[8]) g_uiTalkBalloonCursorFrames = BDC_BYTES(0x28f229, 8);

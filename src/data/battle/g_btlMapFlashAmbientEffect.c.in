@@ -1,0 +1,7 @@
+// bdc 0x08a83a10 g_btlMapFlashAmbientEffect
+#include "bdc.h"
+
+__typeof__(s32[6]) g_btlMapFlashAmbientEffect = {
+    BDC_V(int, 0x27fa10), BDC_V(int, 0x27fa14), BDC_V(int, 0x27fa18), BDC_V(int, 0x27fa1c),
+    BDC_V(int, 0x27fa20), BDC_V(int, 0x27fa24),
+};

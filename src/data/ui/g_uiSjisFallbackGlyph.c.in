@@ -1,0 +1,4 @@
+// bdc 0x08a3a190 g_uiSjisFallbackGlyph
+#include "bdc.h"
+
+__typeof__(const char[4]) g_uiSjisFallbackGlyph = BDC_BYTES(0x236190, 4);

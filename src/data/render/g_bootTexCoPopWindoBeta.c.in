@@ -1,0 +1,4 @@
+// bdc 0x08ad83f0 g_bootTexCoPopWindoBeta
+#include "bdc.h"
+
+__typeof__(u8[18408]) g_bootTexCoPopWindoBeta = BDC_BYTES(0x2d43f0, 18408);

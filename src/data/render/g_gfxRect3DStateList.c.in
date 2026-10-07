@@ -1,0 +1,9 @@
+// bdc 0x08aa37b8 g_gfxRect3DStateList
+#include "bdc.h"
+
+__typeof__(const u32[12]) g_gfxRect3DStateList = {
+    BDC_V(unsigned int, 0x29f7b8), BDC_V(unsigned int, 0x29f7bc), BDC_V(unsigned int, 0x29f7c0),
+    BDC_V(unsigned int, 0x29f7c4), BDC_V(unsigned int, 0x29f7c8), BDC_V(unsigned int, 0x29f7cc),
+    BDC_V(unsigned int, 0x29f7d0), BDC_V(unsigned int, 0x29f7d4), BDC_V(unsigned int, 0x29f7d8),
+    BDC_V(unsigned int, 0x29f7dc), BDC_V(unsigned int, 0x29f7e0), BDC_V(unsigned int, 0x29f7e4),
+};

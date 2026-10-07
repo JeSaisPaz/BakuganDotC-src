@@ -1,0 +1,13 @@
+// bdc 0x08aba7ac g_actorCrystalShakeTable
+#include "bdc.h"
+
+__typeof__(s16[32]) g_actorCrystalShakeTable = {
+    BDC_V(short, 0x2b67ac), BDC_V(short, 0x2b67ae), BDC_V(short, 0x2b67b0), BDC_V(short, 0x2b67b2),
+    BDC_V(short, 0x2b67b4), BDC_V(short, 0x2b67b6), BDC_V(short, 0x2b67b8), BDC_V(short, 0x2b67ba),
+    BDC_V(short, 0x2b67bc), BDC_V(short, 0x2b67be), BDC_V(short, 0x2b67c0), BDC_V(short, 0x2b67c2),
+    BDC_V(short, 0x2b67c4), BDC_V(short, 0x2b67c6), BDC_V(short, 0x2b67c8), BDC_V(short, 0x2b67ca),
+    BDC_V(short, 0x2b67cc), BDC_V(short, 0x2b67ce), BDC_V(short, 0x2b67d0), BDC_V(short, 0x2b67d2),
+    BDC_V(short, 0x2b67d4), BDC_V(short, 0x2b67d6), BDC_V(short, 0x2b67d8), BDC_V(short, 0x2b67da),
+    BDC_V(short, 0x2b67dc), BDC_V(short, 0x2b67de), BDC_V(short, 0x2b67e0), BDC_V(short, 0x2b67e2),
+    BDC_V(short, 0x2b67e4), BDC_V(short, 0x2b67e6), BDC_V(short, 0x2b67e8), BDC_V(short, 0x2b67ea),
+};

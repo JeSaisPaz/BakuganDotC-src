@@ -1,0 +1,9 @@
+// bdc 0x08aa30d4 g_gfxMaterialStateDefault
+#include "bdc.h"
+
+__typeof__(const GfxMaterialState) g_gfxMaterialStateDefault = {
+    .alphaRef = BDC_V(unsigned short, 0x29f0d4),
+    .sortKey = BDC_V(signed char, 0x29f0d6),
+    .shadeFlags = BDC_V(unsigned char, 0x29f0d7),
+    .renderFlags = BDC_V(unsigned char, 0x29f0d8),
+};

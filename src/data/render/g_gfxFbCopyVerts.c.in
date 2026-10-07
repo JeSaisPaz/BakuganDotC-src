@@ -1,0 +1,33 @@
+// bdc 0x08ac5e58 g_gfxFbCopyVerts
+#include "bdc.h"
+
+__typeof__(GfxStripVertex[8]) g_gfxFbCopyVerts = {
+    {0},
+    {
+        .u = BDC_V(unsigned short, 0x2c1e62),
+        .v = BDC_V(unsigned short, 0x2c1e64),
+        .x = BDC_V(short, 0x2c1e66),
+        .y = BDC_V(short, 0x2c1e68),
+    },
+    { .u = BDC_V(unsigned short, 0x2c1e6c), .x = BDC_V(short, 0x2c1e70) },
+    {
+        .u = BDC_V(unsigned short, 0x2c1e76),
+        .v = BDC_V(unsigned short, 0x2c1e78),
+        .x = BDC_V(short, 0x2c1e7a),
+        .y = BDC_V(short, 0x2c1e7c),
+    },
+    { .u = BDC_V(unsigned short, 0x2c1e80), .x = BDC_V(short, 0x2c1e84) },
+    {
+        .u = BDC_V(unsigned short, 0x2c1e8a),
+        .v = BDC_V(unsigned short, 0x2c1e8c),
+        .x = BDC_V(short, 0x2c1e8e),
+        .y = BDC_V(short, 0x2c1e90),
+    },
+    { .u = BDC_V(unsigned short, 0x2c1e94), .x = BDC_V(short, 0x2c1e98) },
+    {
+        .u = BDC_V(unsigned short, 0x2c1e9e),
+        .v = BDC_V(unsigned short, 0x2c1ea0),
+        .x = BDC_V(short, 0x2c1ea2),
+        .y = BDC_V(short, 0x2c1ea4),
+    },
+};

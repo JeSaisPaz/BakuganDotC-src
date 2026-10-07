@@ -1,0 +1,9 @@
+// bdc 0x08aa5c00 g_guDefaultDither
+#include "bdc.h"
+
+__typeof__(const s32[16]) g_guDefaultDither = {
+    BDC_V(int, 0x2a1c00), 0, BDC_V(int, 0x2a1c08), BDC_V(int, 0x2a1c0c), BDC_V(int, 0x2a1c10),
+    BDC_V(int, 0x2a1c14), BDC_V(int, 0x2a1c18), BDC_V(int, 0x2a1c1c), BDC_V(int, 0x2a1c20),
+    BDC_V(int, 0x2a1c24), BDC_V(int, 0x2a1c28), 0, BDC_V(int, 0x2a1c30), BDC_V(int, 0x2a1c34),
+    BDC_V(int, 0x2a1c38), BDC_V(int, 0x2a1c3c),
+};

@@ -1,0 +1,10 @@
+// bdc 0x08a9d14c g_battleRecordBakuganOrder
+#include "bdc.h"
+
+__typeof__(const s32[20]) g_battleRecordBakuganOrder = {
+    0, BDC_V(int, 0x299150), BDC_V(int, 0x299154), BDC_V(int, 0x299158), BDC_V(int, 0x29915c),
+    BDC_V(int, 0x299160), BDC_V(int, 0x299164), BDC_V(int, 0x299168), BDC_V(int, 0x29916c),
+    BDC_V(int, 0x299170), BDC_V(int, 0x299174), BDC_V(int, 0x299178), BDC_V(int, 0x29917c),
+    BDC_V(int, 0x299180), BDC_V(int, 0x299184), BDC_V(int, 0x299188), BDC_V(int, 0x29918c),
+    BDC_V(int, 0x299190), BDC_V(int, 0x299194), BDC_V(int, 0x299198),
+};

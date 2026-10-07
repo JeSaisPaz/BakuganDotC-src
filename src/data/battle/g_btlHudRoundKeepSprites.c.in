@@ -1,0 +1,10 @@
+// bdc 0x08aba670 g_btlHudRoundKeepSprites
+#include "bdc.h"
+
+__typeof__(s32[17]) g_btlHudRoundKeepSprites = {
+    BDC_V(int, 0x2b6670), BDC_V(int, 0x2b6674), BDC_V(int, 0x2b6678), BDC_V(int, 0x2b667c),
+    BDC_V(int, 0x2b6680), BDC_V(int, 0x2b6684), BDC_V(int, 0x2b6688), BDC_V(int, 0x2b668c),
+    BDC_V(int, 0x2b6690), BDC_V(int, 0x2b6694), BDC_V(int, 0x2b6698), BDC_V(int, 0x2b669c),
+    BDC_V(int, 0x2b66a0), BDC_V(int, 0x2b66a4), BDC_V(int, 0x2b66a8), BDC_V(int, 0x2b66ac),
+    BDC_V(int, 0x2b66b0),
+};

@@ -1,0 +1,16 @@
+// bdc 0x08ac16ec g_uiBakuganModelScaleTable
+#include "bdc.h"
+
+__typeof__(float[44]) g_uiBakuganModelScaleTable = {
+    BDC_V(float, 0x2bd6ec), BDC_V(float, 0x2bd6f0), BDC_V(float, 0x2bd6f4), BDC_V(float, 0x2bd6f8),
+    BDC_V(float, 0x2bd6fc), BDC_V(float, 0x2bd700), BDC_V(float, 0x2bd704), BDC_V(float, 0x2bd708),
+    BDC_V(float, 0x2bd70c), BDC_V(float, 0x2bd710), BDC_V(float, 0x2bd714), BDC_V(float, 0x2bd718),
+    BDC_V(float, 0x2bd71c), BDC_V(float, 0x2bd720), BDC_V(float, 0x2bd724), BDC_V(float, 0x2bd728),
+    BDC_V(float, 0x2bd72c), BDC_V(float, 0x2bd730), BDC_V(float, 0x2bd734), BDC_V(float, 0x2bd738),
+    BDC_V(float, 0x2bd73c), BDC_V(float, 0x2bd740), BDC_V(float, 0x2bd744), BDC_V(float, 0x2bd748),
+    BDC_V(float, 0x2bd74c), BDC_V(float, 0x2bd750), BDC_V(float, 0x2bd754), BDC_V(float, 0x2bd758),
+    BDC_V(float, 0x2bd75c), BDC_V(float, 0x2bd760), BDC_V(float, 0x2bd764), BDC_V(float, 0x2bd768),
+    BDC_V(float, 0x2bd76c), BDC_V(float, 0x2bd770), BDC_V(float, 0x2bd774), BDC_V(float, 0x2bd778),
+    BDC_V(float, 0x2bd77c), BDC_V(float, 0x2bd780), BDC_V(float, 0x2bd784), BDC_V(float, 0x2bd788),
+    BDC_V(float, 0x2bd78c), BDC_V(float, 0x2bd790), BDC_V(float, 0x2bd794), BDC_V(float, 0x2bd798),
+};

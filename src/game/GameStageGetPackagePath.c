@@ -1,18 +1,18 @@
 // bdc 0x088d3e98 GameStageGetPackagePath
 #include "bdc.h"
 
-/* Builds the package name of stage `stage` in the static buffer `g_gameStagePackPath`: the entry's pack name
-   (`GameStageFindEntry`) plus `"b"`, `"c"` or `"d"` for profile word 8 = 1/2/3 (stage variant),
+/* Builds the package name of stage `stage` in the static buffer `g_gameStagePackPath`: the entry's `pack`
+   path (`GameStageFindEntry`) plus `"b"`, `"c"` or `"d"` for profile word 8 = 1/2/3 (stage variant),
    plus `".lzs"`. */
 
 char *GameStageGetPackagePath(s32 stage)
 {
-  s32 *entry;
+  const GameStageEntry *entry;
   SaveProfile *self;
   u32 variant;
 
   entry = GameStageFindEntry(stage);
-  strcpy(g_gameStagePackPath, ((char **)entry)[2]);
+  strcpy(g_gameStagePackPath, entry->pack);
   self = SaveGetProfile();
   variant = SaveProfileGetWord(self, 8);
   if ((s32)variant < 2) {

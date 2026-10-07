@@ -1,0 +1,11 @@
+// bdc 0x08ab04e8 g_uiMaxusPartModelNames
+#include "bdc.h"
+
+__typeof__(const char *[12]) g_uiMaxusPartModelNames = {
+    (const char *)BDC_STR(0x24d148), (const char *)BDC_STR(0x24d168),
+    (const char *)BDC_STR(0x24d188), (const char *)BDC_STR(0x24d1a8),
+    (const char *)BDC_STR(0x24d1c8), (const char *)BDC_STR(0x24d1e8),
+    (const char *)BDC_STR(0x24d208), (const char *)BDC_STR(0x24d224),
+    (const char *)BDC_STR(0x24d240), (const char *)BDC_STR(0x24d25c),
+    (const char *)BDC_STR(0x24d278), (const char *)BDC_STR(0x24d294),
+};

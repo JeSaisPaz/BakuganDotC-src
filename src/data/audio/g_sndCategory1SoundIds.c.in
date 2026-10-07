@@ -1,0 +1,8 @@
+// bdc 0x08aa1240 g_sndCategory1SoundIds
+#include "bdc.h"
+
+__typeof__(u32[10]) g_sndCategory1SoundIds = {
+    0, BDC_V(unsigned int, 0x29d244), BDC_V(unsigned int, 0x29d248), BDC_V(unsigned int, 0x29d24c),
+    BDC_V(unsigned int, 0x29d250), BDC_V(unsigned int, 0x29d254), BDC_V(unsigned int, 0x29d258),
+    BDC_V(unsigned int, 0x29d25c), BDC_V(unsigned int, 0x29d260), BDC_V(unsigned int, 0x29d264),
+};

@@ -1,0 +1,25 @@
+// bdc 0x08a82950 g_stageObjLightSetChimney02
+#include "bdc.h"
+
+__typeof__(const StageObjLightSet4) g_stageObjLightSetChimney02 = {
+    .modelName = (const char *)BDC_STR(0x27e934),
+    .count = BDC_V(int, 0x27e954),
+    .lights = {
+        {
+            .pos = { BDC_V(float, 0x27e960), BDC_V(float, 0x27e964), BDC_V(float, 0x27e968) },
+            .texIndex = BDC_V(float, 0x27e96c),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e970), BDC_V(float, 0x27e974), BDC_V(float, 0x27e978) },
+            .texIndex = BDC_V(float, 0x27e97c),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e980), BDC_V(float, 0x27e984), BDC_V(float, 0x27e988) },
+            .texIndex = BDC_V(float, 0x27e98c),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e990), BDC_V(float, 0x27e994), BDC_V(float, 0x27e998) },
+            .texIndex = BDC_V(float, 0x27e99c),
+        },
+    },
+};

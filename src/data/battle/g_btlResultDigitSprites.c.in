@@ -1,0 +1,129 @@
+// bdc 0x08aba1d0 g_btlResultDigitSprites
+#include "bdc.h"
+
+__typeof__(s32[31][8]) g_btlResultDigitSprites = {
+    {
+        BDC_V(int, 0x2b61d0), BDC_V(int, 0x2b61d4), BDC_V(int, 0x2b61d8), BDC_V(int, 0x2b61dc),
+        BDC_V(int, 0x2b61e0), BDC_V(int, 0x2b61e4), BDC_V(int, 0x2b61e8), BDC_V(int, 0x2b61ec),
+    },
+    {
+        BDC_V(int, 0x2b61f0), BDC_V(int, 0x2b61f4), BDC_V(int, 0x2b61f8), BDC_V(int, 0x2b61fc),
+        BDC_V(int, 0x2b6200), BDC_V(int, 0x2b6204), BDC_V(int, 0x2b6208), BDC_V(int, 0x2b620c),
+    },
+    {
+        BDC_V(int, 0x2b6210), BDC_V(int, 0x2b6214), BDC_V(int, 0x2b6218), BDC_V(int, 0x2b621c),
+        BDC_V(int, 0x2b6220), BDC_V(int, 0x2b6224), BDC_V(int, 0x2b6228), BDC_V(int, 0x2b622c),
+    },
+    {
+        BDC_V(int, 0x2b6230), BDC_V(int, 0x2b6234), BDC_V(int, 0x2b6238), BDC_V(int, 0x2b623c),
+        BDC_V(int, 0x2b6240), BDC_V(int, 0x2b6244), BDC_V(int, 0x2b6248), BDC_V(int, 0x2b624c),
+    },
+    {
+        BDC_V(int, 0x2b6250), BDC_V(int, 0x2b6254), BDC_V(int, 0x2b6258), BDC_V(int, 0x2b625c),
+        BDC_V(int, 0x2b6260), BDC_V(int, 0x2b6264), BDC_V(int, 0x2b6268), BDC_V(int, 0x2b626c),
+    },
+    {
+        BDC_V(int, 0x2b6270), BDC_V(int, 0x2b6274), BDC_V(int, 0x2b6278), BDC_V(int, 0x2b627c),
+        BDC_V(int, 0x2b6280), BDC_V(int, 0x2b6284), BDC_V(int, 0x2b6288), BDC_V(int, 0x2b628c),
+    },
+    {
+        BDC_V(int, 0x2b6290), BDC_V(int, 0x2b6294), BDC_V(int, 0x2b6298), BDC_V(int, 0x2b629c),
+        BDC_V(int, 0x2b62a0), BDC_V(int, 0x2b62a4), BDC_V(int, 0x2b62a8), BDC_V(int, 0x2b62ac),
+    },
+    {
+        BDC_V(int, 0x2b62b0), BDC_V(int, 0x2b62b4), BDC_V(int, 0x2b62b8), BDC_V(int, 0x2b62bc),
+        BDC_V(int, 0x2b62c0), BDC_V(int, 0x2b62c4), BDC_V(int, 0x2b62c8), BDC_V(int, 0x2b62cc),
+    },
+    {
+        BDC_V(int, 0x2b62d0), BDC_V(int, 0x2b62d4), BDC_V(int, 0x2b62d8), BDC_V(int, 0x2b62dc),
+        BDC_V(int, 0x2b62e0), BDC_V(int, 0x2b62e4), BDC_V(int, 0x2b62e8), BDC_V(int, 0x2b62ec),
+    },
+    {
+        BDC_V(int, 0x2b62f0), BDC_V(int, 0x2b62f4), BDC_V(int, 0x2b62f8), BDC_V(int, 0x2b62fc),
+        BDC_V(int, 0x2b6300), BDC_V(int, 0x2b6304), BDC_V(int, 0x2b6308), BDC_V(int, 0x2b630c),
+    },
+    {
+        BDC_V(int, 0x2b6310), BDC_V(int, 0x2b6314), BDC_V(int, 0x2b6318), BDC_V(int, 0x2b631c),
+        BDC_V(int, 0x2b6320), BDC_V(int, 0x2b6324), BDC_V(int, 0x2b6328), BDC_V(int, 0x2b632c),
+    },
+    {
+        BDC_V(int, 0x2b6330), BDC_V(int, 0x2b6334), BDC_V(int, 0x2b6338), BDC_V(int, 0x2b633c),
+        BDC_V(int, 0x2b6340), BDC_V(int, 0x2b6344), BDC_V(int, 0x2b6348), BDC_V(int, 0x2b634c),
+    },
+    {
+        BDC_V(int, 0x2b6350), BDC_V(int, 0x2b6354), BDC_V(int, 0x2b6358), BDC_V(int, 0x2b635c),
+        BDC_V(int, 0x2b6360), BDC_V(int, 0x2b6364), BDC_V(int, 0x2b6368), BDC_V(int, 0x2b636c),
+    },
+    {
+        BDC_V(int, 0x2b6370), BDC_V(int, 0x2b6374), BDC_V(int, 0x2b6378), BDC_V(int, 0x2b637c),
+        BDC_V(int, 0x2b6380), BDC_V(int, 0x2b6384), BDC_V(int, 0x2b6388), BDC_V(int, 0x2b638c),
+    },
+    {
+        BDC_V(int, 0x2b6390), BDC_V(int, 0x2b6394), BDC_V(int, 0x2b6398), BDC_V(int, 0x2b639c),
+        BDC_V(int, 0x2b63a0), BDC_V(int, 0x2b63a4), BDC_V(int, 0x2b63a8), BDC_V(int, 0x2b63ac),
+    },
+    {
+        BDC_V(int, 0x2b63b0), BDC_V(int, 0x2b63b4), BDC_V(int, 0x2b63b8), BDC_V(int, 0x2b63bc),
+        BDC_V(int, 0x2b63c0), BDC_V(int, 0x2b63c4), BDC_V(int, 0x2b63c8), BDC_V(int, 0x2b63cc),
+    },
+    {
+        BDC_V(int, 0x2b63d0), BDC_V(int, 0x2b63d4), BDC_V(int, 0x2b63d8), BDC_V(int, 0x2b63dc),
+        BDC_V(int, 0x2b63e0), BDC_V(int, 0x2b63e4), BDC_V(int, 0x2b63e8), BDC_V(int, 0x2b63ec),
+    },
+    {
+        BDC_V(int, 0x2b63f0), BDC_V(int, 0x2b63f4), BDC_V(int, 0x2b63f8), BDC_V(int, 0x2b63fc),
+        BDC_V(int, 0x2b6400), BDC_V(int, 0x2b6404), BDC_V(int, 0x2b6408), BDC_V(int, 0x2b640c),
+    },
+    {
+        BDC_V(int, 0x2b6410), BDC_V(int, 0x2b6414), BDC_V(int, 0x2b6418), BDC_V(int, 0x2b641c),
+        BDC_V(int, 0x2b6420), BDC_V(int, 0x2b6424), BDC_V(int, 0x2b6428), BDC_V(int, 0x2b642c),
+    },
+    {
+        BDC_V(int, 0x2b6430), BDC_V(int, 0x2b6434), BDC_V(int, 0x2b6438), BDC_V(int, 0x2b643c),
+        BDC_V(int, 0x2b6440), BDC_V(int, 0x2b6444), BDC_V(int, 0x2b6448), BDC_V(int, 0x2b644c),
+    },
+    {
+        BDC_V(int, 0x2b6450), BDC_V(int, 0x2b6454), BDC_V(int, 0x2b6458), BDC_V(int, 0x2b645c),
+        BDC_V(int, 0x2b6460), BDC_V(int, 0x2b6464), BDC_V(int, 0x2b6468), BDC_V(int, 0x2b646c),
+    },
+    {
+        BDC_V(int, 0x2b6470), BDC_V(int, 0x2b6474), BDC_V(int, 0x2b6478), BDC_V(int, 0x2b647c),
+        BDC_V(int, 0x2b6480), BDC_V(int, 0x2b6484), BDC_V(int, 0x2b6488), BDC_V(int, 0x2b648c),
+    },
+    {
+        BDC_V(int, 0x2b6490), BDC_V(int, 0x2b6494), BDC_V(int, 0x2b6498), BDC_V(int, 0x2b649c),
+        BDC_V(int, 0x2b64a0), BDC_V(int, 0x2b64a4), BDC_V(int, 0x2b64a8), BDC_V(int, 0x2b64ac),
+    },
+    {
+        BDC_V(int, 0x2b64b0), BDC_V(int, 0x2b64b4), BDC_V(int, 0x2b64b8), BDC_V(int, 0x2b64bc),
+        BDC_V(int, 0x2b64c0), BDC_V(int, 0x2b64c4), BDC_V(int, 0x2b64c8), BDC_V(int, 0x2b64cc),
+    },
+    {
+        BDC_V(int, 0x2b64d0), BDC_V(int, 0x2b64d4), BDC_V(int, 0x2b64d8), BDC_V(int, 0x2b64dc),
+        BDC_V(int, 0x2b64e0), BDC_V(int, 0x2b64e4), BDC_V(int, 0x2b64e8), BDC_V(int, 0x2b64ec),
+    },
+    {
+        BDC_V(int, 0x2b64f0), BDC_V(int, 0x2b64f4), BDC_V(int, 0x2b64f8), BDC_V(int, 0x2b64fc),
+        BDC_V(int, 0x2b6500), BDC_V(int, 0x2b6504), BDC_V(int, 0x2b6508), BDC_V(int, 0x2b650c),
+    },
+    {
+        BDC_V(int, 0x2b6510), BDC_V(int, 0x2b6514), BDC_V(int, 0x2b6518), BDC_V(int, 0x2b651c),
+        BDC_V(int, 0x2b6520), BDC_V(int, 0x2b6524), BDC_V(int, 0x2b6528), BDC_V(int, 0x2b652c),
+    },
+    {
+        BDC_V(int, 0x2b6530), BDC_V(int, 0x2b6534), BDC_V(int, 0x2b6538), BDC_V(int, 0x2b653c),
+        BDC_V(int, 0x2b6540), BDC_V(int, 0x2b6544), BDC_V(int, 0x2b6548), BDC_V(int, 0x2b654c),
+    },
+    {
+        BDC_V(int, 0x2b6550), BDC_V(int, 0x2b6554), BDC_V(int, 0x2b6558), BDC_V(int, 0x2b655c),
+        BDC_V(int, 0x2b6560), BDC_V(int, 0x2b6564), BDC_V(int, 0x2b6568), BDC_V(int, 0x2b656c),
+    },
+    {
+        BDC_V(int, 0x2b6570), BDC_V(int, 0x2b6574), BDC_V(int, 0x2b6578), BDC_V(int, 0x2b657c),
+        BDC_V(int, 0x2b6580), BDC_V(int, 0x2b6584), BDC_V(int, 0x2b6588), BDC_V(int, 0x2b658c),
+    },
+    {
+        BDC_V(int, 0x2b6590), BDC_V(int, 0x2b6594), BDC_V(int, 0x2b6598), BDC_V(int, 0x2b659c),
+        BDC_V(int, 0x2b65a0), BDC_V(int, 0x2b65a4), BDC_V(int, 0x2b65a8), BDC_V(int, 0x2b65ac),
+    },
+};

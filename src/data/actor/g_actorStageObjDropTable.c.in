@@ -1,0 +1,32 @@
+// bdc 0x08a84078 g_actorStageObjDropTable
+#include "bdc.h"
+
+__typeof__(s32[40][4]) g_actorStageObjDropTable = {
+    { BDC_V(int, 0x280078), BDC_V(int, 0x28007c), BDC_V(int, 0x280080) },
+    { BDC_V(int, 0x280088), BDC_V(int, 0x28008c), BDC_V(int, 0x280090) },
+    { BDC_V(int, 0x280098), BDC_V(int, 0x28009c), BDC_V(int, 0x2800a0), BDC_V(int, 0x2800a4) },
+    { BDC_V(int, 0x2800a8), BDC_V(int, 0x2800ac), BDC_V(int, 0x2800b0), BDC_V(int, 0x2800b4) },
+    { BDC_V(int, 0x2800b8), BDC_V(int, 0x2800bc), BDC_V(int, 0x2800c0) },
+    { BDC_V(int, 0x2800c8), BDC_V(int, 0x2800cc) },
+    { BDC_V(int, 0x2800d8), BDC_V(int, 0x2800dc), BDC_V(int, 0x2800e0) },
+    { BDC_V(int, 0x2800e8), BDC_V(int, 0x2800ec), BDC_V(int, 0x2800f0), BDC_V(int, 0x2800f4) },
+    { BDC_V(int, 0x2800f8), BDC_V(int, 0x2800fc), 0, BDC_V(int, 0x280104) },
+    { BDC_V(int, 0x280108), BDC_V(int, 0x28010c), 0, BDC_V(int, 0x280114) },
+    { BDC_V(int, 0x280118), BDC_V(int, 0x28011c), BDC_V(int, 0x280120), BDC_V(int, 0x280124) },
+    { BDC_V(int, 0x280128), BDC_V(int, 0x28012c), BDC_V(int, 0x280130), BDC_V(int, 0x280134) },
+    { BDC_V(int, 0x280138), BDC_V(int, 0x28013c), BDC_V(int, 0x280140), BDC_V(int, 0x280144) },
+    { 0, BDC_V(int, 0x28014c), BDC_V(int, 0x280150) },
+    { BDC_V(int, 0x280158), BDC_V(int, 0x28015c), BDC_V(int, 0x280160), BDC_V(int, 0x280164) },
+    { BDC_V(int, 0x280168), BDC_V(int, 0x28016c), BDC_V(int, 0x280170), BDC_V(int, 0x280174) },
+    { BDC_V(int, 0x280178), BDC_V(int, 0x28017c), BDC_V(int, 0x280180) },
+    { BDC_V(int, 0x280188), BDC_V(int, 0x28018c), BDC_V(int, 0x280190), BDC_V(int, 0x280194) },
+    { BDC_V(int, 0x280198), BDC_V(int, 0x28019c), BDC_V(int, 0x2801a0), BDC_V(int, 0x2801a4) },
+    { BDC_V(int, 0x2801a8), BDC_V(int, 0x2801ac), BDC_V(int, 0x2801b0), BDC_V(int, 0x2801b4) }, {0},
+    {0}, {0}, {0}, { BDC_V(int, 0x2801f8), BDC_V(int, 0x2801fc), BDC_V(int, 0x280200) }, {0}, {0},
+    { BDC_V(int, 0x280228), BDC_V(int, 0x28022c), BDC_V(int, 0x280230), BDC_V(int, 0x280234) },
+    { 0, BDC_V(int, 0x28023c) }, { 0, BDC_V(int, 0x28024c) }, { 0, BDC_V(int, 0x28025c) },
+    { 0, BDC_V(int, 0x28026c) }, { 0, BDC_V(int, 0x28027c) }, { 0, BDC_V(int, 0x28028c) },
+    { 0, BDC_V(int, 0x28029c) }, { 0, BDC_V(int, 0x2802ac) }, {0}, {0},
+    { BDC_V(int, 0x2802d8), BDC_V(int, 0x2802dc), BDC_V(int, 0x2802e0), BDC_V(int, 0x2802e4) },
+    { BDC_V(int, 0x2802e8), BDC_V(int, 0x2802ec), BDC_V(int, 0x2802f0), BDC_V(int, 0x2802f4) },
+};

@@ -1,0 +1,9 @@
+// bdc 0x08aa5230 g_gmoDefaultEyePos
+#include "bdc.h"
+
+__typeof__(ScePspFVector4) g_gmoDefaultEyePos = {
+    .x = BDC_V(float, 0x2a1230),
+    .y = BDC_V(float, 0x2a1234),
+    .z = BDC_V(float, 0x2a1238),
+    .w = BDC_V(float, 0x2a123c),
+};

@@ -1,0 +1,11 @@
+// bdc 0x08a9b458 g_uiLoadingBandColours
+#include "bdc.h"
+
+__typeof__(u32[3][5]) g_uiLoadingBandColours = {
+    { BDC_V(unsigned int, 0x297458), BDC_V(unsigned int, 0x29745c) },
+    { BDC_V(unsigned int, 0x29746c), BDC_V(unsigned int, 0x297470) },
+    {
+        BDC_V(unsigned int, 0x297480), BDC_V(unsigned int, 0x297484), BDC_V(unsigned int, 0x297488),
+        BDC_V(unsigned int, 0x29748c), BDC_V(unsigned int, 0x297490),
+    },
+};

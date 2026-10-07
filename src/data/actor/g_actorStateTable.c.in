@@ -1,0 +1,16 @@
+// bdc 0x08a98a08 g_actorStateTable
+#include "bdc.h"
+
+__typeof__(MemberFnPtr[11]) g_actorStateTable = {
+    { .index = BDC_V(short, 0x294a0a), .delta2 = BDC_V(int, 0x294a0c) },
+    { .index = BDC_V(short, 0x294a12), .delta2 = BDC_V(int, 0x294a14) },
+    { .index = BDC_V(short, 0x294a1a), .delta2 = BDC_V(int, 0x294a1c) },
+    { .index = BDC_V(short, 0x294a22), .delta2 = BDC_V(int, 0x294a24) },
+    { .index = BDC_V(short, 0x294a2a), .delta2 = BDC_V(int, 0x294a2c) },
+    { .index = BDC_V(short, 0x294a32), .delta2 = BDC_V(int, 0x294a34) },
+    { .index = BDC_V(short, 0x294a3a), .delta2 = BDC_V(int, 0x294a3c) },
+    { .index = BDC_V(short, 0x294a42), .delta2 = BDC_V(int, 0x294a44) },
+    { .index = BDC_V(short, 0x294a4a), .delta2 = BDC_V(int, 0x294a4c) },
+    { .index = BDC_V(short, 0x294a52), .delta2 = BDC_V(int, 0x294a54) },
+    { .index = BDC_V(short, 0x294a5a), .delta2 = BDC_V(int, 0x294a5c) },
+};

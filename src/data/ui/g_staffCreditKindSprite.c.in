@@ -1,0 +1,8 @@
+// bdc 0x08a9d044 g_staffCreditKindSprite
+#include "bdc.h"
+
+__typeof__(const s32[10]) g_staffCreditKindSprite = {
+    BDC_V(int, 0x299044), BDC_V(int, 0x299048), BDC_V(int, 0x29904c), BDC_V(int, 0x299050),
+    BDC_V(int, 0x299054), BDC_V(int, 0x299058), BDC_V(int, 0x29905c), BDC_V(int, 0x299060),
+    BDC_V(int, 0x299064), BDC_V(int, 0x299068),
+};

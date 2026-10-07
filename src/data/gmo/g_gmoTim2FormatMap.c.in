@@ -1,0 +1,7 @@
+// bdc 0x08aa5e5c g_gmoTim2FormatMap
+#include "bdc.h"
+
+__typeof__(u32[6]) g_gmoTim2FormatMap = {
+    BDC_V(unsigned int, 0x2a1e5c), BDC_V(unsigned int, 0x2a1e60), BDC_V(unsigned int, 0x2a1e64),
+    BDC_V(unsigned int, 0x2a1e68), BDC_V(unsigned int, 0x2a1e6c), BDC_V(unsigned int, 0x2a1e70),
+};

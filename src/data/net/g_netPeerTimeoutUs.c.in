@@ -1,0 +1,4 @@
+// bdc 0x08aa1fe0 g_netPeerTimeoutUs
+#include "bdc.h"
+
+__typeof__(const u64) g_netPeerTimeoutUs = BDC_V(unsigned long long, 0x29dfe0);

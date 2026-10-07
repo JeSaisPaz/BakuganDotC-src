@@ -1,0 +1,9 @@
+// bdc 0x08ac61b0 g_ioStorageRootNames
+#include "bdc.h"
+
+__typeof__(const char *[7]) g_ioStorageRootNames = {
+    (const char *)BDC_STR(0x29fda0), (const char *)BDC_STR(0x29fda4),
+    (const char *)BDC_STR(0x29fdbc), (const char *)BDC_STR(0x29fddc),
+    (const char *)BDC_STR(0x29fdf8), (const char *)BDC_STR(0x29fe14),
+    (const char *)BDC_STR(0x29fe30),
+};

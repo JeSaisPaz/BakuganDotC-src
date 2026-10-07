@@ -1,0 +1,9 @@
+// bdc 0x08a92c94 g_specialUnlockEventIds
+#include "bdc.h"
+
+__typeof__(const u32[12]) g_specialUnlockEventIds = {
+    BDC_V(unsigned int, 0x28ec94), BDC_V(unsigned int, 0x28ec98), BDC_V(unsigned int, 0x28ec9c),
+    BDC_V(unsigned int, 0x28eca0), BDC_V(unsigned int, 0x28eca4), BDC_V(unsigned int, 0x28eca8),
+    BDC_V(unsigned int, 0x28ecac), BDC_V(unsigned int, 0x28ecb0), BDC_V(unsigned int, 0x28ecb4),
+    BDC_V(unsigned int, 0x28ecb8), BDC_V(unsigned int, 0x28ecbc), BDC_V(unsigned int, 0x28ecc0),
+};

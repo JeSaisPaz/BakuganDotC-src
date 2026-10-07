@@ -1,0 +1,206 @@
+// bdc 0x08a95624 g_gameStageTable
+#include "bdc.h"
+
+__typeof__(const GameStageEntry[41]) g_gameStageTable = {
+    { .name = (const char *)BDC_STR(0x290f30), .pack = (const char *)BDC_STR(0x290f3c) },
+    {
+        .stage = BDC_V(int, 0x291630),
+        .name = (const char *)BDC_STR(0x290f5c),
+        .pack = (const char *)BDC_STR(0x290f68),
+    },
+    {
+        .stage = BDC_V(int, 0x29163c),
+        .name = (const char *)BDC_STR(0x290f88),
+        .pack = (const char *)BDC_STR(0x290f94),
+    },
+    {
+        .stage = BDC_V(int, 0x291648),
+        .name = (const char *)BDC_STR(0x290fb4),
+        .pack = (const char *)BDC_STR(0x290fc0),
+    },
+    {
+        .stage = BDC_V(int, 0x291654),
+        .name = (const char *)BDC_STR(0x290fe0),
+        .pack = (const char *)BDC_STR(0x290fe8),
+    },
+    {
+        .stage = BDC_V(int, 0x291660),
+        .name = (const char *)BDC_STR(0x291008),
+        .pack = (const char *)BDC_STR(0x291010),
+    },
+    {
+        .stage = BDC_V(int, 0x29166c),
+        .name = (const char *)BDC_STR(0x291030),
+        .pack = (const char *)BDC_STR(0x291038),
+    },
+    {
+        .stage = BDC_V(int, 0x291678),
+        .name = (const char *)BDC_STR(0x291058),
+        .pack = (const char *)BDC_STR(0x291060),
+    },
+    {
+        .stage = BDC_V(int, 0x291684),
+        .name = (const char *)BDC_STR(0x291080),
+        .pack = (const char *)BDC_STR(0x291088),
+    },
+    {
+        .stage = BDC_V(int, 0x291690),
+        .name = (const char *)BDC_STR(0x2910a8),
+        .pack = (const char *)BDC_STR(0x2910b0),
+    },
+    {
+        .stage = BDC_V(int, 0x29169c),
+        .name = (const char *)BDC_STR(0x2910d0),
+        .pack = (const char *)BDC_STR(0x2910d8),
+    },
+    {
+        .stage = BDC_V(int, 0x2916a8),
+        .name = (const char *)BDC_STR(0x2910f8),
+        .pack = (const char *)BDC_STR(0x291100),
+    },
+    {
+        .stage = BDC_V(int, 0x2916b4),
+        .name = (const char *)BDC_STR(0x291120),
+        .pack = (const char *)BDC_STR(0x29112c),
+    },
+    {
+        .stage = BDC_V(int, 0x2916c0),
+        .name = (const char *)BDC_STR(0x29114c),
+        .pack = (const char *)BDC_STR(0x291158),
+    },
+    {
+        .stage = BDC_V(int, 0x2916cc),
+        .name = (const char *)BDC_STR(0x291178),
+        .pack = (const char *)BDC_STR(0x291184),
+    },
+    {
+        .stage = BDC_V(int, 0x2916d8),
+        .name = (const char *)BDC_STR(0x2911a4),
+        .pack = (const char *)BDC_STR(0x2911b0),
+    },
+    {
+        .stage = BDC_V(int, 0x2916e4),
+        .name = (const char *)BDC_STR(0x2911d0),
+        .pack = (const char *)BDC_STR(0x2911dc),
+    },
+    {
+        .stage = BDC_V(int, 0x2916f0),
+        .name = (const char *)BDC_STR(0x2911fc),
+        .pack = (const char *)BDC_STR(0x291208),
+    },
+    {
+        .stage = BDC_V(int, 0x2916fc),
+        .name = (const char *)BDC_STR(0x291228),
+        .pack = (const char *)BDC_STR(0x291234),
+    },
+    {
+        .stage = BDC_V(int, 0x291708),
+        .name = (const char *)BDC_STR(0x291254),
+        .pack = (const char *)BDC_STR(0x291260),
+    },
+    {
+        .stage = BDC_V(int, 0x291714),
+        .name = (const char *)BDC_STR(0x291280),
+        .pack = (const char *)BDC_STR(0x291290),
+    },
+    {
+        .stage = BDC_V(int, 0x291720),
+        .name = (const char *)BDC_STR(0x2912b0),
+        .pack = (const char *)BDC_STR(0x2912c0),
+    },
+    {
+        .stage = BDC_V(int, 0x29172c),
+        .name = (const char *)BDC_STR(0x2912e0),
+        .pack = (const char *)BDC_STR(0x2912f0),
+    },
+    {
+        .stage = BDC_V(int, 0x291738),
+        .name = (const char *)BDC_STR(0x291310),
+        .pack = (const char *)BDC_STR(0x291320),
+    },
+    {
+        .stage = BDC_V(int, 0x291744),
+        .name = (const char *)BDC_STR(0x291340),
+        .pack = (const char *)BDC_STR(0x291348),
+    },
+    {
+        .stage = BDC_V(int, 0x291750),
+        .name = (const char *)BDC_STR(0x291368),
+        .pack = (const char *)BDC_STR(0x291370),
+    },
+    {
+        .stage = BDC_V(int, 0x29175c),
+        .name = (const char *)BDC_STR(0x291390),
+        .pack = (const char *)BDC_STR(0x291398),
+    },
+    {
+        .stage = BDC_V(int, 0x291768),
+        .name = (const char *)BDC_STR(0x2913b8),
+        .pack = (const char *)BDC_STR(0x2913c0),
+    },
+    {
+        .stage = BDC_V(int, 0x291774),
+        .name = (const char *)BDC_STR(0x2913e0),
+        .pack = (const char *)BDC_STR(0x2913ec),
+    },
+    {
+        .stage = BDC_V(int, 0x291780),
+        .name = (const char *)BDC_STR(0x29140c),
+        .pack = (const char *)BDC_STR(0x291418),
+    },
+    {
+        .stage = BDC_V(int, 0x29178c),
+        .name = (const char *)BDC_STR(0x291438),
+        .pack = (const char *)BDC_STR(0x291444),
+    },
+    {
+        .stage = BDC_V(int, 0x291798),
+        .name = (const char *)BDC_STR(0x291464),
+        .pack = (const char *)BDC_STR(0x291470),
+    },
+    {
+        .stage = BDC_V(int, 0x2917a4),
+        .name = (const char *)BDC_STR(0x291490),
+        .pack = (const char *)BDC_STR(0x29149c),
+    },
+    {
+        .stage = BDC_V(int, 0x2917b0),
+        .name = (const char *)BDC_STR(0x2914bc),
+        .pack = (const char *)BDC_STR(0x2914c8),
+    },
+    {
+        .stage = BDC_V(int, 0x2917bc),
+        .name = (const char *)BDC_STR(0x2914e8),
+        .pack = (const char *)BDC_STR(0x2914f4),
+    },
+    {
+        .stage = BDC_V(int, 0x2917c8),
+        .name = (const char *)BDC_STR(0x291514),
+        .pack = (const char *)BDC_STR(0x291520),
+    },
+    {
+        .stage = BDC_V(int, 0x2917d4),
+        .name = (const char *)BDC_STR(0x291540),
+        .pack = (const char *)BDC_STR(0x291550),
+    },
+    {
+        .stage = BDC_V(int, 0x2917e0),
+        .name = (const char *)BDC_STR(0x291570),
+        .pack = (const char *)BDC_STR(0x291580),
+    },
+    {
+        .stage = BDC_V(int, 0x2917ec),
+        .name = (const char *)BDC_STR(0x2915a0),
+        .pack = (const char *)BDC_STR(0x2915b0),
+    },
+    {
+        .stage = BDC_V(int, 0x2917f8),
+        .name = (const char *)BDC_STR(0x2915d0),
+        .pack = (const char *)BDC_STR(0x2915e0),
+    },
+    {
+        .stage = BDC_V(int, 0x291804),
+        .name = (const char *)BDC_STR(0x291600),
+        .pack = (const char *)BDC_STR(0x291604),
+    },
+};

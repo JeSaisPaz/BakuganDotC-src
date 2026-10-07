@@ -1,0 +1,4 @@
+// bdc 0x08ac3aa5 g_uiCollectionFigureCat0IdsSpecial
+#include "bdc.h"
+
+__typeof__(u8[18]) g_uiCollectionFigureCat0IdsSpecial = BDC_BYTES(0x2bfaa5, 18);

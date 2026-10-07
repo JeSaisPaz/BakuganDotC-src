@@ -1,0 +1,41 @@
+// bdc 0x08a828a0 g_stageObjLightSetLandmark01
+#include "bdc.h"
+
+__typeof__(const StageObjLightSet8) g_stageObjLightSetLandmark01 = {
+    .modelName = (const char *)BDC_STR(0x27e884),
+    .count = BDC_V(int, 0x27e8a4),
+    .lights = {
+        {
+            .pos = { BDC_V(float, 0x27e8b0), BDC_V(float, 0x27e8b4), BDC_V(float, 0x27e8b8) },
+            .texIndex = BDC_V(float, 0x27e8bc),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e8c0), BDC_V(float, 0x27e8c4), BDC_V(float, 0x27e8c8) },
+            .texIndex = BDC_V(float, 0x27e8cc),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e8d0), BDC_V(float, 0x27e8d4), BDC_V(float, 0x27e8d8) },
+            .texIndex = BDC_V(float, 0x27e8dc),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e8e0), BDC_V(float, 0x27e8e4), BDC_V(float, 0x27e8e8) },
+            .texIndex = BDC_V(float, 0x27e8ec),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e8f0), BDC_V(float, 0x27e8f4), BDC_V(float, 0x27e8f8) },
+            .texIndex = BDC_V(float, 0x27e8fc),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e900), BDC_V(float, 0x27e904), BDC_V(float, 0x27e908) },
+            .texIndex = BDC_V(float, 0x27e90c),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e910), BDC_V(float, 0x27e914), BDC_V(float, 0x27e918) },
+            .texIndex = BDC_V(float, 0x27e91c),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e920), BDC_V(float, 0x27e924), BDC_V(float, 0x27e928) },
+            .texIndex = BDC_V(float, 0x27e92c),
+        },
+    },
+};

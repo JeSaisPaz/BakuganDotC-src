@@ -203,8 +203,7 @@ void BtlBakuganState07Update(BtlBakugan *self)
     }
     if (GfxModelMotionReached(&self->base, advanceProgress)) {
       if (!(set->flags & 0x10000)) {
-        BtlBakuganStartHitWindow(
-            self, (BtlHitWindowDef *)(uintptr_t)BtlBakuganGetComboStepParam(self));
+        BtlBakuganStartHitWindow(self, BtlBakuganGetComboStepParam(self));
       }
       self->subTimer = 0;
       self->finalStepPlaying = 1;

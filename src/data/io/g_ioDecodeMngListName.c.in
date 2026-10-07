@@ -1,0 +1,4 @@
+// bdc 0x08ac61fc g_ioDecodeMngListName
+#include "bdc.h"
+
+__typeof__(const char *) g_ioDecodeMngListName = (const char *)BDC_STR(0x29fef0);

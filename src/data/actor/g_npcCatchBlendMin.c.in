@@ -1,0 +1,4 @@
+// bdc 0x08abf6e0 g_npcCatchBlendMin
+#include "bdc.h"
+
+__typeof__(float) g_npcCatchBlendMin = BDC_V(float, 0x2bb6e0);

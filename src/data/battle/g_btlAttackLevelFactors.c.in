@@ -1,0 +1,8 @@
+// bdc 0x08a6f6bc g_btlAttackLevelFactors
+#include "bdc.h"
+
+__typeof__(float[10]) g_btlAttackLevelFactors = {
+    BDC_V(float, 0x26b6bc), BDC_V(float, 0x26b6c0), BDC_V(float, 0x26b6c4), BDC_V(float, 0x26b6c8),
+    BDC_V(float, 0x26b6cc), BDC_V(float, 0x26b6d0), BDC_V(float, 0x26b6d4), BDC_V(float, 0x26b6d8),
+    BDC_V(float, 0x26b6dc), BDC_V(float, 0x26b6e0),
+};

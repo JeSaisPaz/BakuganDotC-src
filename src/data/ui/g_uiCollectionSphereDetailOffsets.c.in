@@ -1,0 +1,20 @@
+// bdc 0x08ac3828 g_uiCollectionSphereDetailOffsets
+#include "bdc.h"
+
+__typeof__(float[33][2]) g_uiCollectionSphereDetailOffsets = {
+    { 0, BDC_V(float, 0x2bf82c) }, { 0, BDC_V(float, 0x2bf834) }, { 0, BDC_V(float, 0x2bf83c) },
+    { 0, BDC_V(float, 0x2bf844) }, { 0, BDC_V(float, 0x2bf84c) }, { 0, BDC_V(float, 0x2bf854) },
+    { 0, BDC_V(float, 0x2bf85c) }, { 0, BDC_V(float, 0x2bf864) }, { 0, BDC_V(float, 0x2bf86c) },
+    { 0, BDC_V(float, 0x2bf874) }, { 0, BDC_V(float, 0x2bf87c) }, { 0, BDC_V(float, 0x2bf884) },
+    { 0, BDC_V(float, 0x2bf88c) }, { 0, BDC_V(float, 0x2bf894) },
+    { BDC_V(float, 0x2bf898), BDC_V(float, 0x2bf89c) }, { 0, BDC_V(float, 0x2bf8a4) },
+    { 0, BDC_V(float, 0x2bf8ac) }, { 0, BDC_V(float, 0x2bf8b4) }, { 0, BDC_V(float, 0x2bf8bc) },
+    { 0, BDC_V(float, 0x2bf8c4) }, { BDC_V(float, 0x2bf8c8), BDC_V(float, 0x2bf8cc) },
+    { 0, BDC_V(float, 0x2bf8d4) }, { BDC_V(float, 0x2bf8d8), BDC_V(float, 0x2bf8dc) },
+    { BDC_V(float, 0x2bf8e0), BDC_V(float, 0x2bf8e4) },
+    { BDC_V(float, 0x2bf8e8), BDC_V(float, 0x2bf8ec) }, { 0, BDC_V(float, 0x2bf8f4) },
+    { BDC_V(float, 0x2bf8f8), BDC_V(float, 0x2bf8fc) },
+    { BDC_V(float, 0x2bf900), BDC_V(float, 0x2bf904) },
+    { BDC_V(float, 0x2bf908), BDC_V(float, 0x2bf90c) }, { 0, BDC_V(float, 0x2bf914) },
+    { 0, BDC_V(float, 0x2bf91c) }, { 0, BDC_V(float, 0x2bf924) }, { 0, BDC_V(float, 0x2bf92c) },
+};

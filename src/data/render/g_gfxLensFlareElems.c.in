@@ -1,0 +1,53 @@
+// bdc 0x08a83ce8 g_gfxLensFlareElems
+#include "bdc.h"
+
+__typeof__(const GfxLensFlareElem[8]) g_gfxLensFlareElems = {
+    {
+        .texName = (const char *)BDC_STR(0x27fcb8),
+        .size = BDC_V(float, 0x27fcec),
+        .step = BDC_V(float, 0x27fcf0),
+        .alpha = BDC_V(float, 0x27fcf4),
+    },
+    {
+        .texName = (const char *)BDC_STR(0x27fcc0),
+        .size = BDC_V(float, 0x27fcfc),
+        .step = BDC_V(float, 0x27fd00),
+        .alpha = BDC_V(float, 0x27fd04),
+    },
+    {
+        .texName = (const char *)BDC_STR(0x27fcc8),
+        .size = BDC_V(float, 0x27fd0c),
+        .step = BDC_V(float, 0x27fd10),
+        .alpha = BDC_V(float, 0x27fd14),
+    },
+    {
+        .texName = (const char *)BDC_STR(0x27fcd0),
+        .size = BDC_V(float, 0x27fd1c),
+        .step = BDC_V(float, 0x27fd20),
+        .alpha = BDC_V(float, 0x27fd24),
+    },
+    {
+        .texName = (const char *)BDC_STR(0x27fcd8),
+        .size = BDC_V(float, 0x27fd2c),
+        .step = BDC_V(float, 0x27fd30),
+        .alpha = BDC_V(float, 0x27fd34),
+    },
+    {
+        .texName = (const char *)BDC_STR(0x27fce0),
+        .size = BDC_V(float, 0x27fd3c),
+        .step = BDC_V(float, 0x27fd40),
+        .alpha = BDC_V(float, 0x27fd44),
+    },
+    {
+        .texName = (const char *)BDC_STR(0x27fcb8),
+        .size = BDC_V(float, 0x27fd4c),
+        .step = BDC_V(float, 0x27fd50),
+        .alpha = BDC_V(float, 0x27fd54),
+    },
+    {
+        .texName = (const char *)BDC_STR(0x27fcc0),
+        .size = BDC_V(float, 0x27fd5c),
+        .step = BDC_V(float, 0x27fd60),
+        .alpha = BDC_V(float, 0x27fd64),
+    },
+};

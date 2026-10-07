@@ -1,0 +1,4 @@
+// bdc 0x08ac6234 g_msgDialogLastBusy
+#include "bdc.h"
+
+__typeof__(s32) g_msgDialogLastBusy = BDC_V(int, 0x2c2234);

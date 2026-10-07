@@ -1,0 +1,4 @@
+// bdc 0x08a643ee g_gfxTrailSplineIndices
+#include "bdc.h"
+
+__typeof__(u8[128]) g_gfxTrailSplineIndices = BDC_BYTES(0x2603ee, 128);

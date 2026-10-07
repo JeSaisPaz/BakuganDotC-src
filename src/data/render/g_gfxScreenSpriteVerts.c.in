@@ -1,0 +1,33 @@
+// bdc 0x08ac5ea8 g_gfxScreenSpriteVerts
+#include "bdc.h"
+
+__typeof__(GfxGeTexVertex16[8]) g_gfxScreenSpriteVerts = {
+    { .u = BDC_V(short, 0x2c1ea8), .v = BDC_V(short, 0x2c1eaa) },
+    {
+        .u = BDC_V(short, 0x2c1eb2),
+        .v = BDC_V(short, 0x2c1eb4),
+        .x = BDC_V(short, 0x2c1eb6),
+        .y = BDC_V(short, 0x2c1eb8),
+    },
+    { .u = BDC_V(short, 0x2c1ebc), .v = BDC_V(short, 0x2c1ebe) },
+    {
+        .u = BDC_V(short, 0x2c1ec6),
+        .v = BDC_V(short, 0x2c1ec8),
+        .x = BDC_V(short, 0x2c1eca),
+        .y = BDC_V(short, 0x2c1ecc),
+    },
+    {0},
+    {
+        .u = BDC_V(short, 0x2c1eda),
+        .v = BDC_V(short, 0x2c1edc),
+        .x = BDC_V(short, 0x2c1ede),
+        .y = BDC_V(short, 0x2c1ee0),
+    },
+    { .y = BDC_V(short, 0x2c1eea) },
+    {
+        .u = BDC_V(short, 0x2c1eee),
+        .v = BDC_V(short, 0x2c1ef0),
+        .x = BDC_V(short, 0x2c1ef2),
+        .y = BDC_V(short, 0x2c1ef4),
+    },
+};

@@ -1,0 +1,4 @@
+// bdc 0x08ac34f8 g_uiCollectionSphereCat0IdsNormal
+#include "bdc.h"
+
+__typeof__(u8[33]) g_uiCollectionSphereCat0IdsNormal = BDC_BYTES(0x2bf4f8, 33);

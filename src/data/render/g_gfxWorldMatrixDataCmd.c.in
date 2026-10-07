@@ -1,0 +1,4 @@
+// bdc 0x08aa39b0 g_gfxWorldMatrixDataCmd
+#include "bdc.h"
+
+__typeof__(u32) g_gfxWorldMatrixDataCmd = BDC_V(unsigned int, 0x29f9b0);

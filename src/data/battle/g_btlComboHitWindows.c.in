@@ -1,0 +1,84 @@
+// bdc 0x08a6f9e8 g_btlComboHitWindows
+#include "bdc.h"
+
+__typeof__(BtlHitWindowDef[15]) g_btlComboHitWindows = {
+    { .size = BDC_V(float, 0x26b9ec), .reach = BDC_V(float, 0x26b9f0) },
+    {
+        .attackId = BDC_V(short, 0x26b9f4),
+        .size = BDC_V(float, 0x26b9f8),
+        .reach = BDC_V(float, 0x26b9fc),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba00),
+        .size = BDC_V(float, 0x26ba04),
+        .reach = BDC_V(float, 0x26ba08),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba0c),
+        .size = BDC_V(float, 0x26ba10),
+        .reach = BDC_V(float, 0x26ba14),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba18),
+        .size = BDC_V(float, 0x26ba1c),
+        .reach = BDC_V(float, 0x26ba20),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba24),
+        .size = BDC_V(float, 0x26ba28),
+        .reach = BDC_V(float, 0x26ba2c),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba30),
+        .size = BDC_V(float, 0x26ba34),
+        .reach = BDC_V(float, 0x26ba38),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba3c),
+        .flags = BDC_V(short, 0x26ba3e),
+        .size = BDC_V(float, 0x26ba40),
+        .reach = BDC_V(float, 0x26ba44),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba48),
+        .flags = BDC_V(short, 0x26ba4a),
+        .size = BDC_V(float, 0x26ba4c),
+        .reach = BDC_V(float, 0x26ba50),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba54),
+        .flags = BDC_V(short, 0x26ba56),
+        .size = BDC_V(float, 0x26ba58),
+        .reach = BDC_V(float, 0x26ba5c),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba60),
+        .flags = BDC_V(short, 0x26ba62),
+        .size = BDC_V(float, 0x26ba64),
+        .reach = BDC_V(float, 0x26ba68),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba6c),
+        .flags = BDC_V(short, 0x26ba6e),
+        .size = BDC_V(float, 0x26ba70),
+        .reach = BDC_V(float, 0x26ba74),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba78),
+        .flags = BDC_V(short, 0x26ba7a),
+        .size = BDC_V(float, 0x26ba7c),
+        .reach = BDC_V(float, 0x26ba80),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba84),
+        .flags = BDC_V(short, 0x26ba86),
+        .size = BDC_V(float, 0x26ba88),
+        .reach = BDC_V(float, 0x26ba8c),
+    },
+    {
+        .attackId = BDC_V(short, 0x26ba90),
+        .flags = BDC_V(short, 0x26ba92),
+        .size = BDC_V(float, 0x26ba94),
+        .reach = BDC_V(float, 0x26ba98),
+    },
+};

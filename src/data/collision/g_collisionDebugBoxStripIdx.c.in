@@ -1,0 +1,4 @@
+// bdc 0x08aa395c g_collisionDebugBoxStripIdx
+#include "bdc.h"
+
+__typeof__(u8[10]) g_collisionDebugBoxStripIdx = BDC_BYTES(0x29f95c, 10);

@@ -1,0 +1,11 @@
+// bdc 0x08aba0e0 g_btlGateCardColors
+#include "bdc.h"
+
+__typeof__(s32[6][4]) g_btlGateCardColors = {
+    { BDC_V(int, 0x2b60e0), BDC_V(int, 0x2b60e4), BDC_V(int, 0x2b60e8), BDC_V(int, 0x2b60ec) },
+    { BDC_V(int, 0x2b60f0), BDC_V(int, 0x2b60f4), BDC_V(int, 0x2b60f8), BDC_V(int, 0x2b60fc) },
+    { BDC_V(int, 0x2b6100), BDC_V(int, 0x2b6104), BDC_V(int, 0x2b6108), BDC_V(int, 0x2b610c) },
+    { BDC_V(int, 0x2b6110), BDC_V(int, 0x2b6114), BDC_V(int, 0x2b6118), BDC_V(int, 0x2b611c) },
+    { BDC_V(int, 0x2b6120), BDC_V(int, 0x2b6124), BDC_V(int, 0x2b6128), BDC_V(int, 0x2b612c) },
+    { BDC_V(int, 0x2b6130), BDC_V(int, 0x2b6134), BDC_V(int, 0x2b6138), BDC_V(int, 0x2b613c) },
+};

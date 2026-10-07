@@ -1,0 +1,10 @@
+// bdc 0x08a3a198 g_uiFontExtCodeTable
+#include "bdc.h"
+
+__typeof__(const int [17]) g_uiFontExtCodeTable = {
+    BDC_V(int, 0x236198), BDC_V(int, 0x23619c), BDC_V(int, 0x2361a0), BDC_V(int, 0x2361a4),
+    BDC_V(int, 0x2361a8), BDC_V(int, 0x2361ac), BDC_V(int, 0x2361b0), BDC_V(int, 0x2361b4),
+    BDC_V(int, 0x2361b8), BDC_V(int, 0x2361bc), BDC_V(int, 0x2361c0), BDC_V(int, 0x2361c4),
+    BDC_V(int, 0x2361c8), BDC_V(int, 0x2361cc), BDC_V(int, 0x2361d0), BDC_V(int, 0x2361d4),
+    BDC_V(int, 0x2361d8),
+};

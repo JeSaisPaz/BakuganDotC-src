@@ -1,0 +1,4 @@
+// bdc 0x08aa34c0 g_uiMsgBoxPromptAnim
+#include "bdc.h"
+
+__typeof__(s8[13]) g_uiMsgBoxPromptAnim = BDC_BYTES(0x29f4c0, 13);

@@ -1,0 +1,11 @@
+// bdc 0x08aa5360 g_gmoClipPlanes
+#include "bdc.h"
+
+__typeof__(ScePspFVector4[6]) g_gmoClipPlanes = {
+    { .x = BDC_V(float, 0x2a1360), .w = BDC_V(float, 0x2a136c) },
+    { .x = BDC_V(float, 0x2a1370), .w = BDC_V(float, 0x2a137c) },
+    { .y = BDC_V(float, 0x2a1384), .w = BDC_V(float, 0x2a138c) },
+    { .y = BDC_V(float, 0x2a1394), .w = BDC_V(float, 0x2a139c) },
+    { .z = BDC_V(float, 0x2a13a8), .w = BDC_V(float, 0x2a13ac) },
+    { .z = BDC_V(float, 0x2a13b8), .w = BDC_V(float, 0x2a13bc) },
+};

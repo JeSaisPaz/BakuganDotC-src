@@ -1,0 +1,32 @@
+// bdc 0x08a716a8 g_btlKind03MotionSet05
+#include "bdc.h"
+
+__typeof__(BtlAttackMotionSetEv4) g_btlKind03MotionSet05 = {
+    .head = {
+        .flags = BDC_V(unsigned int, 0x26d6a8),
+        .startMotion = BDC_V(short, 0x26d6ac),
+        .loopMotion = BDC_V(short, 0x26d6ae),
+        .mainMotion = BDC_V(short, 0x26d6b0),
+        .endMotion = BDC_V(short, 0x26d6b2),
+    },
+    .events = {
+        {
+            .type = BDC_V(unsigned char, 0x26d6b4),
+            .startFrame = BDC_V(unsigned char, 0x26d6b5),
+            .endFrame = BDC_V(unsigned char, 0x26d6b6),
+            .param = { .soundId = BDC_V(int, 0x26d6b8) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x26d6c8),
+            .startFrame = BDC_V(unsigned char, 0x26d6c9),
+            .endFrame = BDC_V(unsigned char, 0x26d6ca),
+            .param = { .soundId = BDC_V(int, 0x26d6cc) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x26d6dc),
+            .startFrame = BDC_V(unsigned char, 0x26d6dd),
+            .endFrame = BDC_V(unsigned char, 0x26d6de),
+            .param = { .soundId = BDC_V(int, 0x26d6e0) },
+        },
+    },
+};

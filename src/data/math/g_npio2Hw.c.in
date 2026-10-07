@@ -1,0 +1,13 @@
+// bdc 0x08aa4810 g_npio2Hw
+#include "bdc.h"
+
+__typeof__(s32[32]) g_npio2Hw = {
+    BDC_V(int, 0x2a0810), BDC_V(int, 0x2a0814), BDC_V(int, 0x2a0818), BDC_V(int, 0x2a081c),
+    BDC_V(int, 0x2a0820), BDC_V(int, 0x2a0824), BDC_V(int, 0x2a0828), BDC_V(int, 0x2a082c),
+    BDC_V(int, 0x2a0830), BDC_V(int, 0x2a0834), BDC_V(int, 0x2a0838), BDC_V(int, 0x2a083c),
+    BDC_V(int, 0x2a0840), BDC_V(int, 0x2a0844), BDC_V(int, 0x2a0848), BDC_V(int, 0x2a084c),
+    BDC_V(int, 0x2a0850), BDC_V(int, 0x2a0854), BDC_V(int, 0x2a0858), BDC_V(int, 0x2a085c),
+    BDC_V(int, 0x2a0860), BDC_V(int, 0x2a0864), BDC_V(int, 0x2a0868), BDC_V(int, 0x2a086c),
+    BDC_V(int, 0x2a0870), BDC_V(int, 0x2a0874), BDC_V(int, 0x2a0878), BDC_V(int, 0x2a087c),
+    BDC_V(int, 0x2a0880), BDC_V(int, 0x2a0884), BDC_V(int, 0x2a0888), BDC_V(int, 0x2a088c),
+};

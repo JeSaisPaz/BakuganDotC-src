@@ -1,0 +1,4 @@
+// bdc 0x08aac760 g_sceNewlibHeapKbSize
+#include "bdc.h"
+
+__typeof__(u32) g_sceNewlibHeapKbSize = BDC_V(unsigned int, 0x2a8760);

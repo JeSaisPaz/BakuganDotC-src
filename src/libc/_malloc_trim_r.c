@@ -57,7 +57,7 @@ int _malloc_trim_r(_reent *reent, u32 pad)
     brk = _sbrk_r(reent, 0);
     newTopSize = brk - (u8 *)g_mallocBins.bins[0].fd;
     if (newTopSize >= MALLOC_MINSIZE) {
-        g_mallocSbrkedMem = brk - (u8 *)g_mallocSbrkBase;
+        g_mallocSbrkedMem = brk - (u8 *)(intptr_t)g_mallocSbrkBase;
         g_mallocBins.bins[0].fd->size = newTopSize | MALLOC_PREV_INUSE;
     }
     __malloc_unlock(reent);

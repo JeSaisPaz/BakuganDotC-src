@@ -1,0 +1,20 @@
+// bdc 0x08a68b60 g_btlAttackSpreadDirs
+#include "bdc.h"
+
+__typeof__(ScePspFVector4[15]) g_btlAttackSpreadDirs = {
+    { .y = BDC_V(float, 0x264b64), .z = BDC_V(float, 0x264b68) },
+    { .y = BDC_V(float, 0x264b74), .z = BDC_V(float, 0x264b78) },
+    { .x = BDC_V(float, 0x264b80), .y = BDC_V(float, 0x264b84), .z = BDC_V(float, 0x264b88) },
+    { .x = BDC_V(float, 0x264b90), .y = BDC_V(float, 0x264b94), .z = BDC_V(float, 0x264b98) },
+    { .x = BDC_V(float, 0x264ba0), .y = BDC_V(float, 0x264ba4), .z = BDC_V(float, 0x264ba8) },
+    { .x = BDC_V(float, 0x264bb0), .y = BDC_V(float, 0x264bb4), .z = BDC_V(float, 0x264bb8) },
+    { .z = BDC_V(float, 0x264bc8) },
+    { .x = BDC_V(float, 0x264bd0), .y = BDC_V(float, 0x264bd4), .z = BDC_V(float, 0x264bd8) },
+    { .x = BDC_V(float, 0x264be0), .y = BDC_V(float, 0x264be4), .z = BDC_V(float, 0x264be8) },
+    { .x = BDC_V(float, 0x264bf0), .y = BDC_V(float, 0x264bf4), .z = BDC_V(float, 0x264bf8) },
+    { .x = BDC_V(float, 0x264c00), .y = BDC_V(float, 0x264c04), .z = BDC_V(float, 0x264c08) },
+    { .x = BDC_V(float, 0x264c10), .y = BDC_V(float, 0x264c14), .z = BDC_V(float, 0x264c18) },
+    { .x = BDC_V(float, 0x264c20), .y = BDC_V(float, 0x264c24), .z = BDC_V(float, 0x264c28) },
+    { .x = BDC_V(float, 0x264c30), .y = BDC_V(float, 0x264c34), .z = BDC_V(float, 0x264c38) },
+    { .x = BDC_V(float, 0x264c40), .y = BDC_V(float, 0x264c44), .z = BDC_V(float, 0x264c48) },
+};

@@ -1,0 +1,4 @@
+// bdc 0x08af33b4 g_gameGimmickVtbl2
+#include "bdc.h"
+
+__typeof__(const VtblEntry[2]) g_gameGimmickVtbl2 = { {0}, { .delta = BDC_V(short, 0x2ef3bc), .fn = (void *)GameGimmickDtor } };

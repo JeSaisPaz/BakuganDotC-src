@@ -1,0 +1,8 @@
+// bdc 0x08a993d8 g_gameEventDefaultFlags
+#include "bdc.h"
+
+__typeof__(u16 [7]) g_gameEventDefaultFlags = {
+    BDC_V(unsigned short, 0x2953d8), BDC_V(unsigned short, 0x2953da),
+    BDC_V(unsigned short, 0x2953dc), BDC_V(unsigned short, 0x2953de),
+    BDC_V(unsigned short, 0x2953e0), BDC_V(unsigned short, 0x2953e2),
+};

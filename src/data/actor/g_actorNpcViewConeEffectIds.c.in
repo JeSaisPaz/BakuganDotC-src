@@ -1,0 +1,7 @@
+// bdc 0x08a98e90 g_actorNpcViewConeEffectIds
+#include "bdc.h"
+
+__typeof__(u32[6]) g_actorNpcViewConeEffectIds = {
+    BDC_V(unsigned int, 0x294e90), BDC_V(unsigned int, 0x294e94), BDC_V(unsigned int, 0x294e98),
+    BDC_V(unsigned int, 0x294e9c), BDC_V(unsigned int, 0x294ea0), BDC_V(unsigned int, 0x294ea4),
+};

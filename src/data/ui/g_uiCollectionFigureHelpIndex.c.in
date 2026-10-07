@@ -1,0 +1,4 @@
+// bdc 0x08ac3ae0 g_uiCollectionFigureHelpIndex
+#include "bdc.h"
+
+__typeof__(const u8[21]) g_uiCollectionFigureHelpIndex = BDC_BYTES(0x2bfae0, 21);

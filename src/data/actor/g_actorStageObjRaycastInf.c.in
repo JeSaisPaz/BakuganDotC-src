@@ -1,0 +1,4 @@
+// bdc 0x08a84070 g_actorStageObjRaycastInf
+#include "bdc.h"
+
+__typeof__(float) g_actorStageObjRaycastInf = BDC_V(float, 0x280070);

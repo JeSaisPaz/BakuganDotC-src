@@ -1,0 +1,20 @@
+// bdc 0x08ab0518 g_btlUnitKindNames
+#include "bdc.h"
+
+__typeof__(char *[48]) g_btlUnitKindNames = {
+    NULL, (char *)BDC_STR(0x24d2b4), (char *)BDC_STR(0x24d2c4), (char *)BDC_STR(0x24d2d4),
+    (char *)BDC_STR(0x24d2dc), (char *)BDC_STR(0x24d2e8), (char *)BDC_STR(0x24d2f0),
+    (char *)BDC_STR(0x24d2fc), (char *)BDC_STR(0x24d304), (char *)BDC_STR(0x24d30c),
+    (char *)BDC_STR(0x24d320), (char *)BDC_STR(0x24d32c), (char *)BDC_STR(0x24d334),
+    (char *)BDC_STR(0x24d33c), (char *)BDC_STR(0x24d348), (char *)BDC_STR(0x24d350),
+    (char *)BDC_STR(0x24d358), (char *)BDC_STR(0x24d36c), (char *)BDC_STR(0x24d37c),
+    (char *)BDC_STR(0x24d390), (char *)BDC_STR(0x24d39c), (char *)BDC_STR(0x24d3ac),
+    (char *)BDC_STR(0x24d3bc), (char *)BDC_STR(0x24d3c8), (char *)BDC_STR(0x24d3d8),
+    (char *)BDC_STR(0x24d3e8), (char *)BDC_STR(0x24d3f8), (char *)BDC_STR(0x24d408),
+    (char *)BDC_STR(0x24d41c), (char *)BDC_STR(0x24d428), (char *)BDC_STR(0x24d434),
+    (char *)BDC_STR(0x24d444), (char *)BDC_STR(0x24d454), NULL, NULL, (char *)BDC_STR(0x24d460),
+    (char *)BDC_STR(0x24d46c), (char *)BDC_STR(0x24d478), (char *)BDC_STR(0x24d488),
+    (char *)BDC_STR(0x24d494), (char *)BDC_STR(0x24d4a0), (char *)BDC_STR(0x24d4ac),
+    (char *)BDC_STR(0x24d4bc), (char *)BDC_STR(0x24d4cc), (char *)BDC_STR(0x24d4d8),
+    (char *)BDC_STR(0x24d4e4), (char *)BDC_STR(0x24d4f4),
+};

@@ -1,0 +1,15 @@
+// bdc 0x08aa01f8 g_ieeeLogConsts
+#include "bdc.h"
+
+__typeof__(IeeeLogConsts) g_ieeeLogConsts = {
+    .ln2Hi = BDC_V(double, 0x29c1f8),
+    .ln2Lo = BDC_V(double, 0x29c200),
+    .two54 = BDC_V(double, 0x29c208),
+    .lg1 = BDC_V(double, 0x29c210),
+    .lg2 = BDC_V(double, 0x29c218),
+    .lg3 = BDC_V(double, 0x29c220),
+    .lg4 = BDC_V(double, 0x29c228),
+    .lg5 = BDC_V(double, 0x29c230),
+    .lg6 = BDC_V(double, 0x29c238),
+    .lg7 = BDC_V(double, 0x29c240),
+};

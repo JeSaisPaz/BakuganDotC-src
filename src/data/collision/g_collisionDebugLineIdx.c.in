@@ -1,0 +1,4 @@
+// bdc 0x08aa38ec g_collisionDebugLineIdx
+#include "bdc.h"
+
+__typeof__(u8[16]) g_collisionDebugLineIdx = BDC_BYTES(0x29f8ec, 16);

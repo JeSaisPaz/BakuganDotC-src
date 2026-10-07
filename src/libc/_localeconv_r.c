@@ -6,5 +6,5 @@
 void *_localeconv_r(_reent *reent)
 {
     (void)reent;
-    return g_lconv;
+    return (void *)&g_lconv;
 }

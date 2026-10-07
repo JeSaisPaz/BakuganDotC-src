@@ -1,0 +1,9 @@
+// bdc 0x08ac5dd8 g_gfxLightLitStateList
+#include "bdc.h"
+
+__typeof__(u32[13]) g_gfxLightLitStateList = {
+    BDC_V(unsigned int, 0x2c1dd8), BDC_V(unsigned int, 0x2c1ddc), BDC_V(unsigned int, 0x2c1de0),
+    BDC_V(unsigned int, 0x2c1de4), BDC_V(unsigned int, 0x2c1de8), BDC_V(unsigned int, 0x2c1dec),
+    BDC_V(unsigned int, 0x2c1df0), BDC_V(unsigned int, 0x2c1df4), BDC_V(unsigned int, 0x2c1df8), 0,
+    BDC_V(unsigned int, 0x2c1e00), BDC_V(unsigned int, 0x2c1e04), BDC_V(unsigned int, 0x2c1e08),
+};

@@ -1,0 +1,4 @@
+// bdc 0x08a91c58 g_gameFieldJetStageCount
+#include "bdc.h"
+
+__typeof__(s32) g_gameFieldJetStageCount = BDC_V(int, 0x28dc58);

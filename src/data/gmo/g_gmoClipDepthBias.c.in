@@ -1,0 +1,4 @@
+// bdc 0x08aa53c0 g_gmoClipDepthBias
+#include "bdc.h"
+
+__typeof__(float) g_gmoClipDepthBias = BDC_V(float, 0x2a13c0);

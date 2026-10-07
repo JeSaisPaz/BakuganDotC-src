@@ -1,0 +1,33 @@
+// bdc 0x08a7e0b0 g_btlKind19MotionSet14
+#include "bdc.h"
+
+__typeof__(BtlAttackMotionSetEv4) g_btlKind19MotionSet14 = {
+    .head = {
+        .flags = BDC_V(unsigned int, 0x27a0b0),
+        .startMotion = BDC_V(short, 0x27a0b4),
+        .loopMotion = BDC_V(short, 0x27a0b6),
+        .mainMotion = BDC_V(short, 0x27a0b8),
+        .endMotion = BDC_V(short, 0x27a0ba),
+    },
+    .events = {
+        {
+            .type = BDC_V(unsigned char, 0x27a0bc),
+            .endFrame = BDC_V(unsigned char, 0x27a0be),
+            .hitFlags = BDC_V(unsigned char, 0x27a0bf),
+            .value = BDC_V(float, 0x27a0c4),
+            .reach = BDC_V(float, 0x27a0c8),
+        },
+        {
+            .type = BDC_V(unsigned char, 0x27a0d0),
+            .startFrame = BDC_V(unsigned char, 0x27a0d1),
+            .endFrame = BDC_V(unsigned char, 0x27a0d2),
+            .param = { .soundId = BDC_V(int, 0x27a0d4) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x27a0e4),
+            .startFrame = BDC_V(unsigned char, 0x27a0e5),
+            .endFrame = BDC_V(unsigned char, 0x27a0e6),
+            .param = { .soundId = BDC_V(int, 0x27a0e8) },
+        },
+    },
+};

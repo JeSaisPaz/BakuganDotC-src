@@ -1,0 +1,4 @@
+// bdc 0x08aa01e0 g_ieeeLogOne
+#include "bdc.h"
+
+__typeof__(double) g_ieeeLogOne = BDC_V(double, 0x29c1e0);

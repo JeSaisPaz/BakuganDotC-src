@@ -1,0 +1,7 @@
+// bdc 0x08a68d00 g_btlAttributeBeats
+#include "bdc.h"
+
+__typeof__(s32[7]) g_btlAttributeBeats = {
+    BDC_V(int, 0x264d00), 0, BDC_V(int, 0x264d08), BDC_V(int, 0x264d0c), BDC_V(int, 0x264d10),
+    BDC_V(int, 0x264d14), BDC_V(int, 0x264d18),
+};

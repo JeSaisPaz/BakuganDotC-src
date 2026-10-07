@@ -1,0 +1,4 @@
+// bdc 0x08aba804 g_btlNextUnitId
+#include "bdc.h"
+
+__typeof__(s32) g_btlNextUnitId = BDC_V(int, 0x2b6804);

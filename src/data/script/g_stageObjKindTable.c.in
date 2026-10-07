@@ -1,0 +1,8 @@
+// bdc 0x08a348d0 g_stageObjKindTable
+#include "bdc.h"
+
+__typeof__(int[10]) g_stageObjKindTable = {
+    BDC_V(int, 0x2308d0), BDC_V(int, 0x2308d4), BDC_V(int, 0x2308d8), BDC_V(int, 0x2308dc),
+    BDC_V(int, 0x2308e0), BDC_V(int, 0x2308e4), BDC_V(int, 0x2308e8), BDC_V(int, 0x2308ec),
+    BDC_V(int, 0x2308f0), BDC_V(int, 0x2308f4),
+};

@@ -1,0 +1,4 @@
+// bdc 0x08ac5c30 g_gfxLightingCmd
+#include "bdc.h"
+
+__typeof__(u32) g_gfxLightingCmd = BDC_V(unsigned int, 0x2c1c30);

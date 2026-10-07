@@ -1,0 +1,4 @@
+// bdc 0x08aa5e10 g_sndSsVagCoefs
+#include "bdc.h"
+
+__typeof__(s8[10]) g_sndSsVagCoefs = BDC_BYTES(0x2a1e10, 10);

@@ -1,0 +1,206 @@
+// bdc 0x08a81a1c g_btlArenaTable
+#include "bdc.h"
+
+__typeof__(BtlArenaEntry[41]) g_btlArenaTable = {
+    { .name = (const char *)BDC_STR(0x27d5e0), .mapPath = (const char *)BDC_STR(0x27d5ec) },
+    {
+        .id = BDC_V(int, 0x27da28),
+        .name = (const char *)BDC_STR(0x27d60c),
+        .mapPath = (const char *)BDC_STR(0x27d618),
+    },
+    {
+        .id = BDC_V(int, 0x27da34),
+        .name = (const char *)BDC_STR(0x27d638),
+        .mapPath = (const char *)BDC_STR(0x27d644),
+    },
+    {
+        .id = BDC_V(int, 0x27da40),
+        .name = (const char *)BDC_STR(0x27d664),
+        .mapPath = (const char *)BDC_STR(0x27d670),
+    },
+    {
+        .id = BDC_V(int, 0x27da4c),
+        .name = (const char *)BDC_STR(0x27d5e0),
+        .mapPath = (const char *)BDC_STR(0x27d690),
+    },
+    {
+        .id = BDC_V(int, 0x27da58),
+        .name = (const char *)BDC_STR(0x27d60c),
+        .mapPath = (const char *)BDC_STR(0x27d6b0),
+    },
+    {
+        .id = BDC_V(int, 0x27da64),
+        .name = (const char *)BDC_STR(0x27d638),
+        .mapPath = (const char *)BDC_STR(0x27d6d0),
+    },
+    {
+        .id = BDC_V(int, 0x27da70),
+        .name = (const char *)BDC_STR(0x27d664),
+        .mapPath = (const char *)BDC_STR(0x27d6f0),
+    },
+    {
+        .id = BDC_V(int, 0x27da7c),
+        .name = (const char *)BDC_STR(0x27d5e0),
+        .mapPath = (const char *)BDC_STR(0x27d710),
+    },
+    {
+        .id = BDC_V(int, 0x27da88),
+        .name = (const char *)BDC_STR(0x27d60c),
+        .mapPath = (const char *)BDC_STR(0x27d730),
+    },
+    {
+        .id = BDC_V(int, 0x27da94),
+        .name = (const char *)BDC_STR(0x27d638),
+        .mapPath = (const char *)BDC_STR(0x27d750),
+    },
+    {
+        .id = BDC_V(int, 0x27daa0),
+        .name = (const char *)BDC_STR(0x27d664),
+        .mapPath = (const char *)BDC_STR(0x27d770),
+    },
+    {
+        .id = BDC_V(int, 0x27daac),
+        .name = (const char *)BDC_STR(0x27d5e0),
+        .mapPath = (const char *)BDC_STR(0x27d790),
+    },
+    {
+        .id = BDC_V(int, 0x27dab8),
+        .name = (const char *)BDC_STR(0x27d60c),
+        .mapPath = (const char *)BDC_STR(0x27d7b0),
+    },
+    {
+        .id = BDC_V(int, 0x27dac4),
+        .name = (const char *)BDC_STR(0x27d638),
+        .mapPath = (const char *)BDC_STR(0x27d7d0),
+    },
+    {
+        .id = BDC_V(int, 0x27dad0),
+        .name = (const char *)BDC_STR(0x27d664),
+        .mapPath = (const char *)BDC_STR(0x27d7f0),
+    },
+    {
+        .id = BDC_V(int, 0x27dadc),
+        .name = (const char *)BDC_STR(0x27d5e0),
+        .mapPath = (const char *)BDC_STR(0x27d810),
+    },
+    {
+        .id = BDC_V(int, 0x27dae8),
+        .name = (const char *)BDC_STR(0x27d60c),
+        .mapPath = (const char *)BDC_STR(0x27d830),
+    },
+    {
+        .id = BDC_V(int, 0x27daf4),
+        .name = (const char *)BDC_STR(0x27d638),
+        .mapPath = (const char *)BDC_STR(0x27d850),
+    },
+    {
+        .id = BDC_V(int, 0x27db00),
+        .name = (const char *)BDC_STR(0x27d664),
+        .mapPath = (const char *)BDC_STR(0x27d870),
+    },
+    {
+        .id = BDC_V(int, 0x27db0c),
+        .name = (const char *)BDC_STR(0x27d5e0),
+        .mapPath = (const char *)BDC_STR(0x27d890),
+    },
+    {
+        .id = BDC_V(int, 0x27db18),
+        .name = (const char *)BDC_STR(0x27d60c),
+        .mapPath = (const char *)BDC_STR(0x27d8b0),
+    },
+    {
+        .id = BDC_V(int, 0x27db24),
+        .name = (const char *)BDC_STR(0x27d638),
+        .mapPath = (const char *)BDC_STR(0x27d8d0),
+    },
+    {
+        .id = BDC_V(int, 0x27db30),
+        .name = (const char *)BDC_STR(0x27d664),
+        .mapPath = (const char *)BDC_STR(0x27d8f0),
+    },
+    {
+        .id = BDC_V(int, 0x27db3c),
+        .name = (const char *)BDC_STR(0x27d5e0),
+        .mapPath = (const char *)BDC_STR(0x27d910),
+    },
+    {
+        .id = BDC_V(int, 0x27db48),
+        .name = (const char *)BDC_STR(0x27d60c),
+        .mapPath = (const char *)BDC_STR(0x27d930),
+    },
+    {
+        .id = BDC_V(int, 0x27db54),
+        .name = (const char *)BDC_STR(0x27d638),
+        .mapPath = (const char *)BDC_STR(0x27d950),
+    },
+    {
+        .id = BDC_V(int, 0x27db60),
+        .name = (const char *)BDC_STR(0x27d664),
+        .mapPath = (const char *)BDC_STR(0x27d970),
+    },
+    {
+        .id = BDC_V(int, 0x27db6c),
+        .name = (const char *)BDC_STR(0x27d5e0),
+        .mapPath = (const char *)BDC_STR(0x27d5ec),
+    },
+    {
+        .id = BDC_V(int, 0x27db78),
+        .name = (const char *)BDC_STR(0x27d60c),
+        .mapPath = (const char *)BDC_STR(0x27d618),
+    },
+    {
+        .id = BDC_V(int, 0x27db84),
+        .name = (const char *)BDC_STR(0x27d638),
+        .mapPath = (const char *)BDC_STR(0x27d644),
+    },
+    {
+        .id = BDC_V(int, 0x27db90),
+        .name = (const char *)BDC_STR(0x27d664),
+        .mapPath = (const char *)BDC_STR(0x27d670),
+    },
+    {
+        .id = BDC_V(int, 0x27db9c),
+        .name = (const char *)BDC_STR(0x27d5e0),
+        .mapPath = (const char *)BDC_STR(0x27d5ec),
+    },
+    {
+        .id = BDC_V(int, 0x27dba8),
+        .name = (const char *)BDC_STR(0x27d60c),
+        .mapPath = (const char *)BDC_STR(0x27d618),
+    },
+    {
+        .id = BDC_V(int, 0x27dbb4),
+        .name = (const char *)BDC_STR(0x27d638),
+        .mapPath = (const char *)BDC_STR(0x27d644),
+    },
+    {
+        .id = BDC_V(int, 0x27dbc0),
+        .name = (const char *)BDC_STR(0x27d664),
+        .mapPath = (const char *)BDC_STR(0x27d670),
+    },
+    {
+        .id = BDC_V(int, 0x27dbcc),
+        .name = (const char *)BDC_STR(0x27d5e0),
+        .mapPath = (const char *)BDC_STR(0x27d990),
+    },
+    {
+        .id = BDC_V(int, 0x27dbd8),
+        .name = (const char *)BDC_STR(0x27d60c),
+        .mapPath = (const char *)BDC_STR(0x27d9b0),
+    },
+    {
+        .id = BDC_V(int, 0x27dbe4),
+        .name = (const char *)BDC_STR(0x27d638),
+        .mapPath = (const char *)BDC_STR(0x27d990),
+    },
+    {
+        .id = BDC_V(int, 0x27dbf0),
+        .name = (const char *)BDC_STR(0x27d664),
+        .mapPath = (const char *)BDC_STR(0x27d9d0),
+    },
+    {
+        .id = BDC_V(int, 0x27dbfc),
+        .name = (const char *)BDC_STR(0x27d9f0),
+        .mapPath = (const char *)BDC_STR(0x27d9fc),
+    },
+};

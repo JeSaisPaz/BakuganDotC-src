@@ -1,0 +1,22 @@
+// bdc 0x08ac3770 g_spherePopoutModelNames
+#include "bdc.h"
+
+__typeof__(const char *[33]) g_spherePopoutModelNames = {
+    (const char *)BDC_STR(0x29a15c), (const char *)BDC_STR(0x29a15c),
+    (const char *)BDC_STR(0x29a170), (const char *)BDC_STR(0x29a188),
+    (const char *)BDC_STR(0x29a19c), (const char *)BDC_STR(0x29a1b0),
+    (const char *)BDC_STR(0x29a1c4), (const char *)BDC_STR(0x29a1d8),
+    (const char *)BDC_STR(0x29a1ec), (const char *)BDC_STR(0x29a200),
+    (const char *)BDC_STR(0x29a214), (const char *)BDC_STR(0x29a228),
+    (const char *)BDC_STR(0x29a23c), (const char *)BDC_STR(0x29a250),
+    (const char *)BDC_STR(0x29a264), (const char *)BDC_STR(0x29a278),
+    (const char *)BDC_STR(0x29a28c), (const char *)BDC_STR(0x29a2a0),
+    (const char *)BDC_STR(0x29a2b4), (const char *)BDC_STR(0x29a2c8),
+    (const char *)BDC_STR(0x29a2dc), (const char *)BDC_STR(0x29a5c4),
+    (const char *)BDC_STR(0x29a5d8), (const char *)BDC_STR(0x29a5e8),
+    (const char *)BDC_STR(0x29a5fc), (const char *)BDC_STR(0x29a610),
+    (const char *)BDC_STR(0x29a624), (const char *)BDC_STR(0x29a638),
+    (const char *)BDC_STR(0x29a650), (const char *)BDC_STR(0x29a660),
+    (const char *)BDC_STR(0x29a670), (const char *)BDC_STR(0x29a3f0),
+    (const char *)BDC_STR(0x29a684),
+};

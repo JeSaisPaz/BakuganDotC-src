@@ -1,0 +1,4 @@
+// bdc 0x08aa0080 g_ctype
+#include "bdc.h"
+
+__typeof__(s8[257]) g_ctype = BDC_BYTES(0x29c080, 257);

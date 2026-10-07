@@ -1,0 +1,8 @@
+// bdc 0x08aa5bf0 g_guListArgs
+#include "bdc.h"
+
+__typeof__(const SceGeListArgs) g_guListArgs = {
+    .size = BDC_V(unsigned int, 0x2a1bf0),
+    .numStacks = BDC_V(unsigned int, 0x2a1bf8),
+    .stacks = (SceGeStack *)&g_guListStacks,
+};

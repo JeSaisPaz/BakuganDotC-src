@@ -1,0 +1,7 @@
+// bdc 0x08aa5300 g_gmoAttrColorSlots
+#include "bdc.h"
+
+__typeof__(const u8[7][2]) g_gmoAttrColorSlots = {
+    BDC_BYTES(0x2a1300, 2), BDC_BYTES(0x2a1302, 2), BDC_BYTES(0x2a1304, 2), BDC_BYTES(0x2a1306, 2),
+    BDC_BYTES(0x2a1308, 2), BDC_BYTES(0x2a130a, 2), BDC_BYTES(0x2a130c, 2),
+};

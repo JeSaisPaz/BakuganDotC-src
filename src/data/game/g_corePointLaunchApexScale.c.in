@@ -1,0 +1,4 @@
+// bdc 0x08abd524 g_corePointLaunchApexScale
+#include "bdc.h"
+
+__typeof__(float) g_corePointLaunchApexScale = BDC_V(float, 0x2b9524);

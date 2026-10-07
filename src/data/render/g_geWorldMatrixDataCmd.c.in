@@ -1,0 +1,4 @@
+// bdc 0x08aa40c0 g_geWorldMatrixDataCmd
+#include "bdc.h"
+
+__typeof__(u32) g_geWorldMatrixDataCmd = BDC_V(unsigned int, 0x2a00c0);

@@ -1,0 +1,12 @@
+// bdc 0x08a92c44 g_bakuganUnlockEventIds
+#include "bdc.h"
+
+__typeof__(const u32[20]) g_bakuganUnlockEventIds = {
+    BDC_V(unsigned int, 0x28ec44), BDC_V(unsigned int, 0x28ec48), BDC_V(unsigned int, 0x28ec4c),
+    BDC_V(unsigned int, 0x28ec50), BDC_V(unsigned int, 0x28ec54), BDC_V(unsigned int, 0x28ec58),
+    BDC_V(unsigned int, 0x28ec5c), BDC_V(unsigned int, 0x28ec60), BDC_V(unsigned int, 0x28ec64),
+    BDC_V(unsigned int, 0x28ec68), BDC_V(unsigned int, 0x28ec6c), BDC_V(unsigned int, 0x28ec70),
+    BDC_V(unsigned int, 0x28ec74), BDC_V(unsigned int, 0x28ec78), BDC_V(unsigned int, 0x28ec7c),
+    BDC_V(unsigned int, 0x28ec80), BDC_V(unsigned int, 0x28ec84), BDC_V(unsigned int, 0x28ec88),
+    BDC_V(unsigned int, 0x28ec8c), BDC_V(unsigned int, 0x28ec90),
+};

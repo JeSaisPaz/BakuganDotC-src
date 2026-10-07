@@ -1,0 +1,14 @@
+// bdc 0x08aa4890 g_remPio2Consts
+#include "bdc.h"
+
+__typeof__(RemPio2Consts) g_remPio2Consts = {
+    .half = BDC_V(double, 0x2a0898),
+    .two24 = BDC_V(double, 0x2a08a0),
+    .invpio2 = BDC_V(double, 0x2a08a8),
+    .pio2_1 = BDC_V(double, 0x2a08b0),
+    .pio2_1t = BDC_V(double, 0x2a08b8),
+    .pio2_2 = BDC_V(double, 0x2a08c0),
+    .pio2_2t = BDC_V(double, 0x2a08c8),
+    .pio2_3 = BDC_V(double, 0x2a08d0),
+    .pio2_3t = BDC_V(double, 0x2a08d8),
+};

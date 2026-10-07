@@ -1,0 +1,53 @@
+// bdc 0x08a74658 g_btlKind07MotionSet47
+#include "bdc.h"
+
+__typeof__(BtlAttackMotionSetEv7) g_btlKind07MotionSet47 = {
+    .head = {
+        .startMotion = BDC_V(short, 0x27065c),
+        .loopMotion = BDC_V(short, 0x27065e),
+        .mainMotion = BDC_V(short, 0x270660),
+        .endMotion = BDC_V(short, 0x270662),
+    },
+    .events = {
+        {
+            .type = BDC_V(unsigned char, 0x270664),
+            .startFrame = BDC_V(unsigned char, 0x270665),
+            .endFrame = BDC_V(unsigned char, 0x270666),
+            .value = BDC_V(float, 0x27066c),
+        },
+        {
+            .type = BDC_V(unsigned char, 0x270678),
+            .startFrame = BDC_V(unsigned char, 0x270679),
+            .endFrame = BDC_V(unsigned char, 0x27067a),
+            .value = BDC_V(float, 0x270680),
+        },
+        {
+            .type = BDC_V(unsigned char, 0x27068c),
+            .startFrame = BDC_V(unsigned char, 0x27068d),
+            .endFrame = BDC_V(unsigned char, 0x27068e),
+            .param = { .soundId = BDC_V(int, 0x270690) },
+            .value = BDC_V(float, 0x270694),
+            .launchDist = BDC_V(float, 0x27069c),
+        },
+        {
+            .type = BDC_V(unsigned char, 0x2706a0),
+            .startFrame = BDC_V(unsigned char, 0x2706a1),
+            .endFrame = BDC_V(unsigned char, 0x2706a2),
+            .param = { .soundId = BDC_V(int, 0x2706a4) },
+            .value = BDC_V(float, 0x2706a8),
+            .launchDist = BDC_V(float, 0x2706b0),
+        },
+        {
+            .type = BDC_V(unsigned char, 0x2706b4),
+            .startFrame = BDC_V(unsigned char, 0x2706b5),
+            .endFrame = BDC_V(unsigned char, 0x2706b6),
+            .param = { .soundId = BDC_V(int, 0x2706b8) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x2706c8),
+            .startFrame = BDC_V(unsigned char, 0x2706c9),
+            .endFrame = BDC_V(unsigned char, 0x2706ca),
+            .param = { .soundId = BDC_V(int, 0x2706cc) },
+        },
+    },
+};

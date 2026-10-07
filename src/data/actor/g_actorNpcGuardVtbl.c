@@ -1,0 +1,30 @@
+// bdc 0x08af4024 g_actorNpcGuardVtbl
+#include "bdc.h"
+
+__typeof__(VtblEntry[50]) g_actorNpcGuardVtbl = {
+    {0}, { .fn = (void *)ActorNpcGuardDtor }, { .fn = (void *)GfxModelInitFields },
+    { .fn = (void *)GfxModelSetFogEnabled }, { .fn = (void *)GfxModelSetFog },
+    { .fn = (void *)ActorUpdateDistanceFade }, { .fn = (void *)GfxModelSetMotionSpeed },
+    { .fn = (void *)ActorNpcUpdatePhase }, { .fn = (void *)ActorNpcDraw },
+    { .fn = (void *)GfxModelSetToon }, { .fn = (void *)ActorUpdateMatrix },
+    { .fn = (void *)ActorIsBallTarget }, { .fn = (void *)ActorIsRobot },
+    { .fn = (void *)ActorNpcResetBehaviour }, { .fn = (void *)ActorSlot14Nop },
+    { .fn = (void *)ActorSlot15 }, { .fn = (void *)ActorNpcFreeze },
+    { .fn = (void *)ActorNpcHearNoise }, { .fn = (void *)ActorNpcWalkToward },
+    { .fn = (void *)ActorNpcGuardIsSpecialRoute }, { .fn = (void *)ActorStateIdle },
+    { .fn = (void *)ActorState01Nop }, { .fn = (void *)ActorState02Nop },
+    { .fn = (void *)ActorState03Nop }, { .fn = (void *)ActorState04Nop },
+    { .fn = (void *)ActorState05Nop }, { .fn = (void *)ActorState06Nop },
+    { .fn = (void *)ActorState07Nop }, { .fn = (void *)ActorNpcResume },
+    { .fn = (void *)ActorStateRouteWalk }, { .fn = (void *)ActorStateRouteNextStep },
+    { .fn = (void *)ActorNpcRunState }, { .fn = (void *)ActorNpcGuardFindHead },
+    { .fn = (void *)ActorNpcGuardListensForNoise }, { .fn = (void *)ActorNpcGuardUpdate },
+    { .fn = (void *)ActorNpcNextPatrolCommand }, { .fn = (void *)ActorNpcGuardStateWait },
+    { .fn = (void *)ActorNpcStateWalkRoute }, { .fn = (void *)ActorNpcStateLookAround },
+    { .fn = (void *)ActorNpcStateCatchPlayer }, { .fn = (void *)ActorNpcGuardStateInvestigate },
+    { .fn = (void *)ActorNpcGuardStateChaseBall }, { .fn = (void *)ActorNpcGuardStateGlance },
+    { .fn = (void *)ActorNpcState08Nop }, { .fn = (void *)ActorNpcStateEventWait },
+    { .fn = (void *)ActorNpcStateReturnHome }, { .fn = (void *)ActorNpcGuardSetAlertView },
+    { .fn = (void *)ActorNpcGuardUpdateHeadLook }, { .fn = (void *)ActorNpcSlot48Nop },
+    { .fn = (void *)ActorNpcUpdateFeetNop },
+};

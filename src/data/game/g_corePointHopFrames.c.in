@@ -1,0 +1,4 @@
+// bdc 0x08abd516 g_corePointHopFrames
+#include "bdc.h"
+
+__typeof__(s16) g_corePointHopFrames = BDC_V(short, 0x2b9516);

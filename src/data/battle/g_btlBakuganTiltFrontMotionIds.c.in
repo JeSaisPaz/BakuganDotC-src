@@ -1,0 +1,4 @@
+// bdc 0x08a678b8 g_btlBakuganTiltFrontMotionIds
+#include "bdc.h"
+
+__typeof__(s32[2]) g_btlBakuganTiltFrontMotionIds = { BDC_V(int, 0x2638b8) };

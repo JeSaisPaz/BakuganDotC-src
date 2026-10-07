@@ -1,0 +1,4 @@
+// bdc 0x08ab0170 g_uiFontSjisRemapTable
+#include "bdc.h"
+
+__typeof__(unsigned char[62]) g_uiFontSjisRemapTable = BDC_BYTES(0x2ac170, 62);

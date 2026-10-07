@@ -1,0 +1,114 @@
+// bdc 0x08a72140 g_btlKindComboSteps03
+#include "bdc.h"
+
+__typeof__(BtlComboStep[24]) g_btlKindComboSteps03 = {
+    {
+        .input = BDC_V(short, 0x26e142),
+        .motionSet = (void *)&g_btlKind03MotionSet00,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[2],
+    },
+    {
+        .input = BDC_V(short, 0x26e15a),
+        .motionSet = (void *)&g_btlKind03MotionSet01,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[1],
+    },
+    {
+        .branch = BDC_V(unsigned char, 0x26e170),
+        .input = BDC_V(short, 0x26e172),
+        .airInput = BDC_V(short, 0x26e174),
+        .motionSet = (void *)&g_btlKind03MotionSet02,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows,
+        .airMotionSet = (void *)&g_btlKind03MotionSet04,
+        .airHitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows,
+    },
+    {
+        .input = BDC_V(short, 0x26e18a),
+        .airInput = BDC_V(short, 0x26e18c),
+        .motionSet = (void *)&g_btlKind03MotionSet03,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[14],
+        .airMotionSet = (void *)&g_btlKind03MotionSet05,
+        .airHitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[8],
+    },
+    {0},
+    {
+        .input = BDC_V(short, 0x26e1ba),
+        .motionSet = (void *)&g_btlKind03MotionSet06,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[3],
+    },
+    {
+        .input = BDC_V(short, 0x26e1d2),
+        .motionSet = (void *)&g_btlKind03MotionSet07,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[3],
+    },
+    {
+        .branch = BDC_V(unsigned char, 0x26e1e8),
+        .input = BDC_V(short, 0x26e1ea),
+        .airInput = BDC_V(short, 0x26e1ec),
+        .motionSet = (void *)&g_btlKind03MotionSet08,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[3],
+        .airMotionSet = (void *)&g_btlKind03MotionSet10,
+        .airHitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[3],
+    },
+    {
+        .input = BDC_V(short, 0x26e202),
+        .airInput = BDC_V(short, 0x26e204),
+        .motionSet = (void *)&g_btlKind03MotionSet09,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[11],
+        .airMotionSet = (void *)&g_btlKind03MotionSet11,
+        .airHitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[11],
+    },
+    {0},
+    {
+        .input = BDC_V(short, 0x26e232),
+        .motionSet = (void *)&g_btlKind03MotionSet12,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows,
+    },
+    {
+        .input = BDC_V(short, 0x26e24a),
+        .motionSet = (void *)&g_btlKind03MotionSet13,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows,
+    },
+    {
+        .input = BDC_V(short, 0x26e262),
+        .motionSet = (void *)&g_btlKind03MotionSet14,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows,
+    },
+    {
+        .input = BDC_V(short, 0x26e27a),
+        .motionSet = (void *)&g_btlKind03MotionSet15,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[12],
+    },
+    {0},
+    {
+        .input = BDC_V(short, 0x26e2aa),
+        .motionSet = (void *)&g_btlKind03MotionSet16,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[3],
+    },
+    {
+        .input = BDC_V(short, 0x26e2c2),
+        .motionSet = (void *)&g_btlKind03MotionSet17,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[7],
+    },
+    {
+        .input = BDC_V(short, 0x26e2da),
+        .motionSet = (void *)&g_btlKind03MotionSet18,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[7],
+    },
+    {
+        .input = BDC_V(short, 0x26e2f2),
+        .motionSet = (void *)&g_btlKind03MotionSet19,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[12],
+    },
+    {0},
+    {
+        .input = BDC_V(short, 0x26e322),
+        .motionSet = (void *)&g_btlKind03MotionSet20,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[8],
+    },
+    {0},
+    {
+        .input = BDC_V(short, 0x26e352),
+        .motionSet = (void *)&g_btlKind03MotionSet20,
+        .hitWindow = (struct BtlHitWindowDef *)&g_btlComboHitWindows[8],
+    },
+};

@@ -1,0 +1,25 @@
+// bdc 0x08a82830 g_stageObjLightSetPipeUnit01
+#include "bdc.h"
+
+__typeof__(const StageObjLightSet4) g_stageObjLightSetPipeUnit01 = {
+    .modelName = (const char *)BDC_STR(0x27e820),
+    .count = BDC_V(int, 0x27e834),
+    .lights = {
+        {
+            .pos = { BDC_V(float, 0x27e840), BDC_V(float, 0x27e844), BDC_V(float, 0x27e848) },
+            .texIndex = BDC_V(float, 0x27e84c),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e850), BDC_V(float, 0x27e854), BDC_V(float, 0x27e858) },
+            .texIndex = BDC_V(float, 0x27e85c),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e860), BDC_V(float, 0x27e864), BDC_V(float, 0x27e868) },
+            .texIndex = BDC_V(float, 0x27e86c),
+        },
+        {
+            .pos = { BDC_V(float, 0x27e870), BDC_V(float, 0x27e874), BDC_V(float, 0x27e878) },
+            .texIndex = BDC_V(float, 0x27e87c),
+        },
+    },
+};

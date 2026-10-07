@@ -1,0 +1,4 @@
+// bdc 0x08abec9c g_uiFieldHudEnabled
+#include "bdc.h"
+
+__typeof__(u8) g_uiFieldHudEnabled = BDC_V(unsigned char, 0x2bac9c);

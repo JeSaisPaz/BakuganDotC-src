@@ -1,0 +1,17 @@
+// bdc 0x08a98ae0 g_playerStateFns
+#include "bdc.h"
+
+__typeof__(MemberFnPtr[14]) g_playerStateFns = {
+    { .index = BDC_V(short, 0x294ae2), .delta2 = BDC_V(int, 0x294ae4) },
+    { .index = BDC_V(short, 0x294aea), .delta2 = BDC_V(int, 0x294aec) },
+    { .index = BDC_V(short, 0x294af2), .delta2 = BDC_V(int, 0x294af4) },
+    { .index = BDC_V(short, 0x294afa), .delta2 = BDC_V(int, 0x294afc) },
+    { .index = BDC_V(short, 0x294b02), .delta2 = BDC_V(int, 0x294b04) },
+    { .index = BDC_V(short, 0x294b0a), .delta2 = BDC_V(int, 0x294b0c) },
+    { .index = BDC_V(short, 0x294b12), .delta2 = BDC_V(int, 0x294b14) },
+    { .index = BDC_V(short, 0x294b1a), .delta2 = BDC_V(int, 0x294b1c) },
+    { .index = BDC_V(short, 0x294b22), .delta2 = BDC_V(int, 0x294b24) },
+    { .pfn = (void *)ActorPlayerStateCaught }, { .pfn = (void *)ActorPlayerStateOpenItemBox },
+    { .pfn = (void *)ActorPlayerStateHoldRFocusPoint },
+    { .pfn = (void *)ActorPlayerStateTurnToTarget }, { .pfn = (void *)ActorPlayerStateReact },
+};

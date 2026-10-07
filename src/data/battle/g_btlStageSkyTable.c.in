@@ -1,0 +1,203 @@
+// bdc 0x08a8337c g_btlStageSkyTable
+#include "bdc.h"
+
+__typeof__(BtlStageSkyEntry[40]) g_btlStageSkyTable = {
+    {
+        .primaryPos = { BDC_V(float, 0x27f37c), BDC_V(float, 0x27f380), BDC_V(float, 0x27f384) },
+        .secondaryPos = { BDC_V(float, 0x27f388), BDC_V(float, 0x27f38c), BDC_V(float, 0x27f390) },
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f398), BDC_V(float, 0x27f39c), BDC_V(float, 0x27f3a0) },
+        .secondaryPos = { BDC_V(float, 0x27f3a4), BDC_V(float, 0x27f3a8), BDC_V(float, 0x27f3ac) },
+        .isDay = BDC_V(int, 0x27f3b0),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f3b4), BDC_V(float, 0x27f3b8), BDC_V(float, 0x27f3bc) },
+        .secondaryPos = { BDC_V(float, 0x27f3c0), BDC_V(float, 0x27f3c4), BDC_V(float, 0x27f3c8) },
+        .isDay = BDC_V(int, 0x27f3cc),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f3d0), BDC_V(float, 0x27f3d4), BDC_V(float, 0x27f3d8) },
+        .secondaryPos = { BDC_V(float, 0x27f3dc), BDC_V(float, 0x27f3e0), BDC_V(float, 0x27f3e4) },
+        .isDay = BDC_V(int, 0x27f3e8),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f3ec), BDC_V(float, 0x27f3f0), BDC_V(float, 0x27f3f4) },
+        .secondaryPos = { BDC_V(float, 0x27f3f8), BDC_V(float, 0x27f3fc), BDC_V(float, 0x27f400) },
+        .isDay = BDC_V(int, 0x27f404),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f408), BDC_V(float, 0x27f40c), BDC_V(float, 0x27f410) },
+        .secondaryPos = { BDC_V(float, 0x27f414), BDC_V(float, 0x27f418), BDC_V(float, 0x27f41c) },
+        .isDay = BDC_V(int, 0x27f420),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f424), BDC_V(float, 0x27f428), BDC_V(float, 0x27f42c) },
+        .secondaryPos = { BDC_V(float, 0x27f430), BDC_V(float, 0x27f434), BDC_V(float, 0x27f438) },
+        .isDay = BDC_V(int, 0x27f43c),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f440), BDC_V(float, 0x27f444), BDC_V(float, 0x27f448) },
+        .secondaryPos = { BDC_V(float, 0x27f44c), BDC_V(float, 0x27f450), BDC_V(float, 0x27f454) },
+        .isDay = BDC_V(int, 0x27f458),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f45c), BDC_V(float, 0x27f460), BDC_V(float, 0x27f464) },
+        .secondaryPos = { BDC_V(float, 0x27f468), BDC_V(float, 0x27f46c), BDC_V(float, 0x27f470) },
+        .isDay = BDC_V(int, 0x27f474),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f478), BDC_V(float, 0x27f47c), BDC_V(float, 0x27f480) },
+        .secondaryPos = { BDC_V(float, 0x27f484), BDC_V(float, 0x27f488), BDC_V(float, 0x27f48c) },
+        .isDay = BDC_V(int, 0x27f490),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f494), BDC_V(float, 0x27f498), BDC_V(float, 0x27f49c) },
+        .secondaryPos = { BDC_V(float, 0x27f4a0), BDC_V(float, 0x27f4a4), BDC_V(float, 0x27f4a8) },
+        .isDay = BDC_V(int, 0x27f4ac),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f4b0), BDC_V(float, 0x27f4b4), BDC_V(float, 0x27f4b8) },
+        .secondaryPos = { BDC_V(float, 0x27f4bc), BDC_V(float, 0x27f4c0), BDC_V(float, 0x27f4c4) },
+        .isDay = BDC_V(int, 0x27f4c8),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f4cc), BDC_V(float, 0x27f4d0), BDC_V(float, 0x27f4d4) },
+        .secondaryPos = { BDC_V(float, 0x27f4d8), BDC_V(float, 0x27f4dc), BDC_V(float, 0x27f4e0) },
+        .isDay = BDC_V(int, 0x27f4e4),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f4e8), BDC_V(float, 0x27f4ec), BDC_V(float, 0x27f4f0) },
+        .secondaryPos = { BDC_V(float, 0x27f4f4), BDC_V(float, 0x27f4f8), BDC_V(float, 0x27f4fc) },
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f504), BDC_V(float, 0x27f508), BDC_V(float, 0x27f50c) },
+        .secondaryPos = { BDC_V(float, 0x27f510), BDC_V(float, 0x27f514), BDC_V(float, 0x27f518) },
+        .isDay = BDC_V(int, 0x27f51c),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f520), BDC_V(float, 0x27f524), BDC_V(float, 0x27f528) },
+        .secondaryPos = { BDC_V(float, 0x27f52c), BDC_V(float, 0x27f530), BDC_V(float, 0x27f534) },
+        .isDay = BDC_V(int, 0x27f538),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f53c), BDC_V(float, 0x27f540), BDC_V(float, 0x27f544) },
+        .secondaryPos = { BDC_V(float, 0x27f548), BDC_V(float, 0x27f54c), BDC_V(float, 0x27f550) },
+        .isDay = BDC_V(int, 0x27f554),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f558), BDC_V(float, 0x27f55c), BDC_V(float, 0x27f560) },
+        .secondaryPos = { BDC_V(float, 0x27f564), BDC_V(float, 0x27f568), BDC_V(float, 0x27f56c) },
+        .isDay = BDC_V(int, 0x27f570),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f574), BDC_V(float, 0x27f578), BDC_V(float, 0x27f57c) },
+        .secondaryPos = { BDC_V(float, 0x27f580), BDC_V(float, 0x27f584), BDC_V(float, 0x27f588) },
+        .isDay = BDC_V(int, 0x27f58c),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f590), BDC_V(float, 0x27f594), BDC_V(float, 0x27f598) },
+        .secondaryPos = { BDC_V(float, 0x27f59c), BDC_V(float, 0x27f5a0), BDC_V(float, 0x27f5a4) },
+        .isDay = BDC_V(int, 0x27f5a8),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f5ac), BDC_V(float, 0x27f5b0), BDC_V(float, 0x27f5b4) },
+        .secondaryPos = { BDC_V(float, 0x27f5b8), BDC_V(float, 0x27f5bc), BDC_V(float, 0x27f5c0) },
+        .isDay = BDC_V(int, 0x27f5c4),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f5c8), BDC_V(float, 0x27f5cc), BDC_V(float, 0x27f5d0) },
+        .secondaryPos = { BDC_V(float, 0x27f5d4), BDC_V(float, 0x27f5d8), BDC_V(float, 0x27f5dc) },
+        .isDay = BDC_V(int, 0x27f5e0),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f5e4), BDC_V(float, 0x27f5e8), BDC_V(float, 0x27f5ec) },
+        .secondaryPos = { BDC_V(float, 0x27f5f0), BDC_V(float, 0x27f5f4), BDC_V(float, 0x27f5f8) },
+        .isDay = BDC_V(int, 0x27f5fc),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f600), BDC_V(float, 0x27f604), BDC_V(float, 0x27f608) },
+        .secondaryPos = { BDC_V(float, 0x27f60c), BDC_V(float, 0x27f610), BDC_V(float, 0x27f614) },
+        .isDay = BDC_V(int, 0x27f618),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f61c), BDC_V(float, 0x27f620), BDC_V(float, 0x27f624) },
+        .secondaryPos = { BDC_V(float, 0x27f628), BDC_V(float, 0x27f62c), BDC_V(float, 0x27f630) },
+        .isDay = BDC_V(int, 0x27f634),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f638), BDC_V(float, 0x27f63c), BDC_V(float, 0x27f640) },
+        .secondaryPos = { BDC_V(float, 0x27f644), BDC_V(float, 0x27f648), BDC_V(float, 0x27f64c) },
+        .isDay = BDC_V(int, 0x27f650),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f654), BDC_V(float, 0x27f658), BDC_V(float, 0x27f65c) },
+        .secondaryPos = { BDC_V(float, 0x27f660), BDC_V(float, 0x27f664), BDC_V(float, 0x27f668) },
+        .isDay = BDC_V(int, 0x27f66c),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f670), BDC_V(float, 0x27f674), BDC_V(float, 0x27f678) },
+        .secondaryPos = { BDC_V(float, 0x27f67c), BDC_V(float, 0x27f680), BDC_V(float, 0x27f684) },
+        .isDay = BDC_V(int, 0x27f688),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f68c), BDC_V(float, 0x27f690), BDC_V(float, 0x27f694) },
+        .secondaryPos = { BDC_V(float, 0x27f698), BDC_V(float, 0x27f69c), BDC_V(float, 0x27f6a0) },
+        .isDay = BDC_V(int, 0x27f6a4),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f6a8), BDC_V(float, 0x27f6ac), BDC_V(float, 0x27f6b0) },
+        .secondaryPos = { BDC_V(float, 0x27f6b4), BDC_V(float, 0x27f6b8), BDC_V(float, 0x27f6bc) },
+        .isDay = BDC_V(int, 0x27f6c0),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f6c4), BDC_V(float, 0x27f6c8), BDC_V(float, 0x27f6cc) },
+        .secondaryPos = { BDC_V(float, 0x27f6d0), BDC_V(float, 0x27f6d4), BDC_V(float, 0x27f6d8) },
+        .isDay = BDC_V(int, 0x27f6dc),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f6e0), BDC_V(float, 0x27f6e4), BDC_V(float, 0x27f6e8) },
+        .secondaryPos = { BDC_V(float, 0x27f6ec), BDC_V(float, 0x27f6f0), BDC_V(float, 0x27f6f4) },
+        .isDay = BDC_V(int, 0x27f6f8),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f6fc), BDC_V(float, 0x27f700), BDC_V(float, 0x27f704) },
+        .secondaryPos = { BDC_V(float, 0x27f708), BDC_V(float, 0x27f70c), BDC_V(float, 0x27f710) },
+        .isDay = BDC_V(int, 0x27f714),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f718), BDC_V(float, 0x27f71c), BDC_V(float, 0x27f720) },
+        .secondaryPos = { BDC_V(float, 0x27f724), BDC_V(float, 0x27f728), BDC_V(float, 0x27f72c) },
+        .isDay = BDC_V(int, 0x27f730),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f734), BDC_V(float, 0x27f738), BDC_V(float, 0x27f73c) },
+        .secondaryPos = { BDC_V(float, 0x27f740), BDC_V(float, 0x27f744), BDC_V(float, 0x27f748) },
+        .isDay = BDC_V(int, 0x27f74c),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f750), BDC_V(float, 0x27f754), BDC_V(float, 0x27f758) },
+        .secondaryPos = { BDC_V(float, 0x27f75c), BDC_V(float, 0x27f760), BDC_V(float, 0x27f764) },
+        .isDay = BDC_V(int, 0x27f768),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f76c), BDC_V(float, 0x27f770), BDC_V(float, 0x27f774) },
+        .secondaryPos = { BDC_V(float, 0x27f778), BDC_V(float, 0x27f77c), BDC_V(float, 0x27f780) },
+        .isDay = BDC_V(int, 0x27f784),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f788), BDC_V(float, 0x27f78c), BDC_V(float, 0x27f790) },
+        .secondaryPos = { BDC_V(float, 0x27f794), BDC_V(float, 0x27f798), BDC_V(float, 0x27f79c) },
+        .isDay = BDC_V(int, 0x27f7a0),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f7a4), BDC_V(float, 0x27f7a8), BDC_V(float, 0x27f7ac) },
+        .secondaryPos = { BDC_V(float, 0x27f7b0), BDC_V(float, 0x27f7b4), BDC_V(float, 0x27f7b8) },
+        .isDay = BDC_V(int, 0x27f7bc),
+    },
+    {
+        .primaryPos = { BDC_V(float, 0x27f7c0), BDC_V(float, 0x27f7c4), BDC_V(float, 0x27f7c8) },
+        .secondaryPos = { BDC_V(float, 0x27f7cc), BDC_V(float, 0x27f7d0), BDC_V(float, 0x27f7d4) },
+        .isDay = BDC_V(int, 0x27f7d8),
+    },
+};

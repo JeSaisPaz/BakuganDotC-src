@@ -1,0 +1,9 @@
+// bdc 0x08a664f4 g_btlStoryWinStageValues
+#include "bdc.h"
+
+__typeof__(s32[41]) g_btlStoryWinStageValues = {
+    BDC_V(int, 0x2624f4), BDC_V(int, 0x2624f8), BDC_V(int, 0x2624fc), 0, BDC_V(int, 0x262504),
+    BDC_V(int, 0x262508), BDC_V(int, 0x26250c), 0, BDC_V(int, 0x262514), 0, BDC_V(int, 0x26251c), 0,
+    BDC_V(int, 0x262524), 0, BDC_V(int, 0x26252c), 0, BDC_V(int, 0x262534), BDC_V(int, 0x262538),
+    BDC_V(int, 0x26253c),
+};

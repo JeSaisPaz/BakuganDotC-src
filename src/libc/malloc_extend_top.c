@@ -39,7 +39,7 @@ void malloc_extend_top(_reent *reent, u32 nb)
     MallocChunk *oldTop = g_mallocBins.bins[0].fd;
     u32 oldTopSize = oldTop->size & ~(u32)3;
     u8 *oldEnd = (u8 *)MallocChunkAt(oldTop, oldTopSize);
-    void *oldSbrkBase = g_mallocSbrkBase;
+    long oldSbrkBase = g_mallocSbrkBase;
     u32 sbrkSize;
     u8 *brk;
     u8 *newBrk;
@@ -50,7 +50,7 @@ void malloc_extend_top(_reent *reent, u32 nb)
     MallocChunk *top;
 
     sbrkSize = nb + g_mallocTopPad + MALLOC_MINSIZE;
-    if (g_mallocSbrkBase != MALLOC_SBRK_FAIL) {
+    if (g_mallocSbrkBase != (intptr_t)MALLOC_SBRK_FAIL) {
         sbrkSize = (sbrkSize + MALLOC_PAGE_SIZE - 1) & ~(u32)(MALLOC_PAGE_SIZE - 1);
     }
 
@@ -67,8 +67,8 @@ void malloc_extend_top(_reent *reent, u32 nb)
         /* Contiguous: just grow the top chunk. */
         g_mallocBins.bins[0].fd->size = (oldTopSize + sbrkSize) | MALLOC_PREV_INUSE;
     } else {
-        if (g_mallocSbrkBase == MALLOC_SBRK_FAIL) {
-            g_mallocSbrkBase = brk;
+        if (g_mallocSbrkBase == (intptr_t)MALLOC_SBRK_FAIL) {
+            g_mallocSbrkBase = (intptr_t)brk;
         } else {
             g_mallocSbrkedMem += brk - oldEnd;
         }

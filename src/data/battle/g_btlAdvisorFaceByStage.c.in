@@ -1,0 +1,14 @@
+// bdc 0x08a64c68 g_btlAdvisorFaceByStage
+#include "bdc.h"
+
+__typeof__(s32[41]) g_btlAdvisorFaceByStage = {
+    0, BDC_V(int, 0x260c6c), 0, BDC_V(int, 0x260c74), 0, 0, BDC_V(int, 0x260c80),
+    BDC_V(int, 0x260c84), BDC_V(int, 0x260c88), BDC_V(int, 0x260c8c), BDC_V(int, 0x260c90),
+    BDC_V(int, 0x260c94), BDC_V(int, 0x260c98), 0, BDC_V(int, 0x260ca0), BDC_V(int, 0x260ca4),
+    BDC_V(int, 0x260ca8), BDC_V(int, 0x260cac), BDC_V(int, 0x260cb0), BDC_V(int, 0x260cb4),
+    BDC_V(int, 0x260cb8), BDC_V(int, 0x260cbc), BDC_V(int, 0x260cc0), BDC_V(int, 0x260cc4), 0,
+    BDC_V(int, 0x260ccc), BDC_V(int, 0x260cd0), BDC_V(int, 0x260cd4), BDC_V(int, 0x260cd8),
+    BDC_V(int, 0x260cdc), BDC_V(int, 0x260ce0), BDC_V(int, 0x260ce4), BDC_V(int, 0x260ce8),
+    BDC_V(int, 0x260cec), BDC_V(int, 0x260cf0), BDC_V(int, 0x260cf4), BDC_V(int, 0x260cf8), 0,
+    BDC_V(int, 0x260d00), BDC_V(int, 0x260d04), BDC_V(int, 0x260d08),
+};

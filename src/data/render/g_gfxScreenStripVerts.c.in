@@ -1,0 +1,61 @@
+// bdc 0x08ac5ef8 g_gfxScreenStripVerts
+#include "bdc.h"
+
+__typeof__(GfxGeTexVertex16[16]) g_gfxScreenStripVerts = {
+    { .u = BDC_V(short, 0x2c1ef8), .v = BDC_V(short, 0x2c1efa) },
+    {
+        .u = BDC_V(short, 0x2c1f02),
+        .v = BDC_V(short, 0x2c1f04),
+        .x = BDC_V(short, 0x2c1f06),
+        .y = BDC_V(short, 0x2c1f08),
+    },
+    { .u = BDC_V(short, 0x2c1f0c), .v = BDC_V(short, 0x2c1f0e), .x = BDC_V(short, 0x2c1f10) },
+    {
+        .u = BDC_V(short, 0x2c1f16),
+        .v = BDC_V(short, 0x2c1f18),
+        .x = BDC_V(short, 0x2c1f1a),
+        .y = BDC_V(short, 0x2c1f1c),
+    },
+    { .u = BDC_V(short, 0x2c1f20), .v = BDC_V(short, 0x2c1f22), .x = BDC_V(short, 0x2c1f24) },
+    {
+        .u = BDC_V(short, 0x2c1f2a),
+        .v = BDC_V(short, 0x2c1f2c),
+        .x = BDC_V(short, 0x2c1f2e),
+        .y = BDC_V(short, 0x2c1f30),
+    },
+    { .u = BDC_V(short, 0x2c1f34), .v = BDC_V(short, 0x2c1f36), .x = BDC_V(short, 0x2c1f38) },
+    {
+        .u = BDC_V(short, 0x2c1f3e),
+        .v = BDC_V(short, 0x2c1f40),
+        .x = BDC_V(short, 0x2c1f42),
+        .y = BDC_V(short, 0x2c1f44),
+    },
+    { .u = BDC_V(short, 0x2c1f48), .v = BDC_V(short, 0x2c1f4a), .x = BDC_V(short, 0x2c1f4c) },
+    {
+        .u = BDC_V(short, 0x2c1f52),
+        .v = BDC_V(short, 0x2c1f54),
+        .x = BDC_V(short, 0x2c1f56),
+        .y = BDC_V(short, 0x2c1f58),
+    },
+    { .u = BDC_V(short, 0x2c1f5c), .v = BDC_V(short, 0x2c1f5e), .x = BDC_V(short, 0x2c1f60) },
+    {
+        .u = BDC_V(short, 0x2c1f66),
+        .v = BDC_V(short, 0x2c1f68),
+        .x = BDC_V(short, 0x2c1f6a),
+        .y = BDC_V(short, 0x2c1f6c),
+    },
+    { .u = BDC_V(short, 0x2c1f70), .v = BDC_V(short, 0x2c1f72), .x = BDC_V(short, 0x2c1f74) },
+    {
+        .u = BDC_V(short, 0x2c1f7a),
+        .v = BDC_V(short, 0x2c1f7c),
+        .x = BDC_V(short, 0x2c1f7e),
+        .y = BDC_V(short, 0x2c1f80),
+    },
+    { .u = BDC_V(short, 0x2c1f84), .v = BDC_V(short, 0x2c1f86), .x = BDC_V(short, 0x2c1f88) },
+    {
+        .u = BDC_V(short, 0x2c1f8e),
+        .v = BDC_V(short, 0x2c1f90),
+        .x = BDC_V(short, 0x2c1f92),
+        .y = BDC_V(short, 0x2c1f94),
+    },
+};

@@ -1,0 +1,49 @@
+// bdc 0x08a9b5f0 g_uiPauseItemActions
+#include "bdc.h"
+
+__typeof__(s32[11][7]) g_uiPauseItemActions = {
+    {
+        0, BDC_V(int, 0x2975f4), BDC_V(int, 0x2975f8), BDC_V(int, 0x2975fc), BDC_V(int, 0x297600),
+        BDC_V(int, 0x297604), BDC_V(int, 0x297608),
+    },
+    {
+        0, BDC_V(int, 0x297610), BDC_V(int, 0x297614), BDC_V(int, 0x297618), BDC_V(int, 0x29761c),
+        BDC_V(int, 0x297620), BDC_V(int, 0x297624),
+    },
+    {
+        0, BDC_V(int, 0x29762c), BDC_V(int, 0x297630), BDC_V(int, 0x297634), BDC_V(int, 0x297638),
+        BDC_V(int, 0x29763c), BDC_V(int, 0x297640),
+    },
+    {
+        0, BDC_V(int, 0x297648), BDC_V(int, 0x29764c), BDC_V(int, 0x297650), BDC_V(int, 0x297654),
+        BDC_V(int, 0x297658), BDC_V(int, 0x29765c),
+    },
+    {
+        0, BDC_V(int, 0x297664), BDC_V(int, 0x297668), BDC_V(int, 0x29766c), BDC_V(int, 0x297670),
+        BDC_V(int, 0x297674), BDC_V(int, 0x297678),
+    },
+    {
+        0, BDC_V(int, 0x297680), BDC_V(int, 0x297684), BDC_V(int, 0x297688), BDC_V(int, 0x29768c),
+        BDC_V(int, 0x297690), BDC_V(int, 0x297694),
+    },
+    {
+        BDC_V(int, 0x297698), BDC_V(int, 0x29769c), BDC_V(int, 0x2976a0), BDC_V(int, 0x2976a4),
+        BDC_V(int, 0x2976a8), BDC_V(int, 0x2976ac), BDC_V(int, 0x2976b0),
+    },
+    {
+        BDC_V(int, 0x2976b4), BDC_V(int, 0x2976b8), BDC_V(int, 0x2976bc), BDC_V(int, 0x2976c0),
+        BDC_V(int, 0x2976c4), BDC_V(int, 0x2976c8), BDC_V(int, 0x2976cc),
+    },
+    {
+        BDC_V(int, 0x2976d0), BDC_V(int, 0x2976d4), BDC_V(int, 0x2976d8), BDC_V(int, 0x2976dc),
+        BDC_V(int, 0x2976e0), BDC_V(int, 0x2976e4), BDC_V(int, 0x2976e8),
+    },
+    {
+        BDC_V(int, 0x2976ec), BDC_V(int, 0x2976f0), BDC_V(int, 0x2976f4), BDC_V(int, 0x2976f8),
+        BDC_V(int, 0x2976fc), BDC_V(int, 0x297700), BDC_V(int, 0x297704),
+    },
+    {
+        0, BDC_V(int, 0x29770c), BDC_V(int, 0x297710), BDC_V(int, 0x297714), BDC_V(int, 0x297718),
+        BDC_V(int, 0x29771c), BDC_V(int, 0x297720),
+    },
+};

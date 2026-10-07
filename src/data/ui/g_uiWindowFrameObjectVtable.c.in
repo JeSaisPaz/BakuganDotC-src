@@ -1,0 +1,4 @@
+// bdc 0x08af59bc g_uiWindowFrameObjectVtable
+#include "bdc.h"
+
+__typeof__(const VtblEntry[2]) g_uiWindowFrameObjectVtable = { {0}, { .delta = BDC_V(short, 0x2f19c4), .fn = (void *)UiWindowFrameDtor } };

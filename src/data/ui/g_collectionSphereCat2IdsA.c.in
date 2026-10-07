@@ -1,0 +1,4 @@
+// bdc 0x08ac3558 g_collectionSphereCat2IdsA
+#include "bdc.h"
+
+__typeof__(u8[15]) g_collectionSphereCat2IdsA = BDC_BYTES(0x2bf558, 15);

@@ -1,0 +1,4 @@
+// bdc 0x08a6447c g_gfxSmokeBezierVertexData
+#include "bdc.h"
+
+__typeof__(u8[16]) g_gfxSmokeBezierVertexData = BDC_BYTES(0x26047c, 16);

@@ -1,0 +1,7 @@
+// bdc 0x08abd3d0 g_stageObjLightTexNames
+#include "bdc.h"
+
+__typeof__(const char *[4]) g_stageObjLightTexNames = {
+    (const char *)BDC_STR(0x27ea34), (const char *)BDC_STR(0x27ea44),
+    (const char *)BDC_STR(0x27ea54), (const char *)BDC_STR(0x27ea64),
+};

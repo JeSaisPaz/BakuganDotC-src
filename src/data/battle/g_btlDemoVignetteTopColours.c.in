@@ -1,0 +1,4 @@
+// bdc 0x08a99d5c g_btlDemoVignetteTopColours
+#include "bdc.h"
+
+__typeof__(u32[2]) g_btlDemoVignetteTopColours = { BDC_V(unsigned int, 0x295d5c), BDC_V(unsigned int, 0x295d60) };

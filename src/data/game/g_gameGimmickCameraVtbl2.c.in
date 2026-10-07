@@ -1,0 +1,4 @@
+// bdc 0x08af3304 g_gameGimmickCameraVtbl2
+#include "bdc.h"
+
+__typeof__(const VtblEntry[2]) g_gameGimmickCameraVtbl2 = { {0}, { .delta = BDC_V(short, 0x2ef30c), .fn = (void *)GameGimmickCameraDtor } };

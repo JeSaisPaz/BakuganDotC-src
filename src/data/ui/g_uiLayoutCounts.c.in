@@ -1,0 +1,21 @@
+// bdc 0x08a50868 g_uiLayoutCounts
+#include "bdc.h"
+
+__typeof__(s32[64]) g_uiLayoutCounts = {
+    BDC_V(int, 0x24c868), BDC_V(int, 0x24c86c), BDC_V(int, 0x24c870), BDC_V(int, 0x24c874),
+    BDC_V(int, 0x24c878), BDC_V(int, 0x24c87c), BDC_V(int, 0x24c880), BDC_V(int, 0x24c884),
+    BDC_V(int, 0x24c888), BDC_V(int, 0x24c88c), BDC_V(int, 0x24c890), BDC_V(int, 0x24c894),
+    BDC_V(int, 0x24c898), BDC_V(int, 0x24c89c), BDC_V(int, 0x24c8a0), BDC_V(int, 0x24c8a4),
+    BDC_V(int, 0x24c8a8), BDC_V(int, 0x24c8ac), BDC_V(int, 0x24c8b0), BDC_V(int, 0x24c8b4),
+    BDC_V(int, 0x24c8b8), BDC_V(int, 0x24c8bc), BDC_V(int, 0x24c8c0), BDC_V(int, 0x24c8c4),
+    BDC_V(int, 0x24c8c8), BDC_V(int, 0x24c8cc), BDC_V(int, 0x24c8d0), BDC_V(int, 0x24c8d4),
+    BDC_V(int, 0x24c8d8), BDC_V(int, 0x24c8dc), BDC_V(int, 0x24c8e0), BDC_V(int, 0x24c8e4),
+    BDC_V(int, 0x24c8e8), BDC_V(int, 0x24c8ec), BDC_V(int, 0x24c8f0), BDC_V(int, 0x24c8f4),
+    BDC_V(int, 0x24c8f8), BDC_V(int, 0x24c8fc), BDC_V(int, 0x24c900), BDC_V(int, 0x24c904),
+    BDC_V(int, 0x24c908), BDC_V(int, 0x24c90c), BDC_V(int, 0x24c910), BDC_V(int, 0x24c914),
+    BDC_V(int, 0x24c918), BDC_V(int, 0x24c91c), BDC_V(int, 0x24c920), BDC_V(int, 0x24c924),
+    BDC_V(int, 0x24c928), BDC_V(int, 0x24c92c), BDC_V(int, 0x24c930), BDC_V(int, 0x24c934),
+    BDC_V(int, 0x24c938), BDC_V(int, 0x24c93c), BDC_V(int, 0x24c940), BDC_V(int, 0x24c944),
+    BDC_V(int, 0x24c948), BDC_V(int, 0x24c94c), BDC_V(int, 0x24c950), BDC_V(int, 0x24c954),
+    BDC_V(int, 0x24c958), BDC_V(int, 0x24c95c), BDC_V(int, 0x24c960), BDC_V(int, 0x24c964),
+};

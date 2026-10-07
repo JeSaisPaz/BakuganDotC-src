@@ -1,0 +1,4 @@
+// bdc 0x08ac5c7c g_gfxMotionTimeScale
+#include "bdc.h"
+
+__typeof__(float) g_gfxMotionTimeScale = BDC_V(float, 0x2c1c7c);

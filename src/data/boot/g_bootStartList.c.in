@@ -1,0 +1,7 @@
+// bdc 0x08ac51d8 g_bootStartList
+#include "bdc.h"
+
+__typeof__(s32[7]) g_bootStartList = {
+    BDC_V(int, 0x2c11d8), BDC_V(int, 0x2c11dc), BDC_V(int, 0x2c11e0), BDC_V(int, 0x2c11e4),
+    BDC_V(int, 0x2c11e8), BDC_V(int, 0x2c11ec),
+};

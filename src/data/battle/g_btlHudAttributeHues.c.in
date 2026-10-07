@@ -1,0 +1,7 @@
+// bdc 0x08a64e1c g_btlHudAttributeHues
+#include "bdc.h"
+
+__typeof__(const float[6]) g_btlHudAttributeHues = {
+    0, BDC_V(float, 0x260e20), BDC_V(float, 0x260e24), BDC_V(float, 0x260e28),
+    BDC_V(float, 0x260e2c), BDC_V(float, 0x260e30),
+};

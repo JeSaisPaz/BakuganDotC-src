@@ -1,0 +1,38 @@
+// bdc 0x08a79998 g_btlKind13MotionSet22
+#include "bdc.h"
+
+__typeof__(BtlAttackMotionSetEv5) g_btlKind13MotionSet22 = {
+    .head = {
+        .flags = BDC_V(unsigned int, 0x275998),
+        .startMotion = BDC_V(short, 0x27599c),
+        .loopMotion = BDC_V(short, 0x27599e),
+        .mainMotion = BDC_V(short, 0x2759a0),
+        .endMotion = BDC_V(short, 0x2759a2),
+    },
+    .events = {
+        {
+            .type = BDC_V(unsigned char, 0x2759a4),
+            .startFrame = BDC_V(unsigned char, 0x2759a5),
+            .endFrame = BDC_V(unsigned char, 0x2759a6),
+            .param = { .soundId = BDC_V(int, 0x2759a8) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x2759b8),
+            .startFrame = BDC_V(unsigned char, 0x2759b9),
+            .endFrame = BDC_V(unsigned char, 0x2759ba),
+            .param = { .soundId = BDC_V(int, 0x2759bc) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x2759cc),
+            .startFrame = BDC_V(unsigned char, 0x2759cd),
+            .endFrame = BDC_V(unsigned char, 0x2759ce),
+            .value = BDC_V(float, 0x2759d4),
+        },
+        {
+            .type = BDC_V(unsigned char, 0x2759e0),
+            .startFrame = BDC_V(unsigned char, 0x2759e1),
+            .endFrame = BDC_V(unsigned char, 0x2759e2),
+            .value = BDC_V(float, 0x2759e8),
+        },
+    },
+};

@@ -1,0 +1,15 @@
+// bdc 0x08aa39b4 g_gfxLightUnlitStateList
+#include "bdc.h"
+
+__typeof__(const u32[28]) g_gfxLightUnlitStateList = {
+    BDC_V(unsigned int, 0x29f9b4), BDC_V(unsigned int, 0x29f9b8), BDC_V(unsigned int, 0x29f9bc),
+    BDC_V(unsigned int, 0x29f9c0), BDC_V(unsigned int, 0x29f9c4), BDC_V(unsigned int, 0x29f9c8),
+    BDC_V(unsigned int, 0x29f9cc), BDC_V(unsigned int, 0x29f9d0), BDC_V(unsigned int, 0x29f9d4),
+    BDC_V(unsigned int, 0x29f9d8), BDC_V(unsigned int, 0x29f9dc), BDC_V(unsigned int, 0x29f9e0),
+    BDC_V(unsigned int, 0x29f9e4), BDC_V(unsigned int, 0x29f9e8), BDC_V(unsigned int, 0x29f9ec),
+    BDC_V(unsigned int, 0x29f9f0), BDC_V(unsigned int, 0x29f9f4), BDC_V(unsigned int, 0x29f9f8),
+    BDC_V(unsigned int, 0x29f9fc), BDC_V(unsigned int, 0x29fa00), BDC_V(unsigned int, 0x29fa04),
+    BDC_V(unsigned int, 0x29fa08), BDC_V(unsigned int, 0x29fa0c), BDC_V(unsigned int, 0x29fa10),
+    BDC_V(unsigned int, 0x29fa14), BDC_V(unsigned int, 0x29fa18), BDC_V(unsigned int, 0x29fa1c),
+    BDC_V(unsigned int, 0x29fa20),
+};

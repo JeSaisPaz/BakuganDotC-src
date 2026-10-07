@@ -1,0 +1,14 @@
+// bdc 0x08ac163c g_bakuganModelYaw
+#include "bdc.h"
+
+__typeof__(float[44]) g_bakuganModelYaw = {
+    0, 0, BDC_V(float, 0x2bd644), BDC_V(float, 0x2bd648), BDC_V(float, 0x2bd64c),
+    BDC_V(float, 0x2bd650), BDC_V(float, 0x2bd654), BDC_V(float, 0x2bd658), 0,
+    BDC_V(float, 0x2bd660), BDC_V(float, 0x2bd664), BDC_V(float, 0x2bd668), 0, 0, 0, 0,
+    BDC_V(float, 0x2bd67c), BDC_V(float, 0x2bd680), BDC_V(float, 0x2bd684), BDC_V(float, 0x2bd688),
+    BDC_V(float, 0x2bd68c), BDC_V(float, 0x2bd690), BDC_V(float, 0x2bd694), BDC_V(float, 0x2bd698),
+    BDC_V(float, 0x2bd69c), BDC_V(float, 0x2bd6a0), 0, 0, 0, 0, BDC_V(float, 0x2bd6b4),
+    BDC_V(float, 0x2bd6b8), BDC_V(float, 0x2bd6bc), BDC_V(float, 0x2bd6c0), BDC_V(float, 0x2bd6c4),
+    BDC_V(float, 0x2bd6c8), 0, 0, BDC_V(float, 0x2bd6d4), BDC_V(float, 0x2bd6d8),
+    BDC_V(float, 0x2bd6dc), BDC_V(float, 0x2bd6e0),
+};

@@ -1,0 +1,4 @@
+// bdc 0x08aba974 g_btlAttackSoundLastFrame
+#include "bdc.h"
+
+__typeof__(s32) g_btlAttackSoundLastFrame = BDC_V(int, 0x2b6974);

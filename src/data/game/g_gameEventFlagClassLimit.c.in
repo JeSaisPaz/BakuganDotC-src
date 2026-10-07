@@ -1,0 +1,9 @@
+// bdc 0x08a99810 g_gameEventFlagClassLimit
+#include "bdc.h"
+
+__typeof__(u16[8]) g_gameEventFlagClassLimit = {
+    BDC_V(unsigned short, 0x295810), BDC_V(unsigned short, 0x295812),
+    BDC_V(unsigned short, 0x295814), BDC_V(unsigned short, 0x295816),
+    BDC_V(unsigned short, 0x295818), BDC_V(unsigned short, 0x29581a),
+    BDC_V(unsigned short, 0x29581c), BDC_V(unsigned short, 0x29581e),
+};

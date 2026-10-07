@@ -1,0 +1,9 @@
+// bdc 0x08a67822 g_btlHitReactionKind2Ids
+#include "bdc.h"
+
+__typeof__(unsigned short[7]) g_btlHitReactionKind2Ids = {
+    BDC_V(unsigned short, 0x263822), BDC_V(unsigned short, 0x263824),
+    BDC_V(unsigned short, 0x263826), BDC_V(unsigned short, 0x263828),
+    BDC_V(unsigned short, 0x26382a), BDC_V(unsigned short, 0x26382c),
+    BDC_V(unsigned short, 0x26382e),
+};

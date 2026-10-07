@@ -1,0 +1,7 @@
+// bdc 0x08a839f8 g_btlMapFlashLoopEffect
+#include "bdc.h"
+
+__typeof__(s32[6]) g_btlMapFlashLoopEffect = {
+    BDC_V(int, 0x27f9f8), BDC_V(int, 0x27f9fc), BDC_V(int, 0x27fa00), BDC_V(int, 0x27fa04),
+    BDC_V(int, 0x27fa08), BDC_V(int, 0x27fa0c),
+};

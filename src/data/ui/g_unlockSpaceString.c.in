@@ -1,0 +1,4 @@
+// bdc 0x08a9ed98 g_unlockSpaceString
+#include "bdc.h"
+
+__typeof__(char[2]) g_unlockSpaceString = BDC_BYTES(0x29ad98, 2);

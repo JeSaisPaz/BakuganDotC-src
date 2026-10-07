@@ -1,0 +1,4 @@
+// bdc 0x08ac39b9 g_uiCollectionSphereHelpIndexCat2
+#include "bdc.h"
+
+__typeof__(const u8[13]) g_uiCollectionSphereHelpIndexCat2 = BDC_BYTES(0x2bf9b9, 13);

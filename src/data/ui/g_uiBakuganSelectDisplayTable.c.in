@@ -1,0 +1,58 @@
+// bdc 0x08ac1b30 g_uiBakuganSelectDisplayTable
+#include "bdc.h"
+
+__typeof__(s16[20][4]) g_uiBakuganSelectDisplayTable = {
+    { BDC_V(short, 0x2bdb30), BDC_V(short, 0x2bdb32) },
+    { BDC_V(short, 0x2bdb38), BDC_V(short, 0x2bdb3a) },
+    {
+        BDC_V(short, 0x2bdb40), BDC_V(short, 0x2bdb42), BDC_V(short, 0x2bdb44),
+        BDC_V(short, 0x2bdb46),
+    },
+    { BDC_V(short, 0x2bdb48), BDC_V(short, 0x2bdb4a), 0, BDC_V(short, 0x2bdb4e) },
+    { BDC_V(short, 0x2bdb50), BDC_V(short, 0x2bdb52), 0, BDC_V(short, 0x2bdb56) },
+    {
+        BDC_V(short, 0x2bdb58), BDC_V(short, 0x2bdb5a), BDC_V(short, 0x2bdb5c),
+        BDC_V(short, 0x2bdb5e),
+    },
+    {
+        BDC_V(short, 0x2bdb60), BDC_V(short, 0x2bdb62), BDC_V(short, 0x2bdb64),
+        BDC_V(short, 0x2bdb66),
+    },
+    { BDC_V(short, 0x2bdb68), BDC_V(short, 0x2bdb6a) },
+    { BDC_V(short, 0x2bdb70), BDC_V(short, 0x2bdb72) },
+    {
+        BDC_V(short, 0x2bdb78), BDC_V(short, 0x2bdb7a), BDC_V(short, 0x2bdb7c),
+        BDC_V(short, 0x2bdb7e),
+    },
+    {
+        BDC_V(short, 0x2bdb80), BDC_V(short, 0x2bdb82), BDC_V(short, 0x2bdb84),
+        BDC_V(short, 0x2bdb86),
+    },
+    {
+        BDC_V(short, 0x2bdb88), BDC_V(short, 0x2bdb8a), BDC_V(short, 0x2bdb8c),
+        BDC_V(short, 0x2bdb8e),
+    },
+    {
+        BDC_V(short, 0x2bdb90), BDC_V(short, 0x2bdb92), BDC_V(short, 0x2bdb94),
+        BDC_V(short, 0x2bdb96),
+    },
+    { BDC_V(short, 0x2bdb98), BDC_V(short, 0x2bdb9a), 0, BDC_V(short, 0x2bdb9e) },
+    {
+        BDC_V(short, 0x2bdba0), BDC_V(short, 0x2bdba2), BDC_V(short, 0x2bdba4),
+        BDC_V(short, 0x2bdba6),
+    },
+    {
+        BDC_V(short, 0x2bdba8), BDC_V(short, 0x2bdbaa), BDC_V(short, 0x2bdbac),
+        BDC_V(short, 0x2bdbae),
+    },
+    {
+        BDC_V(short, 0x2bdbb0), BDC_V(short, 0x2bdbb2), BDC_V(short, 0x2bdbb4),
+        BDC_V(short, 0x2bdbb6),
+    },
+    {
+        BDC_V(short, 0x2bdbb8), BDC_V(short, 0x2bdbba), BDC_V(short, 0x2bdbbc),
+        BDC_V(short, 0x2bdbbe),
+    },
+    { BDC_V(short, 0x2bdbc0), BDC_V(short, 0x2bdbc2), 0, BDC_V(short, 0x2bdbc6) },
+    { BDC_V(short, 0x2bdbc8), BDC_V(short, 0x2bdbca), 0, BDC_V(short, 0x2bdbce) },
+};

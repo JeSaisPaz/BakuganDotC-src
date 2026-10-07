@@ -1,0 +1,13 @@
+// bdc 0x08aa4090 g_gfxFabBitmapQuad
+#include "bdc.h"
+
+__typeof__(GfxSpriteVertex[4]) g_gfxFabBitmapQuad = {
+    {0}, { .u = BDC_V(float, 0x2a009c), .x = BDC_V(signed char, 0x2a00a4) },
+    { .v = BDC_V(float, 0x2a00ac), .y = BDC_V(signed char, 0x2a00b1) },
+    {
+        .u = BDC_V(float, 0x2a00b4),
+        .v = BDC_V(float, 0x2a00b8),
+        .x = BDC_V(signed char, 0x2a00bc),
+        .y = BDC_V(signed char, 0x2a00bd),
+    },
+};

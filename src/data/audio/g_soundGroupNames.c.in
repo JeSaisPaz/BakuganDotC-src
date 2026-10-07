@@ -1,0 +1,33 @@
+// bdc 0x08ac56e8 g_soundGroupNames
+#include "bdc.h"
+
+__typeof__(char *[84]) g_soundGroupNames = {
+    (char *)BDC_STR(0x29d2e4), (char *)BDC_STR(0x29d2f8), (char *)BDC_STR(0x29d30c),
+    (char *)BDC_STR(0x29d320), (char *)BDC_STR(0x29d334), (char *)BDC_STR(0x29d348),
+    (char *)BDC_STR(0x29d360), (char *)BDC_STR(0x29d374), (char *)BDC_STR(0x29d388),
+    (char *)BDC_STR(0x29d39c), (char *)BDC_STR(0x29d3b0), (char *)BDC_STR(0x29d3c4),
+    (char *)BDC_STR(0x29d3dc), (char *)BDC_STR(0x29d3f0), (char *)BDC_STR(0x29d404),
+    (char *)BDC_STR(0x29d418), (char *)BDC_STR(0x29d42c), (char *)BDC_STR(0x29d440),
+    (char *)BDC_STR(0x29d454), (char *)BDC_STR(0x29d46c), (char *)BDC_STR(0x29d480),
+    (char *)BDC_STR(0x29d494), (char *)BDC_STR(0x29d4a8), (char *)BDC_STR(0x29d4bc),
+    (char *)BDC_STR(0x29d4d0), (char *)BDC_STR(0x29d4e4), (char *)BDC_STR(0x29d4f8),
+    (char *)BDC_STR(0x29d50c), (char *)BDC_STR(0x29d520), (char *)BDC_STR(0x29d534),
+    (char *)BDC_STR(0x29d548), (char *)BDC_STR(0x29d55c), (char *)BDC_STR(0x29d570),
+    (char *)BDC_STR(0x29d584), (char *)BDC_STR(0x29d598), (char *)BDC_STR(0x29d5ac),
+    (char *)BDC_STR(0x29d5c0), (char *)BDC_STR(0x29d5d4), (char *)BDC_STR(0x29d5e8),
+    (char *)BDC_STR(0x29d5fc), (char *)BDC_STR(0x29d610), (char *)BDC_STR(0x29d624),
+    (char *)BDC_STR(0x29d638), (char *)BDC_STR(0x29d64c), (char *)BDC_STR(0x29d660),
+    (char *)BDC_STR(0x29d674), (char *)BDC_STR(0x29d688), (char *)BDC_STR(0x29d69c),
+    (char *)BDC_STR(0x29d6b0), (char *)BDC_STR(0x29d6c4), (char *)BDC_STR(0x29d6d8),
+    (char *)BDC_STR(0x29d6ec), (char *)BDC_STR(0x29d700), (char *)BDC_STR(0x29d718),
+    (char *)BDC_STR(0x29d730), (char *)BDC_STR(0x29d748), (char *)BDC_STR(0x29d760),
+    (char *)BDC_STR(0x29d778), (char *)BDC_STR(0x29d790), (char *)BDC_STR(0x29d7a8),
+    (char *)BDC_STR(0x29d7c0), (char *)BDC_STR(0x29d7d8), (char *)BDC_STR(0x29d7f0),
+    (char *)BDC_STR(0x29d808), (char *)BDC_STR(0x29d820), (char *)BDC_STR(0x29d838),
+    (char *)BDC_STR(0x29d84c), (char *)BDC_STR(0x29d860), (char *)BDC_STR(0x29d874),
+    (char *)BDC_STR(0x29d888), (char *)BDC_STR(0x29d8a0), (char *)BDC_STR(0x29d8b8),
+    (char *)BDC_STR(0x29d8cc), (char *)BDC_STR(0x29d8e4), (char *)BDC_STR(0x29d8fc),
+    (char *)BDC_STR(0x29d914), (char *)BDC_STR(0x29d92c), (char *)BDC_STR(0x29d944),
+    (char *)BDC_STR(0x29d958), (char *)BDC_STR(0x29d970), (char *)BDC_STR(0x29d988),
+    (char *)BDC_STR(0x29d9a0), (char *)BDC_STR(0x29d9b8),
+};

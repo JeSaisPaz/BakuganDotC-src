@@ -1,0 +1,4 @@
+// bdc 0x08a9321c g_uiTalkBalloonCheckPattern
+#include "bdc.h"
+
+__typeof__(const s8[13]) g_uiTalkBalloonCheckPattern = BDC_BYTES(0x28f21c, 13);

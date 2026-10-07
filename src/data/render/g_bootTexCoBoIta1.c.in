@@ -1,0 +1,4 @@
+// bdc 0x08ad7d80 g_bootTexCoBoIta1
+#include "bdc.h"
+
+__typeof__(u8[513]) g_bootTexCoBoIta1 = BDC_BYTES(0x2d3d80, 513);

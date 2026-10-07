@@ -1,0 +1,4 @@
+// bdc 0x08a61df8 g_gfxEffectKindMap
+#include "bdc.h"
+
+__typeof__(const u8[13]) g_gfxEffectKindMap = BDC_BYTES(0x25ddf8, 13);

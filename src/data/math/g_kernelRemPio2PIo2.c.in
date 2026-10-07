@@ -1,0 +1,8 @@
+// bdc 0x08aa4de0 g_kernelRemPio2PIo2
+#include "bdc.h"
+
+__typeof__(double[8]) g_kernelRemPio2PIo2 = {
+    BDC_V(double, 0x2a0de0), BDC_V(double, 0x2a0de8), BDC_V(double, 0x2a0df0),
+    BDC_V(double, 0x2a0df8), BDC_V(double, 0x2a0e00), BDC_V(double, 0x2a0e08),
+    BDC_V(double, 0x2a0e10), BDC_V(double, 0x2a0e18),
+};

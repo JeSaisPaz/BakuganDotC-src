@@ -1,0 +1,4 @@
+// bdc 0x08ac19d2 g_bakuganListOrderBId
+#include "bdc.h"
+
+__typeof__(u8[20]) g_bakuganListOrderBId = BDC_BYTES(0x2bd9d2, 20);

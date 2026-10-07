@@ -1,0 +1,19 @@
+// bdc 0x08a7329c g_btlKind06MotionSet22
+#include "bdc.h"
+
+__typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet22 = {
+    .head = {
+        .startMotion = BDC_V(short, 0x26f2a0),
+        .loopMotion = BDC_V(short, 0x26f2a2),
+        .mainMotion = BDC_V(short, 0x26f2a4),
+        .endMotion = BDC_V(short, 0x26f2a6),
+    },
+    .events = {
+        {
+            .type = BDC_V(unsigned char, 0x26f2a8),
+            .startFrame = BDC_V(unsigned char, 0x26f2a9),
+            .endFrame = BDC_V(unsigned char, 0x26f2aa),
+            .param = { .soundId = BDC_V(int, 0x26f2ac) },
+        },
+    },
+};

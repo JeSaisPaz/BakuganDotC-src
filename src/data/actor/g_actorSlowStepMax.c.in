@@ -1,0 +1,4 @@
+// bdc 0x08abf624 g_actorSlowStepMax
+#include "bdc.h"
+
+__typeof__(float) g_actorSlowStepMax = BDC_V(float, 0x2bb624);

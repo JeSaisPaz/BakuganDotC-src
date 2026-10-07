@@ -1,0 +1,19 @@
+// bdc 0x08ac5280 g_soundStreamFileNames
+#include "bdc.h"
+
+__typeof__(char *[41]) g_soundStreamFileNames = {
+    (char *)BDC_STR(0x29c4c0), (char *)BDC_STR(0x29c4c4), (char *)BDC_STR(0x29c4e4),
+    (char *)BDC_STR(0x29c504), (char *)BDC_STR(0x29c524), (char *)BDC_STR(0x29c53c),
+    (char *)BDC_STR(0x29c554), (char *)BDC_STR(0x29c56c), (char *)BDC_STR(0x29c584),
+    (char *)BDC_STR(0x29c59c), (char *)BDC_STR(0x29c5b8), (char *)BDC_STR(0x29c5d4),
+    (char *)BDC_STR(0x29c5ec), (char *)BDC_STR(0x29c604), (char *)BDC_STR(0x29c61c),
+    (char *)BDC_STR(0x29c634), (char *)BDC_STR(0x29c64c), (char *)BDC_STR(0x29c664),
+    (char *)BDC_STR(0x29c680), (char *)BDC_STR(0x29c69c), (char *)BDC_STR(0x29c6b8),
+    (char *)BDC_STR(0x29c6d0), (char *)BDC_STR(0x29c6e8), (char *)BDC_STR(0x29c6fc),
+    (char *)BDC_STR(0x29c710), (char *)BDC_STR(0x29c728), (char *)BDC_STR(0x29c744),
+    (char *)BDC_STR(0x29c744), (char *)BDC_STR(0x29c758), (char *)BDC_STR(0x29c770),
+    (char *)BDC_STR(0x29c788), (char *)BDC_STR(0x29c7a4), (char *)BDC_STR(0x29c7bc),
+    (char *)BDC_STR(0x29c7d4), (char *)BDC_STR(0x29c7f0), (char *)BDC_STR(0x29c810),
+    (char *)BDC_STR(0x29c82c), (char *)BDC_STR(0x29c844), (char *)BDC_STR(0x29c85c),
+    (char *)BDC_STR(0x29c870), (char *)BDC_STR(0x29c884),
+};

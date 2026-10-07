@@ -1,0 +1,4 @@
+// bdc 0x08a62350 g_gfxEffectFarDepthKey
+#include "bdc.h"
+
+__typeof__(float) g_gfxEffectFarDepthKey = BDC_V(float, 0x25e350);

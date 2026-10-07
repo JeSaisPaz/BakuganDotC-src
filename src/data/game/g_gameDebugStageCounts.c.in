@@ -1,0 +1,8 @@
+// bdc 0x08a93628 g_gameDebugStageCounts
+#include "bdc.h"
+
+__typeof__(s32[9]) g_gameDebugStageCounts = {
+    BDC_V(int, 0x28f628), BDC_V(int, 0x28f62c), BDC_V(int, 0x28f630), BDC_V(int, 0x28f634),
+    BDC_V(int, 0x28f638), BDC_V(int, 0x28f63c), BDC_V(int, 0x28f640), BDC_V(int, 0x28f644),
+    BDC_V(int, 0x28f648),
+};

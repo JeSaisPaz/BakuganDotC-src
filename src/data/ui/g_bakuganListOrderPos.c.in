@@ -1,0 +1,4 @@
+// bdc 0x08ac1994 g_bakuganListOrderPos
+#include "bdc.h"
+
+__typeof__(u8[21]) g_bakuganListOrderPos = BDC_BYTES(0x2bd994, 21);

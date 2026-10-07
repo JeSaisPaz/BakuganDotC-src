@@ -1,0 +1,4 @@
+// bdc 0x08abe907 g_gameFieldEntryId
+#include "bdc.h"
+
+__typeof__(s8) g_gameFieldEntryId = BDC_V(signed char, 0x2ba907);

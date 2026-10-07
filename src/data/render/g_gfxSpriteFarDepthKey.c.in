@@ -1,0 +1,4 @@
+// bdc 0x08aa3c40 g_gfxSpriteFarDepthKey
+#include "bdc.h"
+
+__typeof__(float) g_gfxSpriteFarDepthKey = BDC_V(float, 0x29fc40);

@@ -1,0 +1,34 @@
+// bdc 0x08a33898 g_gfxEffectTintTable
+#include "bdc.h"
+
+__typeof__(GfxEffectTintEntry[6]) g_gfxEffectTintTable = {
+    {
+        .textureName = (const char *)BDC_STR(0x22f854),
+        .entryCount = BDC_V(unsigned short, 0x22f89e),
+    },
+    {
+        .textureName = (const char *)BDC_STR(0x22f864),
+        .backupIndex = BDC_V(unsigned short, 0x22f8a4),
+        .entryCount = BDC_V(unsigned short, 0x22f8a6),
+    },
+    {
+        .textureName = (const char *)BDC_STR(0x22f870),
+        .backupIndex = BDC_V(unsigned short, 0x22f8ac),
+        .entryCount = BDC_V(unsigned short, 0x22f8ae),
+    },
+    {
+        .textureName = (const char *)BDC_STR(0x22f87c),
+        .backupIndex = BDC_V(unsigned short, 0x22f8b4),
+        .entryCount = BDC_V(unsigned short, 0x22f8b6),
+    },
+    {
+        .textureName = (const char *)BDC_STR(0x22f884),
+        .backupIndex = BDC_V(unsigned short, 0x22f8bc),
+        .entryCount = BDC_V(unsigned short, 0x22f8be),
+    },
+    {
+        .textureName = (const char *)BDC_STR(0x22f890),
+        .backupIndex = BDC_V(unsigned short, 0x22f8c4),
+        .entryCount = BDC_V(unsigned short, 0x22f8c6),
+    },
+};

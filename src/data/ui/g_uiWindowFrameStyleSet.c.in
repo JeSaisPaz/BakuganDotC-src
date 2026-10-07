@@ -1,0 +1,7 @@
+// bdc 0x08a3a5b0 g_uiWindowFrameStyleSet
+#include "bdc.h"
+
+__typeof__(const UiWindowFrameStyleSet) g_uiWindowFrameStyleSet = {
+    .count = BDC_V(int, 0x2365b0),
+    .styles = (const struct UiWindowFrameStyle *)&g_uiWindowFrameStyles,
+};

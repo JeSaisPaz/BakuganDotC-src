@@ -1,0 +1,66 @@
+// bdc 0x08a64a34 g_btlHudGuidePages
+#include "bdc.h"
+
+__typeof__(BtlHudGuidePage[15]) g_btlHudGuidePages = {
+    { .buttons = { 0, BDC_V(int, 0x260a38), BDC_V(int, 0x260a3c), BDC_V(int, 0x260a40) } },
+    {
+        .buttons = { BDC_V(int, 0x260a4c), BDC_V(int, 0x260a50), BDC_V(int, 0x260a54), BDC_V(int, 0x260a58) },
+        .captionCell = BDC_V(int, 0x260a60),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260a64), BDC_V(int, 0x260a68), BDC_V(int, 0x260a6c), BDC_V(int, 0x260a70) },
+        .extraIcon = BDC_V(int, 0x260a74),
+        .captionCell = BDC_V(int, 0x260a78),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260a7c), BDC_V(int, 0x260a80), BDC_V(int, 0x260a84), BDC_V(int, 0x260a88) },
+        .captionCell = BDC_V(int, 0x260a90),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260a94), BDC_V(int, 0x260a98), BDC_V(int, 0x260a9c), BDC_V(int, 0x260aa0) },
+        .captionCell = BDC_V(int, 0x260aa8),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260aac), BDC_V(int, 0x260ab0), BDC_V(int, 0x260ab4), BDC_V(int, 0x260ab8) },
+        .captionCell = BDC_V(int, 0x260ac0),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260ac4), BDC_V(int, 0x260ac8), BDC_V(int, 0x260acc), BDC_V(int, 0x260ad0) },
+        .captionCell = BDC_V(int, 0x260ad8),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260adc), BDC_V(int, 0x260ae0), BDC_V(int, 0x260ae4), BDC_V(int, 0x260ae8) },
+        .extraIcon = BDC_V(int, 0x260aec),
+        .captionCell = BDC_V(int, 0x260af0),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260af4), BDC_V(int, 0x260af8), BDC_V(int, 0x260afc), BDC_V(int, 0x260b00) },
+        .captionCell = BDC_V(int, 0x260b08),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260b0c), BDC_V(int, 0x260b10), BDC_V(int, 0x260b14), BDC_V(int, 0x260b18) },
+        .extraIcon = BDC_V(int, 0x260b1c),
+        .captionCell = BDC_V(int, 0x260b20),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260b24), BDC_V(int, 0x260b28), BDC_V(int, 0x260b2c), BDC_V(int, 0x260b30) },
+        .captionCell = BDC_V(int, 0x260b38),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260b3c), BDC_V(int, 0x260b40), BDC_V(int, 0x260b44), BDC_V(int, 0x260b48) },
+        .extraIcon = BDC_V(int, 0x260b4c),
+        .captionCell = BDC_V(int, 0x260b50),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260b54), BDC_V(int, 0x260b58), BDC_V(int, 0x260b5c), BDC_V(int, 0x260b60) },
+        .extraIcon = BDC_V(int, 0x260b64),
+        .captionCell = BDC_V(int, 0x260b68),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260b6c), BDC_V(int, 0x260b70), BDC_V(int, 0x260b74), BDC_V(int, 0x260b78) },
+        .captionCell = BDC_V(int, 0x260b80),
+    },
+    {
+        .buttons = { BDC_V(int, 0x260b84), BDC_V(int, 0x260b88), BDC_V(int, 0x260b8c), BDC_V(int, 0x260b90) },
+    },
+};

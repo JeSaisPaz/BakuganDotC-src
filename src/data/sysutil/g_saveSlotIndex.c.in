@@ -1,0 +1,4 @@
+// bdc 0x08ac5910 g_saveSlotIndex
+#include "bdc.h"
+
+__typeof__(s32) g_saveSlotIndex = BDC_V(int, 0x2c1910);

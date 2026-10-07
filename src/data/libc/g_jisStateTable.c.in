@@ -1,0 +1,35 @@
+// bdc 0x08ac4b68 g_jisStateTable
+#include "bdc.h"
+
+__typeof__(s32[6][9]) g_jisStateTable = {
+    {
+        BDC_V(int, 0x2c0b68), BDC_V(int, 0x2c0b6c), BDC_V(int, 0x2c0b70), BDC_V(int, 0x2c0b74),
+        BDC_V(int, 0x2c0b78), BDC_V(int, 0x2c0b7c), BDC_V(int, 0x2c0b80), BDC_V(int, 0x2c0b84),
+        BDC_V(int, 0x2c0b88),
+    },
+    {
+        BDC_V(int, 0x2c0b8c), BDC_V(int, 0x2c0b90), BDC_V(int, 0x2c0b94), BDC_V(int, 0x2c0b98),
+        BDC_V(int, 0x2c0b9c), BDC_V(int, 0x2c0ba0), BDC_V(int, 0x2c0ba4), BDC_V(int, 0x2c0ba8),
+        BDC_V(int, 0x2c0bac),
+    },
+    {
+        BDC_V(int, 0x2c0bb0), BDC_V(int, 0x2c0bb4), BDC_V(int, 0x2c0bb8), BDC_V(int, 0x2c0bbc),
+        BDC_V(int, 0x2c0bc0), BDC_V(int, 0x2c0bc4), BDC_V(int, 0x2c0bc8), BDC_V(int, 0x2c0bcc),
+        BDC_V(int, 0x2c0bd0),
+    },
+    {
+        BDC_V(int, 0x2c0bd4), BDC_V(int, 0x2c0bd8), BDC_V(int, 0x2c0bdc), BDC_V(int, 0x2c0be0),
+        BDC_V(int, 0x2c0be4), BDC_V(int, 0x2c0be8), BDC_V(int, 0x2c0bec), BDC_V(int, 0x2c0bf0),
+        BDC_V(int, 0x2c0bf4),
+    },
+    {
+        BDC_V(int, 0x2c0bf8), BDC_V(int, 0x2c0bfc), BDC_V(int, 0x2c0c00), BDC_V(int, 0x2c0c04),
+        BDC_V(int, 0x2c0c08), BDC_V(int, 0x2c0c0c), BDC_V(int, 0x2c0c10), BDC_V(int, 0x2c0c14),
+        BDC_V(int, 0x2c0c18),
+    },
+    {
+        BDC_V(int, 0x2c0c1c), BDC_V(int, 0x2c0c20), BDC_V(int, 0x2c0c24), BDC_V(int, 0x2c0c28),
+        BDC_V(int, 0x2c0c2c), BDC_V(int, 0x2c0c30), BDC_V(int, 0x2c0c34), BDC_V(int, 0x2c0c38),
+        BDC_V(int, 0x2c0c3c),
+    },
+};

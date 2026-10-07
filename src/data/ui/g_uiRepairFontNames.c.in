@@ -1,0 +1,4 @@
+// bdc 0x08ac1090 g_uiRepairFontNames
+#include "bdc.h"
+
+__typeof__(char *[2]) g_uiRepairFontNames = { (char *)BDC_STR(0x297580) };

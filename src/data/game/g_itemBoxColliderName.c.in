@@ -1,0 +1,4 @@
+// bdc 0x08abf060 g_itemBoxColliderName
+#include "bdc.h"
+
+__typeof__(char *) g_itemBoxColliderName = (char *)BDC_STR(0x292ae0);

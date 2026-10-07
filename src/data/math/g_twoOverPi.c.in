@@ -1,0 +1,22 @@
+// bdc 0x08aa4708 g_twoOverPi
+#include "bdc.h"
+
+__typeof__(s32[66]) g_twoOverPi = {
+    BDC_V(int, 0x2a0708), BDC_V(int, 0x2a070c), BDC_V(int, 0x2a0710), BDC_V(int, 0x2a0714),
+    BDC_V(int, 0x2a0718), BDC_V(int, 0x2a071c), BDC_V(int, 0x2a0720), BDC_V(int, 0x2a0724),
+    BDC_V(int, 0x2a0728), BDC_V(int, 0x2a072c), BDC_V(int, 0x2a0730), BDC_V(int, 0x2a0734),
+    BDC_V(int, 0x2a0738), BDC_V(int, 0x2a073c), BDC_V(int, 0x2a0740), BDC_V(int, 0x2a0744),
+    BDC_V(int, 0x2a0748), BDC_V(int, 0x2a074c), BDC_V(int, 0x2a0750), BDC_V(int, 0x2a0754),
+    BDC_V(int, 0x2a0758), BDC_V(int, 0x2a075c), BDC_V(int, 0x2a0760), BDC_V(int, 0x2a0764),
+    BDC_V(int, 0x2a0768), BDC_V(int, 0x2a076c), BDC_V(int, 0x2a0770), BDC_V(int, 0x2a0774),
+    BDC_V(int, 0x2a0778), BDC_V(int, 0x2a077c), BDC_V(int, 0x2a0780), BDC_V(int, 0x2a0784),
+    BDC_V(int, 0x2a0788), BDC_V(int, 0x2a078c), BDC_V(int, 0x2a0790), BDC_V(int, 0x2a0794),
+    BDC_V(int, 0x2a0798), BDC_V(int, 0x2a079c), BDC_V(int, 0x2a07a0), BDC_V(int, 0x2a07a4),
+    BDC_V(int, 0x2a07a8), BDC_V(int, 0x2a07ac), BDC_V(int, 0x2a07b0), BDC_V(int, 0x2a07b4),
+    BDC_V(int, 0x2a07b8), BDC_V(int, 0x2a07bc), BDC_V(int, 0x2a07c0), BDC_V(int, 0x2a07c4),
+    BDC_V(int, 0x2a07c8), BDC_V(int, 0x2a07cc), BDC_V(int, 0x2a07d0), BDC_V(int, 0x2a07d4),
+    BDC_V(int, 0x2a07d8), BDC_V(int, 0x2a07dc), BDC_V(int, 0x2a07e0), BDC_V(int, 0x2a07e4),
+    BDC_V(int, 0x2a07e8), BDC_V(int, 0x2a07ec), BDC_V(int, 0x2a07f0), BDC_V(int, 0x2a07f4),
+    BDC_V(int, 0x2a07f8), BDC_V(int, 0x2a07fc), BDC_V(int, 0x2a0800), BDC_V(int, 0x2a0804),
+    BDC_V(int, 0x2a0808), BDC_V(int, 0x2a080c),
+};

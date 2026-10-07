@@ -1,0 +1,16 @@
+// bdc 0x08a99492 g_eventFlagsSetShort
+#include "bdc.h"
+
+__typeof__(u16[21]) g_eventFlagsSetShort = {
+    BDC_V(unsigned short, 0x295492), BDC_V(unsigned short, 0x295494),
+    BDC_V(unsigned short, 0x295496), BDC_V(unsigned short, 0x295498),
+    BDC_V(unsigned short, 0x29549a), BDC_V(unsigned short, 0x29549c),
+    BDC_V(unsigned short, 0x29549e), BDC_V(unsigned short, 0x2954a0),
+    BDC_V(unsigned short, 0x2954a2), BDC_V(unsigned short, 0x2954a4),
+    BDC_V(unsigned short, 0x2954a6), BDC_V(unsigned short, 0x2954a8),
+    BDC_V(unsigned short, 0x2954aa), BDC_V(unsigned short, 0x2954ac),
+    BDC_V(unsigned short, 0x2954ae), BDC_V(unsigned short, 0x2954b0),
+    BDC_V(unsigned short, 0x2954b2), BDC_V(unsigned short, 0x2954b4),
+    BDC_V(unsigned short, 0x2954b6), BDC_V(unsigned short, 0x2954b8),
+    BDC_V(unsigned short, 0x2954ba),
+};

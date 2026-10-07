@@ -1,0 +1,12 @@
+// bdc 0x08ac37f4 g_sphereSpecialPopoutModelNames
+#include "bdc.h"
+
+__typeof__(const char *[13]) g_sphereSpecialPopoutModelNames = {
+    (const char *)BDC_STR(0x29a694), (const char *)BDC_STR(0x29a694),
+    (const char *)BDC_STR(0x29a6b0), (const char *)BDC_STR(0x29a6cc),
+    (const char *)BDC_STR(0x29a6e8), (const char *)BDC_STR(0x29a704),
+    (const char *)BDC_STR(0x29a720), (const char *)BDC_STR(0x29a73c),
+    (const char *)BDC_STR(0x29a754), (const char *)BDC_STR(0x29a76c),
+    (const char *)BDC_STR(0x29a784), (const char *)BDC_STR(0x29a79c),
+    (const char *)BDC_STR(0x29a7b4),
+};

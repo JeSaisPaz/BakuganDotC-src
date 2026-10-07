@@ -1,0 +1,4 @@
+// bdc 0x08abd650 g_actorBallHitQuery
+#include "bdc.h"
+
+__typeof__(CollisionQuery) g_actorBallHitQuery = { .hitParam = BDC_V(int, 0x2b9670) };

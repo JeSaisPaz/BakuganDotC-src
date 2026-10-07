@@ -1,0 +1,37 @@
+// bdc 0x08a65468 g_btlArenaResultRowSprites
+#include "bdc.h"
+
+__typeof__(s32[4][23]) g_btlArenaResultRowSprites = {
+    {
+        BDC_V(int, 0x261468), BDC_V(int, 0x26146c), BDC_V(int, 0x261470), BDC_V(int, 0x261474),
+        BDC_V(int, 0x261478), BDC_V(int, 0x26147c), BDC_V(int, 0x261480), BDC_V(int, 0x261484),
+        BDC_V(int, 0x261488), BDC_V(int, 0x26148c), BDC_V(int, 0x261490), BDC_V(int, 0x261494),
+        BDC_V(int, 0x261498), BDC_V(int, 0x26149c), BDC_V(int, 0x2614a0), BDC_V(int, 0x2614a4),
+        BDC_V(int, 0x2614a8), BDC_V(int, 0x2614ac), BDC_V(int, 0x2614b0), BDC_V(int, 0x2614b4),
+        BDC_V(int, 0x2614b8), BDC_V(int, 0x2614bc), BDC_V(int, 0x2614c0),
+    },
+    {
+        BDC_V(int, 0x2614c4), BDC_V(int, 0x2614c8), BDC_V(int, 0x2614cc), BDC_V(int, 0x2614d0),
+        BDC_V(int, 0x2614d4), BDC_V(int, 0x2614d8), BDC_V(int, 0x2614dc), BDC_V(int, 0x2614e0),
+        BDC_V(int, 0x2614e4), BDC_V(int, 0x2614e8), BDC_V(int, 0x2614ec), BDC_V(int, 0x2614f0),
+        BDC_V(int, 0x2614f4), BDC_V(int, 0x2614f8), BDC_V(int, 0x2614fc), BDC_V(int, 0x261500),
+        BDC_V(int, 0x261504), BDC_V(int, 0x261508), BDC_V(int, 0x26150c), BDC_V(int, 0x261510),
+        BDC_V(int, 0x261514), BDC_V(int, 0x261518), BDC_V(int, 0x26151c),
+    },
+    {
+        BDC_V(int, 0x261520), BDC_V(int, 0x261524), BDC_V(int, 0x261528), BDC_V(int, 0x26152c),
+        BDC_V(int, 0x261530), BDC_V(int, 0x261534), BDC_V(int, 0x261538), BDC_V(int, 0x26153c),
+        BDC_V(int, 0x261540), BDC_V(int, 0x261544), BDC_V(int, 0x261548), BDC_V(int, 0x26154c),
+        BDC_V(int, 0x261550), BDC_V(int, 0x261554), BDC_V(int, 0x261558), BDC_V(int, 0x26155c),
+        BDC_V(int, 0x261560), BDC_V(int, 0x261564), BDC_V(int, 0x261568), BDC_V(int, 0x26156c),
+        BDC_V(int, 0x261570), BDC_V(int, 0x261574), BDC_V(int, 0x261578),
+    },
+    {
+        BDC_V(int, 0x26157c), BDC_V(int, 0x261580), BDC_V(int, 0x261584), BDC_V(int, 0x261588),
+        BDC_V(int, 0x26158c), BDC_V(int, 0x261590), BDC_V(int, 0x261594), BDC_V(int, 0x261598),
+        BDC_V(int, 0x26159c), BDC_V(int, 0x2615a0), BDC_V(int, 0x2615a4), BDC_V(int, 0x2615a8),
+        BDC_V(int, 0x2615ac), BDC_V(int, 0x2615b0), BDC_V(int, 0x2615b4), BDC_V(int, 0x2615b8),
+        BDC_V(int, 0x2615bc), BDC_V(int, 0x2615c0), BDC_V(int, 0x2615c4), BDC_V(int, 0x2615c8),
+        BDC_V(int, 0x2615cc), BDC_V(int, 0x2615d0), BDC_V(int, 0x2615d4),
+    },
+};

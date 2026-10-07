@@ -1,0 +1,7 @@
+// bdc 0x08a98cb8 g_npcWalkFootsteps
+#include "bdc.h"
+
+__typeof__(s32[2][4]) g_npcWalkFootsteps = {
+    { BDC_V(int, 0x294cb8), BDC_V(int, 0x294cbc), BDC_V(int, 0x294cc0), BDC_V(int, 0x294cc4) },
+    { BDC_V(int, 0x294cc8), BDC_V(int, 0x294ccc), BDC_V(int, 0x294cd0), BDC_V(int, 0x294cd4) },
+};

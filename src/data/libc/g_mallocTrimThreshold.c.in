@@ -1,0 +1,4 @@
+// bdc 0x08ac4b20 g_mallocTrimThreshold
+#include "bdc.h"
+
+__typeof__(u32) g_mallocTrimThreshold = BDC_V(unsigned int, 0x2c0b20);

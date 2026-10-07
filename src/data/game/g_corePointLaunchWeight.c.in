@@ -1,0 +1,4 @@
+// bdc 0x08abd528 g_corePointLaunchWeight
+#include "bdc.h"
+
+__typeof__(float) g_corePointLaunchWeight = BDC_V(float, 0x2b9528);

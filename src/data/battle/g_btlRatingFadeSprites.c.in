@@ -1,0 +1,8 @@
+// bdc 0x08aba724 g_btlRatingFadeSprites
+#include "bdc.h"
+
+__typeof__(s32[11]) g_btlRatingFadeSprites = {
+    BDC_V(int, 0x2b6724), BDC_V(int, 0x2b6728), BDC_V(int, 0x2b672c), BDC_V(int, 0x2b6730),
+    BDC_V(int, 0x2b6734), BDC_V(int, 0x2b6738), BDC_V(int, 0x2b673c), BDC_V(int, 0x2b6740),
+    BDC_V(int, 0x2b6744), BDC_V(int, 0x2b6748), BDC_V(int, 0x2b674c),
+};

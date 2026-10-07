@@ -1,0 +1,21 @@
+// bdc 0x08a75074 g_btlKind08MotionSet26
+#include "bdc.h"
+
+__typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet26 = {
+    .head = {
+        .flags = BDC_V(unsigned int, 0x271074),
+        .startMotion = BDC_V(short, 0x271078),
+        .loopMotion = BDC_V(short, 0x27107a),
+        .mainMotion = BDC_V(short, 0x27107c),
+        .endMotion = BDC_V(short, 0x27107e),
+    },
+    .events = {
+        {
+            .type = BDC_V(unsigned char, 0x271080),
+            .startFrame = BDC_V(unsigned char, 0x271081),
+            .endFrame = BDC_V(unsigned char, 0x271082),
+            .param = { .soundId = BDC_V(int, 0x271084) },
+            .launchDist = BDC_V(float, 0x271090),
+        },
+    },
+};

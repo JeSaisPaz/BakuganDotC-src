@@ -1,0 +1,9 @@
+// bdc 0x08a85220 g_stopWallCorners
+#include "bdc.h"
+
+__typeof__(float[4][3]) g_stopWallCorners = {
+    { BDC_V(float, 0x281220), BDC_V(float, 0x281224), BDC_V(float, 0x281228) },
+    { BDC_V(float, 0x28122c), BDC_V(float, 0x281230), BDC_V(float, 0x281234) },
+    { BDC_V(float, 0x281238), 0, BDC_V(float, 0x281240) },
+    { BDC_V(float, 0x281244), BDC_V(float, 0x281248), BDC_V(float, 0x28124c) },
+};

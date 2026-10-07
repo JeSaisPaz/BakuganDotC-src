@@ -1,0 +1,8 @@
+// bdc 0x08aa4938 g_powfConsts
+#include "bdc.h"
+
+__typeof__(PowfConsts) g_powfConsts = {
+    .bp = { BDC_V(float, 0x2a0938), BDC_V(float, 0x2a093c) },
+    .dpH = { 0, BDC_V(float, 0x2a0944) },
+    .dpL = { 0, BDC_V(float, 0x2a094c) },
+};

@@ -1,0 +1,32 @@
+// bdc 0x08abce10 g_btlKindAttackMotions32
+#include "bdc.h"
+
+__typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions32 = {
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07, NULL, NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07, NULL, NULL, NULL, NULL, NULL, NULL,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet08,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet10,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet09,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet08,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet10,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet09,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet07,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet08,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet10,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet09,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet08,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet10,
+    (const struct BtlAttackMotionSet *)&g_btlKind27MotionSet09,
+};

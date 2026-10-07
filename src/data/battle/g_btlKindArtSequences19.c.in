@@ -1,0 +1,28 @@
+// bdc 0x08a7ed2c g_btlKindArtSequences19
+#include "bdc.h"
+
+__typeof__(BtlArtSeqStep[11]) g_btlKindArtSequences19 = {
+    {
+        .flags = BDC_V(unsigned char, 0x27ad2c),
+        .motion = BDC_V(short, 0x27ad2e),
+        .speed = BDC_V(float, 0x27ad30),
+    },
+    { .motion = BDC_V(short, 0x27ad36), .speed = BDC_V(float, 0x27ad38) },
+    { .motion = BDC_V(short, 0x27ad3e), .speed = BDC_V(float, 0x27ad40) },
+    { .motion = BDC_V(short, 0x27ad46), .speed = BDC_V(float, 0x27ad48) },
+    { .motion = BDC_V(short, 0x27ad4e), .speed = BDC_V(float, 0x27ad50) },
+    { .motion = BDC_V(short, 0x27ad56), .speed = BDC_V(float, 0x27ad58) },
+    { .motion = BDC_V(short, 0x27ad5e), .speed = BDC_V(float, 0x27ad60) },
+    { .motion = BDC_V(short, 0x27ad66), .speed = BDC_V(float, 0x27ad68) },
+    {
+        .flags = BDC_V(unsigned char, 0x27ad6c),
+        .motion = BDC_V(short, 0x27ad6e),
+        .speed = BDC_V(float, 0x27ad70),
+    },
+    { .motion = BDC_V(short, 0x27ad76), .speed = BDC_V(float, 0x27ad78) },
+    {
+        .flags = BDC_V(unsigned char, 0x27ad7c),
+        .motion = BDC_V(short, 0x27ad7e),
+        .speed = BDC_V(float, 0x27ad80),
+    },
+};

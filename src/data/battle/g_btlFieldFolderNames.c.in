@@ -1,0 +1,8 @@
+// bdc 0x08abd4e4 g_btlFieldFolderNames
+#include "bdc.h"
+
+__typeof__(char *[7]) g_btlFieldFolderNames = {
+    (char *)BDC_STR(0x27f978), (char *)BDC_STR(0x27f980), (char *)BDC_STR(0x27f988),
+    (char *)BDC_STR(0x27f990), (char *)BDC_STR(0x27f998), (char *)BDC_STR(0x27f9a0),
+    (char *)BDC_STR(0x27f9ac),
+};

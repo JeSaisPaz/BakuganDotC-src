@@ -1,0 +1,9 @@
+// bdc 0x08ac3428 g_equipViewport4P
+#include "bdc.h"
+
+__typeof__(float[16]) g_equipViewport4P = {
+    0, 0, BDC_V(float, 0x2bf430), BDC_V(float, 0x2bf434), BDC_V(float, 0x2bf438), 0,
+    BDC_V(float, 0x2bf440), BDC_V(float, 0x2bf444), 0, BDC_V(float, 0x2bf44c),
+    BDC_V(float, 0x2bf450), BDC_V(float, 0x2bf454), BDC_V(float, 0x2bf458), BDC_V(float, 0x2bf45c),
+    BDC_V(float, 0x2bf460), BDC_V(float, 0x2bf464),
+};

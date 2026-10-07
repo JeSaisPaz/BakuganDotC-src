@@ -1,0 +1,146 @@
+// bdc 0x08a65c90 g_btlCameraKindParams
+#include "bdc.h"
+
+__typeof__(BtlCameraKindParams[21]) g_btlCameraKindParams = {
+    {0},
+    {
+        .param = {
+            BDC_V(float, 0x261cac), BDC_V(float, 0x261cb0), BDC_V(float, 0x261cb4),
+            BDC_V(float, 0x261cb8), BDC_V(float, 0x261cbc), BDC_V(float, 0x261cc0),
+            BDC_V(float, 0x261cc4),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261cc8), BDC_V(float, 0x261ccc), BDC_V(float, 0x261cd0),
+            BDC_V(float, 0x261cd4), BDC_V(float, 0x261cd8), BDC_V(float, 0x261cdc),
+            BDC_V(float, 0x261ce0),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261ce4), BDC_V(float, 0x261ce8), BDC_V(float, 0x261cec),
+            BDC_V(float, 0x261cf0), BDC_V(float, 0x261cf4), BDC_V(float, 0x261cf8),
+            BDC_V(float, 0x261cfc),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261d00), BDC_V(float, 0x261d04), BDC_V(float, 0x261d08),
+            BDC_V(float, 0x261d0c), BDC_V(float, 0x261d10), BDC_V(float, 0x261d14),
+            BDC_V(float, 0x261d18),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261d1c), BDC_V(float, 0x261d20), BDC_V(float, 0x261d24),
+            BDC_V(float, 0x261d28), BDC_V(float, 0x261d2c), BDC_V(float, 0x261d30),
+            BDC_V(float, 0x261d34),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261d38), BDC_V(float, 0x261d3c), BDC_V(float, 0x261d40),
+            BDC_V(float, 0x261d44), BDC_V(float, 0x261d48), BDC_V(float, 0x261d4c),
+            BDC_V(float, 0x261d50),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261d54), BDC_V(float, 0x261d58), BDC_V(float, 0x261d5c),
+            BDC_V(float, 0x261d60), BDC_V(float, 0x261d64), BDC_V(float, 0x261d68),
+            BDC_V(float, 0x261d6c),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261d70), BDC_V(float, 0x261d74), BDC_V(float, 0x261d78),
+            BDC_V(float, 0x261d7c), BDC_V(float, 0x261d80), BDC_V(float, 0x261d84),
+            BDC_V(float, 0x261d88),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261d8c), BDC_V(float, 0x261d90), BDC_V(float, 0x261d94),
+            BDC_V(float, 0x261d98), BDC_V(float, 0x261d9c), BDC_V(float, 0x261da0),
+            BDC_V(float, 0x261da4),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261da8), BDC_V(float, 0x261dac), BDC_V(float, 0x261db0),
+            BDC_V(float, 0x261db4), BDC_V(float, 0x261db8), BDC_V(float, 0x261dbc),
+            BDC_V(float, 0x261dc0),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261dc4), BDC_V(float, 0x261dc8), BDC_V(float, 0x261dcc),
+            BDC_V(float, 0x261dd0), BDC_V(float, 0x261dd4), BDC_V(float, 0x261dd8),
+            BDC_V(float, 0x261ddc),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261de0), BDC_V(float, 0x261de4), BDC_V(float, 0x261de8),
+            BDC_V(float, 0x261dec), BDC_V(float, 0x261df0), BDC_V(float, 0x261df4),
+            BDC_V(float, 0x261df8),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261dfc), BDC_V(float, 0x261e00), BDC_V(float, 0x261e04),
+            BDC_V(float, 0x261e08), BDC_V(float, 0x261e0c), BDC_V(float, 0x261e10),
+            BDC_V(float, 0x261e14),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261e18), BDC_V(float, 0x261e1c), BDC_V(float, 0x261e20),
+            BDC_V(float, 0x261e24), BDC_V(float, 0x261e28), BDC_V(float, 0x261e2c),
+            BDC_V(float, 0x261e30),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261e34), BDC_V(float, 0x261e38), BDC_V(float, 0x261e3c),
+            BDC_V(float, 0x261e40), BDC_V(float, 0x261e44), BDC_V(float, 0x261e48),
+            BDC_V(float, 0x261e4c),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261e50), BDC_V(float, 0x261e54), BDC_V(float, 0x261e58),
+            BDC_V(float, 0x261e5c), BDC_V(float, 0x261e60), BDC_V(float, 0x261e64),
+            BDC_V(float, 0x261e68),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261e6c), BDC_V(float, 0x261e70), BDC_V(float, 0x261e74),
+            BDC_V(float, 0x261e78), BDC_V(float, 0x261e7c), BDC_V(float, 0x261e80),
+            BDC_V(float, 0x261e84),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261e88), BDC_V(float, 0x261e8c), BDC_V(float, 0x261e90),
+            BDC_V(float, 0x261e94), BDC_V(float, 0x261e98), BDC_V(float, 0x261e9c),
+            BDC_V(float, 0x261ea0),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261ea4), BDC_V(float, 0x261ea8), BDC_V(float, 0x261eac),
+            BDC_V(float, 0x261eb0), BDC_V(float, 0x261eb4), BDC_V(float, 0x261eb8),
+            BDC_V(float, 0x261ebc),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261ec0), BDC_V(float, 0x261ec4), BDC_V(float, 0x261ec8),
+            BDC_V(float, 0x261ecc), BDC_V(float, 0x261ed0), BDC_V(float, 0x261ed4),
+            BDC_V(float, 0x261ed8),
+        },
+    },
+};

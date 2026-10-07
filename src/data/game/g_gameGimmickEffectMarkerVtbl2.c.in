@@ -1,0 +1,4 @@
+// bdc 0x08af35c4 g_gameGimmickEffectMarkerVtbl2
+#include "bdc.h"
+
+__typeof__(const VtblEntry[2]) g_gameGimmickEffectMarkerVtbl2 = { {0}, { .delta = BDC_V(short, 0x2ef5cc), .fn = (void *)GameGimmickEffectMarkerDtor } };

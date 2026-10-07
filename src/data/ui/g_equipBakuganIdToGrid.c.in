@@ -1,0 +1,4 @@
+// bdc 0x08ac347c g_equipBakuganIdToGrid
+#include "bdc.h"
+
+__typeof__(u8[21]) g_equipBakuganIdToGrid = BDC_BYTES(0x2bf47c, 21);

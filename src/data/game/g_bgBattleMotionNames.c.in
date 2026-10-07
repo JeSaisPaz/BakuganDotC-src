@@ -1,0 +1,7 @@
+// bdc 0x08abe9f8 g_bgBattleMotionNames
+#include "bdc.h"
+
+__typeof__(const char *[4]) g_bgBattleMotionNames = {
+    (const char *)BDC_STR(0x28ed04), (const char *)BDC_STR(0x28ed18),
+    (const char *)BDC_STR(0x28ed2c), (const char *)BDC_STR(0x28ed38),
+};

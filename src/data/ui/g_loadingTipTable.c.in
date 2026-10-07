@@ -1,0 +1,9 @@
+// bdc 0x08a9b358 g_loadingTipTable
+#include "bdc.h"
+
+__typeof__(s32[8][2]) g_loadingTipTable = {
+    { 0, BDC_V(int, 0x29735c) }, { BDC_V(int, 0x297360), BDC_V(int, 0x297364) },
+    { BDC_V(int, 0x297368), BDC_V(int, 0x29736c) }, { BDC_V(int, 0x297370), BDC_V(int, 0x297374) },
+    { BDC_V(int, 0x297378), BDC_V(int, 0x29737c) }, { BDC_V(int, 0x297380), BDC_V(int, 0x297384) },
+    { BDC_V(int, 0x297388), BDC_V(int, 0x29738c) }, { BDC_V(int, 0x297390), BDC_V(int, 0x297394) },
+};

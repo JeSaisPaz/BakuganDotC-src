@@ -1,0 +1,4 @@
+// bdc 0x08a92cc4 g_gameFieldStage37ReturnPos
+#include "bdc.h"
+
+__typeof__(u32[3]) g_gameFieldStage37ReturnPos = { BDC_V(unsigned int, 0x28ecc4), 0, BDC_V(unsigned int, 0x28eccc) };

@@ -1,0 +1,7 @@
+// bdc 0x08a9b100 g_loadingLangCells
+#include "bdc.h"
+
+__typeof__(s32[8]) g_loadingLangCells = {
+    0, 0, BDC_V(int, 0x297108), BDC_V(int, 0x29710c), BDC_V(int, 0x297110), BDC_V(int, 0x297114),
+    BDC_V(int, 0x297118),
+};

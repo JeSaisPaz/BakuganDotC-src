@@ -1,0 +1,4 @@
+// bdc 0x08a66682 g_btlVignetteBottomYs
+#include "bdc.h"
+
+__typeof__(s16[2]) g_btlVignetteBottomYs = { BDC_V(short, 0x262682), BDC_V(short, 0x262684) };

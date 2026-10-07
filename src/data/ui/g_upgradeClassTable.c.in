@@ -1,0 +1,10 @@
+// bdc 0x08a9bac8 g_upgradeClassTable
+#include "bdc.h"
+
+__typeof__(int[21]) g_upgradeClassTable = {
+    0, BDC_V(int, 0x297acc), BDC_V(int, 0x297ad0), BDC_V(int, 0x297ad4), BDC_V(int, 0x297ad8),
+    BDC_V(int, 0x297adc), BDC_V(int, 0x297ae0), BDC_V(int, 0x297ae4), BDC_V(int, 0x297ae8),
+    BDC_V(int, 0x297aec), BDC_V(int, 0x297af0), BDC_V(int, 0x297af4), BDC_V(int, 0x297af8),
+    BDC_V(int, 0x297afc), BDC_V(int, 0x297b00), BDC_V(int, 0x297b04), BDC_V(int, 0x297b08),
+    BDC_V(int, 0x297b0c), BDC_V(int, 0x297b10), BDC_V(int, 0x297b14), BDC_V(int, 0x297b18),
+};

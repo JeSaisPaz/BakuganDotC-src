@@ -1,0 +1,4 @@
+// bdc 0x08abea34 g_uiTalkBalloonFont
+#include "bdc.h"
+
+__typeof__(char *[2]) g_uiTalkBalloonFont = { (char *)BDC_STR(0x28f324) };

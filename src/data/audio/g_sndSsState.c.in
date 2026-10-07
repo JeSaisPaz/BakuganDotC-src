@@ -1,0 +1,4 @@
+// bdc 0x08af13ac g_sndSsState
+#include "bdc.h"
+
+__typeof__(s32) g_sndSsState = BDC_V(int, 0x2ed3ac);

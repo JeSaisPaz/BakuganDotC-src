@@ -1,0 +1,4 @@
+// bdc 0x08a645f8 g_btlSwordBlurWorldCmd
+#include "bdc.h"
+
+__typeof__(u32) g_btlSwordBlurWorldCmd = BDC_V(unsigned int, 0x2605f8);

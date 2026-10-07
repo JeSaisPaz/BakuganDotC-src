@@ -1,0 +1,55 @@
+// bdc 0x08ac5640 g_soundEmitterProfiles
+#include "bdc.h"
+
+__typeof__(SndEmitterProfile[6]) g_soundEmitterProfiles = {
+    {
+        .key = BDC_V(int, 0x2c1640),
+        .name = (char *)BDC_STR(0x29d26c),
+        .shape = BDC_V(int, 0x2c1648),
+        .curve = BDC_V(int, 0x2c164c),
+        .volNear = BDC_V(float, 0x2c1650),
+        .volFar = BDC_V(float, 0x2c1654),
+        .radius = BDC_V(float, 0x2c1658),
+    },
+    {
+        .key = BDC_V(int, 0x2c165c),
+        .name = (char *)BDC_STR(0x29d278),
+        .shape = BDC_V(int, 0x2c1664),
+        .curve = BDC_V(int, 0x2c1668),
+        .volFar = BDC_V(float, 0x2c1670),
+        .radius = BDC_V(float, 0x2c1674),
+    },
+    {
+        .key = BDC_V(int, 0x2c1678),
+        .name = (char *)BDC_STR(0x29d284),
+        .shape = BDC_V(int, 0x2c1680),
+        .curve = BDC_V(int, 0x2c1684),
+        .volFar = BDC_V(float, 0x2c168c),
+        .radius = BDC_V(float, 0x2c1690),
+    },
+    {
+        .key = BDC_V(int, 0x2c1694),
+        .name = (char *)BDC_STR(0x29d290),
+        .curve = BDC_V(int, 0x2c16a0),
+        .volNear = BDC_V(float, 0x2c16a4),
+        .volFar = BDC_V(float, 0x2c16a8),
+        .radius = BDC_V(float, 0x2c16ac),
+    },
+    {
+        .key = BDC_V(int, 0x2c16b0),
+        .name = (char *)BDC_STR(0x29d298),
+        .shape = BDC_V(int, 0x2c16b8),
+        .curve = BDC_V(int, 0x2c16bc),
+        .volFar = BDC_V(float, 0x2c16c4),
+        .radius = BDC_V(float, 0x2c16c8),
+    },
+    {
+        .key = BDC_V(int, 0x2c16cc),
+        .name = (char *)BDC_STR(0x29d2a0),
+        .shape = BDC_V(int, 0x2c16d4),
+        .curve = BDC_V(int, 0x2c16d8),
+        .volNear = BDC_V(float, 0x2c16dc),
+        .volFar = BDC_V(float, 0x2c16e0),
+        .radius = BDC_V(float, 0x2c16e4),
+    },
+};

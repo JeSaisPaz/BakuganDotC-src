@@ -1,0 +1,31 @@
+// bdc 0x08a34760 g_scriptOpTableHi
+#include "bdc.h"
+
+__typeof__(MemberFnPtr[46]) g_scriptOpTableHi = {
+    { .pfn = (void *)ScriptOpNop }, { .pfn = (void *)ScriptOpSetCpuClock },
+    { .pfn = (void *)ScriptOpNopB }, { .pfn = (void *)ScriptOpProfileAccess },
+    { .pfn = (void *)ScriptOpNopC }, { .pfn = (void *)ScriptOpSpawnActor },
+    { .pfn = (void *)ScriptOpJumpIfActorEvent }, { .pfn = (void *)ScriptOpFieldOpenPauseMenu },
+    { .pfn = (void *)ScriptOpJumpIfStageWordEq }, { .pfn = (void *)ScriptOpFieldOpenRepair },
+    { .pfn = (void *)ScriptOpDeleteActor }, { .pfn = (void *)ScriptOpStoreActorTagForStage },
+    { .pfn = (void *)ScriptOpIsActorTagStoredForStage }, { .pfn = (void *)ScriptOpSpawnUnit },
+    { .pfn = (void *)ScriptOpSpawnCpuUnit }, { .pfn = (void *)ScriptOpUnitSetParam },
+    { .pfn = (void *)ScriptOpJumpIfUnitRefHpRatio },
+    { .pfn = (void *)ScriptOpJumpIfAllOpponentsDead },
+    { .pfn = (void *)ScriptOpJumpIfAllOpponentsDeadB },
+    { .pfn = (void *)ScriptOpJumpIfDistanceToPlayer },
+    { .pfn = (void *)ScriptOpRequestBakuganLoad }, { .pfn = (void *)ScriptOpJumpIfUnitStat },
+    { .pfn = (void *)ScriptOpCameraFocusUnit }, { .pfn = (void *)ScriptOpJumpIfUnitRefField },
+    { .pfn = (void *)ScriptOpCameraFocusUnitRef }, { .pfn = (void *)ScriptOpTalkMessage },
+    { .pfn = (void *)ScriptOpTalkSetMessageFile },
+    { .pfn = (void *)ScriptOpGetPlayerKnockOutCount }, { .pfn = (void *)ScriptOpCaption },
+    { .pfn = (void *)ScriptOpTalkSetFlags }, { .pfn = (void *)ScriptOpJumpIfRefDistanceToPlayer },
+    { .pfn = (void *)ScriptOpUnitRefSetParam }, { .pfn = (void *)ScriptOpCreateCrystal },
+    { .pfn = (void *)ScriptOpCreateStageObj }, { .pfn = (void *)ScriptOpSetBattleEventId },
+    { .pfn = (void *)ScriptOpToggleStageObjEffect }, { .pfn = (void *)ScriptOpStopWall },
+    { .pfn = (void *)ScriptOpEnemySpawner }, { .pfn = (void *)ScriptOpStartNextPlaythrough },
+    { .pfn = (void *)ScriptOpPickLoadingTip }, { .pfn = (void *)ScriptOpChangeBgm },
+    { .pfn = (void *)ScriptOpJumpIfStopWallIdle },
+    { .pfn = (void *)ScriptOpBranchIfStageObjFlag281 }, { .pfn = (void *)ScriptOpSetStageObjPose },
+    { .pfn = (void *)ScriptOpResetProfile }, { .pfn = (void *)ScriptOpControlMovie },
+};

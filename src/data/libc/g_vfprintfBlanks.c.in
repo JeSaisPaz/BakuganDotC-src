@@ -1,0 +1,4 @@
+// bdc 0x08a9fbe8 g_vfprintfBlanks
+#include "bdc.h"
+
+__typeof__(const char[16]) g_vfprintfBlanks = BDC_BYTES(0x29bbe8, 16);

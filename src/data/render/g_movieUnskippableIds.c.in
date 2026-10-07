@@ -1,0 +1,11 @@
+// bdc 0x08aa2d48 g_movieUnskippableIds
+#include "bdc.h"
+
+__typeof__(s32[24]) g_movieUnskippableIds = {
+    BDC_V(int, 0x29ed48), BDC_V(int, 0x29ed4c), BDC_V(int, 0x29ed50), BDC_V(int, 0x29ed54),
+    BDC_V(int, 0x29ed58), BDC_V(int, 0x29ed5c), BDC_V(int, 0x29ed60), BDC_V(int, 0x29ed64),
+    BDC_V(int, 0x29ed68), BDC_V(int, 0x29ed6c), BDC_V(int, 0x29ed70), BDC_V(int, 0x29ed74),
+    BDC_V(int, 0x29ed78), BDC_V(int, 0x29ed7c), BDC_V(int, 0x29ed80), BDC_V(int, 0x29ed84),
+    BDC_V(int, 0x29ed88), BDC_V(int, 0x29ed8c), BDC_V(int, 0x29ed90), BDC_V(int, 0x29ed94),
+    BDC_V(int, 0x29ed98), BDC_V(int, 0x29ed9c), BDC_V(int, 0x29eda0), BDC_V(int, 0x29eda4),
+};

@@ -1,0 +1,4 @@
+// bdc 0x08aba77c g_btlControlLockApplied
+#include "bdc.h"
+
+__typeof__(u8) g_btlControlLockApplied = BDC_V(unsigned char, 0x2b677c);

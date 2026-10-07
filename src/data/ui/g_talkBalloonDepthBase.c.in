@@ -1,0 +1,4 @@
+// bdc 0x08abea14 g_talkBalloonDepthBase
+#include "bdc.h"
+
+__typeof__(float) g_talkBalloonDepthBase = BDC_V(float, 0x2baa14);

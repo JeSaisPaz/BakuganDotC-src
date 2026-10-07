@@ -1,0 +1,10 @@
+// bdc 0x08abe908 g_gameEventDefaultTables
+#include "bdc.h"
+
+__typeof__(u8 *[10]) g_gameEventDefaultTables = {
+    (unsigned char *)BDC_STR(0x28dc5c), (unsigned char *)BDC_STR(0x28df34),
+    (unsigned char *)BDC_STR(0x28e214), (unsigned char *)BDC_STR(0x28e52c),
+    (unsigned char *)BDC_STR(0x28e83c), (unsigned char *)BDC_STR(0x28eb34),
+    (unsigned char *)BDC_STR(0x28ec24), NULL, (unsigned char *)BDC_STR(0x28ec2c),
+    (unsigned char *)BDC_STR(0x28ec34),
+};

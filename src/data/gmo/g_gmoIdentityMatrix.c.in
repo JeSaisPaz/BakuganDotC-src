@@ -1,0 +1,9 @@
+// bdc 0x08aa5240 g_gmoIdentityMatrix
+#include "bdc.h"
+
+__typeof__(ScePspFMatrix4) g_gmoIdentityMatrix = {
+    .x = { .x = BDC_V(float, 0x2a1240) },
+    .y = { .y = BDC_V(float, 0x2a1254) },
+    .z = { .z = BDC_V(float, 0x2a1268) },
+    .w = { .w = BDC_V(float, 0x2a127c) },
+};

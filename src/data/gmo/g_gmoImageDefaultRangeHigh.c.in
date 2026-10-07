@@ -1,0 +1,4 @@
+// bdc 0x08aa520c g_gmoImageDefaultRangeHigh
+#include "bdc.h"
+
+__typeof__(float) g_gmoImageDefaultRangeHigh = BDC_V(float, 0x2a120c);

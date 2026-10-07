@@ -1,0 +1,7 @@
+// bdc 0x08a9bdb8 g_advSelectEventFlagIds
+#include "bdc.h"
+
+__typeof__(u32[4]) g_advSelectEventFlagIds = {
+    BDC_V(unsigned int, 0x297db8), BDC_V(unsigned int, 0x297dbc), BDC_V(unsigned int, 0x297dc0),
+    BDC_V(unsigned int, 0x297dc4),
+};

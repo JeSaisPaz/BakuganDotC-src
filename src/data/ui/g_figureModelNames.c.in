@@ -1,0 +1,16 @@
+// bdc 0x08ac3a30 g_figureModelNames
+#include "bdc.h"
+
+__typeof__(const char *[21]) g_figureModelNames = {
+    (const char *)BDC_STR(0x29aa20), (const char *)BDC_STR(0x29aa20),
+    (const char *)BDC_STR(0x29aa40), (const char *)BDC_STR(0x29aa60),
+    (const char *)BDC_STR(0x29aa7c), (const char *)BDC_STR(0x29aa98),
+    (const char *)BDC_STR(0x29aab4), (const char *)BDC_STR(0x29aad4),
+    (const char *)BDC_STR(0x29aaf0), (const char *)BDC_STR(0x29ab0c),
+    (const char *)BDC_STR(0x29ab28), (const char *)BDC_STR(0x29ab44),
+    (const char *)BDC_STR(0x29ab60), (const char *)BDC_STR(0x29ab7c),
+    (const char *)BDC_STR(0x29ab98), (const char *)BDC_STR(0x29abb4),
+    (const char *)BDC_STR(0x29abd0), (const char *)BDC_STR(0x29abf0),
+    (const char *)BDC_STR(0x29ac0c), (const char *)BDC_STR(0x29ac2c),
+    (const char *)BDC_STR(0x29ac48),
+};

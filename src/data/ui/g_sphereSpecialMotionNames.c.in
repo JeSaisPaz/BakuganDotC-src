@@ -1,0 +1,12 @@
+// bdc 0x08ac373c g_sphereSpecialMotionNames
+#include "bdc.h"
+
+__typeof__(const char *[13]) g_sphereSpecialMotionNames = {
+    (const char *)BDC_STR(0x29a424), (const char *)BDC_STR(0x29a424),
+    (const char *)BDC_STR(0x29a448), (const char *)BDC_STR(0x29a46c),
+    (const char *)BDC_STR(0x29a490), (const char *)BDC_STR(0x29a4b4),
+    (const char *)BDC_STR(0x29a4d8), (const char *)BDC_STR(0x29a4fc),
+    (const char *)BDC_STR(0x29a51c), (const char *)BDC_STR(0x29a53c),
+    (const char *)BDC_STR(0x29a55c), (const char *)BDC_STR(0x29a57c),
+    (const char *)BDC_STR(0x29a59c),
+};

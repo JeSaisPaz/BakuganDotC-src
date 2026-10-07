@@ -1,0 +1,8 @@
+// bdc 0x08a96a38 g_gameGimmickSteamStartTimers
+#include "bdc.h"
+
+__typeof__(const u16[6]) g_gameGimmickSteamStartTimers = {
+    BDC_V(unsigned short, 0x292a38), BDC_V(unsigned short, 0x292a3a),
+    BDC_V(unsigned short, 0x292a3c), BDC_V(unsigned short, 0x292a3e),
+    BDC_V(unsigned short, 0x292a40),
+};

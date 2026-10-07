@@ -1,0 +1,10 @@
+// bdc 0x08af7080 g_cxxBadAllocTypeInfo
+#include "bdc.h"
+
+__typeof__(CxxTypeInfo) g_cxxBadAllocTypeInfo = {
+    .vtbl = (void **)&g_cxxTypeInfoVtable,
+    .typeName = (const char *)BDC_STR(0x2a03e8),
+    .name = (void *)&g_cxxBadAllocTypeId,
+    .dtor = (void *)CxxBadAllocDtor,
+    .bases = (const struct CxxBaseClassEntry *)&g_cxxBadAllocBases,
+};

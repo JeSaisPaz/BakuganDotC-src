@@ -1,0 +1,4 @@
+// bdc 0x08aa4530 g_libVersion
+#include "bdc.h"
+
+__typeof__(s32) g_libVersion = BDC_V(int, 0x2a0530);

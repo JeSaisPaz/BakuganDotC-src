@@ -1,0 +1,14 @@
+// bdc 0x08ac1338 g_hologramViewVoiceTable
+#include "bdc.h"
+
+__typeof__(int[36]) g_hologramViewVoiceTable = {
+    BDC_V(int, 0x2bd338), BDC_V(int, 0x2bd33c), BDC_V(int, 0x2bd340), BDC_V(int, 0x2bd344),
+    BDC_V(int, 0x2bd348), BDC_V(int, 0x2bd34c), BDC_V(int, 0x2bd350), BDC_V(int, 0x2bd354),
+    BDC_V(int, 0x2bd358), BDC_V(int, 0x2bd35c), BDC_V(int, 0x2bd360), BDC_V(int, 0x2bd364),
+    BDC_V(int, 0x2bd368), BDC_V(int, 0x2bd36c), BDC_V(int, 0x2bd370), BDC_V(int, 0x2bd374),
+    BDC_V(int, 0x2bd378), BDC_V(int, 0x2bd37c), BDC_V(int, 0x2bd380), BDC_V(int, 0x2bd384),
+    BDC_V(int, 0x2bd388), BDC_V(int, 0x2bd38c), BDC_V(int, 0x2bd390), BDC_V(int, 0x2bd394),
+    BDC_V(int, 0x2bd398), BDC_V(int, 0x2bd39c), BDC_V(int, 0x2bd3a0), BDC_V(int, 0x2bd3a4),
+    BDC_V(int, 0x2bd3a8), BDC_V(int, 0x2bd3ac), BDC_V(int, 0x2bd3b0), BDC_V(int, 0x2bd3b4),
+    BDC_V(int, 0x2bd3b8), BDC_V(int, 0x2bd3bc), BDC_V(int, 0x2bd3c0), BDC_V(int, 0x2bd3c4),
+};

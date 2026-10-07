@@ -1,0 +1,4 @@
+// bdc 0x08ac3d58 g_uiWorldMapNetLastStep
+#include "bdc.h"
+
+__typeof__(s32) g_uiWorldMapNetLastStep = BDC_V(int, 0x2bfd58);

@@ -1,0 +1,4 @@
+// bdc 0x08aa5210 g_gmoImageDefaultField1c
+#include "bdc.h"
+
+__typeof__(float) g_gmoImageDefaultField1c = BDC_V(float, 0x2a1210);

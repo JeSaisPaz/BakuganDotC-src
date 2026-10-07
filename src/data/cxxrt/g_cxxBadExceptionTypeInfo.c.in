@@ -1,0 +1,10 @@
+// bdc 0x08af5ac4 g_cxxBadExceptionTypeInfo
+#include "bdc.h"
+
+__typeof__(CxxTypeInfo) g_cxxBadExceptionTypeInfo = {
+    .vtbl = (void **)&g_cxxTypeInfoVtable,
+    .typeName = (const char *)BDC_STR(0x2a0420),
+    .name = (void *)&g_cxxBadExceptionTypeId,
+    .dtor = (void *)CxxBadExceptionDtor,
+    .bases = (const struct CxxBaseClassEntry *)&g_cxxBadExceptionBases,
+};

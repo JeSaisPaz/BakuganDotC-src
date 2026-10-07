@@ -1,0 +1,4 @@
+// bdc 0x08aa3320 g_meshChunkTag
+#include "bdc.h"
+
+__typeof__(u32) g_meshChunkTag = BDC_V(unsigned int, 0x29f320);

@@ -1,0 +1,56 @@
+// bdc 0x08a85558 g_stageObjLandmarkHpTable
+#include "bdc.h"
+
+__typeof__(ActorStageObjLandmarkLevel[11]) g_stageObjLandmarkHpTable = {
+    {0},
+    {
+        .maxHp = BDC_V(int, 0x28156c),
+        .radius = BDC_V(float, 0x281570),
+        .field0c = BDC_V(float, 0x281574),
+    },
+    {
+        .maxHp = BDC_V(int, 0x28157c),
+        .radius = BDC_V(float, 0x281580),
+        .field0c = BDC_V(float, 0x281584),
+    },
+    {
+        .maxHp = BDC_V(int, 0x28158c),
+        .radius = BDC_V(float, 0x281590),
+        .field0c = BDC_V(float, 0x281594),
+    },
+    {
+        .maxHp = BDC_V(int, 0x28159c),
+        .radius = BDC_V(float, 0x2815a0),
+        .field0c = BDC_V(float, 0x2815a4),
+    },
+    {
+        .maxHp = BDC_V(int, 0x2815ac),
+        .radius = BDC_V(float, 0x2815b0),
+        .field0c = BDC_V(float, 0x2815b4),
+    },
+    {
+        .maxHp = BDC_V(int, 0x2815bc),
+        .radius = BDC_V(float, 0x2815c0),
+        .field0c = BDC_V(float, 0x2815c4),
+    },
+    {
+        .maxHp = BDC_V(int, 0x2815cc),
+        .radius = BDC_V(float, 0x2815d0),
+        .field0c = BDC_V(float, 0x2815d4),
+    },
+    {
+        .maxHp = BDC_V(int, 0x2815dc),
+        .radius = BDC_V(float, 0x2815e0),
+        .field0c = BDC_V(float, 0x2815e4),
+    },
+    {
+        .maxHp = BDC_V(int, 0x2815ec),
+        .radius = BDC_V(float, 0x2815f0),
+        .field0c = BDC_V(float, 0x2815f4),
+    },
+    {
+        .maxHp = BDC_V(int, 0x2815fc),
+        .radius = BDC_V(float, 0x281600),
+        .field0c = BDC_V(float, 0x281604),
+    },
+};

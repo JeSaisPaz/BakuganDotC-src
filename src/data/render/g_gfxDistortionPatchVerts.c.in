@@ -1,0 +1,4 @@
+// bdc 0x08a623f0 g_gfxDistortionPatchVerts
+#include "bdc.h"
+
+__typeof__(u8[510]) g_gfxDistortionPatchVerts = BDC_BYTES(0x25e3f0, 510);

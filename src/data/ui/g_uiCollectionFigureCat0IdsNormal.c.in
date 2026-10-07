@@ -1,0 +1,4 @@
+// bdc 0x08ac3a84 g_uiCollectionFigureCat0IdsNormal
+#include "bdc.h"
+
+__typeof__(u8[33]) g_uiCollectionFigureCat0IdsNormal = BDC_BYTES(0x2bfa84, 33);

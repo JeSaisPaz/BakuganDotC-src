@@ -1,0 +1,39 @@
+// bdc 0x08a9b138 g_loadingIconLayout
+#include "bdc.h"
+
+__typeof__(s16[6][10]) g_loadingIconLayout = {
+    {
+        BDC_V(short, 0x297138), BDC_V(short, 0x29713a), BDC_V(short, 0x29713c),
+        BDC_V(short, 0x29713e), BDC_V(short, 0x297140), BDC_V(short, 0x297142),
+        BDC_V(short, 0x297144), BDC_V(short, 0x297146), BDC_V(short, 0x297148),
+        BDC_V(short, 0x29714a),
+    },
+    {
+        BDC_V(short, 0x29714c), BDC_V(short, 0x29714e), BDC_V(short, 0x297150),
+        BDC_V(short, 0x297152), BDC_V(short, 0x297154), BDC_V(short, 0x297156),
+        BDC_V(short, 0x297158), BDC_V(short, 0x29715a), BDC_V(short, 0x29715c),
+        BDC_V(short, 0x29715e),
+    },
+    {
+        BDC_V(short, 0x297160), BDC_V(short, 0x297162), BDC_V(short, 0x297164),
+        BDC_V(short, 0x297166), BDC_V(short, 0x297168), BDC_V(short, 0x29716a), 0,
+        BDC_V(short, 0x29716e), BDC_V(short, 0x297170), BDC_V(short, 0x297172),
+    },
+    {
+        BDC_V(short, 0x297174), BDC_V(short, 0x297176), BDC_V(short, 0x297178),
+        BDC_V(short, 0x29717a), BDC_V(short, 0x29717c), BDC_V(short, 0x29717e),
+        BDC_V(short, 0x297180), BDC_V(short, 0x297182), BDC_V(short, 0x297184),
+        BDC_V(short, 0x297186),
+    },
+    {
+        BDC_V(short, 0x297188), BDC_V(short, 0x29718a), BDC_V(short, 0x29718c),
+        BDC_V(short, 0x29718e), BDC_V(short, 0x297190), BDC_V(short, 0x297192),
+        BDC_V(short, 0x297194), BDC_V(short, 0x297196), BDC_V(short, 0x297198),
+        BDC_V(short, 0x29719a),
+    },
+    {
+        BDC_V(short, 0x29719c), BDC_V(short, 0x29719e), BDC_V(short, 0x2971a0),
+        BDC_V(short, 0x2971a2), BDC_V(short, 0x2971a4), BDC_V(short, 0x2971a6), 0,
+        BDC_V(short, 0x2971aa), BDC_V(short, 0x2971ac), BDC_V(short, 0x2971ae),
+    },
+};

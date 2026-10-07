@@ -1,0 +1,8 @@
+// bdc 0x08a33908 g_nameEntryFog
+#include "bdc.h"
+
+__typeof__(BtlArenaFog) g_nameEntryFog = {
+    .color = BDC_V(unsigned int, 0x22f908),
+    .range = BDC_V(float, 0x22f90c),
+    .scale = BDC_V(float, 0x22f910),
+};

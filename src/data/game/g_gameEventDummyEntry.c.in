@@ -1,0 +1,4 @@
+// bdc 0x08a92c3c g_gameEventDummyEntry
+#include "bdc.h"
+
+__typeof__(u32[2]) g_gameEventDummyEntry = { BDC_V(unsigned int, 0x28ec3c) };

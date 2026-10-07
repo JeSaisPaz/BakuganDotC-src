@@ -1,0 +1,4 @@
+// bdc 0x08a64470 g_geWorldDataCmdTemplate
+#include "bdc.h"
+
+__typeof__(u32) g_geWorldDataCmdTemplate = BDC_V(unsigned int, 0x260470);

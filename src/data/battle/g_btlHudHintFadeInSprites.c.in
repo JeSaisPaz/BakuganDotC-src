@@ -1,0 +1,8 @@
+// bdc 0x08aba140 g_btlHudHintFadeInSprites
+#include "bdc.h"
+
+__typeof__(const s32[12]) g_btlHudHintFadeInSprites = {
+    BDC_V(int, 0x2b6140), BDC_V(int, 0x2b6144), BDC_V(int, 0x2b6148), BDC_V(int, 0x2b614c),
+    BDC_V(int, 0x2b6150), BDC_V(int, 0x2b6154), BDC_V(int, 0x2b6158), BDC_V(int, 0x2b615c),
+    BDC_V(int, 0x2b6160), BDC_V(int, 0x2b6164), BDC_V(int, 0x2b6168), BDC_V(int, 0x2b616c),
+};

@@ -1,0 +1,4 @@
+// bdc 0x08abd51c g_gimmickLaunchScaleWeight
+#include "bdc.h"
+
+__typeof__(float) g_gimmickLaunchScaleWeight = BDC_V(float, 0x2b951c);

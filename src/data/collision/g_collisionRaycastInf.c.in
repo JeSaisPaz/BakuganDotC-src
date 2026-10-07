@@ -1,0 +1,4 @@
+// bdc 0x08a50968 g_collisionRaycastInf
+#include "bdc.h"
+
+__typeof__(float) g_collisionRaycastInf = BDC_V(float, 0x24c968);

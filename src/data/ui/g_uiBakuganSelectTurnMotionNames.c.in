@@ -1,0 +1,16 @@
+// bdc 0x08ac193c g_uiBakuganSelectTurnMotionNames
+#include "bdc.h"
+
+__typeof__(const char *[22]) g_uiBakuganSelectTurnMotionNames = {
+    (const char *)BDC_STR(0x298360), (const char *)BDC_STR(0x298360),
+    (const char *)BDC_STR(0x298504), (const char *)BDC_STR(0x29851c),
+    (const char *)BDC_STR(0x298534), (const char *)BDC_STR(0x2983a8),
+    (const char *)BDC_STR(0x2983b8), (const char *)BDC_STR(0x2983c8),
+    (const char *)BDC_STR(0x29854c), (const char *)BDC_STR(0x2983e8),
+    (const char *)BDC_STR(0x298564), (const char *)BDC_STR(0x29840c),
+    (const char *)BDC_STR(0x29841c), (const char *)BDC_STR(0x29842c),
+    (const char *)BDC_STR(0x29843c), (const char *)BDC_STR(0x29844c),
+    (const char *)BDC_STR(0x29845c), (const char *)BDC_STR(0x298470),
+    (const char *)BDC_STR(0x298484), (const char *)BDC_STR(0x298498),
+    (const char *)BDC_STR(0x29857c), (const char *)BDC_STR(0x298360),
+};

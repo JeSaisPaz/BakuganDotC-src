@@ -1,0 +1,7 @@
+// bdc 0x08aa52b0 g_gmoAttrTypeFlags
+#include "bdc.h"
+
+__typeof__(const u32[5]) g_gmoAttrTypeFlags = {
+    0, BDC_V(unsigned int, 0x2a12b4), BDC_V(unsigned int, 0x2a12b8), BDC_V(unsigned int, 0x2a12bc),
+    BDC_V(unsigned int, 0x2a12c0),
+};

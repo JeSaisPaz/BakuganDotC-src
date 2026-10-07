@@ -1,0 +1,4 @@
+// bdc 0x08aa3340 g_faceChunkTag
+#include "bdc.h"
+
+__typeof__(u32) g_faceChunkTag = BDC_V(unsigned int, 0x29f340);

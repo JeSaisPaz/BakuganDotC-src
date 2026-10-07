@@ -1,0 +1,14 @@
+// bdc 0x08a812b8 g_btlBallEntryOpenWait
+#include "bdc.h"
+
+__typeof__(s32[33]) g_btlBallEntryOpenWait = {
+    BDC_V(int, 0x27d2b8), BDC_V(int, 0x27d2bc), BDC_V(int, 0x27d2c0), BDC_V(int, 0x27d2c4),
+    BDC_V(int, 0x27d2c8), BDC_V(int, 0x27d2cc), BDC_V(int, 0x27d2d0), BDC_V(int, 0x27d2d4),
+    BDC_V(int, 0x27d2d8), BDC_V(int, 0x27d2dc), BDC_V(int, 0x27d2e0), BDC_V(int, 0x27d2e4),
+    BDC_V(int, 0x27d2e8), BDC_V(int, 0x27d2ec), BDC_V(int, 0x27d2f0), BDC_V(int, 0x27d2f4),
+    BDC_V(int, 0x27d2f8), BDC_V(int, 0x27d2fc), BDC_V(int, 0x27d300), BDC_V(int, 0x27d304),
+    BDC_V(int, 0x27d308), BDC_V(int, 0x27d30c), BDC_V(int, 0x27d310), BDC_V(int, 0x27d314),
+    BDC_V(int, 0x27d318), BDC_V(int, 0x27d31c), BDC_V(int, 0x27d320), BDC_V(int, 0x27d324),
+    BDC_V(int, 0x27d328), BDC_V(int, 0x27d32c), BDC_V(int, 0x27d330), BDC_V(int, 0x27d334),
+    BDC_V(int, 0x27d338),
+};

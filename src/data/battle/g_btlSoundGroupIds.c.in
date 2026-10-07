@@ -1,0 +1,19 @@
+// bdc 0x08a66184 g_btlSoundGroupIds
+#include "bdc.h"
+
+__typeof__(const s32[56]) g_btlSoundGroupIds = {
+    BDC_V(int, 0x262184), BDC_V(int, 0x262188), BDC_V(int, 0x26218c), BDC_V(int, 0x262190),
+    BDC_V(int, 0x262194), BDC_V(int, 0x262198), BDC_V(int, 0x26219c), BDC_V(int, 0x2621a0),
+    BDC_V(int, 0x2621a4), BDC_V(int, 0x2621a8), BDC_V(int, 0x2621ac), BDC_V(int, 0x2621b0),
+    BDC_V(int, 0x2621b4), BDC_V(int, 0x2621b8), BDC_V(int, 0x2621bc), BDC_V(int, 0x2621c0),
+    BDC_V(int, 0x2621c4), BDC_V(int, 0x2621c8), BDC_V(int, 0x2621cc), BDC_V(int, 0x2621d0),
+    BDC_V(int, 0x2621d4), BDC_V(int, 0x2621d8), BDC_V(int, 0x2621dc), BDC_V(int, 0x2621e0),
+    BDC_V(int, 0x2621e4), BDC_V(int, 0x2621e8), BDC_V(int, 0x2621ec), BDC_V(int, 0x2621f0),
+    BDC_V(int, 0x2621f4), BDC_V(int, 0x2621f8), BDC_V(int, 0x2621fc), BDC_V(int, 0x262200),
+    BDC_V(int, 0x262204), BDC_V(int, 0x262208), BDC_V(int, 0x26220c), BDC_V(int, 0x262210),
+    BDC_V(int, 0x262214), BDC_V(int, 0x262218), BDC_V(int, 0x26221c), BDC_V(int, 0x262220),
+    BDC_V(int, 0x262224), BDC_V(int, 0x262228), BDC_V(int, 0x26222c), BDC_V(int, 0x262230),
+    BDC_V(int, 0x262234), BDC_V(int, 0x262238), BDC_V(int, 0x26223c), BDC_V(int, 0x262240),
+    BDC_V(int, 0x262244), BDC_V(int, 0x262248), BDC_V(int, 0x26224c), BDC_V(int, 0x262250),
+    BDC_V(int, 0x262254), BDC_V(int, 0x262258), BDC_V(int, 0x26225c), BDC_V(int, 0x262260),
+};

@@ -1,0 +1,11 @@
+// bdc 0x08a9aa70 g_btlDemoEffectIdTable
+#include "bdc.h"
+
+__typeof__(s32[21]) g_btlDemoEffectIdTable = {
+    BDC_V(int, 0x296a70), BDC_V(int, 0x296a74), BDC_V(int, 0x296a78), BDC_V(int, 0x296a7c),
+    BDC_V(int, 0x296a80), BDC_V(int, 0x296a84), BDC_V(int, 0x296a88), BDC_V(int, 0x296a8c),
+    BDC_V(int, 0x296a90), BDC_V(int, 0x296a94), BDC_V(int, 0x296a98), BDC_V(int, 0x296a9c),
+    BDC_V(int, 0x296aa0), BDC_V(int, 0x296aa4), BDC_V(int, 0x296aa8), BDC_V(int, 0x296aac),
+    BDC_V(int, 0x296ab0), BDC_V(int, 0x296ab4), BDC_V(int, 0x296ab8), BDC_V(int, 0x296abc),
+    BDC_V(int, 0x296ac0),
+};

@@ -1,0 +1,25 @@
+// bdc 0x08a7c748 g_btlKind17MotionSet16
+#include "bdc.h"
+
+__typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet16 = {
+    .head = {
+        .startMotion = BDC_V(short, 0x27874c),
+        .loopMotion = BDC_V(short, 0x27874e),
+        .mainMotion = BDC_V(short, 0x278750),
+        .endMotion = BDC_V(short, 0x278752),
+    },
+    .events = {
+        {
+            .type = BDC_V(unsigned char, 0x278754),
+            .startFrame = BDC_V(unsigned char, 0x278755),
+            .endFrame = BDC_V(unsigned char, 0x278756),
+            .param = { .soundId = BDC_V(int, 0x278758) },
+        },
+        {
+            .type = BDC_V(unsigned char, 0x278768),
+            .startFrame = BDC_V(unsigned char, 0x278769),
+            .endFrame = BDC_V(unsigned char, 0x27876a),
+            .param = { .soundId = BDC_V(int, 0x27876c) },
+        },
+    },
+};

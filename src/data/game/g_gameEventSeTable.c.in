@@ -1,0 +1,9 @@
+// bdc 0x08a98fd8 g_gameEventSeTable
+#include "bdc.h"
+
+__typeof__(u32[10]) g_gameEventSeTable = {
+    BDC_V(unsigned int, 0x294fd8), BDC_V(unsigned int, 0x294fdc), BDC_V(unsigned int, 0x294fe0),
+    BDC_V(unsigned int, 0x294fe4), BDC_V(unsigned int, 0x294fe8), BDC_V(unsigned int, 0x294fec),
+    BDC_V(unsigned int, 0x294ff0), BDC_V(unsigned int, 0x294ff4), BDC_V(unsigned int, 0x294ff8),
+    BDC_V(unsigned int, 0x294ffc),
+};

@@ -1,0 +1,7 @@
+// bdc 0x08a68a60 g_btlAttributeEffectHue
+#include "bdc.h"
+
+__typeof__(float[6]) g_btlAttributeEffectHue = {
+    0, BDC_V(float, 0x264a64), BDC_V(float, 0x264a68), BDC_V(float, 0x264a6c),
+    BDC_V(float, 0x264a70), BDC_V(float, 0x264a74),
+};

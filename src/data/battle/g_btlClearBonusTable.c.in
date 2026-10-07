@@ -1,0 +1,10 @@
+// bdc 0x08a655d8 g_btlClearBonusTable
+#include "bdc.h"
+
+__typeof__(s32[41]) g_btlClearBonusTable = {
+    BDC_V(int, 0x2615d8), BDC_V(int, 0x2615dc), BDC_V(int, 0x2615e0), 0, BDC_V(int, 0x2615e8),
+    BDC_V(int, 0x2615ec), BDC_V(int, 0x2615f0), 0, BDC_V(int, 0x2615f8), BDC_V(int, 0x2615fc),
+    BDC_V(int, 0x261600), 0, BDC_V(int, 0x261608), BDC_V(int, 0x26160c), BDC_V(int, 0x261610), 0,
+    BDC_V(int, 0x261618), BDC_V(int, 0x26161c), BDC_V(int, 0x261620), 0, 0, 0, 0, 0,
+    BDC_V(int, 0x261638), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, BDC_V(int, 0x26166c),
+};

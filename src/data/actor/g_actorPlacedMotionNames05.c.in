@@ -1,0 +1,9 @@
+// bdc 0x08abf1ac g_actorPlacedMotionNames05
+#include "bdc.h"
+
+__typeof__(char *[11]) g_actorPlacedMotionNames05 = {
+    (char *)BDC_STR(0x293958), (char *)BDC_STR(0x293968), (char *)BDC_STR(0x293978),
+    (char *)BDC_STR(0x293988), (char *)BDC_STR(0x29399c), (char *)BDC_STR(0x2939b0),
+    (char *)BDC_STR(0x2939c4), (char *)BDC_STR(0x2939d8), (char *)BDC_STR(0x2939ec),
+    (char *)BDC_STR(0x293958), (char *)BDC_STR(0x293708),
+};

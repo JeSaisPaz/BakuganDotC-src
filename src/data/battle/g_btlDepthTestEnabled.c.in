@@ -1,0 +1,4 @@
+// bdc 0x08aba780 g_btlDepthTestEnabled
+#include "bdc.h"
+
+__typeof__(u8) g_btlDepthTestEnabled = BDC_V(unsigned char, 0x2b6780);

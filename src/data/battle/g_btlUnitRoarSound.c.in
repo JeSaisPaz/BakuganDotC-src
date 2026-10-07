@@ -1,0 +1,10 @@
+// bdc 0x08a8133c g_btlUnitRoarSound
+#include "bdc.h"
+
+__typeof__(u32[21]) g_btlUnitRoarSound = {
+    0, BDC_V(unsigned int, 0x27d340), BDC_V(unsigned int, 0x27d344), BDC_V(unsigned int, 0x27d348),
+    BDC_V(unsigned int, 0x27d34c), BDC_V(unsigned int, 0x27d350), BDC_V(unsigned int, 0x27d354),
+    BDC_V(unsigned int, 0x27d358), BDC_V(unsigned int, 0x27d35c), BDC_V(unsigned int, 0x27d360),
+    BDC_V(unsigned int, 0x27d364), BDC_V(unsigned int, 0x27d368), BDC_V(unsigned int, 0x27d36c),
+    BDC_V(unsigned int, 0x27d370), BDC_V(unsigned int, 0x27d374), BDC_V(unsigned int, 0x27d378),
+};

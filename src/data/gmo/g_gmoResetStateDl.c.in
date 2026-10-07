@@ -1,0 +1,15 @@
+// bdc 0x08aa2f9c g_gmoResetStateDl
+#include "bdc.h"
+
+__typeof__(const u32[32]) g_gmoResetStateDl = {
+    BDC_V(unsigned int, 0x29ef9c), BDC_V(unsigned int, 0x29efa0), BDC_V(unsigned int, 0x29efa4),
+    BDC_V(unsigned int, 0x29efa8), BDC_V(unsigned int, 0x29efac), BDC_V(unsigned int, 0x29efb0),
+    BDC_V(unsigned int, 0x29efb4), BDC_V(unsigned int, 0x29efb8), BDC_V(unsigned int, 0x29efbc),
+    BDC_V(unsigned int, 0x29efc0), BDC_V(unsigned int, 0x29efc4), BDC_V(unsigned int, 0x29efc8), 0,
+    BDC_V(unsigned int, 0x29efd0), 0, BDC_V(unsigned int, 0x29efd8), 0,
+    BDC_V(unsigned int, 0x29efe0), BDC_V(unsigned int, 0x29efe4), BDC_V(unsigned int, 0x29efe8),
+    BDC_V(unsigned int, 0x29efec), BDC_V(unsigned int, 0x29eff0), BDC_V(unsigned int, 0x29eff4),
+    BDC_V(unsigned int, 0x29eff8), BDC_V(unsigned int, 0x29effc), BDC_V(unsigned int, 0x29f000),
+    BDC_V(unsigned int, 0x29f004), BDC_V(unsigned int, 0x29f008), BDC_V(unsigned int, 0x29f00c),
+    BDC_V(unsigned int, 0x29f010), BDC_V(unsigned int, 0x29f014), BDC_V(unsigned int, 0x29f018),
+};

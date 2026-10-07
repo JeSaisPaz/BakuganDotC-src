@@ -1,0 +1,8 @@
+// bdc 0x08ac3d20 g_worldMapJetAngles
+#include "bdc.h"
+
+__typeof__(float[12]) g_worldMapJetAngles = {
+    BDC_V(float, 0x2bfd20), BDC_V(float, 0x2bfd24), BDC_V(float, 0x2bfd28), BDC_V(float, 0x2bfd2c),
+    BDC_V(float, 0x2bfd30), BDC_V(float, 0x2bfd34), BDC_V(float, 0x2bfd38), BDC_V(float, 0x2bfd3c),
+    0, BDC_V(float, 0x2bfd44), BDC_V(float, 0x2bfd48), BDC_V(float, 0x2bfd4c),
+};

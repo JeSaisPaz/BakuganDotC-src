@@ -1,0 +1,9 @@
+// bdc 0x08abd600 g_actorStageObjBreakPieceModelNames
+#include "bdc.h"
+
+__typeof__(const char *[7]) g_actorStageObjBreakPieceModelNames = {
+    (const char *)BDC_STR(0x280b98), (const char *)BDC_STR(0x280b9c),
+    (const char *)BDC_STR(0x280bb4), (const char *)BDC_STR(0x280bd0),
+    (const char *)BDC_STR(0x280be8), (const char *)BDC_STR(0x280c04),
+    (const char *)BDC_STR(0x280c20),
+};

@@ -1,0 +1,16 @@
+// bdc 0x08ac3af8 g_collectionFigureDetailScale
+#include "bdc.h"
+
+__typeof__(float[42]) g_collectionFigureDetailScale = {
+    BDC_V(float, 0x2bfaf8), BDC_V(float, 0x2bfafc), BDC_V(float, 0x2bfb00), BDC_V(float, 0x2bfb04),
+    BDC_V(float, 0x2bfb08), BDC_V(float, 0x2bfb0c), BDC_V(float, 0x2bfb10), BDC_V(float, 0x2bfb14),
+    BDC_V(float, 0x2bfb18), BDC_V(float, 0x2bfb1c), BDC_V(float, 0x2bfb20), BDC_V(float, 0x2bfb24),
+    BDC_V(float, 0x2bfb28), BDC_V(float, 0x2bfb2c), BDC_V(float, 0x2bfb30), BDC_V(float, 0x2bfb34),
+    BDC_V(float, 0x2bfb38), BDC_V(float, 0x2bfb3c), BDC_V(float, 0x2bfb40), BDC_V(float, 0x2bfb44),
+    BDC_V(float, 0x2bfb48), BDC_V(float, 0x2bfb4c), BDC_V(float, 0x2bfb50), BDC_V(float, 0x2bfb54),
+    BDC_V(float, 0x2bfb58), BDC_V(float, 0x2bfb5c), BDC_V(float, 0x2bfb60), BDC_V(float, 0x2bfb64),
+    BDC_V(float, 0x2bfb68), BDC_V(float, 0x2bfb6c), BDC_V(float, 0x2bfb70), BDC_V(float, 0x2bfb74),
+    BDC_V(float, 0x2bfb78), BDC_V(float, 0x2bfb7c), BDC_V(float, 0x2bfb80), BDC_V(float, 0x2bfb84),
+    BDC_V(float, 0x2bfb88), BDC_V(float, 0x2bfb8c), BDC_V(float, 0x2bfb90), BDC_V(float, 0x2bfb94),
+    BDC_V(float, 0x2bfb98), BDC_V(float, 0x2bfb9c),
+};

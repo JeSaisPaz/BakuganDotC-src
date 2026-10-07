@@ -1,0 +1,27 @@
+// bdc 0x08a934dc g_talkBalloonFillShape
+#include "bdc.h"
+
+__typeof__(float[23][2]) g_talkBalloonFillShape = {
+    {0}, { BDC_V(float, 0x28f4e4), BDC_V(float, 0x28f4e8) },
+    { BDC_V(float, 0x28f4ec), BDC_V(float, 0x28f4f0) },
+    { BDC_V(float, 0x28f4f4), BDC_V(float, 0x28f4f8) },
+    { BDC_V(float, 0x28f4fc), BDC_V(float, 0x28f500) },
+    { BDC_V(float, 0x28f504), BDC_V(float, 0x28f508) },
+    { BDC_V(float, 0x28f50c), BDC_V(float, 0x28f510) },
+    { BDC_V(float, 0x28f514), BDC_V(float, 0x28f518) },
+    { BDC_V(float, 0x28f51c), BDC_V(float, 0x28f520) },
+    { BDC_V(float, 0x28f524), BDC_V(float, 0x28f528) },
+    { BDC_V(float, 0x28f52c), BDC_V(float, 0x28f530) },
+    { BDC_V(float, 0x28f534), BDC_V(float, 0x28f538) },
+    { BDC_V(float, 0x28f53c), BDC_V(float, 0x28f540) },
+    { BDC_V(float, 0x28f544), BDC_V(float, 0x28f548) },
+    { BDC_V(float, 0x28f54c), BDC_V(float, 0x28f550) },
+    { BDC_V(float, 0x28f554), BDC_V(float, 0x28f558) },
+    { BDC_V(float, 0x28f55c), BDC_V(float, 0x28f560) },
+    { BDC_V(float, 0x28f564), BDC_V(float, 0x28f568) },
+    { BDC_V(float, 0x28f56c), BDC_V(float, 0x28f570) },
+    { BDC_V(float, 0x28f574), BDC_V(float, 0x28f578) },
+    { BDC_V(float, 0x28f57c), BDC_V(float, 0x28f580) },
+    { BDC_V(float, 0x28f584), BDC_V(float, 0x28f588) },
+    { BDC_V(float, 0x28f58c), BDC_V(float, 0x28f590) },
+};

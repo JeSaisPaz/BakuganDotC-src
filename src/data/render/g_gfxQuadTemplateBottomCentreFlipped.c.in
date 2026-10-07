@@ -1,0 +1,13 @@
+// bdc 0x08aa3c10 g_gfxQuadTemplateBottomCentreFlipped
+#include "bdc.h"
+
+__typeof__(GfxSpriteVertex[4]) g_gfxQuadTemplateBottomCentreFlipped = {
+    { .x = BDC_V(signed char, 0x29fc18), .y = BDC_V(signed char, 0x29fc19) },
+    {
+        .u = BDC_V(float, 0x29fc1c),
+        .x = BDC_V(signed char, 0x29fc24),
+        .y = BDC_V(signed char, 0x29fc25),
+    },
+    { .v = BDC_V(float, 0x29fc2c), .x = BDC_V(signed char, 0x29fc30) },
+    { .u = BDC_V(float, 0x29fc34), .v = BDC_V(float, 0x29fc38), .x = BDC_V(signed char, 0x29fc3c) },
+};

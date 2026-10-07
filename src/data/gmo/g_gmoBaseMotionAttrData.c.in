@@ -1,0 +1,4 @@
+// bdc 0x08aa5220 g_gmoBaseMotionAttrData
+#include "bdc.h"
+
+__typeof__(const float[4]) g_gmoBaseMotionAttrData = { 0, 0, BDC_V(float, 0x2a1228), BDC_V(float, 0x2a122c) };

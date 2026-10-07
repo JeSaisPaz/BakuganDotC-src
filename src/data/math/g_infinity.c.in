@@ -1,0 +1,4 @@
+// bdc 0x08aa4f68 g_infinity
+#include "bdc.h"
+
+__typeof__(double) g_infinity = BDC_V(double, 0x2a0f68);

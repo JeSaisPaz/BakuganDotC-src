@@ -1,0 +1,35 @@
+// bdc 0x08a98580 g_actorFaceUvTable
+#include "bdc.h"
+
+__typeof__(const float[7][5][2]) g_actorFaceUvTable = {
+    {0},
+    {
+        { BDC_V(float, 0x2945a8) }, { BDC_V(float, 0x2945b0) }, { BDC_V(float, 0x2945b8) },
+        { BDC_V(float, 0x2945c0) }, { 0, BDC_V(float, 0x2945cc) },
+    },
+    {
+        { BDC_V(float, 0x2945d0) }, { BDC_V(float, 0x2945d8) }, { BDC_V(float, 0x2945e0) },
+        { BDC_V(float, 0x2945e8) }, { 0, BDC_V(float, 0x2945f4) },
+    },
+    {
+        { BDC_V(float, 0x2945f8), BDC_V(float, 0x2945fc) },
+        { BDC_V(float, 0x294600), BDC_V(float, 0x294604) }, { BDC_V(float, 0x294608) },
+        { BDC_V(float, 0x294610) }, { 0, BDC_V(float, 0x29461c) },
+    },
+    {
+        { BDC_V(float, 0x294620) }, { BDC_V(float, 0x294628) }, { BDC_V(float, 0x294630) },
+        { BDC_V(float, 0x294638) }, { BDC_V(float, 0x294640), BDC_V(float, 0x294644) },
+    },
+    {
+        { 0, BDC_V(float, 0x29464c) }, { BDC_V(float, 0x294650), BDC_V(float, 0x294654) },
+        { BDC_V(float, 0x294658), BDC_V(float, 0x29465c) },
+        { BDC_V(float, 0x294660), BDC_V(float, 0x294664) },
+        { BDC_V(float, 0x294668), BDC_V(float, 0x29466c) },
+    },
+    {
+        { BDC_V(float, 0x294670) }, { BDC_V(float, 0x294678), BDC_V(float, 0x29467c) },
+        { BDC_V(float, 0x294680), BDC_V(float, 0x294684) },
+        { BDC_V(float, 0x294688), BDC_V(float, 0x29468c) },
+        { BDC_V(float, 0x294690), BDC_V(float, 0x294694) },
+    },
+};

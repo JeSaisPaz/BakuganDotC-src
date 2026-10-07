@@ -1,0 +1,7 @@
+// bdc 0x08aa1f2c g_coreModuleUtilityIds
+#include "bdc.h"
+
+__typeof__(s32[6]) g_coreModuleUtilityIds = {
+    BDC_V(int, 0x29df2c), BDC_V(int, 0x29df30), BDC_V(int, 0x29df34), BDC_V(int, 0x29df38),
+    BDC_V(int, 0x29df3c), BDC_V(int, 0x29df40),
+};

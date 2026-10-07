@@ -1,0 +1,4 @@
+// bdc 0x08ab9dd0 g_gfxEffectHitQuery
+#include "bdc.h"
+
+__typeof__(CollisionQuery) g_gfxEffectHitQuery = { .hitParam = BDC_V(int, 0x2b5df0), .attackSide = BDC_V(int, 0x2b5dfc) };

@@ -1,0 +1,27 @@
+// bdc 0x08a9bb9a g_upgradeInfo
+#include "bdc.h"
+
+__typeof__(UpgradeInfo[27]) g_upgradeInfo = {
+    {0}, { .cost = BDC_V(short, 0x297ba0) }, { .cost = BDC_V(short, 0x297ba4) },
+    { .cost = BDC_V(short, 0x297ba8) }, { .cost = BDC_V(short, 0x297bac) },
+    { .iconCell = BDC_V(unsigned char, 0x297bae), .cost = BDC_V(short, 0x297bb0) },
+    { .iconCell = BDC_V(unsigned char, 0x297bb2), .cost = BDC_V(short, 0x297bb4) },
+    { .iconCell = BDC_V(unsigned char, 0x297bb6), .cost = BDC_V(short, 0x297bb8) },
+    { .iconCell = BDC_V(unsigned char, 0x297bba), .cost = BDC_V(short, 0x297bbc) },
+    { .iconCell = BDC_V(unsigned char, 0x297bbe), .cost = BDC_V(short, 0x297bc0) },
+    { .iconCell = BDC_V(unsigned char, 0x297bc2), .cost = BDC_V(short, 0x297bc4) },
+    { .iconCell = BDC_V(unsigned char, 0x297bc6), .cost = BDC_V(short, 0x297bc8) },
+    { .iconCell = BDC_V(unsigned char, 0x297bca), .cost = BDC_V(short, 0x297bcc) },
+    { .iconCell = BDC_V(unsigned char, 0x297bce), .cost = BDC_V(short, 0x297bd0) },
+    { .iconCell = BDC_V(unsigned char, 0x297bd2), .cost = BDC_V(short, 0x297bd4) },
+    { .cost = BDC_V(short, 0x297bd8) }, { .cost = BDC_V(short, 0x297bdc) },
+    { .cost = BDC_V(short, 0x297be0) }, { .cost = BDC_V(short, 0x297be4) },
+    { .iconCell = BDC_V(unsigned char, 0x297be6), .cost = BDC_V(short, 0x297be8) },
+    { .iconCell = BDC_V(unsigned char, 0x297bea), .cost = BDC_V(short, 0x297bec) },
+    { .iconCell = BDC_V(unsigned char, 0x297bee), .cost = BDC_V(short, 0x297bf0) },
+    { .iconCell = BDC_V(unsigned char, 0x297bf2), .cost = BDC_V(short, 0x297bf4) },
+    { .iconCell = BDC_V(unsigned char, 0x297bf6), .cost = BDC_V(short, 0x297bf8) },
+    { .iconCell = BDC_V(unsigned char, 0x297bfa), .cost = BDC_V(short, 0x297bfc) },
+    { .iconCell = BDC_V(unsigned char, 0x297bfe), .cost = BDC_V(short, 0x297c00) },
+    { .iconCell = BDC_V(unsigned char, 0x297c02), .cost = BDC_V(short, 0x297c04) },
+};

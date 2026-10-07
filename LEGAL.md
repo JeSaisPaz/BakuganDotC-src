@@ -15,7 +15,9 @@ Activision, Now Production, Sony Interactive Entertainment, or any other rights 
 
 - No game executable, no disc image, no extracted assets (models, textures, audio, text, video).
 - No encryption keys and no circumvention tools.
-- No initialised game data: global variables are declared `extern` only.
+- No game data values: `src/data/` holds the layout of the game's global data (types, which fields point
+  where) and value placeholders; `tools/fill_data.py` fills them from your own copy of the game at build
+  time.
 
 To study or use this code you need your own legally obtained copy of the game. Nothing here is
 playable on its own.

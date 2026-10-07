@@ -1,0 +1,4 @@
+// bdc 0x08a6667e g_btlVignetteTopYs
+#include "bdc.h"
+
+__typeof__(s16[2]) g_btlVignetteTopYs = { 0, BDC_V(short, 0x262680) };

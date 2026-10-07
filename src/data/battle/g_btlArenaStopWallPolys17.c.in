@@ -1,0 +1,11 @@
+// bdc 0x08a8327c g_btlArenaStopWallPolys17
+#include "bdc.h"
+
+__typeof__(float[24]) g_btlArenaStopWallPolys17 = {
+    0, BDC_V(float, 0x27f280), BDC_V(float, 0x27f284), BDC_V(float, 0x27f288),
+    BDC_V(float, 0x27f28c), BDC_V(float, 0x27f290), BDC_V(float, 0x27f294), BDC_V(float, 0x27f298),
+    BDC_V(float, 0x27f29c), BDC_V(float, 0x27f2a0), BDC_V(float, 0x27f2a4), BDC_V(float, 0x27f2a8),
+    BDC_V(float, 0x27f2ac), BDC_V(float, 0x27f2b0), BDC_V(float, 0x27f2b4), BDC_V(float, 0x27f2b8),
+    BDC_V(float, 0x27f2bc), BDC_V(float, 0x27f2c0), BDC_V(float, 0x27f2c4), BDC_V(float, 0x27f2c8),
+    BDC_V(float, 0x27f2cc), BDC_V(float, 0x27f2d0),
+};

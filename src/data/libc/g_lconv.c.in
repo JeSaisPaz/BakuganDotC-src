@@ -1,0 +1,23 @@
+// bdc 0x08aa0190 g_lconv
+#include "bdc.h"
+
+__typeof__(const lconv) g_lconv = {
+    .decimal_point = (char *)BDC_STR(0x29c188),
+    .thousands_sep = (char *)BDC_STR(0x29c18c),
+    .grouping = (char *)BDC_STR(0x29c18c),
+    .int_curr_symbol = (char *)BDC_STR(0x29c18c),
+    .currency_symbol = (char *)BDC_STR(0x29c18c),
+    .mon_decimal_point = (char *)BDC_STR(0x29c18c),
+    .mon_thousands_sep = (char *)BDC_STR(0x29c18c),
+    .mon_grouping = (char *)BDC_STR(0x29c18c),
+    .positive_sign = (char *)BDC_STR(0x29c18c),
+    .negative_sign = (char *)BDC_STR(0x29c18c),
+    .int_frac_digits = BDC_V(char, 0x29c1b8),
+    .frac_digits = BDC_V(char, 0x29c1b9),
+    .p_cs_precedes = BDC_V(char, 0x29c1ba),
+    .p_sep_by_space = BDC_V(char, 0x29c1bb),
+    .n_cs_precedes = BDC_V(char, 0x29c1bc),
+    .n_sep_by_space = BDC_V(char, 0x29c1bd),
+    .p_sign_posn = BDC_V(char, 0x29c1be),
+    .n_sign_posn = BDC_V(char, 0x29c1bf),
+};

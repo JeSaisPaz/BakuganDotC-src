@@ -1,0 +1,7 @@
+// bdc 0x08a4ec24 g_uiLayoutTables59
+#include "bdc.h"
+
+__typeof__(s16[8]) g_uiLayoutTables59 = {
+    BDC_V(short, 0x24ac24), BDC_V(short, 0x24ac26), BDC_V(short, 0x24ac28), 0, 0,
+    BDC_V(short, 0x24ac2e), BDC_V(short, 0x24ac30),
+};

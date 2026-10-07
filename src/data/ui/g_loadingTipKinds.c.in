@@ -1,0 +1,14 @@
+// bdc 0x08a9b060 g_loadingTipKinds
+#include "bdc.h"
+
+__typeof__(s32[20][2]) g_loadingTipKinds = {
+    {0}, { BDC_V(int, 0x297068), BDC_V(int, 0x29706c) },
+    { BDC_V(int, 0x297070), BDC_V(int, 0x297074) }, { BDC_V(int, 0x297078), BDC_V(int, 0x29707c) },
+    { BDC_V(int, 0x297080), BDC_V(int, 0x297084) }, { BDC_V(int, 0x297088), BDC_V(int, 0x29708c) },
+    { BDC_V(int, 0x297090), BDC_V(int, 0x297094) }, { BDC_V(int, 0x297098), BDC_V(int, 0x29709c) },
+    { BDC_V(int, 0x2970a0), BDC_V(int, 0x2970a4) }, { BDC_V(int, 0x2970a8), BDC_V(int, 0x2970ac) },
+    { BDC_V(int, 0x2970b0), BDC_V(int, 0x2970b4) }, { BDC_V(int, 0x2970b8), BDC_V(int, 0x2970bc) },
+    { BDC_V(int, 0x2970c0), BDC_V(int, 0x2970c4) }, { BDC_V(int, 0x2970c8), BDC_V(int, 0x2970cc) },
+    { BDC_V(int, 0x2970d0), BDC_V(int, 0x2970d4) }, { BDC_V(int, 0x2970d8), BDC_V(int, 0x2970dc) },
+    { BDC_V(int, 0x2970e0), BDC_V(int, 0x2970e4) },
+};

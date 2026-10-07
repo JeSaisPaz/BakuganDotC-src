@@ -1,0 +1,21 @@
+// bdc 0x08aa4548 g_acosConsts
+#include "bdc.h"
+
+__typeof__(AcosConsts) g_acosConsts = {
+    .one = BDC_V(double, 0x2a0548),
+    .pi = BDC_V(double, 0x2a0550),
+    .pio2Hi = BDC_V(double, 0x2a0558),
+    .pio2Lo = BDC_V(double, 0x2a0560),
+    .pS0 = BDC_V(double, 0x2a0568),
+    .pS1 = BDC_V(double, 0x2a0570),
+    .pS2 = BDC_V(double, 0x2a0578),
+    .pS3 = BDC_V(double, 0x2a0580),
+    .pS4 = BDC_V(double, 0x2a0588),
+    .pS5 = BDC_V(double, 0x2a0590),
+    .qS1 = BDC_V(double, 0x2a0598),
+    .qS2 = BDC_V(double, 0x2a05a0),
+    .qS3 = BDC_V(double, 0x2a05a8),
+    .qS4 = BDC_V(double, 0x2a05b0),
+    .half = BDC_V(double, 0x2a05c0),
+    .two = BDC_V(double, 0x2a05c8),
+};

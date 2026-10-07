@@ -1,0 +1,4 @@
+// bdc 0x08aa12c4 g_soundProfileCount
+#include "bdc.h"
+
+__typeof__(s32) g_soundProfileCount = BDC_V(int, 0x29d2c4);

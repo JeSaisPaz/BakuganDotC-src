@@ -1,0 +1,4 @@
+// bdc 0x08a93214 g_uiTalkBalloonCheckCellV
+#include "bdc.h"
+
+__typeof__(const float[2]) g_uiTalkBalloonCheckCellV = { 0, BDC_V(float, 0x28f218) };

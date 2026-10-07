@@ -1,0 +1,4 @@
+// bdc 0x08aa12d8 g_sndModuleIds
+#include "bdc.h"
+
+__typeof__(u32[3]) g_sndModuleIds = { 0, BDC_V(unsigned int, 0x29d2dc), BDC_V(unsigned int, 0x29d2e0) };

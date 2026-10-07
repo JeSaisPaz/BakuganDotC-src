@@ -1,0 +1,22 @@
+// bdc 0x08ac4d18 g_jisActionTable
+#include "bdc.h"
+
+__typeof__(s32[6][9]) g_jisActionTable = {
+    { BDC_V(int, 0x2c0d18), 0, 0, 0, 0, 0, BDC_V(int, 0x2c0d30) }, { 0, BDC_V(int, 0x2c0d40) },
+    { 0, 0, 0, BDC_V(int, 0x2c0d6c), BDC_V(int, 0x2c0d70) },
+    {
+        BDC_V(int, 0x2c0d84), BDC_V(int, 0x2c0d88), BDC_V(int, 0x2c0d8c), BDC_V(int, 0x2c0d90),
+        BDC_V(int, 0x2c0d94), BDC_V(int, 0x2c0d98), BDC_V(int, 0x2c0d9c), BDC_V(int, 0x2c0da0),
+        BDC_V(int, 0x2c0da4),
+    },
+    {
+        BDC_V(int, 0x2c0da8), BDC_V(int, 0x2c0dac), BDC_V(int, 0x2c0db0), BDC_V(int, 0x2c0db4),
+        BDC_V(int, 0x2c0db8), BDC_V(int, 0x2c0dbc), BDC_V(int, 0x2c0dc0), BDC_V(int, 0x2c0dc4),
+        BDC_V(int, 0x2c0dc8),
+    },
+    {
+        BDC_V(int, 0x2c0dcc), BDC_V(int, 0x2c0dd0), BDC_V(int, 0x2c0dd4), BDC_V(int, 0x2c0dd8),
+        BDC_V(int, 0x2c0ddc), BDC_V(int, 0x2c0de0), BDC_V(int, 0x2c0de4), BDC_V(int, 0x2c0de8),
+        BDC_V(int, 0x2c0dec),
+    },
+};

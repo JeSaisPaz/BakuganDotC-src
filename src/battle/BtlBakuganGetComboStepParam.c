@@ -1,14 +1,14 @@
 // bdc 0x0886b3e0 BtlBakuganGetComboStepParam
 #include "bdc.h"
 
-/* Returns the current combo step's `BtlComboStep` parameter word: `airParam` when the air
-   variant is active, `param` otherwise; used by `BtlBakuganState07Update` (hit-window/parameter
-   record of the step). */
+/* Returns the current combo step's `BtlComboStep` hit window: `airHitWindow` when the air
+   variant is active, `hitWindow` otherwise (an entry of `g_btlComboHitWindows`); used by
+   `BtlBakuganState07Update` to arm the step's hit window. */
 
-u32 BtlBakuganGetComboStepParam(BtlBakugan *self)
+BtlHitWindowDef *BtlBakuganGetComboStepParam(BtlBakugan *self)
 {
   if (self->comboAirVariant != 0) {
-    return self->combos[self->comboIndex][self->comboStep].airParam;
+    return self->combos[self->comboIndex][self->comboStep].airHitWindow;
   }
-  return self->combos[self->comboIndex][self->comboStep].param;
+  return self->combos[self->comboIndex][self->comboStep].hitWindow;
 }

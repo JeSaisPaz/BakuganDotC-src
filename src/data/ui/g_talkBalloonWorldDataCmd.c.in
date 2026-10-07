@@ -1,0 +1,4 @@
+// bdc 0x08a9325c g_talkBalloonWorldDataCmd
+#include "bdc.h"
+
+__typeof__(u32) g_talkBalloonWorldDataCmd = BDC_V(unsigned int, 0x28f25c);

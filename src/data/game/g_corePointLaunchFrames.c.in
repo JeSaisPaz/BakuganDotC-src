@@ -1,0 +1,4 @@
+// bdc 0x08abd520 g_corePointLaunchFrames
+#include "bdc.h"
+
+__typeof__(s16) g_corePointLaunchFrames = BDC_V(short, 0x2b9520);

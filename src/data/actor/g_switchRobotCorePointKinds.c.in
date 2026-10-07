@@ -1,0 +1,4 @@
+// bdc 0x08a98dc8 g_switchRobotCorePointKinds
+#include "bdc.h"
+
+__typeof__(const s32[3]) g_switchRobotCorePointKinds = { BDC_V(int, 0x294dc8), BDC_V(int, 0x294dcc), BDC_V(int, 0x294dd0) };

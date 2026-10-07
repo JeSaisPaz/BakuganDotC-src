@@ -1,0 +1,12 @@
+// bdc 0x08ac1be0 g_staffCreditLayout
+#include "bdc.h"
+
+__typeof__(UiStaffCreditLayout) g_staffCreditLayout = {
+    .sizeAdvance = {
+        BDC_V(float, 0x2bdbf0), BDC_V(float, 0x2bdbf4), BDC_V(float, 0x2bdbf8),
+        BDC_V(float, 0x2bdbfc), BDC_V(float, 0x2bdc00), 0, BDC_V(float, 0x2bdc08),
+        BDC_V(float, 0x2bdc0c), BDC_V(float, 0x2bdc10), BDC_V(float, 0x2bdc14),
+        BDC_V(float, 0x2bdc18), BDC_V(float, 0x2bdc1c), BDC_V(float, 0x2bdc20),
+        BDC_V(float, 0x2bdc24),
+    },
+};

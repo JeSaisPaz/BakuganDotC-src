@@ -1,0 +1,11 @@
+// bdc 0x08a609d0 g_npcMotionLists03
+#include "bdc.h"
+
+__typeof__(const ActorNpcMotionEntry[6]) g_npcMotionLists03 = {
+    { .name = (const char *)BDC_STR(0x25c988) },
+    { .slot = BDC_V(int, 0x25c9d8), .name = (const char *)BDC_STR(0x25c994) },
+    { .slot = BDC_V(int, 0x25c9e0), .name = (const char *)BDC_STR(0x25c9a0) },
+    { .slot = BDC_V(int, 0x25c9e8), .name = (const char *)BDC_STR(0x25c9ac) },
+    { .slot = BDC_V(int, 0x25c9f0), .name = (const char *)BDC_STR(0x25c9bc) },
+    { .slot = BDC_V(int, 0x25c9f8), .name = (const char *)BDC_STR(0x25c3a4) },
+};

@@ -1,0 +1,27 @@
+// bdc 0x08abd698 g_actorBallMotionFiles
+#include "bdc.h"
+
+__typeof__(const char *[44]) g_actorBallMotionFiles = {
+    (const char *)BDC_STR(0x28c8c8), (const char *)BDC_STR(0x28c8dc),
+    (const char *)BDC_STR(0x28c8f0), (const char *)BDC_STR(0x28c904),
+    (const char *)BDC_STR(0x28c918), (const char *)BDC_STR(0x28c92c),
+    (const char *)BDC_STR(0x28c940), (const char *)BDC_STR(0x28c954),
+    (const char *)BDC_STR(0x28c968), (const char *)BDC_STR(0x28c97c),
+    (const char *)BDC_STR(0x28c990), (const char *)BDC_STR(0x28c9a4),
+    (const char *)BDC_STR(0x28c9b8), (const char *)BDC_STR(0x28c9cc),
+    (const char *)BDC_STR(0x28c9e0), (const char *)BDC_STR(0x28c9f4),
+    (const char *)BDC_STR(0x28ca08), (const char *)BDC_STR(0x28ca1c),
+    (const char *)BDC_STR(0x28ca30), (const char *)BDC_STR(0x28ca44),
+    (const char *)BDC_STR(0x28ca58), (const char *)BDC_STR(0x28ca74),
+    (const char *)BDC_STR(0x28ca8c), (const char *)BDC_STR(0x28caa8),
+    (const char *)BDC_STR(0x28cac4), (const char *)BDC_STR(0x28cae0),
+    (const char *)BDC_STR(0x28cafc), (const char *)BDC_STR(0x28cb1c),
+    (const char *)BDC_STR(0x28cb34), (const char *)BDC_STR(0x28cb4c),
+    (const char *)BDC_STR(0x28cb68), (const char *)BDC_STR(0x28cb84),
+    (const char *)BDC_STR(0x28cb9c), (const char *)BDC_STR(0x28cbc4),
+    (const char *)BDC_STR(0x28cbe8), (const char *)BDC_STR(0x28cc10),
+    (const char *)BDC_STR(0x28cc34), (const char *)BDC_STR(0x28cc5c),
+    (const char *)BDC_STR(0x28cc84), (const char *)BDC_STR(0x28cca8),
+    (const char *)BDC_STR(0x28cccc), (const char *)BDC_STR(0x28ccf0),
+    (const char *)BDC_STR(0x28cd14), (const char *)BDC_STR(0x28cd38),
+};

@@ -930,6 +930,13 @@ typedef struct BtlCombatState {
     void *vtable;                           /* 0x11c &DAT_08af2184 (set by the constructor wrapper and the destructor) */
 } BtlCombatState;
 
+typedef struct BtlHitWindowDef {
+    s16 attackId;   /* +0x0 attack id */
+    s16 flags;      /* +0x2 hit flags (low byte used) */
+    float size;     /* +0x4 hit volume size */
+    float reach;    /* +0x8 hit reach (scaled by 0.8 when armed) */
+} BtlHitWindowDef;
+
 typedef struct BtlComboStep {
     u8 branch;                 /* +0x00 non-zero: on the ground, an input equal to airInput also matches (BtlBakuganMatchComboStepInput returns 1) */
     u8 _unk01;                 /* +0x01 */
@@ -937,9 +944,9 @@ typedef struct BtlComboStep {
     s16 airInput;              /* +0x04 expected input in the air variant; the ground branch input */
     u16 _unk06;                /* +0x06 */
     void *motionSet;           /* +0x08 ground motion set (BtlBakuganGetComboStepMotionSet) */
-    u32 param;                 /* +0x0c ground parameter word (BtlBakuganGetComboStepParam) */
+    BtlHitWindowDef *hitWindow;    /* +0x0c ground hit window, an entry of g_btlComboHitWindows (BtlBakuganGetComboStepParam) */
     void *airMotionSet;        /* +0x10 air-variant motion set */
-    u32 airParam;              /* +0x14 air-variant parameter word */
+    BtlHitWindowDef *airHitWindow; /* +0x14 air-variant hit window, an entry of g_btlComboHitWindows */
 } BtlComboStep;
 
 typedef struct BtlBakugan {
@@ -1898,7 +1905,10 @@ typedef struct BootThreadDef {
 typedef struct MemberFnPtr {
     s16 delta;   /* +0x0 added to `this` before the call */
     s16 index;   /* +0x2 0 = non-virtual; else vtable slot index */
-    void *pfn;   /* +0x4 code pointer (index == 0) or vptr offset `delta2` (index != 0) */
+    union {
+        void *pfn;   /* +0x4 code pointer (index == 0) */
+        s32 delta2;  /* +0x4 vptr offset inside the adjusted object (index != 0) */
+    };
 } MemberFnPtr;
 
 typedef struct BtlAiCommand {
@@ -2538,6 +2548,83 @@ typedef struct BtlAttackMotionSet {
     s16 endMotion;             /* +0x0a phase 3 motion; phase 4 plays endMotion + 1 */
 } BtlAttackMotionSet;
 
+typedef struct BtlMotionEvent {
+    u8 type;              /* +0x00 0 ends the list; 1..4 hit check, 5..7 sound, 8 effect, 9 motion speed, 10/11 attack, 12 dash speed */
+    u8 startFrame;        /* +0x01 first frame of the window (scaled by the speed statuses 4/5) */
+    u8 endFrame;          /* +0x02 last frame of the window */
+    u8 hitFlags;          /* +0x03 BtlMotionHitEvent.flags */
+    union {
+        s32 soundId;      /* types 5..7: sound id (read as one word) */
+        struct {
+            s16 id;       /* +0x04 type 8: effect id (0x8e adds the unit's attribute); types 10/11: attack type */
+            s16 bone;     /* +0x06 type 8: model node index, 0x7f = attach to the anchor position */
+        } ref;
+    } param;              /* +0x04 */
+    float value;          /* +0x08 hit size (1..4), motion speed (9), dash speed (12), attack paramF2 (10/11) */
+    float reach;          /* +0x0c hit sweep length (1..4), attack start height offset (10/11, BtlAttackLaunch) */
+    float launchDist;     /* +0x10 attack start offset along the bone axis / heading (10/11, BtlAttackLaunch) */
+} BtlMotionEvent;
+
+typedef struct BtlAttackMotionSetEv10 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[10];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv10;
+
+typedef struct BtlAttackMotionSetEv11 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[11];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv11;
+
+typedef struct BtlAttackMotionSetEv13 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[13];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv13;
+
+typedef struct BtlAttackMotionSetEv2 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[2];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv2;
+
+typedef struct BtlAttackMotionSetEv24 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[24];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv24;
+
+typedef struct BtlAttackMotionSetEv3 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[3];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv3;
+
+typedef struct BtlAttackMotionSetEv4 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[4];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv4;
+
+typedef struct BtlAttackMotionSetEv5 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[5];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv5;
+
+typedef struct BtlAttackMotionSetEv6 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[6];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv6;
+
+typedef struct BtlAttackMotionSetEv7 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[7];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv7;
+
+typedef struct BtlAttackMotionSetEv8 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[8];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv8;
+
+typedef struct BtlAttackMotionSetEv9 {
+    BtlAttackMotionSet head;   /* +0x00 flags and phase motions */
+    BtlMotionEvent events[9];  /* +0x0c events, the last one has type 0 */
+} BtlAttackMotionSetEv9;
+
 typedef struct BtlAttackType3AOffset {
     float pos[4];      /* +0x00 local launch offset (w unused; the transform uses 1.0) */
     float dirDelta[4]; /* +0x10 added to dir scaled by 0.2 before renormalising (w unused) */
@@ -2794,13 +2881,6 @@ typedef struct BtlFinishTask {
     float attackerFrame;    /* +0x300 motion frame the last melee attacker is held at (ctor: its frame - 2, clamped) */
     u8 _unk304[0xc];        /* +0x304 */
 } BtlFinishTask;
-
-typedef struct BtlHitWindowDef {
-    s16 attackId;   /* +0x0 attack id */
-    s16 flags;      /* +0x2 hit flags (low byte used) */
-    float size;     /* +0x4 hit volume size */
-    float reach;    /* +0x8 hit reach (scaled by 0.8 when armed) */
-} BtlHitWindowDef;
 
 typedef struct GfxFabClipDef {
     u8 _unk00[0xa];            /* +0x0 */
@@ -3247,23 +3327,6 @@ typedef struct BtlMain {
     s32 roundResults[5];              /* +0x594 per-round result 1 win, 2 draw, 3 loss (BtlMainRecordRoundResult) */
     u8 _unk5a8[0x8];                  /* +0x5a8 */
 } BtlMain;
-
-typedef struct BtlMotionEvent {
-    u8 type;              /* +0x00 0 ends the list; 1..4 hit check, 5..7 sound, 8 effect, 9 motion speed, 10/11 attack, 12 dash speed */
-    u8 startFrame;        /* +0x01 first frame of the window (scaled by the speed statuses 4/5) */
-    u8 endFrame;          /* +0x02 last frame of the window */
-    u8 hitFlags;          /* +0x03 BtlMotionHitEvent.flags */
-    union {
-        s32 soundId;      /* types 5..7: sound id (read as one word) */
-        struct {
-            s16 id;       /* +0x04 type 8: effect id (0x8e adds the unit's attribute); types 10/11: attack type */
-            s16 bone;     /* +0x06 type 8: model node index, 0x7f = attach to the anchor position */
-        } ref;
-    } param;              /* +0x04 */
-    float value;          /* +0x08 hit size (1..4), motion speed (9), dash speed (12), attack paramF2 (10/11) */
-    float reach;          /* +0x0c hit sweep length (1..4), attack start height offset (10/11, BtlAttackLaunch) */
-    float launchDist;     /* +0x10 attack start offset along the bone axis / heading (10/11, BtlAttackLaunch) */
-} BtlMotionEvent;
 
 typedef struct BtlMotionHitEvent {
     u8 active;      /* +0x0 window armed */
@@ -4065,10 +4128,11 @@ typedef struct CxxGlobalRecord {
 } CxxGlobalRecord;
 
 typedef struct CxxTypeInfo {
-    u8 _pad00[0x8];  /* +0x00 */
+    void **vtbl;         /* +0x00 std::type_info vtable (g_cxxTypeInfoVtable) */
+    const char *typeName;  /* +0x04 class name ("std::bad_alloc") */
     void *name;      /* +0x08 unique type-name token; equal tokens mean the same type (0 = none) */
     void *dtor;      /* +0x0c destructor of the thrown type */
-    struct CxxBaseClassEntry *bases;  /* +0x10 base-class table (CxxBaseClassEntry, last has flag 2; NULL = none) */
+    const struct CxxBaseClassEntry *bases;  /* +0x10 base-class table (CxxBaseClassEntry, last has flag 2; NULL = none; read-only) */
 } CxxTypeInfo;
 
 typedef struct CxxVecBlock {
@@ -5227,6 +5291,12 @@ typedef struct GameQuestPathSet {
     u8 _pad11[3];              /* +0x11 */
 } GameQuestPathSet;
 
+typedef struct GameStageEntry {
+    s32 stage;        /* 0x00 stage number, equal to the entry index (0..40) */
+    const char *name; /* 0x04 debug label, e.g. "Japan-00"; not read by the game */
+    const char *pack; /* 0x08 map package path without variant/suffix, e.g. "data/adventure/map/ADVMAP_00" */
+} GameStageEntry;
+
 typedef struct GameStoryMovie {
     CoreTask base;             /* +0x00 vtable g_gameStoryMovieVtbl */
     s32 set;                   /* +0x10 movie set 0..3 per map, 4 = special (factory argument) */
@@ -5240,6 +5310,12 @@ typedef struct GameStoryMovie {
     s32 questMode;             /* +0x30 0 none, 1 intro, 2 clear */
     void *questData;           /* +0x34 the stage's .qsd data (GameStoryQuestData) (GameStoryMovieLoadQuestData) */
 } GameStoryMovie;
+
+typedef struct GameStoryMovieCue {
+    u16 frame; /* 0x00 movie frame (30 fps) the cue fires at; 0xffff ends the run */
+    u16 skip;  /* 0x02 0 = play `voice`; 1 = no voice (the frame where the previous line ends, and the terminator) */
+    u16 voice; /* 0x04 voice id for SndBgmPlayVoice (10000..), 0 when skip */
+} GameStoryMovieCue;
 
 typedef struct GameStoryQuestData {
     u8 introBlock;             /* +0x00 0 allows quest mode 1 (intro), GameStoryMovieSelectQuestMode */
@@ -7894,6 +7970,34 @@ typedef struct StageObjLightSet {
     StageObjLight lights[]; /* 0x10 count entries */
 } StageObjLightSet;
 
+typedef struct StageObjLightSet3 {
+    const char *modelName;    /* 0x00 substring of the GfxModel name */
+    s32 count;                /* 0x04 3 */
+    u8 _unk08[8];             /* 0x08 zero in the data; never read */
+    StageObjLight lights[3]; /* 0x10 */
+} StageObjLightSet3;
+
+typedef struct StageObjLightSet4 {
+    const char *modelName;    /* 0x00 substring of the GfxModel name */
+    s32 count;                /* 0x04 4 */
+    u8 _unk08[8];             /* 0x08 zero in the data; never read */
+    StageObjLight lights[4]; /* 0x10 */
+} StageObjLightSet4;
+
+typedef struct StageObjLightSet6 {
+    const char *modelName;    /* 0x00 substring of the GfxModel name */
+    s32 count;                /* 0x04 6 */
+    u8 _unk08[8];             /* 0x08 zero in the data; never read */
+    StageObjLight lights[6]; /* 0x10 */
+} StageObjLightSet6;
+
+typedef struct StageObjLightSet8 {
+    const char *modelName;    /* 0x00 substring of the GfxModel name */
+    s32 count;                /* 0x04 8 */
+    u8 _unk08[8];             /* 0x08 zero in the data; never read */
+    StageObjLight lights[8]; /* 0x10 */
+} StageObjLightSet8;
+
 typedef struct StopWall {
     CoreObject base;           /* +0x00 vtable 0x08af2b84 */
     void *collider;            /* +0x18 400-byte collision collider, layer 8 (StopWallBuild) */
@@ -10062,6 +10166,12 @@ typedef struct UiWindowFrameStyle {
     float fillInset[4];     /* 0x90 */
 } UiWindowFrameStyle;
 
+typedef struct UiWindowFrameStyleSet {
+    s32 count;                          /* +0x00 number of styles (6 built in) */
+    const UiWindowFrameStyle *styles;   /* +0x04 */
+    u32 _unk08[2];                      /* +0x08 zero in the built-in set */
+} UiWindowFrameStyleSet;
+
 typedef struct UiWorldMap {
     UiScreen base;            /* +0x0000 */
     u32 unk6c;                /* +0x006c cleared by UiWorldMapCtor */
@@ -10346,6 +10456,27 @@ typedef struct _reentCrt0 {
 } _reentCrt0;
 
 typedef unsigned long clock_t;
+
+typedef struct lconv {
+    char *decimal_point;      /* +0x00 */
+    char *thousands_sep;      /* +0x04 */
+    char *grouping;           /* +0x08 */
+    char *int_curr_symbol;    /* +0x0c */
+    char *currency_symbol;    /* +0x10 */
+    char *mon_decimal_point;  /* +0x14 */
+    char *mon_thousands_sep;  /* +0x18 */
+    char *mon_grouping;       /* +0x1c */
+    char *positive_sign;      /* +0x20 */
+    char *negative_sign;      /* +0x24 */
+    char int_frac_digits;     /* +0x28 */
+    char frac_digits;         /* +0x29 */
+    char p_cs_precedes;       /* +0x2a */
+    char p_sep_by_space;      /* +0x2b */
+    char n_cs_precedes;       /* +0x2c */
+    char n_sep_by_space;      /* +0x2d */
+    char p_sign_posn;         /* +0x2e */
+    char n_sign_posn;         /* +0x2f */
+} lconv;
 
 typedef void (*sceNetAdhocctlHandler)(int, int, void *);
 
@@ -11748,7 +11879,7 @@ s32 BtlBakuganGetBasicHitRowPower(BtlBakugan *self, s32 row);
 s16 *BtlBakuganGetBasicHitTable(BtlBakugan *self);
 int BtlBakuganGetComboLength(BtlBakugan *self);
 void *BtlBakuganGetComboStepMotionSet(BtlBakugan *self);
-u32 BtlBakuganGetComboStepParam(BtlBakugan *self);
+BtlHitWindowDef *BtlBakuganGetComboStepParam(BtlBakugan *self);
 void *BtlBakuganGetContactStageObj(BtlBakugan *self);
 float *BtlBakuganGetFootPosition(BtlBakugan *self, int foot, int variant);
 int BtlBakuganGetHitReaction(BtlBakugan *self, int hitId);
@@ -13917,7 +14048,7 @@ void *GameStageCreateBillboard(float size, char *texture, float *pos, u16 id);
 CoreNode *GameStageCreateCollider(char *name);
 CoreObject *GameStageCreateProp(char *gmoName, float *pos, void *list, bool flag);
 void GameStageCreateSkyBillboards(s32 stage);
-s32 *GameStageFindEntry(s32 stage);
+const GameStageEntry *GameStageFindEntry(s32 stage);
 s32 GameStageGetCount(void);
 void GameStageGetData3c(void *out, u8 area, u8 slot);
 void GameStageGetInfo(u16 *out, u8 area, u8 slot);
@@ -18069,6 +18200,26 @@ extern __typeof__(CollisionQuery) g_actorBallHitQuery;
 extern __typeof__(void *) g_actorBallList;
 extern __typeof__(const char *[44]) g_actorBallMotionFiles;
 extern __typeof__(ActorBallMotionEntry *[20]) g_actorBallMotionLists;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists00;
+extern __typeof__(const ActorBallMotionEntry[4]) g_actorBallMotionLists01;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists02;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists03;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists04;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists05;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists06;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists07;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists08;
+extern __typeof__(const ActorBallMotionEntry[4]) g_actorBallMotionLists09;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists10;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists11;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists12;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists13;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists14;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists15;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists16;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists17;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists18;
+extern __typeof__(const ActorBallMotionEntry[5]) g_actorBallMotionLists19;
 extern __typeof__(s32) g_actorBallNextId;
 extern __typeof__(s32) g_actorBallSerial;
 extern __typeof__(MemberFnPtr[2]) g_actorBallStateFns;
@@ -18092,12 +18243,59 @@ extern __typeof__(u32) g_actorNpcCloakVtbl;
 extern __typeof__(VtblEntry[50]) g_actorNpcGuardVtbl;
 extern __typeof__(float) g_actorNpcHeightApartMin;
 extern __typeof__(VtblEntry[50]) g_actorNpcRobotVtbl;
-extern __typeof__(MemberFnPtr[16]) g_actorNpcStateFns;
+extern __typeof__(MemberFnPtr[12]) g_actorNpcStateFns;
 extern __typeof__(u32) g_actorNpcSwitchRobotVtbl;
 extern __typeof__(u32[6]) g_actorNpcViewConeEffectIds;
 extern __typeof__(u32) g_actorNpcVtbl;
 extern __typeof__(s32) g_actorNumbering;
 extern __typeof__(const char **[53]) g_actorPlacedMotionNames;
+extern __typeof__(char *[12]) g_actorPlacedMotionNames00;
+extern __typeof__(char *[11]) g_actorPlacedMotionNames01;
+extern __typeof__(char *[12]) g_actorPlacedMotionNames02;
+extern __typeof__(char *[12]) g_actorPlacedMotionNames03;
+extern __typeof__(char *[12]) g_actorPlacedMotionNames04;
+extern __typeof__(char *[11]) g_actorPlacedMotionNames05;
+extern __typeof__(char *[11]) g_actorPlacedMotionNames06;
+extern __typeof__(char *[12]) g_actorPlacedMotionNames07;
+extern __typeof__(char *[11]) g_actorPlacedMotionNames08;
+extern __typeof__(char *[11]) g_actorPlacedMotionNames09;
+extern __typeof__(char *[11]) g_actorPlacedMotionNames10;
+extern __typeof__(char *[11]) g_actorPlacedMotionNames11;
+extern __typeof__(char *[36]) g_actorPlacedMotionNames12;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames13;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames14;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames15;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames16;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames17;
+extern __typeof__(char *[5]) g_actorPlacedMotionNames18;
+extern __typeof__(char *[4]) g_actorPlacedMotionNames19;
+extern __typeof__(char *[4]) g_actorPlacedMotionNames20;
+extern __typeof__(char *[4]) g_actorPlacedMotionNames21;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames22;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames23;
+extern __typeof__(char *[4]) g_actorPlacedMotionNames24;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames25;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames26;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames27;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames28;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames29;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames30;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames31;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames32;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames33;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames34;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames35;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames36;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames37;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames38;
+extern __typeof__(char *[4]) g_actorPlacedMotionNames39;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames40;
+extern __typeof__(char *[3]) g_actorPlacedMotionNames41;
+extern __typeof__(char *[6]) g_actorPlacedMotionNames42;
+extern __typeof__(char *[6]) g_actorPlacedMotionNames43;
+extern __typeof__(char *[4]) g_actorPlacedMotionNames46;
+extern __typeof__(char *[2]) g_actorPlacedMotionNames49;
+extern __typeof__(char *[2]) g_actorPlacedMotionNames50;
 extern __typeof__(u32) g_actorPlayerVtbl;
 extern __typeof__(s32) g_actorSerial;
 extern __typeof__(float) g_actorSlowStepMax;
@@ -18134,7 +18332,7 @@ extern __typeof__(MemberFnPtr[12]) g_actorStageObjStateFns;
 extern __typeof__(VtblEntry[20]) g_actorStageObjVtbl;
 extern __typeof__(VtblEntry[1]) g_actorStageObjWindGeneratorStateTable;
 extern __typeof__(VtblEntry[20]) g_actorStageObjWindGeneratorVtbl;
-extern __typeof__(MemberFnPtr[]) g_actorStateTable;
+extern __typeof__(MemberFnPtr[11]) g_actorStateTable;
 extern __typeof__(u32) g_actorTexMatrixCmd;
 extern __typeof__(u32) g_actorVtbl;
 extern __typeof__(int[18]) g_attrLandmarkParamRowTable;
@@ -18153,12 +18351,66 @@ extern __typeof__(const s32[6]) g_eggCrystalAttrElementTable;
 extern __typeof__(float) g_npcCatchBlendMax;
 extern __typeof__(float) g_npcCatchBlendMin;
 extern __typeof__(const char *[13]) g_npcMotionFiles;
-extern __typeof__(const ActorNpcMotionEntry *[]) g_npcMotionLists;
+extern __typeof__(const ActorNpcMotionEntry *[53]) g_npcMotionLists;
+extern __typeof__(const ActorNpcMotionEntry[19]) g_npcMotionLists00;
+extern __typeof__(const ActorNpcMotionEntry[6]) g_npcMotionLists01;
+extern __typeof__(const ActorNpcMotionEntry[10]) g_npcMotionLists02;
+extern __typeof__(const ActorNpcMotionEntry[6]) g_npcMotionLists03;
+extern __typeof__(const ActorNpcMotionEntry[10]) g_npcMotionLists04;
+extern __typeof__(const ActorNpcMotionEntry[10]) g_npcMotionLists05;
+extern __typeof__(const ActorNpcMotionEntry[10]) g_npcMotionLists06;
+extern __typeof__(const ActorNpcMotionEntry[6]) g_npcMotionLists07;
+extern __typeof__(const ActorNpcMotionEntry[6]) g_npcMotionLists08;
+extern __typeof__(const ActorNpcMotionEntry[6]) g_npcMotionLists09;
+extern __typeof__(const ActorNpcMotionEntry[17]) g_npcMotionLists10;
+extern __typeof__(const ActorNpcMotionEntry[6]) g_npcMotionLists11;
+extern __typeof__(const ActorNpcMotionEntry[31]) g_npcMotionLists12;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists13;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists14;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists15;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists16;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists17;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists18;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists19;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists20;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists21;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists22;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists23;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists24;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists25;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists26;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists27;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists28;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists29;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists30;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists31;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists32;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists33;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists34;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists35;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists36;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists37;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists38;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists39;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists40;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists41;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists42;
+extern __typeof__(const ActorNpcMotionEntry[13]) g_npcMotionLists43;
+extern __typeof__(const ActorNpcMotionEntry[10]) g_npcMotionLists46;
+extern __typeof__(const ActorNpcMotionEntry[4]) g_npcMotionLists49;
+extern __typeof__(const ActorNpcMotionEntry[3]) g_npcMotionLists50;
+extern __typeof__(const ActorNpcMotionEntry[9]) g_npcMotionLists51;
+extern __typeof__(const ActorNpcMotionEntry[6]) g_npcMotionLists52;
 extern __typeof__(s32[2][4]) g_npcWalkFootsteps;
-extern __typeof__(MemberFnPtr[16]) g_playerStateFns;
+extern __typeof__(MemberFnPtr[14]) g_playerStateFns;
 extern __typeof__(u8[7]) g_stageObjAuraHeld;
 extern __typeof__(u8[12]) g_stageObjKindSoundParams;
 extern __typeof__(ActorStageObjLandmarkLevel[11]) g_stageObjLandmarkHpTable;
+extern __typeof__(const StageObjLightSet6) g_stageObjLightSetBuilding02;
+extern __typeof__(const StageObjLightSet4) g_stageObjLightSetChimney02;
+extern __typeof__(const StageObjLightSet8) g_stageObjLightSetLandmark01;
+extern __typeof__(const StageObjLightSet4) g_stageObjLightSetPipeUnit01;
+extern __typeof__(const StageObjLightSet3) g_stageObjLightSetPlantTower01;
 extern __typeof__(const StageObjLightSet *[5]) g_stageObjLightSets;
 extern __typeof__(const char *[4]) g_stageObjLightTexNames;
 extern __typeof__(s32) g_stageObjLiveCount;
@@ -18200,10 +18452,9 @@ extern __typeof__(u32) g_sndSsVoicePendingMask;
 extern __typeof__(s32) g_sndSsVoiceState;
 extern __typeof__(u32) g_sndSsVoiceSustainedCount;
 extern __typeof__(SndSsVoice *[32]) g_sndSsVoiceSustainedList;
-extern __typeof__(u32[]) g_sndSsVoiceTable;
 extern __typeof__(u8[32]) g_sndSsVoiceVelocity;
 extern __typeof__(s32[32][4]) g_sndSsVoiceVolumes;
-extern __typeof__(SndSsVoice[]) g_sndSsVoices;
+extern __typeof__(SndSsVoice[32]) g_sndSsVoices;
 extern __typeof__(int[4]) g_sndWaveChannelIds;
 extern __typeof__(s16[56]) g_sndWaveDecodeBuf;
 extern __typeof__(s16 *) g_sndWaveDecodePtr;
@@ -18241,7 +18492,7 @@ extern __typeof__(u32[1]) g_soundStreamSpecialIds;
 extern __typeof__(char *[120]) g_soundVoicePacNames;
 extern __typeof__(char[128]) g_voiceFilePathBuf;
 extern __typeof__(char[128]) g_voicePacPathBuf;
-extern __typeof__(s32[]) g_btlAdvisorFaceByStage;
+extern __typeof__(s32[41]) g_btlAdvisorFaceByStage;
 extern __typeof__(float[4][2]) g_btlAffinityFactors;
 extern __typeof__(MemberFnPtr) g_btlAiAttackRuleCond;
 extern __typeof__(BtlAiComScript *) g_btlAiComScriptCache;
@@ -18328,9 +18579,25 @@ extern __typeof__(s32[16][3]) g_btlArenaResultDigitSprites;
 extern __typeof__(s32[16]) g_btlArenaResultFirstItemSprites;
 extern __typeof__(s32[4][23]) g_btlArenaResultRowSprites;
 extern __typeof__(const float *[36]) g_btlArenaStopWallPolys;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys00;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys01;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys02;
+extern __typeof__(float[22]) g_btlArenaStopWallPolys04;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys05;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys06;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys08;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys09;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys10;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys12;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys13;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys14;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys16;
+extern __typeof__(float[24]) g_btlArenaStopWallPolys17;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys18;
+extern __typeof__(float[20]) g_btlArenaStopWallPolys24;
 extern __typeof__(BtlArenaEntry[41]) g_btlArenaTable;
 extern __typeof__(BtlHitWindowDef[4]) g_btlArtHitWindows;
-extern __typeof__(BtlArtRecord[]) g_btlArtTable;
+extern __typeof__(BtlArtRecord[80]) g_btlArtTable;
 extern __typeof__(s32) g_btlAttack80SoundFrame;
 extern __typeof__(s8[15][15]) g_btlAttackClashMatrix;
 extern __typeof__(void *) g_btlAttackEffectMgr;
@@ -18373,7 +18640,7 @@ extern __typeof__(u32) g_btlBakuganHitQueryInited;
 extern __typeof__(s32[32][24]) g_btlBakuganKindSoundIds;
 extern __typeof__(s32[2]) g_btlBakuganLandFlipMotionIds;
 extern __typeof__(void *) g_btlBakuganList;
-extern __typeof__(char[]) g_btlBakuganLoadPath;
+extern __typeof__(char[76]) g_btlBakuganLoadPath;
 extern __typeof__(s32) g_btlBakuganLoadStep;
 extern __typeof__(s32[32][2]) g_btlBakuganSoundGroupPairs;
 extern __typeof__(CollisionSphereQuery) g_btlBakuganSphereQuery;
@@ -18389,6 +18656,28 @@ extern __typeof__(float[33][7]) g_btlBallEntryCamParams;
 extern __typeof__(s32[33]) g_btlBallEntryOpenWait;
 extern __typeof__(s32) g_btlBallEntrySoundFrame;
 extern __typeof__(s16 *[33]) g_btlBasicHitTables;
+extern __typeof__(s16[175]) g_btlBasicHitTables01;
+extern __typeof__(s16[175]) g_btlBasicHitTables02;
+extern __typeof__(s16[175]) g_btlBasicHitTables03;
+extern __typeof__(s16[175]) g_btlBasicHitTables04;
+extern __typeof__(s16[175]) g_btlBasicHitTables05;
+extern __typeof__(s16[175]) g_btlBasicHitTables06;
+extern __typeof__(s16[175]) g_btlBasicHitTables07;
+extern __typeof__(s16[175]) g_btlBasicHitTables08;
+extern __typeof__(s16[175]) g_btlBasicHitTables09;
+extern __typeof__(s16[175]) g_btlBasicHitTables10;
+extern __typeof__(s16[175]) g_btlBasicHitTables11;
+extern __typeof__(s16[175]) g_btlBasicHitTables12;
+extern __typeof__(s16[175]) g_btlBasicHitTables13;
+extern __typeof__(s16[175]) g_btlBasicHitTables14;
+extern __typeof__(s16[175]) g_btlBasicHitTables15;
+extern __typeof__(s16[175]) g_btlBasicHitTables16;
+extern __typeof__(s16[175]) g_btlBasicHitTables17;
+extern __typeof__(s16[175]) g_btlBasicHitTables18;
+extern __typeof__(s16[175]) g_btlBasicHitTables19;
+extern __typeof__(s16[175]) g_btlBasicHitTables20;
+extern __typeof__(s16[175]) g_btlBasicHitTables25;
+extern __typeof__(s16[243]) g_btlBasicHitTables26;
 extern __typeof__(s32) g_btlBattleOutcome;
 extern __typeof__(u8) g_btlBattleOver;
 extern __typeof__(ScePspFVector4) g_btlBeamDownAxis;
@@ -18409,6 +18698,7 @@ extern __typeof__(CollisionSphere) g_btlClashSelfSphere;
 extern __typeof__(int) g_btlClashSelfSphereInit;
 extern __typeof__(s32[41]) g_btlClearBonusTable;
 extern __typeof__(VtblEntry[2]) g_btlCombatStateVtbl;
+extern __typeof__(BtlHitWindowDef[15]) g_btlComboHitWindows;
 extern __typeof__(const u8[8]) g_btlComboInputsEmpty;
 extern __typeof__(u8) g_btlControlLockAll;
 extern __typeof__(u8) g_btlControlLockApplied;
@@ -18425,6 +18715,8 @@ extern __typeof__(MemberFnPtr[2]) g_btlDemoDrawTable;
 extern __typeof__(s32[21]) g_btlDemoEffectIdTable;
 extern __typeof__(u8) g_btlDemoFinished;
 extern __typeof__(s32 *[3]) g_btlDemoMotionIdTables;
+extern __typeof__(s32[3]) g_btlDemoMotionIdTables01;
+extern __typeof__(s32[3]) g_btlDemoMotionIdTables02;
 extern __typeof__(u8) g_btlDemoReady;
 extern __typeof__(float[4]) g_btlDemoSavedEye;
 extern __typeof__(VtblEntry[3]) g_btlDemoScbCueEventBVtbl;
@@ -18500,21 +18792,946 @@ extern __typeof__(s32) g_btlItemSpawnerCount;
 extern __typeof__(CoreObjectList *) g_btlItemSpawnerList;
 extern __typeof__(VtblEntry[2]) g_btlItemSpawnerVtbl;
 extern __typeof__(VtblEntry[2]) g_btlItemVtbl;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind01MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet40;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind01MotionSet41;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind01MotionSet42;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind01MotionSet43;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind01MotionSet44;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind01MotionSet45;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind02MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind02MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv7) g_btlKind02MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv7) g_btlKind02MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv7) g_btlKind02MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv7) g_btlKind02MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv7) g_btlKind02MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv7) g_btlKind02MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind02MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv7) g_btlKind02MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind02MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind02MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv8) g_btlKind02MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind03MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet40;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind03MotionSet41;
+extern __typeof__(BtlAttackMotionSetEv7) g_btlKind03MotionSet42;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind03MotionSet43;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind03MotionSet44;
+extern __typeof__(BtlAttackMotionSetEv8) g_btlKind03MotionSet45;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet40;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind04MotionSet41;
+extern __typeof__(BtlAttackMotionSetEv24) g_btlKind04MotionSet42;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet43;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind04MotionSet44;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind04MotionSet45;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind05MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind05MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind05MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind05MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind05MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind05MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind05MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind05MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind05MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind05MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind05MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind05MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind05MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind06MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind06MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind06MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind06MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind06MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind06MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind06MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind06MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet40;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind06MotionSet41;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind06MotionSet42;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind06MotionSet43;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind06MotionSet44;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind06MotionSet45;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind07MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind07MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind07MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind07MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind07MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind07MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind07MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind07MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind07MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind07MotionSet40;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet41;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet42;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet43;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet44;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet45;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind07MotionSet46;
+extern __typeof__(BtlAttackMotionSetEv7) g_btlKind07MotionSet47;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind07MotionSet48;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind07MotionSet49;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind07MotionSet50;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind08MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind08MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind08MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind08MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind08MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind08MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind08MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind09MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind09MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind09MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind09MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind09MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind09MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind10MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind10MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind10MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind10MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind10MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind10MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind10MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind10MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind10MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind10MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet40;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet41;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet42;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet43;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind10MotionSet44;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind10MotionSet45;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind10MotionSet46;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind10MotionSet47;
+extern __typeof__(BtlAttackMotionSetEv7) g_btlKind10MotionSet48;
 extern __typeof__(float[4]) g_btlKind11MotionOfs;
 extern __typeof__(s32) g_btlKind11MotionOfsInit;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind11MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind11MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind11MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind11MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind11MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind11MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind11MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind11MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv13) g_btlKind11MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind11MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind11MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind11MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind12MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind12MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind12MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind12MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind12MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind12MotionSet30;
 extern __typeof__(float[4]) g_btlKind13MotionOfs;
 extern __typeof__(s32) g_btlKind13MotionOfsInit;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind13MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind13MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind13MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind13MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv8) g_btlKind13MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind13MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind13MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind13MotionSet22;
 extern __typeof__(float[4]) g_btlKind14MotionOfs;
 extern __typeof__(s32) g_btlKind14MotionOfsInit;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind14MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind14MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind14MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind14MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind14MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind14MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind14MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind14MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind14MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind14MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind14MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind14MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet40;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind14MotionSet41;
+extern __typeof__(BtlAttackMotionSetEv9) g_btlKind14MotionSet42;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind14MotionSet43;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind14MotionSet44;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind14MotionSet45;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind15MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind15MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind15MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind15MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind15MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind15MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet40;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind15MotionSet41;
+extern __typeof__(BtlAttackMotionSetEv8) g_btlKind15MotionSet42;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind15MotionSet43;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind15MotionSet44;
+extern __typeof__(BtlAttackMotionSetEv7) g_btlKind15MotionSet45;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet40;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind16MotionSet41;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind16MotionSet42;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind16MotionSet43;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind16MotionSet44;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind16MotionSet45;
 extern __typeof__(float[4]) g_btlKind17MotionOfs;
 extern __typeof__(s32) g_btlKind17MotionOfsInit;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind17MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv10) g_btlKind17MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind17MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind17MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind17MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind18MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind18MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind18MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind18MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind18MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind18MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind18MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind18MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet40;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind18MotionSet41;
+extern __typeof__(BtlAttackMotionSetEv11) g_btlKind18MotionSet42;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind18MotionSet43;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind18MotionSet44;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind18MotionSet45;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind19MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind19MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind19MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind19MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind19MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind19MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind19MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet31;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet32;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet33;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet34;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet35;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet36;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet37;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind19MotionSet38;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet39;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind19MotionSet40;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet41;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet42;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet43;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet44;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet45;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind19MotionSet46;
+extern __typeof__(BtlAttackMotionSetEv9) g_btlKind19MotionSet47;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind19MotionSet48;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind19MotionSet49;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind19MotionSet50;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet10;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet11;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet12;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet13;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet14;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet15;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet16;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet17;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet18;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet19;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet20;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet21;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet22;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet23;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet24;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet25;
+extern __typeof__(BtlAttackMotionSetEv2) g_btlKind20MotionSet26;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind20MotionSet27;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet28;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet29;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind20MotionSet30;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind21MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind21MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind21MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind21MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind21MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv10) g_btlKind21MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind21MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind21MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind26MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv5) g_btlKind27MotionSet00;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind27MotionSet01;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind27MotionSet02;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind27MotionSet03;
+extern __typeof__(BtlAttackMotionSetEv3) g_btlKind27MotionSet04;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind27MotionSet05;
+extern __typeof__(BtlAttackMotionSetEv6) g_btlKind27MotionSet06;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind27MotionSet07;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind27MotionSet08;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind27MotionSet09;
+extern __typeof__(BtlAttackMotionSetEv4) g_btlKind27MotionSet10;
 extern __typeof__(float[4]) g_btlKind6MotionOfs;
 extern __typeof__(s32) g_btlKind6MotionOfsInit;
 extern __typeof__(float[4]) g_btlKind9MotionOfs;
 extern __typeof__(s32) g_btlKind9MotionOfsInit;
 extern __typeof__(BtlArtSeqStep *[21]) g_btlKindArtSequences;
+extern __typeof__(BtlArtSeqStep[12]) g_btlKindArtSequences01;
+extern __typeof__(BtlArtSeqStep[13]) g_btlKindArtSequences02;
+extern __typeof__(BtlArtSeqStep[14]) g_btlKindArtSequences03;
+extern __typeof__(BtlArtSeqStep[14]) g_btlKindArtSequences04;
+extern __typeof__(BtlArtSeqStep[11]) g_btlKindArtSequences05;
+extern __typeof__(BtlArtSeqStep[13]) g_btlKindArtSequences06;
+extern __typeof__(BtlArtSeqStep[13]) g_btlKindArtSequences07;
+extern __typeof__(BtlArtSeqStep[10]) g_btlKindArtSequences08;
+extern __typeof__(BtlArtSeqStep[13]) g_btlKindArtSequences09;
+extern __typeof__(BtlArtSeqStep[9]) g_btlKindArtSequences10;
+extern __typeof__(BtlArtSeqStep[13]) g_btlKindArtSequences11;
+extern __typeof__(BtlArtSeqStep[9]) g_btlKindArtSequences12;
+extern __typeof__(BtlArtSeqStep[12]) g_btlKindArtSequences13;
+extern __typeof__(BtlArtSeqStep[10]) g_btlKindArtSequences14;
+extern __typeof__(BtlArtSeqStep[9]) g_btlKindArtSequences15;
+extern __typeof__(BtlArtSeqStep[10]) g_btlKindArtSequences16;
+extern __typeof__(BtlArtSeqStep[13]) g_btlKindArtSequences17;
+extern __typeof__(BtlArtSeqStep[13]) g_btlKindArtSequences18;
+extern __typeof__(BtlArtSeqStep[11]) g_btlKindArtSequences19;
+extern __typeof__(BtlArtSeqStep[10]) g_btlKindArtSequences20;
 extern __typeof__(void **[35]) g_btlKindAttackMotions;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions01;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions02;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions03;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions04;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions05;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions06;
+extern __typeof__(const BtlAttackMotionSet *[64]) g_btlKindAttackMotions07;
+extern __typeof__(const BtlAttackMotionSet *[64]) g_btlKindAttackMotions08;
+extern __typeof__(const BtlAttackMotionSet *[64]) g_btlKindAttackMotions09;
+extern __typeof__(const BtlAttackMotionSet *[64]) g_btlKindAttackMotions10;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions11;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions12;
+extern __typeof__(const BtlAttackMotionSet *[64]) g_btlKindAttackMotions13;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions14;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions15;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions16;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions17;
+extern __typeof__(const BtlAttackMotionSet *[74]) g_btlKindAttackMotions18;
+extern __typeof__(const BtlAttackMotionSet *[64]) g_btlKindAttackMotions19;
+extern __typeof__(const BtlAttackMotionSet *[64]) g_btlKindAttackMotions20;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions21;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions22;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions23;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions24;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions25;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions26;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions27;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions28;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions29;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions30;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions31;
+extern __typeof__(const BtlAttackMotionSet *[60]) g_btlKindAttackMotions32;
+extern __typeof__(BtlComboStep[24]) g_btlKindComboSteps01;
+extern __typeof__(BtlComboStep[18]) g_btlKindComboSteps02;
+extern __typeof__(BtlComboStep[24]) g_btlKindComboSteps03;
+extern __typeof__(BtlComboStep[24]) g_btlKindComboSteps04;
+extern __typeof__(BtlComboStep[18]) g_btlKindComboSteps05;
+extern __typeof__(BtlComboStep[24]) g_btlKindComboSteps06;
+extern __typeof__(BtlComboStep[26]) g_btlKindComboSteps07;
+extern __typeof__(BtlComboStep[18]) g_btlKindComboSteps08;
+extern __typeof__(BtlComboStep[18]) g_btlKindComboSteps09;
+extern __typeof__(BtlComboStep[18]) g_btlKindComboSteps10;
+extern __typeof__(BtlComboStep[18]) g_btlKindComboSteps11;
+extern __typeof__(BtlComboStep[18]) g_btlKindComboSteps12;
+extern __typeof__(BtlComboStep[28]) g_btlKindComboSteps13;
+extern __typeof__(BtlComboStep[24]) g_btlKindComboSteps14;
+extern __typeof__(BtlComboStep[24]) g_btlKindComboSteps15;
+extern __typeof__(BtlComboStep[24]) g_btlKindComboSteps16;
+extern __typeof__(BtlComboStep[18]) g_btlKindComboSteps17;
+extern __typeof__(BtlComboStep[24]) g_btlKindComboSteps18;
+extern __typeof__(BtlComboStep[28]) g_btlKindComboSteps19;
+extern __typeof__(BtlComboStep[18]) g_btlKindComboSteps20;
+extern __typeof__(BtlComboStep[2]) g_btlKindComboSteps25;
+extern __typeof__(BtlComboStep[2]) g_btlKindComboSteps26;
 extern __typeof__(BtlComboStep **[42]) g_btlKindComboTables;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables01;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables02;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables03;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables04;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables05;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables06;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables07;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables08;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables09;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables10;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables11;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables12;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables13;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables14;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables15;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables16;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables17;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables18;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables19;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables20;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables21;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables25;
+extern __typeof__(BtlComboStep *[8]) g_btlKindComboTables26;
 extern __typeof__(u32) g_btlKindSetupMask;
 extern __typeof__(s8 *[35]) g_btlKindStatTables;
 extern __typeof__(float[16]) g_btlLFootAttachMatrix;
@@ -18536,7 +19753,7 @@ extern __typeof__(s32) g_btlMapFlashTimer;
 extern __typeof__(char *[3]) g_btlMapModelNames;
 extern __typeof__(u8) g_btlMapVisible;
 extern __typeof__(char *) g_btlModelArchiveSuffix;
-extern __typeof__(char *[]) g_btlModelNames;
+extern __typeof__(char *[120]) g_btlModelNames;
 extern __typeof__(char *) g_btlMotionArchiveSuffix;
 extern __typeof__(float[4]) g_btlMotionOfsY30;
 extern __typeof__(s32) g_btlMotionOfsY30Init;
@@ -18561,6 +19778,8 @@ extern __typeof__(s32[22]) g_btlScriptMsgVoiceIds;
 extern __typeof__(GfxSprite *[2]) g_btlSkySprites;
 extern __typeof__(VtblEntry[7]) g_btlSlowMotionTaskVtbl;
 extern __typeof__(const s32[56]) g_btlSoundGroupIds;
+extern __typeof__(BtlStagePointSet[41]) g_btlSpawnPointSets;
+extern __typeof__(ScePspFVector4[40]) g_btlSpawnPoints;
 extern __typeof__(s32) g_btlSpherePkgLoadStep;
 extern __typeof__(float[40][4]) g_btlStageAmbientColors;
 extern __typeof__(char *[46]) g_btlStageCamFileNames;
@@ -18570,7 +19789,9 @@ extern __typeof__(const s32[40]) g_btlStageClearBitTable;
 extern __typeof__(float[4]) g_btlStageClearColor;
 extern __typeof__(BtlItemOdds[39][5]) g_btlStageItemOdds;
 extern __typeof__(BtlStageLight[36]) g_btlStageLights;
-extern __typeof__(BtlStagePlacementList *[2]) g_btlStagePlacementTables;
+extern __typeof__(BtlStagePlacementList *[5]) g_btlStagePlacementTables;
+extern __typeof__(BtlStagePlacementList[41]) g_btlStagePlacementTables00;
+extern __typeof__(BtlStagePlacement[2296]) g_btlStagePlacements;
 extern __typeof__(BtlStagePointSet *[2]) g_btlStagePointTables;
 extern __typeof__(BtlStageSkyEntry[40]) g_btlStageSkyTable;
 extern __typeof__(float *[4]) g_btlStageUvAnimParams;
@@ -18579,7 +19800,7 @@ extern __typeof__(CoreList *) g_btlStatsList;
 extern __typeof__(MemPool *) g_btlStatsPool;
 extern __typeof__(VtblEntry[2]) g_btlStatsVtbl;
 extern __typeof__(s32[40][3]) g_btlStoryUnitKinds;
-extern __typeof__(s32[]) g_btlStoryWinStageValues;
+extern __typeof__(s32[41]) g_btlStoryWinStageValues;
 extern __typeof__(float[4]) g_btlSwordBlurNemusBase;
 extern __typeof__(s32) g_btlSwordBlurNemusBaseInit;
 extern __typeof__(float[4]) g_btlSwordBlurNemusEnBase;
@@ -18606,7 +19827,7 @@ extern __typeof__(char *) g_btlTrapBakuganDirPath;
 extern __typeof__(u32[2]) g_btlTutorialActionMasks;
 extern __typeof__(VtblEntry[7]) g_btlTutorialTaskVtbl;
 extern __typeof__(u32[12]) g_btlUnitAltActionMasks;
-extern __typeof__(MemberFnPtr[23]) g_btlUnitAltStateTable;
+extern __typeof__(MemberFnPtr[22]) g_btlUnitAltStateTable;
 extern __typeof__(VtblEntry[49]) g_btlUnitAltVtbl;
 extern __typeof__(GfxEffectMgr *) g_btlUnitEffectMgr;
 extern __typeof__(char *[48]) g_btlUnitKindNames;
@@ -18621,6 +19842,7 @@ extern __typeof__(ScePspFVector4) g_btlVulcanCalfOffset;
 extern __typeof__(s32) g_btlVulcanCalfOffsetInited;
 extern __typeof__(char *[33]) g_charMotionFiles;
 extern __typeof__(char **[33]) g_charMotionNameLists;
+extern __typeof__(char *[32][297]) g_charMotionNames;
 extern __typeof__(GfxEffectMgr *) g_worldEffectMgr;
 extern __typeof__(GfxSpriteLayer *) g_worldSpriteLayer;
 extern __typeof__(u8) g_bootExitRequested;
@@ -18750,11 +19972,15 @@ extern __typeof__(s32[8]) g_taskIdWhitelist;
 extern __typeof__(CoreList *) g_taskList;
 extern __typeof__(void *) g_taskManager;
 extern __typeof__(u32[8]) g_vfpuRandState;
+extern __typeof__(const CxxBaseClassEntry[1]) g_cxxBadAllocBases;
 extern __typeof__(void *) g_cxxBadAllocDtorCleanup;
+extern __typeof__(u8) g_cxxBadAllocTypeId;
 extern __typeof__(CxxTypeInfo) g_cxxBadAllocTypeInfo;
 extern __typeof__(void *[4]) g_cxxBadAllocVtable;
+extern __typeof__(const CxxBaseClassEntry[1]) g_cxxBadExceptionBases;
 extern __typeof__(void *) g_cxxBadExceptionCtorCleanup;
 extern __typeof__(void *) g_cxxBadExceptionDtorCleanup;
+extern __typeof__(u8) g_cxxBadExceptionTypeId;
 extern __typeof__(CxxTypeInfo) g_cxxBadExceptionTypeInfo;
 extern __typeof__(void *[4]) g_cxxBadExceptionVtable;
 extern __typeof__(int) g_cxxCallUnexpectedHandlers;
@@ -18774,8 +20000,12 @@ extern __typeof__(s32) g_cxxInTerminate;
 extern __typeof__(void *) g_cxxNewHandler;
 extern __typeof__(void *) g_cxxSpecBadAllocA;
 extern __typeof__(void *) g_cxxSpecBadAllocB;
+extern __typeof__(u8) g_cxxStdExceptionTypeId;
+extern __typeof__(CxxTypeInfo) g_cxxStdExceptionTypeInfo;
 extern __typeof__(void *[4]) g_cxxStdExceptionVtable;
 extern __typeof__(void *) g_cxxTerminateHandler;
+extern __typeof__(u8) g_cxxTypeInfoTypeId;
+extern __typeof__(CxxTypeInfo) g_cxxTypeInfoTypeInfo;
 extern __typeof__(void *[4]) g_cxxTypeInfoVtable;
 extern __typeof__(void *) g_cxxUnexpectedHandler;
 extern __typeof__(s32) g_cxxVecCookieSize;
@@ -18816,7 +20046,7 @@ extern __typeof__(u8[8]) g_gameEvent470TransitionDefaults;
 extern __typeof__(u8[16]) g_gameEvent470TurnDefaults;
 extern __typeof__(VtblEntry[15]) g_gameEvent470Vtbl;
 extern __typeof__(VtblEntry[7]) g_gameEventActionListVtbl;
-extern __typeof__(VtblEntry[]) g_gameEventActionVtbl;
+extern __typeof__(VtblEntry[7]) g_gameEventActionVtbl;
 extern __typeof__(VtblEntry[7]) g_gameEventActorTweenVtbl;
 extern __typeof__(VtblEntry[2]) g_gameEventCamTweenVtbl;
 extern __typeof__(u16 [7]) g_gameEventDefaultFlags;
@@ -18895,46 +20125,46 @@ extern __typeof__(const u32[4]) g_gameFieldVignetteColours;
 extern __typeof__(const s16[4]) g_gameFieldVignetteYs;
 extern __typeof__(s64) g_gameFixedHalf;
 extern __typeof__(s64) g_gameFixedScale;
-extern __typeof__(const VtblEntry[]) g_gameGimmickBarrierVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickBarrierVtbl2;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickBarrierVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickBarrierVtbl2;
 extern __typeof__(const char *) g_gameGimmickCameraColName;
-extern __typeof__(MemberFnPtr[]) g_gameGimmickCameraStateFns;
-extern __typeof__(const VtblEntry[]) g_gameGimmickCameraVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickCameraVtbl2;
+extern __typeof__(MemberFnPtr[3]) g_gameGimmickCameraStateFns;
+extern __typeof__(const VtblEntry[21]) g_gameGimmickCameraVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickCameraVtbl2;
 extern __typeof__(ScePspFVector4) g_gameGimmickCollectionBoxTriggerPos;
-extern __typeof__(const VtblEntry[]) g_gameGimmickCollectionBoxVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickCollectionBoxVtbl2;
-extern __typeof__(const VtblEntry[]) g_gameGimmickCollidableVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickCollidableVtbl2;
-extern __typeof__(const VtblEntry[]) g_gameGimmickCorePointVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickCorePointVtbl2;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickCollectionBoxVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickCollectionBoxVtbl2;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickCollidableVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickCollidableVtbl2;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickCorePointVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickCorePointVtbl2;
 extern __typeof__(VtblEntry[1]) g_gameGimmickEffectMarkerStateTable;
-extern __typeof__(const VtblEntry[]) g_gameGimmickEffectMarkerVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickEffectMarkerVtbl2;
-extern __typeof__(MemberFnPtr[]) g_gameGimmickIrSensorStateFns;
-extern __typeof__(const VtblEntry[]) g_gameGimmickIrSensorVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickIrSensorVtbl2;
-extern __typeof__(MemberFnPtr[]) g_gameGimmickItemBoxStateFns;
-extern __typeof__(const VtblEntry[]) g_gameGimmickItemBoxVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickItemBoxVtbl2;
-extern __typeof__(const GameGimmickJetDoorBlinkStep[]) g_gameGimmickJetDoorBlinkTable;
-extern __typeof__(const VtblEntry[]) g_gameGimmickJetDoorVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickJetDoorVtbl2;
-extern __typeof__(const char *const[18][3]) g_gameGimmickKindTable;
-extern __typeof__(const VtblEntry[]) g_gameGimmickSolidVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickSolidVtbl2;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickEffectMarkerVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickEffectMarkerVtbl2;
+extern __typeof__(MemberFnPtr[3]) g_gameGimmickIrSensorStateFns;
+extern __typeof__(const VtblEntry[21]) g_gameGimmickIrSensorVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickIrSensorVtbl2;
+extern __typeof__(MemberFnPtr[3]) g_gameGimmickItemBoxStateFns;
+extern __typeof__(const VtblEntry[21]) g_gameGimmickItemBoxVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickItemBoxVtbl2;
+extern __typeof__(const GameGimmickJetDoorBlinkStep[5]) g_gameGimmickJetDoorBlinkTable;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickJetDoorVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickJetDoorVtbl2;
+extern __typeof__(const char *[18][3]) g_gameGimmickKindTable;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickSolidVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickSolidVtbl2;
 extern __typeof__(const u16[6]) g_gameGimmickSteamStartTimers;
-extern __typeof__(const VtblEntry[]) g_gameGimmickSteamVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickSteamVtbl2;
-extern __typeof__(const VtblEntry[]) g_gameGimmickSubBaseVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickSwitchVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickSwitchVtbl2;
-extern __typeof__(const VtblEntry[]) g_gameGimmickTouchSpotVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickTouchSpotVtbl2;
-extern __typeof__(const VtblEntry[]) g_gameGimmickTriggerZoneVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickTriggerZoneVtbl2;
-extern __typeof__(const VtblEntry[]) g_gameGimmickVtbl;
-extern __typeof__(const VtblEntry[]) g_gameGimmickVtbl2;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickSteamVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickSteamVtbl2;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickSubBaseVtbl;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickSwitchVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickSwitchVtbl2;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickTouchSpotVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickTouchSpotVtbl2;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickTriggerZoneVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickTriggerZoneVtbl2;
+extern __typeof__(const VtblEntry[20]) g_gameGimmickVtbl;
+extern __typeof__(const VtblEntry[2]) g_gameGimmickVtbl2;
 extern __typeof__(void *) g_gameLastActivatedObject;
 extern __typeof__(AxisVectorConsts) g_gameQuestCamCtrlAxisConsts;
 extern __typeof__(VtblEntry[5]) g_gameQuestCamDirSwitchVtbl;
@@ -18981,6 +20211,7 @@ extern __typeof__(s32) g_gameStageIndex;
 extern __typeof__(u16[180]) g_gameStageInfoTable;
 extern __typeof__(VtblEntry[2]) g_gameStageLayoutObjVtbl;
 extern __typeof__(s32 *[5]) g_gameStageLayoutTables;
+extern __typeof__(s32[1]) g_gameStageLayoutTables00;
 extern __typeof__(u8[1]) g_gameStageLights;
 extern __typeof__(float[4]) g_gameStageLocatorPos;
 extern __typeof__(char *[11]) g_gameStageModelNames;
@@ -18991,11 +20222,16 @@ extern __typeof__(u8[8]) g_gameStageRecAreaBase;
 extern __typeof__(s16[18]) g_gameStageRecTable;
 extern __typeof__(u8[1080]) g_gameStageRecords;
 extern __typeof__(s32 *[4]) g_gameStageSpawnTables;
+extern __typeof__(s32[1]) g_gameStageSpawnTables00;
+extern __typeof__(s32[1]) g_gameStageSpawnTables01;
+extern __typeof__(s32[1]) g_gameStageSpawnTables02;
+extern __typeof__(s32[1]) g_gameStageSpawnTables03;
 extern __typeof__(s32) g_gameStageSpawned;
 extern __typeof__(float[32][7]) g_gameStageSunTable;
-extern __typeof__(s32[123]) g_gameStageTable;
-extern __typeof__(const void *[66]) g_gameStoryMovieCueTables;
-extern __typeof__(s8[20][4][6]) g_gameStoryMovieIds;
+extern __typeof__(const GameStageEntry[41]) g_gameStageTable;
+extern __typeof__(const GameStoryMovieCue *[66]) g_gameStoryMovieCueTables;
+extern __typeof__(const GameStoryMovieCue[913]) g_gameStoryMovieCues;
+extern __typeof__(s8[19][4][6]) g_gameStoryMovieIds;
 extern __typeof__(s32) g_gameStoryMovieSeq;
 extern __typeof__(VtblEntry[7]) g_gameStoryMovieVtbl;
 extern __typeof__(u8) g_gameTransitionByte;
@@ -19136,13 +20372,13 @@ extern __typeof__(_reent *) g_impurePtr;
 extern __typeof__(char[37]) g_itoaDigits;
 extern __typeof__(s32[6][9]) g_jisActionTable;
 extern __typeof__(s32[6][9]) g_jisStateTable;
-extern __typeof__(u8[48]) g_lconv;
+extern __typeof__(const lconv) g_lconv;
 extern __typeof__(MallocState) g_mallocBins;
 extern __typeof__(s32) g_mallocLockDepth;
 extern __typeof__(s32) g_mallocLockIntrFlags;
 extern __typeof__(u32) g_mallocMaxSbrkedMem;
 extern __typeof__(u32) g_mallocMaxTotalMem;
-extern __typeof__(void *) g_mallocSbrkBase;
+extern __typeof__(long) g_mallocSbrkBase;
 extern __typeof__(u32) g_mallocSbrkedMem;
 extern __typeof__(u32) g_mallocTopPad;
 extern __typeof__(u32) g_mallocTrimThreshold;
@@ -19221,7 +20457,7 @@ extern __typeof__(const u64) g_netPeerTimeoutUs;
 extern __typeof__(void **) g_netPlay;
 extern __typeof__(MemberFnPtr[9]) g_netPlayStateFns;
 extern __typeof__(s32) g_netStatusMessage;
-extern __typeof__(s32[]) g_netStatusMessageStrings;
+extern __typeof__(s32[3]) g_netStatusMessageStrings;
 extern __typeof__(u8) g_netStatusShow;
 extern __typeof__(MemberFnPtr[5]) g_netStatusStateTable;
 extern __typeof__(u32) g_netStatusTaskVtbl;
@@ -19230,6 +20466,20 @@ extern __typeof__(s32) g_netVblankBudget;
 extern __typeof__(GfxSpriteLayer *) g_billboardSpriteLayer;
 extern __typeof__(u8) g_blurCaptureActive;
 extern __typeof__(void *) g_blurCaptureBuffer;
+extern __typeof__(u8[5443]) g_bootTexAtviLogoBlack2;
+extern __typeof__(u8[8295]) g_bootTexBack04;
+extern __typeof__(u8[4100]) g_bootTexBulletsLogo;
+extern __typeof__(u8[513]) g_bootTexCoBoIta1;
+extern __typeof__(u8[513]) g_bootTexCoBoIta2;
+extern __typeof__(u8[579]) g_bootTexCoBoItaSol;
+extern __typeof__(u8[18408]) g_bootTexCoPopWindoBeta;
+extern __typeof__(u8[1216]) g_bootTexDialogMoji;
+extern __typeof__(u8[4405]) g_bootTexLoadFlashMoji;
+extern __typeof__(u8[425]) g_bootTexLoadIcon0;
+extern __typeof__(u8[5823]) g_bootTexNelMainLogo;
+extern __typeof__(u8[5060]) g_bootTexNowLogo;
+extern __typeof__(u8[20613]) g_bootTexWdFont12;
+extern __typeof__(u8[31275]) g_bootTexWdFont16;
 extern __typeof__(u8 *) g_bootTextureData;
 extern __typeof__(void *[28]) g_bootTextureTable;
 extern __typeof__(ScePspFVector4) g_colorBlack;
@@ -19244,7 +20494,7 @@ extern __typeof__(ScePspFVector4) g_colorRed;
 extern __typeof__(ScePspFVector4) g_colorWhite;
 extern __typeof__(ScePspFVector4) g_colorYellow;
 extern __typeof__(void **) g_faderSlots;
-extern __typeof__(GfxFader *[]) g_faderTable;
+extern __typeof__(GfxFader *[2]) g_faderTable;
 extern __typeof__(u8[320]) g_feedbackTexture;
 extern __typeof__(CxxGlobalRecord) g_feedbackTextureDtorRecord;
 extern __typeof__(u32) g_geWorldDataCmdTemplate;
@@ -19266,9 +20516,9 @@ extern __typeof__(CoreObject *) g_gfxDeferredDeleteHead;
 extern __typeof__(CoreObject *) g_gfxDeferredDeleteTail;
 extern __typeof__(float) g_gfxDepthCenter;
 extern __typeof__(GfxDisplay *) g_gfxDisplay;
-extern __typeof__(u8[]) g_gfxDistortionIndices;
-extern __typeof__(u8[]) g_gfxDistortionLargeIndices;
-extern __typeof__(u8[]) g_gfxDistortionPatchVerts;
+extern __typeof__(u8[2560]) g_gfxDistortionIndices;
+extern __typeof__(u8[2560]) g_gfxDistortionLargeIndices;
+extern __typeof__(u8[510]) g_gfxDistortionPatchVerts;
 extern __typeof__(u8) g_gfxEffectAltMeshOnce;
 extern __typeof__(float[4]) g_gfxEffectCamDir;
 extern __typeof__(float[4]) g_gfxEffectCamEye;
@@ -19332,7 +20582,7 @@ extern __typeof__(u8[40]) g_gfxMaskSplineVerts;
 extern __typeof__(u32) g_gfxMaterialAlpha;
 extern __typeof__(const char[3]) g_gfxMaterialCodePrefix;
 extern __typeof__(const GfxMaterialState) g_gfxMaterialStateDefault;
-extern __typeof__(u16[]) g_gfxMeshObjDefaultIndices;
+extern __typeof__(u16[1280]) g_gfxMeshObjDefaultIndices;
 extern __typeof__(u8) g_gfxMeshObjDepthTest;
 extern __typeof__(u32[8]) g_gfxMeshObjLightList;
 extern __typeof__(CoreObjectList) g_gfxMeshObjList0;
@@ -19351,9 +20601,9 @@ extern __typeof__(u32) g_gfxModelVtable;
 extern __typeof__(float) g_gfxMotionTimeScale;
 extern __typeof__(float[4]) g_gfxMovieRect;
 extern __typeof__(u32) g_gfxMovieRectInit;
-extern __typeof__(u32[4]) g_gfxMovieTaskVtbl;
+extern __typeof__(VtblEntry[7]) g_gfxMovieTaskVtbl;
 extern __typeof__(VtblEntry[7]) g_gfxPlayerBlurTaskVtbl;
-extern __typeof__(u32[]) g_gfxPsmTable;
+extern __typeof__(u32[8]) g_gfxPsmTable;
 extern __typeof__(MemberFnPtr[8]) g_gfxPuffKindTable;
 extern __typeof__(VtblEntry[3]) g_gfxPuffVtbl;
 extern __typeof__(float[4]) g_gfxPushedPoint;
@@ -19375,10 +20625,10 @@ extern __typeof__(VtblEntry[6]) g_gfxScreenFaderVtbl;
 extern __typeof__(float[6]) g_gfxScreenOrthoRect;
 extern __typeof__(GfxGeTexVertex16[8]) g_gfxScreenSpriteVerts;
 extern __typeof__(GfxGeTexVertex16[16]) g_gfxScreenStripVerts;
-extern __typeof__(u8[]) g_gfxSmokeBezierIndexData;
-extern __typeof__(u8[]) g_gfxSmokeBezierVertexData;
+extern __typeof__(u8[36]) g_gfxSmokeBezierIndexData;
+extern __typeof__(u8[16]) g_gfxSmokeBezierVertexData;
 extern __typeof__(u8[20]) g_gfxSmokeQuadVerts;
-extern __typeof__(u8[]) g_gfxSpriteDefaultQuad;
+extern __typeof__(u8[32]) g_gfxSpriteDefaultQuad;
 extern __typeof__(u8) g_gfxSpriteDepthTest;
 extern __typeof__(float) g_gfxSpriteFarDepthKey;
 extern __typeof__(u8) g_gfxSpriteFogEnable;
@@ -19420,6 +20670,7 @@ extern __typeof__(const u32[212]) g_guGeInitList;
 extern __typeof__(s32) g_guInitialized;
 extern __typeof__(const SceGeListArgs) g_guListArgs;
 extern __typeof__(s32) g_guListId;
+extern __typeof__(SceGeStack[32]) g_guListStacks;
 extern __typeof__(s32) g_guPixelFormat;
 extern __typeof__(void *) g_guSignalCallback;
 extern __typeof__(s32) g_guSignalEventFlag;
@@ -19508,7 +20759,7 @@ extern __typeof__(VtblEntry[7]) g_saveSaveTaskVtbl;
 extern __typeof__(u8[4048]) g_saveSnapshotBuffer;
 extern __typeof__(u8) g_saveSnapshotEnabled;
 extern __typeof__(s32[21]) g_teamBakuganOrderTable;
-extern __typeof__(s32[]) g_battleEventIdByStage;
+extern __typeof__(s32[41]) g_battleEventIdByStage;
 extern __typeof__(VtblEntry[3]) g_scriptBaseVtbl;
 extern __typeof__(u32) g_scriptDefaultPackage;
 extern __typeof__(u32 *) g_scriptGlobalBits;
@@ -19530,7 +20781,7 @@ extern __typeof__(u8) g_scriptRestartRequest;
 extern __typeof__(void *) g_scriptVars;
 extern __typeof__(VtblEntry[3]) g_scriptVtbl;
 extern __typeof__(int[10]) g_stageObjKindTable;
-extern __typeof__(VtblEntry[]) g_msgDialogHandlerVtbl;
+extern __typeof__(VtblEntry[7]) g_msgDialogHandlerVtbl;
 extern __typeof__(s32) g_msgDialogLastBusy;
 extern __typeof__(SysUtilMsgDialogBlock *) g_msgDialogParams;
 extern __typeof__(u32) g_saveRequiredBytes;
@@ -19540,9 +20791,9 @@ extern __typeof__(const char *) g_savedataInstallSaveName;
 extern __typeof__(const u8 *) g_savedataKey;
 extern __typeof__(SysUtilSavedataBlock *) g_savedataParams;
 extern __typeof__(const char *[3]) g_savedataSaveNames;
-extern __typeof__(VtblEntry[]) g_sysUtilHandlerVtbl;
+extern __typeof__(VtblEntry[7]) g_sysUtilHandlerVtbl;
 extern __typeof__(SysUtilMng *) g_sysUtilMng;
-extern __typeof__(VtblEntry[]) g_sysUtilSavedataVtbl;
+extern __typeof__(VtblEntry[7]) g_sysUtilSavedataVtbl;
 extern __typeof__(u8[21]) g_advSelectCandidateIds;
 extern __typeof__(u32[4]) g_advSelectEventFlagIds;
 extern __typeof__(u8[33]) g_bakuganAttributeTable;
@@ -19611,8 +20862,7 @@ extern __typeof__(ScePspFVector4) g_nameEntryColorHighlight;
 extern __typeof__(ScePspFVector4) g_nameEntryColorLightGreen;
 extern __typeof__(BtlArenaFog) g_nameEntryFog;
 extern __typeof__(const char **) g_nameEntryKeyTable;
-extern __typeof__(char **) g_nameEntryMotionTable;
-extern __typeof__(u8[]) g_nowLoadingFlashFabData;
+extern __typeof__(u8[68976]) g_nowLoadingFlashFabData;
 extern __typeof__(s32[77]) g_pauseActionTable;
 extern __typeof__(s32[7]) g_pauseActionTableFlagged;
 extern __typeof__(const float[8][2]) g_pauseEntryLayoutInit;
@@ -19652,7 +20902,7 @@ extern __typeof__(float[44]) g_uiBakuganModelScaleTable;
 extern __typeof__(u8[42]) g_uiBakuganPairTable;
 extern __typeof__(s16[20][4]) g_uiBakuganSelectDisplayTable;
 extern __typeof__(const char *[22]) g_uiBakuganSelectMotionNames;
-extern __typeof__(u32[8]) g_uiBakuganSelectPhaseTable;
+extern __typeof__(MemberFnPtr[4]) g_uiBakuganSelectPhaseTable;
 extern __typeof__(const char *[22]) g_uiBakuganSelectTurnMotionNames;
 extern __typeof__(VtblEntry[7]) g_uiBakuganSelectVtbl;
 extern __typeof__(MemberFnPtr[4]) g_uiBattleModeSelectPhaseTable;
@@ -19698,10 +20948,10 @@ extern __typeof__(MemberFnPtr[4]) g_uiComboListPhaseTable;
 extern __typeof__(VtblEntry[7]) g_uiComboListVtbl;
 extern __typeof__(u8) g_uiCommonNoticeState;
 extern __typeof__(CoreTask *) g_uiConfirmDialogInstance;
-extern __typeof__(u8[32]) g_uiConfirmDialogPhaseTable;
+extern __typeof__(MemberFnPtr[4]) g_uiConfirmDialogPhaseTable;
 extern __typeof__(s32) g_uiConfirmDialogResult;
 extern __typeof__(u32) g_uiConfirmDialogVtbl;
-extern __typeof__(u8[16]) g_uiCopyrightTaskStateTable;
+extern __typeof__(MemberFnPtr[2]) g_uiCopyrightTaskStateTable;
 extern __typeof__(VtblEntry[4]) g_uiCopyrightTaskVtable;
 extern __typeof__(UiCursorGlow) g_uiCursorGlow;
 extern __typeof__(const char *[2]) g_uiDefaultFontNames;
@@ -19734,9 +20984,12 @@ extern __typeof__(char [97]) g_uiFontGlyphTable;
 extern __typeof__(s32) g_uiFontGlyphTableLen;
 extern __typeof__(unsigned char[62]) g_uiFontSjisRemapTable;
 extern __typeof__(char **[4]) g_uiFontTextureLists;
-extern __typeof__(char **) g_uiFrameStyleRoot;
+extern __typeof__(char *[4]) g_uiFontTextureLists00;
+extern __typeof__(char *[4]) g_uiFontTextureLists02;
+extern __typeof__(char *[4]) g_uiFontTextureLists03;
+extern __typeof__(const UiWindowFrameStyleSet *) g_uiFrameStyleRoot;
 extern __typeof__(char *[2]) g_uiGauntletSetupFontNames;
-extern __typeof__(u8[32]) g_uiGauntletSetupPhaseTable;
+extern __typeof__(MemberFnPtr[4]) g_uiGauntletSetupPhaseTable;
 extern __typeof__(VtblEntry[7]) g_uiGauntletSetupVtbl;
 extern __typeof__(const char[632]) g_uiGlyphUtf8Table;
 extern __typeof__(s32) g_uiGlyphUtf8TableSize;
@@ -19753,11 +21006,76 @@ extern __typeof__(float[4]) g_uiHpGaugeUnusedConsts;
 extern __typeof__(VtblEntry[2]) g_uiHpGaugeVtbl;
 extern __typeof__(s32) g_uiKeepSharedBg;
 extern __typeof__(const char **) g_uiKeyCharTable;
+extern __typeof__(const char *[200]) g_uiKeyLabels;
 extern __typeof__(const s32[7]) g_uiLanguageSelectLangIds;
 extern __typeof__(MemberFnPtr[5]) g_uiLanguageSelectStateTable;
 extern __typeof__(VtblEntry[7]) g_uiLanguageSelectVtbl;
 extern __typeof__(s32[64]) g_uiLayoutCounts;
 extern __typeof__(s16 *[64]) g_uiLayoutTables;
+extern __typeof__(s16[8]) g_uiLayoutTables00;
+extern __typeof__(s16[8]) g_uiLayoutTables01;
+extern __typeof__(s16[8]) g_uiLayoutTables02;
+extern __typeof__(s16[8]) g_uiLayoutTables03;
+extern __typeof__(s16[8]) g_uiLayoutTables04;
+extern __typeof__(s16[8]) g_uiLayoutTables05;
+extern __typeof__(s16[8]) g_uiLayoutTables06;
+extern __typeof__(s16[8]) g_uiLayoutTables07;
+extern __typeof__(s16[8]) g_uiLayoutTables08;
+extern __typeof__(s16[8]) g_uiLayoutTables09;
+extern __typeof__(s16[8]) g_uiLayoutTables10;
+extern __typeof__(s16[8]) g_uiLayoutTables11;
+extern __typeof__(s16[8]) g_uiLayoutTables12;
+extern __typeof__(s16[8]) g_uiLayoutTables13;
+extern __typeof__(s16[8]) g_uiLayoutTables14;
+extern __typeof__(s16[8]) g_uiLayoutTables15;
+extern __typeof__(s16[8]) g_uiLayoutTables16;
+extern __typeof__(s16[8]) g_uiLayoutTables17;
+extern __typeof__(s16[8]) g_uiLayoutTables18;
+extern __typeof__(s16[8]) g_uiLayoutTables19;
+extern __typeof__(s16[8]) g_uiLayoutTables20;
+extern __typeof__(s16[8]) g_uiLayoutTables21;
+extern __typeof__(s16[8]) g_uiLayoutTables22;
+extern __typeof__(s16[8]) g_uiLayoutTables23;
+extern __typeof__(s16[8]) g_uiLayoutTables24;
+extern __typeof__(s16[8]) g_uiLayoutTables25;
+extern __typeof__(s16[8]) g_uiLayoutTables26;
+extern __typeof__(s16[8]) g_uiLayoutTables27;
+extern __typeof__(s16[8]) g_uiLayoutTables28;
+extern __typeof__(s16[8]) g_uiLayoutTables29;
+extern __typeof__(s16[8]) g_uiLayoutTables30;
+extern __typeof__(s16[8]) g_uiLayoutTables31;
+extern __typeof__(s16[8]) g_uiLayoutTables32;
+extern __typeof__(s16[8]) g_uiLayoutTables33;
+extern __typeof__(s16[8]) g_uiLayoutTables34;
+extern __typeof__(s16[8]) g_uiLayoutTables35;
+extern __typeof__(s16[8]) g_uiLayoutTables36;
+extern __typeof__(s16[8]) g_uiLayoutTables37;
+extern __typeof__(s16[8]) g_uiLayoutTables38;
+extern __typeof__(s16[8]) g_uiLayoutTables39;
+extern __typeof__(s16[8]) g_uiLayoutTables40;
+extern __typeof__(s16[8]) g_uiLayoutTables41;
+extern __typeof__(s16[8]) g_uiLayoutTables42;
+extern __typeof__(s16[8]) g_uiLayoutTables43;
+extern __typeof__(s16[8]) g_uiLayoutTables44;
+extern __typeof__(s16[8]) g_uiLayoutTables45;
+extern __typeof__(s16[8]) g_uiLayoutTables46;
+extern __typeof__(s16[8]) g_uiLayoutTables47;
+extern __typeof__(s16[8]) g_uiLayoutTables48;
+extern __typeof__(s16[8]) g_uiLayoutTables49;
+extern __typeof__(s16[8]) g_uiLayoutTables50;
+extern __typeof__(s16[8]) g_uiLayoutTables51;
+extern __typeof__(s16[8]) g_uiLayoutTables52;
+extern __typeof__(s16[8]) g_uiLayoutTables53;
+extern __typeof__(s16[8]) g_uiLayoutTables54;
+extern __typeof__(s16[8]) g_uiLayoutTables55;
+extern __typeof__(s16[8]) g_uiLayoutTables56;
+extern __typeof__(s16[8]) g_uiLayoutTables57;
+extern __typeof__(s16[8]) g_uiLayoutTables58;
+extern __typeof__(s16[8]) g_uiLayoutTables59;
+extern __typeof__(s16[8]) g_uiLayoutTables60;
+extern __typeof__(s16[8]) g_uiLayoutTables61;
+extern __typeof__(s16[8]) g_uiLayoutTables62;
+extern __typeof__(s16[8]) g_uiLayoutTables63;
 extern __typeof__(VtblEntry[7]) g_uiLoadIconTaskVtbl;
 extern __typeof__(u32[3][5]) g_uiLoadingBandColours;
 extern __typeof__(s16[3][5]) g_uiLoadingBandYs;
@@ -19765,7 +21083,7 @@ extern __typeof__(UiLoadingShared *) g_uiLoadingShared;
 extern __typeof__(MemberFnPtr[5]) g_uiLoadingStateTable;
 extern __typeof__(VtblEntry[7]) g_uiLoadingVtbl;
 extern __typeof__(u8[25]) g_uiMainMenuItemDistTable;
-extern __typeof__(u8[56]) g_uiMainMenuPhaseTable;
+extern __typeof__(MemberFnPtr[7]) g_uiMainMenuPhaseTable;
 extern __typeof__(VtblEntry[7]) g_uiMainMenuVtbl;
 extern __typeof__(const char *[12]) g_uiMaxusPartModelNames;
 extern __typeof__(void **) g_uiMsgBoxHolder;
@@ -19787,16 +21105,16 @@ extern __typeof__(MemberFnPtr[5]) g_uiOptionPhaseTable;
 extern __typeof__(VtblEntry[7]) g_uiOptionVtbl;
 extern __typeof__(const signed char [8][2]) g_uiOutlineOffsets;
 extern __typeof__(UiPasscodeAnswerEntry[6]) g_uiPasscodeAnswers;
-extern __typeof__(u8[32]) g_uiPasscodePhaseTable;
+extern __typeof__(MemberFnPtr[4]) g_uiPasscodePhaseTable;
 extern __typeof__(VtblEntry[2]) g_uiPasscodeVtbl;
 extern __typeof__(s32[17][2]) g_uiPauseActionCells;
-extern __typeof__(s32[][7]) g_uiPauseItemActions;
+extern __typeof__(s32[11][7]) g_uiPauseItemActions;
 extern __typeof__(MemberFnPtr[7]) g_uiPausePhaseTable;
 extern __typeof__(MemberFnPtr[4]) g_uiPauseSettingsPhaseFns;
 extern __typeof__(VtblEntry[7]) g_uiPauseSettingsVtbl;
 extern __typeof__(VtblEntry[7]) g_uiPauseVtbl;
 extern __typeof__(char *[2]) g_uiRepairFontNames;
-extern __typeof__(float [99]) g_uiRepairFontWidths;
+extern __typeof__(float[95]) g_uiRepairFontWidths;
 extern __typeof__(MemberFnPtr[4]) g_uiRepairPhaseTable;
 extern __typeof__(u8[4]) g_uiRepairVtable;
 extern __typeof__(s32) g_uiScreen390FastForward;
@@ -19840,7 +21158,7 @@ extern __typeof__(float) g_uiTextMeasureBreakWidth;
 extern __typeof__(VtblEntry) g_uiTextPrinterVtbl;
 extern __typeof__(void **) g_uiTextRenderHolder;
 extern __typeof__(CoreTask *) g_uiTextTask;
-extern __typeof__(u32[4]) g_uiTextTaskVtbl;
+extern __typeof__(VtblEntry[7]) g_uiTextTaskVtbl;
 extern __typeof__(MemberFnPtr[4]) g_uiTitleMenuPhaseFns;
 extern __typeof__(u8) g_uiTitleMenuVtable;
 extern __typeof__(MemberFnPtr[7]) g_uiTitlePhaseTable;
@@ -19855,9 +21173,11 @@ extern __typeof__(const char *[21]) g_uiUpgradeMotionFormats;
 extern __typeof__(MemberFnPtr[4]) g_uiUpgradePhaseFns;
 extern __typeof__(VtblEntry[7]) g_uiUpgradeVtbl;
 extern __typeof__(u8[15]) g_uiWindowActive;
-extern __typeof__(const void *[]) g_uiWindowFrameObjectVtable;
+extern __typeof__(const VtblEntry[2]) g_uiWindowFrameObjectVtable;
 extern __typeof__(MemberFnPtr[3]) g_uiWindowFrameStateFns;
-extern __typeof__(const VtblEntry[]) g_uiWindowFrameVtable;
+extern __typeof__(const UiWindowFrameStyleSet) g_uiWindowFrameStyleSet;
+extern __typeof__(const UiWindowFrameStyle[6]) g_uiWindowFrameStyles;
+extern __typeof__(const VtblEntry[13]) g_uiWindowFrameVtable;
 extern __typeof__(float[10][3]) g_uiWorldMapAreaRotations;
 extern __typeof__(char *) g_uiWorldMapFontNames;
 extern __typeof__(s32) g_uiWorldMapNetLastStep;
@@ -19872,10 +21192,10 @@ extern __typeof__(s32[2][10]) g_unlockCodeRejectedCodes;
 extern __typeof__(VtblEntry[7]) g_unlockCodeVtbl;
 extern __typeof__(const char **) g_unlockKeyTable;
 extern __typeof__(char[2]) g_unlockSpaceString;
-extern __typeof__(int[]) g_upgradeClassTable;
-extern __typeof__(UpgradeInfo[]) g_upgradeInfo;
-extern __typeof__(u8[]) g_upgradePrereqFlags;
-extern __typeof__(u8[]) g_upgradeSlotIds;
+extern __typeof__(int[21]) g_upgradeClassTable;
+extern __typeof__(UpgradeInfo[27]) g_upgradeInfo;
+extern __typeof__(u8[126]) g_upgradePrereqFlags;
+extern __typeof__(u8[126]) g_upgradeSlotIds;
 extern __typeof__(float[12]) g_worldMapJetAngles;
 extern __typeof__(u8[40]) g_worldMapStageDest;
 #endif

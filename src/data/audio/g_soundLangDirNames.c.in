@@ -1,0 +1,8 @@
+// bdc 0x08ac5838 g_soundLangDirNames
+#include "bdc.h"
+
+__typeof__(char *[7]) g_soundLangDirNames = {
+    (char *)BDC_STR(0x29d9d8), (char *)BDC_STR(0x29d9dc), (char *)BDC_STR(0x29d9e0),
+    (char *)BDC_STR(0x29d9e4), (char *)BDC_STR(0x29d9e8), (char *)BDC_STR(0x29d9ec),
+    (char *)BDC_STR(0x29d9f0),
+};

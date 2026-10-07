@@ -1,0 +1,4 @@
+// bdc 0x08ac10f0 g_advSelectCandidateIds
+#include "bdc.h"
+
+__typeof__(u8[21]) g_advSelectCandidateIds = BDC_BYTES(0x2bd0f0, 21);

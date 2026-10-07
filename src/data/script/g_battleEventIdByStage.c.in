@@ -1,0 +1,16 @@
+// bdc 0x08a348f8 g_battleEventIdByStage
+#include "bdc.h"
+
+__typeof__(s32[41]) g_battleEventIdByStage = {
+    BDC_V(int, 0x2308f8), BDC_V(int, 0x2308fc), BDC_V(int, 0x230900), BDC_V(int, 0x230904),
+    BDC_V(int, 0x230908), BDC_V(int, 0x23090c), BDC_V(int, 0x230910), BDC_V(int, 0x230914),
+    BDC_V(int, 0x230918), BDC_V(int, 0x23091c), BDC_V(int, 0x230920), BDC_V(int, 0x230924),
+    BDC_V(int, 0x230928), BDC_V(int, 0x23092c), BDC_V(int, 0x230930), BDC_V(int, 0x230934),
+    BDC_V(int, 0x230938), BDC_V(int, 0x23093c), BDC_V(int, 0x230940), BDC_V(int, 0x230944),
+    BDC_V(int, 0x230948), BDC_V(int, 0x23094c), BDC_V(int, 0x230950), BDC_V(int, 0x230954),
+    BDC_V(int, 0x230958), BDC_V(int, 0x23095c), BDC_V(int, 0x230960), BDC_V(int, 0x230964),
+    BDC_V(int, 0x230968), BDC_V(int, 0x23096c), BDC_V(int, 0x230970), BDC_V(int, 0x230974),
+    BDC_V(int, 0x230978), BDC_V(int, 0x23097c), BDC_V(int, 0x230980), BDC_V(int, 0x230984),
+    BDC_V(int, 0x230988), BDC_V(int, 0x23098c), BDC_V(int, 0x230990), BDC_V(int, 0x230994),
+    BDC_V(int, 0x230998),
+};
