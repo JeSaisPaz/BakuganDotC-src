@@ -31,7 +31,7 @@ void ActorStartVexosBarrier(Actor *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(400,(char *)0x0,0);
+    mem = MemAlloc(sizeof(CollisionCollider),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != (CollisionCollider *)0x0) {

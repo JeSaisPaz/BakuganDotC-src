@@ -17,7 +17,7 @@ s32 UiTextPrinterLoadFonts(UiTextPrinter *self, const char **names)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    textures = MemAlloc(0x10, NULL, 0);
+    textures = MemAlloc(4 * sizeof(void *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->fontTextures = textures;

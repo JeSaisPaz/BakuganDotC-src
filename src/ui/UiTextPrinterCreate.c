@@ -16,7 +16,7 @@ UiTextPrinter * UiTextPrinterCreate(s32 font)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  self = MemAlloc(0xf0,(char *)0x0,0);
+  self = MemAlloc(sizeof(UiTextPrinter),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self_00 = (UiTextPrinter *)0x0;

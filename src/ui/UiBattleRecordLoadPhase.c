@@ -33,7 +33,7 @@ void UiBattleRecordLoadPhase(UiBattleRecord *self)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      mem = MemAlloc(0x44, NULL, 0);
+      mem = MemAlloc(sizeof(IoLzsPackage), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       if (mem != NULL) {

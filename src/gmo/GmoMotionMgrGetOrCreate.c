@@ -14,7 +14,7 @@ void *GmoMotionMgrGetOrCreate(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mgr = MemAlloc(0x14, NULL, 0);
+    mgr = MemAlloc(sizeof(GmoMotionMgr), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mgr != NULL) {

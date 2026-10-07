@@ -49,7 +49,7 @@ CoreObject *GameGimmickSolidCtor(GameGimmick *obj, s32 kind, void *record, u16 t
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x190, NULL, 0);
+  mem = MemAlloc(sizeof(CollisionCollider), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   collider = NULL;

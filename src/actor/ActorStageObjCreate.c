@@ -21,7 +21,7 @@ void *ActorStageObjCreate(int kind, const float *pos, u32 instanceId)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x340, NULL, 0);
+  mem = MemAlloc(sizeof(ActorStageObj), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (mem != NULL) {

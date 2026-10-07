@@ -21,9 +21,9 @@ s32 SndSsBankRegister(void **record, void *phd, void *pbd)
     return -0x7fbafff6;
   }
   for (i = 0; i < 0x80; i++) {
-    if (g_sndSsBankTable[i] == 0) {
+    if (g_sndSsBankTable[i] == NULL) {
       record[1] = pbd;
-      g_sndSsBankTable[i] = (uintptr_t)record;
+      g_sndSsBankTable[i] = record;
       record[0] = phd;
       return i;
     }

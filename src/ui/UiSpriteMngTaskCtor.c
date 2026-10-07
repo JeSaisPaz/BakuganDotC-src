@@ -20,7 +20,7 @@ UiSpriteMng *UiSpriteMngTaskCtor(UiSpriteMng *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x80, NULL, 0);
+  mem = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   layer = NULL;
@@ -34,11 +34,11 @@ UiSpriteMng *UiSpriteMngTaskCtor(UiSpriteMng *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sprites = MemAlloc(0x80, NULL, 0);
+  sprites = MemAlloc(0x20 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->sprites = sprites;
-  memset(sprites, 0, 0x80);
+  memset(sprites, 0, 0x20 * sizeof(GfxSprite *));
 
   self->visible = 0;
   self->count = 0;

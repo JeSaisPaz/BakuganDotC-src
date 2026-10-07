@@ -129,7 +129,7 @@ u8 GameQuestPathFindNearestSegment(void *cam, s32 *out, s32 *path, s16 node, flo
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        seg = (GameQuestPathSegment *)MemAlloc(0x30, NULL, 0);
+        seg = (GameQuestPathSegment *)MemAlloc(sizeof(GameQuestPathSegment), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (seg != NULL) {

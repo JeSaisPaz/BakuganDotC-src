@@ -26,7 +26,7 @@ UiScreen *UiCardEquipCtor(UiCardEquip *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    data = MemAlloc(0x1a4, NULL, 0);
+    data = MemAlloc(105 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->base.data = data;
@@ -34,7 +34,7 @@ UiScreen *UiCardEquipCtor(UiCardEquip *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    data = MemAlloc(0x31c, NULL, 0);
+    data = MemAlloc(199 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->base.data = data;

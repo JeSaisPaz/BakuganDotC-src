@@ -24,7 +24,7 @@ void **GameFieldScreenFxCtor(void **fx)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sfx = MemAlloc(0xc, NULL, 0);
+  sfx = MemAlloc(sizeof(GameFieldScreenFx), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (sfx != NULL) {
@@ -32,7 +32,7 @@ void **GameFieldScreenFxCtor(void **fx)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    layer = MemAlloc(0x80, NULL, 0);
+    layer = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (layer != NULL) {
@@ -45,7 +45,7 @@ void **GameFieldScreenFxCtor(void **fx)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mgr = MemAlloc(0xa0, NULL, 0);
+    mgr = MemAlloc(sizeof(GfxEffectMgr), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mgr != NULL) {

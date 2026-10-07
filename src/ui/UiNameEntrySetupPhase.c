@@ -35,7 +35,7 @@ void UiNameEntrySetupPhase(UiNameEntry *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sprites = MemAlloc(0xac, NULL, 0);
+  sprites = MemAlloc(43 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->base.data = sprites;
@@ -44,7 +44,7 @@ void UiNameEntrySetupPhase(UiNameEntry *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  printer = MemAlloc(0xf0, NULL, 0);
+  printer = MemAlloc(sizeof(UiTextPrinter), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (printer != NULL) {
@@ -58,7 +58,7 @@ void UiNameEntrySetupPhase(UiNameEntry *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  printer = MemAlloc(0xf0, NULL, 0);
+  printer = MemAlloc(sizeof(UiTextPrinter), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (printer != NULL) {
@@ -213,7 +213,7 @@ void UiNameEntrySetupPhase(UiNameEntry *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  model = MemAlloc(0x140, NULL, 0);
+  model = MemAlloc(sizeof(GfxModel), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (model != NULL) {
@@ -231,7 +231,7 @@ void UiNameEntrySetupPhase(UiNameEntry *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  model = MemAlloc(0x140, NULL, 0);
+  model = MemAlloc(sizeof(GfxModel), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (model != NULL) {

@@ -42,7 +42,7 @@ void ActorStageObjBaseInit(ActorStageObjBase *self, u32 *pos)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    list = MemAlloc(0xc, NULL, 0);
+    list = MemAlloc(sizeof(CoreObjectList), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     g_actorStageObjList = list;
@@ -119,7 +119,7 @@ void ActorStageObjBaseInit(ActorStageObjBase *self, u32 *pos)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      col = MemAlloc(400, NULL, 0);
+      col = MemAlloc(sizeof(CollisionCollider), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       if (col != NULL) {
@@ -166,7 +166,7 @@ void ActorStageObjBaseInit(ActorStageObjBase *self, u32 *pos)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    box = MemAlloc(0xc0, NULL, 0);
+    box = MemAlloc(0xc0 /* PSP: CollisionBox (0xb4) rounded up to 16 */, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (box != NULL) {

@@ -17,7 +17,7 @@ void NetErrorPush(void *mgr, s32 code)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    data = MemAlloc(8,(char *)0x0,0);
+    data = MemAlloc(8 /* PSP: 8-byte error record {code, unknown word}; no struct defined */,(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
   }

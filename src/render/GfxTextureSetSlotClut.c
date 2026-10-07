@@ -7,7 +7,7 @@
    the inline block into each and points each slot at consecutive palettes from `clutData` (stride
    0x40 bytes, 0x400 for T8). Returns whether the split happened. */
 
-bool GfxTextureSetSlotClut(void *tex, int slot, u32 clut, bool fromLow)
+bool GfxTextureSetSlotClut(void *tex, int slot, void *clut, bool fromLow)
 {
   GfxTexture *t = (GfxTexture *)tex;
   bool split = false;
@@ -29,7 +29,7 @@ bool GfxTextureSetSlotClut(void *tex, int slot, u32 clut, bool fromLow)
       ((u32 *)t->blocks)[i * 0x18 + t->mipCmdIdx + 3] = (addr & 0xffffff) | 0xb0000000;
     }
   }
-  ((u32 *)t->blocks)[slot * 0x18 + t->mipCmdIdx + 2] = ((clut >> 24) & 0xf) << 16 | 0xb1000000;
-  ((u32 *)t->blocks)[slot * 0x18 + t->mipCmdIdx + 3] = (clut & 0xffffff) | 0xb0000000;
+  ((u32 *)t->blocks)[slot * 0x18 + t->mipCmdIdx + 2] = (((u32)(uintptr_t)clut >> 24) & 0xf) << 16 | 0xb1000000;
+  ((u32 *)t->blocks)[slot * 0x18 + t->mipCmdIdx + 3] = ((u32)(uintptr_t)clut & 0xffffff) | 0xb0000000;
   return split;
 }

@@ -14,7 +14,7 @@ BtlSlowMotionTask *BtlSlowMotionTaskCreate(BtlBakugan *unit, void *target, u32 a
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x2d0, NULL, 0);
+    mem = MemAlloc(sizeof(BtlSlowMotionTask), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     task = NULL;

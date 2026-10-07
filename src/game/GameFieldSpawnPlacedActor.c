@@ -39,7 +39,7 @@ void GameFieldSpawnPlacedActor(void *mgr, u8 slot, u8 entryIndex, void *entry, s
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  rec = (GameFieldPlacedChar *)MemAlloc(0x48, NULL, 0);
+  rec = (GameFieldPlacedChar *)MemAlloc(sizeof(GameFieldPlacedChar), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   placed = NULL;

@@ -19,7 +19,7 @@ void SndEmitterSystemCreate(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  listener = MemAlloc(0x28, NULL, 0);
+  listener = MemAlloc(sizeof(SndListener), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (listener != NULL) {
@@ -30,7 +30,7 @@ void SndEmitterSystemCreate(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  list = MemAlloc(0x14, NULL, 0);
+  list = MemAlloc(sizeof(CorePrioList), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (list != NULL) {
@@ -41,18 +41,18 @@ void SndEmitterSystemCreate(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  pool = MemAlloc(0x14, NULL, 0);
+  pool = MemAlloc(sizeof(MemPool), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (pool != NULL) {
-    MemPoolInit(pool, 0x48, 0x40, true);
+    MemPoolInit(pool, sizeof(SndEmitter), 0x40, true);
   }
   g_soundEmitterPool = pool;
 
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  list = MemAlloc(0x14, NULL, 0);
+  list = MemAlloc(sizeof(CorePrioList), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (list != NULL) {

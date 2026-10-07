@@ -15,7 +15,7 @@ void PadCreate(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  pad = MemAlloc(0x5c,(char *)0x0,0);
+  pad = MemAlloc(sizeof(PadState),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   result = (PadState *)0x0;

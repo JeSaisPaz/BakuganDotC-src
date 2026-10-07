@@ -19,7 +19,7 @@ BtlAi *BtlAiCreate(BtlBakugan *unit)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    self = MemAlloc(0xa30, NULL, 0);
+    self = MemAlloc(sizeof(BtlAi), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (self != NULL) {

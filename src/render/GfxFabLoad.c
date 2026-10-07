@@ -39,7 +39,7 @@ void GfxFabLoad(GfxFab *fab)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    u16 **defs = MemAlloc(defCount << 2, NULL, 0);
+    u16 **defs = MemAlloc(defCount * sizeof(u16 *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     fab->defs = defs;
@@ -53,7 +53,7 @@ void GfxFabLoad(GfxFab *fab)
             MemLock();
             fromLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            clip = MemAlloc(0x3c, NULL, 0);
+            clip = MemAlloc(sizeof(GfxFabClip), NULL, 0);
             MemSetAllocFromLow(fromLow);
             MemUnlock();
             if (clip != NULL) {
@@ -92,7 +92,7 @@ void GfxFabLoad(GfxFab *fab)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    void **bitmaps = MemAlloc(bitmapCount << 2, NULL, 0);
+    void **bitmaps = MemAlloc(bitmapCount * sizeof(void *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     fab->bitmaps = bitmaps;
@@ -126,7 +126,7 @@ void GfxFabLoad(GfxFab *fab)
                 MemLock();
                 fromLow = MemIsAllocFromLow();
                 MemSetAllocFromLow(true);
-                tex = MemAlloc(0x140, NULL, 0);
+                tex = MemAlloc(sizeof(GfxTexture), NULL, 0);
                 MemSetAllocFromLow(fromLow);
                 MemUnlock();
                 if (tex != NULL) {

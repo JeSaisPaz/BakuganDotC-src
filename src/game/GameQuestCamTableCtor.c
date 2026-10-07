@@ -14,7 +14,7 @@ void *GameQuestCamTableCtor(void *tablePtr, void **src)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  table->data = (struct GameQuestCamEntry **)MemAlloc(0x28,(char *)0x0,0);
+  table->data = (struct GameQuestCamEntry **)MemAlloc(10 * sizeof(struct GameQuestCamEntry *),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   table->cap = 10;

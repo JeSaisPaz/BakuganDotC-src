@@ -23,7 +23,7 @@ UiScreen *UiPasscodeCtor(UiScreen *screen, u32 arg)
   MemLock();
   lowAlloc = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sprites = MemAlloc(0xac, (char *)0x0, 0);
+  sprites = MemAlloc(43 * sizeof(GfxSprite *), (char *)0x0, 0);
   MemSetAllocFromLow(lowAlloc);
   MemUnlock();
   screen->data = sprites;

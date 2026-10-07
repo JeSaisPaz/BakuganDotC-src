@@ -128,7 +128,7 @@ void *ActorStageObjCreateByKind(s32 kind, float *pos)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    obj = MemAlloc(0x380, NULL, 0);
+    obj = MemAlloc(sizeof(ActorStageObjProp), NULL, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     if (obj != NULL) {
@@ -143,7 +143,7 @@ void *ActorStageObjCreateByKind(s32 kind, float *pos)
         MemLock();
         wasLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        obj = MemAlloc(0x390, NULL, 0);
+        obj = MemAlloc(sizeof(ActorStageObjEggCrystal), NULL, 0);
         MemSetAllocFromLow(wasLow);
         MemUnlock();
         if (obj != NULL) {
@@ -163,7 +163,7 @@ void *ActorStageObjCreateByKind(s32 kind, float *pos)
         MemLock();
         wasLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        obj = MemAlloc(0x3a0, NULL, 0);
+        obj = MemAlloc(sizeof(ActorStageObjCrystal), NULL, 0);
         MemSetAllocFromLow(wasLow);
         MemUnlock();
         if (obj != NULL) {
@@ -180,7 +180,7 @@ void *ActorStageObjCreateByKind(s32 kind, float *pos)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    obj = MemAlloc(0x340, NULL, 0);
+    obj = MemAlloc(sizeof(ActorStageObjScreen), NULL, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     if (obj != NULL) {
@@ -191,7 +191,7 @@ void *ActorStageObjCreateByKind(s32 kind, float *pos)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    obj = MemAlloc(0x340, NULL, 0);
+    obj = MemAlloc(sizeof(ActorStageObjMine), NULL, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     if (obj != NULL) {
@@ -202,7 +202,7 @@ void *ActorStageObjCreateByKind(s32 kind, float *pos)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    obj = MemAlloc(0x340, NULL, 0);
+    obj = MemAlloc(sizeof(ActorStageObjWindGenerator), NULL, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     if (obj != NULL) {
@@ -215,7 +215,7 @@ void *ActorStageObjCreateByKind(s32 kind, float *pos)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    obj = MemAlloc(0x320, NULL, 0);
+    obj = MemAlloc(sizeof(ActorStageObjBase), NULL, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     if (obj != NULL) {

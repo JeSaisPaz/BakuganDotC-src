@@ -27,7 +27,7 @@ void GameFieldCreateEffectManager(CoreTask *task, void *eset)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mgr = MemAlloc(0xa0, NULL, 0);
+  mgr = MemAlloc(sizeof(GfxEffectMgr), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   result = NULL;

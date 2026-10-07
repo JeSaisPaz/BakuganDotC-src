@@ -13,7 +13,7 @@ GameFieldCameraMode9State **GameFieldCameraMode9Ctor(GameFieldCameraMode9State *
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  state = MemAlloc(0x80, NULL, 0);
+  state = MemAlloc(sizeof(GameFieldCameraMode9State), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (state != NULL) {

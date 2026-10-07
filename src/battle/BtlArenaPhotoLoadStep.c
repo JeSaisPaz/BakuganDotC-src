@@ -45,7 +45,7 @@ int BtlArenaPhotoLoadStep(BtlArenaPhotoTask *task)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      name = MemAlloc(0x40, NULL, 0);
+      name = MemAlloc(64 * sizeof(char), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       task->paths[0] = name;
@@ -79,7 +79,7 @@ int BtlArenaPhotoLoadStep(BtlArenaPhotoTask *task)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    tex = MemAlloc(0x140, NULL, 0);
+    tex = MemAlloc(sizeof(GfxTexture), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (tex != NULL) {
@@ -102,7 +102,7 @@ int BtlArenaPhotoLoadStep(BtlArenaPhotoTask *task)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      name = MemAlloc(0x40, NULL, 0);
+      name = MemAlloc(64 * sizeof(char), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       task->paths[1] = name;
@@ -136,7 +136,7 @@ int BtlArenaPhotoLoadStep(BtlArenaPhotoTask *task)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    tex = MemAlloc(0x140, NULL, 0);
+    tex = MemAlloc(sizeof(GfxTexture), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (tex != NULL) {
@@ -159,7 +159,7 @@ int BtlArenaPhotoLoadStep(BtlArenaPhotoTask *task)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      name = MemAlloc(0x40, NULL, 0);
+      name = MemAlloc(64 * sizeof(char), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       task->paths[2] = name;
@@ -193,7 +193,7 @@ int BtlArenaPhotoLoadStep(BtlArenaPhotoTask *task)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    tex = MemAlloc(0x140, NULL, 0);
+    tex = MemAlloc(sizeof(GfxTexture), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (tex != NULL) {

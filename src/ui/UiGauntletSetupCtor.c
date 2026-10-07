@@ -25,7 +25,7 @@ UiGauntletSetup *UiGauntletSetupCtor(UiGauntletSetup *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sprites = MemAlloc(0xf0, NULL, 0);
+  sprites = MemAlloc(60 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->base.data = sprites;

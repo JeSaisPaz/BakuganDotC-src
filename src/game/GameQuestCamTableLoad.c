@@ -16,7 +16,7 @@ void GameQuestCamTableLoad(void *src)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    table = (GameQuestCamTable *)MemAlloc(0x18,(char *)0x0,0);
+    table = (GameQuestCamTable *)MemAlloc(sizeof(GameQuestCamTable),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     result = (GameQuestCamTable *)0x0;

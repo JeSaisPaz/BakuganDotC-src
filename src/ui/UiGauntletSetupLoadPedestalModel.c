@@ -18,7 +18,7 @@ void UiGauntletSetupLoadPedestalModel(UiGauntletSetup *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x140, NULL, 0);
+  mem = MemAlloc(sizeof(GfxModel), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (mem != NULL) {

@@ -17,7 +17,7 @@ void UiNetMenuCreateHelpText(UiScreen *screen)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  self = MemAlloc(0xf0, (char *)0, 0);
+  self = MemAlloc(sizeof(UiTextPrinter), (char *)0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   printer = (UiTextPrinter *)0;

@@ -19,7 +19,7 @@ CoreObject *GameStageCreateProp(char *gmoName, float *pos, void *list, bool flag
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  self = MemAlloc(0x140, NULL, 0);
+  self = MemAlloc(sizeof(GfxModel), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   obj = NULL;

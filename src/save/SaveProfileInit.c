@@ -18,7 +18,7 @@ void SaveProfileInit(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    self = MemAlloc(0xc,(char *)0x0,0);
+    self = MemAlloc(sizeof(SaveProfile),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     holder = (SaveProfile *)0x0;

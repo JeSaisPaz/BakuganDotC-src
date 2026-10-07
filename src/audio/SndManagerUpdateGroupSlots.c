@@ -82,11 +82,11 @@ bool SndManagerUpdateGroupSlots(SndManager *mgr)
       if (found != NULL) {
         fromTable = true;
         req = IoDataMngRequest(IoGetDataMng(), slot, g_soundGroupNames[slot->groupId],
-                               (u32)(uintptr_t)slot->data, false, false);
+                               (uintptr_t)slot->data, false, false);
         slot->fileReq[0] = req;
       }
       else {
-        req = IoDataMngRequest(IoGetDataMng(), slot, slot->name, (u32)(uintptr_t)slot->data, false, false);
+        req = IoDataMngRequest(IoGetDataMng(), slot, slot->name, (uintptr_t)slot->data, false, false);
         slot->fileReq[0] = req;
       }
       if (req == NULL) {

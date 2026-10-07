@@ -13,7 +13,7 @@ void GameFieldPointInitList(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    list = MemAlloc(0xc, NULL, 0);
+    list = MemAlloc(sizeof(CoreObjectList), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     g_gameFieldPointList = list;

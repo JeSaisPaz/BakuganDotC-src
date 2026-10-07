@@ -13,7 +13,7 @@ void *GameEventPropCreate(s16 kind)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x14, (char *)0, 0);
+    mem = MemAlloc(sizeof(GameEventProp), (char *)0, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     prop = (void *)0;

@@ -53,7 +53,7 @@ BtlMain *BtlMainTaskCtor(BtlMain *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x80, NULL, 0);
+  mem = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   layer = NULL;
@@ -68,7 +68,7 @@ BtlMain *BtlMainTaskCtor(BtlMain *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x80, NULL, 0);
+  mem = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   layer = NULL;
@@ -85,7 +85,7 @@ BtlMain *BtlMainTaskCtor(BtlMain *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x80, NULL, 0);
+  mem = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   layer = NULL;
@@ -210,7 +210,7 @@ BtlMain *BtlMainTaskCtor(BtlMain *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  name = MemAlloc(0x80, NULL, 0);
+  name = MemAlloc(0x80 * sizeof(char), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->stagePackName = name;
@@ -227,7 +227,7 @@ BtlMain *BtlMainTaskCtor(BtlMain *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    pkgMem = MemAlloc(0x44, NULL, 0);
+    pkgMem = MemAlloc(sizeof(IoLzsPackage), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     pkg = NULL;

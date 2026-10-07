@@ -37,11 +37,11 @@ UiBattleRecord *UiBattleRecordCtor(UiBattleRecord *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  anims = MemAlloc(8, NULL, 0);
+  anims = MemAlloc(2 * sizeof(GfxFab *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_uiSharedAnims = (GfxFab **)anims;
-  memset(anims, 0, 8);
+  memset(anims, 0, 2 * sizeof(GfxFab *));
   self->base.unk58 = 0;
   self->base.bgAnimList = NULL;
   self->base.unk5c = 0;

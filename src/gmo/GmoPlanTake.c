@@ -39,7 +39,7 @@ void *GmoPlanTake(void *plan, int pool, u32 align, int size)
   if (remain < rounded) {
     return NULL;
   }
-  words[15 + pool * 4 + cls] = (u32)(uintptr_t)(ptr + rounded);
+  words[15 + pool * 4 + cls] = (u32)(uintptr_t)(ptr + rounded); /* PSP: raw u32 word view holds pointers; port override needed */
   words[3 + pool * 4 + cls] = remain - rounded;
   if (ptr == NULL) {
     return NULL;

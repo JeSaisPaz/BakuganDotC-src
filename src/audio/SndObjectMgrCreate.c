@@ -26,11 +26,11 @@ void SndObjectMgrCreate(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  holder = MemAlloc(8,(char *)0x0,0);
+  holder = MemAlloc(2 * sizeof(void *),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_soundObjectMgr = holder;
-  memset(holder,0,8);
+  memset(holder,0,2 * sizeof(void *));
 
   MemLock();
   fromLow = MemIsAllocFromLow();
@@ -39,7 +39,7 @@ void SndObjectMgrCreate(void)
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (pool != (MemPool *)0x0) {
-    MemPoolInit(pool,0x40,0x40,true);
+    MemPoolInit(pool,sizeof(SndObject),0x40,true);
   }
   g_soundObjectMgr[1] = pool;
 

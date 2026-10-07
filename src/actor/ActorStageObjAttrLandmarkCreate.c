@@ -20,7 +20,7 @@ void *ActorStageObjAttrLandmarkCreate(s32 kind, float *pos, s32 arg)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x3d0, NULL, 0);
+  mem = MemAlloc(sizeof(ActorStageObjAttrLandmark), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self = NULL;

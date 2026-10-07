@@ -42,7 +42,7 @@ void UiLoadingShowTip(UiLoading *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    tex = (CoreObject *)MemAlloc(0x140, NULL, 0);
+    tex = (CoreObject *)MemAlloc(sizeof(GfxTexture), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (tex != NULL) {

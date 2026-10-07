@@ -34,7 +34,7 @@ CoreTask *UiLanguageSelectCtor(CoreTask *task)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = (GfxSpriteLayer *)MemAlloc(0x80, (char *)0x0, 0);
+  mem = (GfxSpriteLayer *)MemAlloc(sizeof(GfxSpriteLayer), (char *)0x0, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   layer = (GfxSpriteLayer *)0x0;
@@ -48,7 +48,7 @@ CoreTask *UiLanguageSelectCtor(CoreTask *task)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sprites = (GfxSprite **)MemAlloc(0x6c, (char *)0x0, 0);
+  sprites = (GfxSprite **)MemAlloc(27 * sizeof(GfxSprite *), (char *)0x0, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   self->sprites = sprites;
@@ -64,7 +64,7 @@ CoreTask *UiLanguageSelectCtor(CoreTask *task)
     self->itemScale[i] = 1.0f;
   }
   self->done = 0;
-  self->word5c = (void *)0x0;
+  self->word5c = 0;
   UiLanguageSelectSetResult(self, 0);
 
   if (SaveHasProfile()) {

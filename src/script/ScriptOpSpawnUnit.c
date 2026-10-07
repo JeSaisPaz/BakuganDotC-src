@@ -49,7 +49,7 @@ int ScriptOpSpawnUnit(Script *script)
     isPlayer = true;
   }
   unit = (BtlBakugan *)BtlCreateBakugan((int)kind, (int)mode, pos);
-  *out = (u32)(uintptr_t)unit;
+  *out = (u32)(uintptr_t)unit; /* PSP: 32-bit script variable holds a pointer; port handle needed */
   BtlBakuganCreateHpGauge(unit);
   if (isPlayer) {
     unit->isPlayer = 1;

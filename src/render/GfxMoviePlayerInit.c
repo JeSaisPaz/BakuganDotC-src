@@ -28,7 +28,7 @@ void GfxMoviePlayerInit(GfxMoviePlayer *player)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  psmf = MemAlloc(4, NULL, 0);
+  psmf = MemAlloc(sizeof(ScePsmfPlayer), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   player->psmf = psmf;
@@ -36,7 +36,7 @@ void GfxMoviePlayerInit(GfxMoviePlayer *player)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  data = MemAlloc(0xc, NULL, 0);
+  data = MemAlloc(sizeof(ScePsmfPlayerData), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   player->data = data;
@@ -44,7 +44,7 @@ void GfxMoviePlayerInit(GfxMoviePlayer *player)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  playInfo = MemAlloc(0x18, NULL, 0);
+  playInfo = MemAlloc(sizeof(ScePsmfPlayerPlayInfo), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   player->playInfo = playInfo;
@@ -58,7 +58,7 @@ void GfxMoviePlayerInit(GfxMoviePlayer *player)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  psmfInfo = MemAlloc(0x14, NULL, 0);
+  psmfInfo = MemAlloc(sizeof(ScePsmfPlayerPsmfInfo), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   player->psmfInfo = psmfInfo;
@@ -66,7 +66,7 @@ void GfxMoviePlayerInit(GfxMoviePlayer *player)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  videoData = MemAlloc(0xc, NULL, 0);
+  videoData = MemAlloc(sizeof(ScePsmfPlayerVideoData), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   player->videoData = videoData;
@@ -83,7 +83,7 @@ void GfxMoviePlayerInit(GfxMoviePlayer *player)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  verts = MemAlloc(300, NULL, 0);
+  verts = MemAlloc(150 * sizeof(u16), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   player->vertices = verts;
@@ -108,13 +108,13 @@ void GfxMoviePlayerInit(GfxMoviePlayer *player)
     player->vertices[i * 5 + 2] += 0x20;
   }
 
-  player->frameBuffers[0] = MemAllocAligned(0x88000, true);
-  player->frameBuffers[1] = MemAllocAligned(0x88000, true);
+  player->frameBuffers[0] = MemAllocAligned(0x88000 /* PSP: 512x272 32-bit frame buffer bytes */, true);
+  player->frameBuffers[1] = MemAllocAligned(0x88000 /* PSP: 512x272 32-bit frame buffer bytes */, true);
 
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  buf = MemAlloc(0x300000, NULL, 0);
+  buf = MemAlloc(0x300000 /* PSP: PSMF stream buffer bytes */, NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   player->data->buffer = buf;
@@ -130,7 +130,7 @@ void GfxMoviePlayerInit(GfxMoviePlayer *player)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  buf = MemAlloc(0x2000, NULL, 0);
+  buf = MemAlloc(0x2000 /* PSP: audio buffer bytes */, NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   player->audioBuffer = buf;

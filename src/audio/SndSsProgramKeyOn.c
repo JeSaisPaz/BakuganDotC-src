@@ -17,14 +17,14 @@ u32 SndSsProgramKeyOn(u32 bankId, u32 channel, u32 program, u32 note, u32 flags,
   u32 *tone;    /* [4] lowest key, [5] highest key */
 
   mask = 0;
-  if (g_sndSsState == -1 || bankId >= 0x80 || g_sndSsBankTable[bankId] == 0) {
+  if (g_sndSsState == -1 || bankId >= 0x80 || g_sndSsBankTable[bankId] == NULL) {
     return 0;
   }
   sceKernelLockLwMutex(&g_sndSsMutex,1,NULL);
-  if (SndSsPhdGetProgram(*(void **)(uintptr_t)g_sndSsBankTable[bankId],program,(void **)&prog) == 0 && prog[0] != 0) {
+  if (SndSsPhdGetProgram(*g_sndSsBankTable[bankId],program,(void **)&prog) == 0 && prog[0] != 0) {
     i = 0;
     do {
-      if (SndSsPhdGetTone(*(void **)(uintptr_t)g_sndSsBankTable[bankId],prog[4 + i],(void **)&tone) >= 0 &&
+      if (SndSsPhdGetTone(*g_sndSsBankTable[bankId],prog[4 + i],(void **)&tone) >= 0 &&
           note >= tone[4] && note <= tone[5]) {
         voice = SndSsKeyOnTone(bankId,prog[4 + i],channel,note,0,flags,handle,volPan);
         if (voice >= 0) {

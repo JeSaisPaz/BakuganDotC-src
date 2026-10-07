@@ -37,7 +37,7 @@ int ScriptOpCreateCrystal(Script *script)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xa90, NULL, 0);
+  mem = MemAlloc(sizeof(ActorCrystal), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (mem != NULL) {

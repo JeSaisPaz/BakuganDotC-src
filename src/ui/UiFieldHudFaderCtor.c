@@ -14,7 +14,7 @@ void UiFieldHudFaderCtor(void **fader)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xc,(char *)0x0,0);
+  mem = MemAlloc(sizeof(UiFieldHudFader),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   result = (void *)0x0;

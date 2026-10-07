@@ -23,7 +23,7 @@ void GfxRenderInit(void)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xc0040, NULL, 0);
+  mem = MemAlloc(0xc0040 /* PSP: two 0x60000-byte display lists + 0x40 alignment slack */, NULL, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   g_renderListBuf = mem;
@@ -44,7 +44,7 @@ void GfxRenderInit(void)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xd04, NULL, 0);
+  mem = MemAlloc(64 * sizeof(RenderPacket) + 4 /* PSP: extra trailing word */, NULL, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   g_renderPacketPool = mem;
@@ -53,7 +53,7 @@ void GfxRenderInit(void)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x1b04, NULL, 0);
+  mem = MemAlloc(192 * sizeof(CoreNode) + 4 /* PSP: extra trailing word */, NULL, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   g_renderChunkPool = (CoreNode *)mem;

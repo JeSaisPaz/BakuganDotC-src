@@ -21,11 +21,11 @@ void ScriptVarsInit(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(false);
-  s = MemAlloc(0xfd0,(char *)0x0,0);
+  s = MemAlloc(0x100 /* PSP: global var table (0x80) + global flag bits (0x80) */ + sizeof(SaveProfileData),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_scriptVars = s;
-  memset(s,0,0xfd0);
+  memset(s,0,0x100 /* PSP: global var table (0x80) + global flag bits (0x80) */ + sizeof(SaveProfileData));
   g_scriptGlobalVars = g_scriptVars;
   g_scriptGlobalBits = (u32 *)&g_scriptGlobalVars[32];
   SaveProfileAttachBlock(g_scriptVars);

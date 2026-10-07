@@ -15,7 +15,7 @@ CoreTask *BtlStageCamCreate(u32 index, void *unit)
     MemLock();
     wasFromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    task = MemAlloc(0x58, NULL, 0);
+    task = MemAlloc(sizeof(BtlStageCam), NULL, 0);
     MemSetAllocFromLow(wasFromLow);
     MemUnlock();
     if (task != NULL) {

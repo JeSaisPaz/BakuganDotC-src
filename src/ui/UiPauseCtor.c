@@ -22,7 +22,7 @@ UiScreen *UiPauseCtor(UiPause *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    self->base.data = MemAlloc(0x94, NULL, 0);
+    self->base.data = MemAlloc(0x25 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     UiScreenSetFrameMode((CoreTask *)self, 1);

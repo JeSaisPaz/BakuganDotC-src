@@ -61,7 +61,7 @@ void GameQuestCamLookFactoryBuild(void *factory, void **args)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  spring = MemAlloc(0xa0, NULL, 0);
+  spring = MemAlloc(sizeof(GameQuestCamEyeSpring), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (spring != NULL) {

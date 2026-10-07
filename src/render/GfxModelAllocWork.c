@@ -17,7 +17,7 @@ void GfxModelAllocWork(GfxModel *self, u32 size)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    buf = MemAlloc(0x200f,(char *)0x0,0);
+    buf = MemAlloc(0x200f /* PSP: 0x2000-byte bump buffer + 0xf alignment slack */,(char *)0x0,0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     self->workDefault = buf;

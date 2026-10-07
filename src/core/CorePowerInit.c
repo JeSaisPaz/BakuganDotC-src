@@ -29,16 +29,16 @@ void CorePowerInit(void)
     if (g_corePowerMgr != NULL) {
         return;
     }
-    g_corePowerMgr = AllocLow(0xc);
-    memset(g_corePowerMgr, 0, 0xc);
+    g_corePowerMgr = AllocLow(sizeof(CorePowerMgr));
+    memset(g_corePowerMgr, 0, sizeof(CorePowerMgr));
 
-    power = AllocLow(0x30);
+    power = AllocLow(sizeof(CorePower));
     if (power != NULL) {
         CorePowerStateInit(power);
     }
     g_corePowerMgr->power = power;
 
-    lock = AllocLow(0x38);
+    lock = AllocLow(sizeof(CoreLock));
     if (lock != NULL) {
         CoreLockInit(lock, "COPower", CORE_LOCK_MUTEX);
     }

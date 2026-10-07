@@ -22,7 +22,7 @@ void *UiLoadIconInit(void *this)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    layer = (GfxSpriteLayer *)MemAlloc(0x80, NULL, 0);
+    layer = (GfxSpriteLayer *)MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (layer != NULL) {

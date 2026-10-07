@@ -20,11 +20,11 @@ CoreList *CoreListInit(CoreList *list, s32 capacity)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        pool = MemAlloc(0x14, NULL, 0);
+        pool = MemAlloc(sizeof(MemPool), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (pool != NULL)
-            MemPoolInit(pool, 0x10, capacity, true);
+            MemPoolInit(pool, sizeof(CoreListNode), capacity, true);
         list->pool = pool;
     }
     list->iterating = 0;
@@ -38,7 +38,7 @@ CoreList *CoreListInit(CoreList *list, s32 capacity)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        sentinel = MemAlloc(0x10, NULL, 0);
+        sentinel = MemAlloc(sizeof(CoreListNode), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
     }

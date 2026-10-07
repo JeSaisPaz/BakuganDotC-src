@@ -44,7 +44,7 @@ void BtlDemoScbParse(u32 *data, void *scene, u32 size, s8 raw)
         MemLock();
         wasLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        pairs = MemAlloc(pairCount * 4, NULL, 0);
+        pairs = MemAlloc(pairCount * sizeof(u32), NULL, 0);
         MemSetAllocFromLow(wasLow);
         MemUnlock();
         for (j = 0; j < (s32)pairCount; j++) {
@@ -102,7 +102,7 @@ void BtlDemoScbParse(u32 *data, void *scene, u32 size, s8 raw)
         MemLock();
         wasLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        *keys = MemAlloc(count * words * 4, NULL, 0);
+        *keys = MemAlloc(count * words * sizeof(u32), NULL, 0);
         MemSetAllocFromLow(wasLow);
         MemUnlock();
         dst = (u32 *)*keys;

@@ -25,7 +25,7 @@ void IoDataAddOwner(IoData *self, void *owner, bool fromLow)
     MemLock();
     prevFromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(fromLow);
-    mem = MemAlloc(0x28, NULL, 0);
+    mem = MemAlloc(sizeof(IoDataOwnerRef), NULL, 0);
     MemSetAllocFromLow(prevFromLow);
     MemUnlock();
     ref = NULL;

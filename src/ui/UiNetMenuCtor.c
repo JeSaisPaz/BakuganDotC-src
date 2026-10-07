@@ -19,7 +19,7 @@ UiScreen *UiNetMenuCtor(UiScreen *screen)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  data = MemAlloc(0x3c, NULL, 0);
+  data = MemAlloc(15 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   screen->data = data;

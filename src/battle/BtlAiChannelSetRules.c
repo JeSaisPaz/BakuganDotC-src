@@ -39,7 +39,7 @@ void BtlAiChannelSetRules(BtlAiChannel *self, void *rules)
             MemLock();
             fromLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            weights = MemAlloc(count << 2, NULL, 0);
+            weights = MemAlloc(count * sizeof(s32), NULL, 0);
             MemSetAllocFromLow(fromLow);
             MemUnlock();
             table->weights = weights;

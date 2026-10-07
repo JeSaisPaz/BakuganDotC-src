@@ -15,7 +15,7 @@ void *CoreModuleMgrCtor(void *mgr)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    g_coreModuleSlots = MemAlloc(0x40, NULL, 0);
+    g_coreModuleSlots = MemAlloc(8 * sizeof(CoreModuleSlot), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     for (i = 0; i < 8; i++) {
@@ -27,7 +27,7 @@ void *CoreModuleMgrCtor(void *mgr)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    lock = MemAlloc(0x38, NULL, 0);
+    lock = MemAlloc(sizeof(CoreLock), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (lock != NULL) {

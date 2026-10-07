@@ -64,7 +64,7 @@ void GameGimmickCollidableUpdate(GameGimmickCollidable *obj)
           MemLock();
           fromLow = MemIsAllocFromLow();
           MemSetAllocFromLow(true);
-          cp = (GameGimmickCorePoint *)MemAlloc(0x2e0, NULL, 0);
+          cp = (GameGimmickCorePoint *)MemAlloc(sizeof(GameGimmickCorePoint), NULL, 0);
           MemSetAllocFromLow(fromLow);
           MemUnlock();
           if (cp != NULL) {

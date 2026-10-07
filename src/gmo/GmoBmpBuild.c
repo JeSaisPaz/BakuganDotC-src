@@ -63,7 +63,7 @@ s32 GmoBmpBuild(void *img, void *data, u32 size, s32 index, void *arena)
     image = GmoImagePlanTakePalettesThunk(1, arena);
     tex->palettes = image;
     GmoImageBuild(image, 3, 0, entries, 1, 0x10, 1, 1, 1, 2, 3, 1, 0x10, 0, NULL, arena);
-    GmoBmpConvert32((u8 *)(uintptr_t)GmoTextureGetPaletteFrame(tex, 0, 0),
+    GmoBmpConvert32((u8 *)GmoTextureGetPaletteFrame(tex, 0, 0),
                     file + 0x36, colors, 1, 0xff);
   }
   fmt = GmoBmpBppToFormat((s16)hdr.bitCount, hdr.compression);
@@ -78,7 +78,7 @@ s32 GmoBmpBuild(void *img, void *data, u32 size, s32 index, void *arena)
   GmoImageBuild(image, fmt, 0, width, absHeight, 0x10, 1, 1, 1, 1, 3, 1, 0x80, 0, NULL, arena);
   src = file + hdr.dataOffset;
   bits = (s16)hdr.bitCount;
-  pixels = (void *)(uintptr_t)GmoTextureGetImageFrame(tex, 0, 0); /* level 0 pixel buffer */
+  pixels = GmoTextureGetImageFrame(tex, 0, 0); /* level 0 pixel buffer */
 
   if (hdr.compression != 0) {
     if (bits == 4) {

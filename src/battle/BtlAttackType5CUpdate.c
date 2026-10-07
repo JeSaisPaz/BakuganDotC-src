@@ -46,7 +46,7 @@ void BtlAttackType5CUpdate(BtlAttack *self)
                 MemLock();
                 fromLow = MemIsAllocFromLow();
                 MemSetAllocFromLow(true);
-                child = MemAlloc(0x160, NULL, 0);
+                child = MemAlloc(sizeof(BtlAttack), NULL, 0);
                 MemSetAllocFromLow(fromLow);
                 MemUnlock();
                 if (child != NULL) {

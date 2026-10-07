@@ -30,7 +30,7 @@ static inline UiTextPrinter *UiUnlockCodeNewPrinter(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    printer = MemAlloc(0xf0, NULL, 0);
+    printer = MemAlloc(sizeof(UiTextPrinter), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (printer != NULL) {
@@ -53,7 +53,7 @@ void UiUnlockCodeSetupPhase(UiUnlockCode *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    sprites = MemAlloc(0xa4, NULL, 0);
+    sprites = MemAlloc(0x29 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->base.data = sprites;

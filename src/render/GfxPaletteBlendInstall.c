@@ -11,5 +11,5 @@ void GfxPaletteBlendInstall(GfxPaletteBlender *pb, s32 start, void *texture)
   if (texture != NULL) {
     pb->texture = texture;
   }
-  pb->installed = GfxTextureSetSlotClut(pb->texture, start, (u32)(uintptr_t)pb->output, true);
+  pb->installed = GfxTextureSetSlotClut(pb->texture, start, pb->output, true);
 }

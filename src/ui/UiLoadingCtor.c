@@ -120,7 +120,7 @@ UiLoading *UiLoadingCtor(UiLoading *self)
     mng = IoGetDataMng();
     g_uiLoadingShared->tipData =
         IoDataMngRequest(mng, &g_uiLoadingShared->tipData, g_loadingTipPath,
-                         (u32)(uintptr_t)g_uiLoadingShared->tipBuffer, false, false);
+                         (uintptr_t)g_uiLoadingShared->tipBuffer, false, false);
     if (g_uiLoadingShared->tipData != NULL) {
       IoDataAddFlags(g_uiLoadingShared->tipData, 2);
       if (table != NULL && msg < (s32)UiMesTableRelocate(table)) {

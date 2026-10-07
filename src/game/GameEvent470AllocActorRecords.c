@@ -18,7 +18,7 @@ void GameEvent470AllocActorRecords(GameEvent470 *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    block = MemAlloc(0x1300, NULL, 0);
+    block = MemAlloc(64 * sizeof(GameEventActorRecord), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->actors = block;

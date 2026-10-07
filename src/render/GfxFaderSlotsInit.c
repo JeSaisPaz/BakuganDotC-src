@@ -18,16 +18,16 @@ GfxFader * GfxFaderSlotsInit(GfxFader *activeFader)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    slots = MemAlloc(8, NULL, 0);
+    slots = MemAlloc(2 * sizeof(void *), NULL, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     g_faderSlots = slots;
-    memset(slots, 0, 8);
+    memset(slots, 0, 2 * sizeof(void *));
 
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    fader = MemAlloc(0x70, NULL, 0);
+    fader = MemAlloc(sizeof(GfxScreenFader), NULL, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     if (fader != NULL) {

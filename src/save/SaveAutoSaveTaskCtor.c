@@ -31,7 +31,7 @@ CoreTask *SaveAutoSaveTaskCtor(CoreTask *task)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  box = MemAlloc(0x10, NULL, 0);
+  box = MemAlloc(sizeof(UiTextBox), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (box != NULL) {
@@ -44,7 +44,7 @@ CoreTask *SaveAutoSaveTaskCtor(CoreTask *task)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  fader = MemAlloc(0x70, NULL, 0);
+  fader = MemAlloc(sizeof(GfxScreenFader), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (fader != NULL) {

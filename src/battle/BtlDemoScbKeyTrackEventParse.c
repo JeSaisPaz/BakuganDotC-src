@@ -25,7 +25,7 @@ int BtlDemoScbKeyTrackEventParse(BtlDemoScbKeyTrackEvent *ev, const s32 *body)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        block = MemAlloc(count * 8 + 0x10, NULL, 0);
+        block = MemAlloc(count * sizeof(BtlDemoScbKey) + 0x10 /* PSP: CxxVecNew array cookie */, NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (block != NULL) {

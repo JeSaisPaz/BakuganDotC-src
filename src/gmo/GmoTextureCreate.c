@@ -6,5 +6,5 @@
 
 void *GmoTextureCreate(void)
 {
-  return GmoTextureInit(GmoImageHeapAlloc(0, 0x10, 0x40));
+  return GmoTextureInit(GmoImageHeapAlloc(0, 0x10, sizeof(GmoTexture)));
 }

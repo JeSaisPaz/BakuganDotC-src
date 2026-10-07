@@ -20,7 +20,7 @@ void GfxInit(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  display = MemAlloc(0xa0,(char *)0x0,0);
+  display = MemAlloc(sizeof(GfxDisplay),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   display_00 = (GfxDisplay *)0x0;

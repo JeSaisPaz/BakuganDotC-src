@@ -31,17 +31,17 @@ void UiLoadingInitShared(void)
   MemLock();
   low = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  shared = MemAlloc(0x44, NULL, 0);
+  shared = MemAlloc(sizeof(UiLoadingShared), NULL, 0);
   MemSetAllocFromLow(low);
   MemUnlock();
   g_uiLoadingShared = shared;
-  memset(shared, 0, 0x44);
+  memset(shared, 0, sizeof(UiLoadingShared));
   g_uiLoadingShared->spriteCount = UiLayoutGetCount(0x2b);
 
   MemLock();
   low = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  layer = MemAlloc(0x80, NULL, 0);
+  layer = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
   MemSetAllocFromLow(low);
   MemUnlock();
   if (layer != NULL) {
@@ -55,7 +55,7 @@ void UiLoadingInitShared(void)
   MemLock();
   low = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sprites = MemAlloc(count * 4, NULL, 0);
+  sprites = MemAlloc(count * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(low);
   MemUnlock();
   g_uiLoadingShared->sprites = sprites;
@@ -86,7 +86,7 @@ void UiLoadingInitShared(void)
   MemLock();
   low = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  box = MemAlloc(0x10, NULL, 0);
+  box = MemAlloc(sizeof(UiTextBox), NULL, 0);
   MemSetAllocFromLow(low);
   MemUnlock();
   if (box != NULL) {
@@ -100,7 +100,7 @@ void UiLoadingInitShared(void)
   MemLock();
   low = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  buffer = MemAlloc(0x17000, NULL, 0);
+  buffer = MemAlloc(0x17000 /* PSP: tip picture TIM2 buffer, 92 KiB */, NULL, 0);
   MemSetAllocFromLow(low);
   MemUnlock();
   g_uiLoadingShared->tipBuffer = buffer;

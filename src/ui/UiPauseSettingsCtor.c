@@ -25,7 +25,7 @@ UiScreen *UiPauseSettingsCtor(UiPauseSettings *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    block = MemAlloc(0x100, NULL, 0);
+    block = MemAlloc(0x40 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->base.data = block;
@@ -33,11 +33,11 @@ UiScreen *UiPauseSettingsCtor(UiPauseSettings *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    anims = (GfxFab **)MemAlloc(8, NULL, 0);
+    anims = (GfxFab **)MemAlloc(2 * sizeof(GfxFab *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     g_uiSharedAnims = anims;
-    memset(anims, 0, 8);
+    memset(anims, 0, 2 * sizeof(GfxFab *));
 
     UiScreenSetFrameMode(&self->base.base, 0);
     self->unk6c = 0;

@@ -19,7 +19,7 @@ GfxEffect *GfxEffectSpawnDirected(GfxEffectMgr *mgr, int id, float *pos, float *
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  effect = MemAlloc(0x220,(char *)0x0,0);
+  effect = MemAlloc(sizeof(GfxEffect),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   obj = (GfxEffect *)0x0;

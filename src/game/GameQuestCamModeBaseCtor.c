@@ -81,7 +81,7 @@ GameQuestCamModeBase *GameQuestCamModeBaseCtor(GameQuestCamModeBase *self, void 
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sub = (GameQuestCamSubState *)MemAlloc(8, NULL, 0);
+  sub = (GameQuestCamSubState *)MemAlloc(8 /* PSP: watch sub-state, mode + vtbl words only (no struct) */, NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   push = NULL;
@@ -97,13 +97,13 @@ GameQuestCamModeBase *GameQuestCamModeBaseCtor(GameQuestCamModeBase *self, void 
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      buf = (void **)MemAlloc(newCap * 4, NULL, 0);
+      buf = (void **)MemAlloc(newCap * sizeof(void *), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       if (newCap < self->stateCount) {
         self->stateCount = newCap;
       }
-      memcpy(buf, self->states, self->stateCount * 4);
+      memcpy(buf, self->states, self->stateCount * sizeof(void *));
       self->stateCap = newCap;
       if (self->states != NULL) {
         old = self->states;
@@ -124,7 +124,7 @@ GameQuestCamModeBase *GameQuestCamModeBaseCtor(GameQuestCamModeBase *self, void 
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sub = (GameQuestCamSubState *)MemAlloc(8, NULL, 0);
+  sub = (GameQuestCamSubState *)MemAlloc(8 /* PSP: watch sub-state, mode + vtbl words only (no struct) */, NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   push = NULL;
@@ -140,13 +140,13 @@ GameQuestCamModeBase *GameQuestCamModeBaseCtor(GameQuestCamModeBase *self, void 
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      buf = (void **)MemAlloc(newCap * 4, NULL, 0);
+      buf = (void **)MemAlloc(newCap * sizeof(void *), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       if (newCap < self->stateCount) {
         self->stateCount = newCap;
       }
-      memcpy(buf, self->states, self->stateCount * 4);
+      memcpy(buf, self->states, self->stateCount * sizeof(void *));
       self->stateCap = newCap;
       if (self->states != NULL) {
         old = self->states;
@@ -184,13 +184,13 @@ GameQuestCamModeBase *GameQuestCamModeBaseCtor(GameQuestCamModeBase *self, void 
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      buf = (void **)MemAlloc(newCap * 4, NULL, 0);
+      buf = (void **)MemAlloc(newCap * sizeof(void *), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       if (newCap < self->stateCount) {
         self->stateCount = newCap;
       }
-      memcpy(buf, self->states, self->stateCount * 4);
+      memcpy(buf, self->states, self->stateCount * sizeof(void *));
       self->stateCap = newCap;
       if (self->states != NULL) {
         old = self->states;

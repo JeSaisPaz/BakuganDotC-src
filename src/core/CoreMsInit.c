@@ -19,15 +19,15 @@ void CoreMsInit(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    g_coreMsMgr = MemAlloc(0x80, NULL, 0);
+    g_coreMsMgr = MemAlloc(sizeof(CoreMsMgr), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
-    memset(g_coreMsMgr, 0, 0x80);
+    memset(g_coreMsMgr, 0, sizeof(CoreMsMgr));
 
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    ms = MemAlloc(300, NULL, 0);
+    ms = MemAlloc(sizeof(CoreMs), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (ms != NULL)
@@ -38,7 +38,7 @@ void CoreMsInit(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    lock = MemAlloc(0x38, NULL, 0);
+    lock = MemAlloc(sizeof(CoreLock), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (lock != NULL)

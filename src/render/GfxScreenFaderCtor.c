@@ -19,7 +19,7 @@ GfxScreenFader * GfxScreenFaderCtor(GfxScreenFader *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  rect = MemAlloc(0x50,(char *)0x0,0);
+  rect = MemAlloc(sizeof(GfxRect),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   rect_00 = (GfxRect *)0x0;

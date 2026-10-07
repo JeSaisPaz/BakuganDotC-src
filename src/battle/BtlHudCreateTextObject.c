@@ -14,7 +14,7 @@ GfxFab *BtlHudCreateTextObject(BtlHud *self, char *name, int slot)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    fab = MemAlloc(0xb0, NULL, 0);
+    fab = MemAlloc(sizeof(GfxFab), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (fab != NULL) {

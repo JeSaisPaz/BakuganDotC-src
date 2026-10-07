@@ -50,7 +50,7 @@ s32 GmoTim2Build(void *img, void *data, u32 size, s32 index, void *arena)
     hasMips = levels >= 2;
     src = (u8 *)pic + pic->headerSize;
     for (level = 0; level < levels; level++) {
-      GmoTim2ConvertPixels((u8 *)(uintptr_t)GmoTextureGetImageFrame(tex, level, 0), src, width,
+      GmoTim2ConvertPixels((u8 *)GmoTextureGetImageFrame(tex, level, 0), src, width,
                            height, (s8)pic->imageType);
       if (hasMips) {
         width = (width + 1) / 2;
@@ -68,7 +68,7 @@ s32 GmoTim2Build(void *img, void *data, u32 size, s32 index, void *arena)
     GmoImageBuild(image, fmt, 0, (s16)pic->clutColors, 1, 0x10, 1, 1, 1, 2, 3, 1, 0x10, 0, NULL,
                   arena);
     src = (u8 *)pic + pic->headerSize + pic->imageSize;
-    clut = (u32 *)(uintptr_t)GmoTextureGetPaletteFrame(tex, 0, 0);
+    clut = (u32 *)GmoTextureGetPaletteFrame(tex, 0, 0);
     GmoTim2ConvertPixels((u8 *)clut, src, (s16)pic->clutColors, 1, clutType);
     if ((s8)pic->clutType >= 0 && (s16)pic->clutColors == 0x100) {
       if (fmt == 1) {

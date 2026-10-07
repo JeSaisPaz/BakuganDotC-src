@@ -18,7 +18,7 @@ void GameEventAddCamTween(GameEvent *self, u16 frames, u8 kind)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    self_00 = MemAlloc(0x10,(char *)0x0,0);
+    self_00 = MemAlloc(sizeof(GameEventCamTween),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     action = (GameEventCamTween *)0x0;

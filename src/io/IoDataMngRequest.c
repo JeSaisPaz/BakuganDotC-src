@@ -8,7 +8,7 @@
    `copyPath`), adds `owner` and sets the destination `buffer` (`IoDataSetBuffer`; bit 0 also
    selects the low heap end). Returns the request. */
 
-void *IoDataMngRequest(IoDataMng *self, void *owner, char *path, u32 buffer, bool forceNew, bool copyPath)
+void *IoDataMngRequest(IoDataMng *self, void *owner, char *path, uintptr_t buffer, bool forceNew, bool copyPath)
 {
     bool fromLow;
     bool found;
@@ -43,7 +43,7 @@ void *IoDataMngRequest(IoDataMng *self, void *owner, char *path, u32 buffer, boo
             MemLock();
             wasLow = MemIsAllocFromLow();
             MemSetAllocFromLow(fromLow);
-            mem = MemAlloc(0x60, NULL, 0);
+            mem = MemAlloc(sizeof(IoData), NULL, 0);
             MemSetAllocFromLow(wasLow);
             MemUnlock();
             if (mem != NULL) {
@@ -60,7 +60,7 @@ void *IoDataMngRequest(IoDataMng *self, void *owner, char *path, u32 buffer, boo
             IoDataSetPath(req, path);
         }
         IoDataAddOwner(req, owner, fromLow);
-        IoDataSetBuffer(req, (void *)(uintptr_t)buffer);
+        IoDataSetBuffer(req, (void *)buffer);
     }
     CoreLockRelease(self->lock);
     return req;

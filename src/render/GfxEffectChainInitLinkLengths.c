@@ -14,7 +14,7 @@ void GfxEffectChainInitLinkLengths(GfxEffectChain *chain)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    lengths = MemAlloc(count << 2, NULL, 0);
+    lengths = MemAlloc(count * sizeof(float), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     chain->linkLengths = lengths;

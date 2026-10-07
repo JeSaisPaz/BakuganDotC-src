@@ -16,7 +16,7 @@ void GameFieldCameraSpringCtor(void **holder)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  state = MemAlloc(0x40, NULL, 0);
+  state = MemAlloc(sizeof(GameFieldCameraSpring), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   result = NULL;

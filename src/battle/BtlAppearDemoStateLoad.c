@@ -198,7 +198,7 @@ void BtlAppearDemoStateLoad(BtlAppearDemo *demo)
             MemLock();
             fromLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            list = MemAlloc(0xc, NULL, 0);
+            list = MemAlloc(sizeof(CoreObjectList), NULL, 0);
             MemSetAllocFromLow(fromLow);
             MemUnlock();
             demo->base.mapModels = list;
@@ -224,7 +224,7 @@ void BtlAppearDemoStateLoad(BtlAppearDemo *demo)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        mgrMem = MemAlloc(0xa0, NULL, 0);
+        mgrMem = MemAlloc(sizeof(GfxEffectMgr), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         mgr = NULL;
@@ -237,7 +237,7 @@ void BtlAppearDemoStateLoad(BtlAppearDemo *demo)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        mgrMem = MemAlloc(0xa0, NULL, 0);
+        mgrMem = MemAlloc(sizeof(GfxEffectMgr), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         mgr = NULL;
@@ -313,7 +313,7 @@ void BtlAppearDemoStateLoad(BtlAppearDemo *demo)
                 MemLock();
                 fromLow = MemIsAllocFromLow();
                 MemSetAllocFromLow(true);
-                modelMem = MemAlloc(0x140, NULL, 0);
+                modelMem = MemAlloc(sizeof(GfxModel), NULL, 0);
                 MemSetAllocFromLow(fromLow);
                 MemUnlock();
                 model = NULL;

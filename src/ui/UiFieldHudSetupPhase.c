@@ -46,11 +46,11 @@ void UiFieldHudSetupPhase(UiFieldHud *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  spriteTable = MemAlloc((iconCount[0] + self->targetCount + 0x48) * 4, NULL, 0);
+  spriteTable = MemAlloc((iconCount[0] + self->targetCount + 0x48) * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->base.data = spriteTable;
-  memset(spriteTable, 0, 4);
+  memset(spriteTable, 0, sizeof(GfxSprite *));
   UiLayoutCreateSprites(self->base.spriteLayer, self->base.data, 0xc);
   UiFieldHudBuildGuideIcons(self);
   sprites = self->base.data;

@@ -33,11 +33,11 @@ CoreBufQueue *CoreBufQueueCtor(CoreBufQueue *queue, int elemSize, int count)
     }
     dataSize = count * stride;
 
-    queue->slots = AllocLow(count << 2);
+    queue->slots = AllocLow(count * sizeof(void *));
     queue->data = AllocLow(dataSize);
     memset(queue->data, 0, dataSize);
 
-    heap = AllocLow(0x10);
+    heap = AllocLow(sizeof(MemLocalHeap));
     if (heap != NULL) {
         MemLocalHeapCtor(heap, queue->data, dataSize, 0x10);
     }

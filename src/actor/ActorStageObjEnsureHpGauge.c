@@ -35,7 +35,7 @@ void ActorStageObjEnsureHpGauge(ActorStageObjBase *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    gauge = MemAlloc(0xa0, NULL, 0);
+    gauge = MemAlloc(sizeof(UiHpGauge), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (gauge != NULL) {

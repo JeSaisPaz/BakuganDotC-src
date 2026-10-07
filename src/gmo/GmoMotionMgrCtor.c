@@ -18,7 +18,7 @@ void *GmoMotionMgrCtor(void *mgr)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  node = MemAlloc(0x24, (char *)0x0, 0);
+  node = MemAlloc(sizeof(CoreNode), (char *)0x0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   root = (CoreNode *)0x0;

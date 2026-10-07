@@ -27,7 +27,7 @@ void UiPauseSettingsCreateSprites(UiPauseSettings *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    ghost = MemAlloc(0x160, NULL, 0);
+    ghost = MemAlloc(sizeof(GfxSprite), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (ghost != NULL) {

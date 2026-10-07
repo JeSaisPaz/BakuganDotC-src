@@ -6,7 +6,7 @@
    `g_bootTextureTable` (`CoreLzssGetSize`), allocates one block for them from the low end of
    the heap (`g_bootTextureData`), allocates the 14 texture objects (0x140 bytes each, 0x1190
    bytes with the array cookie) and constructs them with
-   `CxxVecNew``(block + g_cxxVecCookieSize, 14, 0x140, GfxTextureCtorEmpty, 0)`, then for each
+   `CxxVecNew``(block + g_cxxVecCookieSize, 14, sizeof(GfxTexture), GfxTextureCtorEmpty, 0)`, then for each
    entry decompresses it into the data block (`CoreLzssDecompress`), writes the data cache back
    (`sceKernelDcacheWritebackInvalidateRange`) and builds the texture with
    `GfxTextureInitFromTim2` (no NULL check on the texture array). It finishes by creating the
@@ -44,11 +44,11 @@ void GfxInitBootResources(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(0x1190, NULL, 0);
+  block = MemAlloc(14 * sizeof(GfxTexture) + 0x10 /* PSP: array cookie */, NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (block != NULL) {
-    tex = CxxVecNew((u8 *)block + g_cxxVecCookieSize, 14, 0x140, GfxTextureCtorEmpty, 0);
+    tex = CxxVecNew((u8 *)block + g_cxxVecCookieSize, 14, sizeof(GfxTexture), GfxTextureCtorEmpty, 0);
   }
 
   offset = 0;

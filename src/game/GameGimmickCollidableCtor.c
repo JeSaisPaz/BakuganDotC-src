@@ -91,7 +91,7 @@ CoreObject *GameGimmickCollidableCtor(GameGimmickCollidable *obj, s32 kind, void
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x190, NULL, 0);
+  mem = MemAlloc(sizeof(CollisionCollider), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   collider = NULL;
@@ -114,7 +114,7 @@ CoreObject *GameGimmickCollidableCtor(GameGimmickCollidable *obj, s32 kind, void
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x190, NULL, 0);
+  mem = MemAlloc(sizeof(CollisionCollider), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   collider = NULL;
@@ -171,9 +171,9 @@ CoreObject *GameGimmickCollidableCtor(GameGimmickCollidable *obj, s32 kind, void
   obj->broken = 0;
 
   for (i = 0; i < 3; i++) {
-    copy = MemAllocAligned(0x38, true);
+    copy = MemAllocAligned(sizeof(GameGimmickRecord), true);
     obj->recordCopy[i] = copy;
-    memcpy(copy, obj->base.record, 0x38);
+    memcpy(copy, obj->base.record, sizeof(GameGimmickRecord));
   }
 
   e = &((const VtblEntry *)obj->base.base.base.vtable)[6];

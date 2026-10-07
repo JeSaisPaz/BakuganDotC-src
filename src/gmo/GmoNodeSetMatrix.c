@@ -19,7 +19,7 @@ void GmoNodeSetMatrix(GmoNode *self, const float *m)
     else {
       dst = self->matrix;
       if (dst == (float *)0x0) {
-        dst = GmoHeapAlloc(0, 0x40, 0x40);
+        dst = GmoHeapAlloc(0, 0x40, 16 * sizeof(float));
         self->matrix = dst;
         if (dst == (float *)0x0) {
           return;

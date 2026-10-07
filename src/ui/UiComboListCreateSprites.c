@@ -33,7 +33,7 @@ void UiComboListCreateSprites(UiComboList *self)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    spr = MemAlloc(0x160, (char *)0x0, 0);
+    spr = MemAlloc(sizeof(GfxSprite), (char *)0x0, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     copy = NULL;
@@ -72,7 +72,7 @@ void UiComboListCreateSprites(UiComboList *self)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    spr = MemAlloc(0x160, (char *)0x0, 0);
+    spr = MemAlloc(sizeof(GfxSprite), (char *)0x0, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     copy = NULL;
@@ -113,7 +113,7 @@ void UiComboListCreateSprites(UiComboList *self)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    spr = MemAlloc(0x160, (char *)0x0, 0);
+    spr = MemAlloc(sizeof(GfxSprite), (char *)0x0, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     copy = NULL;

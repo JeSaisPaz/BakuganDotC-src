@@ -50,7 +50,7 @@ void GmoMotionLoadFromGmo(const void *gmo)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    block = MemAlloc(count * (s32)sizeof(GmoMotionEntry) + 0x10, NULL, 0);
+    block = MemAlloc(count * (s32)sizeof(GmoMotionEntry) + 0x10 /* PSP: CxxVecNew array cookie */, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     entries = NULL;

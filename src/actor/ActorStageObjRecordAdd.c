@@ -16,7 +16,7 @@ void *ActorStageObjRecordAdd(float *pos, s16 kind, s16 arg, s16 type, s16 varian
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  rec = MemAlloc(0x40,(char *)0x0,0);
+  rec = MemAlloc(sizeof(ActorStageObjRecord),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   obj = (CoreObject *)0x0;

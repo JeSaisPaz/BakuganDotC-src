@@ -31,7 +31,7 @@ void UiLanguageSelectStateInput(CoreTask *task)
   } else if (self->subStep >= 0) {
     pad = self->pad;
     if ((pad->repeat & 0x2000) != 0) {
-      mode = (s32)(intptr_t)self->word5c;
+      mode = (s32)self->word5c;
       if (mode > 0) {
         if (mode < 2) {
           self->subStep = 2;

@@ -36,7 +36,7 @@ UiNetLobby *UiNetLobbyCtor(UiNetLobby *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  panels = MemAlloc(8, NULL, 0);
+  panels = MemAlloc(2 * sizeof(UiNetLobbySlideAnim *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->panels = panels;
@@ -55,7 +55,7 @@ UiNetLobby *UiNetLobbyCtor(UiNetLobby *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    anim = MemAlloc(0x18, NULL, 0);
+    anim = MemAlloc(sizeof(UiNetLobbySlideAnim), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (anim != NULL) {
@@ -72,7 +72,7 @@ UiNetLobby *UiNetLobbyCtor(UiNetLobby *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  box = MemAlloc(0x10, NULL, 0);
+  box = MemAlloc(sizeof(UiTextBox), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (box != NULL) {
@@ -85,7 +85,7 @@ UiNetLobby *UiNetLobbyCtor(UiNetLobby *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  rect = MemAlloc(0x50, NULL, 0);
+  rect = MemAlloc(sizeof(GfxRect), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (rect != NULL) {

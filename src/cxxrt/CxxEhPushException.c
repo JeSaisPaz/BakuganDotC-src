@@ -15,7 +15,7 @@ void CxxEhPushException(void *type, void *dtor, u8 flags, int a3, int a4, u8 a5,
     CxxEhRecord *prev;
     CxxEhFrame *f;
 
-    exc = (CxxEhRecord *)CxxEhAlloc(0xa4);
+    exc = (CxxEhRecord *)CxxEhAlloc(0xa4 /* PSP: exception record block; CxxEhRecord models only its first 0x3c bytes */);
     exc->next = (CxxEhRecord *)g_cxxEhCurrentException;
     g_cxxEhCurrentException = exc;
     exc->type = type;

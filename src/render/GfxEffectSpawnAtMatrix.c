@@ -18,7 +18,7 @@ GfxEffect *GfxEffectSpawnAtMatrix(GfxEffectMgr *mgr, s32 id, const float *mtx)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  raw = MemAlloc(0x220, (char *)0, 0);
+  raw = MemAlloc(sizeof(GfxEffect), (char *)0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   obj = (GfxEffect *)0;

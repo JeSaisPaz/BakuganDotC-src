@@ -21,7 +21,7 @@ void UiTalkBalloonCreatePrinter(UiTalkBalloon *self, char **font)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xf0, NULL, 0);
+  mem = MemAlloc(sizeof(UiTextPrinter), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   printer = NULL;

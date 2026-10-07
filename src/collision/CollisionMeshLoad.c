@@ -49,7 +49,7 @@ void CollisionMeshLoad(void *block, bool keepWorldVerts)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(count << 2, (const char *)0, 0);
+  mem = MemAlloc(count * sizeof(CollisionFacePart *), (const char *)0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->parts = (void **)mem;
@@ -58,7 +58,7 @@ void CollisionMeshLoad(void *block, bool keepWorldVerts)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(count * 0xc0, (const char *)0, 0);
+    mem = MemAlloc(count * 0xc0 /* PSP: 0xc0-byte MESH part header copy; CollisionFacePart only maps 0xb0 */, (const char *)0, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->worldVerts = mem;

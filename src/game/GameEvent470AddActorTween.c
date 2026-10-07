@@ -24,7 +24,7 @@ void GameEvent470AddActorTween(GameEvent470 *self, u16 frames, u8 kind, u8 index
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xc, NULL, 0);
+  mem = MemAlloc(sizeof(GameEventActorTween), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   action = NULL;

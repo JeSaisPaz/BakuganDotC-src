@@ -22,7 +22,7 @@ UiTextPrinter *UiTextPrinterCtor(UiTextPrinter *self, void *texList, char **font
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  textures = MemAlloc(0x10, NULL, 0);
+  textures = MemAlloc(4 * sizeof(void *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->fontTextures = textures;

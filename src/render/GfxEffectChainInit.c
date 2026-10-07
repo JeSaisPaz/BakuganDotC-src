@@ -21,7 +21,7 @@ void GfxEffectChainInit(float segLen, GfxEffectChain *chain, s32 count, const Sc
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  buf = MemAlloc(count * 0x30, NULL, 0);
+  buf = MemAlloc(count * 3 * sizeof(ScePspFVector4), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   chain->points = buf;

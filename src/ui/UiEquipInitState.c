@@ -83,12 +83,12 @@ void UiEquipInitState(UiEquip *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    block = MemAlloc(0x550, NULL, 0);
+    block = MemAlloc(2 * sizeof(GfxCamera) + 0x10 /* PSP: CxxVecNew cookie */, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     cameras = NULL;
     if (block != NULL) {
-      cameras = CxxVecNew((u8 *)block + g_cxxVecCookieSize, 2, 0x2a0, GfxCameraCtor, 0);
+      cameras = CxxVecNew((u8 *)block + g_cxxVecCookieSize, 2, sizeof(GfxCamera), GfxCameraCtor, 0);
     }
     self->slotCameras = cameras;
   }
@@ -96,12 +96,12 @@ void UiEquipInitState(UiEquip *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    block = MemAlloc(0xa90, NULL, 0);
+    block = MemAlloc(4 * sizeof(GfxCamera) + 0x10 /* PSP: CxxVecNew cookie */, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     cameras = NULL;
     if (block != NULL) {
-      cameras = CxxVecNew((u8 *)block + g_cxxVecCookieSize, 4, 0x2a0, GfxCameraCtor, 0);
+      cameras = CxxVecNew((u8 *)block + g_cxxVecCookieSize, 4, sizeof(GfxCamera), GfxCameraCtor, 0);
     }
     self->slotCameras = cameras;
   }

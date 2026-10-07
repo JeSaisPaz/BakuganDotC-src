@@ -22,7 +22,7 @@ UiScreen *UiTitleMenuCtor(UiScreen *screen)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(8, NULL, 0);
+  block = MemAlloc(2 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   screen->data = block;
@@ -30,11 +30,11 @@ UiScreen *UiTitleMenuCtor(UiScreen *screen)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(8, NULL, 0);
+  block = MemAlloc(2 * sizeof(GfxFab *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   screen->bgData = block;
-  memset(block, 0, 8);
+  memset(block, 0, 2 * sizeof(GfxFab *));
 
   UiScreenSetFrameMode(&screen->base, 1);
   self->package = NULL;

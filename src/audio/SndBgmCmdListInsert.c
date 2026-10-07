@@ -28,7 +28,7 @@ s32 SndBgmCmdListInsert(CoreList *list, SndBgmCmd *data, s32 priority)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    heapNode = (CoreListNode *)MemAlloc(0x10, NULL, 0);
+    heapNode = (CoreListNode *)MemAlloc(sizeof(CoreListNode), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (heapNode != NULL) {

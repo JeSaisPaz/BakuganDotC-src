@@ -21,7 +21,7 @@ void GfxScreenCameraCreate(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  cam = MemAlloc(0x2a0,(char *)0x0,0);
+  cam = MemAlloc(sizeof(GfxCamera),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   newCam = (CoreNode *)0x0;

@@ -33,18 +33,18 @@ UiAdvSelect *UiAdvSelectCtor(UiAdvSelect *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xa0, NULL, 0);
+  mem = MemAlloc(40 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->base.data = mem;
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(4, NULL, 0);
+  mem = MemAlloc(sizeof(GfxFab *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_uiSharedAnims = (GfxFab **)mem;
-  memset(mem, 0, 4);
+  memset(mem, 0, sizeof(GfxFab *));
   UiScreenSetFrameMode((CoreTask *)self, 0);
   self->unk6c = 0;
   if (!GfxFaderIsReady()) {

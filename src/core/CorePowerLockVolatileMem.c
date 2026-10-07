@@ -31,7 +31,7 @@ int CorePowerLockVolatileMem(CorePower *power)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        heap = MemAlloc(0x1c, NULL, 0);
+        heap = MemAlloc(sizeof(MemMng2), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (heap != NULL) {

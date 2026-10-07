@@ -70,7 +70,7 @@ void GameQuestParsePathTable(void *vec, u8 *file, s32 size)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      sec = (GameQuestPathNodeVec *)MemAlloc(0xc, NULL, 0);
+      sec = (GameQuestPathNodeVec *)MemAlloc(sizeof(GameQuestPathNodeVec), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       section = NULL;
@@ -78,7 +78,7 @@ void GameQuestParsePathTable(void *vec, u8 *file, s32 size)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        newData = MemAlloc(recCount << 2, NULL, 0);
+        newData = MemAlloc(recCount * sizeof(GameQuestPathNode *), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         sec->data = (GameQuestPathNode **)newData;
@@ -92,7 +92,7 @@ void GameQuestParsePathTable(void *vec, u8 *file, s32 size)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      newNode = (GameQuestPathNode *)MemAlloc(0x60, NULL, 0);
+      newNode = (GameQuestPathNode *)MemAlloc(sizeof(GameQuestPathNode), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       node = NULL;
@@ -118,7 +118,7 @@ void GameQuestParsePathTable(void *vec, u8 *file, s32 size)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        newData = MemAlloc(0x28, NULL, 0);
+        newData = MemAlloc(10 * sizeof(GameQuestPathLink *), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         newNode->links = (GameQuestPathLink **)newData;
@@ -177,7 +177,7 @@ void GameQuestParsePathTable(void *vec, u8 *file, s32 size)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        newLink = (GameQuestPathLink *)MemAlloc(6, NULL, 0);
+        newLink = (GameQuestPathLink *)MemAlloc(sizeof(GameQuestPathLink), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         link = NULL;
@@ -202,7 +202,7 @@ void GameQuestParsePathTable(void *vec, u8 *file, s32 size)
           MemLock();
           fromLow = MemIsAllocFromLow();
           MemSetAllocFromLow(true);
-          newData = MemAlloc(newCap << 2, NULL, 0);
+          newData = MemAlloc(newCap * sizeof(GameQuestPathLink *), NULL, 0);
           MemSetAllocFromLow(fromLow);
           MemUnlock();
           count = node->linkCount;
@@ -210,7 +210,7 @@ void GameQuestParsePathTable(void *vec, u8 *file, s32 size)
             node->linkCount = newCap;
             count = newCap;
           }
-          memcpy(newData, node->links, count << 2);
+          memcpy(newData, node->links, count * sizeof(GameQuestPathLink *));
           oldData = node->links;
           node->linkCap = newCap;
           if (oldData != NULL) {
@@ -237,7 +237,7 @@ void GameQuestParsePathTable(void *vec, u8 *file, s32 size)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        newData = MemAlloc(newCap << 2, NULL, 0);
+        newData = MemAlloc(newCap * sizeof(GameQuestPathNode *), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         count = section->count;
@@ -245,7 +245,7 @@ void GameQuestParsePathTable(void *vec, u8 *file, s32 size)
           section->count = newCap;
           count = section->count;
         }
-        memcpy(newData, section->data, count << 2);
+        memcpy(newData, section->data, count * sizeof(GameQuestPathNode *));
         section->cap = newCap;
         oldData = section->data;
         if (oldData != NULL) {
@@ -275,7 +275,7 @@ void GameQuestParsePathTable(void *vec, u8 *file, s32 size)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        newData = MemAlloc(newCap << 2, NULL, 0);
+        newData = MemAlloc(newCap * sizeof(void *), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         count = set->count;
@@ -283,7 +283,7 @@ void GameQuestParsePathTable(void *vec, u8 *file, s32 size)
           set->count = newCap;
           count = newCap;
         }
-        memcpy(newData, set->data, count << 2);
+        memcpy(newData, set->data, count * sizeof(void *));
         oldData = set->data;
         set->cap = newCap;
         if (oldData != NULL) {

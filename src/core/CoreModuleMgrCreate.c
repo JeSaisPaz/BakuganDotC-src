@@ -12,7 +12,7 @@ void CoreModuleMgrCreate(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mgr = MemAlloc(8, NULL, 0);
+    mgr = MemAlloc(sizeof(CoreModuleMgr), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mgr != NULL)

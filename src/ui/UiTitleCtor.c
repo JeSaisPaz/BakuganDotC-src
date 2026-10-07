@@ -23,18 +23,18 @@ UiScreen *UiTitleCtor(UiScreen *screen)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(0x20, NULL, 0);
+  block = MemAlloc(8 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   screen->data = block;
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(0x10, NULL, 0);
+  block = MemAlloc(4 * sizeof(GfxFab *), NULL, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   screen->bgData = block;
-  memset(block, 0, 0x10);
+  memset(block, 0, 4 * sizeof(GfxFab *));
   UiScreenSetFrameMode(&screen->base, 0);
   title->unk6c = 0;
   if (!GfxFaderIsReady()) {

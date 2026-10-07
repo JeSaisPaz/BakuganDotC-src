@@ -23,11 +23,11 @@ SysUtilSavedataHandler *SysUtilSavedataHandlerCtor(SysUtilSavedataHandler *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(0x76c, NULL, 0);
+  block = MemAlloc(sizeof(SysUtilSavedataBlock), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_savedataParams = block;
-  memset(block, 0, 0x76c);
+  memset(block, 0, sizeof(SysUtilSavedataBlock));
 
   SysUtilInitDialogCommon((void **)self, g_savedataParams, 0x600);
   g_savedataParams->params.mode = PSP_UTILITY_SAVEDATA_LISTLOAD;
@@ -51,11 +51,11 @@ SysUtilSavedataHandler *SysUtilSavedataHandlerCtor(SysUtilSavedataHandler *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  msData = MemAlloc(0x40, NULL, 0);
+  msData = MemAlloc(sizeof(SceUtilitySavedataMsDataInfo), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_savedataParams->params.msData = msData;
-  memset(g_savedataParams->params.msData, 0, 0x40);
+  memset(g_savedataParams->params.msData, 0, sizeof(SceUtilitySavedataMsDataInfo));
   strcpy(g_savedataParams->params.msData->gameName, g_savedataParams->params.gameName);
   strcpy(g_savedataParams->params.msData->saveName, g_savedataParams->params.saveName);
 

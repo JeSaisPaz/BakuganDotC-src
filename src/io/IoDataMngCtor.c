@@ -57,7 +57,7 @@ IoDataMng *IoDataMngCtor(IoDataMng *self)
   MemSetAllocFromLow(prevFromLow);
   MemUnlock();
   if (pool != NULL) {
-    MemPoolInit(pool, 0x60, 0x40, true);
+    MemPoolInit(pool, sizeof(IoData), 0x40, true);
   }
   self->pool = pool;
   return self;

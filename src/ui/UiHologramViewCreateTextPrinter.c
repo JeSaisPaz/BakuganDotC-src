@@ -16,7 +16,7 @@ void UiHologramViewCreateTextPrinter(UiHologramView *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  self_00 = MemAlloc(0xf0,(char *)0x0,0);
+  self_00 = MemAlloc(sizeof(UiTextPrinter),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self_01 = (UiTextPrinter *)0x0;

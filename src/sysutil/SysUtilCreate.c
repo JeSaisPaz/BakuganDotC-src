@@ -18,16 +18,16 @@ void SysUtilCreate(void)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mng = MemAlloc(0x18, (char *)0x0, 0);
+  mng = MemAlloc(sizeof(SysUtilMng), (char *)0x0, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   g_sysUtilMng = mng;
-  memset(mng, 0, 0x18);
+  memset(mng, 0, sizeof(SysUtilMng));
 
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  list = MemAlloc(0x14, (char *)0x0, 0);
+  list = MemAlloc(sizeof(CorePrioList), (char *)0x0, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   if (list != (CorePrioList *)0x0) {
@@ -38,7 +38,7 @@ void SysUtilCreate(void)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  cell = MemAlloc(4, (char *)0x0, 0);
+  cell = MemAlloc(sizeof(u32), (char *)0x0, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   if (cell != (u32 *)0x0) {

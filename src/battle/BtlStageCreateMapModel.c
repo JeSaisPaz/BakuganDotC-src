@@ -20,7 +20,7 @@ CoreObject *BtlStageCreateMapModel(const char *name, float *pose, void *list, u8
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x140, NULL, 0);
+    mem = MemAlloc(sizeof(GfxModel), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     model = NULL;

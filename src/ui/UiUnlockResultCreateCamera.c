@@ -19,7 +19,7 @@ void UiUnlockResultCreateCamera(UiUnlockResult *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  cam = (GfxCamera *)MemAlloc(0x2a0, NULL, 0);
+  cam = (GfxCamera *)MemAlloc(sizeof(GfxCamera), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (cam != NULL) {

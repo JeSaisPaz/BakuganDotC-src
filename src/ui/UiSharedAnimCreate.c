@@ -18,7 +18,7 @@ void UiSharedAnimCreate(void *owner, void *data, int slot)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  fab = MemAlloc(0xb0, (char *)0, 0);
+  fab = MemAlloc(sizeof(GfxFab), (char *)0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   made = (GfxFab *)0;

@@ -27,7 +27,7 @@ void GfxSetEffectTint(u32 color)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        block = MemAlloc(0x18c0, NULL, 0);
+        block = MemAlloc(1584 * sizeof(u32), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         g_gfxEffectTintBackup = block;

@@ -45,7 +45,7 @@ void StopWallBuild(StopWall *self, s32 id)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    collider = (CollisionCollider *)MemAlloc(400, NULL, 0);
+    collider = (CollisionCollider *)MemAlloc(sizeof(CollisionCollider), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (collider != NULL) {

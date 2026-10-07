@@ -16,11 +16,11 @@ CoreTask *SaveLoadTaskCtor(CoreTask *task)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  s = MemAlloc(4,(char *)0x0,0);
+  s = MemAlloc(sizeof(void *),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_saveLoadDialogSlot = s;
-  memset(s,0,4);
+  memset(s,0,sizeof(void *));
   if (SaveHasProfile()) {
     SaveProfileSetWord(SaveGetProfile(),1,0);
   }

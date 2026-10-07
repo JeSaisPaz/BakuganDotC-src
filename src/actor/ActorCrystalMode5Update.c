@@ -117,7 +117,7 @@ int ActorCrystalMode5Update(ActorCrystal *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = (BtlAttack *)MemAlloc(0x160, NULL, 0);
+  mem = (BtlAttack *)MemAlloc(sizeof(BtlAttack), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (mem != NULL) {

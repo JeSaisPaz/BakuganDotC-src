@@ -18,7 +18,7 @@ void UiEquipLoadPedestalModel(UiEquip *self, u8 slot)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  model = MemAlloc(0x140, NULL, 0);
+  model = MemAlloc(sizeof(GfxModel), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (model != NULL) {

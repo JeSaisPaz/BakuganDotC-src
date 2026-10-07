@@ -17,10 +17,10 @@ void CoreLzssDecodeRaw(const u8 *src, u8 *dst, u32 size)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    window = MemAlloc(0x1011, NULL, 0);
+    window = MemAlloc(0x1011 * sizeof(u8), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
-    memset(window, 0, 0xfee);
+    memset(window, 0, 0xfee /* PSP: LZSS ring prefill in bytes, not the object size */);
 
     for (;;) {
         if ((flags & 0x100) == 0) {

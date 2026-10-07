@@ -35,7 +35,7 @@ void *ActorCrystalStandCtor(void *stand, const char *gmoName)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(400, NULL, 0);
+    mem = MemAlloc(sizeof(CollisionCollider), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != NULL) {

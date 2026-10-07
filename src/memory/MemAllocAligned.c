@@ -17,7 +17,7 @@ void *MemAllocAligned(u32 size, bool fromLow)
     MemLock();
     prevFromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(fromLow);
-    block = MemAlloc(size + 0x40, NULL, 0);
+    block = MemAlloc(size + 0x40 /* PSP: 64-byte alignment slack */, NULL, 0);
     MemSetAllocFromLow(prevFromLow);
     MemUnlock();
 

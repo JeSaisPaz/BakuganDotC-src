@@ -29,7 +29,7 @@ UiScreen *UiEquipCtor(UiEquip *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    block = MemAlloc(0x3b4, NULL, 0);
+    block = MemAlloc(237 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->base.data = block;
@@ -38,7 +38,7 @@ UiScreen *UiEquipCtor(UiEquip *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    block = MemAlloc(0x5e0, NULL, 0);
+    block = MemAlloc(376 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->base.data = block;
@@ -46,11 +46,11 @@ UiScreen *UiEquipCtor(UiEquip *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(8, NULL, 0);
+  block = MemAlloc(2 * sizeof(GfxFab *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_uiSharedAnims = (GfxFab **)block;
-  memset(block, 0, 8);
+  memset(block, 0, 2 * sizeof(GfxFab *));
   UiScreenSetFrameMode((CoreTask *)self, 1);
   self->word6c = 0;
   if (!GfxFaderIsReady()) {

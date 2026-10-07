@@ -47,7 +47,7 @@ static void ScriptMsgBuildPanel(BtlHud *self, float alpha, float panelAlpha)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        mem = MemAlloc(0x80, NULL, 0);
+        mem = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (mem != NULL) {
@@ -61,7 +61,7 @@ static void ScriptMsgBuildPanel(BtlHud *self, float alpha, float panelAlpha)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        sprites = MemAlloc(8, NULL, 0);
+        sprites = MemAlloc(2 * sizeof(GfxSprite *), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         self->msgSprites = sprites;

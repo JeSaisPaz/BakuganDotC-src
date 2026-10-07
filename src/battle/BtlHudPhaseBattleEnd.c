@@ -37,7 +37,7 @@ void BtlHudPhaseBattleEnd(BtlHud *self)
             MemLock();
             fromLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            layer = MemAlloc(0x80, NULL, 0);
+            layer = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
             MemSetAllocFromLow(fromLow);
             MemUnlock();
             if (layer != NULL) {

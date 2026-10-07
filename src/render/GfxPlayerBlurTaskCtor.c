@@ -24,13 +24,13 @@ GfxPlayerBlurTask *GfxPlayerBlurTaskCtor(GfxPlayerBlurTask *task, GfxModel *mode
     g_playerBlurActive = 1;
     task->model = model;
     task->camera = camera;
-    task->buffer = MemAllocAligned(0x20000, true);
+    task->buffer = MemAllocAligned(0x20000 /* PSP: raw capture buffer bytes */, true);
     g_blurCaptureBuffer = task->buffer;
-    memset(task->buffer, 0, 0x20000);
+    memset(task->buffer, 0, 0x20000 /* PSP: raw capture buffer bytes */);
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    obj = (GfxTexture *)MemAlloc(0x140, NULL, 0);
+    obj = (GfxTexture *)MemAlloc(sizeof(GfxTexture), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     tex = NULL;

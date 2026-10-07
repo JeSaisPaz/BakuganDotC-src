@@ -22,7 +22,7 @@ CoreNode *SndObjectCreate(CoreNodeOwner *owner, s32 slotCount)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(false);
-    self = MemAlloc(0x40,(char *)0x0,0);
+    self = MemAlloc(sizeof(SndObject),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self_00 = (SndObject *)0x0;

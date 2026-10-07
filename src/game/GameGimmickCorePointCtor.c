@@ -124,7 +124,7 @@ CoreObject *GameGimmickCorePointCtor(GameGimmickCorePoint *obj, s32 kind, void *
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x190, NULL, 0);
+  mem = MemAlloc(sizeof(CollisionCollider), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   collider = NULL;

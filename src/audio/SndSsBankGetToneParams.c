@@ -10,7 +10,7 @@
 s32 SndSsBankGetToneParams(u32 bankId, u32 tone, u32 *out)
 {
   SndSsToneParams *params;
-  u32 *entry;
+  void ***entry;
   void **bank;
   s32 ret;
   SndSsPhdTone *toneEntry;
@@ -18,7 +18,7 @@ s32 SndSsBankGetToneParams(u32 bankId, u32 tone, u32 *out)
 
   params = (SndSsToneParams *)out;
   entry = &g_sndSsBankTable[bankId];
-  bank = (void **)(uintptr_t)*entry;
+  bank = *entry;
   ret = SndSsPhdGetTone(bank[0], tone, (void **)&toneEntry);
   if (ret < 0) {
     return (s32)0x80450005;
@@ -27,13 +27,13 @@ s32 SndSsBankGetToneParams(u32 bankId, u32 tone, u32 *out)
     params->isNoise = 1;
     params->noiseClock = toneEntry->noiseClock;
   } else {
-    bank = (void **)(uintptr_t)*entry;
+    bank = *entry;
     ret = SndSsPhdGetVag(bank[0], (u32)toneEntry->vagIndex, (void **)&vag);
     if (ret < 0) {
       return (s32)0x80450005;
     }
     params->isNoise = 0;
-    bank = (void **)(uintptr_t)*entry;
+    bank = *entry;
     params->sampleSize = vag->size;
     params->sampleAddr = (u8 *)bank[1] + vag->offset;
     params->sampleRate = vag->sampleRate;

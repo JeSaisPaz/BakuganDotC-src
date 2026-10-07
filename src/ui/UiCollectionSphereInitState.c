@@ -29,7 +29,7 @@ void UiCollectionSphereInitState(UiCollectionSphere *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    cam = MemAlloc(0x2a0, NULL, 0);
+    cam = MemAlloc(sizeof(GfxCamera), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (cam != NULL) {

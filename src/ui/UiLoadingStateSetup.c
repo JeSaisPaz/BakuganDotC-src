@@ -103,7 +103,7 @@ void UiLoadingStateSetup(UiLoading *self)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      mem = MemAlloc(0xb0, NULL, 0);
+      mem = MemAlloc(sizeof(GfxFab), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       shared = g_uiLoadingShared;

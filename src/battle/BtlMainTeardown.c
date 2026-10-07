@@ -102,7 +102,7 @@ void BtlMainTeardown(BtlMain *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x80, NULL, 0);
+    mem = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     layer = NULL;
@@ -116,7 +116,7 @@ void BtlMainTeardown(BtlMain *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x80, NULL, 0);
+    mem = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     layer = NULL;
@@ -132,7 +132,7 @@ void BtlMainTeardown(BtlMain *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x80, NULL, 0);
+    mem = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     layer = NULL;

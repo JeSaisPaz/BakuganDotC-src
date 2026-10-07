@@ -29,7 +29,7 @@
     MemLock();                                                                                    \
     fromLow_ = MemIsAllocFromLow();                                                               \
     MemSetAllocFromLow(true);                                                                     \
-    mem_ = (GfxSprite *)MemAlloc(0x160, NULL, 0);                                                 \
+    mem_ = (GfxSprite *)MemAlloc(sizeof(GfxSprite), NULL, 0);                                                 \
     MemSetAllocFromLow(fromLow_);                                                                 \
     MemUnlock();                                                                                  \
     if (mem_ != NULL) {                                                                           \

@@ -39,25 +39,25 @@ void ScriptSetup(Script *script, void *entry)
   hdr = script->entry;
   varCount = hdr->varCount;
   if (varCount != 0) {
-    u32 *vars = ScriptAllocHigh(varCount * 4);
+    u32 *vars = ScriptAllocHigh(varCount * sizeof(u32));
     script->vars = vars;
     hdr = script->entry;
-    memset(vars, 0, hdr->varCount * 4);
+    memset(vars, 0, hdr->varCount * sizeof(u32));
   }
 
   {
-    ScriptTrackLocal *locals = ScriptAllocHigh(0x500);
+    ScriptTrackLocal *locals = ScriptAllocHigh(32 * sizeof(ScriptTrackLocal));
     script->trackLocals = locals;
-    memset(locals, 0, 0x500);
+    memset(locals, 0, 32 * sizeof(ScriptTrackLocal));
   }
 
   hdr = script->entry;
   flagBitCount = hdr->flagBitCount;
   if (flagBitCount != 0) {
-    u32 *bits = ScriptAllocHigh(((int)(flagBitCount + 31) / 32) * 4);
+    u32 *bits = ScriptAllocHigh(((int)(flagBitCount + 31) / 32) * sizeof(u32));
     script->flagBits = bits;
     hdr = script->entry;
-    memset(bits, 0, ((hdr->flagBitCount + 31) / 32) * 4);
+    memset(bits, 0, ((hdr->flagBitCount + 31) / 32) * sizeof(u32));
   }
 
   for (i = 0; i < trackCount; i++) {

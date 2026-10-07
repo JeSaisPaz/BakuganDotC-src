@@ -23,7 +23,7 @@ UiScreen *UiCollectionSphereCtor(UiCollectionSphere *self, s8 category)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  data = MemAlloc(0x11c, NULL, 0);
+  data = MemAlloc(71 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->base.data = data;

@@ -18,7 +18,7 @@ static inline BtlAiParamSet *BtlAiNewParamSet(s32 kind, const VtblEntry *derived
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    set = MemAlloc(8, NULL, 0);
+    set = MemAlloc(sizeof(BtlAiParamSet), NULL, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     if (set != NULL) {

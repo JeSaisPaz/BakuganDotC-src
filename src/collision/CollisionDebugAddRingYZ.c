@@ -19,7 +19,7 @@ CollisionDebugPrim *CollisionDebugAddRingYZ(float r, const ScePspFVector4 *centr
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xa0, (char *)0x0, 0);
+  mem = MemAlloc(sizeof(CollisionDebugPrim), (char *)0x0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   prim = (CollisionDebugPrim *)0x0;

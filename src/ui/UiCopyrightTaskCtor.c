@@ -22,7 +22,7 @@ UiCopyrightTask *UiCopyrightTaskCtor(UiCopyrightTask *task)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  box = MemAlloc(0x10, (char *)0x0, 0);
+  box = MemAlloc(sizeof(UiTextBox), (char *)0x0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   textBox = (UiTextBox *)0x0;

@@ -160,7 +160,7 @@ ActorCrystal *ActorCrystalCtor(ActorCrystal *self, s32 modelId, s32 mode, float 
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        mem = MemAlloc(0x150, NULL, 0);
+        mem = MemAlloc(sizeof(ActorCrystalStand), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         stand = NULL;
@@ -320,7 +320,7 @@ ActorCrystal *ActorCrystalCtor(ActorCrystal *self, s32 modelId, s32 mode, float 
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    boxMem = MemAlloc(0xc0, NULL, 0);
+    boxMem = MemAlloc(0xc0 /* PSP: CollisionBox (0xb4) padded to 0xc0 */, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     box = NULL;

@@ -20,7 +20,7 @@ s32 CoreListInsert(CoreList *list, void *data, s32 priority)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        node = MemAlloc(0x10, NULL, 0);
+        node = MemAlloc(sizeof(CoreListNode), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
     }

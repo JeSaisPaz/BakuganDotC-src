@@ -71,7 +71,7 @@ void GameFieldCameraLoadQuestCam(GameFieldCamera *cam)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  params = MemAlloc(0x20, NULL, 0);
+  params = MemAlloc(sizeof(GameQuestCamParams), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (params != NULL) {
@@ -90,7 +90,7 @@ void GameFieldCameraLoadQuestCam(GameFieldCamera *cam)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  ctrl = MemAlloc(0x50, NULL, 0);
+  ctrl = MemAlloc(sizeof(GameQuestCamCtrl), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (ctrl != NULL) {

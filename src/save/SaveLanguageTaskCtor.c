@@ -16,11 +16,11 @@ SaveLanguageTask *SaveLanguageTaskCtor(SaveLanguageTask *task)
   MemLock();
   prevLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  slot = MemAlloc(4, NULL, 0);
+  slot = MemAlloc(sizeof(void *), NULL, 0);
   MemSetAllocFromLow(prevLow);
   MemUnlock();
   g_saveLanguageDialogSlot = slot;
-  memset(slot, 0, 4);
+  memset(slot, 0, sizeof(void *));
   if (SaveHasProfile()) {
     SaveProfileSetWord(SaveGetProfile(), 1, 0);
   }

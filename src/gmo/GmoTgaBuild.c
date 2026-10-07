@@ -41,7 +41,7 @@ s32 GmoTgaBuild(void *img, void *data, u32 size, s32 index, void *arena)
     pal = GmoImagePlanTakePalettesThunk(1, arena);
     tex->palettes = pal;
     GmoImageBuild(pal, 3, 0, count, 1, 0x10, 1, 1, 1, 2, 3, 1, 0x10, 0, NULL, arena);
-    clut = (u32 *)(uintptr_t)GmoTextureGetPaletteFrame(tex, 0, 0);
+    clut = (u32 *)GmoTextureGetPaletteFrame(tex, 0, 0);
     if (hdr.cmapDepth == 24) {
       for (i = 0; i < count; i++) {
         *clut++ = (u32)src[0] << 16 | (u32)src[1] << 8 | (u32)src[2] | 0xff000000;
@@ -64,7 +64,7 @@ s32 GmoTgaBuild(void *img, void *data, u32 size, s32 index, void *arena)
   srcBytes = (hdr.pixelDepth + 7) >> 3;
   dstBytes = GmoImageGetBpp(image) / 8;
   pitch = width * dstBytes + 0xf;
-  dst = (u8 *)(uintptr_t)GmoTextureGetImageFrame(tex, 0, 0);
+  dst = (u8 *)GmoTextureGetImageFrame(tex, 0, 0);
   srcRow = width * srcBytes;
   pitch &= ~0xf;
   if ((hdr.descriptor & 0x20) == 0) {

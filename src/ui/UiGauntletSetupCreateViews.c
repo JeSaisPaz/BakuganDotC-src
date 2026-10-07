@@ -22,7 +22,7 @@ void UiGauntletSetupCreateViews(UiGauntletSetup *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(0x550, NULL, 0);
+  block = MemAlloc(2 * sizeof(GfxCamera) + 0x10 /* PSP: CxxVecNew cookie */, NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (block != NULL) {

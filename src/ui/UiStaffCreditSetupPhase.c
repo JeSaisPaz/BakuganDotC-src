@@ -19,7 +19,7 @@ void UiStaffCreditSetupPhase(UiScreen *screen)
       MemLock();
       prevFromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      screen->data = MemAlloc(0x7c, NULL, 0);
+      screen->data = MemAlloc(31 * sizeof(GfxSprite *), NULL, 0);
       MemSetAllocFromLow(prevFromLow);
       MemUnlock();
       UiLayoutCreateSprites(screen->spriteLayer, (GfxSprite **)screen->data, 0x31);

@@ -24,11 +24,11 @@ UiUpgrade *UiUpgradeCtor(UiUpgrade *self)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(4, NULL, 0);
+  block = MemAlloc(sizeof(GfxFab *), NULL, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   self->base.bgData = block;
-  memset(block, 0, 4);
+  memset(block, 0, sizeof(GfxFab *));
   self->base.unk58 = 0;
   self->base.bgAnimList = NULL;
   self->base.unk5c = 0;
@@ -36,7 +36,7 @@ UiUpgrade *UiUpgradeCtor(UiUpgrade *self)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(0x19c, NULL, 0);
+  block = MemAlloc(103 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   self->base.data = block;

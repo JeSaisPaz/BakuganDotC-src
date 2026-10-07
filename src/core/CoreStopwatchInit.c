@@ -20,7 +20,7 @@ void CoreStopwatchInit(s32 count)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    slots = MemAlloc(count << 4, NULL, 0);
+    slots = MemAlloc(count * sizeof(ScePspDateTime), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     g_coreStopwatchSlots = slots;

@@ -16,14 +16,14 @@ void GmoNodeSetMorphWeights(GmoNode *self, const float *src, int count)
   if (self != (GmoNode *)0x0) {
     if ((src != (float *)0x0) && (count != 0)) {
       if ((int)(uint)self->morphCount < count) {
-        buf = GmoHeapAlloc(0,0x10,count << 2);
+        buf = GmoHeapAlloc(0,0x10,count * sizeof(float));
         self->morphWeights = buf;
         if (buf == (float *)0x0) {
           return;
         }
         self->flags = self->flags | 0x40000;
       }
-      memcpy(self->morphWeights,src,count << 2);
+      memcpy(self->morphWeights,src,count * sizeof(float));
       self->morphCount = (u16)count;
       return;
     }

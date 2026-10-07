@@ -22,7 +22,7 @@ CorePrioNode *NetErrorListAdd(CorePrioList *list, void *data, s32 priority)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        heapNode = MemAlloc(0x10, NULL, 0);
+        heapNode = MemAlloc(sizeof(CorePrioNode), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (heapNode != NULL) {

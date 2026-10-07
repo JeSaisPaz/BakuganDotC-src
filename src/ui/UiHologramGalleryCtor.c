@@ -24,7 +24,7 @@ UiScreen *UiHologramGalleryCtor(UiHologramGallery *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    data = MemAlloc(0x2f4, NULL, 0);
+    data = MemAlloc(189 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->base.data = data;

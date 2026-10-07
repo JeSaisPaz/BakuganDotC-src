@@ -22,7 +22,7 @@ UiScreen *UiCollectionTheaterCtor(UiScreen *screen)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  data = MemAlloc(0xc4, NULL, 0);
+  data = MemAlloc(49 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->base.data = data;

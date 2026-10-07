@@ -32,7 +32,7 @@ NetChara *NetCharaCtor(NetChara *self, const u8 *mac)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    lock = MemAlloc(0x38, NULL, 0);
+    lock = MemAlloc(sizeof(CoreLock), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (lock != NULL) {
@@ -43,21 +43,21 @@ NetChara *NetCharaCtor(NetChara *self, const u8 *mac)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    buf = MemAlloc(0x800, NULL, 0);
+    buf = MemAlloc(0x800 /* PSP: message buffer bytes */, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->outBuf = buf;
-    memset(buf, 0, 0x800);
+    memset(buf, 0, 0x800 /* PSP: message buffer bytes */);
     self->outLen = 0;
 
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    buf = MemAlloc(0x800, NULL, 0);
+    buf = MemAlloc(0x800 /* PSP: message buffer bytes */, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->recvBuf = buf;
-    memset(buf, 0, 0x800);
+    memset(buf, 0, 0x800 /* PSP: message buffer bytes */);
     self->recvLen = 0;
 
     self->connected = 1;

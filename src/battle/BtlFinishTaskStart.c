@@ -32,7 +32,7 @@ void *BtlFinishTaskStart(void *unit, int arg, int mode)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    alloc = (BtlFinishTask *)MemAlloc(0x310, NULL, 0);
+    alloc = (BtlFinishTask *)MemAlloc(sizeof(BtlFinishTask), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (alloc != NULL) {

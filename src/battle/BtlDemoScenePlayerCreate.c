@@ -15,7 +15,7 @@ BtlDemoScenePlayer *BtlDemoScenePlayerCreate(s32 demoId, void *demo, Actor *acto
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x70, NULL, 0);
+    mem = MemAlloc(sizeof(BtlDemoScenePlayer), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     task = NULL;

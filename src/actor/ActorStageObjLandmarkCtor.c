@@ -56,7 +56,7 @@ ActorStageObjLandmark *ActorStageObjLandmarkCtor(ActorStageObjLandmark *self, fl
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x690, NULL, 0);
+  mem = MemAlloc(0x690 /* PSP: BtlTargetPointLandmark object (struct definition covers 0x684 bytes) */, NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (mem != NULL) {
@@ -136,7 +136,7 @@ ActorStageObjLandmark *ActorStageObjLandmarkCtor(ActorStageObjLandmark *self, fl
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  boxMem = MemAlloc(0xc0, NULL, 0);
+  boxMem = MemAlloc(0xc0 /* PSP: CollisionBox object (struct definition covers 0xb4 bytes) */, NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (boxMem != NULL) {

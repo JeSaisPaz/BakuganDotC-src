@@ -27,7 +27,7 @@ void BtlDemoScbEventGroupReadEvents(BtlDemoScbEventGroup *group, u16 *data, s32 
             MemLock();
             wasLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            ev = MemAlloc(0x34, NULL, 0);
+            ev = MemAlloc(sizeof(BtlDemoScbKeyTrackEvent), NULL, 0);
             MemSetAllocFromLow(wasLow);
             MemUnlock();
             if (ev != NULL) {
@@ -38,7 +38,7 @@ void BtlDemoScbEventGroupReadEvents(BtlDemoScbEventGroup *group, u16 *data, s32 
             MemLock();
             wasLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            ev = MemAlloc(0x28, NULL, 0);
+            ev = MemAlloc(sizeof(BtlDemoScbEvent), NULL, 0);
             MemSetAllocFromLow(wasLow);
             MemUnlock();
             if (ev != NULL) {
@@ -49,7 +49,7 @@ void BtlDemoScbEventGroupReadEvents(BtlDemoScbEventGroup *group, u16 *data, s32 
             MemLock();
             wasLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            ev = MemAlloc(0x3c, NULL, 0);
+            ev = MemAlloc(sizeof(BtlDemoScbMotionEvent), NULL, 0);
             MemSetAllocFromLow(wasLow);
             MemUnlock();
             if (ev != NULL) {
@@ -60,7 +60,7 @@ void BtlDemoScbEventGroupReadEvents(BtlDemoScbEventGroup *group, u16 *data, s32 
             MemLock();
             wasLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            ev = MemAlloc(0x2c, NULL, 0);
+            ev = MemAlloc(sizeof(BtlDemoScbPoseEvent), NULL, 0);
             MemSetAllocFromLow(wasLow);
             MemUnlock();
             if (ev != NULL) {
@@ -71,7 +71,7 @@ void BtlDemoScbEventGroupReadEvents(BtlDemoScbEventGroup *group, u16 *data, s32 
             MemLock();
             wasLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            ev = MemAlloc(0x34, NULL, 0);
+            ev = MemAlloc(sizeof(BtlDemoScbSoundEvent), NULL, 0);
             MemSetAllocFromLow(wasLow);
             MemUnlock();
             if (ev != NULL) {
@@ -82,7 +82,7 @@ void BtlDemoScbEventGroupReadEvents(BtlDemoScbEventGroup *group, u16 *data, s32 
             MemLock();
             wasLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            ev = MemAlloc(0x28, NULL, 0);
+            ev = MemAlloc(sizeof(BtlDemoScbEvent), NULL, 0);
             MemSetAllocFromLow(wasLow);
             MemUnlock();
             if (ev != NULL) {

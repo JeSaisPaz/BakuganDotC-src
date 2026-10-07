@@ -14,7 +14,7 @@ NetInvite *NetInviteCtor(NetInvite *invite)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  lock = MemAlloc(0x38, NULL, 0);
+  lock = MemAlloc(sizeof(CoreLock), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   result = NULL;

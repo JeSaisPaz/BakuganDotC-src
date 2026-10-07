@@ -17,17 +17,17 @@ void *UiTextRenderEnsure(void)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        holder = MemAlloc(4, NULL, 0);
+        holder = MemAlloc(sizeof(void *), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         g_uiTextRenderHolder = holder;
-        memset(holder, 0, 4);
+        memset(holder, 0, sizeof(void *));
 
         stored = NULL;
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        box = MemAlloc(0x10, NULL, 0);
+        box = MemAlloc(sizeof(UiTextBox), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (box != NULL) {

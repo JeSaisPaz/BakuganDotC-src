@@ -85,7 +85,7 @@ void GameFieldPhaseLoad(CoreTask *task)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      pkg = MemAlloc(0x44, NULL, 0);
+      pkg = MemAlloc(sizeof(IoLzsPackage), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       pkgResult = NULL;
@@ -139,7 +139,7 @@ void GameFieldPhaseLoad(CoreTask *task)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    fx = MemAlloc(4, NULL, 0);
+    fx = MemAlloc(sizeof(void *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     fxResult = NULL;
@@ -155,7 +155,7 @@ void GameFieldPhaseLoad(CoreTask *task)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      blur = MemAlloc(0x550, NULL, 0);
+      blur = MemAlloc(sizeof(GfxPlayerBlurTask), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       blurResult = NULL;
@@ -163,7 +163,7 @@ void GameFieldPhaseLoad(CoreTask *task)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        model = MemAlloc(0x140, NULL, 0);
+        model = MemAlloc(sizeof(GfxModel), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         modelResult = NULL;
@@ -174,7 +174,7 @@ void GameFieldPhaseLoad(CoreTask *task)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        cam = MemAlloc(0x2a0, NULL, 0);
+        cam = MemAlloc(sizeof(GfxCamera), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         camResult = NULL;
@@ -285,7 +285,7 @@ void GameFieldPhaseLoad(CoreTask *task)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    charSet = MemAlloc(0xd8, NULL, 0);
+    charSet = MemAlloc(0xd8 /* PSP: char-set manager size; GameFieldCharSet definition is only 0xd0 */, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     charSetResult = NULL;

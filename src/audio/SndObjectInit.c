@@ -26,14 +26,14 @@ SndObject *SndObjectInit(SndObject *self, s32 emitterCount)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(false);
-    emitters = MemAlloc(emitterCount * 4, NULL, 0);
+    emitters = MemAlloc(emitterCount * sizeof(SndEmitter *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->emitters = emitters;
   } else {
     self->emitters = emitters;
   }
-  memset(emitters, 0, emitterCount * 4);
+  memset(emitters, 0, emitterCount * sizeof(SndEmitter *));
   self->emitterCount = emitterCount;
   self->alive = 1;
   self->src = NULL;

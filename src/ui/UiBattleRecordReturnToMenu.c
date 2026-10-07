@@ -39,7 +39,7 @@ void UiBattleRecordReturnToMenu(UiBattleRecord *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x80, NULL, 0);
+    mem = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != NULL) {
@@ -52,7 +52,7 @@ void UiBattleRecordReturnToMenu(UiBattleRecord *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    sprites = MemAlloc(0x4c, NULL, 0);
+    sprites = MemAlloc(19 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->base.data = sprites;

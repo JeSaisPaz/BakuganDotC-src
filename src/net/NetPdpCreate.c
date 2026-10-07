@@ -13,15 +13,15 @@ void NetPdpCreate(void)
   MemLock();
   prevLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  state = MemAlloc(0x28,(char *)0x0,0);
+  state = MemAlloc(sizeof(NetPdpState),(char *)0x0,0);
   MemSetAllocFromLow(prevLow);
   MemUnlock();
   g_netPdpState = state;
-  memset(state,0,0x28);
+  memset(state,0,sizeof(NetPdpState));
   MemLock();
   prevLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  self = MemAlloc(0x14,(char *)0x0,0);
+  self = MemAlloc(sizeof(NetPdp),(char *)0x0,0);
   MemSetAllocFromLow(prevLow);
   MemUnlock();
   pdp = (NetPdp *)0x0;

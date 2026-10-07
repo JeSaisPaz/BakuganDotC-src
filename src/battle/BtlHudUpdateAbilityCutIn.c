@@ -157,7 +157,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
             MemLock();
             fromLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            obj = MemAlloc(0x140, NULL, 0);
+            obj = MemAlloc(sizeof(GfxTexture), NULL, 0);
             MemSetAllocFromLow(fromLow);
             MemUnlock();
             if (obj != NULL) {
@@ -175,7 +175,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
             MemLock();
             fromLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            obj = MemAlloc(0x140, NULL, 0);
+            obj = MemAlloc(sizeof(GfxTexture), NULL, 0);
             MemSetAllocFromLow(fromLow);
             MemUnlock();
             if (obj != NULL) {

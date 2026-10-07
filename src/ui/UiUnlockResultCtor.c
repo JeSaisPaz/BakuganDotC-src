@@ -25,7 +25,7 @@ UiUnlockResult *UiUnlockResultCtor(UiUnlockResult *self, u32 arg)
     MemLock();
     wasFromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    data = MemAlloc(0x94, NULL, 0);
+    data = MemAlloc(0x25 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(wasFromLow);
     MemUnlock();
     self->base.data = data;

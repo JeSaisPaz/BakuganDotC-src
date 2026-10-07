@@ -29,7 +29,7 @@ void GfxInitNullTexture(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    tex = MemAlloc(0x140, NULL, 0);
+    tex = MemAlloc(sizeof(GfxTexture), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (tex != NULL) {

@@ -36,7 +36,7 @@ CoreObject *GameGimmickTouchSpotCtor(GameGimmickTouchSpot *obj, s32 kind, void *
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  collider = MemAlloc(0x190, NULL, 0);
+  collider = MemAlloc(sizeof(CollisionCollider), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (collider != NULL) {

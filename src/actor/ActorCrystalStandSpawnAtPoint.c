@@ -21,7 +21,7 @@ CoreObject *ActorCrystalStandSpawnAtPoint(int index)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x150, NULL, 0);
+    mem = MemAlloc(sizeof(ActorCrystalStand), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != NULL) {

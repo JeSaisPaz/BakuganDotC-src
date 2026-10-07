@@ -21,7 +21,7 @@ void SndBgmPlayerCreate(s32 index)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    player = MemAlloc(0xd4,(char *)0x0,0);
+    player = MemAlloc(sizeof(SndBgmPlayer),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (player != (SndBgmPlayer *)0x0) {

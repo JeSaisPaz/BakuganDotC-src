@@ -13,7 +13,7 @@ void *IoDataMngCreate(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    self = MemAlloc(0x14, (char *)0x0, 0);
+    self = MemAlloc(sizeof(IoDataMng), (char *)0x0, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     mng = (IoDataMng *)0x0;

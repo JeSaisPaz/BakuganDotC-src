@@ -18,7 +18,7 @@ void UiComboListOpenPhase(UiComboList *self)
     MemLock();
     bool wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    outSprites = MemAlloc(0x194,(char *)0x0,0);
+    outSprites = MemAlloc(101 * sizeof(GfxSprite *),(char *)0x0,0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     (self->base).data = outSprites;

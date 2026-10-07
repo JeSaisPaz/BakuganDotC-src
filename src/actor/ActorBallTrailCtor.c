@@ -27,11 +27,11 @@ ActorBallTrail *ActorBallTrailCtor(ActorBallTrail *trail)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  table = (void **)MemAlloc(0x300, NULL, 0);
+  table = (void **)MemAlloc(0xc0 * sizeof(void *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   trail->sprites = table;
-  memset(table, 0, 0x300);
+  memset(table, 0, 0xc0 * sizeof(void *));
   for (i = 0; i < 0xc0; i++) {
     sprite = GfxSpriteLayerCreateBillboardByName(g_billboardSpriteLayer, "eff_ball_a");
     sprite->blendMode = 2;

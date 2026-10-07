@@ -18,7 +18,7 @@ void ActorStageObjRecordInitLists(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    list = MemAlloc(0xc,(char *)0x0,0);
+    list = MemAlloc(sizeof(CoreObjectList),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     g_stageObjRecordList = list;

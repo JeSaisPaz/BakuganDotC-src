@@ -33,7 +33,7 @@ void GmoMaterialSetAttrData(void *mat, u32 index, const u32 *data)
   }
   dst = (u32 *)a->data;
   if (dst == NULL) {
-    dst = GmoHeapAlloc(0, 0x10, 0x10);
+    dst = GmoHeapAlloc(0, 0x10, 4 * sizeof(u32));
     a->data = dst;
     if (dst == NULL) {
       return;

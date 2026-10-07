@@ -75,7 +75,7 @@ Actor *ActorCtor(Actor *self, s32 modelId)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  input = MemAlloc(0x70, NULL, 0);
+  input = MemAlloc(sizeof(BtlInput), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (input != NULL) {
@@ -93,7 +93,7 @@ Actor *ActorCtor(Actor *self, s32 modelId)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  shadow = MemAlloc(0x30, NULL, 0);
+  shadow = MemAlloc(sizeof(BtlShadow), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (shadow != NULL) {

@@ -46,7 +46,7 @@ void UiWorldMapCreateSprites(UiScreen *screen)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sprite = MemAlloc(0x160, NULL, 0);
+  sprite = MemAlloc(sizeof(GfxSprite), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (sprite != NULL) {

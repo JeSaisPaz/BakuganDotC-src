@@ -16,7 +16,7 @@ CoreObject *GameFieldPointCreate(const float *pos, s32 kind, s32 id, float headi
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  obj = MemAlloc(0x40,NULL,0);
+  obj = MemAlloc(sizeof(GameFieldPoint),NULL,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   obj_00 = NULL;

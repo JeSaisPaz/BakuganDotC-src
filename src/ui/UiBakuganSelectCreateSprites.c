@@ -34,7 +34,7 @@ void UiBakuganSelectCreateSprites(UiBakuganSelect *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sprite = MemAlloc(0x160, NULL, 0);
+  sprite = MemAlloc(sizeof(GfxSprite), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   copy = NULL;

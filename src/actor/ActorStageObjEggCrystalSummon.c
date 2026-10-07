@@ -41,7 +41,7 @@ void ActorStageObjEggCrystalSummon(float *pos, int kind, int element, int aiLeve
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  self = MemAlloc(0x390, NULL, 0);
+  self = MemAlloc(sizeof(ActorStageObjEggCrystal), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (self != NULL) {

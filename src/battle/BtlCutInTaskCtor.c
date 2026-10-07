@@ -27,7 +27,7 @@ CoreTask *BtlCutInTaskCtor(BtlCutInTask *self, BtlBakugan *unit)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mgr = MemAlloc(0xa0, NULL, 0);
+    mgr = MemAlloc(sizeof(GfxEffectMgr), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     effects = NULL;

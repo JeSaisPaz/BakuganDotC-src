@@ -35,7 +35,7 @@ void GfxFabClipUpdate(GfxFabClip *clip)
             MemLock();
             fromLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            mem = MemAlloc(0xf0, NULL, 0);
+            mem = MemAlloc(sizeof(GfxFabObject), NULL, 0);
             MemSetAllocFromLow(fromLow);
             MemUnlock();
             obj = NULL;

@@ -15,7 +15,7 @@ IoDecodeMng *IoDecodeMngCreate(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  self = MemAlloc(0x34,(char *)0x0,0);
+  self = MemAlloc(sizeof(IoDecodeMng),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   node = (IoDecodeMng *)0x0;

@@ -14,7 +14,7 @@ static void *AllocCallbackList(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    list = MemAlloc(0x10, NULL, 0);
+    list = MemAlloc(sizeof(CoreList), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (list != NULL) {

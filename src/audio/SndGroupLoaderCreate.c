@@ -17,15 +17,15 @@ void SndGroupLoaderCreate(void)
         MemLock();
         wasLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        holder = MemAlloc(4, NULL, 0);
+        holder = MemAlloc(sizeof(SndGroupLoader *), NULL, 0);
         MemSetAllocFromLow(wasLow);
         MemUnlock();
         g_soundGroupLoader = holder;
-        memset(holder, 0, 4);
+        memset(holder, 0, sizeof(SndGroupLoader *));
         MemLock();
         wasLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        self = MemAlloc(0x1c, NULL, 0);
+        self = MemAlloc(sizeof(SndGroupLoader), NULL, 0);
         MemSetAllocFromLow(wasLow);
         MemUnlock();
         result = NULL;

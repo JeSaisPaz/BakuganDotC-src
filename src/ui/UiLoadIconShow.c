@@ -18,7 +18,7 @@ void UiLoadIconShow(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    this = MemAlloc(0x20,(char *)0x0,0);
+    this = MemAlloc(sizeof(UiLoadIcon),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     task = (void *)0x0;

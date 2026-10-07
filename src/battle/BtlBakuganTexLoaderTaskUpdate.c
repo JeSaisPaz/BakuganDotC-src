@@ -66,7 +66,7 @@ void BtlBakuganTexLoaderTaskUpdate(CoreTask *task)
                 MemLock();
                 fromLow = MemIsAllocFromLow();
                 MemSetAllocFromLow(true);
-                tex = (GfxTexture *)MemAlloc(0x140, NULL, 0);
+                tex = (GfxTexture *)MemAlloc(sizeof(GfxTexture), NULL, 0);
                 MemSetAllocFromLow(fromLow);
                 MemUnlock();
                 if (tex != NULL) {

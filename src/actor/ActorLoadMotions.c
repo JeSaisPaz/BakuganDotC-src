@@ -62,7 +62,7 @@ void ActorLoadMotions(Actor *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    slots = MemAlloc(0x252, NULL, 0);
+    slots = MemAlloc(0x129 * sizeof(s16), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->motionSlots = slots;
@@ -104,7 +104,7 @@ void ActorLoadMotions(Actor *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  slots = MemAlloc(100, NULL, 0);
+  slots = MemAlloc(0x32 * sizeof(s16), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->motionSlots = slots;

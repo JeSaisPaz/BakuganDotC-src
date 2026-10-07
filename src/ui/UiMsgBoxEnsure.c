@@ -17,16 +17,16 @@ void *UiMsgBoxEnsure(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    holder = MemAlloc(4, NULL, 0);
+    holder = MemAlloc(sizeof(void *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     g_uiMsgBoxHolder = holder;
-    memset(holder, 0, 4);
+    memset(holder, 0, sizeof(void *));
     box = NULL;
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    alloc = MemAlloc(0x80, NULL, 0);
+    alloc = MemAlloc(sizeof(UiMsgBox), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (alloc != NULL) {

@@ -16,7 +16,7 @@ void *BtlLoadRequestCreate(u32 kind)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x34, NULL, 0);
+    mem = MemAlloc(sizeof(BtlLoadRequest), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != NULL) {

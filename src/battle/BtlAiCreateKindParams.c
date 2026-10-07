@@ -119,7 +119,7 @@ BtlAiParams *BtlAiCreateKindParams(void *mgr, s32 kind)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    params = MemAlloc(8, NULL, 0);
+    params = MemAlloc(sizeof(BtlAiParams), NULL, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     if (params == NULL) {

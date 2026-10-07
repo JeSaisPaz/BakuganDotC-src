@@ -40,7 +40,7 @@ CoreNode *GmoMotionLoadFile(void *mgr, const char *filename)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    entry = (GmoMotionEntry *)MemAlloc(0x84,(char *)0x0,0);
+    entry = (GmoMotionEntry *)MemAlloc(sizeof(GmoMotionEntry),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (entry != (GmoMotionEntry *)0x0) {
@@ -57,7 +57,7 @@ CoreNode *GmoMotionLoadFile(void *mgr, const char *filename)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    ref = (GmoMotionRef *)MemAlloc(0x3c,(char *)0x0,0);
+    ref = (GmoMotionRef *)MemAlloc(sizeof(GmoMotionRef),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (ref != (GmoMotionRef *)0x0) {

@@ -16,7 +16,7 @@ void *ActorStageObjLandmarkCreate(float *pos)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x400, NULL, 0);
+  mem = MemAlloc(sizeof(ActorStageObjLandmark), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (mem != NULL) {

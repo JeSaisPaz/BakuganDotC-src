@@ -26,7 +26,7 @@ void CollisionPhysBoxInit(CollisionPhysBox *self, void *mtx, const ScePspFVector
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        buf = MemAlloc(0x180, NULL, 0);
+        buf = MemAlloc(3 * 8 * sizeof(ScePspFVector4), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         self->pos = buf;

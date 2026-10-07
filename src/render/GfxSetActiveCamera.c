@@ -19,7 +19,7 @@ void *GfxSetActiveCamera(void *cam)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    newCam = MemAlloc(0x2a0, (const char *)0x0, 0);
+    newCam = MemAlloc(sizeof(GfxCamera), (const char *)0x0, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     cam = (void *)0x0;

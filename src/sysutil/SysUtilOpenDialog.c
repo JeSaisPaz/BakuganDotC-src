@@ -27,7 +27,7 @@ void SysUtilOpenDialog(u32 *cell, s32 kind)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x14, NULL, 0);
+    mem = MemAlloc(sizeof(SysUtilHandler), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != NULL) {
@@ -39,7 +39,7 @@ void SysUtilOpenDialog(u32 *cell, s32 kind)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x20, NULL, 0);
+    mem = MemAlloc(sizeof(SysUtilSavedataHandler), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != NULL) {

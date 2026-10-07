@@ -23,18 +23,18 @@ UiScreen *UiCollectionMenuCtor(UiCollectionMenu *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  data = MemAlloc(0x68, NULL, 0);
+  data = MemAlloc(26 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->base.data = data;
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  data = MemAlloc(8, NULL, 0);
+  data = MemAlloc(2 * sizeof(GfxFab *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_uiSharedAnims = (GfxFab **)data;
-  memset(data, 0, 8);
+  memset(data, 0, 2 * sizeof(GfxFab *));
   UiScreenSetFrameMode((CoreTask *)self, 0);
   self->unk6c = 0;
   if (!GfxFaderIsReady()) {

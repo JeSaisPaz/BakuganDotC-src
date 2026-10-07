@@ -21,7 +21,7 @@ void BtlCombatSetup(BtlCombatState *combat, void *owner, int species)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        stats = MemAlloc(0x110, NULL, 0);
+        stats = MemAlloc(sizeof(BtlUnitStatTable), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         combat->stats = stats;

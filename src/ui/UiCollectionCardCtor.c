@@ -22,7 +22,7 @@ UiScreen *UiCollectionCardCtor(UiCollectionCard *self, s8 category)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  data = MemAlloc(0x108, NULL, 0);
+  data = MemAlloc(66 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->base.data = data;

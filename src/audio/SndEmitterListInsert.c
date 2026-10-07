@@ -22,7 +22,7 @@ CorePrioNode *SndEmitterListInsert(CorePrioList *list, SndEmitter *data, s32 pri
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    heapNode = MemAlloc(0x10, (const char *)0x0, 0);
+    heapNode = MemAlloc(sizeof(CorePrioNode), (const char *)0x0, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     node = (CorePrioNode *)0x0;

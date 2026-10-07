@@ -36,7 +36,7 @@ UiMsgBox *UiMsgBoxCtor(UiMsgBox *self)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  box = MemAlloc(0x10, NULL, 0);
+  box = MemAlloc(sizeof(UiTextBox), NULL, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   textBox = NULL;
@@ -61,7 +61,7 @@ UiMsgBox *UiMsgBoxCtor(UiMsgBox *self)
   MemLock();
   wasLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  rect = MemAlloc(0x50, NULL, 0);
+  rect = MemAlloc(sizeof(GfxRect), NULL, 0);
   MemSetAllocFromLow(wasLow);
   MemUnlock();
   highlight = NULL;

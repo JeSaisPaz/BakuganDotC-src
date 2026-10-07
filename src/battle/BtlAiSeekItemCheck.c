@@ -54,7 +54,7 @@ s32 BtlAiSeekItemCheck(BtlAi *self)
                     MemLock();
                     fromLow = MemIsAllocFromLow();
                     MemSetAllocFromLow(true);
-                    flags = MemAlloc(count << 2, NULL, 0);
+                    flags = MemAlloc(count * sizeof(s32), NULL, 0);
                     MemSetAllocFromLow(fromLow);
                     MemUnlock();
                     for (i = 0; i < flagCount; i++) {

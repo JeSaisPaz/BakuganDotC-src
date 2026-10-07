@@ -38,7 +38,7 @@ void ActorStageObjSpawnBreakModel(ActorStageObjBase *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = (ActorStageObjBreakPiece *)MemAlloc(0x340, NULL, 0);
+  mem = (ActorStageObjBreakPiece *)MemAlloc(sizeof(ActorStageObjBreakPiece), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (mem != NULL) {

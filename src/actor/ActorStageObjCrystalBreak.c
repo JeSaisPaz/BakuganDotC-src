@@ -60,7 +60,7 @@ void ActorStageObjCrystalBreak(ActorStageObjCrystal *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x1e0, NULL, 0);
+    mem = MemAlloc(sizeof(ActorStageObjDebris), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != NULL) {

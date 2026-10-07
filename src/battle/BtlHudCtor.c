@@ -190,11 +190,11 @@ BtlHud *BtlHudCtor(BtlHud *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    fabs = MemAlloc(0x10, NULL, 0);
+    fabs = MemAlloc(4 * sizeof(GfxFab *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->fabs = fabs;
-    memset(fabs, 0, 0x10);
+    memset(fabs, 0, 4 * sizeof(GfxFab *));
 
     self->overlayObj[0] = NULL;
     self->overlayObj[1] = NULL;

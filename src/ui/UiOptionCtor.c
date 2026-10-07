@@ -20,7 +20,7 @@ UiOption *UiOptionCtor(UiOption *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  data = MemAlloc(0xec, NULL, 0);
+  data = MemAlloc(0x3b * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->base.data = data;

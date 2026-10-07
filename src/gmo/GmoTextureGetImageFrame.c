@@ -6,7 +6,7 @@
    `+0xc` image list, `+0x10` palette list, `+0x14` animation tracks (0x30 bytes, count `+0x18` +
    1), `+0x1d..+0x1f` frame selectors), or 0. */
 
-u32 GmoTextureGetImageFrame(void *tex, int level, int frame)
+void *GmoTextureGetImageFrame(void *tex, int level, int frame)
 
 {
   GmoImage *list;
@@ -24,8 +24,8 @@ u32 GmoTextureGetImageFrame(void *tex, int level, int frame)
         }
         slot += idx * list->levelCount;
       }
-      return (u32)(uintptr_t)*slot;
+      return *slot;
     }
   }
-  return 0;
+  return NULL;
 }

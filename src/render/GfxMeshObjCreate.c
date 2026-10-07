@@ -18,7 +18,7 @@ void * GfxMeshObjCreate(s32 state, void *owner)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  self = MemAlloc(0x1c0, NULL, 0);
+  self = MemAlloc(sizeof(GfxMeshObj), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   obj = NULL;

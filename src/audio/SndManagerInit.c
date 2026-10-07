@@ -33,7 +33,7 @@ SndManager *SndManagerInit(SndManager *mgr)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  lock = MemAlloc(0x38, NULL, 0);
+  lock = MemAlloc(sizeof(CoreLock), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (lock != NULL) {
@@ -44,7 +44,7 @@ SndManager *SndManagerInit(SndManager *mgr)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  lock = MemAlloc(0x38, NULL, 0);
+  lock = MemAlloc(sizeof(CoreLock), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (lock != NULL) {
@@ -70,7 +70,7 @@ SndManager *SndManagerInit(SndManager *mgr)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  table = MemAlloc(0x100, NULL, 0);
+  table = MemAlloc(0x40 * sizeof(void *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_soundAudioSettings->bankTable = table;
@@ -81,7 +81,7 @@ SndManager *SndManagerInit(SndManager *mgr)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    bank = MemAlloc(0x44, NULL, 0);
+    bank = MemAlloc(sizeof(IoLzsPackage), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (bank != NULL) {

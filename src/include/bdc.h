@@ -6,8 +6,6 @@
 #define INFINITY __builtin_inff()
 #define NAN __builtin_nanf("")
 #define ABS(x) __builtin_fabsf(x)
-typedef __UINTPTR_TYPE__ uintptr_t;
-typedef __INTPTR_TYPE__ intptr_t;
 /* VFPU helpers: portable C for the VFPU (and other Allegrex) operations C has no operator for.
    The comment on each helper gives its semantics. IEEE results, not the VFPU's approximation
    bits; build with -ffp-contract=off. */
@@ -76,6 +74,9 @@ typedef unsigned long long qword;
 #ifndef BDC_ALIGN16
 #define BDC_ALIGN16 __attribute__((aligned(16)))
 #endif
+
+typedef __UINTPTR_TYPE__ uintptr_t;
+typedef __INTPTR_TYPE__ intptr_t;
 
 typedef struct AcosConsts {
     double one;      /* 0x00 1.0 */
@@ -6019,7 +6020,7 @@ typedef struct GmoInstance {
     u16 id;                    /* +0x0e instance id (1 = shared) */
     void *state;               /* +0x10 0x60-byte state block or NULL: the 8 bounding-box vertices (float x,y,z) of the mesh 0x16 tag, drawn by a BBOX/BJUMP prefix of the display list */
     void *vertices;            /* +0x14 vertex data */
-    void *extra;               /* +0x18 cleared by the ctor; GmoModelBuild stores the vertex-type word here (array format & 0xffefff, the VTYPE operand) */
+    u32 extra;                 /* +0x18 cleared by the ctor; GmoModelBuild stores the vertex-type word here (array format & 0xffefff, the VTYPE operand) */
     u16 vertexSize;            /* +0x1c vertex data bytes = vertexSize * vertexCount */
     u16 vertexCount;           /* +0x1e */
 } GmoInstance;
@@ -9220,7 +9221,7 @@ typedef struct UiLanguageSelect {
     float itemScale[7];     /* +0x3c per-row button scale (1.0 .. 1.1) */
     u8 done;                /* +0x58 set when the task should be removed */
     u8 _pad59[3];           /* +0x59 */
-    void *word5c;           /* +0x5c cancel mode (set via field 5): 0 = circle buzzes, 1 = circle leaves with result -1 */
+    u32 word5c;             /* +0x5c cancel mode (set via field 5): 0 = circle buzzes, 1 = circle leaves with result -1 */
 } UiLanguageSelect;
 
 typedef struct UiLayoutEntry {
@@ -14448,8 +14449,8 @@ GmoImage *GmoTextureFindPalette(GmoTexture *tex, u32 id, int n);
 void *GmoTextureFrameCopy(void *dst, const void *src, u32 flags, void *arena);
 void *GmoTextureFramesCopy(void *frames, s32 count, u32 flags, void *arena);
 s32 GmoTextureFramesMeasureCopy(void *frames, s32 count, u32 flags, void *arena);
-u32 GmoTextureGetImageFrame(void *tex, int level, int frame);
-u32 GmoTextureGetPaletteFrame(void *tex, int level, int frame);
+void *GmoTextureGetImageFrame(void *tex, int level, int frame);
+void *GmoTextureGetPaletteFrame(void *tex, int level, int frame);
 float *GmoTextureGetUvTransform(GmoTexture *tex);
 void *GmoTextureInit(void *tex);
 u32 GmoTextureIsDynamic(GmoTexture *tex);
@@ -14542,7 +14543,7 @@ void *IoDataMngFindByOwner(IoDataMng *self, void *owner, void *prev);
 void *IoDataMngFindByPath(IoDataMng *self, char *path);
 void IoDataMngRelease(IoDataMng *self, void *owner, void *data);
 void IoDataMngReleaseOwner(IoDataMng *self, void *owner);
-void *IoDataMngRequest(IoDataMng *self, void *owner, char *path, u32 buffer, bool forceNew, bool copyPath);
+void *IoDataMngRequest(IoDataMng *self, void *owner, char *path, uintptr_t buffer, bool forceNew, bool copyPath);
 void IoDataMngUpdate(IoDataMng *self);
 void IoDataOwnerNodeDtor(CoreNode *node, u32 flags);
 void IoDataRefPoolCreate(void);
@@ -15569,7 +15570,7 @@ u32 GfxTextureRoundPow2(void *tex, u32 n);
 void GfxTextureSelectSlot(void *tex, int slot);
 void GfxTextureSetMipBias(float bias, void *tex);
 void GfxTextureSetMipSlope(float slope, void *tex);
-bool GfxTextureSetSlotClut(void *tex, int slot, u32 clut, bool fromLow);
+bool GfxTextureSetSlotClut(void *tex, int slot, void *clut, bool fromLow);
 void GfxTextureSwapSlots(void *tex, int a, int b);
 void GfxTextureSystemReset(void);
 void GfxTextureUnswizzleRows(void *data, int format, int size);
@@ -17285,8 +17286,8 @@ void UiLanguageSelectAnimateItems(void *self);
 CoreTask *UiLanguageSelectCtor(CoreTask *task);
 void UiLanguageSelectDraw(CoreTask *task);
 void UiLanguageSelectDtor(CoreTask *task, u32 flags);
-void *UiLanguageSelectGetField(CoreTask *task, u32 field);
-void UiLanguageSelectSetField(CoreTask *task, u32 field, void *value);
+u32 UiLanguageSelectGetField(CoreTask *task, u32 field);
+void UiLanguageSelectSetField(CoreTask *task, u32 field, u32 value);
 void UiLanguageSelectSetResult(void *self, s32 value);
 void UiLanguageSelectStateBuild(CoreTask *task);
 void UiLanguageSelectStateFinish(CoreTask *task);
@@ -18433,7 +18434,7 @@ extern __typeof__(VtblEntry[2]) g_sndObjectMgrVtbl;
 extern __typeof__(const void *[2]) g_sndObjectVtable;
 extern __typeof__(SceSasCore) g_sndSasCore;
 extern __typeof__(int) g_sndSasInitialized;
-extern __typeof__(u32[128]) g_sndSsBankTable;
+extern __typeof__(void **[128]) g_sndSsBankTable;
 extern __typeof__(const u16[128]) g_sndSsFinePitchTable;
 extern __typeof__(s32) g_sndSsMaxVoices;
 extern __typeof__(SceLwMutex) g_sndSsMutex;

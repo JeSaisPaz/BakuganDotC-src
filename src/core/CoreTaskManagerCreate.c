@@ -13,7 +13,7 @@ void CoreTaskManagerCreate(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mgr = MemAlloc(4, NULL, 0);
+    mgr = MemAlloc(4 /* PSP: 4-byte task manager object, no struct */, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mgr != NULL) {

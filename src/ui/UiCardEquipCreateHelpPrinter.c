@@ -15,7 +15,7 @@ void UiCardEquipCreateHelpPrinter(UiCardEquip *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(1);
-    printer = MemAlloc(0xf0, 0, 0);
+    printer = MemAlloc(sizeof(UiTextPrinter), 0, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (printer != NULL) {

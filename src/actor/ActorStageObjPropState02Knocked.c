@@ -67,7 +67,7 @@ void ActorStageObjPropState02Knocked(ActorStageObjProp *self)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      mem = (CollisionPhysBox *)MemAlloc(0x170, NULL, 0);
+      mem = (CollisionPhysBox *)MemAlloc(sizeof(CollisionPhysBox), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       if (mem != NULL) {

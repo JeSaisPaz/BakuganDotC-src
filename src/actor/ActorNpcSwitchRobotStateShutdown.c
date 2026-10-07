@@ -58,7 +58,7 @@ void ActorNpcSwitchRobotStateShutdown(ActorNpcSwitchRobot *self)
     GfxEffectSpawnAttached(g_worldEffectMgr, 0x4a, self->footPos[0]);
     GfxEffectSpawnAttached(g_worldEffectMgr, 0x4a, self->footPos[1]);
 
-    record = MemAllocAligned(0x38, true);
+    record = MemAllocAligned(sizeof(GameGimmickRecord), true);
     record->heading = 0;
     /* translation row scaled by 0.05 (vscl.t; lane 3 is not used) */
     for (i = 0; i < 3; i++) {
@@ -88,7 +88,7 @@ void ActorNpcSwitchRobotStateShutdown(ActorNpcSwitchRobot *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    obj = MemAlloc(0x2e0, NULL, 0);
+    obj = MemAlloc(sizeof(GameGimmickCorePoint), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     gimmick = NULL;

@@ -92,7 +92,7 @@ void *ActorStageObjRecordSpawn(ActorStageObjRecord *rec)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      mem = MemAlloc(0x30, NULL, 0);
+      mem = MemAlloc(sizeof(BtlItemSpawner), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       if (mem != NULL) {

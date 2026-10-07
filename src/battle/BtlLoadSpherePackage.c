@@ -19,7 +19,7 @@ static IoLzsPackage *NewPackageNode(void)
     MemLock();
     wasFromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x44, NULL, 0);
+    mem = MemAlloc(sizeof(IoLzsPackage), NULL, 0);
     MemSetAllocFromLow(wasFromLow);
     MemUnlock();
     if (mem != NULL) {

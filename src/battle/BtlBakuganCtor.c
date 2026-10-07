@@ -77,7 +77,7 @@ void *BtlBakuganCtor(BtlBakugan *self, s32 kind)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  inputMem = MemAlloc(0x70, (const char *)0, 0);
+  inputMem = MemAlloc(sizeof(BtlInput), (const char *)0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (inputMem != (BtlInput *)0) {
@@ -97,7 +97,7 @@ void *BtlBakuganCtor(BtlBakugan *self, s32 kind)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    shadowMem = MemAlloc(0x30, (const char *)0, 0);
+    shadowMem = MemAlloc(sizeof(BtlShadow), (const char *)0, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (shadowMem != (BtlShadow *)0) {

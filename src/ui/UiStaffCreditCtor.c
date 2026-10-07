@@ -53,11 +53,11 @@ UiScreen *UiStaffCreditCtor(UiScreen *screen)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  anims = MemAlloc(4, (char *)0x0, 0);
+  anims = MemAlloc(sizeof(GfxFab *), (char *)0x0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_uiSharedAnims = (GfxFab **)anims;
-  memset(anims, 0, 4);
+  memset(anims, 0, sizeof(GfxFab *));
   UiScreenKeepSharedBg(screen);
   return screen;
 }

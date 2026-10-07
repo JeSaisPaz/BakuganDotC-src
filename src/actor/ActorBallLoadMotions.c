@@ -33,7 +33,7 @@ void ActorBallLoadMotions(CoreObject *ball)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    map = (u16 *)MemAlloc(10, NULL, 0);
+    map = (u16 *)MemAlloc(5 * sizeof(u16), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->motionMap = map;

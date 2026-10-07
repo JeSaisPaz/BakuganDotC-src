@@ -18,7 +18,7 @@ void *NetCharaFindOrCreate(u8 *mac)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    self = MemAlloc(0x15c,(char *)0x0,0);
+    self = MemAlloc(sizeof(NetChara),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     found = (NetChara *)0x0;

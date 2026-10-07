@@ -19,7 +19,7 @@ void *UiWindowFrameNew(char *style, const float *rect, u32 arg, float depth)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  self = MemAlloc(0x130, NULL, 0);
+  self = MemAlloc(sizeof(UiWindowFrame), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (self != NULL) {

@@ -108,7 +108,7 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xa0, (char *)0x0, 0);
+  mem = MemAlloc(sizeof(CollisionDebugPrim), (char *)0x0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   ring = (CollisionDebugPrim *)0x0;
@@ -214,7 +214,7 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xa0, (char *)0x0, 0);
+  mem = MemAlloc(sizeof(CollisionDebugPrim), (char *)0x0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   prim = (CollisionDebugPrim *)0x0;
@@ -228,7 +228,7 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xa0, (char *)0x0, 0);
+  mem = MemAlloc(sizeof(CollisionDebugPrim), (char *)0x0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   prim = (CollisionDebugPrim *)0x0;
@@ -243,7 +243,7 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xa0, (char *)0x0, 0);
+  mem = MemAlloc(sizeof(CollisionDebugPrim), (char *)0x0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   endRing = (CollisionDebugPrim *)0x0;
@@ -260,7 +260,7 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xa0, (char *)0x0, 0);
+  mem = MemAlloc(sizeof(CollisionDebugPrim), (char *)0x0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (mem != (CollisionDebugPrim *)0x0) {
@@ -274,7 +274,7 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0xa0, (char *)0x0, 0);
+  mem = MemAlloc(sizeof(CollisionDebugPrim), (char *)0x0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   prim = (CollisionDebugPrim *)0x0;

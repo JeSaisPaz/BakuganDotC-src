@@ -32,7 +32,7 @@ void UiAdvSelectInitSprites(UiAdvSelect *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sprite = (GfxSprite *)MemAlloc(0x160, NULL, 0);
+  sprite = (GfxSprite *)MemAlloc(sizeof(GfxSprite), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (sprite != NULL) {

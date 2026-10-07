@@ -47,7 +47,7 @@ ActorStageObjCrystal *ActorStageObjCrystalCtor(ActorStageObjCrystal *self, float
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x680, NULL, 0);
+  mem = MemAlloc(sizeof(BtlTargetPoint), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (mem != NULL) {

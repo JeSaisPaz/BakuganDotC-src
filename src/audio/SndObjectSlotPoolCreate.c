@@ -20,11 +20,11 @@ void SndObjectSlotPoolCreate(s32 count)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  pool = MemAlloc(0x14,(char *)0x0,0);
+  pool = MemAlloc(sizeof(MemPool),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (pool != (MemPool *)0x0) {
-    MemPoolInit(pool,4,count,true);
+    MemPoolInit(pool,sizeof(SndEmitter *),count,true);
   }
   g_soundObjectSlotPool = pool;
   return;

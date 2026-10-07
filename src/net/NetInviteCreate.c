@@ -17,15 +17,15 @@ void NetInviteCreate(void)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    s = MemAlloc(4,(char *)0x0,0);
+    s = MemAlloc(sizeof(void *),(char *)0x0,0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     g_netInvite = s;
-    memset(s,0,4);
+    memset(s,0,sizeof(void *));
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    invite = MemAlloc(0x78,(char *)0x0,0);
+    invite = MemAlloc(sizeof(NetInvite),(char *)0x0,0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     result = (void *)0x0;

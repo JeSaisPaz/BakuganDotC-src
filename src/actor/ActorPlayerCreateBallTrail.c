@@ -16,7 +16,7 @@ void ActorPlayerCreateBallTrail(ActorPlayer *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    trail = MemAlloc(0x840,(char *)0x0,0);
+    trail = MemAlloc(sizeof(ActorBallTrail),(char *)0x0,0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     result = (void *)0x0;

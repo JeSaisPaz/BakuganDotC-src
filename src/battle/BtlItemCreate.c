@@ -15,7 +15,7 @@ void BtlItemCreate(s32 kind, u32 *pos, u32 life, u8 appearAnim, void *spawner)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = (BtlItem *)MemAlloc(0x80, NULL, 0);
+    mem = (BtlItem *)MemAlloc(0x80 /* PSP: allocation is 0x80 bytes, smaller than the 0x88-byte BtlItem layout */, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     item = NULL;

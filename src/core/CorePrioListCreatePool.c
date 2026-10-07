@@ -16,10 +16,10 @@ void CorePrioListCreatePool(CorePrioList *list, s32 count)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    pool = MemAlloc(0x14, NULL, 0);
+    pool = MemAlloc(sizeof(MemPool), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (pool != NULL)
-        MemPoolInit(pool, 0x10, count, true);
+        MemPoolInit(pool, sizeof(CorePrioNode), count, true);
     list->pool = pool;
 }

@@ -21,7 +21,7 @@ void NetErrorCreate(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  holder = MemAlloc(8, NULL, 0);
+  holder = MemAlloc(2 * sizeof(void *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_netErrorMgr = holder;
@@ -44,7 +44,7 @@ void NetErrorCreate(void)
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (pool != NULL) {
-    MemPoolInit(pool, 8, 0x20, true);
+    MemPoolInit(pool, 8 /* PSP: 8-byte error record, no struct definition */, 0x20, true);
   }
   g_netErrorMgr[1] = pool;
 }

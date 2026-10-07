@@ -18,7 +18,7 @@ SndDecOut *SndDecOutInit(SndDecOut *dec, s32 mode)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  lock = MemAlloc(0x38, NULL, 0);
+  lock = MemAlloc(sizeof(CoreLock), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (lock != NULL) {
@@ -30,12 +30,12 @@ SndDecOut *SndDecOutInit(SndDecOut *dec, s32 mode)
   dec->mode = mode;
   dec->dataBuffer = NULL;
   dec->dataSize = 0;
-  ring = MemAllocAligned(SndGetManager()->blockBytes * 2, true);
+  ring = MemAllocAligned(SndGetManager()->blockBytes * 2 /* PSP: two blocks of blockBytes bytes */, true);
   dec->ring = ring;
-  memset(ring, 0, SndGetManager()->blockBytes * 2);
-  decodeBuf = MemAllocAligned(0x2000, true);
+  memset(ring, 0, SndGetManager()->blockBytes * 2 /* PSP: two blocks of blockBytes bytes */);
+  decodeBuf = MemAllocAligned(0x1000 * sizeof(s16), true);
   dec->decodeBuf = decodeBuf;
-  memset(decodeBuf, 0, 0x2000);
+  memset(decodeBuf, 0, 0x1000 * sizeof(s16));
   dec->readBlock = 0;
   dec->blockCount = 0;
   dec->decodePos = 0;

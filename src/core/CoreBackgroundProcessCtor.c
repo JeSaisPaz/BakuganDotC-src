@@ -14,7 +14,7 @@ CoreBackgroundProcess *CoreBackgroundProcessCtor(CoreBackgroundProcess *proc)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    jobs = MemAlloc(0x10, NULL, 0);
+    jobs = MemAlloc(sizeof(CoreList), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (jobs != NULL) {
@@ -25,7 +25,7 @@ CoreBackgroundProcess *CoreBackgroundProcessCtor(CoreBackgroundProcess *proc)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    lock = MemAlloc(0x38, NULL, 0);
+    lock = MemAlloc(sizeof(CoreLock), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (lock != NULL) {

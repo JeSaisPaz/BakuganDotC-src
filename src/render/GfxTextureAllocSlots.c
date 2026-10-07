@@ -14,7 +14,7 @@ void GfxTextureAllocSlots(void *tex, bool fromLow)
   MemLock();
   prevLow = MemIsAllocFromLow();
   MemSetAllocFromLow(fromLow);
-  p = MemAlloc(0x300, (char *)0, 0);
+  p = MemAlloc(8 * sizeof(t->inlineBlock), (char *)0, 0);
   MemSetAllocFromLow(prevLow);
   MemUnlock();
   t->blocks = (unsigned char *)p;

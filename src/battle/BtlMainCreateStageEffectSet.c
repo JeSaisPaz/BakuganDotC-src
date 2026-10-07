@@ -23,7 +23,7 @@ void BtlMainCreateStageEffectSet(BtlMain *self, s32 *data)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mgr = MemAlloc(0xa0, NULL, 0);
+    mgr = MemAlloc(sizeof(GfxEffectMgr), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mgr != NULL) {

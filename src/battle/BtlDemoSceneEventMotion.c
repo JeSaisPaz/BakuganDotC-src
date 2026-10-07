@@ -100,7 +100,7 @@ void BtlDemoSceneEventMotion(BtlDemoScenePlayer *player, void *event)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        node = (BtlDemoSceneMotionEvent *)MemAlloc(0x28, NULL, 0);
+        node = (BtlDemoSceneMotionEvent *)MemAlloc(sizeof(BtlDemoSceneMotionEvent), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (node != NULL) {

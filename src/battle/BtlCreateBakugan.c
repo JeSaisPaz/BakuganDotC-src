@@ -30,7 +30,7 @@ void *BtlCreateBakugan(int kind, int mode, void *spawn)
             MemLock();
             fromLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            mem = MemAlloc(0x670, NULL, 0);
+            mem = MemAlloc(sizeof(BtlBakugan), NULL, 0);
             MemSetAllocFromLow(fromLow);
             MemUnlock();
             unit = NULL;
@@ -42,7 +42,7 @@ void *BtlCreateBakugan(int kind, int mode, void *spawn)
             MemLock();
             fromLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            mem = MemAlloc(0x6e0, NULL, 0);
+            mem = MemAlloc(sizeof(BtlUnitAlt), NULL, 0);
             MemSetAllocFromLow(fromLow);
             MemUnlock();
             unit = NULL;
@@ -56,7 +56,7 @@ void *BtlCreateBakugan(int kind, int mode, void *spawn)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        mem = MemAlloc(0x710, NULL, 0);
+        mem = MemAlloc(sizeof(BtlUnitMode4), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         unit = NULL;
@@ -68,7 +68,7 @@ void *BtlCreateBakugan(int kind, int mode, void *spawn)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        mem = MemAlloc(0x6d0, NULL, 0);
+        mem = MemAlloc(sizeof(BtlCpuUnit), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         unit = NULL;
@@ -80,7 +80,7 @@ void *BtlCreateBakugan(int kind, int mode, void *spawn)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        mem = MemAlloc(0x6e0, NULL, 0);
+        mem = MemAlloc(sizeof(BtlUnitAlt), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         unit = NULL;

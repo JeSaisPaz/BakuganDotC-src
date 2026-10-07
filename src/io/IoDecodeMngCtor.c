@@ -16,12 +16,12 @@ IoDecodeMng *IoDecodeMngCtor(IoDecodeMng *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  pool = MemAlloc(0x14,(char *)0x0,0);
+  pool = MemAlloc(sizeof(MemPool),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   result = (MemPool *)0x0;
   if (pool != (MemPool *)0x0) {
-    MemPoolInit(pool,0x10b0,8,true);
+    MemPoolInit(pool,sizeof(IoDecodeJob),8,true);
     result = pool;
   }
   self->pool = result;

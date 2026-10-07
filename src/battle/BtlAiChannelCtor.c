@@ -19,7 +19,7 @@ BtlAiChannel *BtlAiChannelCtor(BtlAiChannel *self)
     self->cmdElapsed = 0.0f;
     self->cmdExpired = 1;
     self->rules = NULL;
-    CxxVecNewSimple(self->weights, 10, 0x10, BtlAiChannelWeightEntryCtor);
+    CxxVecNewSimple(self->weights, 10, sizeof(BtlAiWeightTable), BtlAiChannelWeightEntryCtor);
     self->exec.timerLimit = 0.0f;
     self->exec.timerElapsed = 0.0f;
     self->exec.timerExpired = 1;

@@ -18,14 +18,14 @@ void NetPlayCreate(void)
     MemLock();
     prevLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    holder = MemAlloc(4,(char *)0x0,0);
+    holder = MemAlloc(sizeof(void *),(char *)0x0,0);
     MemSetAllocFromLow(prevLow);
     MemUnlock();
     g_netPlay = holder;
     MemLock();
     prevLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    self = MemAlloc(0xf0,(char *)0x0,0);
+    self = MemAlloc(sizeof(NetPlay),(char *)0x0,0);
     MemSetAllocFromLow(prevLow);
     MemUnlock();
     obj = (NetPlay *)0x0;

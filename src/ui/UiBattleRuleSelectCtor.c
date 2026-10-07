@@ -24,7 +24,7 @@ UiBattleRuleSelect *UiBattleRuleSelectCtor(UiBattleRuleSelect *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  data = MemAlloc(0x74, NULL, 0);
+  data = MemAlloc(0x1d * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->base.data = data;

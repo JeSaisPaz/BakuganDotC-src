@@ -22,16 +22,16 @@ void NetAdhocCreate(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mgr = MemAlloc(0x1fc, NULL, 0);
+  mgr = MemAlloc(sizeof(NetAdhocManager), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_netAdhoc = mgr;
-  memset(mgr, 0, 0x1fc);
+  memset(mgr, 0, sizeof(NetAdhocManager));
 
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  queue = MemAlloc(0x1c, NULL, 0);
+  queue = MemAlloc(sizeof(CoreBufQueue), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (queue != NULL) {
@@ -44,7 +44,7 @@ void NetAdhocCreate(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  conn = MemAlloc(0x5c, NULL, 0);
+  conn = MemAlloc(sizeof(NetAdhocConn), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (conn != NULL) {
@@ -55,7 +55,7 @@ void NetAdhocCreate(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  list = MemAlloc(0x10, NULL, 0);
+  list = MemAlloc(sizeof(CoreList), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (list != NULL) {

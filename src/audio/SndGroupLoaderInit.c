@@ -19,7 +19,7 @@ SndGroupLoader *SndGroupLoaderInit(SndGroupLoader *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    list = MemAlloc(0x10, NULL, 0);
+    list = MemAlloc(sizeof(CoreList), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (list != NULL)
@@ -28,7 +28,7 @@ SndGroupLoader *SndGroupLoaderInit(SndGroupLoader *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    list = MemAlloc(0x10, NULL, 0);
+    list = MemAlloc(sizeof(CoreList), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (list != NULL)
@@ -37,7 +37,7 @@ SndGroupLoader *SndGroupLoaderInit(SndGroupLoader *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    list = MemAlloc(0x10, NULL, 0);
+    list = MemAlloc(sizeof(CoreList), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (list != NULL)
@@ -46,7 +46,7 @@ SndGroupLoader *SndGroupLoaderInit(SndGroupLoader *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    lock = MemAlloc(0x38, NULL, 0);
+    lock = MemAlloc(sizeof(CoreLock), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (lock != NULL)
@@ -55,20 +55,20 @@ SndGroupLoader *SndGroupLoaderInit(SndGroupLoader *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    pool = MemAlloc(0x14, NULL, 0);
+    pool = MemAlloc(sizeof(MemPool), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (pool != NULL)
-        MemPoolInit(pool, 0xc, 0x20, true);
+        MemPoolInit(pool, sizeof(SndGroupRequest), 0x20, true);
     self->requestPool = pool;
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    pool = MemAlloc(0x14, NULL, 0);
+    pool = MemAlloc(sizeof(MemPool), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (pool != NULL)
-        MemPoolInit(pool, 8, 0x20, true);
+        MemPoolInit(pool, sizeof(SndGroupHold), 0x20, true);
     self->holdPool = pool;
     self->enabled = 0;
     return self;

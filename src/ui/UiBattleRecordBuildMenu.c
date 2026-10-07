@@ -20,7 +20,7 @@ void UiBattleRecordBuildMenu(UiBattleRecord *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    sprites = MemAlloc(0x4c, NULL, 0);
+    sprites = MemAlloc(19 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->base.data = sprites;

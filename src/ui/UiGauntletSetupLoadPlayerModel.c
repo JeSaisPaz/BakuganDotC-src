@@ -26,7 +26,7 @@ void UiGauntletSetupLoadPlayerModel(UiGauntletSetup *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  alloc = MemAlloc(0x140, NULL, 0);
+  alloc = MemAlloc(sizeof(GfxModel), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (alloc != NULL) {

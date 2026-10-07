@@ -26,7 +26,7 @@ void BtlBakuganInitColliders(BtlBakugan *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = (CollisionCollider *)MemAlloc(400, NULL, 0);
+    mem = (CollisionCollider *)MemAlloc(sizeof(CollisionCollider), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     collider = NULL;
@@ -79,7 +79,7 @@ void BtlBakuganInitColliders(BtlBakugan *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = (CollisionCollider *)MemAlloc(400, NULL, 0);
+    mem = (CollisionCollider *)MemAlloc(sizeof(CollisionCollider), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     collider = NULL;

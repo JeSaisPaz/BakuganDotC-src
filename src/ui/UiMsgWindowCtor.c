@@ -22,7 +22,7 @@ UiMsgWindow *UiMsgWindowCtor(UiMsgWindow *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  text = MemAlloc(0x800, NULL, 0);
+  text = MemAlloc(0x800 * sizeof(char), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->text = text;
@@ -39,7 +39,7 @@ UiMsgWindow *UiMsgWindowCtor(UiMsgWindow *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  box = MemAlloc(0x10, NULL, 0);
+  box = MemAlloc(sizeof(UiTextBox), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (box != NULL) {
@@ -50,7 +50,7 @@ UiMsgWindow *UiMsgWindowCtor(UiMsgWindow *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  rect = MemAlloc(0x50, NULL, 0);
+  rect = MemAlloc(sizeof(GfxRect), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (rect != NULL) {
@@ -63,7 +63,7 @@ UiMsgWindow *UiMsgWindowCtor(UiMsgWindow *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  layer = MemAlloc(0x80, NULL, 0);
+  layer = MemAlloc(sizeof(GfxSpriteLayer), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (layer != NULL) {

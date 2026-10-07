@@ -33,7 +33,7 @@ UiMainMenu *UiMainMenuCtor(UiMainMenu *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(0x58, NULL, 0);
+  block = MemAlloc(22 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->base.data = block;
@@ -41,11 +41,11 @@ UiMainMenu *UiMainMenuCtor(UiMainMenu *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(8, NULL, 0);
+  block = MemAlloc(2 * sizeof(GfxFab *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_uiSharedAnims = block;
-  memset(block, 0, 8);
+  memset(block, 0, 2 * sizeof(GfxFab *));
 
   UiScreenSetFrameMode((CoreTask *)self, 1);
   self->unk6c = 0;

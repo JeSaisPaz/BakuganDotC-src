@@ -18,7 +18,7 @@ SaveProfile *SaveProfileHolderCtor(SaveProfile *self)
   MemLock();
   savedLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  words = MemAlloc(300,(char *)0x0,0);
+  words = MemAlloc(75 * sizeof(u32),(char *)0x0,0);
   MemSetAllocFromLow(savedLow);
   MemUnlock();
   self->words = words;
@@ -26,7 +26,7 @@ SaveProfile *SaveProfileHolderCtor(SaveProfile *self)
   MemLock();
   savedLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  lang = MemAlloc(4,(char *)0x0,0);
+  lang = MemAlloc(sizeof(s32),(char *)0x0,0);
   MemSetAllocFromLow(savedLow);
   MemUnlock();
   self->language = lang;

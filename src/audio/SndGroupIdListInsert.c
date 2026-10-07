@@ -24,7 +24,7 @@ s32 SndGroupIdListInsert(CoreList *list, s32 groupId, s32 priority)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        node = MemAlloc(0x10, NULL, 0);
+        node = MemAlloc(sizeof(CoreListNode), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
     }

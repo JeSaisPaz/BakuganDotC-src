@@ -25,7 +25,7 @@ CoreTask *BtlBakuganTexLoaderTaskCtor(CoreTask *task)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = (IoLzsPackage *)MemAlloc(0x44, NULL, 0);
+    mem = (IoLzsPackage *)MemAlloc(sizeof(IoLzsPackage), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     package = NULL;

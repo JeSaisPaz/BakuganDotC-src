@@ -15,7 +15,7 @@ static inline CorePrioNode *SentinelInit(CorePrioNode *node)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        node = MemAlloc(0x10, NULL, 0);
+        node = MemAlloc(sizeof(CorePrioNode), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (node == NULL) {

@@ -24,7 +24,7 @@ void GfxEffectMgrResolveTextures(GfxEffectMgr *mgr)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  table = MemAlloc(count << 2, (char *)0, 0);
+  table = MemAlloc(count * sizeof(void *), (char *)0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   mgr->textures = table;

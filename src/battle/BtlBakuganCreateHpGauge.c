@@ -14,7 +14,7 @@ void BtlBakuganCreateHpGauge(BtlBakugan *self)
     MemLock();
     wasFromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    gauge = MemAlloc(0xa0, NULL, 0);
+    gauge = MemAlloc(sizeof(UiHpGauge), NULL, 0);
     MemSetAllocFromLow(wasFromLow);
     MemUnlock();
     if (gauge != NULL) {

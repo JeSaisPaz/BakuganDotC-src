@@ -23,7 +23,7 @@ void UiLanguageSelectStateLoad(CoreTask *task)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      pack = MemAlloc(0x44, (char *)0x0, 0);
+      pack = MemAlloc(sizeof(IoLzsPackage), (char *)0x0, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       if (pack != (IoLzsPackage *)0x0) {

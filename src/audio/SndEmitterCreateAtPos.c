@@ -31,11 +31,11 @@ SndEmitter *SndEmitterCreateAtPos(SndListener *listener, s32 soundId, float *pos
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      emitter = MemAlloc(0x48, NULL, 0);
+      emitter = MemAlloc(sizeof(SndEmitter), NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
     }
-    memset(emitter, 0, 0x48);
+    memset(emitter, 0, sizeof(SndEmitter));
     SndEmitterListInsert(g_soundEmitterList, emitter, soundId);
     emitter->soundId = soundId;
     emitter->handle = -1;

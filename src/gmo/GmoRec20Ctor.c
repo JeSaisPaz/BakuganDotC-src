@@ -17,7 +17,7 @@ void *GmoRec20Ctor(void *rec)
     inst->id = 0;
     inst->state = (void *)0x0;
     inst->vertices = (void *)0x0;
-    inst->extra = (void *)0x0;
+    inst->extra = 0;
     inst->vertexSize = 0;
     inst->vertexCount = 0;
   }

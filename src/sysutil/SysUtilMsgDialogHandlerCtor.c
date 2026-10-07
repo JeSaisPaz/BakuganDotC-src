@@ -17,11 +17,11 @@ SysUtilHandler *SysUtilMsgDialogHandlerCtor(SysUtilHandler *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  s = (SysUtilMsgDialogBlock *)MemAlloc(0x2c8,(char *)0x0,0);
+  s = (SysUtilMsgDialogBlock *)MemAlloc(sizeof(SysUtilMsgDialogBlock),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_msgDialogParams = s;
-  memset(s,0,0x2c8);
+  memset(s,0,sizeof(SysUtilMsgDialogBlock));
   CoreTaskSetExclusiveId(20000);
   return self;
 }

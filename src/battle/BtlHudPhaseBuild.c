@@ -200,7 +200,7 @@ void BtlHudPhaseBuild(BtlHud *self)
     }
 
     /* sprite layer and the layout 4 sprites, all hidden */
-    mem = HudAllocLow(0x80);
+    mem = HudAllocLow(sizeof(GfxSpriteLayer));
     layer = NULL;
     if (mem != NULL) {
         GfxSpriteLayerCtor((GfxSpriteLayer *)mem, 0);
@@ -210,8 +210,8 @@ void BtlHudPhaseBuild(BtlHud *self)
     self->savedAlphaCount = 0x106;
     GfxSpriteLayerInitPool(layer, 0x106);
     self->layer->sorted = 1;
-    self->sprites = (GfxSprite **)HudAllocLow(self->savedAlphaCount << 2);
-    memset(self->sprites, 0, self->savedAlphaCount << 2);
+    self->sprites = (GfxSprite **)HudAllocLow(self->savedAlphaCount * sizeof(GfxSprite *));
+    memset(self->sprites, 0, self->savedAlphaCount * sizeof(GfxSprite *));
     UiLayoutCreateSprites(self->layer, self->sprites, 4);
     for (i = 0; i < 0xbc; i++) {
         self->sprites[i]->flags &= ~HUD_SPRITE_VISIBLE;
@@ -334,7 +334,7 @@ void BtlHudPhaseBuild(BtlHud *self)
     /* enemy arrow palette blenders (CLUT row 1) */
     for (i = 0; i < 4; i++) {
         if (self->arrowBlend[i] == NULL) {
-            mem = HudAllocLow(0x1c);
+            mem = HudAllocLow(sizeof(GfxPaletteBlender));
             obj = NULL;
             if (mem != NULL) {
                 GfxPaletteBlendInit(mem, 0x10, self->sprites[0xf + i * 3]->texture);
@@ -407,7 +407,7 @@ void BtlHudPhaseBuild(BtlHud *self)
     /* lock-on marker palette blenders (CLUT row 0) on sprites 0x1b..0x1d */
     for (i = 0; i < 3; i++) {
         if (self->markerBlend[i] == NULL) {
-            mem = HudAllocLow(0x1c);
+            mem = HudAllocLow(sizeof(GfxPaletteBlender));
             obj = NULL;
             if (mem != NULL) {
                 GfxPaletteBlendInit(mem, 0x10, self->sprites[0x1b + i]->texture);
@@ -532,7 +532,7 @@ void BtlHudPhaseBuild(BtlHud *self)
                     self->buildPixels[i] = pixels;
                     CoreLzssDecompress((const u8 *)blob, pixels);
                     sprintf(name, "card_L_%03d", HudArtId(unit, (u8)i) + 1);
-                    mem = HudAllocLow(0x140);
+                    mem = HudAllocLow(sizeof(GfxTexture));
                     obj = NULL;
                     if (mem != NULL) {
                         GfxTextureCtor((CoreObject *)mem, name, self->buildPixels[i], 1);
@@ -887,7 +887,7 @@ void BtlHudPhaseBuild(BtlHud *self)
     BtlHudFabSeek(self, 2, 1);
 
     /* talk text printers */
-    mem = HudAllocLow(0xf0);
+    mem = HudAllocLow(sizeof(UiTextPrinter));
     printer = NULL;
     if (mem != NULL) {
         UiTextPrinterCtor((UiTextPrinter *)mem, 0, NULL);
@@ -898,7 +898,7 @@ void BtlHudPhaseBuild(BtlHud *self)
     UiTextPrinterSetFont((UiTextPrinter *)self->overlayObj[0], 1);
     ((UiTextPrinter *)self->overlayObj[0])->wrapWidth = 264.0f;
     ((UiTextPrinter *)self->overlayObj[0])->widthScale = 0.600000024f;
-    mem = HudAllocLow(0xf0);
+    mem = HudAllocLow(sizeof(UiTextPrinter));
     printer = NULL;
     if (mem != NULL) {
         UiTextPrinterCtor((UiTextPrinter *)mem, 0, NULL);

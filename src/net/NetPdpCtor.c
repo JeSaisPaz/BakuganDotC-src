@@ -16,7 +16,7 @@ NetPdp *NetPdpCtor(NetPdp *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  buf = MemAlloc(0x2000,(char *)0x0,0);
+  buf = MemAlloc(0x2000 * sizeof(u8),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->buffer = buf;

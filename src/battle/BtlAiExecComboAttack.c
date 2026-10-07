@@ -20,7 +20,7 @@ static s32 *WeightsAlloc(u32 count)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    data = MemAlloc(count << 2, NULL, 0);
+    data = MemAlloc(count * sizeof(s32), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     for (i = 0; i < count; i++) {

@@ -21,7 +21,7 @@ void IoDataRefPoolCreate(void)
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (pool != NULL) {
-    MemPoolInit(pool, 0x28, 0x50, true);
+    MemPoolInit(pool, sizeof(IoDataOwnerRef), 0x50, true);
   }
   g_ioDataRefPool = pool;
 }

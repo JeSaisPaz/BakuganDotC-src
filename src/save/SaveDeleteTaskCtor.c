@@ -19,11 +19,11 @@ CoreTask *SaveDeleteTaskCtor(CoreTask *task)
   MemLock();
   hadLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  cell = MemAlloc(4, (char *)0x0, 0);
+  cell = MemAlloc(sizeof(void *), (char *)0x0, 0);
   MemSetAllocFromLow(hadLow);
   MemUnlock();
   g_saveDeleteDialogSlot = cell;
-  memset(cell, 0, 4);
+  memset(cell, 0, sizeof(void *));
   if (SaveHasProfile()) {
     self = SaveGetProfile();
     SaveProfileSetWord(self, 1, 0);

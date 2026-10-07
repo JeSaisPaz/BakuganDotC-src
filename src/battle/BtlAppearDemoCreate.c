@@ -17,7 +17,7 @@ CoreTask *BtlAppearDemoCreate(u32 ctorArg)
     MemLock();
     wasFromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    task = MemAlloc(0x7a0, NULL, 0);
+    task = MemAlloc(sizeof(BtlAppearDemo), NULL, 0);
     MemSetAllocFromLow(wasFromLow);
     MemUnlock();
     if (task != NULL) {

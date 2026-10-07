@@ -20,7 +20,7 @@ CoreObject *ActorBallCreate(float scale, u32 kind, s32 unused, float *pos)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = MemAlloc(0x200, NULL, 0);
+  mem = MemAlloc(sizeof(ActorBall), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   ball = NULL;

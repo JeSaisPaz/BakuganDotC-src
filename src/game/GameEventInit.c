@@ -29,7 +29,7 @@ void GameEventInit(GameEvent *self, s32 unused, u8 mode, const char *cutName)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  fades = MemAlloc(4, NULL, 0);
+  fades = MemAlloc(sizeof(GameEventFadeRecord), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   self->fades = fades;
@@ -37,7 +37,7 @@ void GameEventInit(GameEvent *self, s32 unused, u8 mode, const char *cutName)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  fadeWork = MemAlloc(4, NULL, 0);
+  fadeWork = MemAlloc(4 * sizeof(u8), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (fadeWork != NULL) {

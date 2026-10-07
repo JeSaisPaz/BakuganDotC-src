@@ -25,12 +25,12 @@ void IoLzsPackageRegister(IoLzsPackage *self, u16 *dir, u8 createTextures, u8 fr
         MemLock();
         wasLow = MemIsAllocFromLow();
         MemSetAllocFromLow(fromLow);
-        block = MemAlloc(count * 0x140 + 0x10, NULL, 0);
+        block = MemAlloc(count * sizeof(GfxTexture) + 0x10 /* PSP: CxxVecNew cookie */, NULL, 0);
         MemSetAllocFromLow(wasLow);
         MemUnlock();
         textures = NULL;
         if (block != NULL) {
-            textures = CxxVecNew((u8 *)block + g_cxxVecCookieSize, count, 0x140,
+            textures = CxxVecNew((u8 *)block + g_cxxVecCookieSize, count, sizeof(GfxTexture),
                                  GfxTextureCtorEmpty, 0);
         }
         self->textures = textures;

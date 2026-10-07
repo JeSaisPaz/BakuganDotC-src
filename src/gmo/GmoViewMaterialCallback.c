@@ -227,7 +227,7 @@ void GmoViewMaterialCallback(GmoDlContext *ctx)
   }
 
   /* byte offset of the position inside a vertex, computed as -2 * offset */
-  vtype = (u32)(uintptr_t)inst->extra | (u32)inst->vertexSize << 24;
+  vtype = inst->extra | (u32)inst->vertexSize << 24;
   wfmt = (vtype >> 9) & 3;
   tfmt = vtype & 3;
   cfmt = (vtype >> 2) & 7;

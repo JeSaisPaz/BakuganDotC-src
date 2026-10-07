@@ -15,11 +15,11 @@ void ActorStageObjAttachLight(ActorStageObjBase *self, GfxSprite *sprite)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    s = MemAlloc(0x40, NULL, 0);
+    s = MemAlloc(16 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->lights = s;
-    memset(s, 0, 0x40);
+    memset(s, 0, 16 * sizeof(GfxSprite *));
     self->lightCount = 0;
   }
   if (self->lightCount < 0x10) {

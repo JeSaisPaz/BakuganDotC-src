@@ -17,11 +17,11 @@ void GfxMovieCreatePlayer(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    block = MemAlloc(4, NULL, 0);
+    block = MemAlloc(4 /* PSP: untyped 4-byte movie block */, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     g_movieBlock = block;
-    memset(block, 0, 4);
+    memset(block, 0, 4 /* PSP: untyped 4-byte movie block */);
   }
   if (g_moviePlayer == NULL) {
     MemLock();

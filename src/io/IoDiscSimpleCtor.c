@@ -57,7 +57,7 @@ IoDiscSimple *IoDiscSimpleCtor(IoDiscSimple *self)
       CoreNodeCtor(&node->base, NULL);
       node->base.vtable = g_ioDiscBufNodeVtbl;
       node->state = 0;
-      node->data = MemAllocAligned(0x30000, true);
+      node->data = MemAllocAligned(0x30000 /* PSP: read-buffer size in bytes */, true);
     }
     self->bufNodes[i] = node;
   }

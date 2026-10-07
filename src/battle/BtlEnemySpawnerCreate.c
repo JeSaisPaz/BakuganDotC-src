@@ -15,7 +15,7 @@ void *BtlEnemySpawnerCreate(int id)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  spawner = (BtlEnemySpawner *)MemAlloc(0x40, NULL, 0);
+  spawner = (BtlEnemySpawner *)MemAlloc(sizeof(BtlEnemySpawner), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   result = NULL;

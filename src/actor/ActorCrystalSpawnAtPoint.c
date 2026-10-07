@@ -29,7 +29,7 @@ void *ActorCrystalSpawnAtPoint(int index)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = (ActorCrystal *)MemAlloc(0xa90, NULL, 0);
+    mem = (ActorCrystal *)MemAlloc(sizeof(ActorCrystal), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != NULL) {

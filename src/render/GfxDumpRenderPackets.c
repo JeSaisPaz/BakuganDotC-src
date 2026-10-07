@@ -30,7 +30,7 @@ void GfxDumpRenderPackets(void)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(false);
-  pairs = (RenderPacketDepthPair *)MemAlloc((count + 1) * 8, NULL, 0);
+  pairs = (RenderPacketDepthPair *)MemAlloc((count + 1) * sizeof(RenderPacketDepthPair), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
 

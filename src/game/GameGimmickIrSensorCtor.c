@@ -134,7 +134,7 @@ CoreObject *GameGimmickIrSensorCtor(GameGimmickIrSensor *obj, s32 kind, void *re
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    timer = MemAlloc(8, NULL, 0);
+    timer = MemAlloc(sizeof(GameGimmickIrSensorBeamTimer), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     rec = (GameGimmickRecord *)obj->base.record;

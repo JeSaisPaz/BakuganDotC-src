@@ -14,7 +14,7 @@ void *GameQuestPathSetCtor(void *setPtr, void **desc)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  set->data = (void **)MemAlloc(0x28,(char *)0x0,0);
+  set->data = (void **)MemAlloc(10 * sizeof(void *),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   set->cap = 10;

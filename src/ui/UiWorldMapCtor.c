@@ -30,7 +30,7 @@ UiScreen *UiWorldMapCtor(UiScreen *screen)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(0x178, NULL, 0);
+  block = MemAlloc(94 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   screen->data = block;
@@ -38,11 +38,11 @@ UiScreen *UiWorldMapCtor(UiScreen *screen)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  block = MemAlloc(8, NULL, 0);
+  block = MemAlloc(2 * sizeof(GfxFab *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   g_uiSharedAnims = block;
-  memset(block, 0, 8);
+  memset(block, 0, 2 * sizeof(GfxFab *));
 
   UiScreenSetFrameMode(&screen->base, 0);
   map->unk6c = 0;

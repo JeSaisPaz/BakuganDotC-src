@@ -18,11 +18,11 @@ MemPool *MemPoolInit(MemPool *pool, s32 itemSize, s32 count, bool fromLow)
     MemLock();
     prevFromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(fromLow);
-    pool->base = MemAlloc(((u32)(count * itemSize) & ~3u) + 4, NULL, 0);
+    pool->base = MemAlloc(((u32)(count * itemSize) & ~3u) + 4 /* PSP: slab bytes rounded down to a word plus one spare word */, NULL, 0);
     MemSetAllocFromLow(prevFromLow);
     MemUnlock();
 
-    bitmapSize = (size_t)(count / 32 + 1) * 4;
+    bitmapSize = (size_t)(count / 32 + 1) * sizeof(u32);
     MemLock();
     prevFromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(fromLow);

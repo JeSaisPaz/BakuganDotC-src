@@ -46,7 +46,7 @@ void UiMainMenuCreateSprites(UiMainMenu *self)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = (GfxSprite *)MemAlloc(0x160, NULL, 0);
+    mem = (GfxSprite *)MemAlloc(sizeof(GfxSprite), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != NULL) {

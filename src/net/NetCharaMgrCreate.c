@@ -19,16 +19,16 @@ void NetCharaMgrCreate(void)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        mgr = MemAlloc(0x94, NULL, 0);
+        mgr = MemAlloc(sizeof(NetCharaMgr), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         g_netCharaMgr = mgr;
-        memset(mgr, 0, 0x94);
+        memset(mgr, 0, sizeof(NetCharaMgr));
 
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        lock = MemAlloc(0x38, NULL, 0);
+        lock = MemAlloc(sizeof(CoreLock), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (lock != NULL) {
@@ -39,7 +39,7 @@ void NetCharaMgrCreate(void)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        list = MemAlloc(0x10, NULL, 0);
+        list = MemAlloc(sizeof(NetCharaList), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (list != NULL) {
@@ -54,10 +54,10 @@ void NetCharaMgrCreate(void)
             MemLock();
             fromLow = MemIsAllocFromLow();
             MemSetAllocFromLow(true);
-            slots = MemAlloc(0x3c0, NULL, 0);
+            slots = MemAlloc(12 * 2 * sizeof(NetCharaMsg), NULL, 0);
             MemSetAllocFromLow(fromLow);
             MemUnlock();
-            memset(slots, 0, 0x3c0);
+            memset(slots, 0, 12 * 2 * sizeof(NetCharaMsg));
             g_netCharaSlots = slots;
         }
         CoreLockRelease(g_netCharaMgr->lock);

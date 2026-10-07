@@ -10,7 +10,7 @@ GfxPaletteBlender *GfxPaletteBlendInit(GfxPaletteBlender *pb, s32 count, void *t
   pb->slot = 0;
   pb->count = count;
   pb->texture = texture;
-  pb->output = MemAllocAligned(count << 2, true);
+  pb->output = MemAllocAligned(count * sizeof(u32), true);
   pb->start = 0;
   pb->rangeCount = count;
   pb->installed = 0;

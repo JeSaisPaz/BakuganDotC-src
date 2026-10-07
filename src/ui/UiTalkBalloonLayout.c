@@ -59,7 +59,7 @@ void UiTalkBalloonLayout(UiTalkBalloon *self, void *unused, const void *style)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = (GfxSprite *)MemAlloc(400, (const char *)0x0, 0);
+    mem = (GfxSprite *)MemAlloc(400 /* PSP: UiTalkBalloonSprite (0x184) rounded up to 0x190 */, (const char *)0x0, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != (GfxSprite *)0x0) {
@@ -82,7 +82,7 @@ void UiTalkBalloonLayout(UiTalkBalloon *self, void *unused, const void *style)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  mem = (GfxSprite *)MemAlloc(400, (const char *)0x0, 0);
+  mem = (GfxSprite *)MemAlloc(400 /* PSP: UiTalkBalloonSprite (0x184) rounded up to 0x190 */, (const char *)0x0, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (mem != (GfxSprite *)0x0) {

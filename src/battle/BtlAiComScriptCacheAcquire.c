@@ -16,11 +16,11 @@ void *BtlAiComScriptCacheAcquire(void)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        cache = MemAlloc(0x200, NULL, 0);
+        cache = MemAlloc(0x20 * sizeof(BtlAiComScript), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (cache != NULL) {
-            CxxVecNewSimple(cache, 0x20, 0x10, (void *)BtlAiComScriptCacheEntryCtor);
+            CxxVecNewSimple(cache, 0x20, sizeof(BtlAiComScript), (void *)BtlAiComScriptCacheEntryCtor);
         }
         g_btlAiComScriptCache = cache;
     }

@@ -42,7 +42,7 @@ void BtlAiLoadComScript(void *rules, s32 id)
     memcpy(&script->groupCount, src + 5, sizeof(s16));
     script->headerByte7 = src[7];
     src += 8;
-    script->groups = BtlAiComScriptAllocLow(0x20);
+    script->groups = BtlAiComScriptAllocLow(4 * sizeof(BtlAiRuleGroup));
 
     for (g = 0; g < 4; g++) {
         BtlAiRuleGroup *group = &script->groups[g];
@@ -60,7 +60,7 @@ void BtlAiLoadComScript(void *rules, s32 id)
         src += 4;
         count = script->groups[g].count;
         records = NULL;
-        block = BtlAiComScriptAllocLow(count * (s32)sizeof(BtlAiRuleRecord) + 0x10);
+        block = BtlAiComScriptAllocLow(count * (s32)sizeof(BtlAiRuleRecord) + 0x10 /* PSP: CxxVecNew array cookie */);
         if (block != NULL) {
             records = CxxVecNew((u8 *)block + g_cxxVecCookieSize, count,
                                 sizeof(BtlAiRuleRecord), BtlAiRuleRecordCtor, 0);

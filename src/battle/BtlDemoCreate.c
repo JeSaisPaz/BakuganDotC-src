@@ -16,7 +16,7 @@ BtlDemo *BtlDemoCreate(u32 demoId)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(0x790, NULL, 0);
+    mem = MemAlloc(sizeof(BtlDemo), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     demo = NULL;

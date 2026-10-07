@@ -27,10 +27,10 @@ u32 GmoDlDrawNode(GmoDlContext *ctx, GmoModel *model, u32 dirty)
     ctx->boneList = NULL;
     parts = node->parts;
     for (count = node->partCount; count > 0; count--, parts++) {
-        u32 ref = (u32)(uintptr_t)*parts;
+        uintptr_t ref = (uintptr_t)*parts;
         void *part = *parts;
 
-        if (((ref + 1) & 0xffff0000) == 0) {
+        if (((ref + 1) & ~(uintptr_t)0xffff) == 0) {
             /* 16-bit index into the model's 0x10-byte part records. */
             if ((ref & 0xffff) < model->partCount) {
                 part = (u8 *)model->parts + ref * 0x10;

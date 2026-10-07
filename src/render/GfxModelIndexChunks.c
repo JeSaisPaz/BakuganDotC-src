@@ -31,7 +31,7 @@ void GfxModelIndexChunks(GfxModel *self)
   self->motionCount = GmoChunkCount(model, 0xb);
 
   if (self->materialCount > 0) {
-    s32 size = self->materialCount << 4;
+    s32 size = self->materialCount * sizeof(GfxMaterialState);
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
@@ -39,11 +39,11 @@ void GfxModelIndexChunks(GfxModel *self)
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     self->materialStates = states;
-    memset(states, 0, self->materialCount << 4);
+    memset(states, 0, self->materialCount * sizeof(GfxMaterialState));
   }
 
   {
-    s32 size = (self->nodeCount + self->partCount + self->materialCount + self->motionCount) << 2;
+    s32 size = (self->nodeCount + self->partCount + self->materialCount + self->motionCount) * sizeof(void *);
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);

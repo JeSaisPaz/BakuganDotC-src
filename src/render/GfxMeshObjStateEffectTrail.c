@@ -352,7 +352,7 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
       MemLock();
       wasLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      idx = MemAlloc((self->patchCountU + 3) * self->patchCountV, NULL, 0);
+      idx = MemAlloc((self->patchCountU + 3) * self->patchCountV * (s32)sizeof(u8), NULL, 0);
       MemSetAllocFromLow(wasLow);
       MemUnlock();
       self->flags |= 2;

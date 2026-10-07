@@ -15,7 +15,7 @@ void CoreBackgroundProcessCreate(void)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    proc = MemAlloc(8, NULL, 0);
+    proc = MemAlloc(sizeof(CoreBackgroundProcess), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (proc != NULL) {

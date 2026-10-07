@@ -25,7 +25,7 @@ UiScreen *UiHologramViewCtor(UiHologramView *self, u32 arg)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    data = MemAlloc(0x68, NULL, 0);
+    data = MemAlloc(26 * sizeof(GfxSprite *), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->base.data = data;

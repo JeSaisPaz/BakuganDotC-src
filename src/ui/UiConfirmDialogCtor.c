@@ -22,7 +22,7 @@ CoreTask *UiConfirmDialogCtor(CoreTask *task)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sprites = MemAlloc(0x40, NULL, 0);
+  sprites = MemAlloc(16 * sizeof(GfxSprite *), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   pad = self->pad;

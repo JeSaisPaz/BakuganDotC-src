@@ -14,7 +14,7 @@ void CoreNodeRegistryAdd(CoreNode *node)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        root = MemAlloc(0x24, NULL, 0);
+        root = MemAlloc(sizeof(CoreNode), NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         if (root != NULL) {

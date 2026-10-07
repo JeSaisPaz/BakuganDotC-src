@@ -12,7 +12,7 @@ GmoModel *GmoModelCreate(void)
 {
   GmoModel *model;
 
-  model = GmoHeapAlloc(0, 0x10, 0xc0);
+  model = GmoHeapAlloc(0, 0x10, sizeof(GmoModel));
   if (model != NULL) {
     model->refCount = 1;
     model->motionIndex = -1;

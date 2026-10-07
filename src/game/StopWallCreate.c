@@ -17,7 +17,7 @@ StopWall *StopWallCreate(s32 id)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  self = MemAlloc(0x90,(char *)0x0,0);
+  self = MemAlloc(sizeof(StopWall),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   wall = (StopWall *)0x0;

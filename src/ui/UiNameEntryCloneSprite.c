@@ -16,7 +16,7 @@ GfxSprite * UiNameEntryCloneSprite(GfxSprite *src, void *layer)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sprite = MemAlloc(0x160,(char *)0x0,0);
+  sprite = MemAlloc(sizeof(GfxSprite),(char *)0x0,0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   dst = (GfxSprite *)0x0;
