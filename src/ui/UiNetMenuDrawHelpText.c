@@ -2,7 +2,7 @@
 #include "bdc.h"
 
 /* Draws the help text of `UiNetMenu`: applies alpha `+0x2e0` to the `+0x2ec` glyphs
-   (list `+0x304`) when it changed (`+0x2e4`), sets the colour from `g_colorWhite` and submits the
+   (list `+0x304`) when it changed (`+0x2e4`), sets the printer's outline colour from `g_colorWhite` and submits the
    printer `+0x2dc` (`GfxNewRenderPacket`, `GfxSpriteLayerDraw`). */
 
 void UiNetMenuDrawHelpText(UiScreen *screen)
@@ -10,7 +10,7 @@ void UiNetMenuDrawHelpText(UiScreen *screen)
 {
   UiNetMenu *menu = (UiNetMenu *)screen;
   GfxSprite *glyph;
-  GfxSprite *printer;
+  UiTextPrinter *printer;
   float *addColor;
   int i;
 
@@ -26,11 +26,11 @@ void UiNetMenuDrawHelpText(UiScreen *screen)
     }
     menu->helpAppliedAlpha = menu->titleHelpAlpha;
   }
-  addColor = menu->helpPrinter->addColor;
+  addColor = menu->helpPrinter->outlineColor;
   addColor[0] = g_colorWhite.x;
   addColor[1] = g_colorWhite.y;
   addColor[2] = g_colorWhite.z;
   addColor[3] = g_colorWhite.w;
   printer = menu->helpPrinter;
-  GfxSpriteLayerDraw((GfxSpriteLayer *)printer, GfxNewRenderPacket(400.0f));
+  GfxSpriteLayerDraw(&printer->layer, GfxNewRenderPacket(400.0f));
 }

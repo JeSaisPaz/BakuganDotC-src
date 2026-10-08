@@ -8,8 +8,8 @@
    others 16-byte float keys (`GmoMotionKeyF`). Used by `BtlMotionSetTrackKeysByName`. */
 void BtlMotionDataSetTrackKeys(GmoMotionInfo *motion, u32 target, const float *value)
 {
-    const GmoMotionTrack *track = motion->tracks;
-    const u16 *offset = motion->table;
+    const GmoMotionTrack *track = (const GmoMotionTrack *)PspPtr(motion->tracks);
+    const u16 *offset = (const u16 *)PspPtr(motion->table);
     int i;
 
     for (i = 0; i < motion->trackCount; i++, track++, offset++) {
@@ -19,7 +19,7 @@ void BtlMotionDataSetTrackKeys(GmoMotionInfo *motion, u32 target, const float *v
         if (track->paramD != 'H' || track->ref != target) {
             continue;
         }
-        keys = (u8 *)track->data + *offset;
+        keys = (u8 *)PspPtr(track->data) + *offset;
         if ((track->param8 & 0x80) != 0) {
             GmoMotionKeyH *key = (GmoMotionKeyH *)keys;
 

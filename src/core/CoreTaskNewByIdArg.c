@@ -33,14 +33,14 @@ CoreTask *CoreTaskNewByIdArg(s32 id, void *arg)
         if (mem == NULL) {
             return NULL;
         }
-        GameFieldMovieTaskCtor(mem, (u32)(uintptr_t)arg);
+        GameFieldMovieTaskCtor(mem, (u32)(uintptr_t)arg); /* bdc: ptr-narrow ok: arg carries a small integer */
         return mem;
     case 198:
         mem = CoreTaskAllocLow(sizeof(UiCopyrightTask));
         if (mem == NULL) {
             return NULL;
         }
-        UiCopyrightTaskCtorArg(mem, (u32)(uintptr_t)arg);
+        UiCopyrightTaskCtorArg(mem, (u32)(uintptr_t)arg); /* bdc: ptr-narrow ok: arg carries a small integer */
         return mem;
     case 312:
         mem = CoreTaskAllocLow(sizeof(UiCollectionSphere));
@@ -96,7 +96,7 @@ CoreTask *CoreTaskNewByIdArg(s32 id, void *arg)
         if (mem == NULL) {
             return NULL;
         }
-        GameStoryMovieCtor(mem, (u32)(uintptr_t)arg);
+        GameStoryMovieCtor(mem, (u32)(uintptr_t)arg); /* bdc: ptr-narrow ok: arg carries a small integer */
         return mem;
     default:
         return NULL;

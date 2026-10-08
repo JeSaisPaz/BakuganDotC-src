@@ -4,14 +4,9 @@
 /* Moves the prop's model to `pos` given in 1/4096 units x 20 (field placement convention).
    Lane 3 of the model position is left as is (the asm stores a stale VFPU lane there). */
 
-typedef struct {
-  u8 pad[0x20];
-  float pos[4];
-} GameEventPropPosModel;
-
 void GameEventPropSetPos(GameEventProp *prop, const s32 *pos)
 {
-  GameEventPropPosModel *model = (GameEventPropPosModel *)prop->model;
+  GfxModel *model = (GfxModel *)prop->model;
   float x;
   float y;
   float z;

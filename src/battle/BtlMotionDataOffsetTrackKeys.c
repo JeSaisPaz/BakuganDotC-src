@@ -9,8 +9,8 @@
    `BtlMotionAddTrackOffsetByName`. */
 void BtlMotionDataOffsetTrackKeys(GmoMotionInfo *motion, u32 target, float *offset)
 {
-    const GmoMotionTrack *track = motion->tracks;
-    const u16 *keyOffset = motion->table;
+    const GmoMotionTrack *track = (const GmoMotionTrack *)PspPtr(motion->tracks);
+    const u16 *keyOffset = (const u16 *)PspPtr(motion->table);
     int i;
 
     for (i = 0; i < motion->trackCount; i++, track++, keyOffset++) {
@@ -20,7 +20,7 @@ void BtlMotionDataOffsetTrackKeys(GmoMotionInfo *motion, u32 target, float *offs
         if (track->paramD != 'H' || track->ref != target) {
             continue;
         }
-        keys = (u8 *)track->data + *keyOffset;
+        keys = (u8 *)PspPtr(track->data) + *keyOffset;
         if ((track->param8 & 0x80) != 0) {
             GmoMotionKeyH *key = (GmoMotionKeyH *)keys;
 

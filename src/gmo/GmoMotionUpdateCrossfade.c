@@ -8,7 +8,7 @@
 void GmoMotionUpdateCrossfade(float dt, void *player, void *current)
 
 {
-  GmoMotionPlayer *p = (GmoMotionPlayer *)player;
+  GmoModel *p = (GmoModel *)player;
   GmoMotionSlot *slot;
   float total;
   float left;
@@ -16,7 +16,7 @@ void GmoMotionUpdateCrossfade(float dt, void *player, void *current)
   float target;
   s32 i;
 
-  total = p->fadeTime;
+  total = p->motionBlend;
   if (!(total < 0.0f)) {
     if (dt < 0.0f) {
       dt = -dt;
@@ -25,14 +25,14 @@ void GmoMotionUpdateCrossfade(float dt, void *player, void *current)
     if (left <= 0.0f) {
       left = 0.0f;
     }
-    p->fadeTime = left;
+    p->motionBlend = left;
     if (total == 0.0f) {
       ratio = 0.0f;
     } else {
       ratio = left / total;
     }
-    for (i = 0; i < (s32)p->slotCount; i++) {
-      slot = &p->slots[i];
+    for (i = 0; i < (s32)p->motionCount; i++) {
+      slot = &((GmoMotionSlot *)p->motions)[i];
       if (slot == (GmoMotionSlot *)current) {
         target = 1.0f;
       } else {

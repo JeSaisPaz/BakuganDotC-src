@@ -16,22 +16,6 @@
    times `pitchDist`, with y taken from the controller's `lookAt.y`. Both non-returning
    paths finish by copying `targetDist` to `pitchDist` when the controller snaps (`ctrl->snap`). */
 
-typedef struct PitchNode {
-  ScePspFVector4 pos; /* +0x00 */
-  u8 _unk10[0x30];
-  float pitch; /* +0x40 negative = default pi/2 */
-} PitchNode;
-
-typedef struct PitchEntryObj {
-  u8 _unk00[0x40];
-  ScePspFVector4 eye; /* +0x40 */
-} PitchEntryObj;
-
-typedef struct PitchOwner {
-  void *_unk00;
-  const VtblEntry *vtbl; /* +0x04 */
-} PitchOwner;
-
 void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
 
 {
@@ -45,10 +29,10 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
   ScePspFVector4 pB;
   ScePspFVector4 eye;
   GameQuestPathSegment *seg;
-  const PitchOwner *owner;
+  const GameQuestPathCursor *owner;
   const VtblEntry *e;
   const ScePspFVector4 *pos;
-  PitchEntryObj *entryObj;
+  GameQuestCamSpring *look;
   float pitchA;
   float pitchB;
   float t;
@@ -81,8 +65,8 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
     return;
   }
   seg = (GameQuestPathSegment *)self->segment;
-  pitchA = ((PitchNode *)seg->from)->pitch;
-  pitchB = ((PitchNode *)seg->to)->pitch;
+  pitchA = seg->from->f40;
+  pitchB = seg->to->f40;
   if (pitchA < 0.0f && pitchB < 0.0f) {
     return;
   }
@@ -96,7 +80,7 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
   pitch = (1.0f - t) * pitchA + t * pitchB;
 
   /* dir = horizontal (target - goal), normalised */
-  owner = (const PitchOwner *)(self->base).base.base.followed;
+  owner = (const GameQuestPathCursor *)(self->base).base.base.followed;
   e = &owner->vtbl[2];
   pos = ((const ScePspFVector4 *(*)(void *))e->fn)((char *)owner + e->delta);
   dir.x = pos->x - (self->base).base.base.goal.x;
@@ -185,13 +169,13 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
     offs.w = 0.0f;
 
     /* goal = lerp(from->pos, to->pos, t) + offs, old goal y kept */
-    pA = ((PitchNode *)((GameQuestPathSegment *)self->segment)->from)->pos;
+    pA = ((GameQuestPathSegment *)self->segment)->from->pos;
     scl = 1.0f - ((GameQuestPathSegment *)self->segment)->t;
     pA.x = pA.x * scl;
     pA.y = pA.y * scl;
     pA.z = pA.z * scl;
     pA.w = 0.0f;
-    pB = ((PitchNode *)((GameQuestPathSegment *)self->segment)->to)->pos;
+    pB = ((GameQuestPathSegment *)self->segment)->to->pos;
     scl = ((GameQuestPathSegment *)self->segment)->t;
     pB.x = pB.x * scl;
     pB.y = pB.y * scl;
@@ -275,8 +259,8 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
       g_staticZeroF = 0.0f;
     }
     eye.y = lookY;
-    entryObj = *(PitchEntryObj **)(self->base).entry;
-    entryObj->eye = eye;
+    look = *(GameQuestCamSpring **)(self->base).entry;
+    look->goal = eye;
   }
   if ((self->base).base.base.ctrl->snap != 0) {
     self->pitchDist = self->targetDist;

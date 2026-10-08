@@ -52,7 +52,7 @@ void GmoMotionAdvance(float dt, float weight, GmoModel *model, GmoMotionSlot *sl
             /* crossed the end going forward */
             if (slot->loop != 0) {
                 next = start;
-                memset(slot->cursors, 0, (u32)slot->trackCount * 2);
+                memset(PspPtr(slot->cursors), 0, (u32)slot->trackCount * 2);
             } else {
                 next = end;
             }
@@ -76,8 +76,8 @@ void GmoMotionAdvance(float dt, float weight, GmoModel *model, GmoMotionSlot *sl
     }
     blend = weight < 1.0f;
 
-    track = slot->tracks;
-    cursor = slot->cursors;
+    track = (GmoMotionTrack *)PspPtr(slot->tracks);
+    cursor = (u16 *)PspPtr(slot->cursors);
     for (i = (s32)slot->trackCount - 1; i >= 0; i--, track++, cursor++) {
         if ((track->kind & 0x100) != 0 && !((s32)track->ref < (s32)model->nodeCount)) {
             continue;
@@ -88,7 +88,7 @@ void GmoMotionAdvance(float dt, float weight, GmoModel *model, GmoMotionSlot *sl
         }
 
         count = track->paramA;
-        keys = (const u8 *)track->data;
+        keys = (const u8 *)PspPtr(track->data);
         if ((track->param8 & 0x80) == 0) {
             /* full-precision keys, time in the leading float */
             if (count < 2) {

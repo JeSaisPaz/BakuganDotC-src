@@ -22,10 +22,10 @@ void GmoMotionEntryInitFromBin(GmoMotionEntry *entry, const void *bin)
       ((void (*)(void *, int))reserve->fn)((u8 *)entry + reserve->delta,entry->arenaSize);
     }
     memcpy(entry->arena,(const u8 *)bin + (HDR),entry->arenaSize);
-    entry->info.tracks = (GmoMotionTrack *)(entry->arena + (uintptr_t)entry->info.tracks);
-    entry->info.table = (u16 *)(entry->arena + (uintptr_t)entry->info.table);
+    entry->info.tracks = PspAddr(entry->arena) + entry->info.tracks;
+    entry->info.table = PspAddr(entry->arena) + entry->info.table;
     for (i = 0; i < (int)entry->info.trackCount; i++) {
-      entry->info.tracks[i].data = entry->arena + (uintptr_t)entry->info.tracks[i].data;
+      ((GmoMotionTrack *)PspPtr(entry->info.tracks))[i].data = PspAddr(entry->arena) + ((GmoMotionTrack *)PspPtr(entry->info.tracks))[i].data;
     }
   }
 }

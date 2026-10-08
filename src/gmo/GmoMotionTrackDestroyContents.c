@@ -8,7 +8,7 @@ GmoMotionTrack *GmoMotionTrackDestroyContents(GmoMotionTrack *track)
 
 {
   if (track != NULL) {
-    GmoHeapReleaseThunk(0,track->data);
+    GmoHeapReleaseThunk(0,PspPtr(track->data));
   }
   return track;
 }

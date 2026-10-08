@@ -6,15 +6,10 @@
    (`g_padState`, beyond ±0.8; 0 when the player's `+0x4a8` lock byte is set): rotates `dir` about
    Z by that angle and stores the result back only when its |x| is not <= 0.62 (clamps the pitch). */
 
-typedef struct {
-  u8 pad[0x4a8];
-  u8 aimLock;
-} GameFieldAimPitchPlayer;
-
 void GameFieldCameraAimViewPitch(GameFieldCameraAimView *aim)
 
 {
-  GameFieldAimPitchPlayer *player;
+  ActorPlayer *player;
   float rotated[4];
   float stickY;
   float angle;
@@ -29,8 +24,8 @@ void GameFieldCameraAimViewPitch(GameFieldCameraAimView *aim)
   } else if (!(stickY <= 0.8f)) {
     angle = -0.03141593f;
   }
-  player = (GameFieldAimPitchPlayer *)ActorFindPlayer();
-  if (player->aimLock != 0) {
+  player = (ActorPlayer *)ActorFindPlayer();
+  if (player->throwing != 0) {
     angle = 0.0f;
   }
   /* vrot.q of angle * S703 (2/π): columns (c, s, 0, 0), (-s, c, 0, 0), then identity columns

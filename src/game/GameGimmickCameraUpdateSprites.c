@@ -5,29 +5,24 @@
    sprite `+0x250` (1 when `+0x255`, else 0) of the surveillance camera gimmick
    (`GameGimmickCameraCtor`, vtables `0x08af325c`/`0x08af3304`). */
 
-typedef struct {
-  u8 pad[0xbc];
-  float alpha;
-} GameGimmickCameraSprite;
-
 void GameGimmickCameraUpdateSprites(GameGimmickCamera *obj)
 
 {
-  GameGimmickCameraSprite *s = (GameGimmickCameraSprite *)obj->coneEffect;
+  GfxEffect *s = (GfxEffect *)obj->coneEffect;
 
   if (s != NULL) {
     if (obj->coneVisible == 0) {
-      s->alpha = 0.0f;
+      s->color[3] = 0.0f;
     } else {
-      s->alpha = 0.2f;
+      s->color[3] = 0.2f;
     }
   }
-  s = (GameGimmickCameraSprite *)obj->spotEffect;
+  s = (GfxEffect *)obj->spotEffect;
   if (s != NULL) {
     if (obj->spotVisible != 0) {
-      s->alpha = 1.0f;
+      s->color[3] = 1.0f;
       return;
     }
-    s->alpha = 0.0f;
+    s->color[3] = 0.0f;
   }
 }

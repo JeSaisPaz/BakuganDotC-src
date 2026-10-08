@@ -7,17 +7,11 @@
    destructor and clears save-profile word 0x17; then `UiScreenDtor``(screen, 0)` and frees the
    object when `flags & 1`. */
 
-/* Owned object whose class vtable pointer sits at +0x74. */
-typedef struct VirtualOwner {
-  u8 _unk[0x74];
-  const VtblEntry *vtable;
-} VirtualOwner;
-
 void UiTitleDtor(UiScreen *screen, u32 flags)
 
 {
   UiTitle *title = (UiTitle *)screen;
-  GfxSprite *sprite;
+  GfxSpriteLayer *sprite;
 
   if (screen != (UiScreen *)0x0) {
     screen->base.vtable = &g_uiTitleVtable;
@@ -25,11 +19,11 @@ void UiTitleDtor(UiScreen *screen, u32 flags)
     screen->pad->stickEmulatesDpad = 0;
     g_lastScreenTaskId = screen->base.id;
     sprite = title->sprite;
-    if (sprite != (GfxSprite *)0x0) {
-      const VtblEntry *entry = ((const VirtualOwner *)sprite)->vtable + 1;
+    if (sprite != (GfxSpriteLayer *)0x0) {
+      const VtblEntry *entry = sprite->vtbl + 1;
 
       ((void (*)(void *, int))entry->fn)((char *)sprite + entry->delta, 3);
-      title->sprite = (GfxSprite *)0x0;
+      title->sprite = (GfxSpriteLayer *)0x0;
     }
     SaveProfileSetWord(SaveGetProfile(), 0x17, 0);
     UiScreenDtor(screen, 0);

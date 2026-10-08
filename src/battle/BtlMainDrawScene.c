@@ -38,7 +38,7 @@ void BtlMainDrawScene(BtlMain *self)
     BtlBakugan *player;
     CoreObject *target;
     CoreObject *stageObjs;
-    UiTalkTask *talk;
+    BtlHud *talk;
     u32 *dl;
     union { float f; u32 u; } bits;
 
@@ -137,8 +137,8 @@ void BtlMainDrawScene(BtlMain *self)
             if (UiTalkTaskExists() != 0) {
                 packet = GfxNewRenderPacket(110.0f);
                 GfxPacketCall2DState(packet);
-                talk = (UiTalkTask *)UiGetTalkTask();
-                GfxPacketDrawGradientBands(packet, g_btlTalkGradientYs, talk->overlayColours, 2, 1);
+                talk = UiGetTalkTask();
+                GfxPacketDrawGradientBands(packet, g_btlTalkGradientYs, (const u32 *)talk->countdownGlow, 2, 1);
             }
         } else if (GameStageIs0Or13() == 0) {
             packet = GfxNewRenderPacket(1.9f);

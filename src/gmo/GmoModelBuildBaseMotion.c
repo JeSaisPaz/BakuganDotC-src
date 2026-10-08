@@ -62,7 +62,7 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
   for (m = 0; m < slots; m++) {
     info = (GmoMotionInfo *)self->motions + m;
     for (i = 0; i < info->trackCount; i++) {
-      track = &info->tracks[i];
+      track = &((GmoMotionTrack *)PspPtr(info->tracks))[i];
       attr = track->paramD;
       if (attr - 0x49 < 2) {
         attr = 0x4b;
@@ -157,7 +157,8 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
   /* Apply the old base slot at frame 0. */
   info = (GmoMotionInfo *)self->motions + self->motionCount;
   for (i = 0; i < info->trackCount; i++) {
-    GmoMotionApplyTrack(0.0f, g_gmoBaseMotionWeight, &info->tracks[i], &info->table[i], self);
+    GmoMotionApplyTrack(0.0f, g_gmoBaseMotionWeight, (GmoMotionTrack *)PspPtr(info->tracks) + i,
+                        (u16 *)PspPtr(info->table) + i, self);
   }
   if (GmoPlanCommit(plan) == 0) {
     return 0;
@@ -170,7 +171,7 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
     newCursors = GmoPlanTake(plan, 0, 4, n * 2);
     memset(newCursors, 0, n * 2);
     for (i = 0; i < info->trackCount; i++) {
-      track = &info->tracks[i];
+      track = &((GmoMotionTrack *)PspPtr(info->tracks))[i];
       if ((track->kind & 2) != 0) {
         continue;
       }
@@ -195,11 +196,11 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
         GmoTrackCopy(&newTracks[idx], track, 0, plan);
       }
     }
-    GmoMotionTrackArrayRelease((short *)info->tracks, info->trackCount);
-    GmoHeapReleaseThunk(0, info->table);
-    info->tracks = newTracks;
+    GmoMotionTrackArrayRelease((short *)PspPtr(info->tracks), info->trackCount);
+    GmoHeapReleaseThunk(0, PspPtr(info->table));
+    info->tracks = PspAddr(newTracks);
     info->trackCount = (u16)n;
-    info->table = newCursors;
+    info->table = PspAddr(newCursors);
   }
 
   /* Fill the channels a slot lacks: the first such slot gets the current value, later ones a
@@ -207,8 +208,8 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
   for (c = 0; c < n; c++) {
     src = NULL;
     for (m = 0; m < self->motionCount + 1; m++) {
-      track = &((GmoMotionInfo *)self->motions)[m].tracks[c];
-      if (track->data != NULL) {
+      track = &((GmoMotionTrack *)PspPtr(((GmoMotionInfo *)self->motions)[m].tracks))[c];
+      if (track->data != 0) {
         continue;
       }
       if (src != NULL) {
@@ -373,7 +374,7 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
       track->paramA = 1;
       track->param8 = 0;
       track->ref = (u16)key;
-      track->data = block;
+      track->data = PspAddr(block);
     }
   }
   GmoPlanFree(plan);

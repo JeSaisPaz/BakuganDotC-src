@@ -21,7 +21,7 @@ typedef struct CharSetEntryView {
 
 bool GameFieldCharSetEntryIsActive(void *entry)
 {
-  CharSetEntryView *e = (CharSetEntryView *)entry;
+  CharSetEntryView *e = (CharSetEntryView *)entry; /* bdc: record-view ok: 0x2c-byte .bin character-set record, scalars only */
   u8 i;
 
   for (i = 0; i < 5; i++) {

@@ -5,12 +5,6 @@
    `g_lastScreenTaskId` and deletes its package (`+0x6c`, `IoLzsPackage`) through its virtual destructor. Then
    `UiScreenDtor``(screen, 0)`; frees the object when `flags & 1`. */
 
-/* Owned object whose class vtable pointer sits at +0x20. */
-typedef struct VirtualOwner {
-  u8 _unk[0x20];
-  const VtblEntry *vtable;
-} VirtualOwner;
-
 void UiTitleMenuDtor(UiScreen *screen, u32 flags)
 
 {
@@ -22,7 +16,7 @@ void UiTitleMenuDtor(UiScreen *screen, u32 flags)
     GfxWaitGeIdle();
     package = menu->package;
     if (package != (IoLzsPackage *)0x0) {
-      const VtblEntry *entry = ((const VirtualOwner *)package)->vtable + 1;
+      const VtblEntry *entry = (const VtblEntry *)package->base.vtable + 1;
 
       ((void (*)(void *, int))entry->fn)((char *)package + entry->delta, 3);
       menu->package = (IoLzsPackage *)0x0;

@@ -18,12 +18,6 @@ typedef struct CamFixedModeDesc {
   void *entry;                   /* +0x40 */
 } __attribute__((aligned(16))) CamFixedModeDesc;
 
-/* Partial view of the camera table entry. */
-typedef struct CamFixedEntry {
-  u8 _unk00[0x5c];
-  s32 type; /* +0x5c 1 = eye spring */
-} CamFixedEntry;
-
 void GameQuestCamCtrlStartFixedMode(GameQuestCamCtrl *self, void *entry)
 {
   CamFixedModeDesc desc __attribute__((aligned(16)));
@@ -66,7 +60,7 @@ void GameQuestCamCtrlStartFixedMode(GameQuestCamCtrl *self, void *entry)
     GameQuestCamFixedModeCtor(mode, &desc);
   }
   self->mode = (GameQuestCamSpring *)mode;
-  if (((CamFixedEntry *)entry)->type == 1) {
+  if (((GameQuestCamEntry *)entry)->springKind == 1) {
     GameQuestCamCtrlCreateEyeSpring(self, entry);
   } else {
     GameQuestCamCtrlCreateLookSpring(self);

@@ -19,7 +19,7 @@ void BtlMotionDataScaleTrackKeysGraded(GmoMotionInfo *motion, u32 target, float 
     int i;
 
     matches = 0;
-    track = motion->tracks;
+    track = (const GmoMotionTrack *)PspPtr(motion->tracks);
     for (i = 0; i < motion->trackCount; i++, track++) {
         if (track->paramD == 'H' && track->ref == target) {
             matches++;
@@ -31,8 +31,8 @@ void BtlMotionDataScaleTrackKeysGraded(GmoMotionInfo *motion, u32 target, float 
 
     count = (float)matches;
     remaining = count;
-    track = motion->tracks;
-    keyOffset = motion->table;
+    track = (const GmoMotionTrack *)PspPtr(motion->tracks);
+    keyOffset = (const u16 *)PspPtr(motion->table);
     for (i = 0; i < motion->trackCount; i++, track++, keyOffset++) {
         u8 *keys;
         float weight;
@@ -48,7 +48,7 @@ void BtlMotionDataScaleTrackKeysGraded(GmoMotionInfo *motion, u32 target, float 
         sz = vec[2] * weight;
         remaining = remaining - 1.0f;
 
-        keys = (u8 *)track->data + *keyOffset;
+        keys = (u8 *)PspPtr(track->data) + *keyOffset;
         if ((track->param8 & 0x80) != 0) {
             GmoMotionKeyH *key = (GmoMotionKeyH *)keys;
 

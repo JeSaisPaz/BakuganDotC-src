@@ -4,11 +4,6 @@
 /* Sets the prop model's rotation `+0x30` from three s16 angles (1/65535 turns), each wrapped
    once into (-pi, pi]; w is 0. Does nothing when the prop has no model. */
 
-typedef struct {
-  u8 pad[0x30];
-  float rot[4];
-} GameEventPropRotModel;
-
 static inline float GameEventPropAngleToRad(s16 angle)
 {
   float a = (float)angle * 6.2831855f * 1.5259022e-05f;
@@ -30,7 +25,7 @@ void GameEventPropSetRot(void *prop, const s16 *angles)
   if (p->model == NULL) {
     return;
   }
-  dst = ((GameEventPropRotModel *)p->model)->rot;
+  dst = ((GfxModel *)p->model)->rot;
   dst[0] = GameEventPropAngleToRad(angles[0]);
   dst[1] = GameEventPropAngleToRad(angles[1]);
   dst[2] = GameEventPropAngleToRad(angles[2]);

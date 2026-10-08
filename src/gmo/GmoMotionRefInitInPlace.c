@@ -20,13 +20,13 @@ void GmoMotionRefInitInPlace(GmoMotionRef *ref, void *bin)
     ref->arenaSize = (int *)ref->name + 8;
     ref->arena = (u8 *)(ref->arenaSize + 1);
     info = (GmoMotionInfo *)ref->info;
-    if ((u8 *)info->tracks < ref->arena) {
-      info->tracks = (GmoMotionTrack *)(ref->arena + (uintptr_t)info->tracks);
-      info->table = (u16 *)(ref->arena + (uintptr_t)info->table);
+    if (info->tracks < PspAddr(ref->arena)) {
+      info->tracks = PspAddr(ref->arena) + info->tracks;
+      info->table = PspAddr(ref->arena) + info->table;
       info = (GmoMotionInfo *)ref->info;
       for (i = 0; i < info->trackCount; i++) {
-        tracks = info->tracks;
-        tracks[i].data = ref->arena + (uintptr_t)tracks[i].data;
+        tracks = (GmoMotionTrack *)PspPtr(info->tracks);
+        tracks[i].data = PspAddr(ref->arena) + tracks[i].data;
         info = (GmoMotionInfo *)ref->info;
       }
     }

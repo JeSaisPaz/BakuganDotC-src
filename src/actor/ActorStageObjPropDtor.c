@@ -5,22 +5,16 @@
    chains to `ActorStageObjBaseDtor`. (GCC 2.x deleting destructor: frees the object when bit 0 of
    `flags` is set). */
 
-/* Object at `physicsBox` has its vtable pointer at +0x164. */
-typedef struct PhysBoxVtView {
-  unsigned char _pad[0x164];
-  const void *vtable;
-} PhysBoxVtView;
-
 void ActorStageObjPropDtor(ActorStageObjProp *self, u32 flags)
 
 {
-  void *box;
+  CollisionPhysBox *box;
 
   if (self != (ActorStageObjProp *)0x0) {
     box = self->physicsBox;
     (self->base).base.base.vtable = &g_actorStageObjPropVtbl;
-    if (box != (void *)0x0) {
-      const VtblEntry *ent = (const VtblEntry *)((PhysBoxVtView *)box)->vtable + 1;
+    if (box != (CollisionPhysBox *)0x0) {
+      const VtblEntry *ent = box->vtbl + 1;
 
       ((void (*)(void *, int))ent->fn)((char *)box + ent->delta, 3);
       self->physicsBox = (void *)0x0;

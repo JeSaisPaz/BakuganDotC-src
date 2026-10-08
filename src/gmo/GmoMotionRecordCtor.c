@@ -19,8 +19,8 @@ void *GmoMotionRecordCtor(void *rec)
     info->endFrame = g_gmoMotionDefaultEnd;
     info->unk02 = 0;
     info->frameRate = g_gmoMotionDefaultRate;
-    info->tracks = (GmoMotionTrack *)0x0;
-    info->table = (u16 *)0x0;
+    info->tracks = 0;
+    info->table = 0;
     info->trackCount = 0;
     info->unk1c = 0;
     info->unk20 = 0;

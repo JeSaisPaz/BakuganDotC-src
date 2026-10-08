@@ -24,7 +24,7 @@ void ActorStageObjDebrisDtor(ActorStageObjDebris *self, u32 flags)
     dtor = &frag->vtbl[1];
     ((void (*)(void *, u32))dtor->fn)((u8 *)frag + dtor->delta, 2);
   }
-  block = (CxxVecBlock *)self->fragments - 1; /* new[] cookie header in front of the array */
+  block = (CxxVecBlock *)self->fragments - 1; /* new[] cookie header in front of the array */ /* bdc: record-view ok: the header before the array, not a view of it */
   if (block != NULL) {
     MemLock();
     MemFree(block, NULL, 0);

@@ -5,17 +5,12 @@
    player is hidden (`player+0x3a1` clear while `+0x1a8` is set) and otherwise calls the gimmick
    draw `GameGimmickDraw` when the fade alpha `+0x178` is positive. */
 
-typedef struct {
-  u8 pad[0x3a1];
-  u8 hudFlag;
-} GameGimmickPlayerView;
-
 void GameGimmickCorePointDraw(GameGimmickCorePoint *obj, void *ctx)
 
 {
-  GameGimmickPlayerView *player = (GameGimmickPlayerView *)ActorFindPlayer();
+  ActorPlayer *player = (ActorPlayer *)ActorFindPlayer();
 
-  if (player != (GameGimmickPlayerView *)0x0 && obj->invisible != '\0' && player->hudFlag == 0) {
+  if (player != (ActorPlayer *)0x0 && obj->invisible != '\0' && player->scan == 0) {
     return;
   }
   if (!((obj->base).alpha <= 0.0f)) {

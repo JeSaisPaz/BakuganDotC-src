@@ -28,7 +28,7 @@ void UiPulseStep(GfxSprite *ghost, UiPulse *self)
       return;
     }
   }
-  if (!(self->source->addColor[0] < 0.3f)) {
+  if (!(((GfxSprite *)PspPtr(self->source))->addColor[0] < 0.3f)) {
     self->waiting = 0;
     waiting = (s8)self->waiting;
   }
@@ -42,10 +42,10 @@ void UiPulseStep(GfxSprite *ghost, UiPulse *self)
   ghost->alpha = self->level - (1.0f - t * t);
 
   t = self->phase - 1.0f;
-  scaleX = self->source->scaleX + (1.0f - t * t) * (self->targetScale - 1.0f);
+  scaleX = ((GfxSprite *)PspPtr(self->source))->scaleX + (1.0f - t * t) * (self->targetScale - 1.0f);
   ghost->scaleX = scaleX;
-  GfxSpriteSetScaleRotation(ghost, scaleX, self->source->scaleY, ghost->angle, false);
-  ghost->posZ = self->source->posZ + 1.0f;
+  GfxSpriteSetScaleRotation(ghost, scaleX, ((GfxSprite *)PspPtr(self->source))->scaleY, ghost->angle, false);
+  ghost->posZ = ((GfxSprite *)PspPtr(self->source))->posZ + 1.0f;
 
   if (!(self->phase < 1.0f)) {
     self->phase = 0.0f;

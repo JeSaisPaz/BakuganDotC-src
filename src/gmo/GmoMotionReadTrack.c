@@ -42,7 +42,7 @@ void GmoMotionReadTrack(const void *gmo, const void *trackChunk, GmoMotionTrack 
     dst = ((void *(*)(void *, size_t))alloc->fn)((u8 *)g_gmoMotionArena + alloc->delta, n);
     memcpy(dst, src, n);
     kind = GmoMotionTrackKind(args[1], params[0]);
-    track->data = dst;
+    track->data = PspAddr(dst);
     track->kind = track->kind | (u16)kind;
     track->param8 = (u16)params[0];
     track->paramA = (u16)params[2];

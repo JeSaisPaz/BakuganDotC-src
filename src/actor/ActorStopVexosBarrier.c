@@ -10,7 +10,7 @@
 void ActorStopVexosBarrier(Actor *self)
 
 {
-  ActorCrystal *crystal = (ActorCrystal *)self;
+  ActorCrystal *crystal = (ActorCrystal *)self; /* bdc: record-view ok: no Actor member is read through self */
   void *obj;
   SndManager *mgr;
 

@@ -5,18 +5,13 @@
    `+0x180` from its layer (`UiSpriteLayerRelease` on `effect + 0x214`) and destroys the collider
    `+0x174`. */
 
-typedef struct {
-  u8 pad[0x214];
-  void *layer;
-} GameGimmickTouchSpotSprite;
-
 void GameGimmickTouchSpotDisable(GameGimmickTouchSpot *gimmick)
 
 {
   if ((gimmick->base).active != '\0') {
     (gimmick->base).active = '\0';
     if (gimmick->sprite != (void *)0x0) {
-      UiSpriteLayerRelease(((GameGimmickTouchSpotSprite *)gimmick->sprite)->layer,gimmick->sprite);
+      UiSpriteLayerRelease(((GfxEffect *)gimmick->sprite)->mgr,gimmick->sprite);
     }
     if ((gimmick->base).attached == (void *)0x0) {
       (gimmick->base).attached = (void *)0x0;

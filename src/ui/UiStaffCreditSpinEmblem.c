@@ -6,17 +6,6 @@
    rotation. The angle (radians) is the cached `g_staffCreditEmblemSin` = sin(1 degree), computed
    once on the first call; the first object turns by its negation, the second by it. */
 
-typedef struct StaffCreditEmblemObj {
-  u8 unk00[0x20];
-  float matrix[16]; /* 0x20 */
-} StaffCreditEmblemObj;
-
-typedef struct StaffCreditEmblemData {
-  u8 unk00[0x18];
-  StaffCreditEmblemObj *a; /* 0x18 */
-  StaffCreditEmblemObj *b; /* 0x1c */
-} StaffCreditEmblemData;
-
 /* m = m * Rz(angle) (vmmul.q E200,E100,E000): each row r becomes
    (c*m[r][0] - s*m[r][1], s*m[r][0] + c*m[r][1], m[r][2], m[r][3]). */
 static void StaffCreditRotateMatrix(float *m, float angle)
@@ -37,14 +26,14 @@ static void StaffCreditRotateMatrix(float *m, float angle)
 void UiStaffCreditSpinEmblem(UiScreen *screen)
 
 {
-  StaffCreditEmblemObj *obj;
+  GfxSprite *obj;
 
   if (g_staffCreditEmblemInit == 0) {
     g_staffCreditEmblemInit = 1;
     g_staffCreditEmblemSin = __builtin_sinf(0.0174532924f); /* 0x3c8efa35: 1 degree */
   }
-  obj = ((StaffCreditEmblemData *)screen->data)->a;
+  obj = ((GfxSprite **)screen->data)[6];
   StaffCreditRotateMatrix(obj->matrix, -g_staffCreditEmblemSin);
-  obj = ((StaffCreditEmblemData *)screen->data)->b;
+  obj = ((GfxSprite **)screen->data)[7];
   StaffCreditRotateMatrix(obj->matrix, g_staffCreditEmblemSin);
 }

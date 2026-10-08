@@ -15,7 +15,7 @@ u8 UiHpGaugeIsSourceDown(UiHpGauge *self)
       return (self->unit->combat).dead;
     }
   } else if (mode < 3) {
-    result = ((ActorStageObjBase *)self->object)->dead;
+    result = self->object->dead;
     if (g_btlBattleOver != 0) {
       result = 1;
     }

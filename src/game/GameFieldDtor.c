@@ -95,7 +95,7 @@ void GameFieldDtor(CoreTask *task, u32 flags)
 
   aux = field->aux;
   if (aux != NULL) {
-    GF_VDELETE(aux, aux->vtbl);
+    GF_VDELETE(aux, aux->base.vtable);
     field->aux = NULL;
   }
   GameFieldPointListDestroy();

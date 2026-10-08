@@ -10,7 +10,7 @@
 void BtlMainDrawTalk(BtlMain *self)
 {
     void *packet;
-    UiTalkTask *talk;
+    BtlHud *talk;
     float white[4] __attribute__((aligned(16)));
 
     if (UiGetWindowActive(0) == 0) {
@@ -23,8 +23,8 @@ void BtlMainDrawTalk(BtlMain *self)
     } else {
         packet = GfxNewRenderPacket(110.0f);
         GfxPacketCall2DState(packet);
-        talk = (UiTalkTask *)UiGetTalkTask();
-        GfxPacketDrawGradientBands(packet, g_btlTalkBackBandYs, talk->backColours, 2, 1);
+        talk = UiGetTalkTask();
+        GfxPacketDrawGradientBands(packet, g_btlTalkBackBandYs, (const u32 *)talk->cutInColor, 2, 1);
         BtlMainDrawScene(self);
     }
     packet = GfxNewRenderPacket(1050.0f);

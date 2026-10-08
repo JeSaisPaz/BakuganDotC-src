@@ -18,7 +18,7 @@ void GmoDlWriteTextureIfDirty(GmoDlContext *self, u32 dirty)
     if (self->end != (u32 *)0x0) {
       dl = &local_dl;
     }
-    remain = (u32)((uintptr_t)self->end - (uintptr_t)local_dl);
+    remain = (u32)((u8 *)self->end - (u8 *)local_dl);
     written = GmoTextureWriteDl(self->texture, dl, &remain, 0xffff);
     self->cur = (u32 *)((u8 *)self->cur + written);
     if (written == 0) {

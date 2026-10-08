@@ -11,11 +11,6 @@
    `shapeDesc + 0x10` (bank constant C720) and refreshes the model matrix (`ActorStageObjUpdateTransform`).
    Counterpart: `ActorStageObjDeactivate`. */
 
-typedef struct StageObjHelperShapeDesc {
-  u8 _unk00[0x10];
-  float vec10[4]; /* +0x10 receives C720 */
-} StageObjHelperShapeDesc;
-
 void ActorStageObjActivate(void *obj)
 
 {
@@ -24,7 +19,7 @@ void ActorStageObjActivate(void *obj)
   bool fromLow;
   float radius;
   float axisLen;
-  StageObjHelperShapeDesc *shapeDesc;
+  CollisionCapsule *shapeDesc;
   int i;
   int j;
 
@@ -68,11 +63,11 @@ void ActorStageObjActivate(void *obj)
   self->helper->attachMatrix = self->helperMatrix;
   self->helper->attachDirty = 1;
   /* sv.q of the bank constant C720 = (0, 0, 0, 0). */
-  shapeDesc = (StageObjHelperShapeDesc *)self->helper->shapeDesc;
-  shapeDesc->vec10[0] = 0.0f;
-  shapeDesc->vec10[1] = 0.0f;
-  shapeDesc->vec10[2] = 0.0f;
-  shapeDesc->vec10[3] = 0.0f;
+  shapeDesc = (CollisionCapsule *)self->helper->shapeDesc;
+  ((float *)shapeDesc->segmentHead)[0] = 0.0f;
+  ((float *)shapeDesc->segmentHead)[1] = 0.0f;
+  ((float *)shapeDesc->segmentHead)[2] = 0.0f;
+  ((float *)shapeDesc->segmentHead)[3] = 0.0f;
   self->helper->byte104 = 0;
   self->helper->attachDirty = 1;
   ActorStageObjUpdateTransform(&self->base);

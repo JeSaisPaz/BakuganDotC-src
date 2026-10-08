@@ -37,7 +37,7 @@ void GameFieldEnterArea(CoreTask *task, bool reload)
     GameFieldLoadObjects(task, g_gameEventFlags[0], g_gameEventFlags[2]);
   }
   GameFieldResetGimmickStates(task, true);
-  GameEvent470LoadScript(field->events, 0, 0, 0, (s32)(uintptr_t)&g_gameEventState, 0,
+  GameEvent470LoadScript(field->events, 0, 0, 0, (s32)(uintptr_t)&g_gameEventState, 0, /* bdc: ptr-narrow ok: the callee never reads a4 */
                          g_gameEventFlags[0], g_gameEventFlags[2]);
   rec = table[0];
   if (reload) {

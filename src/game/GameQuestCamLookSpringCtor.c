@@ -7,15 +7,14 @@
    `+0x70`, `+0x80 = 0`, and the descriptor's goal `desc+0x20` -> `+0x40`. The listing copies the
    look-at twice (the second copy is identical). Returns `self`. */
 
-typedef struct CamLookDesc {
-  u8 pad[0x20];
-  ScePspFVector4 goal;
-  ScePspFVector4 look;
-} CamLookDesc;
+typedef struct CamLookSpringDesc {
+  GameQuestCamSpringDesc spring; /* +0x00 */
+  ScePspFVector4 look;           /* +0x30 */
+} __attribute__((aligned(16))) CamLookSpringDesc;
 
 GameQuestCamLookSpring *GameQuestCamLookSpringCtor(GameQuestCamLookSpring *self, void *desc)
 {
-  CamLookDesc *d = (CamLookDesc *)desc;
+  CamLookSpringDesc *d = (CamLookSpringDesc *)desc;
 
   GameQuestCamSpringCtor(&self->base, desc);
   self->base.vtbl = g_gameQuestCamSpringBaseVtbl;
@@ -24,6 +23,6 @@ GameQuestCamLookSpring *GameQuestCamLookSpringCtor(GameQuestCamLookSpring *self,
   self->base.vtbl = g_gameQuestCamLookSpringVtbl;
   self->flag80 = 0;
   self->point = d->look;
-  self->base.goal = d->goal;
+  self->base.goal = d->spring.goal;
   return self;
 }

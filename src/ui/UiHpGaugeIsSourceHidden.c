@@ -15,7 +15,7 @@ u8 UiHpGaugeIsSourceHidden(UiHpGauge *self)
             result = self->unit->combat.status[9].active;
         }
     } else if (self->mode < 3) {
-        const VtblEntry *e = &self->object->vtable[18];
+        const VtblEntry *e = &((const VtblEntry *)self->object->base.base.vtable)[18];
         if (((s32 (*)(void *))e->fn)((u8 *)self->object + e->delta) != 0) {
             result = 1;
             self->fade = 0.0f;

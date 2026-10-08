@@ -21,7 +21,7 @@ void UiEquipDtor(UiEquip *self, u32 flags)
     UiScreenSetFrameMode((CoreTask *)self, 1);
     if (self->slotCameras != (GfxCamera *)0x0) {
       MemLock();
-      MemFree((CxxVecBlock *)self->slotCameras - 1, (char *)0x0, 0); /* new[] cookie header */
+      MemFree((CxxVecBlock *)self->slotCameras - 1, (char *)0x0, 0); /* new[] cookie header */ /* bdc: record-view ok: the header before the array, not a view of it */
       MemUnlock();
       self->slotCameras = (GfxCamera *)0x0;
     }

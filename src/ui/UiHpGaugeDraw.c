@@ -14,7 +14,7 @@
      anchor is projected through `g_gfxActiveCamera` and, unless the depth from
      `MathVfpuStoreC100` is <= -3, drawn at the rounded screen position (y - 12) with scale -1;
      then, when `UiHpGaugeObjectSlot6C` holds, it is drawn again in the left-hand list
-     (x = 42, y = (object `drawY` - standing HP objects among the first 3) * 16 + 208) with scale
+     (x = 42, y = (object `instanceId` - standing HP objects among the first 3) * 16 + 208) with scale
      40 and alpha forced to 1 unless `UiHpGaugeIsSourceDown` (alpha is restored after).
    Each draw uploads a world matrix (scale rows + translation) and stores the translation in
    `screenPos` (w = y) before `UiHpGaugeEmitBars`. The fixed positions are staged on the stack
@@ -157,7 +157,7 @@ void UiHpGaugeDraw(void *packet)
         }
         if (UiHpGaugeObjectSlot6C(gauge) != 0) {
           spot[0] = 42.0f;
-          spot[1] = (float)((gauge->object->drawY - standing) * 16 + 0xd0);
+          spot[1] = (float)(((s32)gauge->object->instanceId - standing) * 16 + 0xd0);
           spot[2] = -1000.0f;
           spot[3] = 0.0f;
           pos[0] = spot[0];

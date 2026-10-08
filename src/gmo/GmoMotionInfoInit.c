@@ -10,8 +10,8 @@ void GmoMotionInfoInit(GmoMotionInfo *info)
 {
   info->active = 1;
   info->unk02 = 0;
-  info->tracks = NULL;
-  info->table = NULL;
+  info->tracks = 0;
+  info->table = 0;
   info->trackCount = 0;
   info->value0e = 1;
   info->startFrame = -1000000.0f;

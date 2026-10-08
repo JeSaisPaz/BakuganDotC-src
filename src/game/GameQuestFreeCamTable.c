@@ -24,7 +24,7 @@ void GameQuestFreeCamTable(GameQuestCamTable *table, u32 flags)
   for (i = 0; i < table->count; i++) {
     /* inlined bounds-checked operator[] (lower bound only) */
     if (i > -1) {
-      set = (GameQuestCamPtrVec *)table->data[i];
+      set = table->data[i];
     } else {
       memset(&g_gameQuestCamNullSet, 0, 4);
       set = g_gameQuestCamNullSet;

@@ -2,7 +2,7 @@
 #include "bdc.h"
 
 /* Initialises a 0x140-byte texture object from an in-memory TIM2 image: zeroes the sub-records at
-   `rec38Type` and `gmoData`; when `data` starts with the `TIM2` magic (`0x324d4954`) points
+   `rec38Type` and `gmo`; when `data` starts with the `TIM2` magic (`0x324d4954`) points
    `picture` at `data + 0x10` (or `data + 0x80` when the header's alignment byte is non-zero) and
    takes `name` without extension, truncated to 31 characters, as the texture name (otherwise
    neither is touched). Rounds width/height to powers of two (`GfxTextureRoundPow2`), derives
@@ -29,9 +29,9 @@ void GfxTextureInitFromTim2(void *tex, const char *name, void *data, u8 flag)
     t->clutData = NULL;
     t->singleSlot = 1;
     t->blocks = t->inlineBlock;
-    memset(t->gmoData, 0, 0x40);
-    t->gmoData[0] = 1;
-    t->gmoOwner = t;
+    memset(&t->gmo, 0, sizeof(GmoTexture));
+    t->gmo.refCount = 1;
+    t->gmo.palette = t;
     if (hdr->magic == 0x324d4954) {
         t->picture = (GfxTim2Picture *)(hdr + 1);
         if (hdr->format != 0) {

@@ -403,7 +403,7 @@ void BtlBakuganState07Update(BtlBakugan *self)
             self->dashSpeed = BtlBakuganGetMeleeLungeSpeed(self);
             vy = BtlCalcDeceleratingDistance(target->base.velocity[1],
                                              target->combat.stats->gravity * 0.75f,
-                                             (u32)(uintptr_t)self, 6);
+                                             (u32)(uintptr_t)self, 6); /* bdc: ptr-narrow ok: the callee never reads its third argument */
             vy = (vy + target->base.pos[1]) - (self->base.pos[1] + velocity[1]);
             if (!(vy <= self->dashSpeed)) {
               vy = self->dashSpeed;

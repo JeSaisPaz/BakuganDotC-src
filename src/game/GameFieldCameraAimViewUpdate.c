@@ -9,27 +9,17 @@
    (`GameFieldCameraAimViewTurnPlayer`), tests walls (`GameFieldCameraAimViewCollide`) and
    springs eye/look-at into `outEye`/`outLook` (`GameFieldCameraSpringStep`, damping 0.8). */
 
-typedef struct {
-  u8 pad[0xd0];
-  u32 flags;
-} GameFieldAimSprite;
-
-typedef struct {
-  u8 pad[0x4d0];
-  GameFieldAimSprite *sprite;
-} GameFieldAimPlayer;
-
 void GameFieldCameraAimViewUpdate(void *aim, float *outEye, float *outLook)
 
 {
   Actor *player;
-  GameFieldAimSprite *sprite;
+  GfxSprite *sprite;
   float targetEye[4] __attribute__((aligned(16)));
   float targetLook[4] __attribute__((aligned(16)));
 
   player = (Actor *)ActorFindPlayer();
   if (player->state == 8) {
-    sprite = ((GameFieldAimPlayer *)player)->sprite;
+    sprite = (GfxSprite *)((ActorPlayer *)player)->aimSprite;
     if (sprite != NULL) {
       sprite->flags = sprite->flags & ~1u;
     }

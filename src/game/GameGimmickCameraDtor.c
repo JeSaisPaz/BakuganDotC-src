@@ -6,21 +6,16 @@
    (`UiSpriteLayerRelease`), deletes the collider `+0x174`, the sound object (`GfxModelReleaseSound`),
    runs `GameGimmickDtor` and frees when `flags & 1`. */
 
-typedef struct {
-  u8 pad[0x214];
-  void *layer;
-} GameGimmickCameraSprite;
-
 void GameGimmickCameraDtor(GameGimmickCamera *obj, u32 flags)
 {
   if (obj != (GameGimmickCamera *)0x0) {
     obj->base.base.base.vtable = g_gameGimmickCameraVtbl;
     obj->base.vtbl2 = g_gameGimmickCameraVtbl2;
     if (obj->coneEffect != (void *)0x0) {
-      UiSpriteLayerRelease(((GameGimmickCameraSprite *)obj->coneEffect)->layer, obj->coneEffect);
+      UiSpriteLayerRelease(((GfxEffect *)obj->coneEffect)->mgr, obj->coneEffect);
     }
     if (obj->spotEffect != (void *)0x0) {
-      UiSpriteLayerRelease(((GameGimmickCameraSprite *)obj->spotEffect)->layer, obj->spotEffect);
+      UiSpriteLayerRelease(((GfxEffect *)obj->spotEffect)->mgr, obj->spotEffect);
     }
     if (obj->base.attached != (void *)0x0) {
       CoreNode *node = (CoreNode *)obj->base.attached;

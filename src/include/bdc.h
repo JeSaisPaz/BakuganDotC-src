@@ -1771,7 +1771,7 @@ typedef struct ActorStageObjLandmark {
         u8 _unk324[0x8];       /* +0x324 raw view (used by the ctor) */
         struct {
             GmoNode *orbNode;  /* +0x324 model node `f6_landmark01_02` (the orb); its localMatrix gets the spin rotation (`ActorStageObjLandmarkState00Active`) */
-            u32 unk328;        /* +0x328 cleared by `ActorStageObjLandmarkCtor`; no reader found */
+            GfxEffect *effect; /* +0x328 looping effect 99 (ActorStageObjStartEffect, attached to orbPos); cleared by `ActorStageObjLandmarkCtor` and `ActorStageObjStopEffect` */
         };
     };
     CollisionCollider *helper; /* +0x32c helper collider; hides the HP gauge while it exists */
@@ -2906,10 +2906,12 @@ typedef struct GfxFabClipDef {
 } GfxFabClipDef;
 
 typedef struct GfxFabClip {
-    u8 _unk00[0x4];            /* +0x00 */
+    struct GfxFabClip *prev;   /* +0x00 CoreObject header: clips are CoreObjects kept in the fab's list (CoreObjectInitInList) */
     struct GfxFabClip *next;   /* +0x04 next clip in the fab list */
-    u8 _unk08[0xc];            /* +0x08 */
-    const void *vtable;        /* +0x14 vtable 0x08af5884 */
+    u32 unk08;                 /* +0x08 CoreObject.unk08 */
+    u32 id;                    /* +0x0c CoreObject.id */
+    struct CoreObjectList *list; /* +0x10 CoreObject.list */
+    const void *vtable;        /* +0x14 CoreObject.vtable: 0x08af5884 */
     void *fab;                 /* +0x18 owning fab; looping flag at its +0x9c (GfxFabClipUpdate) */
     GfxFabClipDef *def;        /* +0x1c clip definition header */
     const GfxFabClipDef *data; /* +0x20 chunk + 0x10 (GfxFabClipBind) */
@@ -2923,10 +2925,12 @@ typedef struct GfxFabClip {
 } GfxFabClip;
 
 typedef struct GfxFab {
-    u8 _unk000[0x4];
+    struct GfxFab *prev;              /* +0x000 CoreObject header: fabs are CoreObjects kept in a head/tail/count list (CoreObjectInitInList) */
     struct GfxFab *next;              /* +0x004 next fab in the list (GfxFabListUpdate/Draw) */
-    u8 _unk008[0xc];                  /* +0x008 */
-    const void *vtable;               /* +0x014 vtable (0x08af5874 for GfxFabCtor/GfxFabCtorFromPack) */
+    u32 unk08;                        /* +0x008 CoreObject.unk08 */
+    u32 id;                           /* +0x00c CoreObject.id */
+    struct CoreObjectList *list;      /* +0x010 CoreObject.list: owning list (CoreObjectListAppend) */
+    const void *vtable;               /* +0x014 CoreObject.vtable (0x08af5874 for GfxFabCtor/GfxFabCtorFromPack) */
     void *data;                       /* +0x018 loaded .fab file data (chunk list) */
     char *name;                       /* +0x01c file name / pack entry name */
     u8 _unk020[0x10];                 /* +0x020 */
@@ -4419,8 +4423,7 @@ typedef struct GameEventPropTween {
 } GameEventPropTween;
 
 typedef struct GameFieldAux {
-    u8 _unk00[0x20];
-    const VtblEntry *vtbl;     /* +0x20 entry 1: deleting destructor */
+    CoreNode base;             /* +0x00 IoLzsPackage header; vtable at +0x20, entry 1: deleting destructor */
 } GameFieldAux;
 
 typedef struct GameFieldCamParamVEntry {
@@ -4430,7 +4433,7 @@ typedef struct GameFieldCamParamVEntry {
 } GameFieldCamParamVEntry;
 
 typedef struct GameFieldCamParamVtbl {
-    u8 _unk00[0x10];
+    GameFieldCamParamVEntry base[2];     /* +0x00 entry 0 (empty) and entry 1 (destructor: GameFieldCamParamDtor / GameFieldCamParamBaseDtor) */
     GameFieldCamParamVEntry getPayload;  /* +0x10 */
 } GameFieldCamParamVtbl;
 
@@ -4536,8 +4539,12 @@ typedef struct GameFieldCameraSpring {
 } GameFieldCameraSpring;
 
 typedef struct GameFieldPlacement {
-    u8 _unk00[0x14];
-    const VtblEntry *vtbl;  /* +0x14 */
+    struct CoreObject *prev;   /* +0x00 CoreObject header (the placed actors are CoreObjects) */
+    struct CoreObject *next;   /* +0x04 */
+    u32 unk08;                 /* +0x08 */
+    u32 id;                    /* +0x0c */
+    struct CoreObjectList *list; /* +0x10 */
+    const VtblEntry *vtbl;     /* +0x14 CoreObject.vtable */
 } GameFieldPlacement;
 
 typedef struct GameFieldCharSet {
@@ -4656,10 +4663,12 @@ typedef struct GameFieldPlacementBase {
 } GameFieldPlacementBase;
 
 typedef struct GameFieldPoint {
-    u8 _unk00[4];
+    struct GameFieldPoint *prev; /* +0x00 CoreObject header: points are CoreObjects (CoreObjectInit, no chain) */
     struct GameFieldPoint *next; /* +0x04 next point in the list */
-    u8 _unk08[0xc];
-    const void *vtable;          /* +0x14 */
+    u32 unk08;                   /* +0x08 CoreObject.unk08 */
+    u32 objectId;                /* +0x0c CoreObject.id (the point id is `id` at +0x30) */
+    struct CoreObjectList *list; /* +0x10 CoreObject.list */
+    const void *vtable;          /* +0x14 CoreObject.vtable */
     void *effect;                /* +0x18 marker effect, NULL until spawned */
     u8 _unk1c[4];
     float pos[4];                /* +0x20 position vec4 */
@@ -5047,7 +5056,7 @@ typedef struct GameQuestCamEntry {
     s32 subCap;                /* +0x34 10 at parse */
     s32 subCount;              /* +0x38 0 at parse */
     s32 id;                    /* +0x3c camera id (s16 at record +0x50) */
-    float f40;                 /* +0x40 record +0x28 */
+    float f40;                 /* +0x40 record +0x28; path pitch, negative = default pi/2 (GameQuestCamUpdatePitch) */
     float distance;            /* +0x44 record +0x2c; distance passed to the spring-by-distance step */
     float sideOffset;          /* +0x48 record +0x30, 600 when below FLT_EPSILON */
     float f4c;                 /* +0x4c record +0x34 */
@@ -5136,7 +5145,7 @@ typedef struct GameQuestCamModeEntry {
     u8 _unk30[0x14];           /* +0x30 */
     float distance;            /* +0x44 distance passed to the spring-by-distance step */
     float sideOffset;          /* +0x48 sideways swing distance (x1.5) of the point mode follow offset */
-    u8 _unk4c[0x4];            /* +0x4c */
+    float leadScale;           /* +0x4c lead scale passed to GameQuestCamModeSmooth by the point mode */
     float extra0;              /* +0x50 copied to ctrl extra[0] */
     float extra1;              /* +0x54 copied to ctrl extra[1] */
     u8 _unk58[0x9];            /* +0x58 */
@@ -5167,8 +5176,19 @@ typedef struct GameQuestCamPathMode {
     u8 _unk144[0xc];           /* +0x144 */
 } GameQuestCamPathMode;
 
+typedef struct GameQuestCamSpringDesc {
+    struct GameQuestCamCtrl *ctrl; /* +0x00 owning controller */
+    void *followed;            /* +0x04 followed object */
+    u8 _unk08[8];              /* +0x08 */
+    ScePspFVector4 start;      /* +0x10 initial velocity vector */
+    ScePspFVector4 goal;       /* +0x20 initial spring target */
+} GameQuestCamSpringDesc;
+
 typedef struct GameQuestCamPathModeDesc {
-    u8 _unk00[0x50];           /* +0x00 */
+    GameQuestCamSpringDesc spring; /* +0x00 base descriptor read by GameQuestCamModeBaseCtor (GameQuestCamCtrlStartPathMode: ctrl, followed, start, goal) */
+    ScePspFVector4 point;      /* +0x30 point returned by the old mode's vtable entry 2 */
+    struct GameQuestCamSpring **lookSlot; /* +0x40 &ctrl->look */
+    u8 _unk44[0xc];            /* +0x44 */
     void *pathSet;             /* +0x50 quest path set */
 } GameQuestCamPathModeDesc;
 
@@ -5183,7 +5203,10 @@ typedef struct GameQuestCamPointMode {
 } GameQuestCamPointMode;
 
 typedef struct GameQuestCamPointModeDesc {
-    u8 _unk00[0x50];           /* +0x00 base descriptor read by GameQuestCamModeBaseCtor */
+    GameQuestCamSpringDesc spring; /* +0x00 base descriptor read by GameQuestCamModeBaseCtor (GameQuestCamCtrlStartPointMode: ctrl, followed, start, goal) */
+    ScePspFVector4 point;      /* +0x30 point returned by the old mode's vtable entry 2 */
+    struct GameQuestCamSpring **lookSlot; /* +0x40 &ctrl->look */
+    u8 _unk44[0xc];            /* +0x44 */
     struct GameQuestCamModeEntry *entry; /* +0x50 type-2 camera table entry */
     u8 _unk54[0xc];            /* +0x54 */
     ScePspFVector4 pos;        /* +0x60 transformed point */
@@ -5195,14 +5218,6 @@ typedef struct GameQuestCamPtrVec {
     s32 count;                 /* +0x08 element count */
 } GameQuestCamPtrVec;
 
-typedef struct GameQuestCamSpringDesc {
-    struct GameQuestCamCtrl *ctrl; /* +0x00 owning controller */
-    void *followed;            /* +0x04 followed object */
-    u8 _unk08[8];              /* +0x08 */
-    ScePspFVector4 start;      /* +0x10 initial velocity vector */
-    ScePspFVector4 goal;       /* +0x20 initial spring target */
-} GameQuestCamSpringDesc;
-
 typedef struct GameQuestCamSubState {
     struct GameQuestCamModeBase *mode; /* +0x00 owning mode */
     const VtblEntry *vtbl;     /* +0x04 */
@@ -5212,7 +5227,7 @@ typedef struct GameQuestCamSubState {
 } GameQuestCamSubState;
 
 typedef struct GameQuestCamTable {
-    struct GameQuestCamEntry **data; /* +0x00 pointer vector (10 entries) */
+    struct GameQuestCamPtrVec **data; /* +0x00 pointer vector of the camera sets (10 slots at first) */
     s32 cap;                   /* +0x04 */
     s32 count;                 /* +0x08 */
     struct GameQuestCamPtrVec *cur; /* +0x0c current camera set */
@@ -5276,8 +5291,8 @@ typedef struct GameQuestPathRecord {
 } GameQuestPathRecord;
 
 typedef struct GameQuestPathSegment {
-    struct GameQuestPathNode *from; /* +0x00 segment start node (position at +0x00) */
-    struct GameQuestPathNode *to;   /* +0x04 segment end node */
+    struct GameQuestCamEntry *from; /* +0x00 segment start node (camera path entry) */
+    struct GameQuestCamEntry *to;   /* +0x04 segment end node */
     u8 _unk08[0x8];                 /* +0x08 */
     ScePspFVector4 dir;             /* +0x10 unit direction from -> to */
     float t;                        /* +0x20 projection parameter along the segment (0..1) */
@@ -5391,11 +5406,65 @@ typedef struct GfxFabLabel {
     char name[4];    /* +0x0c NUL-terminated name, extends past the struct */
 } GfxFabLabel;
 
+typedef struct GmoImage {
+    s16 refCount;              /* +0x00 */
+    u16 auxFlags;
+    struct GmoImage *next;     /* +0x04 next record in a texture's image/palette list; owns a reference */
+    u16 id;                    /* +0x08 list lookup id (GmoImageListFind); 1 = private writable copy */
+    u8 _unk0a[0x6];
+    u16 format;                /* +0x10 pixel format (GmoImageBuild fmt) */
+    u16 width;                 /* +0x12 base width */
+    u16 height;                /* +0x14 base height */
+    u8 flags16;                 /* +0x16 */
+    u8 bpp;                    /* +0x17 bits per pixel */
+    u8 widthAlign;             /* +0x18 width alignment in pixels */
+    u8 heightAlign;            /* +0x19 height alignment, a power of two */
+    u8 flags1a;                 /* +0x1a */
+    u8 _unk1b;
+    u32 frameMask;             /* +0x1c frame bit mask (GmoTextureSetFrameIndex) */
+    void **levels;             /* +0x20 levelCount * frameCount pixel buffers, frame-major */
+    u16 levelCount;            /* +0x24 mip levels */
+    u16 frameCount;            /* +0x26 animation frames */
+    u8 mipmapMode;             /* +0x28 1: level sizes halve per level */
+    u8 kind29;                 /* +0x29 3 at construction */
+    u16 aux2a;                /* +0x2a */
+    void *userData;            /* +0x2c data block, pool 0 */
+} GmoImage;
+
+typedef struct GmoTexture {
+    s16 refCount;              /* +0x00 reference count */
+    u16 flags;                 /* +0x02 0x2 writable, 0x10 dynamic, 0x20 has UV transform */
+    void *image;               /* +0x04 current image block; holds a pool-1 image-heap reference (GmoTextureSetImage) */
+    void *palette;             /* +0x08 current palette; holds a pool-1 image-heap reference (GmoTextureSetPalette); image restored by GmoTextureReleaseWritable */
+    GmoImage *images;          /* +0x0c image list head (owns a reference on the first node) */
+    GmoImage *palettes;        /* +0x10 palette list head (palettes are GmoImage records too) */
+    void *tracks;              /* +0x14 animation tracks (0x30 bytes each, count trackCount + 1) */
+    u8 trackCount;             /* +0x18 */
+    u8 lastTrack;                 /* +0x19 init 0xff */
+    u16 trackFlags;                /* +0x1a GE state to emit (GmoTextureWriteDl): 1 dual-frame/bias from track, 2 TBIAS, 4 UV transform, 0x100 blend, 0x200 TFUNC, 0x400 TFLT, 0x800 TWRAP */
+    u8 frameIndex;                 /* +0x1c frame index */
+    u8 frameA;                 /* +0x1d frame selector */
+    u8 frameB;                 /* +0x1e frame selector */
+    u8 frameC;                 /* +0x1f frame selector */
+    float uvTransform[4];      /* +0x20 {uOffset, vOffset, uScale, vScale}, valid when flags & 0x20 */
+    u8 filterMin;                 /* +0x30 init 1; actually the blend preset index into g_gmoBlendModeTable (GmoTextureWriteDl) */
+    u8 filterPad;                 /* +0x31 */
+    u8 filterMode;                 /* +0x32 TFUNC texture function (GE 0xc9 bits 0-7) */
+    u8 filterMag;                 /* +0x33 init 1; TFUNC bits 8-15 (alpha/RGBA) */
+    u8 wrapU;                 /* +0x34 init 1; TFLT bits 8-15 (mag filter) */
+    u8 wrapV;                 /* +0x35 init 7; TFLT bits 0-7 (min filter) */
+    u8 flagsA;                 /* +0x36 TWRAP bits 0-7 (U wrap) */
+    u8 flagsB;                 /* +0x37 TWRAP bits 8-15 (V wrap) */
+    u8 _unk38[8];              /* +0x38 */
+} GmoTexture;
+
 typedef struct GfxTexture {
-    u8 _unk0[4];              /* +0x000 */
+    struct GfxTexture *prev;  /* +0x000 CoreObject header: textures are CoreObjects (CoreObjectInit), linked in g_textureList */
     struct GfxTexture *next;  /* +0x004 next texture in g_textureList */
-    u8 _unk08[0xc];           /* +0x008 */
-    const VtblEntry *vtbl;    /* +0x014 GCC 2.x vtable (0x08af5864 restored by GfxTextureDtor); slot 1 (+0x8) is the destructor, called with flag 2 by IoPackDirReleaseTextures */
+    u32 unk08;                /* +0x008 CoreObject.unk08 */
+    u32 id;                   /* +0x00c CoreObject.id */
+    struct CoreObjectList *list; /* +0x010 CoreObject.list */
+    const VtblEntry *vtbl;    /* +0x014 CoreObject.vtable: GCC 2.x vtable (0x08af5864 restored by GfxTextureDtor); slot 1 (+0x8) is the destructor, called with flag 2 by IoPackDirReleaseTextures */
     char name[0x20];          /* +0x018 texture name, NUL-terminated, at most 31 chars (searched by GfxFindTexture) */
     s32 rec38Type;            /* +0x038 set to 1 by the init functions (start of a 0x20-byte record they zero) */
     u8 _unk03c[0x10];         /* +0x03c */
@@ -5403,10 +5472,7 @@ typedef struct GfxTexture {
     u8 _unk050[4];            /* +0x050 */
     struct GfxTexture *rec38Owner; /* +0x054 back pointer to the texture, set by the init functions */
     u8 _unk058[8];            /* +0x058 */
-    u16 gmoData[2];           /* +0x060 data record (0x40 bytes, zeroed by the init functions, first half-word = 1) whose address GmoTextureByFileName hands out */
-    u8 *curBlock2;            /* +0x064 copy of curBlock (GfxTextureSelectSlot) */
-    struct GfxTexture *gmoOwner; /* +0x068 back pointer to the texture, set by the init functions */
-    u8 _unk06c[0x34];         /* +0x06c */
+    GmoTexture gmo;           /* +0x060 GMO texture record (0x40 bytes) whose address GmoTextureByFileName hands out and GfxModelSetMaterialTextureByIndex binds to a GmoLayer: zeroed by the init functions, refCount = 1, image = copy of curBlock (GfxTextureSelectSlot, GfxTextureBuildDl), palette = back pointer to the texture (GmoDlWriteMeshRenderState selects and calls its GE slot) */
     struct GfxTim2Picture *picture; /* +0x0a0 TIM2 picture header (mip count, mip slope/bias; GfxTextureBuildDl, GfxTextureSetMipSlope, GfxTextureSetMipBias) */
     float invWidth;           /* +0x0a4 1/width (texel to UV factor) */
     float invHeight;          /* +0x0a8 1/height */
@@ -5545,7 +5611,7 @@ typedef struct GfxMaterialState {
 } GfxMaterialState;
 
 typedef struct GfxModelVtable {
-    u8 _unk00[0x30];
+    VtblEntry base[6];         /* +0x00 slots 0-5 of g_gfxModelVtable: 0 (empty), GfxModelDtor, GfxModelInitFields, GfxModelSetFogEnabled, GfxModelSetFog, GfxModelDistanceFade */
     s16 setMotionSpeedAdjust;  /* +0x30 byte offset added to the model pointer for the call */
     u8 _pad32[2];
     float (*setMotionSpeed)(void *self, float speed); /* +0x34 GfxModelSetMotionSpeed */
@@ -5959,31 +6025,6 @@ typedef struct GmoGimTimeEntry {
     u32 offset;                /* 0x4: offset (from the sequence header, same base as dataStart) of this entry's sequence data */
 } GmoGimTimeEntry;
 
-typedef struct GmoImage {
-    s16 refCount;              /* +0x00 */
-    u16 auxFlags;
-    struct GmoImage *next;     /* +0x04 next record in a texture's image/palette list; owns a reference */
-    u16 id;                    /* +0x08 list lookup id (GmoImageListFind); 1 = private writable copy */
-    u8 _unk0a[0x6];
-    u16 format;                /* +0x10 pixel format (GmoImageBuild fmt) */
-    u16 width;                 /* +0x12 base width */
-    u16 height;                /* +0x14 base height */
-    u8 flags16;                 /* +0x16 */
-    u8 bpp;                    /* +0x17 bits per pixel */
-    u8 widthAlign;             /* +0x18 width alignment in pixels */
-    u8 heightAlign;            /* +0x19 height alignment, a power of two */
-    u8 flags1a;                 /* +0x1a */
-    u8 _unk1b;
-    u32 frameMask;             /* +0x1c frame bit mask (GmoTextureSetFrameIndex) */
-    void **levels;             /* +0x20 levelCount * frameCount pixel buffers, frame-major */
-    u16 levelCount;            /* +0x24 mip levels */
-    u16 frameCount;            /* +0x26 animation frames */
-    u8 mipmapMode;             /* +0x28 1: level sizes halve per level */
-    u8 kind29;                 /* +0x29 3 at construction */
-    u16 aux2a;                /* +0x2a */
-    void *userData;            /* +0x2c data block, pool 0 */
-} GmoImage;
-
 typedef struct GmoImageBlock {
     void *alloc;                         /* 0x00 raw pointer returned by the pool allocator */
     struct GmoImageBlock *next;          /* 0x04 newer block (list back-link) */
@@ -6027,33 +6068,6 @@ typedef struct GmoInstance {
     u16 vertexCount;           /* +0x1e */
 } GmoInstance;
 
-typedef struct GmoTexture {
-    s16 refCount;              /* +0x00 reference count */
-    u16 flags;                 /* +0x02 0x2 writable, 0x10 dynamic, 0x20 has UV transform */
-    void *image;               /* +0x04 current image block; holds a pool-1 image-heap reference (GmoTextureSetImage) */
-    void *palette;             /* +0x08 current palette; holds a pool-1 image-heap reference (GmoTextureSetPalette); image restored by GmoTextureReleaseWritable */
-    GmoImage *images;          /* +0x0c image list head (owns a reference on the first node) */
-    GmoImage *palettes;        /* +0x10 palette list head (palettes are GmoImage records too) */
-    void *tracks;              /* +0x14 animation tracks (0x30 bytes each, count trackCount + 1) */
-    u8 trackCount;             /* +0x18 */
-    u8 lastTrack;                 /* +0x19 init 0xff */
-    u16 trackFlags;                /* +0x1a GE state to emit (GmoTextureWriteDl): 1 dual-frame/bias from track, 2 TBIAS, 4 UV transform, 0x100 blend, 0x200 TFUNC, 0x400 TFLT, 0x800 TWRAP */
-    u8 frameIndex;                 /* +0x1c frame index */
-    u8 frameA;                 /* +0x1d frame selector */
-    u8 frameB;                 /* +0x1e frame selector */
-    u8 frameC;                 /* +0x1f frame selector */
-    float uvTransform[4];      /* +0x20 {uOffset, vOffset, uScale, vScale}, valid when flags & 0x20 */
-    u8 filterMin;                 /* +0x30 init 1; actually the blend preset index into g_gmoBlendModeTable (GmoTextureWriteDl) */
-    u8 filterPad;                 /* +0x31 */
-    u8 filterMode;                 /* +0x32 TFUNC texture function (GE 0xc9 bits 0-7) */
-    u8 filterMag;                 /* +0x33 init 1; TFUNC bits 8-15 (alpha/RGBA) */
-    u8 wrapU;                 /* +0x34 init 1; TFLT bits 8-15 (mag filter) */
-    u8 wrapV;                 /* +0x35 init 7; TFLT bits 0-7 (min filter) */
-    u8 flagsA;                 /* +0x36 TWRAP bits 0-7 (U wrap) */
-    u8 flagsB;                 /* +0x37 TWRAP bits 8-15 (V wrap) */
-    u8 _unk38[8];              /* +0x38 */
-} GmoTexture;
-
 typedef struct GmoLayer {
     u16 f00;                   /* +0x00 */
     u16 flags;                 /* +0x02 */
@@ -6094,8 +6108,8 @@ typedef struct GmoMaterial {
 typedef struct GmoMotionInfo {
     u16 active;                    /* 0x00 1 after maybe_GmoMotionInfoInit */
     u16 unk02;                     /* 0x02 */
-    struct GmoMotionTrack *tracks; /* 0x04 trackCount records of 0x10 bytes */
-    u16 *table;                    /* 0x08 trackCount u16 entries, zeroed (per-track state) */
+    u32 tracks;                    /* 0x04 PSP address (PspPtr) of trackCount GmoMotionTrack records of 0x10 bytes (arena offset in a .bin file) */
+    u32 table;                     /* 0x08 PSP address (PspPtr) of trackCount u16 entries, zeroed (per-track state; arena offset in a .bin file) */
     u16 trackCount;                /* 0x0c number of 0xb3 sub-chunks */
     u16 value0e;                   /* 0x0e payload of the 0xb4 sub-chunk (default 1) */
     float startFrame;              /* 0x10 0xb1 first word (default -1000000.0) */
@@ -6155,33 +6169,14 @@ typedef struct GmoMotionKeyQuatH {
     u16 q[4];                 /* +0x02 x, y, z, w as halves */
 } GmoMotionKeyQuatH;
 
-typedef struct GmoMotionLink {
-    u8 unk00[0x4];     /* 0x00 */
-    void *obj;         /* 0x04 texture record for GmoTextureAnimUpdate */
-    u8 unk08[0x8];     /* 0x08 */
-} GmoMotionLink;
-
 typedef struct GmoMotionMgr {
     u32 unk00;         /* 0x00 cleared by the constructor */
     u32 unk04;         /* 0x04 cleared by the constructor */
     u32 entryClass;    /* 0x08 entry class selector (1 after construction), see GmoMotionLoadFile */
     u8 replaceExisting; /* 0x0c replace-existing flag, see GmoMotionContains */
     u8 pad0d[3];       /* 0x0d */
-    void *lookupCb;    /* 0x10 optional lookup callback used by GmoMotionGetDataByIndex */
+    struct CoreNode *(*lookupCb)(s32 index, void *mgr); /* 0x10 optional lookup callback (index, manager) used by GmoMotionGetDataByIndex */
 } GmoMotionMgr;
-
-typedef struct GmoMotionPlayer {
-    u8 unk00[0x2];             /* 0x00 */
-    u16 flags;                 /* 0x02 bit 0x400: has linked entries */
-    u8 unk04[0xc];             /* 0x04 */
-    struct GmoMotionLink *links; /* 0x10 linked entries (0x10 bytes each) */
-    struct GmoMotionSlot *slots; /* 0x14 motion slots (0x30 bytes each) */
-    u8 unk18[0x6];             /* 0x18 */
-    u16 linkCount;             /* 0x1e */
-    u16 slotCount;             /* 0x20 */
-    u16 current;               /* 0x22 current slot index */
-    float fadeTime;            /* 0x24 remaining cross-fade time, negative = none */
-} GmoMotionPlayer;
 
 typedef struct GmoMotionRecord {
     u8 _unk00[0xe];
@@ -6205,8 +6200,8 @@ typedef struct GmoMotionRef {
 typedef struct GmoMotionSlot {
     u16 unk00;                     /* 0x00 */
     u16 unk02;                     /* 0x02 */
-    struct GmoMotionTrack *tracks; /* 0x04 trackCount tracks */
-    u16 *cursors;                  /* 0x08 per-track byte offset of the last key found, zeroed on loop wrap */
+    u32 tracks;                    /* 0x04 PSP address (PspPtr) of trackCount GmoMotionTrack records */
+    u32 cursors;                   /* 0x08 PSP address (PspPtr) of the u16 per-track byte offsets of the last key found, zeroed on loop wrap */
     u16 trackCount;                /* 0x0c */
     u16 loop;                      /* 0x0e nonzero: frame wraps at the range ends, else clamps */
     float startFrame;              /* 0x10 */
@@ -6220,7 +6215,7 @@ typedef struct GmoMotionSlot {
 typedef struct GmoMotionTrack {
     u16 flags;        /* 0x00 1 after maybe_GmoMotionTrackInit */
     u16 kind;         /* 0x02 0x100/0x200 class bits from maybe_GmoMotionTrackKind */
-    void *data;       /* 0x04 copy of the 0xc chunk payload (arena allocation) */
+    u32 data;         /* 0x04 PSP address (PspPtr) of the copy of the 0xc chunk payload (arena allocation; arena offset in a .bin file) */
     u16 param8;       /* 0x08 channel parameter, first word of the 0xb3 payload */
     u16 paramA;       /* 0x0a channel parameter */
     u8 paramC;        /* 0x0c channel parameter */
@@ -6243,7 +6238,7 @@ typedef struct GmoPtrTables {
 typedef struct GmoRec10A {
     u16 refCount;              /* 0x00 1 */
     u16 f02;                   /* 0x02 */
-    void *f04;                 /* 0x04 pointer (GmoMotionTrack data) */
+    u32 f04;                   /* 0x04 PSP address (PspPtr) (GmoMotionTrack data) */
     u16 f08;                   /* 0x08 */
     u16 f0a;                   /* 0x0a */
     u8 f0c;                    /* 0x0c */
@@ -6644,8 +6639,7 @@ struct productStruct {
 };
 
 typedef struct NetPacketQueue {
-    u8 _unk00[0x18];
-    const VtblEntry *vtbl;    /* +0x18 */
+    CoreBufQueue base;        /* +0x00 buffer queue (NetPacketQueueCtor); vtbl at +0x18 */
 } NetPacketQueue;
 
 typedef struct NetAdhocManager {
@@ -7490,8 +7484,8 @@ typedef struct Script {
     struct Script *next;              /* 0x04 next script in g_scriptList */
     u32 unk08;                        /* 0x08 cleared by the list-node constructor */
     u32 id;                           /* 0x0c ++counter at construction (DAT_08ac5bb8) */
-    u32 unk10;                        /* 0x10 cleared by the constructor */
-    u32 unk14;                        /* 0x14 cleared by the constructor */
+    struct CoreNodeOwner *owner;      /* 0x10 CoreNode.owner, cleared by the constructor */
+    struct CoreNodeGroup *group;      /* 0x14 CoreNode.group, cleared by the constructor */
     u8 unk18[8];                      /* 0x18 never written by the constructors */
     const void *vtable;               /* 0x20 0x08af59fc (ScriptCtor) / 0x08af52a4 (ScriptBaseCtor); 8-byte entries {s16 delta; s16 pad; fn}; slot 2 (+0x10/+0x14) = opcode dispatcher */
     void *entry;                      /* 0x24 decoded package entry (the .lzs file): u16 track count at entry+8, u16 var count at +0xa, u16 flag-bit count at +0xc, u16 track start offsets at +0x10, code behind them */
@@ -8347,7 +8341,7 @@ typedef struct UiPulse {
     u8 _unk18[4];           /* 0x18 */
     float phase;            /* 0x1c 0..1 progress of the current pulse */
     float level;            /* 0x20 ghost start alpha (UiPulseStep) or tint level 0..0.3 (UiPulseStepTint) */
-    GfxSprite *source;      /* 0x24 sprite the ghost copies */
+    u32 source;             /* 0x24 PSP address (PspPtr) of the GfxSprite the ghost copies: the record is a 0x28-byte UiTween slot, so the word stays 32 bits */
 } UiPulse;
 
 typedef struct UiCardEquip {
@@ -9169,23 +9163,11 @@ typedef struct UiHologramView {
     s32 voice;                          /* +0x70c voice id playing, -1 none */
 } UiHologramView;
 
-typedef struct UiHpGaugeObject {
-    u8 _unk00[0x14];                  /* +0x00 */
-    const VtblEntry *vtable;          /* +0x14 entry at +0x68 (adjust delta, fn) is called by UiHpGaugeObjectSlot6C */
-    u8 _unk18[0x1e8];                 /* +0x18 */
-    s32 hp;                           /* +0x200 current HP, shown by UiHpGaugeGetHp */
-    s32 maxHp;                        /* +0x204 max HP, shown by UiHpGaugeGetMaxHp */
-    u8 _unk208[0x14];                 /* +0x208 */
-    s32 drawY;                        /* +0x21c read by UiHpGaugeDraw */
-    u8 _unk220[0x80];                 /* +0x220 */
-    float gaugeAnchor[4];             /* +0x2a0 point the HP gauge hangs from; [1] becomes the gauge anchor height in UiHpGaugeUpdate (read with lv.q, 16-byte aligned) */
-} UiHpGaugeObject;
-
 typedef struct UiHpGauge {
     CoreNode base;          /* 0x00 vtable 0x08af2194 at +0x20 */
     void *source;           /* 0x24 bound unit or object; its +0x20..+0x2c is copied to anchor every frame */
     BtlBakugan *unit;       /* 0x28 = source in mode 1 (battle unit: HP from unit+0x434, dead byte unit+0x4c1), else NULL */
-    UiHpGaugeObject *object;         /* 0x2c = source in mode 2 (int HP at +0x200 / max +0x204), else NULL */
+    ActorStageObjBase *object; /* 0x2c = source in mode 2 (int HP at +0x200 / max +0x204), else NULL */
     void *texture;          /* 0x30 "tairyoku_01_gauge" (GfxFindTexture) */
     u8 _unk34[0xc];         /* 0x34 */
     float screenPos[4];     /* 0x40 anchor projected to the screen by UiHpGaugeDraw; x/y read by UiHpGaugeEmitBarSprite */
@@ -9588,7 +9570,7 @@ typedef struct UiNetMenu {
     u8 _unk2d3[0x1];                 /* +0x2d3 */
     float buttonX;                   /* +0x2d4 X the incoming button slides to */
     float buttonY;                   /* +0x2d8 Y of button sprite 4 saved by UiNetMenuStartButtonTween */
-    GfxSprite *helpPrinter;          /* +0x2dc help text sprite object (UiNetMenuDrawHelpText) */
+    UiTextPrinter *helpPrinter;      /* +0x2dc help text printer (UiNetMenuCreateHelpText, UiNetMenuDrawHelpText) */
     float titleHelpAlpha;            /* +0x2e0 help alpha, 0 opening / 1 closing (UiNetMenuBeginTitleFade) */
     float helpAppliedAlpha;          /* +0x2e4 alpha last applied to the help glyphs */
     float helpAnimFrom;              /* +0x2e8 set to 24 when a help text is printed (UiNetMenuSetHelpText); reader unknown */
@@ -9847,7 +9829,7 @@ typedef struct UiStaffCredit {
 } UiStaffCredit;
 
 typedef struct UiStaffCreditData {
-    u8 unk00[40];               /* 0x00 */
+    GfxSprite *sprites[10];     /* 0x00 sprites 0x00..0x09 of the screen's sprite table (UiScreen.data is the GfxSprite * table; UiStaffCreditSpinEmblem turns 6 and 7) */
     GfxSprite *pictures[13];    /* 0x28 sprites of the 13 slideshow pictures (sprite ids 0x0a..0x16) */
 } UiStaffCreditData;
 
@@ -10016,7 +9998,7 @@ typedef struct UiTitle {
     float unk7c[3];                  /* +0x7c zeroed by UiTitleCtor */
     float animAngle;                 /* +0x88 animation angle, pi/2 from UiTitleBuildSprites */
     float choiceAngle;               /* +0x8c set to pi/2 by UiTitleChoicePhase */
-    GfxSprite *sprite;               /* +0x90 owned sprite/model object, deleted by UiTitleDtor */
+    struct GfxSpriteLayer *sprite;   /* +0x90 owned sprite layer (class vtable at +0x74, deleted through slot 1 by UiTitleDtor); no known code sets it */
     s32 idleFrames;                  /* +0x94 frames without input on the press-start screen (UiTitlePressStartPhase; 0x960 starts the attract loop), cleared by UiTitleCtor */
     s32 timer;                       /* +0x98 frame countdown (250 in UiTitlePressStartPhase) */
     u32 skipFrameA;                  /* +0x9c last frame of title.fab (UiTitleUpdateBackground) */
@@ -11027,7 +11009,7 @@ void ActorStageObjState09Update(ActorStageObjBase *self);
 void ActorStageObjState10FadeIn(ActorStageObjBase *self);
 void ActorStageObjState11FadeOut(ActorStageObjBase *self);
 void ActorStageObjStepUvScrolls(ActorStageObjBase *self);
-void ActorStageObjStopEffect(ActorStageObjCrystal *obj);
+void ActorStageObjStopEffect(ActorStageObjLandmark *obj);
 void ActorStageObjStopOwnedEffects(ActorStageObjBase *self);
 void ActorStageObjSystemInit(void);
 void ActorStageObjSystemShutdown(void);

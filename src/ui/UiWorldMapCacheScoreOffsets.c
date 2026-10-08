@@ -5,22 +5,16 @@
    row), their offset from their row's plate sprite (`0x32 + (i / 5)`) in `+0x1e8c + i * 8`, so the
    digits can follow the plates. */
 
-typedef struct WorldMapSprites {
-  u8 _unk00[0xc8];
-  GfxSprite *plate[23]; /* +0xc8 */
-  GfxSprite *digit[15]; /* +0x124 */
-} WorldMapSprites;
-
 void UiWorldMapCacheScoreOffsets(UiScreen *screen)
 
 {
   UiWorldMap *map = (UiWorldMap *)screen;
-  WorldMapSprites *spr = (WorldMapSprites *)screen->data;
+  GfxSprite **spr = (GfxSprite **)screen->data;
   int i;
 
   for (i = 0; i < 15; i++) {
     u8 row = (u8)(i / 5);
-    map->scoreOffset[i][0] = spr->plate[row]->posX - spr->digit[i]->posX;
-    map->scoreOffset[i][1] = spr->plate[row]->posY - spr->digit[i]->posY;
+    map->scoreOffset[i][0] = (spr + 0x32)[row]->posX - (spr + 0x49)[i]->posX;
+    map->scoreOffset[i][1] = (spr + 0x32)[row]->posY - (spr + 0x49)[i]->posY;
   }
 }

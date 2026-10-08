@@ -5,14 +5,9 @@
    the model scale `+0x40`. Lane 3 of the model scale is left as is (the asm stores a stale VFPU
    lane there). */
 
-typedef struct {
-  u8 pad[0x40];
-  float scale[4];
-} GameEventPropScaleModel;
-
 void GameEventPropSetScale(GameEventProp *prop, s32 scale)
 {
-  GameEventPropScaleModel *model;
+  GfxModel *model;
   float x;
   float y;
   float z;
@@ -21,7 +16,7 @@ void GameEventPropSetScale(GameEventProp *prop, s32 scale)
   prop->scaleY = scale;
   prop->scaleZ = scale;
   if (prop->model != NULL) {
-    model = (GameEventPropScaleModel *)prop->model;
+    model = (GfxModel *)prop->model;
     x = (float)prop->scaleX * 0.00024414062f;
     y = (float)prop->scaleY * 0.00024414062f;
     z = (float)prop->scaleZ * 0.00024414062f;

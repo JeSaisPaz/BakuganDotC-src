@@ -16,12 +16,12 @@ s32 UiHpGaugeGetBarStyle(UiHpGauge *self)
         return 0;
     }
     if (self->mode < 3) {
-        const VtblEntry *e = &self->object->vtable[13];
+        const VtblEntry *e = &((const VtblEntry *)self->object->base.base.vtable)[13];
         s32 style = 1;
         if (((s32 (*)(void *))e->fn)((u8 *)self->object + e->delta) != 0) {
             return 2;
         }
-        e = &self->object->vtable[12];
+        e = &((const VtblEntry *)self->object->base.base.vtable)[12];
         if (((s32 (*)(void *))e->fn)((u8 *)self->object + e->delta) != 0) {
             style = 2;
         }

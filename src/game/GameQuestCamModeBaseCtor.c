@@ -211,7 +211,7 @@ GameQuestCamModeBase *GameQuestCamModeBaseCtor(GameQuestCamModeBase *self, void 
      (the binary inlines the state switch once per branch) */
   curSet = g_questCamTable->cur;
   if (0 < g_questCamTable->count) {
-    firstSet = (GameQuestCamPtrVec *)g_questCamTable->data[0];
+    firstSet = g_questCamTable->data[0];
   }
   else {
     memset(&g_gameQuestCamNullSet, 0, 4);

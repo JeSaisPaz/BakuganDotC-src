@@ -9,27 +9,26 @@
 void NetAdhocDestroy(void)
 
 {
-  NetAdhocManager *mgr;
-
-  mgr = g_netAdhoc;
-  if (mgr != NULL) {
-    if (mgr->list != NULL) {
-      NetAdhocListDestroy(mgr->list, 3);
-      mgr->list = NULL;
+  if (g_netAdhoc != NULL) {
+    if (g_netAdhoc->list != NULL) {
+      NetAdhocListDestroy(g_netAdhoc->list, 3);
+      g_netAdhoc->list = NULL;
     }
-    if (mgr->queue != NULL) {
-      const VtblEntry *dtor = &mgr->queue->vtbl[1];
-      ((void (*)(void *, s32))dtor->fn)((u8 *)mgr->queue + dtor->delta, 3);
-      mgr->queue = NULL;
+    if (g_netAdhoc->queue != NULL) {
+      const VtblEntry *dtor = &g_netAdhoc->queue->base.vtbl[1];
+      ((void (*)(void *, s32))dtor->fn)((u8 *)g_netAdhoc->queue + dtor->delta, 3);
+      g_netAdhoc->queue = NULL;
     }
-    if (mgr->conn != NULL) {
-      NetAdhocConnDtor(mgr->conn, 3);
-      mgr->conn = NULL;
+    if (g_netAdhoc->conn != NULL) {
+      NetAdhocConnDtor(g_netAdhoc->conn, 3);
+      g_netAdhoc->conn = NULL;
     }
-    MemLock();
-    MemFree(mgr, NULL, 0);
-    MemUnlock();
-    g_netAdhoc = NULL;
+    if (g_netAdhoc != NULL) {
+      MemLock();
+      MemFree(g_netAdhoc, NULL, 0);
+      MemUnlock();
+      g_netAdhoc = NULL;
+    }
   }
   NetCharaMgrDestroy();
   NetErrorDestroy();

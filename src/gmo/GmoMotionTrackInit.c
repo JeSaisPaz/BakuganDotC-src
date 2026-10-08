@@ -10,7 +10,7 @@ void GmoMotionTrackInit(GmoMotionTrack *track)
 {
   track->flags = 1;
   track->kind = 0;
-  track->data = (void *)0x0;
+  track->data = 0;
   track->param8 = 0;
   track->paramA = 0;
   track->paramC = '\0';

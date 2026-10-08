@@ -23,18 +23,18 @@ void UiNetMenuSetHelpText(UiScreen *screen, u8 entry)
   dst = (char *)menu->helpText;
   index = UiButtonCellOffset(0, entry);
   strcpy(dst, (const char *)PspPtr(table[index]));
-  printer = (UiTextPrinter *)menu->helpPrinter;
+  printer = menu->helpPrinter;
   GfxSpriteLayerClear(&printer->layer);
   printer->glyphs = NULL;
 
-  printer = (UiTextPrinter *)menu->helpPrinter;
+  printer = menu->helpPrinter;
   anchor = ((GfxSprite **)screen->data)[14];
   slot = &printer->layer.vtbl[2];
   ((void (*)(float, float, float, void *, char *, s32, s32, s32))slot->fn)(
       anchor->posX, anchor->posY - 6.0f, 0.0f, (u8 *)printer + slot->delta, dst, 1, 0, 0);
   UiTextMeasure(0.0f, menu->helpPrinter, dst, &menu->helpWidth, &menu->helpHeight, &menu->helpLines);
 
-  printer = (UiTextPrinter *)menu->helpPrinter;
+  printer = menu->helpPrinter;
   menu->helpGlyphs = printer->glyphs;
   menu->helpAnimT = 0.0f;
   menu->helpAnimFrames = 30;

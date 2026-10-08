@@ -9,7 +9,7 @@ s32 UiHpGaugeObjectSlot6C(UiHpGauge *self)
 {
     s32 result = 0;
     if (self->mode >= 2 && self->mode < 3) {
-        const VtblEntry *e = self->object->vtable + 0xd;
+        const VtblEntry *e = ((const VtblEntry *)self->object->base.base.vtable) + 0xd;
         if (((s32 (*)(void *))e->fn)((char *)self->object + e->delta) != 0) {
             result = 1;
         }

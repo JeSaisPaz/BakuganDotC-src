@@ -45,9 +45,8 @@ void GameQuestCamFollowPath(GameQuestCamPathMode *self)
         point.z = point.z + seg->dir.z * s;
     }
     self->base.base.base.goal = point;
-    /* The flag byte sits past the 0x60-byte path node, at the offset of GameQuestCamModeEntry.collide. */
     if (self->segment == NULL ||
-        ((const GameQuestCamModeEntry *)((GameQuestPathSegment *)self->segment)->from)->collide != 0) {
+        ((GameQuestPathSegment *)self->segment)->from->collide != 0) {
         GameQuestCamRefreshLookAt();
     }
 }

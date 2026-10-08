@@ -210,7 +210,7 @@ u32 GmoMotionEvalTrack(float frame, const GmoMotionTrack *track, u16 *cursor, fl
         /* half-float keys: time in the leading half */
         if (count < 2) {
             t0 = 0.0f;
-            key = (const u8 *)trk->data;
+            key = (const u8 *)PspPtr(trk->data);
             t1 = t0;
             key1 = key;
         } else {
@@ -220,7 +220,7 @@ u32 GmoMotionEvalTrack(float frame, const GmoMotionTrack *track, u16 *cursor, fl
             } else if (mode == 3) {
                 values = values * 5;
             }
-            keys = (const u8 *)trk->data;
+            keys = (const u8 *)PspPtr(trk->data);
             stride = (s32)(values * 4 + 4) >> 1;
             last = keys + stride * (s32)(count - 1);
             key = keys + *cursor;
@@ -348,7 +348,7 @@ u32 GmoMotionEvalTrack(float frame, const GmoMotionTrack *track, u16 *cursor, fl
     /* float keys: time in the leading float */
     if (count < 2) {
         t0 = 0.0f;
-        key = (const u8 *)trk->data;
+        key = (const u8 *)PspPtr(trk->data);
         t1 = t0;
         key1 = key;
     } else {
@@ -358,7 +358,7 @@ u32 GmoMotionEvalTrack(float frame, const GmoMotionTrack *track, u16 *cursor, fl
         } else if (mode == 3) {
             values = values * 5;
         }
-        keys = (const u8 *)trk->data;
+        keys = (const u8 *)PspPtr(trk->data);
         stride = (s32)(values * 4 + 4);
         last = keys + stride * (s32)(count - 1);
         key = keys + *cursor;

@@ -12,7 +12,7 @@ s32 SndGroupIdListIndexOf(CoreList *list, s32 groupId)
 
   if (list->sentinel != (CoreListNode *)0x0) {
     for (node = list->sentinel->next; node != (CoreListNode *)0x0; node = node->next) {
-      if ((s32)(intptr_t)node->data == groupId) {
+      if ((intptr_t)node->data == groupId) {
         return index;
       }
       index = index + 1;

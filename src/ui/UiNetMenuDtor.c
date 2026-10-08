@@ -14,11 +14,11 @@ void UiNetMenuDtor(UiScreen *screen, u32 flags)
   if (screen != (UiScreen *)0x0) {
     screen->base.vtable = &g_uiNetMenuVtable;
     GfxWaitGeIdle();
-    printer = (UiTextPrinter *)menu->helpPrinter;
+    printer = menu->helpPrinter;
     if (printer != (UiTextPrinter *)0x0) {
       const VtblEntry *vtbl = printer->layer.vtbl;
       ((void (*)(void *, int))vtbl[1].fn)((u8 *)printer + vtbl[1].delta, 3);
-      menu->helpPrinter = (GfxSprite *)0x0;
+      menu->helpPrinter = (UiTextPrinter *)0x0;
     }
     screen->pad->stickEmulatesDpad = 0;
     g_lastScreenTaskId = screen->base.id;

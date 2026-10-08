@@ -8,7 +8,7 @@
 
 void ActorStageObjDeactivate(ActorStageObjLandmark *obj)
 {
-  ActorStageObjStopEffect((ActorStageObjCrystal *)obj);
+  ActorStageObjStopEffect(obj);
   if (obj->helper != (CollisionCollider *)0) {
     const VtblEntry *dtor = &((const VtblEntry *)obj->helper->node.vtable)[1];
     ((void (*)(void *, s32))dtor->fn)((u8 *)obj->helper + dtor->delta, 3);

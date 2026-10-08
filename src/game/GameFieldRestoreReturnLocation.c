@@ -7,11 +7,11 @@
 
 void GameFieldRestoreReturnLocation(CoreTask *task)
 {
-  u32 *rec = *(u32 **)g_gameEventLocationBlock;
+  GameFieldPlacedChar *rec = g_gameEventLocationBlock[0];
 
-  rec[0] = g_gameReturnLocationPos[0];
-  rec[1] = g_gameReturnLocationPos[1];
-  rec[2] = g_gameReturnLocationPos[2];
-  ((s16 *)rec)[7] = g_gameReturnLocationHeading;
-  GameFieldCameraSnapQuestCam((GameFieldCamera *)(task + 2));
+  rec->pos[0] = g_gameReturnLocationPos[0];
+  rec->pos[1] = g_gameReturnLocationPos[1];
+  rec->pos[2] = g_gameReturnLocationPos[2];
+  rec->rot[1] = g_gameReturnLocationHeading;
+  GameFieldCameraSnapQuestCam((GameFieldCamera *)((GameFieldTask *)task)->camera);
 }

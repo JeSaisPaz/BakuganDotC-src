@@ -8,15 +8,15 @@
    `t` clamped below at 0 into the controller's `extra[0]`/`extra[1]`; without a segment the far
    time is 1.8. Then spring-accelerates towards `point` (`GameQuestCamSpringAccelerateByDistance`,
    1.2 near, 400/1200 distances), resolves collision unless the segment's start node has `collide`
-   (`+0x61`) clear, integrates, and captures the target position. The segment nodes are read through
-   the `GameQuestCamModeEntry` layout (see `GameQuestPathSegment` notes). */
+   (`+0x61`) clear, integrates, and captures the target position. The segment nodes are
+   `GameQuestCamEntry` records (see `GameQuestPathSegment` notes). */
 
 void GameQuestCamPathModeUpdateEye(float dt, GameQuestCamPathMode *self)
 
 {
   GameQuestPathSegment *seg;
-  const GameQuestCamModeEntry *from;
-  const GameQuestCamModeEntry *to;
+  const GameQuestCamEntry *from;
+  const GameQuestCamEntry *to;
   GameQuestCamSpring *spring = &self->base.base.base;
   ScePspFVector4 *pos = &self->base.base.point;
   float farTime = 1.8f;
@@ -31,8 +31,8 @@ void GameQuestCamPathModeUpdateEye(float dt, GameQuestCamPathMode *self)
     }
     seg = (GameQuestPathSegment *)self->segment;
     t = seg->t;
-    from = (const GameQuestCamModeEntry *)seg->from;
-    to = (const GameQuestCamModeEntry *)seg->to;
+    from = seg->from;
+    to = seg->to;
     farTime = from->distance * (1.0f - t) + to->distance * t;
     if (t < 0.0f) {
       t = 0.0f;
@@ -44,7 +44,7 @@ void GameQuestCamPathModeUpdateEye(float dt, GameQuestCamPathMode *self)
   }
   GameQuestCamSpringAccelerateByDistance(dt, 1.2f, farTime, 400.0f, 1200.0f, spring, &pos->x);
   if ((self->segment == NULL) ||
-      (((const GameQuestCamModeEntry *)((GameQuestPathSegment *)self->segment)->from)->collide != 0)) {
+      (((GameQuestPathSegment *)self->segment)->from->collide != 0)) {
     GameQuestCamResolveCollision(dt, spring);
   }
   GameQuestCamIntegrate(dt, spring, &pos->x, &spring->vel.x, &spring->accel.x);

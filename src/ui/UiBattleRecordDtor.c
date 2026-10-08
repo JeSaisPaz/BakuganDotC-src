@@ -6,12 +6,6 @@
    (virtual dtor, flag 3), stores its id in `g_lastScreenTaskId`, then
    `UiScreenDtor`; frees the object when `flags & 1`. */
 
-/* Header of the layout package node: only the vtable at +0x20 is used here. */
-typedef struct UiBattleRecordPackage {
-  u8 _unk00[0x20];
-  const VtblEntry *vtbl;
-} UiBattleRecordPackage;
-
 void UiBattleRecordDtor(UiBattleRecord *self, u32 flags)
 
 {
@@ -19,7 +13,7 @@ void UiBattleRecordDtor(UiBattleRecord *self, u32 flags)
     (self->base).base.vtable = g_uiBattleRecordVtbl;
     GfxWaitGeIdle();
     if (self->package != (void *)0x0) {
-      const VtblEntry *dtor = &((UiBattleRecordPackage *)self->package)->vtbl[1];
+      const VtblEntry *dtor = &((const VtblEntry *)((CoreNode *)self->package)->vtable)[1];
 
       ((void (*)(void *, int))dtor->fn)((u8 *)self->package + dtor->delta, 3);
       self->package = (void *)0x0;

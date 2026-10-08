@@ -18,7 +18,7 @@
 void BtlMainPhaseExit(BtlMain *self)
 {
     void *pause;
-    UiTalkTask *talk;
+    BtlHud *talk;
     GfxFader *fader;
     float *from;
     bool resume;
@@ -120,8 +120,8 @@ void BtlMainPhaseExit(BtlMain *self)
     default:
         resume = true;
         if (UiTalkTaskExists() != 0) {
-            talk = (UiTalkTask *)UiGetTalkTask();
-            if (talk->heldEventScript != 0) {
+            talk = UiGetTalkTask();
+            if (talk->talkScriptSuspended != 0) {
                 resume = false;
             }
         }

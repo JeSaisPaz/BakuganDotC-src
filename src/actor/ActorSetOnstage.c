@@ -10,7 +10,7 @@
 void ActorSetOnstage(Actor *self, char onstage)
 
 {
-  ActorCrystal *crystal = (ActorCrystal *)self;
+  ActorCrystal *crystal = (ActorCrystal *)self; /* bdc: record-view ok: no Actor member is read through self */
   GfxModel *model = &crystal->base.base;
   GmoModel *gmo;
   const VtblEntry *entry;

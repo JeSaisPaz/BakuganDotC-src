@@ -720,8 +720,8 @@ void GmoModelBuild(void **planCtx, const void *chunk, GmoModel *model)
       cursors = GmoPlanTake(ctx->plan, 0, 4, n * 2);
       memset(cursors, 0, n * 2);
       mot->trackCount = n;
-      mot->table = cursors;
-      mot->tracks = track;
+      mot->table = PspAddr(cursors);
+      mot->tracks = PspAddr(track);
       ctx->motionChunk = c;
       for (t = CHUNK_FIRST(c); t < CHUNK_END(c); t = CHUNK_END(t)) {
         args = CHUNK_ARGS(t);
@@ -782,7 +782,7 @@ void GmoModelBuild(void **planCtx, const void *chunk, GmoModel *model)
           track->paramC = params[1];
           track->kind |= kind;
           track->paramD = args[1];
-          track->data = keys;
+          track->data = PspAddr(keys);
           track->ref = args[0] & 0xfff;
           track->param8 = fmt;
           track->paramA = params[2];

@@ -51,7 +51,7 @@ void GameQuestCamAttachToPath(GameQuestCamPathMode *self)
   /* inlined bounds-checked table->data[0] */
   table = g_questCamTable;
   if (0 < table->count) {
-    firstSet = (GameQuestCamPtrVec *)table->data[0];
+    firstSet = table->data[0];
   } else {
     memset(&g_gameQuestCamNullSet, 0, 4);
     firstSet = g_gameQuestCamNullSet;

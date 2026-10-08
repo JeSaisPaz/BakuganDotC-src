@@ -13,9 +13,9 @@ float UiHpGaugeGetBarWidth(UiHpGauge *self)
     float width;
 
     if (self->mode == 2) {
-        const VtblEntry *e = &self->object->vtable[13];
+        const VtblEntry *e = &((const VtblEntry *)self->object->base.base.vtable)[13];
         if (((s32 (*)(void *))e->fn)((u8 *)self->object + e->delta) == 0) {
-            e = &self->object->vtable[12];
+            e = &((const VtblEntry *)self->object->base.base.vtable)[12];
             if (((s32 (*)(void *))e->fn)((u8 *)self->object + e->delta) == 0) {
                 width = self->maxHp * 80.0f * 0.001f;
                 if (width < 20.0f) {

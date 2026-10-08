@@ -255,18 +255,18 @@ void GameQuestParseCamTable(GameQuestCamTable *table, u8 *file)
           CptbFree(table->data);
           table->data = NULL;
         }
-        table->data = buf;
+        table->data = (GameQuestCamPtrVec **)buf;
         count = table->count;
       }
     }
     if (count < table->cap) {
-      table->data[count] = (GameQuestCamEntry *)set;
+      table->data[count] = set;
       table->count = table->count + 1;
     }
   }
 
   if (0 < table->count) {
-    table->cur = (GameQuestCamPtrVec *)table->data[0];
+    table->cur = table->data[0];
   } else {
     memset(&g_gameQuestCamNullSet, 0, 4);
     table->cur = g_gameQuestCamNullSet;

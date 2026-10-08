@@ -5,14 +5,9 @@
    `+0x1af0`) through their virtual destructor (vtable at `+0x14`, slot at `+0xc`, flag 3) and
    clears the pointers. */
 
-typedef struct ModelObj {
-  u8 unk00[0x14];
-  const VtblEntry *vtbl;
-} ModelObj;
-
 static void FreeModel(void *obj)
 {
-  const VtblEntry *e = ((ModelObj *)obj)->vtbl + 1;
+  const VtblEntry *e = (const VtblEntry *)((CoreObject *)obj)->vtable + 1;
   ((void (*)(void *, int))e->fn)((char *)obj + e->delta, 3);
 }
 

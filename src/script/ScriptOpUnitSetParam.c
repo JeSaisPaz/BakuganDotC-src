@@ -88,12 +88,12 @@ int ScriptOpUnitSetParam(Script *script)
     case 3:
         if (v0 < 2.0f) {
             if (v0 <= 0.0f) {
-                ActorSetOnstage((Actor *)crystal, 0);
+                ActorSetOnstage((Actor *)crystal, 0); /* bdc: record-view ok: handed on, the callee reads it as an ActorCrystal */
             } else {
-                ActorSetOnstage((Actor *)crystal, 1);
+                ActorSetOnstage((Actor *)crystal, 1); /* bdc: record-view ok: handed on, the callee reads it as an ActorCrystal */
             }
         } else {
-            ActorSetOnstage((Actor *)crystal, 1);
+            ActorSetOnstage((Actor *)crystal, 1); /* bdc: record-view ok: handed on, the callee reads it as an ActorCrystal */
             crystal->mode2Proceed = 1;
         }
         break;
@@ -113,9 +113,9 @@ int ScriptOpUnitSetParam(Script *script)
         break;
     case 6:
         if (v0 <= 0.0f) {
-            ActorStopVexosBarrier((Actor *)crystal);
+            ActorStopVexosBarrier((Actor *)crystal); /* bdc: record-view ok: handed on, the callee reads it as an ActorCrystal */
         } else {
-            ActorStartVexosBarrier((Actor *)crystal);
+            ActorStartVexosBarrier((Actor *)crystal); /* bdc: record-view ok: handed on, the callee reads it as an ActorCrystal */
         }
         break;
     case 7:

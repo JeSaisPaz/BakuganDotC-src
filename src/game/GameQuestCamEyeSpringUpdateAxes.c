@@ -7,15 +7,10 @@
    constant of `g_gameQuestCamEyeSpringAxisConsts`. The result, its xyz scaled by `dist` and
    the controller's mode `goal` xyz added, becomes `goal` (`goal.w` = 0). */
 
-typedef struct EyeSpringPathSet {
-  char pad[0x10];
-  ScePspFVector4 quat;
-} EyeSpringPathSet;
-
 void GameQuestCamEyeSpringUpdateAxes(GameQuestCamEyeSpring *self)
 
 {
-  const EyeSpringPathSet *pathSet = (const EyeSpringPathSet *)self->pathSet;
+  const GameQuestCamEntry *pathSet = (const GameQuestCamEntry *)self->pathSet;
   float l[4][4];
   float r[4][4];
   float m[4][4];
@@ -27,10 +22,10 @@ void GameQuestCamEyeSpringUpdateAxes(GameQuestCamEyeSpring *self)
   int j;
   int k;
 
-  x = pathSet->quat.x;
-  y = pathSet->quat.y;
-  z = pathSet->quat.z;
-  w = pathSet->quat.w;
+  x = pathSet->vec10[0];
+  y = pathSet->vec10[1];
+  z = pathSet->vec10[2];
+  w = pathSet->vec10[3];
   /* columns of the left matrix (M100) */
   l[0][0] = w;  l[0][1] = z;  l[0][2] = -y; l[0][3] = -x;
   l[1][0] = -z; l[1][1] = w;  l[1][2] = x;  l[1][3] = -y;

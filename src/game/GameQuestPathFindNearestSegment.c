@@ -140,9 +140,8 @@ u8 GameQuestPathFindNearestSegment(void *cam, s32 *out, s32 *path, s16 node, flo
         }
         *segOut = seg;
       }
-      /* the path nodes are GameQuestCamEntry records stored through the segment's node pointers */
-      (*segOut)->from = (GameQuestPathNode *)from;
-      (*segOut)->to = (GameQuestPathNode *)to;
+      (*segOut)->from = from;
+      (*segOut)->to = to;
       (*segOut)->t = along / len;
       (*segOut)->dir = dir;
       (*segOut)->dist = dist;

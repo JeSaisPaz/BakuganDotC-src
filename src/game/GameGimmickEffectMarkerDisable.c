@@ -5,12 +5,6 @@
    effects `+0x180`/`+0x184` from their layer (`UiSpriteLayerRelease` on `effect + 0x214`) and
    destroys the attached object `+0x174`. */
 
-/* Attached collider as seen here: only its virtual destructor table at `+0x20` is used. */
-typedef struct GameGimmickAttachedView {
-  u8 _pad[0x20];
-  const VtblEntry *vtbl;
-} GameGimmickAttachedView;
-
 void GameGimmickEffectMarkerDisable(GameGimmickEffectMarker *gimmick)
 {
   void **slot;
@@ -29,8 +23,8 @@ void GameGimmickEffectMarkerDisable(GameGimmickEffectMarker *gimmick)
     if (gimmick->base.attached == NULL) {
       gimmick->base.attached = NULL;
     } else {
-      GameGimmickAttachedView *obj = (GameGimmickAttachedView *)gimmick->base.attached;
-      const VtblEntry *entry = &obj->vtbl[1];
+      CoreNode *obj = (CoreNode *)gimmick->base.attached;
+      const VtblEntry *entry = &((const VtblEntry *)obj->vtable)[1];
 
       ((void (*)(void *, int))entry->fn)((u8 *)obj + entry->delta, 3);
       gimmick->base.attached = NULL;

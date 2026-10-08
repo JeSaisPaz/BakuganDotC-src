@@ -22,7 +22,7 @@ void ActorStageObjWindGeneratorUpdate(ActorStageObjWindGenerator *self)
     void (*fn)(void *) = (void (*)(void *))entry->fn;
 
     if (entry->pad != 0) {
-      const VtblEntry *v = (const VtblEntry *)*(void **)(obj + (int)(intptr_t)fn) + entry->pad;
+      const VtblEntry *v = (const VtblEntry *)*(void **)(obj + (intptr_t)fn) + entry->pad;
       fn = (void (*)(void *))v->fn;
       obj += v->delta;
     }

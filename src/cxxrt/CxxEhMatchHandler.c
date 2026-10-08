@@ -61,7 +61,7 @@ int CxxEhMatchHandler(int *list, void *type, u8 quals, u32 a3, char *a4, u32 a5,
     }
     if (matched) {
       result = index;
-      *outEntry = (u32)(uintptr_t)entry;
+      *outEntry = (u32)(uintptr_t)entry; /* bdc: ptr-narrow ok: no caller reads *outEntry */
       break;
     }
     if ((entry->flags & 0x20) != 0) {

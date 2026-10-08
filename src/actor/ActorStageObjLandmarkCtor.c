@@ -110,7 +110,7 @@ ActorStageObjLandmark *ActorStageObjLandmarkCtor(ActorStageObjLandmark *self, fl
   self->orbPos[3] = tmp.w;
   ActorStageObjLandmarkSetupMaterials(self);
 
-  self->unk328 = 0;
+  self->effect = NULL;
   self->helper = NULL;
   self->capsule.start[0] = 1.0f;
   self->capsule.start[1] = 0.0f;

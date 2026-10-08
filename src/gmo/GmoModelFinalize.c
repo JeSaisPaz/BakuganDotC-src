@@ -67,7 +67,7 @@ void GmoModelFinalize(GmoModel *self)
       u32 m;
       for (m = 0; m != motionCount; m++, motion++) {
         u32 trackCount = motion->trackCount;
-        GmoMotionTrack *track = motion->tracks;
+        GmoMotionTrack *track = (GmoMotionTrack *)PspPtr(motion->tracks);
         u32 t;
         for (t = 0; t < trackCount; t++, track++) {
           if ((track->kind & 0x100) != 0) {

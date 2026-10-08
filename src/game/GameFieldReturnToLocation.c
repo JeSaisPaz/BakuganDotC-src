@@ -14,7 +14,7 @@ void GameFieldReturnToLocation(CoreTask *task, s16 id, u8 b)
   GameFieldRestoreReturnLocation(task);
   ActorApplyPlacement((Actor *)g_gameFieldCharSet->actors[0]);
   GameFieldCharSetFreezeAll(field->charSet);
-  GameFieldCameraReset((GameFieldCamera *)(task + 2),'\x01','\0');
+  GameFieldCameraReset((GameFieldCamera *)((GameFieldTask *)task)->camera,'\x01','\0');
   GameFieldStartEvent(task,id,'\0',b,false);
   GameFieldCloseHud();
   field->returnedFlag = 1;

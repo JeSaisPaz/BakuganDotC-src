@@ -14,7 +14,7 @@ short *GmoMotionTrackArrayRelease(short *arr, int n)
     for (i = 0; i < n; i++) {
       *ptr = *ptr - 1;
       if (*ptr == 0) {
-        GmoHeapReleaseThunk(0, *(void **)(ptr + 2));
+        GmoHeapReleaseThunk(0, PspPtr(((GmoMotionTrack *)ptr)->data));
         GmoHeapReleaseThunk(0, ptr);
       }
       ptr += 8;

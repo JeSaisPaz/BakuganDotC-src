@@ -39,7 +39,7 @@ void UiHpGaugeUpdate(UiHpGauge *self)
             }
         }
     } else if (self->mode < 3) {
-        self->anchor[1] = self->object->gaugeAnchor[1];
+        self->anchor[1] = self->object->gaugePos[1];
     }
     self->updated = 1;
 

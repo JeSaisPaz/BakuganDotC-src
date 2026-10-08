@@ -1,7 +1,7 @@
 // bdc 0x089f7cb8 GfxTextureBuildDl
 #include "bdc.h"
 
-/* Builds the GE command block of a texture object (`blocks`, also stored in `curBlock`/`curBlock2`):
+/* Builds the GE command block of a texture object (`blocks`, also stored in `curBlock`/`gmo.image`):
    TMODE (`0xc2`, mip level count from the TIM2 picture header clamped to 4, swizzle bit from
    `gsTexClut` bit 0) and TPSM (`0xc3`, `GfxTextureGetPsm`); the pixel data (`unk11c` =
    picture + headerSize) is copied to VRAM when `g_gfxTexVramEnabled` is set and a slot or pool
@@ -55,7 +55,7 @@ void GfxTextureBuildDl(void *tex, s32 width, s32 height)
   blk = t->blocks;
   t->curBlock = blk;
   pic = t->picture;
-  t->curBlock2 = blk;
+  t->gmo.image = blk;
   levels = pic->mipMapTextures;
   if (levels > 4) {
     pic->mipMapTextures = 4;

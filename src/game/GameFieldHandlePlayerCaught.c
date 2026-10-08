@@ -33,6 +33,6 @@ check:
       GameFieldCharSetFreezeActor(field->charSet,0);
     }
   }
-  GameFieldCameraReset((GameFieldCamera *)(task + 2),'\0','\0');
+  GameFieldCameraReset((GameFieldCamera *)((GameFieldTask *)task)->camera,'\0','\0');
   return;
 }

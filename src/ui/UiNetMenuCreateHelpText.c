@@ -25,11 +25,11 @@ void UiNetMenuCreateHelpText(UiScreen *screen)
     UiTextPrinterCtor(self, 0, (char **)0);
     printer = self;
   }
-  menu->helpPrinter = (GfxSprite *)printer;
+  menu->helpPrinter = printer;
   UiTextPrinterSetFont(printer, 1);
-  ((UiTextPrinter *)menu->helpPrinter)->scale = 0.8f;
-  ((UiTextPrinter *)menu->helpPrinter)->wrapWidth = 1000.0f;
-  ((UiTextPrinter *)menu->helpPrinter)->widthScale = 0.53333336f;
+  menu->helpPrinter->scale = 0.8f;
+  menu->helpPrinter->wrapWidth = 1000.0f;
+  menu->helpPrinter->widthScale = 0.53333336f;
   strcpy((char *)menu->helpText, g_uiNetMenuEmptyText);
   menu->titleHelpAlpha = 0.0f;
   menu->helpAppliedAlpha = 1.0f;

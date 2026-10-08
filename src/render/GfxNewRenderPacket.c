@@ -13,7 +13,7 @@ void *GfxNewRenderPacket(float sortKey)
     CoreNode *packet;
     CoreNode *node;
 
-    packet = (CoreNode *)((char *)g_renderPacketPool + g_renderPacketCount * 0x34);
+    packet = &((RenderPacket *)g_renderPacketPool)[g_renderPacketCount].node;
     g_renderPacketCount = g_renderPacketCount + 1;
     node = NULL;
     if (packet != NULL) {

@@ -17,7 +17,7 @@ void NetStatusTaskUpdate(NetStatusTask *self)
     obj = (char *)self + entry->delta;
     fn = (void (*)(void *))entry->pfn;
     if (entry->index != 0) {
-      const MemberFnPtr *v = (const MemberFnPtr *)(*(char **)(obj + (intptr_t)entry->pfn) + entry->index * 8);
+      const MemberFnPtr *v = *(const MemberFnPtr **)(obj + (intptr_t)entry->pfn) + entry->index;
       fn = (void (*)(void *))v->pfn;
       obj = obj + v->delta;
     }

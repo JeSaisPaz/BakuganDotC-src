@@ -7,15 +7,15 @@
 void GmoMotionAdvanceBlended(float dt, void *player, u32 mask)
 
 {
-  GmoMotionPlayer *p = (GmoMotionPlayer *)player;
+  GmoModel *p = (GmoModel *)player;
   GmoMotionSlot *slot;
   float sum;
   float weight;
   int i;
 
   sum = 0.0f;
-  slot = p->slots;
-  for (i = 0; i < (int)p->slotCount; i++, slot++) {
+  slot = (GmoMotionSlot *)p->motions;
+  for (i = 0; i < (int)p->motionCount; i++, slot++) {
     weight = slot->weight;
     if (!(weight <= 0.0f)) {
       sum = sum + weight;

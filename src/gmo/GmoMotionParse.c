@@ -35,8 +35,8 @@ void GmoMotionParse(const void *chunk, GmoMotionInfo *motion)
     alloc = &((const VtblEntry *)g_gmoMotionArena->vtable)[7];
     table = ((u16 *(*)(void *, size_t))alloc->fn)((u8 *)g_gmoMotionArena + alloc->delta, n * 2);
     memset(table, 0, n * 2);
-    motion->tracks = tracks;
-    motion->table = table;
+    motion->tracks = PspAddr(tracks);
+    motion->table = PspAddr(table);
     motion->trackCount = (u16)n;
 
     end = (const GmoChunk *)((const u8 *)c + c->size);

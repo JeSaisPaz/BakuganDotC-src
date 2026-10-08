@@ -14,11 +14,6 @@
    screen effects `screenFx` (`GameFieldScreenFxUpdate`), the sprite layers `layers[2]`, `[0]`, `[1]`
    (`GfxSpriteLayerUpdateAll`) and all mesh objects (`GfxMeshObjUpdateAll`). */
 
-typedef struct WorldMapTaskView {
-  u8 _unk000[0x520];
-  GfxModel *model; /* +0x520 world-map model */
-} WorldMapTaskView;
-
 /* One field of `rot * m` (VFPU `vmmul.q E200, E100, E000`): lane by lane, summed left to right,
    with rot's columns (c, 0, -s, 0), (0, 1, 0, 0), (s, 0, c, 0), (0, 0, 0, 1). */
 static void GameFieldRotateFieldY(float *d, const float *r, float c, float s)
@@ -53,7 +48,7 @@ void GameFieldUpdateWorld(CoreTask *task)
   GfxCameraUpdateShake(g_gfxActiveCamera);
   GfxCameraUpdate(g_gfxActiveCamera, 2);
   if (field->worldMapTask != NULL) {
-    GfxModel *model = ((WorldMapTaskView *)field->worldMapTask)->model;
+    GfxModel *model = ((GfxPlayerBlurTask *)field->worldMapTask)->model;
     GfxModel *extra;
     float *m = model->data->rootMatrix;
     /* vmul.s by S703 (bank 2/pi) then vrot in quarter turns: cos/sin of 0.01 rad */

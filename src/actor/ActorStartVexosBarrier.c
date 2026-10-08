@@ -12,7 +12,7 @@
 void ActorStartVexosBarrier(Actor *self)
 
 {
-  ActorCrystal *crystal = (ActorCrystal *)self;
+  ActorCrystal *crystal = (ActorCrystal *)self; /* bdc: record-view ok: no Actor member is read through self */
   bool fromLow;
   CollisionCollider *mem;
   CollisionCollider *collider;

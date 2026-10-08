@@ -17,7 +17,7 @@ void ActorStageObjLandmarkDtor(ActorStageObjLandmark *self, u32 flags)
     return;
   self->base.base.base.vtable = g_actorStageObjLandmarkVtbl;
   ActorStageObjStopOwnedEffects(&self->base);
-  ActorStageObjStopEffect((ActorStageObjCrystal *)self);
+  ActorStageObjStopEffect(self);
   if (self->helper != NULL) {
     CollisionCollider *helper = self->helper;
     dtor = &((const VtblEntry *)helper->node.vtable)[1];

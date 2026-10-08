@@ -126,7 +126,7 @@ void BtlBakuganState04Update(BtlBakugan *self)
         /* the listing passes self in the callee's unused third argument */
         for (i = 1; i < 5; i++) {
             dist = BtlCalcDeceleratingDistance(self->base.velocity[1], self->gravity,
-                                               (u32)(uintptr_t)self, i);
+                                               (u32)(uintptr_t)self, i); /* bdc: ptr-narrow ok: the callee never reads its third argument */
             if (dist + self->base.pos[1] < self->groundPoint[1]) {
                 /* orient += (g_vecUp - orient) * (1 / (i + 1)) */
                 keep = 1.0f / (float)(i + 1);

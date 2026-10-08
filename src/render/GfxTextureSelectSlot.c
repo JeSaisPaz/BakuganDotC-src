@@ -2,7 +2,7 @@
 #include "bdc.h"
 
 /* Makes GE state block `slot` the texture's current one: stores `blocks + slot * 0x60` in `curBlock`
-   and `curBlock2` (slot 0 when `singleSlot` is set). */
+   and `gmo.image` (slot 0 when `singleSlot` is set). */
 
 void GfxTextureSelectSlot(void *tex, int slot)
 {
@@ -14,5 +14,5 @@ void GfxTextureSelectSlot(void *tex, int slot)
   }
   block = t->blocks + slot * 0x60;
   t->curBlock = block;
-  t->curBlock2 = block;
+  t->gmo.image = block;
 }

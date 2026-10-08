@@ -18,17 +18,17 @@ short *GmoMotionArrayRelease(short *arr, int n)
     for (i = 0; i < n; i++, motion++) {
       motion->active--;
       if (motion->active == 0) {
-        track = motion->tracks;
+        track = (GmoMotionTrack *)PspPtr(motion->tracks);
         if (track != (GmoMotionTrack *)0x0) {
           for (t = 0; t < (int)motion->trackCount; t++, track++) {
             track->flags--;
             if (track->flags == 0) {
-              GmoHeapReleaseThunk(0,track->data);
+              GmoHeapReleaseThunk(0,PspPtr(track->data));
               GmoHeapReleaseThunk(0,track);
             }
           }
         }
-        GmoHeapReleaseThunk(0,motion->table);
+        GmoHeapReleaseThunk(0,PspPtr(motion->table));
         GmoHeapReleaseThunk(0,motion);
       }
     }

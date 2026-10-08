@@ -17,7 +17,7 @@ void UiPulseInit(GfxSprite *src, GfxSprite *ghost, UiPulse *self)
   ghost->alpha = 1.0f;
   ghost->posZ = src->posZ + 1.0f;
   self->phase = 0.0f;
-  self->source = src;
+  self->source = PspAddr(src);
   self->level = ghost->alpha;
   self->waiting = '\0';
   width = GfxSpriteGetWidth(src);

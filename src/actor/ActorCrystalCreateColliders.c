@@ -10,11 +10,6 @@
    `collider2`. */
 
 /* View of the shape descriptor of collider1: only the quad at +0x10 is written here. */
-typedef struct ActorCrystalShapeDescView {
-  u8 _unk00[0x10];
-  float vec10[4]; /* +0x10 zeroed here */
-} ActorCrystalShapeDescView;
-
 void ActorCrystalCreateColliders(ActorCrystal *self)
 
 {
@@ -25,7 +20,7 @@ void ActorCrystalCreateColliders(ActorCrystal *self)
   float k;
   float r;
   float axisLen;
-  ActorCrystalShapeDescView *desc;
+  CollisionCapsule *desc;
 
   MemLock();
   fromLow = MemIsAllocFromLow();
@@ -97,11 +92,11 @@ void ActorCrystalCreateColliders(ActorCrystal *self)
   CollisionColliderInit(&collider->node, (const u32 *)&self->pushShape, 0, self, 0);
   self->base.collider1->byte104 = 0;
   /* bank constant C720 = (0, 0, 0, 0) */
-  desc = (ActorCrystalShapeDescView *)self->base.collider1->shapeDesc;
-  desc->vec10[0] = 0.0f;
-  desc->vec10[1] = 0.0f;
-  desc->vec10[2] = 0.0f;
-  desc->vec10[3] = 0.0f;
+  desc = (CollisionCapsule *)self->base.collider1->shapeDesc;
+  ((float *)desc->segmentHead)[0] = 0.0f;
+  ((float *)desc->segmentHead)[1] = 0.0f;
+  ((float *)desc->segmentHead)[2] = 0.0f;
+  ((float *)desc->segmentHead)[3] = 0.0f;
   collider = self->base.collider1;
   collider->attachMatrix = self->base.anchorMatrix;
   collider->attachDirty = 1;

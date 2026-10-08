@@ -342,7 +342,7 @@ void GameFieldPhaseLoad(CoreTask *task)
   case 10:
     events = (GameEvent470 *)CoreTaskCreate(0x1d6, 100);
     field->events = events;
-    GameEvent470LoadScript(events, 0, 0, 0, (s32)(uintptr_t)&g_gameEventState, 0,
+    GameEvent470LoadScript(events, 0, 0, 0, (s32)(uintptr_t)&g_gameEventState, 0, /* bdc: ptr-narrow ok: the callee never reads a4 */
                            g_gameEventFlags[0], g_gameEventFlags[2]);
     field->subState = field->subState + 1;
     break;

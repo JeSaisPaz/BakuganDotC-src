@@ -45,7 +45,7 @@ void GameQuestCamCtrlSelectCamSet(GameQuestCamCtrl *self, s16 node)
         index = link->camSet;
         if ((-1 < index) && (index < g_questCamTable->count)) {
           /* the table's elements are camera sets, see GameQuestCamTableHasCam */
-          camSet = (GameQuestCamPtrVec *)g_questCamTable->data[index];
+          camSet = g_questCamTable->data[index];
         }
         else {
           memset(&g_gameQuestCamNullSet, 0, 4);

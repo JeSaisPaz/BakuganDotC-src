@@ -10,7 +10,7 @@ void *GmoTrackCopy(void *dst, const void *src, u32 flags, void *plan)
 {
   GmoMotionTrack *d = (GmoMotionTrack *)dst;
   const GmoMotionTrack *s = (const GmoMotionTrack *)src;
-  void *ptr;
+  u32 ptr;
   u16 ref, p8, pA;
   u8 pC, pD;
 
@@ -30,7 +30,7 @@ void *GmoTrackCopy(void *dst, const void *src, u32 flags, void *plan)
       d->paramD = pD;
       d->ref = ref;
       d->data = ptr;
-      GmoHeapAddRef(0, ptr);
+      GmoHeapAddRef(0, PspPtr(ptr));
     }
     return dst;
   }

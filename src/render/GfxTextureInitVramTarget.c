@@ -23,9 +23,9 @@ void GfxTextureInitVramTarget(void *tex, char *name, void *vram)
     memset(&t->rec38Type, 0, 0x20);
     t->rec38Type = 1;
     t->rec38Owner = t;
-    memset(t->gmoData, 0, 0x40);
-    t->gmoData[0] = 1;
-    t->gmoOwner = t;
+    memset(&t->gmo, 0, sizeof(GmoTexture));
+    t->gmo.refCount = 1;
+    t->gmo.palette = t;
     t->clutData = NULL;
     t->tim2 = g_gfxVramTargetTim2;
     memset(g_gfxVramTargetTim2, 0, sizeof(g_gfxVramTargetTim2));
@@ -43,7 +43,7 @@ void GfxTextureInitVramTarget(void *tex, char *name, void *vram)
     t->isPow2Size = 1;
     cmd = (u32 *)t->blocks;
     t->curBlock = t->blocks;
-    t->curBlock2 = t->blocks;
+    t->gmo.image = t->blocks;
     t->invWidth = 1.0f / (float)(s32)width;
     t->invHeight = 1.0f / (float)(s32)height;
     cmd[0] = 0xc2000000;                                           /* TMODE */
