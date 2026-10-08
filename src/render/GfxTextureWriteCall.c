@@ -13,7 +13,7 @@ u32 *GfxTextureWriteCall(void *tex, u32 *dl, int slot)
   if (t->singleSlot != 0) {
     slot = 0;
   }
-  addr = (u32)(uintptr_t)(t->blocks + slot * 0x60);
+  addr = PspAddr(t->blocks + slot * 0x60);
   dl[0] = (addr >> 0x18 & 0xf) << 0x10 | 0x10000000;
   dl[1] = addr & 0xffffff | 0xa000000;
   return dl + 2;

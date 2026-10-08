@@ -47,8 +47,8 @@ void GmoGimMeasurePicture(void *arena, const void *picture)
     sequences++;
     times = seq->timeCount;
     GmoImagePlanReserve(*(void **)arena, 0, 4, seq->frameCount * 4);
-    GmoImagePlanReserve(*(void **)arena, 0, 4, times * 8);
-    GmoImagePlanReserve(*(void **)arena, 0, 4, (int)(seq->dataEnd - seq->dataStart));
+    GmoImagePlanReserve(*(void **)arena, 0, (u32)__alignof__(GmoTexChannel), times * (int)sizeof(GmoTexChannel));
+    GmoImagePlanReserve(*(void **)arena, 0, (u32)__alignof__(GmoTexChannel), (int)(seq->dataEnd - seq->dataStart));
   }
 
   if (sequences != 0 || animated) {

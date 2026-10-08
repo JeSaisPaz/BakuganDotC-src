@@ -10,7 +10,7 @@ u32 *GfxGuGetListPtr(s32 *remaining)
 {
   if (remaining != (s32 *)0x0) {
     *remaining = g_guCurrentContext->listSize -
-                 (g_guCurrentContext->listCurrent - g_guCurrentContext->listStart);
+                 (s32)(g_guCurrentContext->listCurrent - g_guCurrentContext->listStart);
   }
   return (u32 *)g_guCurrentContext->listCurrent;
 }

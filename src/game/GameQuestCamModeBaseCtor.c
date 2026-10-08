@@ -81,7 +81,7 @@ GameQuestCamModeBase *GameQuestCamModeBaseCtor(GameQuestCamModeBase *self, void 
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sub = (GameQuestCamSubState *)MemAlloc(8 /* PSP: watch sub-state, mode + vtbl words only (no struct) */, NULL, 0);
+  sub = (GameQuestCamSubState *)MemAlloc(__builtin_offsetof(GameQuestCamSubState, next), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   push = NULL;
@@ -124,7 +124,7 @@ GameQuestCamModeBase *GameQuestCamModeBaseCtor(GameQuestCamModeBase *self, void 
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  sub = (GameQuestCamSubState *)MemAlloc(8 /* PSP: watch sub-state, mode + vtbl words only (no struct) */, NULL, 0);
+  sub = (GameQuestCamSubState *)MemAlloc(__builtin_offsetof(GameQuestCamSubState, next), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   push = NULL;

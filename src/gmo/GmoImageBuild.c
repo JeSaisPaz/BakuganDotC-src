@@ -46,7 +46,7 @@ int GmoImageBuild(GmoImage *self, u32 fmt, u8 flags16, int width, int height, in
     rowUnits = 0x20;
   }
   self->flags1a = (u8)rowUnits;
-  self->levels = (void **)GmoImagePlanTakeArray(plan, 0, 4, 4, levels * frames, NULL);
+  self->levels = (void **)GmoImagePlanTakeArray(plan, 0, (u32)__alignof__(void *), (int)sizeof(void *), levels * frames, NULL);
   self->kind29 = (u8)kind;
   self->levelCount = (u16)levels;
   self->mipmapMode = (u8)mipmapMode;

@@ -11,7 +11,7 @@ void *CorePackChainFindNamed(CorePack *pack, char *name, char **outName)
 
         if (entry != NULL) {
             *outName = entry->name;
-            return entry->data;
+            return PspPtr(entry->data);
         }
     }
     return NULL;

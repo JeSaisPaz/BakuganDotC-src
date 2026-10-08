@@ -16,7 +16,7 @@ int CxxEhSpecAllows(void *type, u8 flags, u32 extra)
        frame = frame->next) {
   }
   if (frame->list != NULL &&
-      CxxEhMatchHandler(frame->list, (int)(intptr_t)type, flags, extra, 0, 0, NULL, &outEntry) != 0) {
+      CxxEhMatchHandler(frame->list, type, flags, extra, 0, 0, NULL, &outEntry) != 0) {
     return 1;
   }
   return 0;

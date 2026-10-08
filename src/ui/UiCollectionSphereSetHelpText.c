@@ -51,7 +51,7 @@ void UiCollectionSphereSetHelpText(UiCollectionSphere *self)
   table = SaveFindLocalizedBin("DWCollectionHelp");
   UiMesTableRelocate(table);
   dst = self->helpText;
-  strcpy(dst, ((char **)table)[msg]);
+  strcpy(dst, (const char *)PspPtr(table[msg]));
   printer = self->helpPrinter;
   GfxSpriteLayerClear(&printer->layer);
   printer->glyphs = NULL;

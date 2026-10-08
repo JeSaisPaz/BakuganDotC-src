@@ -33,7 +33,7 @@ void GmoDlWriteResetState(GmoDlContext *self, GmoModel *model)
         if (end < dl + 2) {
             return;
         }
-        addr = (u32)(uintptr_t)src; /* GE address of the list */
+        addr = PspAddr(src); /* GE address of the list */
         *dl++ = (addr >> 24) << 16 | 0x10000000;
         *dl++ = (addr & 0xffffff) | 0x0a000000;
         return;

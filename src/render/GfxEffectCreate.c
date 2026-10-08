@@ -22,7 +22,7 @@ void *GfxEffectCreate(GfxEffectMgr *mgr, int id)
   MemUnlock();
   obj = (GfxEffect *)0x0;
   if (effect != (GfxEffect *)0x0) {
-    GfxEffectCtor(effect,mgr,*(void **)(mgr->defs + id * 0x20),id);
+    GfxEffectCtor(effect,mgr,PspPtr(*(u32 *)(mgr->defs + id * 0x20)),id);
     obj = effect;
   }
   return GfxSpriteLayerAdd(&mgr->base,&obj->base);

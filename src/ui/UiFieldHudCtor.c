@@ -56,7 +56,7 @@ UiFieldHud *UiFieldHudCtor(UiFieldHud *self)
   self->targetMark[2] = '\0';
   self->targetMark[3] = '\0';
   self->hintPrinter = (UiTextPrinter *)0x0;
-  self->hints = (char **)0x0;
+  self->hints = (u32 *)0x0;
   self->blinkA = 0;
   self->promptY = -48.0;
   self->blinkB = 0;

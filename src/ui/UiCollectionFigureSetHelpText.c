@@ -29,7 +29,7 @@ void UiCollectionFigureSetHelpText(UiCollectionFigure *self)
   table = SaveFindLocalizedBin("DWCollectionHelp");
   UiMesTableRelocate(table);
   dst = self->helpText;
-  strcpy(dst, ((char **)table)[msg + 0x2c]);
+  strcpy(dst, (const char *)PspPtr(table[msg + 0x2c]));
   printer = self->helpPrinter;
   GfxSpriteLayerClear(&printer->layer);
   printer->glyphs = NULL;

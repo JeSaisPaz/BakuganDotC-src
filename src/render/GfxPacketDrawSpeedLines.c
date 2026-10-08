@@ -101,8 +101,8 @@ void GfxPacketDrawSpeedLines(float x, float y, float w, float h, float amount, v
   jump = list + 13;
   verts = (GfxGeColorVertexF (*)[6])(((uintptr_t)(jump + 2) + 0xf) & ~(uintptr_t)0xf);
   cmd = (u32 *)&verts[256];
-  jump[0] = (((uintptr_t)cmd >> 0x18) & 0xf) << 0x10 | 0x10000000;
-  jump[1] = ((uintptr_t)cmd & 0xffffff) | 0x8000000;
+  jump[0] = ((PspAddr(cmd) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+  jump[1] = (PspAddr(cmd) & 0xffffff) | 0x8000000;
   jitter = spread * 0.2f;
   for (i = 0; i < 0x100; i++) {
     rnd = PlatformRandFloat12() - 1.0f;
@@ -181,8 +181,8 @@ void GfxPacketDrawSpeedLines(float x, float y, float w, float h, float amount, v
     (*verts)[0].z = 0.0f;
     *cmd++ = 0x1200019c; /* VTYPE: colour 8888, float position */
     if (verts != NULL) {
-      cmd[0] = (((uintptr_t)verts >> 0x18) & 0xf) << 0x10 | 0x10000000;
-      cmd[1] = ((uintptr_t)verts & 0xffffff) | 0x1000000; /* VADDR */
+      cmd[0] = ((PspAddr(verts) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+      cmd[1] = (PspAddr(verts) & 0xffffff) | 0x1000000; /* VADDR */
       cmd += 2;
     }
     *cmd++ = 0x4050006; /* PRIM triangle fan, 6 vertices */

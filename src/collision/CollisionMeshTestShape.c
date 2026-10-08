@@ -47,17 +47,17 @@ s32 CollisionMeshTestShape(void *meshBlock, void *query, float *hit, u32 surface
         g_collisionHitInfo.fromClosestPoint = 0;
         for (i = 0; i < block->partCount; i++) {
             g_collisionMeshQuery.partIndex = i;
-            if (((const CollisionFacePart *)block->parts[i])->rotation != (const float *)0) {
+            if (((const CollisionFacePart *)block->parts[i])->rotation != 0) {
                 transform = &shape->vtbl[6];
                 ((void (*)(const void *, const ScePspFMatrix4 *, void *))transform->fn)(
                     (const u8 *)shape + transform->delta,
                     &((const CollisionFacePart *)block->parts[i])->invWorldMatrix,
                     &g_collisionMeshRayQuery);
                 part = block->parts[i];
-                CollisionMeshTreeQueryType1(part, part->bvhRoot, &g_collisionMeshRayQuery);
+                CollisionMeshTreeQueryType1(part, (CollisionBvhNode *)PspPtr(part->bvhRoot), &g_collisionMeshRayQuery);
             } else {
                 part = block->parts[i];
-                CollisionMeshTreeQueryType1(part, part->bvhRoot, query);
+                CollisionMeshTreeQueryType1(part, (CollisionBvhNode *)PspPtr(part->bvhRoot), query);
             }
         }
         break;
@@ -70,7 +70,7 @@ s32 CollisionMeshTestShape(void *meshBlock, void *query, float *hit, u32 surface
         g_collisionHitInfo.fromClosestPoint = 0;
         for (i = 0; i < block->partCount; i++) {
             g_collisionMeshQuery.partIndex = i;
-            if (((const CollisionFacePart *)block->parts[i])->rotation != (const float *)0) {
+            if (((const CollisionFacePart *)block->parts[i])->rotation != 0) {
                 transform = &shape->vtbl[6];
                 ((void (*)(const void *, const ScePspFMatrix4 *, void *))transform->fn)(
                     (const u8 *)shape + transform->delta,
@@ -78,11 +78,11 @@ s32 CollisionMeshTestShape(void *meshBlock, void *query, float *hit, u32 surface
                     &g_collisionMeshSegmentQuery);
                 part = block->parts[i];
                 /* The segment shape shares the ray shape's type/vtable/origin/dir prefix. */
-                CollisionMeshTreeQueryType2(part, part->bvhRoot,
+                CollisionMeshTreeQueryType2(part, (CollisionBvhNode *)PspPtr(part->bvhRoot),
                                             (const CollisionRayShape *)&g_collisionMeshSegmentQuery);
             } else {
                 part = block->parts[i];
-                CollisionMeshTreeQueryType2(part, part->bvhRoot, query);
+                CollisionMeshTreeQueryType2(part, (CollisionBvhNode *)PspPtr(part->bvhRoot), query);
             }
         }
         break;
@@ -94,18 +94,18 @@ s32 CollisionMeshTestShape(void *meshBlock, void *query, float *hit, u32 surface
         }
         for (i = 0; i < block->partCount; i++) {
             g_collisionMeshQuery.partIndex = i;
-            if (((const CollisionFacePart *)block->parts[i])->rotation != (const float *)0) {
+            if (((const CollisionFacePart *)block->parts[i])->rotation != 0) {
                 transform = &shape->vtbl[6];
                 ((void (*)(const void *, const ScePspFMatrix4 *, void *))transform->fn)(
                     (const u8 *)shape + transform->delta,
                     &((const CollisionFacePart *)block->parts[i])->invWorldMatrix,
                     &g_collisionMeshSphereQuery);
                 part = block->parts[i];
-                CollisionMeshTreeQueryType3(part, part->bvhRoot, &g_collisionMeshSphereQuery);
+                CollisionMeshTreeQueryType3(part, (CollisionBvhNode *)PspPtr(part->bvhRoot), &g_collisionMeshSphereQuery);
                 center = &g_collisionMeshSphereQuery.center;
             } else {
                 part = block->parts[i];
-                CollisionMeshTreeQueryType3(part, part->bvhRoot, query);
+                CollisionMeshTreeQueryType3(part, (CollisionBvhNode *)PspPtr(part->bvhRoot), query);
                 center = &((const CollisionSphereQuery *)query)->center;
             }
         }
@@ -121,17 +121,17 @@ s32 CollisionMeshTestShape(void *meshBlock, void *query, float *hit, u32 surface
         }
         for (i = 0; i < block->partCount; i++) {
             g_collisionMeshQuery.partIndex = i;
-            if (((const CollisionFacePart *)block->parts[i])->rotation != (const float *)0) {
+            if (((const CollisionFacePart *)block->parts[i])->rotation != 0) {
                 transform = &shape->vtbl[6];
                 ((void (*)(const void *, const ScePspFMatrix4 *, void *))transform->fn)(
                     (const u8 *)shape + transform->delta,
                     &((const CollisionFacePart *)block->parts[i])->invWorldMatrix,
                     &g_collisionMeshCapsuleQuery);
                 part = block->parts[i];
-                CollisionMeshTreeQueryType4(part, part->bvhRoot, &g_collisionMeshCapsuleQuery);
+                CollisionMeshTreeQueryType4(part, (CollisionBvhNode *)PspPtr(part->bvhRoot), &g_collisionMeshCapsuleQuery);
             } else {
                 part = block->parts[i];
-                CollisionMeshTreeQueryType4(part, part->bvhRoot, query);
+                CollisionMeshTreeQueryType4(part, (CollisionBvhNode *)PspPtr(part->bvhRoot), query);
             }
             center = &g_collisionMeshQuery.sweepCenter;
         }
@@ -139,12 +139,12 @@ s32 CollisionMeshTestShape(void *meshBlock, void *query, float *hit, u32 surface
     }
 
     if (g_collisionMeshHit != 0) {
-        rotation = ((const CollisionFacePart *)g_collisionHitInfo.part)->rotation;
+        rotation = (const float *)PspPtr(((const CollisionFacePart *)g_collisionHitInfo.part)->rotation);
         if (rotation != (const float *)0) {
             rot = (const ScePspFMatrix4 *)rotation;
             if (g_collisionHitInfo.fromClosestPoint == 0) {
                 part = g_collisionHitInfo.part;
-                planeNormal = &part->normals[g_collisionHitInfo.face[3]];
+                planeNormal = &((const ScePspFVector4 *)PspPtr(part->normals))[g_collisionHitInfo.face[3]];
                 v = *planeNormal;
                 /* vtfm3.t: xyz only; the sv.q also writes a stale VFPU lane to normal.w (left out). */
                 g_collisionHitResult.normal.x = rot->x.x * v.x + rot->y.x * v.y + rot->z.x * v.z;
@@ -180,7 +180,7 @@ s32 CollisionMeshTestShape(void *meshBlock, void *query, float *hit, u32 surface
                 rot->x.w * v.x + rot->y.w * v.y + rot->z.w * v.z + rot->w.w;
         } else if (g_collisionHitInfo.fromClosestPoint == 0) {
             part = g_collisionHitInfo.part;
-            planeNormal = &part->normals[g_collisionHitInfo.face[3]];
+            planeNormal = &((const ScePspFVector4 *)PspPtr(part->normals))[g_collisionHitInfo.face[3]];
             g_collisionHitResult.normal = *planeNormal;
         } else {
             /* normal = clamp(normalize(center - point)), w = 0 (S713). */

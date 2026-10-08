@@ -49,8 +49,8 @@ void GfxTextureInitVramTarget(void *tex, char *name, void *vram)
     cmd[0] = 0xc2000000;                                           /* TMODE */
     cmd[1] = 0xc3000000;                                           /* TPSM */
     cmd[2] = 0xcb000000;                                           /* TFLUSH */
-    cmd[3] = 0xa8000100 | ((((uintptr_t)vram >> 24) & 0xf) << 16); /* TBW0 256, TBP0 high */
-    cmd[4] = 0xa0000000 | ((uintptr_t)vram & 0xffffff);            /* TBP0 low */
+    cmd[3] = 0xa8000100 | (((PspAddr(vram) >> 24) & 0xf) << 16);  /* TBW0 256, TBP0 high */
+    cmd[4] = 0xa0000000 | (PspAddr(vram) & 0xffffff);             /* TBP0 low */
     cmd[5] = 0xb8000808;                                           /* TSIZE0 256x256 */
     cmd[6] = 0xcb000000;                                           /* TFLUSH */
     cmd[7] = 0xc6000101;                                           /* TFILTER linear */

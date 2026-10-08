@@ -26,7 +26,7 @@ int UiWorldMapShowConfirm(UiScreen *screen)
     dialog = (UiConfirmDialog *)CoreTaskCreate(0x1fe, 100);
     table = SaveFindLocalizedBin("DWMesHelp");
     UiMesTableRelocate(table);
-    UiConfirmDialogSetMessage(((char **)table)[UiButtonCellOffset(3, 0)]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[UiButtonCellOffset(3, 0)]));
     dialog->cursor = 0;
     map->dialogState[1] = map->dialogState[1] + 1;
   } else if (step == 2) {

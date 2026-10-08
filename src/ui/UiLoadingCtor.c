@@ -124,7 +124,7 @@ UiLoading *UiLoadingCtor(UiLoading *self)
     if (g_uiLoadingShared->tipData != NULL) {
       IoDataAddFlags(g_uiLoadingShared->tipData, 2);
       if (table != NULL && msg < (s32)UiMesTableRelocate(table)) {
-        strcpy(self->tipText, (const char *)(uintptr_t)table[msg]);
+        strcpy(self->tipText, (const char *)PspPtr(table[msg]));
       }
     }
   }

@@ -9,14 +9,14 @@
    in `*adjObj` when `adjObj` is non-null. Returns the 1-based index of the match and the entry in
    `*outEntry`, or 0 with `*outEntry` = 0 when no entry matches. `a3` is unused. */
 
-int CxxEhMatchHandler(int *list, int type, u8 quals, u32 a3, u32 a4, u32 a5, u32 *adjObj, u32 *outEntry)
+int CxxEhMatchHandler(int *list, void *type, u8 quals, u32 a3, char *a4, u32 a5, void **adjObj, u32 *outEntry)
 
 {
   CxxEhHandlerEntry *entry;
   CxxTypeInfo *thrown;
   CxxTypeInfo *caught;
   char *access;
-  int adjusted;
+  void *adjusted;
   int result;
   int index;
   int matched;
@@ -29,10 +29,10 @@ int CxxEhMatchHandler(int *list, int type, u8 quals, u32 a3, u32 a4, u32 a5, u32
   isPtr = quals & 1;
   ptrQuals = quals & 6;
   entry = (CxxEhHandlerEntry *)list;
-  thrown = (CxxTypeInfo *)(intptr_t)type;
+  thrown = (CxxTypeInfo *)type;
   index = 0;
   for (;;) {
-    access = (char *)(uintptr_t)a4;
+    access = a4;
     matched = 0;
     flags = entry->flags;
     index++;
@@ -51,11 +51,11 @@ int CxxEhMatchHandler(int *list, int type, u8 quals, u32 a3, u32 a4, u32 a5, u32
       if (caught->name != NULL && caught->name == &g_cxxVoidTypeName && isPtr != 0) {
         matched = 1;
       } else if (thrown->bases != NULL &&
-                 CxxFindBaseClass((int *)adjObj, &adjusted, thrown,
+                 CxxFindBaseClass(adjObj, &adjusted, thrown,
                                   caught, &access, (int)a5) != 0) {
         matched = 1;
         if (adjObj != NULL) {
-          *adjObj = (u32)adjusted;
+          *adjObj = adjusted;
         }
       }
     }

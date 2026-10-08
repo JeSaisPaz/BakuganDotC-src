@@ -34,7 +34,7 @@ static inline void Vec3Cross(ScePspFVector4 *out, const ScePspFVector4 *a, const
 
 bool CollisionTriangleTestSegment(const CollisionFacePart *part, const u16 *face, const CollisionRayShape *query, float *bestT)
 {
-    const ScePspFVector4 *normal = &part->normals[face[3]];
+    const ScePspFVector4 *normal = &((const ScePspFVector4 *)PspPtr(part->normals))[face[3]];
     ScePspFVector4 *point = &g_collisionMeshQuery.point;
     ScePspFVector4 e2;
     ScePspFVector4 e1;
@@ -62,9 +62,9 @@ bool CollisionTriangleTestSegment(const CollisionFacePart *part, const u16 *face
     point->z = query->origin.z + query->dir.z * t;
     point->w = query->origin.w;
 
-    Vec3Sub(&e2, &part->vertices[face[2]], point);
-    Vec3Sub(&e1, &part->vertices[face[1]], point);
-    Vec3Sub(&e0, &part->vertices[face[0]], point);
+    Vec3Sub(&e2, &((const ScePspFVector4 *)PspPtr(part->vertices))[face[2]], point);
+    Vec3Sub(&e1, &((const ScePspFVector4 *)PspPtr(part->vertices))[face[1]], point);
+    Vec3Sub(&e0, &((const ScePspFVector4 *)PspPtr(part->vertices))[face[0]], point);
     Vec3Cross(&c0, &e1, &e0);
     Vec3Cross(&c1, &e0, &e2);
     if (Vec3Dot(&c0, &c1) < 0.0f)

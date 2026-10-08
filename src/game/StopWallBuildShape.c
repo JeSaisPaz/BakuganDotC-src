@@ -62,7 +62,7 @@ void StopWallBuildShape(StopWall *self, s32 id)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = (CollisionBox *)MemAlloc(0xc0 /* PSP: CollisionBox (0xb4) rounded up to 16 */, NULL, 0);
+    mem = (CollisionBox *)MemAlloc((sizeof(CollisionBox) + 0xf) & ~0xfu, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (mem != NULL) {

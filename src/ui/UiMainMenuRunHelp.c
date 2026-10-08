@@ -21,7 +21,7 @@ int UiMainMenuRunHelp(UiMainMenu *self)
     dialog = (UiConfirmDialog *)CoreTaskCreate(0x1fe, 100);
     table = SaveFindLocalizedBin("DWMesHelp");
     UiMesTableRelocate(table);
-    UiConfirmDialogSetMessage(((char **)table)[self->helpMsg]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[self->helpMsg]));
     if (self->helpMsg < 4) {
       dialog->cursor = 1;
     } else {

@@ -28,6 +28,6 @@ int GmoPlanReserve(void *plan, int pool, u32 align, int size)
     cls = 0;
     bytes = 0x80;
   }
-  words[3 + pool * 4 + cls] += (bytes + size - 1) & -bytes;
+  words[__builtin_offsetof(GmoImagePlan, totals) / sizeof(s32) + pool * 4 + cls] += (bytes + size - 1) & -bytes;
   return 1;
 }

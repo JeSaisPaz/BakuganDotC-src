@@ -25,7 +25,7 @@ u32 *GfxPacketBeginChunk(RenderPacket *packet)
     CoreNodeLink(node, packet->chunkHead, 0);
   }
   packet->jumpSlot = g_renderListCursor;
-  node->id = (uintptr_t)(g_renderListCursor + 2);
+  node->id = PspAddr(g_renderListCursor + 2);
   packet->chunkLast = node;
   return packet->jumpSlot + 2;
 }

@@ -14,7 +14,7 @@ s32 UiHologramGalleryShowHelpDialog(UiHologramGallery *self)
 
 {
   UiConfirmDialog *dialog;
-  void *table;
+  u32 *table;
   u32 kind;
   char *text;
   char *format;
@@ -43,12 +43,12 @@ s32 UiHologramGalleryShowHelpDialog(UiHologramGallery *self)
   UiMesTableRelocate(table);
   kind = self->msgKind;
   if (kind == 11) {
-    UiConfirmDialogSetMessage(((char **)table)[kind]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[kind]));
     dialog->cursor = 1;
     dialog->unk84 = 0;
   }
   else if (kind == 10) {
-    UiConfirmDialogSetMessage(((char **)table)[kind]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[kind]));
     dialog->cursor = 1;
     dialog->unk84 = 0;
   }
@@ -63,7 +63,7 @@ s32 UiHologramGalleryShowHelpDialog(UiHologramGallery *self)
     dialog->unk84 = 0;
   }
   else {
-    text = ((char **)table)[kind];
+    text = (char *)PspPtr(table[kind]);
     if (kind == 6) {
       UiConfirmDialogSetMessage(text);
       dialog->cursor = 1;

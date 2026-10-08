@@ -133,7 +133,7 @@ void GmoModelBuild(void **planCtx, const void *chunk, GmoModel *model)
           n++;
         }
       }
-      partRefs = GmoPlanTake(ctx->plan, 0, 4, n * 4);
+      partRefs = GmoPlanTake(ctx->plan, 0, (u32)__alignof__(*partRefs), n * (int)sizeof(*partRefs));
       node->visible = (1 << n) - 1;
       node->partCount = n;
       node->parts = partRefs;
@@ -400,16 +400,16 @@ void GmoModelBuild(void **planCtx, const void *chunk, GmoModel *model)
           if (bboxCount > 0) {
             ret = &dl[words - 1];
             cmd[0] = 0x12000180; /* VTYPE: float positions */
-            cmd[1] = 0x10000000 | (u32)(((uintptr_t)bbox >> 24) & 0xf) << 16; /* BASE */
-            cmd[2] = 0x01000000 | (u32)((uintptr_t)bbox & 0xffffff);          /* VADDR */
+            cmd[1] = 0x10000000 | (u32)((PspAddr(bbox) >> 24) & 0xf) << 16; /* BASE */
+            cmd[2] = 0x01000000 | (u32)(PspAddr(bbox) & 0xffffff);          /* VADDR */
             cmd[3] = 0x07000008;                                              /* BBOX 8 */
-            cmd[4] = 0x10000000 | (u32)(((uintptr_t)ret >> 24) & 0xf) << 16;  /* BASE */
-            cmd[5] = 0x09000000 | (u32)((uintptr_t)ret & 0xffffff);           /* BJUMP */
+            cmd[4] = 0x10000000 | (u32)((PspAddr(ret) >> 24) & 0xf) << 16;  /* BASE */
+            cmd[5] = 0x09000000 | (u32)(PspAddr(ret) & 0xffffff);           /* BJUMP */
             cmd += 6;
           }
           cmd[0] = (format & 0xffefff) | 0x12000000;                         /* VTYPE */
-          cmd[1] = 0x10000000 | (u32)(((uintptr_t)verts >> 24) & 0xf) << 16; /* BASE */
-          cmd[2] = 0x01000000 | (u32)((uintptr_t)verts & 0xffffff);          /* VADDR */
+          cmd[1] = 0x10000000 | (u32)((PspAddr(verts) >> 24) & 0xf) << 16; /* BASE */
+          cmd[2] = 0x01000000 | (u32)(PspAddr(verts) & 0xffffff);          /* VADDR */
           cmd += 3;
           /* second pass: draw commands and their vertices */
           for (t = CHUNK_FIRST(sub); t < CHUNK_END(sub); t = CHUNK_END(t)) {
@@ -762,7 +762,7 @@ void GmoModelBuild(void **planCtx, const void *chunk, GmoModel *model)
           if ((s16)found->type >= 0) {
             size = found->childOffset - found->dataOffset;
           }
-          keys = GmoPlanTake(ctx->plan, 0, 4, size);
+          keys = GmoPlanTake(ctx->plan, 0, 4, (int)size);
           memcpy(keys, CHUNK_PAYLOAD(found), size);
           channel = args[1];
           fmt = params[0];

@@ -37,7 +37,7 @@ u32 GmoDlEmitMesh(GmoDlContext *self, GmoModel *model, u32 dirty)
   GmoDlWriteTextureIfDirty(self, dirty);
   g_gmoMeshFixupFlags = GmoDlWriteMeshRenderState(self, self->drawMaterial, model, self->node, false);
   if (self->mesh->data != NULL) {
-    addr = (u32)(uintptr_t)self->mesh->data; /* GE address of the primitive list */
+    addr = PspAddr(self->mesh->data); /* GE address of the primitive list */
     if (self->end < self->cur + 2) {
       self->cur = self->cur + 2;
     } else {

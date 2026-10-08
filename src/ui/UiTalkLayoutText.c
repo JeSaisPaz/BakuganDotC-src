@@ -31,7 +31,7 @@ void UiTalkLayoutText(void *win, s32 index, u32 *mes, s32 x, s32 y)
     hud->talkTextHeight = 0.0f;
     text = hud->talkText;
     smallFont = 0;
-    strcpy(text, (const char *)(uintptr_t)mes[index]); /* relocated table entries are pointers */
+    strcpy(text, (const char *)PspPtr(mes[index])); /* relocated table entries are pointers */
     printer = hud->overlayObj[0];
     GfxSpriteLayerClear(&printer->layer);
     printer->glyphs = NULL;

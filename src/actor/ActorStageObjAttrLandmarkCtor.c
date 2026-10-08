@@ -215,7 +215,7 @@ ActorStageObjAttrLandmark *ActorStageObjAttrLandmarkCtor(ActorStageObjAttrLandma
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  boxMem = MemAlloc(0xc0 /* PSP: CollisionBox allocation, 0xc0 bytes; the struct definition covers only 0xb4 */, NULL, 0);
+  boxMem = MemAlloc((sizeof(CollisionBox) + 0xf) & ~0xfu, NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (boxMem != NULL) {

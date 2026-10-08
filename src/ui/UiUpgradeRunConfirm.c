@@ -43,7 +43,7 @@ int UiUpgradeRunConfirm(UiUpgrade *self, int kind)
   table = SaveFindLocalizedBin("DMUpgrade");
   UiMesTableRelocate(table);
   if (kind == 0) {
-    UiConfirmDialogSetMessage(((const char **)table)[27]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[27]));
     dialog->cursor = 0;
     dialog->unk84 = 1;
   }

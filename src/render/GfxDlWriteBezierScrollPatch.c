@@ -29,7 +29,7 @@ u32 *GfxDlWriteBezierScrollPatch(float scaleU, u32 *dl, u32 divS, u32 divT)
     dl[2] = GfxBezierFloatArg(scaleU) | 0x48000000;             /* USCALE */
     dl[3] = GfxBezierFloatArg(12.0f) | 0x49000000;              /* VSCALE */
     dl[4] = 0x12000118;                                         /* VTYPE */
-    addr = (u32)(uintptr_t)g_gfxBezierScrollPatchPoints;
+    addr = PspAddr(g_gfxBezierScrollPatchPoints);
     dl[5] = ((addr >> 24) & 0xf) << 16 | 0x10000000;            /* BASE */
     dl[6] = (addr & 0xffffff) | 0x01000000;                     /* VADDR */
     dl[7] = 0x05000404;                                         /* BEZIER 4x4 */

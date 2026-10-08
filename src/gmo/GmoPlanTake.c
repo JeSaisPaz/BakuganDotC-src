@@ -15,7 +15,7 @@ void *GmoPlanTake(void *plan, int pool, u32 align, int size)
   u32 remain;
   u32 rounded;
   u8 *ptr;
-  u8 *block;
+  GmoImageBlock *block;
 
   if (plan == NULL || size == 0) {
     return NULL;
@@ -33,20 +33,20 @@ void *GmoPlanTake(void *plan, int pool, u32 align, int size)
     cls = 0;
     bytes = 0x80;
   }
-  remain = words[3 + pool * 4 + cls];
+  remain = words[__builtin_offsetof(GmoImagePlan, totals) / sizeof(s32) + pool * 4 + cls];
   rounded = (bytes + size - 1) & -bytes;
-  ptr = (u8 *)(uintptr_t)words[15 + pool * 4 + cls];
+  ptr = ((u8 **)words)[__builtin_offsetof(GmoImagePlan, cursors) / sizeof(u8 *) + pool * 4 + cls];
   if (remain < rounded) {
     return NULL;
   }
-  words[15 + pool * 4 + cls] = (u32)(uintptr_t)(ptr + rounded); /* PSP: raw u32 word view holds pointers; port override needed */
-  words[3 + pool * 4 + cls] = remain - rounded;
+  ((u8 **)words)[__builtin_offsetof(GmoImagePlan, cursors) / sizeof(u8 *) + pool * 4 + cls] = ptr + rounded;
+  words[__builtin_offsetof(GmoImagePlan, totals) / sizeof(s32) + pool * 4 + cls] = remain - rounded;
   if (ptr == NULL) {
     return NULL;
   }
-  block = ((u8 **)plan)[pool];
+  block = ((GmoImagePlan *)plan)->blocks[pool];
   if (block != NULL) {
-    ((u16 *)block)[7]++;
+    block->refCount++;
   }
   return ptr;
 }

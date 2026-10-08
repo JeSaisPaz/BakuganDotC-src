@@ -63,7 +63,7 @@ void GfxPacketDrawScreenTint(void *packet, const float *rgba, s32 mode, void *te
     p = GfxTextureWriteCall(texture, dl + 14, 0);
   }
   if (mode == 1) {
-    addr = (u32)(uintptr_t)g_gfxScreenStripVerts;
+    addr = PspAddr(g_gfxScreenStripVerts);
     p[0] = 0x12800102;
     p[1] = ((addr >> 24) & 0xf) << 16 | 0x10000000;
     p[2] = (addr & 0xffffff) | 0x01000000;
@@ -79,7 +79,7 @@ void GfxPacketDrawScreenTint(void *packet, const float *rgba, s32 mode, void *te
     p[0] = 0x12800102;
     p++;
     if (verts != NULL) {
-      addr = (u32)(uintptr_t)verts;
+      addr = PspAddr(verts);
       p[0] = ((addr >> 24) & 0xf) << 16 | 0x10000000;
       p[1] = (addr & 0xffffff) | 0x01000000;
       p += 2;

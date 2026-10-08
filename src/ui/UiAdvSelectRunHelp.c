@@ -20,7 +20,7 @@ int UiAdvSelectRunHelp(UiAdvSelect *self)
     table = SaveFindLocalizedBin("DWMesHelp");
     UiMesTableRelocate(table);
     line = UiButtonCellOffset(9, self->helpKind);
-    UiConfirmDialogSetMessage(((char **)table)[line]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[line]));
     task->cursor = 0;
     if (self->helpKind == 0) {
       task->unk84 = 1;

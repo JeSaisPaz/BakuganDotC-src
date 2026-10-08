@@ -28,14 +28,14 @@ s32 SysUtilSavedataHandlerRequest(SysUtilSavedataHandler *self, u32 request)
     g_savedataParams->params.focus = PSP_UTILITY_SAVEDATA_FOCUS_LATEST;
     entry = CorePackChainFindEntry(g_ioLzsPackages, "ICON0.PNG");
     if (entry != NULL) {
-      g_savedataParams->params.icon0FileData.buf = entry->data;
+      g_savedataParams->params.icon0FileData.buf = PspPtr(entry->data);
       size = entry->size;
       g_savedataParams->params.icon0FileData.size = size;
       g_savedataParams->params.icon0FileData.bufSize = size;
       newData = &g_savedataParams->newData;
       memset(newData, 0, 0x14);
       g_savedataParams->params.newData = newData;
-      newData->icon0.buf = entry->data;
+      newData->icon0.buf = PspPtr(entry->data);
       size = entry->size;
       newData->title = NULL;
       newData->icon0.size = size;
@@ -43,7 +43,7 @@ s32 SysUtilSavedataHandlerRequest(SysUtilSavedataHandler *self, u32 request)
     }
     entry = CorePackChainFindEntry(g_ioLzsPackages, "PIC1.PNG");
     if (entry != NULL) {
-      g_savedataParams->params.pic1FileData.buf = entry->data;
+      g_savedataParams->params.pic1FileData.buf = PspPtr(entry->data);
       size = entry->size;
       g_savedataParams->params.pic1FileData.size = size;
       g_savedataParams->params.pic1FileData.bufSize = size;
@@ -74,14 +74,14 @@ s32 SysUtilSavedataHandlerRequest(SysUtilSavedataHandler *self, u32 request)
     strcpy(g_savedataParams->params.fileName, g_savedataFileNames[0]);
     entry = CorePackChainFindEntry(g_ioLzsPackages, "ICON0.PNG");
     if (entry != NULL) {
-      g_savedataParams->params.icon0FileData.buf = entry->data;
+      g_savedataParams->params.icon0FileData.buf = PspPtr(entry->data);
       size = entry->size;
       g_savedataParams->params.icon0FileData.size = size;
       g_savedataParams->params.icon0FileData.bufSize = size;
     }
     entry = CorePackChainFindEntry(g_ioLzsPackages, "PIC1.PNG");
     if (entry != NULL) {
-      g_savedataParams->params.pic1FileData.buf = entry->data;
+      g_savedataParams->params.pic1FileData.buf = PspPtr(entry->data);
       size = entry->size;
       g_savedataParams->params.pic1FileData.size = size;
       g_savedataParams->params.pic1FileData.bufSize = size;
@@ -117,14 +117,14 @@ s32 SysUtilSavedataHandlerRequest(SysUtilSavedataHandler *self, u32 request)
     }
     entry = CorePackChainFindEntry(g_ioLzsPackages, "INST_ICON0.PNG");
     if (entry != NULL) {
-      g_savedataParams->params.icon0FileData.buf = entry->data;
+      g_savedataParams->params.icon0FileData.buf = PspPtr(entry->data);
       size = entry->size;
       g_savedataParams->params.icon0FileData.size = size;
       g_savedataParams->params.icon0FileData.bufSize = size;
     }
     entry = CorePackChainFindEntry(g_ioLzsPackages, "INST_PIC1.PNG");
     if (entry != NULL) {
-      g_savedataParams->params.pic1FileData.buf = entry->data;
+      g_savedataParams->params.pic1FileData.buf = PspPtr(entry->data);
       size = entry->size;
       g_savedataParams->params.pic1FileData.size = size;
       g_savedataParams->params.pic1FileData.bufSize = size;
@@ -188,14 +188,14 @@ s32 SysUtilSavedataHandlerRequest(SysUtilSavedataHandler *self, u32 request)
     }
     entry = CorePackChainFindEntry(g_ioLzsPackages, "ICON0.PNG");
     if (entry != NULL) {
-      g_savedataParams->params.icon0FileData.buf = entry->data;
+      g_savedataParams->params.icon0FileData.buf = PspPtr(entry->data);
       size = entry->size;
       g_savedataParams->params.icon0FileData.size = size;
       g_savedataParams->params.icon0FileData.bufSize = size;
     }
     entry = CorePackChainFindEntry(g_ioLzsPackages, "PIC1.PNG");
     if (entry != NULL) {
-      g_savedataParams->params.pic1FileData.buf = entry->data;
+      g_savedataParams->params.pic1FileData.buf = PspPtr(entry->data);
       size = entry->size;
       g_savedataParams->params.pic1FileData.size = size;
       g_savedataParams->params.pic1FileData.bufSize = size;

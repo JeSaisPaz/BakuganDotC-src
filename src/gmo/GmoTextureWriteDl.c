@@ -13,8 +13,8 @@
    reduced by it. */
 
 /* GE address bits 24..27 (BASE / TBW / CBW high bits) and 0..23 of a pointer. */
-#define GE_ADDR_HI(p) ((u32)(((uintptr_t)(p) >> 24) & 0xf) << 16)
-#define GE_ADDR_LO(p) ((u32)((uintptr_t)(p) & 0xffffff))
+#define GE_ADDR_HI(p) ((u32)((PspAddr((p)) >> 24) & 0xf) << 16)
+#define GE_ADDR_LO(p) ((u32)(PspAddr((p)) & 0xffffff))
 
 /* ceil(log2(n)) as `32 - clz(n - 1)`, with the Allegrex clz(0) == 32. */
 static inline u32 GmoTexLog2(u32 n)

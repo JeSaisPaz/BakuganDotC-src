@@ -18,7 +18,7 @@ int ScriptOpJumpIfUnitRefHpRatio(Script *script)
   int jump;
 
   ref = ScriptReadRef(script, 2);
-  unit = (BtlBakugan *)(uintptr_t)*ref;
+  unit = (BtlBakugan *)PspPtr(*ref);
   cmp = ScriptReadU16(script);
   value = ScriptReadFloat(script);
   target = ScriptReadU16(script);

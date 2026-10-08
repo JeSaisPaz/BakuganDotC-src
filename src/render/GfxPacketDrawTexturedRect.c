@@ -36,8 +36,8 @@ void GfxPacketDrawTexturedRect(void *packet, const float *pos, const float *rect
   second = verts + 1;
   end = (u32 *)(second + 1);
   /* BASE + JUMP over the inline vertex data */
-  list[0] = (((uintptr_t)end >> 0x18) & 0xf) << 0x10 | 0x10000000;
-  list[1] = ((uintptr_t)end & 0xffffff) | 0x8000000;
+  list[0] = ((PspAddr(end) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+  list[1] = (PspAddr(end) & 0xffffff) | 0x8000000;
   verts[0].u = st[0];
   verts[0].v = st[1];
   second->u = st[2];
@@ -51,8 +51,8 @@ void GfxPacketDrawTexturedRect(void *packet, const float *pos, const float *rect
   list = end;
   *list++ = 0x12800102; /* VTYPE: 16-bit texel, 16-bit position, through mode */
   if (verts != NULL) {
-    list[0] = (((uintptr_t)verts >> 0x18) & 0xf) << 0x10 | 0x10000000;
-    list[1] = ((uintptr_t)verts & 0xffffff) | 0x1000000; /* VADDR */
+    list[0] = ((PspAddr(verts) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+    list[1] = (PspAddr(verts) & 0xffffff) | 0x1000000; /* VADDR */
     list += 2;
   }
   *list = 0x4060002; /* PRIM sprites, 2 vertices */

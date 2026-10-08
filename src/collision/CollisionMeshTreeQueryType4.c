@@ -24,12 +24,13 @@ void CollisionMeshTreeQueryType4(const CollisionFacePart *part, const CollisionB
     }
     dist = g_collisionFloatInf;
     if (node->kind == 0) {
-        CollisionMeshTreeQueryType4(part, node->left, query);
-        CollisionMeshTreeQueryType4(part, node->right, query);
+        CollisionMeshTreeQueryType4(part, (CollisionBvhNode *)PspPtr(node->left), query);
+        CollisionMeshTreeQueryType4(part, (CollisionBvhNode *)PspPtr(node->right), query);
         return;
     }
     for (i = 0; i < node->kind; i++) {
-        const u16 *face = part->faces + node->triList[i] * 5;
+        const u16 *face =
+            (const u16 *)PspPtr(part->faces) + ((const u16 *)PspPtr(node->tri))[i] * 5;
         s32 surface = g_collisionMeshQuery.faceSurface[(s8)face[4] & 0xf];
         const ScePspFVector4 *plane;
         float planeT;
@@ -37,7 +38,7 @@ void CollisionMeshTreeQueryType4(const CollisionFacePart *part, const CollisionB
         if (surface != -1 && ((1 << surface) & g_collisionMeshQuery.surfaceMask) == 0) {
             continue;
         }
-        plane = &part->normals[face[3]];
+        plane = &((const ScePspFVector4 *)PspPtr(part->normals))[face[3]];
         /* vdot.t of the plane normal and the sweep start */
         if ((plane->x * query->start[0] + plane->y * query->start[1] + plane->z * query->start[2]) - plane->w < 0.0f) {
             continue;

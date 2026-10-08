@@ -26,11 +26,11 @@ void *GfxEffectMgrCtor(GfxEffectMgr *mgr, s32 *data)
     first = *(u32 *)defs;
     if (0x1000000 < first) {
         /* already relocated: the first entry holds a pointer */
-        mgr->defCount = (s32)((first - (u32)data[0] - (u32)(uintptr_t)data) >> 5); /* PSP: pointer in a 32-bit .ptb word; port loader needed */
+        mgr->defCount = (s32)((first - (u32)data[0] - PspAddr(data)) >> 5);
     } else {
         mgr->defCount = (s32)((first - (u32)data[0]) >> 5);
         for (i = 0; i < mgr->defCount; i++) {
-            *(u32 *)(defs + i * 0x20) += (u32)(uintptr_t)data; /* PSP: pointer in a 32-bit .ptb word; port loader needed */
+            *(u32 *)(defs + i * 0x20) += PspAddr(data);
             data = mgr->data;
             defs = mgr->defs;
         }

@@ -23,7 +23,7 @@ void IoDataSetPathCopy(IoData *self, char *path, bool fromLow)
   MemLock();
   oldFromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(fromLow);
-  copy = MemAlloc(len + 1,(char *)0x0,0);
+  copy = MemAlloc((s32)(len + 1),(char *)0x0,0);
   MemSetAllocFromLow(oldFromLow);
   MemUnlock();
   self->pathCopy = copy;

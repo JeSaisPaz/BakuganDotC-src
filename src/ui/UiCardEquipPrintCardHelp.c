@@ -26,7 +26,7 @@ void UiCardEquipPrintCardHelp(UiCardEquip *self, u8 cardId)
   table = CorePackChainFind(g_ioLzsPackages, "DWCardHelp_eu.bin");
   UiMesTableRelocate(table);
   dst = self->helpText;
-  strcpy(dst, ((char **)table)[cardId]);
+  strcpy(dst, (const char *)PspPtr(table[cardId]));
   printer = self->helpPrinter;
   GfxSpriteLayerClear(&printer->layer);
   printer->glyphs = NULL;

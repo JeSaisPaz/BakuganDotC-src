@@ -90,40 +90,40 @@ void UiTalkBalloonDrawFrame(UiTalkBalloon *self, void *packet)
   jump = dl + 13;
   border = (float (*)[3])(jump + 2);
   dl = (u32 *)&border[21];
-  jump[0] = (((uintptr_t)dl >> 0x18) & 0xf) << 0x10 | 0x10000000;
-  jump[1] = ((uintptr_t)dl & 0xffffff) | 0x8000000;
+  jump[0] = ((PspAddr(dl) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+  jump[1] = (PspAddr(dl) & 0xffffff) | 0x8000000;
   colour[0] = 0.0f;
   colour[1] = 0.0f;
   colour[2] = 0.0f;
   colour[3] = self->frameSprite->alpha;
   dl = GfxDlSetBlendState(dl, (const ScePspFVector4 *)colour, 0, 1);
   dl[0] = 0x12000980; /* VTYPE: float position, 8-bit indices */
-  dl[1] = (((uintptr_t)g_talkBalloonBorderIndices >> 0x18) & 0xf) << 0x10 | 0x10000000;
-  dl[2] = ((uintptr_t)g_talkBalloonBorderIndices & 0xffffff) | 0x2000000; /* IADDR */
+  dl[1] = ((PspAddr(g_talkBalloonBorderIndices) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+  dl[2] = (PspAddr(g_talkBalloonBorderIndices) & 0xffffff) | 0x2000000; /* IADDR */
   dl += 3;
   if (border != NULL) {
-    dl[0] = (((uintptr_t)border >> 0x18) & 0xf) << 0x10 | 0x10000000;
-    dl[1] = ((uintptr_t)border & 0xffffff) | 0x1000000; /* VADDR */
+    dl[0] = ((PspAddr(border) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+    dl[1] = (PspAddr(border) & 0xffffff) | 0x1000000; /* VADDR */
     dl += 2;
   }
   dl[0] = 0x04030033; /* PRIM triangles, 51 indices */
   /* BASE + JUMP over the 23 fill vertices */
   fill = (float (*)[3])(dl + 3);
   jump = (u32 *)&fill[23];
-  dl[1] = (((uintptr_t)jump >> 0x18) & 0xf) << 0x10 | 0x10000000;
-  dl[2] = ((uintptr_t)jump & 0xffffff) | 0x8000000;
+  dl[1] = ((PspAddr(jump) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+  dl[2] = (PspAddr(jump) & 0xffffff) | 0x8000000;
   colour[0] = 1.0f;
   colour[1] = 1.0f;
   colour[2] = 1.0f;
   colour[3] = self->frameSprite->alpha;
   dl = GfxDlSetBlendState(jump, (const ScePspFVector4 *)colour, 0, 1);
   dl[0] = 0x12000980;
-  dl[1] = (((uintptr_t)g_talkBalloonFillIndices >> 0x18) & 0xf) << 0x10 | 0x10000000;
-  dl[2] = ((uintptr_t)g_talkBalloonFillIndices & 0xffffff) | 0x2000000;
+  dl[1] = ((PspAddr(g_talkBalloonFillIndices) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+  dl[2] = (PspAddr(g_talkBalloonFillIndices) & 0xffffff) | 0x2000000;
   dl += 3;
   if (fill != NULL) {
-    dl[0] = (((uintptr_t)fill >> 0x18) & 0xf) << 0x10 | 0x10000000;
-    dl[1] = ((uintptr_t)fill & 0xffffff) | 0x1000000;
+    dl[0] = ((PspAddr(fill) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+    dl[1] = (PspAddr(fill) & 0xffffff) | 0x1000000;
     dl += 2;
   }
   dl[0] = 0x04030039; /* PRIM triangles, 57 indices */
@@ -135,16 +135,16 @@ void UiTalkBalloonDrawFrame(UiTalkBalloon *self, void *packet)
   dl[0] = 0x12000180; /* VTYPE: float position */
   dl += 1;
   if (&fill[1] != NULL) {
-    dl[0] = (((uintptr_t)&fill[1] >> 0x18) & 0xf) << 0x10 | 0x10000000;
-    dl[1] = ((uintptr_t)&fill[1] & 0xffffff) | 0x1000000;
+    dl[0] = ((PspAddr(&fill[1]) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+    dl[1] = (PspAddr(&fill[1]) & 0xffffff) | 0x1000000;
     dl += 2;
   }
   dl[0] = 0x04020016; /* PRIM line strip, 22 vertices */
   dl[1] = 0x12000180;
   dl += 2;
   if (&border[1] != NULL) {
-    dl[0] = (((uintptr_t)&border[1] >> 0x18) & 0xf) << 0x10 | 0x10000000;
-    dl[1] = ((uintptr_t)&border[1] & 0xffffff) | 0x1000000;
+    dl[0] = ((PspAddr(&border[1]) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+    dl[1] = (PspAddr(&border[1]) & 0xffffff) | 0x1000000;
     dl += 2;
   }
   dl[0] = 0x04020014; /* PRIM line strip, 20 vertices */

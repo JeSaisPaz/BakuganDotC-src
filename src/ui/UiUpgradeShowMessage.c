@@ -28,7 +28,7 @@ void UiUpgradeShowMessage(UiUpgrade *self, u32 index)
   else {
     table = SaveFindLocalizedBin("DMUpgrade");
     UiMesTableRelocate(table);
-    strcpy(dst, ((char **)table)[(index & 0xff) - 1]);
+    strcpy(dst, (const char *)PspPtr(table[(index & 0xff) - 1]));
   }
   printer = self->textPrinter;
   GfxSpriteLayerClear(&printer->layer);

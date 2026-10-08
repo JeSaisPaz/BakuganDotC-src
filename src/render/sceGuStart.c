@@ -43,17 +43,17 @@ s32 sceGuStart(s32 cid, void *list, s32 size)
 
   if ((u32)(cid - 3) < 2) {
     ctx = g_guCurrentContext;
-    start = (u8 *)((uintptr_t)list & 0x1fffffff);
+    start = (u8 *)PspPtr(PspAddr(list) & 0x1fffffff);
     ctx->listSize = size;
     ctx->listCurrent = start;
     ctx->listStart = start;
   } else {
     ctx = g_guCurrentContext;
-    start = (u8 *)(((uintptr_t)list & 0x1fffffff) | 0x40000000);
+    start = (u8 *)PspPtr((PspAddr(list) & 0x1fffffff) | 0x40000000);
     ctx->listSize = size;
     ctx->listCurrent = start;
     ctx->listStart = start;
-    if (((uintptr_t)list & 0x40000000) == 0) {
+    if ((PspAddr(list) & 0x40000000) == 0) {
       intr = sceKernelCpuSuspendIntr();
       PlatformDcacheWriteback(list, 64); /* cache 0x1b: write back + invalidate one 64-byte line */
       ctx = g_guCurrentContext;

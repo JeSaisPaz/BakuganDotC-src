@@ -17,7 +17,7 @@ u32 *GfxDlDrawColorRect(void *unused, u32 *list, const float *rect, const ScePsp
   (void)unused;
   verts = (s16 *)(list + 2);
   body = list + 5;
-  addr = (u32)(uintptr_t)body;
+  addr = PspAddr(body);
   list[0] = ((addr >> 24) & 0xf) << 16 | 0x10000000;
   list[1] = (addr & 0xffffff) | 0x08000000;
   verts[0] = (s16)(s32)rect[0];
@@ -40,7 +40,7 @@ u32 *GfxDlDrawColorRect(void *unused, u32 *list, const float *rect, const ScePsp
   body[2] = 0x12800100;
   body += 3;
   if (verts != NULL) {
-    addr = (u32)(uintptr_t)verts;
+    addr = PspAddr(verts);
     body[0] = ((addr >> 24) & 0xf) << 16 | 0x10000000;
     body[1] = (addr & 0xffffff) | 0x01000000;
     body += 2;

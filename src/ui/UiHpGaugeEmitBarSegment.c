@@ -46,13 +46,13 @@ u32 * UiHpGaugeEmitBarSegment(float x0, float y0, float x1, float y1, float z, U
   /* first fan, jumped over: BASE + JUMP */
   top = (GfxGeColor4444Vertex16 (*)[5])(((uintptr_t)(dl + 2) + 0xf) & ~(uintptr_t)0xf);
   jump = (u32 *)&top[1];
-  dl[0] = (((uintptr_t)jump >> 24) & 0xf) << 16 | 0x10000000;
-  dl[1] = ((uintptr_t)jump & 0xffffff) | 0x08000000;
+  dl[0] = ((PspAddr(jump) >> 24) & 0xf) << 16 | 0x10000000;
+  dl[1] = (PspAddr(jump) & 0xffffff) | 0x08000000;
   /* second fan, jumped over */
   bottom = (GfxGeColor4444Vertex16 (*)[5])(((uintptr_t)(jump + 2) + 0xf) & ~(uintptr_t)0xf);
   cmd = (u32 *)&bottom[1];
-  jump[0] = (((uintptr_t)cmd >> 24) & 0xf) << 16 | 0x10000000;
-  jump[1] = ((uintptr_t)cmd & 0xffffff) | 0x08000000;
+  jump[0] = ((PspAddr(cmd) >> 24) & 0xf) << 16 | 0x10000000;
+  jump[1] = (PspAddr(cmd) & 0xffffff) | 0x08000000;
 
   iz = (s16)(int)z;
   (*top)[0].x = ix0; (*top)[0].y = iy0; (*top)[0].z = iz; (*top)[0].colour = dark;
@@ -77,15 +77,15 @@ u32 * UiHpGaugeEmitBarSegment(float x0, float y0, float x1, float y1, float z, U
 
   *cmd++ = 0x12000118; /* VTYPE: colour 4444, 16-bit position */
   if (top != NULL) {
-    cmd[0] = (((uintptr_t)top >> 24) & 0xf) << 16 | 0x10000000; /* BASE */
-    cmd[1] = ((uintptr_t)top & 0xffffff) | 0x01000000;          /* VADDR */
+    cmd[0] = ((PspAddr(top) >> 24) & 0xf) << 16 | 0x10000000; /* BASE */
+    cmd[1] = (PspAddr(top) & 0xffffff) | 0x01000000;          /* VADDR */
     cmd += 2;
   }
   *cmd++ = 0x04050005; /* PRIM triangle fan, 5 vertices */
   *cmd++ = 0x12000118;
   if (bottom != NULL) {
-    cmd[0] = (((uintptr_t)bottom >> 24) & 0xf) << 16 | 0x10000000;
-    cmd[1] = ((uintptr_t)bottom & 0xffffff) | 0x01000000;
+    cmd[0] = ((PspAddr(bottom) >> 24) & 0xf) << 16 | 0x10000000;
+    cmd[1] = (PspAddr(bottom) & 0xffffff) | 0x01000000;
     cmd += 2;
   }
   *cmd++ = 0x04050005;

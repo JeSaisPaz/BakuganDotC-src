@@ -59,9 +59,9 @@ void UiUnlockResultSetRewardName(UiUnlockResult *self)
   UiMesTableRelocate(table);
   if (self->rewardKind == 9) {
     index = UiUnlockResultMapFigureIndex(self, 0, (u8)(self->rewardIndex + 1));
-    strcpy(dst, ((char **)table)[index]);
+    strcpy(dst, (const char *)PspPtr(table[index]));
   } else {
-    strcpy(dst, ((char **)table)[self->rewardIndex]);
+    strcpy(dst, (const char *)PspPtr(table[self->rewardIndex]));
   }
   printer = self->printers[0];
   GfxSpriteLayerClear(&printer->layer);

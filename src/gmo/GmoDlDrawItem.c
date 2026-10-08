@@ -26,7 +26,7 @@ u32 GmoDlDrawItem(GmoDlContext *self, GmoModel *model, u32 dirty)
     material = (void *)(uintptr_t)idx;
     if (((idx + 1) & 0xffff0000) == 0) {
       if ((idx & 0xffff) < (u32)model->materialCount) {
-        material = (u8 *)model->materials + idx * 0x10;
+        material = (GmoMaterial *)model->materials + idx;
       } else {
         material = (void *)0;
       }

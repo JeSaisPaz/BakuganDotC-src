@@ -292,8 +292,8 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
       dl[0] = 0x12000081;
       p = dl + 1;
       if (verts != NULL) {
-        p[0] = ((u32)((uintptr_t)verts >> 24) & 0xf) << 16 | 0x10000000;
-        p[1] = ((u32)(uintptr_t)verts & 0xffffff) | 0x01000000;
+        p[0] = (PspAddr(verts) >> 24 & 0xf) << 16 | 0x10000000;
+        p[1] = (PspAddr(verts) & 0xffffff) | 0x01000000;
         p += 2;
       }
       p[0] = 0x04040004;
@@ -302,14 +302,14 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
       /* 48-byte vertex block (4 vertices) inlined at the next 16-byte boundary, jumped over */
       buf = (u32 *)(((uintptr_t)(dl + 2) + 0xf) & ~(uintptr_t)0xf);
       jump = buf + 12;
-      dl[0] = ((u32)((uintptr_t)jump >> 24) & 0xf) << 16 | 0x10000000;
-      dl[1] = ((u32)(uintptr_t)jump & 0xffffff) | 0x08000000;
+      dl[0] = (PspAddr(jump) >> 24 & 0xf) << 16 | 0x10000000;
+      dl[1] = (PspAddr(jump) & 0xffffff) | 0x08000000;
       __builtin_memcpy(buf, sprite->vertices, 4 * sizeof(GfxSpriteVertex));
       jump[0] = 0x12000083;
       p = jump + 1;
       if (buf != NULL) {
-        p[0] = ((u32)((uintptr_t)buf >> 24) & 0xf) << 16 | 0x10000000;
-        p[1] = ((u32)(uintptr_t)buf & 0xffffff) | 0x01000000;
+        p[0] = (PspAddr(buf) >> 24 & 0xf) << 16 | 0x10000000;
+        p[1] = (PspAddr(buf) & 0xffffff) | 0x01000000;
         p += 2;
       }
       p[0] = 0x04040004;

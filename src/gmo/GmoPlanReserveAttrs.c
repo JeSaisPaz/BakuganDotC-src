@@ -6,7 +6,7 @@
 void GmoPlanReserveAttrs(int n, void *plan)
 
 {
-  GmoPlanReserve(plan,0,0x10,n << 6);
+  GmoPlanReserve(plan,0,0x10,n * (int)sizeof(GmoAttr));
   return;
 }
 

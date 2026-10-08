@@ -246,42 +246,42 @@ void BtlHudRatingResultScreen(BtlHud *self)
             for (i = 0; i < 8; i++) {
                 switch (i) {
                 case 0:
-                    strcpy(self->msgText, self->msgTable[0x393]);
+                    strcpy(self->msgText, (const char *)PspPtr(self->msgTable[0x393]));
                     x = (s32)self->ratingSprites[7]->posX;
                     y = (s32)(self->ratingSprites[7]->posY - 16.0f);
                     break;
                 case 1:
-                    strcpy(self->msgText, self->msgTable[0x390]);
+                    strcpy(self->msgText, (const char *)PspPtr(self->msgTable[0x390]));
                     x = (s32)self->ratingSprites[7]->posX;
                     y = (s32)self->ratingSprites[7]->posY;
                     break;
                 case 2:
-                    strcpy(self->msgText, self->msgTable[0x38c]);
+                    strcpy(self->msgText, (const char *)PspPtr(self->msgTable[0x38c]));
                     x = (s32)self->ratingSprites[8]->posX;
                     y = (s32)self->ratingSprites[8]->posY;
                     break;
                 case 3:
-                    strcpy(self->msgText, self->msgTable[0x38d]);
+                    strcpy(self->msgText, (const char *)PspPtr(self->msgTable[0x38d]));
                     x = (s32)self->ratingSprites[9]->posX;
                     y = (s32)self->ratingSprites[9]->posY;
                     break;
                 case 4:
-                    strcpy(self->msgText, self->msgTable[0x394]);
+                    strcpy(self->msgText, (const char *)PspPtr(self->msgTable[0x394]));
                     x = (s32)self->ratingSprites[10]->posX;
                     y = (s32)(self->ratingSprites[10]->posY + 2.0f);
                     break;
                 case 5:
-                    strcpy(self->msgText, self->msgTable[0x38f]);
+                    strcpy(self->msgText, (const char *)PspPtr(self->msgTable[0x38f]));
                     x = (s32)self->ratingSprites[11]->posX;
                     y = (s32)self->ratingSprites[11]->posY;
                     break;
                 case 6:
-                    strcpy(self->msgText, self->msgTable[0x391]);
+                    strcpy(self->msgText, (const char *)PspPtr(self->msgTable[0x391]));
                     x = (s32)self->ratingSprites[13]->posX;
                     y = (s32)self->ratingSprites[13]->posY;
                     break;
                 case 7:
-                    strcpy(self->msgText, self->msgTable[0x392]);
+                    strcpy(self->msgText, (const char *)PspPtr(self->msgTable[0x392]));
                     y = (s32)self->ratingSprites[14]->posY;
                     x = (s32)(self->ratingSprites[14]->posX + 15.0f);
                     x -= RatingLangShift();

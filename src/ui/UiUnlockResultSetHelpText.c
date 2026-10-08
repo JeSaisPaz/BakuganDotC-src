@@ -71,7 +71,7 @@ void UiUnlockResultSetHelpText(UiUnlockResult *self)
   dst = self->texts[1];
   table = SaveFindLocalizedBin(name);
   UiMesTableRelocate(table);
-  src = ((char **)table)[index];
+  src = (char *)PspPtr(table[index]);
   if (self->rewardKind == 4) {
     strcpy(line, src);
     strcat(dst, line);

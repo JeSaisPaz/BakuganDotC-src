@@ -61,6 +61,20 @@ float PlatformRandFloat12(void);                                 /* vrndf1: rand
 float PlatformRandFloat24(void);                                 /* vrndf2: random float in [2, 4) */
 void PlatformRandLoadState(const unsigned *state);              /* mtvc RCX0..RCX7: load the 8-word generator state */
 
+/* PSP addresses (port spec D4a): the game keeps some pointers in 32-bit words (GE command words, disc
+   formats relocated in place, script variable cells). PspAddr(p) is the word the PSP stored for p and
+   PspPtr(a) the pointer back. On the PSP they are the plain casts; a host maps its memory onto PSP-like
+   addresses through two hooks the port defines, so the words keep their size and meaning. */
+#ifdef __mips__ /* uintptr_t (bdc.h's typedef, visible where the macros expand) keeps `src check` quiet */
+#define PspAddr(p) ((unsigned)(uintptr_t)(p))
+#define PspPtr(a) ((void *)(uintptr_t)(a))
+#else
+unsigned PlatformPspAddr(const void *p);
+void *PlatformPspPtr(unsigned addr);
+#define PspAddr(p) PlatformPspAddr(p)
+#define PspPtr(a) PlatformPspPtr(a)
+#endif
+
 #endif
 typedef unsigned char uchar; typedef unsigned short ushort; typedef unsigned int uint;
 typedef unsigned long ulong; typedef long long longlong; typedef unsigned long long ulonglong;
@@ -77,6 +91,7 @@ typedef unsigned long long qword;
 
 typedef __UINTPTR_TYPE__ uintptr_t;
 typedef __INTPTR_TYPE__ intptr_t;
+typedef __SIZE_TYPE__ size_t;
 
 typedef struct AcosConsts {
     double one;      /* 0x00 1.0 */
@@ -2307,6 +2322,7 @@ typedef struct BtlDemoCam {
     float keyBA[2][4];                /* +0x370 second track vector a: [0] current, [1] previous (BtlDemoCamPushKeyB) */
     float keyBB[2][4];                /* +0x390 second track vector b: [0] current, [1] previous */
     s32 keyBFrame[2];                 /* +0x3b0 second track frames: [1] current, [0] previous */
+    u8 _unk3b8[0x8];                  /* +0x3b8 */
 } BtlDemoCam;
 
 typedef struct BtlDemoCamEyeKey {
@@ -2393,7 +2409,6 @@ typedef struct BtlDemo {
     CoreObjectList *mapModels;        /* +0x0f0 list the stage map is loaded into (BtlAppearDemoStateLoad allocates it when NULL; BtlMainStartAppearDemo binds BtlMain.modelLists[1]) */
     u8 _unkf4[0xc];                   /* +0x0f4 */
     BtlDemoCam cam;                   /* +0x100 demo camera */
-    u8 _unk4b8[0x8];                  /* +0x4b8 */
     GfxCamera *battleCamera;          /* +0x4c0 the battle task's camera (&BtlMain.camera, set by BtlDemoStateLoad/BtlAppearDemoStateLoad when task 100 exists); BtlDemoFinish makes it the active camera again and stops its shake */
     BtlBakugan *bakugan;              /* +0x4c4 the demo's Bakugan unit; NULL = none (BtlDemoLoadMotion stores motion indices in its motion map +0x164, BtlDemoFreeMotion) */
     Actor *actor;                     /* +0x4c8 demo actor (BtlAppearDemoStateLoad spawns it; BtlDemoUpdateObjects keeps fallSpeed 0, jumpTimer 1; BtlDemoFinish deletes it) */
@@ -3084,7 +3099,7 @@ typedef struct BtlHud {
     char nameBuf[0x40];               /* +0x824 string buffer cleared by BtlHudCtor */
     char voiceName[0x40];             /* +0x864 "VO_%d.at3" built by BtlHudPlayVoice */
     u32 *mesTable0;                   /* +0x8a4 message table relocated by BtlHudPhaseBuild (UiMesTableRelocate) */
-    char **msgTable;                  /* +0x8a8 battle message strings (UiMesTableRelocate) */
+    u32 *msgTable;                    /* +0x8a8 battle message strings (UiMesTableRelocate); entries are PSP addresses (PspPtr) */
     s32 reserved8ac;                  /* +0x8ac cleared by BtlHudCtor and BtlHudPhaseBuild; no reader identified yet */
     s32 reserved8b0;                  /* +0x8b0 cleared by BtlHudCtor and BtlHudPhaseBuild; no reader identified yet */
     float talkTextAlpha;              /* +0x8b4 talk text alpha (fade ramp * hudAlpha, UiTalkWindowStep) */
@@ -3220,7 +3235,7 @@ typedef struct BtlItem {
     s32 popFrame;                /* +0x070 pop-up bounce frame counter (BtlItemUpdate state 1; cleared by BtlItemInit) */
     u8 blinking;                 /* +0x074 set by BtlItemUpdate once lifetime < 90; cleared by BtlItemInit */
     u8 appearAnim;               /* +0x075 set by BtlItemCreate (1 for drops and spawners, 0 for stage-object drops), cleared by BtlItemInit; BtlItemUpdate state 0 goes on to state 1 when set, straight to state 5 when clear */
-    u8 _unk076[0x12];            /* +0x076 */
+    u8 _unk076[0xa];             /* +0x076 */
 } BtlItem;
 
 typedef struct BtlItemOdds {
@@ -3541,30 +3556,15 @@ typedef struct BtlUnitMode4 {
 typedef struct CollisionBvhNode {
     float aabb[8];                  /* 0x00 bounding box: min xyzw, max xyzw */
     s32 kind;                       /* 0x20 0 = inner node, else leaf triangle count */
-    union {
-        s32 triOffset;              /* 0x24 leaf: index list, file-relative until relocated */
-        const u16 *triList;         /* face indices into part->faces */
-    };
-    union {
-        s32 leftOffset;             /* 0x28 inner: child, file-relative until relocated */
-        struct CollisionBvhNode *left;
-    };
-    union {
-        s32 rightOffset;            /* 0x2c */
-        struct CollisionBvhNode *right;
-    };
+    u32 tri;                        /* 0x24 leaf: index list (const u16), file-relative, then PSP address */
+    u32 left;                       /* 0x28 inner: child, file-relative, then PSP address */
+    u32 right;                      /* 0x2c inner: child, file-relative, then PSP address */
 } CollisionBvhNode;
 
 typedef struct CollisionBvhPart {
     u32 unk00;                              /* 0x00 copied to CollisionFacePart.bvhUnk18 */
-    union {
-        s32 nodeBase;                       /* 0x04 node table: offset from this payload, then base address */
-        struct CollisionBvhNode *nodes;     /* 0x04 node table (root first) once relocated */
-    };
-    union {
-        s32 triBase;                        /* 0x08 triangle-index data: offset from this payload, then base address */
-        const u8 *tris;                     /* 0x08 triangle-index data once relocated */
-    };
+    u32 nodes;                              /* 0x04 node table: offset from this payload, then PSP address (CollisionBvhNode) */
+    u32 tris;                               /* 0x08 triangle-index data: offset from this payload, then PSP address */
 } CollisionBvhPart;
 
 typedef struct CollisionDebugPrim {
@@ -3584,16 +3584,16 @@ typedef struct CollisionDebugPrim {
 
 typedef struct CollisionFacePart {
     u8 _unk00[4];                     /* +0x00 */
-    const ScePspFVector4 *vertices;   /* +0x04 vertex positions, indexed by face[0..2] */
+    u32 vertices;                     /* +0x04 PSP address (PspPtr) of the vertex positions (const ScePspFVector4), indexed by face[0..2] */
     u8 _unk08[4];                     /* +0x08 */
-    const ScePspFVector4 *normals;    /* +0x0c per-face plane normals (xyz, w), indexed by face[3] */
+    u32 normals;                      /* +0x0c PSP address (PspPtr) of the per-face plane normals (const ScePspFVector4: xyz, w), indexed by face[3] */
     u8 _unk10[4];                     /* +0x10 */
-    const u16 *faces;                 /* +0x14 10-byte faces: u16 v[3], u16 plane, s8 surface (+8, low nibble), pad */
+    u32 faces;                        /* +0x14 PSP address (PspPtr) of the 10-byte faces (const u16): u16 v[3], u16 plane, s8 surface (+8, low nibble), pad */
     u32 bvhUnk18;                     /* +0x18 AABB chunk word 0 (CollisionBvhPart.unk00) */
-    struct CollisionBvhNode *bvhRoot; /* +0x1c BVH root node (AABB chunk node table, relocated) */
-    const u8 *bvhTris;                /* +0x20 BVH triangle-index data (AABB chunk, relocated) */
-    const ScePspFMatrix4 *localMatrix; /* +0x24 part-local 4x4 transform */
-    const float *rotation;            /* +0x28 3x4-float rows (lv.q C100/C110/C120) part rotation, NULL = identity; set by CollisionShapeBlockPrepare to worldMatrix, localMatrix or NULL */
+    u32 bvhRoot;                      /* +0x1c PSP address (PspPtr) of the BVH root node (CollisionBvhNode; AABB chunk node table, relocated) */
+    u32 bvhTris;                      /* +0x20 PSP address (PspPtr) of the BVH triangle-index data (const u8; AABB chunk, relocated) */
+    u32 localMatrix;                  /* +0x24 PSP address (PspPtr) of the part-local 4x4 transform (const ScePspFMatrix4) */
+    u32 rotation;                     /* +0x28 PSP address (PspPtr) of 3x4-float rows (const float) (lv.q C100/C110/C120) part rotation, NULL = identity; set by CollisionShapeBlockPrepare to worldMatrix, localMatrix or NULL */
     u8 _unk2c[4];                     /* +0x2c */
     ScePspFMatrix4 worldMatrix;       /* +0x30 block matrix x localMatrix (only when the block has a matrix) */
     ScePspFMatrix4 invWorldMatrix;    /* +0x70 rigid inverse of the part's transform */
@@ -3904,7 +3904,7 @@ typedef struct CoreNodeRegistryEntry {
 typedef struct CorePackDirEntry {
     u16 count;                /* +0x00 entry count (meaningful in entry 0 only) */
     u16 type;                 /* +0x02 3 = TIM2 texture, 0x78 = sub-directory */
-    void *data;               /* +0x04 data offset in the file, pointer after IoPackDirRelocate */
+    u32 data;                 /* +0x04 data offset in the file; PSP address (PspPtr) after IoPackDirRelocate */
     u32 size;                 /* +0x08 data size in bytes */
     u8 _unkc[0x4];            /* +0x0c */
     char name[0x30];          /* +0x10 NUL-terminated entry name */
@@ -4080,7 +4080,7 @@ typedef struct CxxEhRecord {
     u8 flags;                 /* +0x0c */
     u8 _pad0d[0x3];           /* +0x0d */
     u32 extra;                /* +0x10 */
-    u32 extra2;                /* +0x14 */
+    char *extra2;             /* +0x14 base-class access string for CxxFindBaseClass (NULL from every thrower) */
     void *object;             /* +0x18 thrown object storage */
     void *objectCopy;         /* +0x1c holds the thrown pointer for pointer-typed throws */
     struct CxxEhFrame *tryFrame; /* +0x20 innermost idle try frame when pushed */
@@ -4094,6 +4094,7 @@ typedef struct CxxEhRecord {
     u8 constructed;           /* +0x31 object constructed */
     u8 flags2;                 /* +0x32 */
     CxxEhFrame frame;         /* +0x34 */
+    u8 _unk3c[0x68];          /* +0x3c rest of the record; frame..end is 0x70 bytes, the size of the generic EH frame area (CxxVecNewEx's frame[0x70]) */
 } CxxEhRecord;
 
 typedef struct CxxEhRegion {
@@ -4548,7 +4549,8 @@ typedef struct GameFieldCharSet {
     u8 guardCount;       /* +0xca length of the guard slot list at +0xa9 */
     u8 eventDepth;       /* +0xcb */
     u8 queuedCount;      /* +0xcc */
-    u8 queued[1];        /* +0xcd queued switch events */
+    u8 queued[10];       /* +0xcd queued switch events (GameFieldCharSetLoadFresh clears 10 bytes) */
+    u8 _unkd7[0x1];      /* +0xd7 */
 } GameFieldCharSet;
 
 typedef struct GameFieldEntryPoint {
@@ -6241,7 +6243,7 @@ typedef struct GmoPtrTables {
 typedef struct GmoRec10A {
     u16 refCount;              /* 0x00 1 */
     u16 f02;                   /* 0x02 */
-    u32 f04;                   /* 0x04 */
+    void *f04;                 /* 0x04 pointer (GmoMotionTrack data) */
     u16 f08;                   /* 0x08 */
     u16 f0a;                   /* 0x0a */
     u8 f0c;                    /* 0x0c */
@@ -6252,15 +6254,15 @@ typedef struct GmoRec10A {
 typedef struct GmoRec10B {
     u16 refCount;              /* 0x00 1 */
     u16 f02;                   /* 0x02 */
-    u32 f04;                   /* 0x04 */
+    void *f04;                 /* 0x04 pointer (GmoLayer texture) */
     u8 pad08[8];               /* 0x08 */
 } GmoRec10B;
 
 typedef struct GmoRec10C {
     u16 refCount;              /* 0x00 1 */
     u16 f02;                   /* 0x02 */
-    u32 f04;                   /* 0x04 */
-    u32 f08;                   /* 0x08 */
+    void *f04;                 /* 0x04 pointer (GmoMaterial info) */
+    void *f08;                 /* 0x08 pointer (GmoMaterial attrs) */
     u16 f0c;                   /* 0x0c */
     u8 pad0e[2];               /* 0x0e */
 } GmoRec10C;
@@ -6268,7 +6270,7 @@ typedef struct GmoRec10C {
 typedef struct GmoRec10D {
     u16 refCount;              /* 0x00 1 */
     u16 f02;                   /* 0x02 */
-    u32 f04;                   /* 0x04 */
+    void *f04;                 /* 0x04 pointer (GmoPart meshes) */
     u16 f08;                   /* 0x08 */
     u8 pad0a[6];               /* 0x0a */
 } GmoRec10D;
@@ -6276,17 +6278,17 @@ typedef struct GmoRec10D {
 typedef struct GmoRec30B {
     u16 refCount;              /* 0x00 1 */
     u16 f02;                   /* 0x02 */
-    u32 f04;                   /* 0x04 */
-    u32 f08;                   /* 0x08 */
-    u32 f0c;                   /* 0x0c */
-    u32 f10;                   /* 0x10 */
+    void *f04;                 /* 0x04 pointer (GmoMesh instances) */
+    void *f08;                 /* 0x08 pointer (GmoMesh patchScale) */
+    void *f0c;                 /* 0x0c pointer (GmoMesh vertexArray) */
+    void *f10;                 /* 0x10 pointer (GmoMesh skinData) */
     u16 f14;                   /* 0x14 */
     u16 f16;                   /* 0x16 */
     u16 f18;                   /* 0x18 */
     u16 f1a;                   /* 0x1a */
     u32 f1c;                   /* 0x1c */
     s32 f20;                   /* 0x20 -1 */
-    u32 f24;                   /* 0x24 */
+    void *f24;                 /* 0x24 pointer (GmoMesh data) */
     u32 f28;                   /* 0x28 */
     u16 f2c;                   /* 0x2c 1 */
     s16 f2e;                   /* 0x2e -1 */
@@ -8953,7 +8955,7 @@ typedef struct UiFieldHud {
     s32 targetsDone;            /* +0xd0 incremented by UiFieldHudIncrementCounter */
     u8 targetMark[0x4];          /* +0xd4 written as bytes by UiFieldHudCountTargets, read as a word by UiFieldHudUpdateRadar */
     UiTextPrinter *hintPrinter; /* +0xd8 hint text printer (UiFieldHudLoadHints; font 3, scale 0.7) */
-    char **hints;               /* +0xdc relocated mes_Adventure_hint_<lang>.bin table */
+    u32 *hints;                 /* +0xdc relocated mes_Adventure_hint_<lang>.bin table; entries are PSP addresses (PspPtr) */
     float promptY;              /* +0xe0 prompt slide position, -48 .. 48 */
     s32 blinkA;                 /* +0xe4 gauge 0 blink state */
     s32 blinkB;                 /* +0xe8 gauge 1 blink state */
@@ -9823,7 +9825,7 @@ typedef struct UiStaffCredit {
     IoLzsPackage *commonPackage;    /* 0x70 "data/credit_common.lzs", loaded by UiStaffCreditLoadPhase */
     s32 rollFrame;                  /* 0x74 roll frame counter */
     s32 pauseTimer;                 /* 0x78 frames spent in the main phase's 150-frame pause (sub-state 4) */
-    char **lineTexts;               /* 0x7c relocated "DNStaffCredit.bin" message table (one string per line) */
+    u32 *lineTexts;                 /* 0x7c relocated "DNStaffCredit.bin" message table (one string per line); entries are PSP addresses (PspPtr) */
     s32 pictureIndex;               /* 0x80 next of the 13 pictures to reveal (13 = all shown) */
     u32 unk84;                      /* 0x84 zeroed by the ctor; first spawned line whose sprite is still on screen (UiStaffCreditScrollLines) */
     s32 lineIndex;                  /* 0x88 next credit line to spawn (UiStaffCreditSpawnLine, < lineCount, max 0x1f6) */
@@ -10331,6 +10333,7 @@ typedef struct UiWorldMap {
         s16 unkE;             /* +0x0e cleared by UiWorldMapLoadNetSettings; UiOptionNetMainPhase sends its phaseStep here (-1 / 10 tested) */
     } player[4];
     int netSession;           /* +0x2370 nonzero in a network session; also indexes the local player's record (UiWorldMapLoadNetSettings) */
+    u8 _unk2374[0xc];         /* +0x2374 */
 } UiWorldMap;
 
 typedef struct UpgradeInfo {
@@ -10480,8 +10483,6 @@ typedef struct lconv {
 } lconv;
 
 typedef void (*sceNetAdhocctlHandler)(int, int, void *);
-
-typedef unsigned int size_t;
 
 typedef long long time_t;
 
@@ -13205,10 +13206,10 @@ void CxxEhFree(void *ptr);
 void CxxEhFreeTop(void);
 void CxxEhGetCurrentType(void **type, u8 *flags, u32 *extra);
 void *CxxEhMalloc(u32 size);
-int CxxEhMatchHandler(int *list, int type, u8 quals, u32 a3, u32 a4, u32 a5, u32 *adjObj, u32 *outEntry);
+int CxxEhMatchHandler(int *list, void *type, u8 quals, u32 a3, char *a4, u32 a5, void **adjObj, u32 *outEntry);
 void CxxEhPopFrame(void);
 void CxxEhPushArrayFrame(void *frame, void *rec, u32 flag);
-void CxxEhPushException(void *type, void *dtor, u8 flags, int a3, int a4, u8 a5, void *object, int isRethrow, void *orig);
+void CxxEhPushException(void *type, void *dtor, u8 flags, int a3, char *a4, u8 a5, void *object, int isRethrow, void *orig);
 void CxxEhPushThrowFrame(void);
 void CxxEhRegionInit(void *region);
 void CxxEhReleaseException(void *exc);

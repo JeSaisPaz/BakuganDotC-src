@@ -26,7 +26,7 @@ void UiEquipSetCardHelpText(UiEquip *self, u8 index)
   table = SaveFindLocalizedBin("DWCardHelp");
   UiMesTableRelocate(table);
   dst = self->helpText;
-  strcpy(dst, ((char **)table)[index]);
+  strcpy(dst, (const char *)PspPtr(table[index]));
   printer = self->helpPrinter;
   GfxSpriteLayerClear(&printer->layer);
   printer->glyphs = NULL;

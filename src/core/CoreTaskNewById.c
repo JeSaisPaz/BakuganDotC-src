@@ -108,7 +108,7 @@ CoreTask *CoreTaskNewById(s32 id)
         }
         return mem;
     case 310:
-        mem = CoreTaskAllocLow(0x2380 /* PSP: UiWorldMap object size; the UiWorldMap struct is partial (0x2374) */);
+        mem = CoreTaskAllocLow(sizeof(UiWorldMap));
         if (mem != NULL) {
             UiWorldMapCtor(mem);
         }

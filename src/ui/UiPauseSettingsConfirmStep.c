@@ -19,7 +19,7 @@ bool UiPauseSettingsConfirmStep(UiPauseSettings *self)
     dialog = (UiConfirmDialog *)CoreTaskCreate(0x1fe, 100);
     table = SaveFindLocalizedBin("DWMesHelp");
     UiMesTableRelocate(table);
-    UiConfirmDialogSetMessage(((const char **)table)[self->dlgMessage]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[self->dlgMessage]));
     dialog->cursor = 1;
     self->dlgStep = self->dlgStep + 1;
   }

@@ -53,7 +53,7 @@ CoreTask *BtlStageCamCtor(CoreTask *task, u32 index, void *unit)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    cam = (BtlDemoCam *)MemAlloc(0x3c0 /* PSP: BtlDemoCam (0x3b8) plus 8 bytes the layout does not cover yet */, NULL, 0);
+    cam = (BtlDemoCam *)MemAlloc(sizeof(BtlDemoCam), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (cam != NULL) {

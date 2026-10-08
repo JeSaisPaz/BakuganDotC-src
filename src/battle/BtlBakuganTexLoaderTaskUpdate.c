@@ -61,7 +61,7 @@ void BtlBakuganTexLoaderTaskUpdate(CoreTask *task)
                 MemSetAllocFromLow(fromLow);
                 MemUnlock();
                 entry->data = data;
-                memcpy(data, file->data, file->size);
+                memcpy(data, PspPtr(file->data), file->size);
 
                 MemLock();
                 fromLow = MemIsAllocFromLow();

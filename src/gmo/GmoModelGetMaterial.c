@@ -16,7 +16,7 @@ void *GmoModelGetMaterial(GmoModel *self, u32 index)
       return (void *)(uintptr_t)index;
     }
     if ((index & 0xffff) < (uint)self->materialCount) {
-      return (void *)((u8 *)self->materials + index * 0x10);
+      return (GmoMaterial *)self->materials + index;
     }
   }
   return (void *)0x0;

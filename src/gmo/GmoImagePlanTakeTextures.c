@@ -6,6 +6,6 @@
 void *GmoImagePlanTakeTextures(int n, void *plan)
 
 {
-  return GmoImagePlanTakeArray(plan,0,0x10,0x40,n,GmoTextureInit);
+  return GmoImagePlanTakeArray(plan,0,0x10,(int)sizeof(GmoTexture),n,GmoTextureInit);
 }
 

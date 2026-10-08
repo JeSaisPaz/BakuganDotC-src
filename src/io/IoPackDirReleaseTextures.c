@@ -22,9 +22,9 @@ void IoPackDirReleaseTextures(IoLzsPackage *pkg, u16 *dir, int *index)
         *index = *index + 1;
       }
     } else if (type == 0x78) {
-      IoPackDirReleaseTextures(pkg, (u16 *)entry->data, index);
+      IoPackDirReleaseTextures(pkg, (u16 *)PspPtr(entry->data), index);
     }
-    entry->data = (u8 *)entry->data - (uintptr_t)dir;
+    entry->data = entry->data - PspAddr(dir);
     entry++;
   }
   pkg->registered = 0;

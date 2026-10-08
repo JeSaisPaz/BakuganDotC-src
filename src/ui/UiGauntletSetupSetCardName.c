@@ -22,7 +22,7 @@ void UiGauntletSetupSetCardName(UiGauntletSetup *self, u8 card)
   table = SaveFindLocalizedBin("DWCardName");
   UiMesTableRelocate(table);
   dst = self->nameText;
-  strcpy(dst, ((char **)table)[card]);
+  strcpy(dst, (const char *)PspPtr(table[card]));
   printer = self->namePrinter;
   GfxSpriteLayerClear(&printer->layer);
   printer->glyphs = NULL;

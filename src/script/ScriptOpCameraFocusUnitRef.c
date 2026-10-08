@@ -32,7 +32,7 @@ int ScriptOpCameraFocusUnitRef(Script *script)
   ScriptReadFloat(script);
   ScriptReadFloat(script);
   ScriptReadFloat(script);
-  unit = BtlBakuganListFind((BtlBakugan *)(uintptr_t)savedRef);
+  unit = BtlBakuganListFind((BtlBakugan *)PspPtr(savedRef));
   player = BtlGetPlayerBakugan();
   if (BtlCameraTaskExists() != 0 && player != NULL) {
     if (cmd == 0) {

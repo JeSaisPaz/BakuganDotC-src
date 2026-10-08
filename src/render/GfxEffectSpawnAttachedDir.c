@@ -22,7 +22,7 @@ void *GfxEffectSpawnAttachedDir(GfxEffectMgr *mgr, s32 id, float *attach, const 
   MemUnlock();
   obj = (GfxEffect *)0;
   if (raw != (GfxEffect *)0) {
-    GfxEffectCtor(raw, mgr, *(void **)(mgr->defs + id * 0x20), id);
+    GfxEffectCtor(raw, mgr, PspPtr(*(u32 *)(mgr->defs + id * 0x20)), id);
     obj = raw;
   }
   e = (GfxEffect *)GfxSpriteLayerAdd(&mgr->base, &obj->base);

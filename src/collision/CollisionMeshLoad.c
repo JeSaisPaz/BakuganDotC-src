@@ -58,7 +58,7 @@ void CollisionMeshLoad(void *block, bool keepWorldVerts)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = MemAlloc(count * 0xc0 /* PSP: 0xc0-byte MESH part header copy; CollisionFacePart only maps 0xb0 */, (const char *)0, 0);
+    mem = MemAlloc(count * 0xc0 /* disc stride of a MESH part header */, (const char *)0, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     self->worldVerts = mem;
@@ -103,19 +103,19 @@ void CollisionMeshLoad(void *block, bool keepWorldVerts)
         worldOffset += 0xc0;
       }
       else if (chunk->tag == g_vertChunkTag) {
-        part->vertices = (const ScePspFVector4 *)data;
+        part->vertices = PspAddr(data);
       }
       else if (chunk->tag == g_normChunkTag) {
-        part->normals = (const ScePspFVector4 *)data;
+        part->normals = PspAddr(data);
       }
       else if (chunk->tag == g_faceChunkTag) {
-        part->faces = (const u16 *)data;
+        part->faces = PspAddr(data);
       }
       else if (chunk->tag == g_geomChunkTag) {
-        part->localMatrix = (const ScePspFMatrix4 *)data;
+        part->localMatrix = PspAddr(data);
         if ((file->flags & 0x8000) == 0) {
           /* File form: x = translation, y = rotation angles (radians), z = scale. */
-          geom = (ScePspFMatrix4 *)part->localMatrix;
+          geom = (ScePspFMatrix4 *)PspPtr(part->localMatrix);
           sx = geom->z.x;
           sy = geom->z.y;
           sz = geom->z.z;
@@ -145,15 +145,15 @@ void CollisionMeshLoad(void *block, bool keepWorldVerts)
       else if (chunk->tag == g_aabbChunkTag) {
         aabb = (CollisionBvhPart *)data;
         if ((file->flags & 0x8000) == 0) {
-          aabb->nodes = (CollisionBvhNode *)(data + aabb->nodeBase);
-          aabb->tris = data + aabb->triBase;
+          aabb->nodes = PspAddr(data + (s32)aabb->nodes);
+          aabb->tris = PspAddr(data + (s32)aabb->tris);
         }
         part->bvhUnk18 = aabb->unk00;
         part->bvhRoot = aabb->nodes;
-        part->rotation = (const float *)0;
+        part->rotation = 0;
         part->bvhTris = aabb->tris;
         if ((file->flags & 0x8000) == 0) {
-          CollisionBvhRelocate(part->bvhRoot, aabb);
+          CollisionBvhRelocate((CollisionBvhNode *)PspPtr(part->bvhRoot), aabb);
         }
       }
       chunkIdx++;

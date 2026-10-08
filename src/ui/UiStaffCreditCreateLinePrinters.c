@@ -41,6 +41,6 @@ void UiStaffCreditCreateLinePrinters(UiScreen *screen)
     i++;
   } while (i < 20);
   table = CorePackChainFind(g_ioLzsPackages, "DNStaffCredit.bin");
-  credit->lineTexts = (char **)table;
+  credit->lineTexts = (u32 *)table;
   credit->lineCount = (s32)UiMesTableRelocate((u32 *)table);
 }

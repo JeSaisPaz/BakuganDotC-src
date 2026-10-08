@@ -26,7 +26,7 @@ MemPool *MemPoolInit(MemPool *pool, s32 itemSize, s32 count, bool fromLow)
     MemLock();
     prevFromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(fromLow);
-    pool->bitmap = MemAlloc(bitmapSize, NULL, 0);
+    pool->bitmap = MemAlloc((s32)bitmapSize, NULL, 0);
     MemSetAllocFromLow(prevFromLow);
     MemUnlock();
     memset(pool->bitmap, 0, bitmapSize);

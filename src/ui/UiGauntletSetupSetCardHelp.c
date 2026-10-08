@@ -26,7 +26,7 @@ void UiGauntletSetupSetCardHelp(UiGauntletSetup *self, u8 card)
   table = SaveFindLocalizedBin("DWCardHelp");
   UiMesTableRelocate(table);
   dst = self->helpText;
-  strcpy(dst, (const char *)(uintptr_t)table[card]);
+  strcpy(dst, (const char *)PspPtr(table[card]));
   printer = self->helpPrinter;
   GfxSpriteLayerClear(&printer->layer);
   printer->glyphs = NULL;

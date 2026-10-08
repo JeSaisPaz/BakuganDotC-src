@@ -46,7 +46,7 @@ int ScriptOpSpawnCpuUnit(Script *script)
   }
   unit = (BtlCpuUnit *)BtlCreateBakugan(kind, mode, spawn);
   /* the script variable receives the unit as a 32-bit handle (PSP pointer width) */
-  *(BtlCpuUnit **)outRef = unit;
+  *outRef = PspAddr(unit);
   unit->allyIndex = allyIndex;
   BtlBakuganCreateHpGauge(&unit->base);
   unit->base.playerSlot = 4;

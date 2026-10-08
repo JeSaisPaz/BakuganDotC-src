@@ -12,7 +12,7 @@
 int ScriptOpSpawnActor(Script *script)
 
 {
-  Actor **out;
+  u32 *out;
   u32 base;
   u32 flag;
   u32 tag;
@@ -21,7 +21,7 @@ int ScriptOpSpawnActor(Script *script)
   float pos[4] __attribute__((aligned(16)));
 
   /* script variables are 32-bit slots; on the PSP they hold the actor pointer */
-  out = (Actor **)ScriptReadRef(script, 2);
+  out = ScriptReadRef(script, 2);
   base = ScriptReadU32(script);
   modelId = base + 0x23;
   flag = ScriptReadU32(script);
@@ -52,7 +52,7 @@ int ScriptOpSpawnActor(Script *script)
     }
   }
   actor = (Actor *)ActorSpawn(modelId, flag, pos);
-  *out = actor;
+  *out = PspAddr(actor);
   actor->spawnTag = tag;
   return 0;
 }

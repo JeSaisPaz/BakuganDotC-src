@@ -13,11 +13,11 @@ u32 *GfxRectDlWriteQuad(void *rect, u32 *list)
   GfxRect *r = (GfxRect *)rect;
   s16 *verts = (s16 *)(list + 2); /* two {x, y, z} s16 vertices */
   u32 *end = list + 5;
-  uintptr_t addr;
+  u32 addr;
 
   /* BASE + JUMP over the inline vertex data */
-  list[0] = (((uintptr_t)end >> 0x18) & 0xf) << 0x10 | 0x10000000;
-  list[1] = ((uintptr_t)end & 0xffffff) | 0x8000000;
+  list[0] = ((PspAddr(end) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+  list[1] = (PspAddr(end) & 0xffffff) | 0x8000000;
   if (r->mode == 1) {
     verts[0] = (s16)(s32)((float)((s32)r->pos[0] & 0xffff) - (float)r->width * 0.5f);
     verts[1] = (s16)(s32)((float)((s32)r->pos[1] & 0xffff) - (float)r->height * 0.5f);
@@ -35,7 +35,7 @@ u32 *GfxRectDlWriteQuad(void *rect, u32 *list)
   list = end;
   *list++ = 0x12800100; /* VTYPE: 16-bit position, through mode */
   if (verts != NULL) {
-    addr = (uintptr_t)verts;
+    addr = PspAddr(verts);
     list[0] = ((addr >> 0x18) & 0xf) << 0x10 | 0x10000000;
     list[1] = (addr & 0xffffff) | 0x1000000; /* VADDR */
     list += 2;

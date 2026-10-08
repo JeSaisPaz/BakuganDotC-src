@@ -6,6 +6,6 @@
 
 void *GmoPlanTakeMotions(int n, void *plan)
 {
-  return GmoPlanTakeArray(plan,0,0x10,0x30,n,GmoMotionRecordCtor);
+  return GmoPlanTakeArray(plan,0,0x10,(int)sizeof(GmoMotionInfo),n,GmoMotionRecordCtor);
 }
 

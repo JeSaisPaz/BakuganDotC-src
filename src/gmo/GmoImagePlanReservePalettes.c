@@ -6,7 +6,7 @@
 void GmoImagePlanReservePalettes(int n, void *plan)
 
 {
-  GmoImagePlanReserve(plan,0,0x10,n * 0x30);
+  GmoImagePlanReserve(plan,0,0x10,n * (int)sizeof(GmoImage));
   return;
 }
 

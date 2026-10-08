@@ -12,7 +12,7 @@ u32 GmoDlCacheEmitCall(GmoModel *model, u32 **buf, u32 *size, s32 slot)
   s32 first;
   u32 *list;
   u32 *dl;
-  uintptr_t addr;
+  u32 addr;
 
   if (model == NULL) {
     return 0;
@@ -53,10 +53,10 @@ u32 GmoDlCacheEmitCall(GmoModel *model, u32 **buf, u32 *size, s32 slot)
   if (list == NULL) {
     return 0;
   }
-  addr = (uintptr_t)list;
+  addr = PspAddr(list);
   dl = *buf;
   *buf = dl + 2;
-  dl[0] = (u32)(addr >> 24) << 16 | 0x10000000;
-  dl[1] = (u32)(addr & 0xffffff) | 0x0a000000;
+  dl[0] = (addr >> 24) << 16 | 0x10000000;
+  dl[1] = (addr & 0xffffff) | 0x0a000000;
   return 4;
 }

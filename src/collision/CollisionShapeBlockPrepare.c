@@ -66,8 +66,8 @@ void *CollisionShapeBlockPrepare(void *block)
         if (self->matrix != (float (*)[4])0) {
             for (i = 0; i < self->partCount; i++) {
                 part = (CollisionFacePart *)self->parts[i];
-                part->rotation = (const float *)&part->worldMatrix;
-                local = part->localMatrix;
+                part->rotation = PspAddr(&part->worldMatrix);
+                local = (const ScePspFMatrix4 *)PspPtr(part->localMatrix);
                 /* vmmul.q M000, M100, M200 (M100 = matrix, M200 = localMatrix): column j =
                    sum over k of localMatrix[j][k] * matrix[k]. Both inputs are read first. */
                 for (j = 0; j < 4; j++) {
@@ -100,7 +100,7 @@ void *CollisionShapeBlockPrepare(void *block)
             for (i = 0; i < self->partCount; i++) {
                 /* Raw word compare: identity means exact 1.0f diagonal and all-zero bits
                    elsewhere (-0.0f does not count). */
-                m = (const u32 *)((CollisionFacePart *)self->parts[i])->localMatrix;
+                m = (const u32 *)PspPtr(((CollisionFacePart *)self->parts[i])->localMatrix);
                 if ((m[0] == 0x3f800000) && (m[5] == 0x3f800000) && (m[10] == 0x3f800000) &&
                     (m[15] == 0x3f800000)) {
                     identity = ((m[6] | m[8] | m[7] | m[9] | m[4] | m[1] | m[13] | m[3] | m[2] |
@@ -111,11 +111,12 @@ void *CollisionShapeBlockPrepare(void *block)
                 }
                 part = (CollisionFacePart *)self->parts[i];
                 if (identity) {
-                    part->rotation = (const float *)0;
+                    part->rotation = 0;
                 }
                 else {
-                    part->rotation = (const float *)part->localMatrix;
-                    CollisionPartRigidInverse(&part->invWorldMatrix, part->localMatrix);
+                    part->rotation = part->localMatrix;
+                    CollisionPartRigidInverse(&part->invWorldMatrix,
+                                              (const ScePspFMatrix4 *)PspPtr(part->localMatrix));
                 }
             }
         }

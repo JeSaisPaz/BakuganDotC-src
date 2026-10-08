@@ -20,7 +20,7 @@ static u32 FloatBits(float f)
 
 u32 *GfxDlWriteLightState(u32 *list, GfxCamera *camera, s32 shadowed)
 {
-  u32 base = (u32)(uintptr_t)g_gfxLightBaseStateList;
+  u32 base = PspAddr(g_gfxLightBaseStateList);
   u32 sub;
   u32 packed;
 
@@ -31,12 +31,12 @@ u32 *GfxDlWriteLightState(u32 *list, GfxCamera *camera, s32 shadowed)
     g_gfxLightLitStateList[9] = (FloatBits(5.0f) >> 8) | 0x5b000000;
   }
   if (shadowed == 0) {
-    sub = (u32)(uintptr_t)g_gfxLightUnlitStateList;
+    sub = PspAddr(g_gfxLightUnlitStateList);
     list[2] = (((sub >> 24) & 0xf) << 16) | 0x10000000;
     list[3] = (sub & 0xffffff) | 0x0a000000;
     g_gfxLightSelectCmd = 0x5f000002;
   } else {
-    sub = (u32)(uintptr_t)g_gfxLightLitStateList;
+    sub = PspAddr(g_gfxLightLitStateList);
     list[2] = (((sub >> 24) & 0xf) << 16) | 0x10000000;
     list[3] = (sub & 0xffffff) | 0x0a000000;
     g_gfxLightSelectCmd = 0x5f000001;

@@ -16,7 +16,7 @@
 int ScriptOpUnitRefSetParam(Script *script)
 {
     u32 cmd;
-    BtlBakugan **ref;
+    u32 *ref;
     BtlBakugan *refUnit;
     BtlBakugan *unit;
     BtlBakugan *player;
@@ -29,8 +29,8 @@ int ScriptOpUnitRefSetParam(Script *script)
     float v[4] __attribute__((aligned(16)));
 
     cmd = ScriptReadU16(script);
-    ref = (BtlBakugan **)ScriptReadRef(script, 2);
-    refUnit = *ref;
+    ref = ScriptReadRef(script, 2);
+    refUnit = (BtlBakugan *)PspPtr(*ref);
     v[2] = 0.0f;
     v[1] = 0.0f;
     v[0] = 0.0f;

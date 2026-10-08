@@ -28,7 +28,7 @@ int UiHologramViewRunHelp(UiHologramView *self)
   task = (UiConfirmDialog *)CoreTaskCreate(0x1fe,100);
   table = SaveFindLocalizedBin("DWHologramHelp");
   UiMesTableRelocate(table);
-  UiConfirmDialogSetMessage(((char **)table)[self->page]);
+  UiConfirmDialogSetMessage((const char *)PspPtr(table[self->page]));
   kind = self->kind;
   if (kind == 1 || kind == 7) {
     task->unk91 = 0;

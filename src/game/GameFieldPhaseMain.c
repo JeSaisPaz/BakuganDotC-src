@@ -481,7 +481,7 @@ void GameFieldPhaseMain(CoreTask *task)
     sprintf(name, "mes_MaruchoJet_%s.bin", SaveGetLanguageName());
     table = CorePackChainFind(g_ioLzsPackages, name);
     UiMesTableRelocate(table);
-    UiConfirmDialogSetMessage(((const char **)table)[2]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[2]));
     field->subState++;
     break;
   case 29:

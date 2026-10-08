@@ -7,6 +7,6 @@
 void *GmoImagePlanTakeImages(int n, void *plan)
 
 {
-  return GmoImagePlanTakeArray(plan,0,0x10,0x30,n,GmoImageCtor);
+  return GmoImagePlanTakeArray(plan,0,0x10,(int)sizeof(GmoTexTrack),n,GmoImageCtor);
 }
 

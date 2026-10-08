@@ -17,7 +17,7 @@ void GfxRectDraw(void *rect, u32 *list)
   const u32 *m;
   s32 mode;
   int row, col;
-  uintptr_t addr;
+  u32 addr;
   u32 packed;
 
   if ((r->flags & 1) == 0 || r->color[3] == 0.0f) {
@@ -39,7 +39,7 @@ void GfxRectDraw(void *rect, u32 *list)
         list = GfxCameraDlWrite(g_gfxActiveCamera, list, 0xffffffff);
       }
       list = GfxDlWriteLightState(list, g_gfxActiveCamera, 0);
-      addr = (uintptr_t)g_gfxRect3DStateList;
+      addr = PspAddr(g_gfxRect3DStateList);
       list[0] = ((addr >> 0x18) & 0xf) << 0x10 | 0x10000000; /* BASE */
       list[1] = (addr & 0xffffff) | 0xa000000;                /* CALL */
       list += 2;

@@ -41,7 +41,7 @@ NetPlay *NetPlayCtor(NetPlay *self)
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
-  pad = MemAlloc(0x50 /* PSP: remote pad object, smaller than the 0x5c-byte PadState layout */, NULL, 0);
+  pad = MemAlloc(__builtin_offsetof(PadState, id50), NULL, 0);
   MemSetAllocFromLow(fromLow);
   MemUnlock();
   if (pad != NULL) {

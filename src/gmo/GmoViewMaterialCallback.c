@@ -531,11 +531,11 @@ void GmoViewMaterialCallback(GmoDlContext *ctx)
     data = cur + 7;
     cur[1] = ((nrmSize != 0) ? 0x60 : 0) | ((colSize != 0) ? 0x1c : 0) |
              ((texSize != 0) ? 3 : 0) | 0x12000180;                          /* VTYPE */
-    cur[2] = (((u32)(uintptr_t)data >> 24) & 0xf) << 16 | 0x10000000;       /* BASE */
-    cur[3] = ((u32)(uintptr_t)data & 0xffffff) | 0x01000000;                /* VADDR */
+    cur[2] = ((PspAddr(data) >> 24) & 0xf) << 16 | 0x10000000;       /* BASE */
+    cur[3] = (PspAddr(data) & 0xffffff) | 0x01000000;                /* VADDR */
     cur[4] = (u32)nv | 0x04050000;                                           /* PRIM fan */
-    cur[5] = (((u32)(uintptr_t)next >> 24) & 0xf) << 16 | 0x10000000;       /* BASE */
-    cur[6] = ((u32)(uintptr_t)next & 0xffffff) | 0x08000000;                /* JUMP */
+    cur[5] = ((PspAddr(next) >> 24) & 0xf) << 16 | 0x10000000;       /* BASE */
+    cur[6] = (PspAddr(next) & 0xffffff) | 0x08000000;                /* JUMP */
     o = (u8 *)data;
     src = outBase; /* the last plane's output */
     do {

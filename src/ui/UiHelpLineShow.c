@@ -17,7 +17,7 @@ void UiHelpLineShow(float x, float y, u8 msgIndex)
 
   table = SaveFindLocalizedBin("DOMesHelp");
   UiMesTableRelocate(table);
-  strcpy(g_helpLineText, ((char **)table)[msgIndex]);
+  strcpy(g_helpLineText, (const char *)PspPtr(table[msgIndex]));
   printer = g_helpLinePrinter;
   GfxSpriteLayerClear(&printer->layer);
   printer->glyphs = NULL;

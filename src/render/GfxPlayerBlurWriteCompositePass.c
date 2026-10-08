@@ -56,8 +56,8 @@ u32 * GfxPlayerBlurWriteCompositePass(void *task, u32 *dl, void *tex)
 
     *dl++ = 0x12800102; /* VTYPE: through, 16-bit UV and position */
     if (verts != NULL) {
-        dl[0] = (((u32)(uintptr_t)verts >> 24 & 0xf) << 16) | 0x10000000; /* BASE */
-        dl[1] = ((u32)(uintptr_t)verts & 0xffffff) | 0x01000000;          /* VADDR */
+        dl[0] = ((PspAddr(verts) >> 24 & 0xf) << 16) | 0x10000000; /* BASE */
+        dl[1] = (PspAddr(verts) & 0xffffff) | 0x01000000;          /* VADDR */
         dl += 2;
     }
     *dl = 0x04060040; /* PRIM: sprites, 64 vertices */

@@ -13,11 +13,11 @@ void *GmoCreateMotionArray(int n)
   void *array;
 
   GmoPlanInit(plan);
-  GmoPlanReserve(plan, 0, 0x10, n * 0x30);
+  GmoPlanReserve(plan, 0, 0x10, n * (int)sizeof(GmoMotionInfo));
   committed = GmoPlanCommit(plan);
   array = (void *)0x0;
   if (committed != 0) {
-    array = GmoPlanTakeArray(plan, 0, 0x10, 0x30, n, GmoMotionRecordCtor);
+    array = GmoPlanTakeArray(plan, 0, 0x10, (int)sizeof(GmoMotionInfo), n, GmoMotionRecordCtor);
     GmoPlanFree(plan);
   }
   return array;

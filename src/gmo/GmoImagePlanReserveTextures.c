@@ -6,7 +6,7 @@
 void GmoImagePlanReserveTextures(int n, void *plan)
 
 {
-  GmoImagePlanReserve(plan,0,0x10,n << 6);
+  GmoImagePlanReserve(plan,0,0x10,n * (int)sizeof(GmoTexture));
   return;
 }
 

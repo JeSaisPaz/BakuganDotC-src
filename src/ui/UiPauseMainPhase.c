@@ -223,7 +223,7 @@ void UiPauseMainPhase(UiPause *self)
     table = SaveFindLocalizedBin("DMPauseEnd");
     count = (s32)UiMesTableRelocate(table);
     if (self->confirmMsg < count) {
-      UiConfirmDialogSetMessage(((const char **)table)[self->confirmMsg]);
+      UiConfirmDialogSetMessage((const char *)PspPtr(table[self->confirmMsg]));
     }
     dlg->cursor = 1;
     self->base.phaseStep = self->base.phaseStep + 1;
@@ -264,7 +264,7 @@ void UiPauseMainPhase(UiPause *self)
     dlg = (UiConfirmDialog *)CoreTaskCreate(0x1fe, 100);
     table = SaveFindLocalizedBin("DWCommon");
     UiMesTableRelocate(table);
-    UiConfirmDialogSetMessage(((const char **)table)[2]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[2]));
     dlg->cursor = 0;
     dlg->unk84 = 1;
     self->base.phaseStep = self->base.phaseStep + 1;

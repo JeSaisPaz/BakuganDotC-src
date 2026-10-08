@@ -9,7 +9,7 @@ void *CorePackGetEntryOffset(CorePack *pack, int index)
     CorePackDirEntry *dir = pack->dir;
 
     if (dir != NULL && dir->count != 0 && index >= 0 && index < (int)dir->count) {
-        return dir[index].data;
+        return PspPtr(dir[index].data);
     }
     return NULL;
 }

@@ -13,9 +13,9 @@
    reaches 0 or below. The chunk ends by restoring patch primitive triangles. */
 
 /* GE BASE command for the upper address bits of `p`. */
-#define GE_BASE(p) (0x10000000u | (u32)((((uintptr_t)(p) >> 24) & 0xf) << 16))
+#define GE_BASE(p) (0x10000000u | (u32)(((PspAddr((p)) >> 24) & 0xf) << 16))
 /* GE address command `cmd` (VADDR 1, IADDR 2, JUMP 8, CALL 0xa) with the low 24 bits of `p`. */
-#define GE_ADDR(cmd, p) (((u32)(cmd) << 24) | (u32)((uintptr_t)(p) & 0xffffff))
+#define GE_ADDR(cmd, p) (((u32)(cmd) << 24) | (u32)(PspAddr((p)) & 0xffffff))
 
 void CollisionDebugPrimsDraw(void *list)
 

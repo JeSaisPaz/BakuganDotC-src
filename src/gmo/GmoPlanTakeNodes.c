@@ -6,5 +6,5 @@
 void *GmoPlanTakeNodes(int n, void *plan)
 
 {
-  return GmoPlanTakeArray(plan,0,0x40,0xc0,n,GmoNodeCtor);
+  return GmoPlanTakeArray(plan,0,0x40,(int)sizeof(GmoNode),n,GmoNodeCtor);
 }

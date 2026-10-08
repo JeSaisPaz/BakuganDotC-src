@@ -121,8 +121,8 @@ u32 *GfxFabObjectDraw(void *obj, u32 *list, const float *parentMtx, void *color,
     uvs = o->uvs;
     *list++ = 0x12000081; /* VTYPE: u8 UV, s8 position */
     if (uvs != 0) {
-      list[0] = 0x10000000 | ((((uintptr_t)uvs >> 24) & 0xf) << 16); /* BASE */
-      list[1] = 0x01000000 | ((uintptr_t)uvs & 0xffffff);             /* VADDR */
+      list[0] = 0x10000000 | (((PspAddr(uvs) >> 24) & 0xf) << 16); /* BASE */
+      list[1] = 0x01000000 | (PspAddr(uvs) & 0xffffff);             /* VADDR */
       list += 2;
     }
     *list++ = 0x04040004; /* PRIM triangle strip, 4 vertices */
@@ -132,8 +132,8 @@ u32 *GfxFabObjectDraw(void *obj, u32 *list, const float *parentMtx, void *color,
   /* inline the 48 bytes of vertices (16-byte aligned) and JUMP over them */
   verts = (u32 *)(((uintptr_t)(list + 2) + 0xf) & ~(uintptr_t)0xf);
   after = verts + 12;
-  list[0] = 0x10000000 | ((((uintptr_t)after >> 24) & 0xf) << 16); /* BASE */
-  list[1] = 0x08000000 | ((uintptr_t)after & 0xffffff);             /* JUMP */
+  list[0] = 0x10000000 | (((PspAddr(after) >> 24) & 0xf) << 16); /* BASE */
+  list[1] = 0x08000000 | (PspAddr(after) & 0xffffff);             /* JUMP */
   src = (const u32 *)o->uvs;
   for (i = 0; i < 3; i++) {
     verts[i * 4 + 0] = src[i * 4 + 0];
@@ -144,8 +144,8 @@ u32 *GfxFabObjectDraw(void *obj, u32 *list, const float *parentMtx, void *color,
   *after = 0x12000083; /* VTYPE: float UV, s8 position */
   list = after + 1;
   if (verts != 0) {
-    list[0] = 0x10000000 | ((((uintptr_t)verts >> 24) & 0xf) << 16); /* BASE */
-    list[1] = 0x01000000 | ((uintptr_t)verts & 0xffffff);             /* VADDR */
+    list[0] = 0x10000000 | (((PspAddr(verts) >> 24) & 0xf) << 16); /* BASE */
+    list[1] = 0x01000000 | (PspAddr(verts) & 0xffffff);             /* VADDR */
     list += 2;
   }
   *list++ = 0x04040004; /* PRIM triangle strip, 4 vertices */

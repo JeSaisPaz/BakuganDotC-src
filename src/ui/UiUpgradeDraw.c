@@ -104,8 +104,8 @@ void UiUpgradeDraw(UiUpgrade *self)
     verts = (GfxGeColorVertex16 *)(dl + 2);
     after = (u32 *)((u8 *)verts + 32 * sizeof(GfxGeColorVertex16));
     list = dl;
-    dl[0] = (((u32)(uintptr_t)after >> 24 & 0xf) << 16) | 0x10000000; /* BASE */
-    dl[1] = ((u32)(uintptr_t)after & 0xffffff) | 0x08000000;           /* JUMP */
+    dl[0] = ((PspAddr(after) >> 24 & 0xf) << 16) | 0x10000000; /* BASE */
+    dl[1] = (PspAddr(after) & 0xffffff) | 0x08000000;           /* JUMP */
 
     v = verts;
     for (i = 0; i < 32; i++) {
@@ -119,8 +119,8 @@ void UiUpgradeDraw(UiUpgrade *self)
     after[1] = 0x1280011c;                                /* VTYPE through, 8888, s16 */
     after += 2;
     if (verts != NULL) {
-      after[0] = (((u32)(uintptr_t)verts >> 24 & 0xf) << 16) | 0x10000000; /* BASE */
-      after[1] = ((u32)(uintptr_t)verts & 0xffffff) | 0x01000000;          /* VADDR */
+      after[0] = ((PspAddr(verts) >> 24 & 0xf) << 16) | 0x10000000; /* BASE */
+      after[1] = (PspAddr(verts) & 0xffffff) | 0x01000000;          /* VADDR */
       after += 2;
     }
     after[0] = 0x04060020;                                /* PRIM sprites x32 */

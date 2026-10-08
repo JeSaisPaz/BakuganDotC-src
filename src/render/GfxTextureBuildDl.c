@@ -47,7 +47,7 @@ void GfxTextureBuildDl(void *tex, s32 width, s32 height)
   s32 clutOff;
   s32 slot;
   u8 single;
-  uintptr_t addr;
+  u32 addr;
   void *vram;
   u8 *alpha;
   u32 a;
@@ -112,13 +112,13 @@ void GfxTextureBuildDl(void *tex, s32 width, s32 height)
   }
 
   /* per mip level: TBW (with the address high bits), TBP, TSIZE */
-  addr = (uintptr_t)t->unk11c;
+  addr = PspAddr(t->unk11c);
   pic = t->picture;
   cmdIdx = 2;
   for (i = 0; i < pic->mipMapTextures; i++) {
-    ((u32 *)t->blocks)[cmdIdx] = (u32)(i + 0xa8) << 24 | ((u32)addr >> 24 & 0xf) << 16 |
+    ((u32 *)t->blocks)[cmdIdx] = (u32)(i + 0xa8) << 24 | (addr >> 24 & 0xf) << 16 |
                                  (u32)(1 << (wLog & 0x1f));
-    ((u32 *)t->blocks)[cmdIdx + 1] = (u32)(i + 0xa0) << 24 | ((u32)addr & 0xffffff);
+    ((u32 *)t->blocks)[cmdIdx + 1] = (u32)(i + 0xa0) << 24 | (addr & 0xffffff);
     ((u32 *)t->blocks)[cmdIdx + 2] = (u32)(i + 0xb8) << 24 | (u32)hLog << 8 | (u32)wLog;
     addr += size;
     pic = t->picture;
@@ -205,8 +205,8 @@ void GfxTextureBuildDl(void *tex, s32 width, s32 height)
     }
     ((u32 *)t->blocks)[cmdIdx] = 0xcb000000;
     ((u32 *)t->blocks)[cmdIdx + 1] = clutPsm | 0xc500ff00;
-    ((u32 *)t->blocks)[cmdIdx + 2] = ((u32)(uintptr_t)t->clutData >> 24 & 0xf) << 16 | 0xb1000000;
-    ((u32 *)t->blocks)[cmdIdx + 3] = ((u32)(uintptr_t)t->clutData & 0xffffff) | 0xb0000000;
+    ((u32 *)t->blocks)[cmdIdx + 2] = (PspAddr(t->clutData) >> 24 & 0xf) << 16 | 0xb1000000;
+    ((u32 *)t->blocks)[cmdIdx + 3] = (PspAddr(t->clutData) & 0xffffff) | 0xb0000000;
     ((u32 *)t->blocks)[cmdIdx + 4] = (u32)(clutStride / 32) | 0xc4000000;
     ((u32 *)t->blocks)[cmdIdx + 5] = 0x0b000000;
   } else {
@@ -223,9 +223,9 @@ void GfxTextureBuildDl(void *tex, s32 width, s32 height)
     for (slot = 1; slot < 8; slot++) {
       memcpy(blk + slot * 0x60, blk, 0x60);
       ((u32 *)t->blocks)[slot * 0x18 + cmdIdx + 2] =
-          ((u32)((uintptr_t)t->clutData + clutOff) >> 24 & 0xf) << 16 | 0xb1000000;
+          ((PspAddr(t->clutData) + clutOff) >> 24 & 0xf) << 16 | 0xb1000000;
       ((u32 *)t->blocks)[slot * 0x18 + cmdIdx + 3] =
-          ((u32)((uintptr_t)t->clutData + clutOff) & 0xffffff) | 0xb0000000;
+          ((PspAddr(t->clutData) + clutOff) & 0xffffff) | 0xb0000000;
       clutOff += clutStride;
       blk = t->blocks;
     }

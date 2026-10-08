@@ -290,7 +290,7 @@ s32 UiTalkBalloonStep(UiTalkBalloon *self, PadState *pad)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      mem = MemAlloc(400 /* PSP: UiTalkBalloonSprite (0x184) rounded up to 0x190 */, NULL, 0);
+      mem = MemAlloc((sizeof(UiTalkBalloonSprite) + 0xf) & ~0xfu, NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       sprite = NULL;
@@ -364,7 +364,7 @@ s32 UiTalkBalloonStep(UiTalkBalloon *self, PadState *pad)
         MemLock();
         fromLow = MemIsAllocFromLow();
         MemSetAllocFromLow(true);
-        mem = MemAlloc(400 /* PSP: UiTalkBalloonSprite (0x184) rounded up to 0x190 */, NULL, 0);
+        mem = MemAlloc((sizeof(UiTalkBalloonSprite) + 0xf) & ~0xfu, NULL, 0);
         MemSetAllocFromLow(fromLow);
         MemUnlock();
         sprite = NULL;
@@ -394,7 +394,7 @@ s32 UiTalkBalloonStep(UiTalkBalloon *self, PadState *pad)
       MemLock();
       fromLow = MemIsAllocFromLow();
       MemSetAllocFromLow(true);
-      mem = MemAlloc(400 /* PSP: UiTalkBalloonSprite (0x184) rounded up to 0x190 */, NULL, 0);
+      mem = MemAlloc((sizeof(UiTalkBalloonSprite) + 0xf) & ~0xfu, NULL, 0);
       MemSetAllocFromLow(fromLow);
       MemUnlock();
       sprite = NULL;

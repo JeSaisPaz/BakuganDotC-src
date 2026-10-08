@@ -25,7 +25,7 @@ int CxxThrow(void)
   void *obj;
   void **slot;
   u32 a3;
-  u32 a4;
+  char *a4;
   u32 isPtr;
   u32 handlerEntry;
   u32 specEntry;
@@ -71,8 +71,8 @@ int CxxThrow(void)
       }
       match = 1;
       if (tryFrame->handlers != NULL) {
-        match = CxxEhMatchHandler(tryFrame->handlers, (int)(intptr_t)type, quals, a3, a4, flags2,
-                                  (void *)&obj, &handlerEntry);
+        match = CxxEhMatchHandler(tryFrame->handlers, type, quals, a3, a4, flags2,
+                                  &obj, &handlerEntry);
       }
       if (match == 0) {
         continue;
@@ -93,7 +93,7 @@ int CxxThrow(void)
       spec = (CxxEhSpecFrame *)frame;
       match = 0;
       if (spec->list != NULL) {
-        match = CxxEhMatchHandler(spec->list, (int)(intptr_t)type, quals, a3, a4, flags2, NULL, &specEntry);
+        match = CxxEhMatchHandler(spec->list, type, quals, a3, a4, flags2, NULL, &specEntry);
       }
       if (match != 0) {
         continue;

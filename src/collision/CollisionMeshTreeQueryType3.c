@@ -21,25 +21,26 @@ void CollisionMeshTreeQueryType3(const CollisionFacePart *part, const CollisionB
     }
     distSq = g_collisionFloatInf;
     if (node->kind == 0) {
-        CollisionMeshTreeQueryType3(part, node->left, query);
-        CollisionMeshTreeQueryType3(part, node->right, query);
+        CollisionMeshTreeQueryType3(part, (CollisionBvhNode *)PspPtr(node->left), query);
+        CollisionMeshTreeQueryType3(part, (CollisionBvhNode *)PspPtr(node->right), query);
         return;
     }
     for (i = 0; i < node->kind; i++) {
-        const u16 *face = part->faces + node->triList[i] * 5;
+        const u16 *face =
+            (const u16 *)PspPtr(part->faces) + ((const u16 *)PspPtr(node->tri))[i] * 5;
         s32 surface = g_collisionMeshQuery.faceSurface[(s8)face[4] & 0xf];
         const ScePspFVector4 *plane;
 
         if (surface != -1 && ((1 << surface) & g_collisionMeshQuery.surfaceMask) == 0) {
             continue;
         }
-        plane = &part->normals[face[3]];
+        plane = &((const ScePspFVector4 *)PspPtr(part->normals))[face[3]];
         /* vdot.t of the plane normal and the sphere centre (VFPU registers dead afterwards) */
         if ((plane->x * query->center.x + plane->y * query->center.y + plane->z * query->center.z) - plane->w < 0.0f) {
             continue;
         }
-        if (!CollisionTriangleTestSphere(&part->vertices[face[0]].x, &part->vertices[face[1]].x,
-                                         &part->vertices[face[2]].x, query, &distSq)) {
+        if (!CollisionTriangleTestSphere(&((const ScePspFVector4 *)PspPtr(part->vertices))[face[0]].x, &((const ScePspFVector4 *)PspPtr(part->vertices))[face[1]].x,
+                                         &((const ScePspFVector4 *)PspPtr(part->vertices))[face[2]].x, query, &distSq)) {
             continue;
         }
         if (g_collisionFaceFilter != NULL &&

@@ -55,7 +55,7 @@ u32 GmoDlDrawMeshes(GmoDlContext *self, GmoModel *model, u32 dirty)
   if (billboard) {
     fixup = GmoDlWriteMeshRenderState(self, self->drawMaterial, model, self->node, true);
     g_gmoMeshFixupFlags = g_gmoMeshFixupFlags | fixup;
-    list = (u32)(uintptr_t)self->mesh->data;
+    list = PspAddr(self->mesh->data);
     if (list != 0) {
       cur = self->cur;
       self->cur = cur + 1;

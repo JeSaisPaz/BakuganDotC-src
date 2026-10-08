@@ -29,15 +29,15 @@ void GfxPacketCopyFramebuffer(void *packet, void *dst)
   RenderPacket *pkt = (RenderPacket *)packet;
   u32 *dl;
   u32 *start;
-  uintptr_t dstAddr;
-  uintptr_t texAddr;
-  uintptr_t verts;
+  u32 dstAddr;
+  u32 texAddr;
+  u32 verts;
   u32 tsize;
 
   if (dst == NULL) {
     dst = g_gfxDisplay->vramFreeStart;
   }
-  dstAddr = (uintptr_t)dst;
+  dstAddr = PspAddr(dst);
   start = GfxPacketBeginChunk(pkt);
   start[0] = 0x1e000001; /* TME on */
   start[1] = 0x22000000; /* ATE off */
@@ -58,8 +58,8 @@ void GfxPacketCopyFramebuffer(void *packet, void *dst)
   dl[1] = GfxCopyFloatArg(0.0f) | 0x4b000000; /* VOFFSET */
   dl += 2;
   dl[0] = 0xd2000000;                                          /* PSM 565 */
-  dl[1] = (((u32)(dstAddr >> 24) & 0xf) << 16) | 0x9d000100; /* FBW 256 */
-  dl[2] = ((u32)dstAddr & 0xffffff) | 0x9c000000;              /* FBP dst */
+  dl[1] = (((dstAddr >> 24) & 0xf) << 16) | 0x9d000100; /* FBW 256 */
+  dl[2] = (dstAddr & 0xffffff) | 0x9c000000;              /* FBP dst */
   dl += 3;
   dl[0] = GfxCopyFloatArg(128.0f) | 0x42000000;  /* XSCALE */
   dl[1] = GfxCopyFloatArg(-128.0f) | 0x43000000; /* YSCALE */
@@ -71,10 +71,10 @@ void GfxPacketCopyFramebuffer(void *packet, void *dst)
   dl[2] = 0x15000000; /* REGION1 (0,0) */
   dl[3] = 0x1603fcff; /* REGION2 (255,255) */
   dl += 4;
-  texAddr = (uintptr_t)sceGeEdramGetAddr() + (g_gfxFrameIndex ^ 1) * 0x88000;
+  texAddr = PspAddr(sceGeEdramGetAddr()) + (g_gfxFrameIndex ^ 1) * 0x88000;
   tsize = (GfxCopyLog2(0x200) << 8) | 0xb8000000 | GfxCopyLog2(0x200);
-  dl[0] = (((u32)(texAddr >> 24) & 0xf) << 16) | 0xa8000200; /* TBW0 512 */
-  dl[1] = ((u32)texAddr & 0xffffff) | 0xa0000000;              /* TBP0 */
+  dl[0] = (((texAddr >> 24) & 0xf) << 16) | 0xa8000200; /* TBW0 512 */
+  dl[1] = (texAddr & 0xffffff) | 0xa0000000;              /* TBP0 */
   dl[2] = tsize;                                               /* TSIZE0 512x512 */
   dl[3] = 0xcb000000;                                          /* TFLUSH */
   dl += 4;
@@ -84,9 +84,9 @@ void GfxPacketCopyFramebuffer(void *packet, void *dst)
   dl += 3;
   dl[0] = 0x12800102; /* VTYPE: through, 16-bit UV, 16-bit position */
   dl += 1;
-  verts = (uintptr_t)g_gfxFbCopyVerts;
-  dl[0] = (((u32)(verts >> 24) & 0xf) << 16) | 0x10000000; /* BASE */
-  dl[1] = ((u32)verts & 0xffffff) | 0x01000000;              /* VADDR */
+  verts = PspAddr(g_gfxFbCopyVerts);
+  dl[0] = (((verts >> 24) & 0xf) << 16) | 0x10000000; /* BASE */
+  dl[1] = (verts & 0xffffff) | 0x01000000;              /* VADDR */
   dl += 2;
   dl[0] = 0x04060008; /* PRIM sprites, 8 vertices */
   dl += 1;

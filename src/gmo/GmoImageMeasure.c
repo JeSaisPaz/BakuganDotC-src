@@ -16,7 +16,7 @@ int GmoImageMeasure(void *image, u32 fmt, int order, int w, int h, int alignW, i
   int level;
 
   GmoImagePlanReserve(plan, 0, 0x10, headerSize);
-  GmoImagePlanReserve(plan, 0, 4, levels * frames * 4);
+  GmoImagePlanReserve(plan, 0, (u32)__alignof__(void *), levels * frames * (int)sizeof(void *));
   if (headerOnly != 0) {
     return 1;
   }

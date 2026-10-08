@@ -88,7 +88,7 @@ void BtlSwordBlurDraw(BtlSwordBlur *self, u32 **cursor)
     patch = list + 2;
     end = patch + 0x60;
     {
-        uintptr_t addr = (uintptr_t)end;
+        u32 addr = PspAddr(end);
 
         list[0] = (u32)(((addr >> 24) & 0xf) << 16) | 0x10000000;
         list[1] = (u32)(addr & 0xffffff) | 0x08000000;
@@ -122,7 +122,7 @@ void BtlSwordBlurDraw(BtlSwordBlur *self, u32 **cursor)
     end[0] = 0x12000180;
     list = end + 1;
     if (patch != NULL) {
-        uintptr_t addr = (uintptr_t)patch;
+        u32 addr = PspAddr(patch);
 
         list[0] = (u32)(((addr >> 24) & 0xf) << 16) | 0x10000000;
         list[1] = (u32)(addr & 0xffffff) | 0x01000000;

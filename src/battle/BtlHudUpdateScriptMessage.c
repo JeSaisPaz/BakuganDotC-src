@@ -97,7 +97,7 @@ static void ScriptMsgPrint(BtlHud *self)
 
     y = 0x68;
     x = 0x28;
-    strcpy(self->msgText, self->msgTable[self->msgIndex]);
+    strcpy(self->msgText, (const char *)PspPtr(self->msgTable[self->msgIndex]));
     printer = self->overlayObj[1];
     GfxSpriteLayerClear(&printer->layer);
     printer->glyphs = NULL;

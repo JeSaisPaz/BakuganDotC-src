@@ -5,6 +5,6 @@
 
 void *GmoPlanTakeRec20(int n, void *plan)
 {
-  return GmoPlanTakeArray(plan,0,0x10,0x20,n,GmoRec20Ctor);
+  return GmoPlanTakeArray(plan,0,0x10,(int)sizeof(GmoInstance),n,GmoRec20Ctor);
 }
 

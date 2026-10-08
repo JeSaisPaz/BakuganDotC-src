@@ -22,7 +22,7 @@ void UiNetMenuSetHelpText(UiScreen *screen, u8 entry)
   UiMesTableRelocate(table);
   dst = (char *)menu->helpText;
   index = UiButtonCellOffset(0, entry);
-  strcpy(dst, ((char **)table)[index]);
+  strcpy(dst, (const char *)PspPtr(table[index]));
   printer = (UiTextPrinter *)menu->helpPrinter;
   GfxSpriteLayerClear(&printer->layer);
   printer->glyphs = NULL;

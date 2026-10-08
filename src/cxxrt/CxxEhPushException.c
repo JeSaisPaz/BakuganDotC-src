@@ -8,21 +8,21 @@
    previous record belongs to that same frame, drops one use of the new record
    (`CxxEhReleaseException`). */
 
-void CxxEhPushException(void *type, void *dtor, u8 flags, int a3, int a4, u8 a5, void *object, int isRethrow, void *orig)
+void CxxEhPushException(void *type, void *dtor, u8 flags, int a3, char *a4, u8 a5, void *object, int isRethrow, void *orig)
 {
     CxxEhRecord *exc;
     CxxEhRecord *origRec = (CxxEhRecord *)orig;
     CxxEhRecord *prev;
     CxxEhFrame *f;
 
-    exc = (CxxEhRecord *)CxxEhAlloc(0xa4 /* PSP: exception record block; CxxEhRecord models only its first 0x3c bytes */);
+    exc = (CxxEhRecord *)CxxEhAlloc(sizeof(CxxEhRecord));
     exc->next = (CxxEhRecord *)g_cxxEhCurrentException;
     g_cxxEhCurrentException = exc;
     exc->type = type;
     exc->dtor = (void (*)(void *, int))dtor;
     exc->flags = flags;
     exc->extra = (u32)a3;
-    exc->extra2 = (u32)a4;
+    exc->extra2 = a4;
     exc->flags2 = a5;
     exc->object = object;
     exc->objectCopy = NULL;

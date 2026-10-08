@@ -37,7 +37,7 @@ CorePackDirEntry *CorePackDirFind(CorePackDirEntry *dir, char *name)
             return &dir[i];
         }
         if (dir[i].type == 0x78) {
-            found = CorePackDirFind((CorePackDirEntry *)dir[i].data, name);
+            found = CorePackDirFind((CorePackDirEntry *)PspPtr(dir[i].data), name);
             if (found != NULL) {
                 return found;
             }

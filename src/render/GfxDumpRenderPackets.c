@@ -51,11 +51,11 @@ void GfxDumpRenderPackets(void)
 
   printf("----------DumpRender-----------\n");
   for (i = 1; packet != NULL; i++) {
-    printf("$%07x:", (u32)(uintptr_t)packet);
+    printf("$%07x:", PspAddr(packet));
     chunk = packet->chunkHead;
     if (chunk != NULL) {
       for (;;) {
-        printf("($%07x,$%07x)", (u32)(uintptr_t)chunk, chunk->id);
+        printf("($%07x,$%07x)", PspAddr(chunk), chunk->id);
         if (chunk->unk08 == 0) {
           list = chunk->id;
           g_renderListCursor[0] = ((list >> 24) & 0xf) << 16 | 0x10000000;

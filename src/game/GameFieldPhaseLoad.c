@@ -285,7 +285,7 @@ void GameFieldPhaseLoad(CoreTask *task)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    charSet = MemAlloc(0xd8 /* PSP: char-set manager size; GameFieldCharSet definition is only 0xd0 */, NULL, 0);
+    charSet = MemAlloc(sizeof(GameFieldCharSet), NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     charSetResult = NULL;

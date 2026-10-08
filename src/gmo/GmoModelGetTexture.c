@@ -15,7 +15,7 @@ void *GmoModelGetTexture(GmoModel *self, u32 index)
       return (void *)(uintptr_t)index;
     }
     if ((index & 0xffff) < (uint)self->textureCount) {
-      return (void *)((u8 *)self->textures + index * 0x10);
+      return (GmoLayer *)self->textures + index;
     }
   }
   return (void *)0x0;

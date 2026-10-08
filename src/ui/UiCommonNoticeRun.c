@@ -15,7 +15,7 @@ int UiCommonNoticeRun(void)
     dialog = (UiConfirmDialog *)CoreTaskCreate(0x1fe, 100);
     table = CorePackChainFind(g_ioLzsPackages, "DWCommon_eu.bin");
     UiMesTableRelocate(table);
-    UiConfirmDialogSetMessage(((char **)table)[2]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[2]));
     dialog->cursor = 0;
     dialog->unk84 = 1;
     g_uiCommonNoticeState = g_uiCommonNoticeState + 1;

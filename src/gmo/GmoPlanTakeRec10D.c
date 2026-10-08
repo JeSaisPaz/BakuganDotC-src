@@ -5,6 +5,6 @@
 
 void *GmoPlanTakeRec10D(int n, void *plan)
 {
-  return GmoPlanTakeArray(plan,0,0x10,0x10,n,GmoRec10DCtor);
+  return GmoPlanTakeArray(plan,0,0x10,(int)sizeof(GmoPart),n,GmoRec10DCtor);
 }
 

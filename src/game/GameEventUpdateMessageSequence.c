@@ -36,7 +36,7 @@ void GameEventUpdateMessageSequence(GameEvent *self)
       g_uiTalkBalloonLineCount = 3;
       text = "ctllx";
       if ((s32)self->msgIds[self->msgPos] < (s32)count) {
-        text = (const char *)(uintptr_t)table[self->msgIds[self->msgPos]];
+        text = (const char *)PspPtr(table[self->msgIds[self->msgPos]]);
       }
       self->msgWindow = &UiTalkBalloonOpen((void *)text, self->msgAttrs[self->msgPos])->base;
       g_uiTalkBalloonLineCount = 0;

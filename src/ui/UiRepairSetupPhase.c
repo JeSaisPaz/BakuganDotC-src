@@ -18,7 +18,7 @@ void UiRepairSetupPhase(UiScreen *screen)
   GfxSprite *picture;
   void *texture;
   void *table;
-  char **lines;
+  u32 *lines;
   s32 count;
   GfxFader *fader;
   int i;
@@ -40,8 +40,8 @@ void UiRepairSetupPhase(UiScreen *screen)
     table = CorePackChainFind(g_ioLzsPackages, "DMMesRepair_eu.bin");
     lines = table;
     count = UiMesTableRelocate(table);
-    strcpy(repair->message, lines[UiRepairKindMessageIndex(screen, repair->value)]);
-    strcpy(repair->detail, lines[count / 2 + UiRepairKindMessageIndex(screen, repair->value)]);
+    strcpy(repair->message, (const char *)PspPtr(lines[UiRepairKindMessageIndex(screen, repair->value)]));
+    strcpy(repair->detail, (const char *)PspPtr(lines[count / 2 + UiRepairKindMessageIndex(screen, repair->value)]));
     screen->phaseStep = screen->phaseStep + 1;
   }
   else {

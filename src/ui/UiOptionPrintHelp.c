@@ -18,7 +18,7 @@ void UiOptionPrintHelp(float x, float y, UiOption *self, u8 index)
   table = SaveFindLocalizedBin("DOMesHelp");
   UiMesTableRelocate(table);
   dst = self->helpText;
-  strcpy(dst, ((char **)table)[index]);
+  strcpy(dst, (const char *)PspPtr(table[index]));
   printer = self->helpPrinter;
   GfxSpriteLayerClear(&printer->layer);
   printer->glyphs = NULL;

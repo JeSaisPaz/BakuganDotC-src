@@ -10,7 +10,7 @@ int UiUnlockCodeShowMessage(UiUnlockCode *self)
 
 {
   UiConfirmDialog *dialog;
-  char **table;
+  u32 *table;
   void *raw;
   s32 exists;
   
@@ -20,7 +20,7 @@ int UiUnlockCodeShowMessage(UiUnlockCode *self)
     raw = SaveFindLocalizedBin("DWSpecialUnlock");
     table = raw;
     UiMesTableRelocate(raw);
-    UiConfirmDialogSetMessage(table[self->messageId]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[self->messageId]));
     dialog->cursor = 0;
     dialog->unk84 = 1;
     self->messageStep = self->messageStep + 1;

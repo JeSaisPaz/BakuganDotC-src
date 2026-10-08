@@ -18,7 +18,7 @@ s32 UiGauntletSetupShowFirstTimeHelp(UiGauntletSetup *self)
     task = (UiConfirmDialog *)CoreTaskCreate(0x1fe,100);
     table = SaveFindLocalizedBin("DWHologramHelp");
     UiMesTableRelocate(table);
-    UiConfirmDialogSetMessage(((char **)table)[0x23]);
+    UiConfirmDialogSetMessage((const char *)PspPtr(table[0x23]));
     task->cursor = 0;
     task->unk84 = 1;
     self->helpStep = self->helpStep + 1;

@@ -14,8 +14,8 @@ void GfxMoviePlayerDrawFrame(GfxMoviePlayer *player)
   void *packet;
   u32 *list;
   u32 *after;
-  uintptr_t tex;
-  uintptr_t verts;
+  u32 tex;
+  u32 verts;
 
   fader = GfxGetActiveFader();
   packet = GfxNewRenderPacket(fader->sortKey + 1.0f);
@@ -32,9 +32,9 @@ void GfxMoviePlayerDrawFrame(GfxMoviePlayer *player)
     list[2] = 0xc2000000;                       /* TMODE */
     list[3] = 0xc3000003;                       /* TPSM 8888 */
     list[4] = 0xcb000000;                       /* TFLUSH */
-    tex = (uintptr_t)player->videoData->displaybuf;
-    list[5] = (((u32)(tex >> 24) & 0xf) << 16) | 0xa8000200;   /* TBW0 512 */
-    list[6] = ((u32)tex & 0xffffff) | 0xa0000000;               /* TBP0 */
+    tex = PspAddr(player->videoData->displaybuf);
+    list[5] = (((tex >> 24) & 0xf) << 16) | 0xa8000200;   /* TBW0 512 */
+    list[6] = (tex & 0xffffff) | 0xa0000000;               /* TBP0 */
     list[7] = 0xb8000000 | (9 << 8) | 9;        /* TSIZE0 512x512 */
     list[8] = 0xcb000000;                       /* TFLUSH */
     after = list + 9;
@@ -42,12 +42,12 @@ void GfxMoviePlayerDrawFrame(GfxMoviePlayer *player)
   }
   after[0] = 0x55ffffff;
   after[1] = 0x580000ff;
-  verts = (uintptr_t)player->vertices;
+  verts = PspAddr(player->vertices);
   list[0] = 0x12800102;                         /* VTYPE */
   after = list + 1;
   if (verts != 0) {
-    after[0] = (((u32)(verts >> 24) & 0xf) << 16) | 0x10000000; /* BASE */
-    list[2] = ((u32)verts & 0xffffff) | 0x01000000;             /* VADDR */
+    after[0] = (((verts >> 24) & 0xf) << 16) | 0x10000000; /* BASE */
+    list[2] = (verts & 0xffffff) | 0x01000000;             /* VADDR */
     after = list + 3;
   }
   after[0] = 0x0406001e;                        /* PRIM sprites, 30 */

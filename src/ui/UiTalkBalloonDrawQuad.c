@@ -23,7 +23,7 @@ void UiTalkBalloonDrawQuad(float extraWidth, void *packet, float *pos, float *co
   chunk = GfxPacketBeginChunk(packet);
   verts = (float *)(chunk + 2);
   dl = chunk + 2 + 40;
-  addr = (u32)(uintptr_t)dl;
+  addr = PspAddr(dl);
   chunk[0] = ((addr >> 24 & 0xf) << 16) | 0x10000000; /* BASE */
   chunk[1] = (addr & 0xffffff) | 0x08000000;          /* JUMP over the vertices */
   memcpy(verts, g_uiTalkBalloonBarVerts, 0xa0);
@@ -64,7 +64,7 @@ void UiTalkBalloonDrawQuad(float extraWidth, void *packet, float *pos, float *co
   dl[0] = 0x12000183; /* VTYPE: float UV, float position */
   dl += 1;
   if (verts != NULL) {
-    addr = (u32)(uintptr_t)verts;
+    addr = PspAddr(verts);
     dl[0] = ((addr >> 24 & 0xf) << 16) | 0x10000000; /* BASE */
     dl[1] = (addr & 0xffffff) | 0x01000000;          /* VADDR */
     dl += 2;

@@ -17,10 +17,10 @@ int IoPackDirRelocate(u16 *dir)
   entry = base;
   for (i = 0; i < (int)base->count; i++) {
     u16 type = entry->type;
-    entry->data = (u8 *)entry->data + (uintptr_t)base;
+    entry->data = entry->data + PspAddr(base);
     if (type >= 4) {
       if (type == 0x78) {
-        textures += IoPackDirRelocate((u16 *)entry->data);
+        textures += IoPackDirRelocate((u16 *)PspPtr(entry->data));
       }
     } else if (type >= 3) {
       textures++;

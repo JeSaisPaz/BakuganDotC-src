@@ -12,7 +12,7 @@ void *CorePackChainFind(void *packChain, char *name)
     for (p = packChain; p != NULL; p = (const CorePack *)p->base.next) {
         entry = CorePackDirFind(p->dir, name);
         if (entry != NULL)
-            return entry->data;
+            return PspPtr(entry->data);
     }
     return NULL;
 }

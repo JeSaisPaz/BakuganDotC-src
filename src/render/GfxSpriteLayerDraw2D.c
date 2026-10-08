@@ -124,7 +124,7 @@ void GfxSpriteLayerDraw2D(GfxSpriteLayer *self, void *packet)
 
     if (sprite->quadMode < 2) {
       src = (const u32 *)sprite->vertices;
-      addr = (u32)(uintptr_t)src;
+      addr = PspAddr(src);
       dl[0] = 0x12000081; /* VTYPE u8 UVs, s8 positions */
       p = dl + 1;
       if (src != NULL) {
@@ -138,7 +138,7 @@ void GfxSpriteLayerDraw2D(GfxSpriteLayer *self, void *packet)
       /* Copy the 4 vertices (48 bytes) inline and jump over them. */
       verts = (u32 *)(((uintptr_t)(dl + 2) + 15) & ~(uintptr_t)15);
       end = verts + 12;
-      addr = (u32)(uintptr_t)end;
+      addr = PspAddr(end);
       dl[0] = ((addr >> 24 & 0xf) << 16) | 0x10000000; /* BASE */
       dl[1] = (addr & 0xffffff) | 0x08000000;          /* JUMP */
       src = (const u32 *)sprite->vertices;
@@ -148,7 +148,7 @@ void GfxSpriteLayerDraw2D(GfxSpriteLayer *self, void *packet)
       end[0] = 0x12000083; /* VTYPE float UVs, s8 positions */
       p = end + 1;
       if (verts != NULL) {
-        addr = (u32)(uintptr_t)verts;
+        addr = PspAddr(verts);
         p[0] = ((addr >> 24 & 0xf) << 16) | 0x10000000; /* BASE */
         p[1] = (addr & 0xffffff) | 0x01000000;          /* VADDR */
         p += 2;

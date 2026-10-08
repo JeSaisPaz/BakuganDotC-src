@@ -913,7 +913,7 @@ void BtlHudPhaseBuild(BtlHud *self)
     if (self->mesTable0 != NULL) {
         UiMesTableRelocate(self->mesTable0);
     }
-    self->msgTable = (char **)SaveFindLocalizedBin("DRMesBattleCommon");
+    self->msgTable = (u32 *)SaveFindLocalizedBin("DRMesBattleCommon");
     if (self->msgTable != NULL) {
         UiMesTableRelocate((void *)self->msgTable);
     }
@@ -1072,7 +1072,7 @@ void BtlHudPhaseBuild(BtlHud *self)
             msgId = 0x367;
             break;
         }
-        strcpy(self->msgText, self->msgTable[msgId]);
+        strcpy(self->msgText, (const char *)PspPtr(self->msgTable[msgId]));
         if (rounds < 4) {
             if (!(rounds < 3)) {
                 for (i = 0x9f; i < 0xaa; i++) {

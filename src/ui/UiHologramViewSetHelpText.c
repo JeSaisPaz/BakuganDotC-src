@@ -27,7 +27,7 @@ void UiHologramViewSetHelpText(UiHologramView *self, s8 hide, u16 sprite)
     table = SaveFindLocalizedBin("DWHologramHelp");
     UiMesTableRelocate(table);
     dst = self->text;
-    strcpy(dst, ((char **)table)[self->page]);
+    strcpy(dst, (const char *)PspPtr(table[self->page]));
     printer = self->printer;
     GfxSpriteLayerClear(&printer->layer);
     printer->glyphs = NULL;

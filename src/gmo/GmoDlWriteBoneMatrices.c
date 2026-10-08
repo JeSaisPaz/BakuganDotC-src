@@ -40,8 +40,8 @@ void GmoDlWriteBoneMatrices(GmoDlContext *self)
     if (remap != NULL) {
       /* jump over the sub-lists: 2 jump words + 13 words per bone */
       target = (u8 *)(list + 2 + count * 13);
-      *self->cur++ = 0x10000000 | (((u32)(uintptr_t)target >> 24) << 16);
-      *self->cur++ = 0x08000000 | ((u32)(uintptr_t)target & 0xffffff);
+      *self->cur++ = 0x10000000 | ((PspAddr(target) >> 24) << 16);
+      *self->cur++ = 0x08000000 | (PspAddr(target) & 0xffffff);
       list = self->cur;
     }
     self->boneList = list;
@@ -68,8 +68,8 @@ void GmoDlWriteBoneMatrices(GmoDlContext *self)
     for (i = 0; i < count; i++) {
       *self->cur++ = 0x2a000000 | (u32)(i * 0xc);
       target = (u8 *)((u32 *)self->boneList + remap[i] * 13);
-      *self->cur++ = 0x10000000 | (((u32)(uintptr_t)target >> 24) << 16);
-      *self->cur++ = 0x0a000000 | ((u32)(uintptr_t)target & 0xffffff);
+      *self->cur++ = 0x10000000 | ((PspAddr(target) >> 24) << 16);
+      *self->cur++ = 0x0a000000 | (PspAddr(target) & 0xffffff);
     }
   }
 }

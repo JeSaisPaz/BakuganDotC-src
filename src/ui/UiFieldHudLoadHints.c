@@ -39,6 +39,6 @@ void UiFieldHudLoadHints(UiFieldHud *self)
   language = SaveGetLanguageName();
   sprintf(name, "mes_Adventure_hint_%s.bin", language);
   table = CorePackChainFind(g_ioLzsPackages, name);
-  self->hints = (char **)table;
+  self->hints = table;
   UiMesTableRelocate(table);
 }

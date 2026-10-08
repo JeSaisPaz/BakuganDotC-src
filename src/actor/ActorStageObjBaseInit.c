@@ -166,7 +166,7 @@ void ActorStageObjBaseInit(ActorStageObjBase *self, u32 *pos)
     MemLock();
     fromLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    box = MemAlloc(0xc0 /* PSP: CollisionBox (0xb4) rounded up to 16 */, NULL, 0);
+    box = MemAlloc((sizeof(CollisionBox) + 0xf) & ~0xfu, NULL, 0);
     MemSetAllocFromLow(fromLow);
     MemUnlock();
     if (box != NULL) {

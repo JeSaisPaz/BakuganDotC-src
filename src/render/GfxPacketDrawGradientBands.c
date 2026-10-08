@@ -19,8 +19,8 @@ void GfxPacketDrawGradientBands(void *packet, const s16 *ys, const u32 *colours,
   verts = (GfxGeColorVertex16 *)(list + 2);
   end = (u32 *)verts + (((count + 1) * 0x18 + 3) >> 2);
   /* BASE + JUMP over the inline vertex data */
-  list[0] = (((uintptr_t)end >> 0x18) & 0xf) << 0x10 | 0x10000000;
-  list[1] = ((uintptr_t)end & 0xffffff) | 0x8000000;
+  list[0] = ((PspAddr(end) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+  list[1] = (PspAddr(end) & 0xffffff) | 0x8000000;
   vcount = count * 2 + 2;
   vtx = verts;
   for (i = 0; i < vcount; i++) {
@@ -33,8 +33,8 @@ void GfxPacketDrawGradientBands(void *packet, const s16 *ys, const u32 *colours,
   list = GfxDlSetBlendState(end, &g_colorWhite, 0, blend);
   *list++ = 0x1280011c; /* VTYPE: colour 8888, 16-bit position, through mode */
   if (verts != NULL) {
-    list[0] = (((uintptr_t)verts >> 0x18) & 0xf) << 0x10 | 0x10000000;
-    list[1] = ((uintptr_t)verts & 0xffffff) | 0x1000000; /* VADDR */
+    list[0] = ((PspAddr(verts) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+    list[1] = (PspAddr(verts) & 0xffffff) | 0x1000000; /* VADDR */
     list += 2;
   }
   *list = vcount | 0x4040000; /* PRIM triangle strip */

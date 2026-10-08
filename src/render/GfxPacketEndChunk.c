@@ -13,6 +13,6 @@ void GfxPacketEndChunk(RenderPacket *packet, u32 *end)
   *end = 0xb000000;
   g_renderListCursor = end + 1;
   slot = packet->jumpSlot;
-  slot[0] = (((uintptr_t)g_renderListCursor >> 0x18) & 0xf) << 0x10 | 0x10000000;
-  slot[1] = ((uintptr_t)g_renderListCursor & 0xffffff) | 0x8000000;
+  slot[0] = ((PspAddr(g_renderListCursor) >> 0x18) & 0xf) << 0x10 | 0x10000000;
+  slot[1] = (PspAddr(g_renderListCursor) & 0xffffff) | 0x8000000;
 }

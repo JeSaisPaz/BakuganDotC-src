@@ -26,7 +26,7 @@ UiScreen *UiStaffCreditCtor(UiScreen *screen)
   credit->commonPackage = (IoLzsPackage *)0x0;
   credit->rollFrame = 0;
   credit->pauseTimer = 0;
-  credit->lineTexts = (char **)0x0;
+  credit->lineTexts = (u32 *)0x0;
   credit->pictureIndex = 0;
   credit->unk84 = 0;
   credit->lineIndex = 0;

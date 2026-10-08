@@ -102,8 +102,8 @@ u32 *UiHpGaugeEmitBars(float scale, UiHpGauge *self, u32 *dl)
   packed = UiHpGaugePackColor(&colors[5]);
   rect = (GfxGeVertex16 (*)[2])(dl + 2);
   cmd = (u32 *)&rect[1];
-  dl[0] = (((uintptr_t)cmd >> 24) & 0xf) << 16 | 0x10000000; /* BASE */
-  dl[1] = ((uintptr_t)cmd & 0xffffff) | 0x08000000;          /* JUMP */
+  dl[0] = ((PspAddr(cmd) >> 24) & 0xf) << 16 | 0x10000000; /* BASE */
+  dl[1] = (PspAddr(cmd) & 0xffffff) | 0x08000000;          /* JUMP */
   ix0 = (int)x0;
   (*rect)[0].x = (s16)ix0;
   iy0 = (int)y0;
@@ -119,8 +119,8 @@ u32 *UiHpGaugeEmitBars(float scale, UiHpGauge *self, u32 *dl)
   cmd += 2;
   *cmd++ = 0x12000100; /* VTYPE: 16-bit position */
   if (rect != NULL) {
-    cmd[0] = (((uintptr_t)rect >> 24) & 0xf) << 16 | 0x10000000; /* BASE */
-    cmd[1] = ((uintptr_t)rect & 0xffffff) | 0x01000000;          /* VADDR */
+    cmd[0] = ((PspAddr(rect) >> 24) & 0xf) << 16 | 0x10000000; /* BASE */
+    cmd[1] = (PspAddr(rect) & 0xffffff) | 0x01000000;          /* VADDR */
     cmd += 2;
   }
   *cmd++ = 0x04060002; /* PRIM sprites, 2 vertices */
@@ -150,8 +150,8 @@ u32 *UiHpGaugeEmitBars(float scale, UiHpGauge *self, u32 *dl)
     packed = UiHpGaugePackColor(&colors[4]);
     rect = (GfxGeVertex16 (*)[2])(cmd + 2);
     dl = (u32 *)&rect[1];
-    cmd[0] = (((uintptr_t)dl >> 24) & 0xf) << 16 | 0x10000000;
-    cmd[1] = ((uintptr_t)dl & 0xffffff) | 0x08000000;
+    cmd[0] = ((PspAddr(dl) >> 24) & 0xf) << 16 | 0x10000000;
+    cmd[1] = (PspAddr(dl) & 0xffffff) | 0x08000000;
     (*rect)[0].x = (s16)(int)fillX;
     (*rect)[0].y = (s16)iy0;
     (*rect)[0].z = -20;
@@ -163,8 +163,8 @@ u32 *UiHpGaugeEmitBars(float scale, UiHpGauge *self, u32 *dl)
     dl += 2;
     *dl++ = 0x12000100;
     if (rect != NULL) {
-      dl[0] = (((uintptr_t)rect >> 24) & 0xf) << 16 | 0x10000000;
-      dl[1] = ((uintptr_t)rect & 0xffffff) | 0x01000000;
+      dl[0] = ((PspAddr(rect) >> 24) & 0xf) << 16 | 0x10000000;
+      dl[1] = (PspAddr(rect) & 0xffffff) | 0x01000000;
       dl += 2;
     }
     *dl++ = 0x04060002;
@@ -176,8 +176,8 @@ u32 *UiHpGaugeEmitBars(float scale, UiHpGauge *self, u32 *dl)
   dl = cmd;
   rect = (GfxGeVertex16 (*)[2])(dl + 2);
   cmd = (u32 *)&rect[1];
-  dl[0] = (((uintptr_t)cmd >> 24) & 0xf) << 16 | 0x10000000;
-  dl[1] = ((uintptr_t)cmd & 0xffffff) | 0x08000000;
+  dl[0] = ((PspAddr(cmd) >> 24) & 0xf) << 16 | 0x10000000;
+  dl[1] = (PspAddr(cmd) & 0xffffff) | 0x08000000;
   (*rect)[0].x = (s16)ix0;
   (*rect)[0].y = (s16)iy0;
   (*rect)[0].z = -10;
@@ -189,8 +189,8 @@ u32 *UiHpGaugeEmitBars(float scale, UiHpGauge *self, u32 *dl)
   cmd += 2;
   *cmd++ = 0x12000100;
   if (rect != NULL) {
-    cmd[0] = (((uintptr_t)rect >> 24) & 0xf) << 16 | 0x10000000;
-    cmd[1] = ((uintptr_t)rect & 0xffffff) | 0x01000000;
+    cmd[0] = ((PspAddr(rect) >> 24) & 0xf) << 16 | 0x10000000;
+    cmd[1] = (PspAddr(rect) & 0xffffff) | 0x01000000;
     cmd += 2;
   }
   *cmd++ = 0x04060002;
@@ -200,8 +200,8 @@ u32 *UiHpGaugeEmitBars(float scale, UiHpGauge *self, u32 *dl)
   outline = (GfxGeColor4444Vertex16 (*)[9])(dl + 2);
   cmd = (u32 *)&outline[1];
   shade = (u16)(((int)(self->alpha * 15.0f) & 0xffff) << 12);
-  dl[0] = (((uintptr_t)cmd >> 24) & 0xf) << 16 | 0x10000000;
-  dl[1] = ((uintptr_t)cmd & 0xffffff) | 0x08000000;
+  dl[0] = ((PspAddr(cmd) >> 24) & 0xf) << 16 | 0x10000000;
+  dl[1] = (PspAddr(cmd) & 0xffffff) | 0x08000000;
   dark = shade | 0x888;
   light = shade | 0xeee;
   midX = (s16)(int)((x0 + x1) * 0.5f);
@@ -241,8 +241,8 @@ u32 *UiHpGaugeEmitBars(float scale, UiHpGauge *self, u32 *dl)
   cmd += 2;
   *cmd++ = 0x12000118; /* VTYPE: colour 4444, 16-bit position */
   if (outline != NULL) {
-    cmd[0] = (((uintptr_t)outline >> 24) & 0xf) << 16 | 0x10000000;
-    cmd[1] = ((uintptr_t)outline & 0xffffff) | 0x01000000;
+    cmd[0] = ((PspAddr(outline) >> 24) & 0xf) << 16 | 0x10000000;
+    cmd[1] = (PspAddr(outline) & 0xffffff) | 0x01000000;
     cmd += 2;
   }
   *cmd = 0x04020009; /* PRIM line strip, 9 vertices */

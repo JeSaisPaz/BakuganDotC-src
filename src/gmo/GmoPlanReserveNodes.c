@@ -6,7 +6,7 @@
 void GmoPlanReserveNodes(int n, void *plan)
 
 {
-  GmoPlanReserve(plan,0,0x40,n * 0xc0);
+  GmoPlanReserve(plan,0,0x40,n * (int)sizeof(GmoNode));
   return;
 }
 

@@ -20,6 +20,6 @@ int ScriptOpCreateStageObj(Script *script) {
     pos[2] = ScriptReadFloat(script);
     pos[3] = ScriptReadFloat(script);
     instanceId = ScriptReadU32(script);
-    *out = (u32)(uintptr_t)ActorStageObjCreate(g_stageObjKindTable[id / 6] + id % 6, pos, instanceId); /* PSP: 32-bit script variable holds a pointer; port handle needed */
+    *out = PspAddr(ActorStageObjCreate(g_stageObjKindTable[id / 6] + id % 6, pos, instanceId));
     return 0;
 }

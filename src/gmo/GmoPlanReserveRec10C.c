@@ -6,7 +6,7 @@
 void GmoPlanReserveRec10C(int n, void *plan)
 
 {
-  GmoPlanReserve(plan,0,0x10,n << 4);
+  GmoPlanReserve(plan,0,0x10,n * (int)sizeof(GmoMaterial));
   return;
 }
 

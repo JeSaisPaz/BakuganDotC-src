@@ -7,7 +7,7 @@
 void GmoPlanReserveRec30A(int n, void *plan)
 
 {
-  GmoPlanReserve(plan,0,0x10,n * 0x30);
+  GmoPlanReserve(plan,0,0x10,n * (int)sizeof(GmoMotionInfo));
   return;
 }
 

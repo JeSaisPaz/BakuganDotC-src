@@ -73,21 +73,21 @@ void UiStaffCreditSpawnLine(UiScreen *screen)
     if (g_staffCreditLayout.lines[credit->lineIndex].style == 0) {
       UiStaffCreditSetOutline((UiTextPrinter *)credit->overlays[slot], &g_colorBlack);
       UiStaffCreditPrint(credit->overlays[slot], 242.0f, 2.0f,
-                         credit->lineTexts[credit->lineIndex]);
+                         (char *)PspPtr(credit->lineTexts[credit->lineIndex]));
       UiStaffCreditSetOutline((UiTextPrinter *)credit->overlays[slot], &g_colorYellow);
     } else if (g_staffCreditLayout.lines[credit->lineIndex].style == 1) {
       UiStaffCreditSetOutline((UiTextPrinter *)credit->overlays[slot], &g_colorBlack);
       UiStaffCreditPrint(credit->overlays[slot], 241.0f, 1.0f,
-                         credit->lineTexts[credit->lineIndex]);
+                         (char *)PspPtr(credit->lineTexts[credit->lineIndex]));
       UiStaffCreditSetOutline((UiTextPrinter *)credit->overlays[slot], &g_colorWhite);
     } else if (g_staffCreditLayout.lines[credit->lineIndex].style == 2) {
       y = 0.0f + 1.0f;
       UiStaffCreditSetOutline((UiTextPrinter *)credit->overlays[slot], &g_colorWhite);
       UiStaffCreditPrint(credit->overlays[slot], 241.0f, y + 1.0f,
-                         credit->lineTexts[credit->lineIndex]);
+                         (char *)PspPtr(credit->lineTexts[credit->lineIndex]));
       UiStaffCreditSetOutline((UiTextPrinter *)credit->overlays[slot], &g_colorOrange);
     }
-    UiStaffCreditPrint(credit->overlays[slot], 240.0f, y, credit->lineTexts[credit->lineIndex]);
+    UiStaffCreditPrint(credit->overlays[slot], 240.0f, y, (char *)PspPtr(credit->lineTexts[credit->lineIndex]));
     credit->overlays[slot]->view.w.y = 288.0f;
   } else {
     idx = g_staffCreditKindSprite[g_staffCreditLayout.lines[credit->lineIndex].kind];
@@ -102,7 +102,7 @@ void UiStaffCreditSpawnLine(UiScreen *screen)
         }
         size = g_staffCreditStyleFontSize[g_staffCreditLayout.lines[credit->lineIndex - 1].style];
         w = (float)UiTextMeasure(0.0f, credit->overlays[0],
-                                 credit->lineTexts[credit->lineIndex - 1], NULL, NULL, NULL) *
+                                 (char *)PspPtr(credit->lineTexts[credit->lineIndex - 1]), NULL, NULL, NULL) *
                 size +
             5.0f;
         UiSpriteSetSize(w, h, ((GfxSprite **)screen->data)[idx]);

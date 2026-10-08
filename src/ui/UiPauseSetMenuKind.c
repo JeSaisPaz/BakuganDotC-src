@@ -32,7 +32,7 @@ void UiPauseSetMenuKind(UiPause *self, int kind)
     MemLock();
     wasLow = MemIsAllocFromLow();
     MemSetAllocFromLow(true);
-    mem = (PadState *)MemAlloc(0x50 /* PSP: pad object, smaller than PadState (0x5c) */, NULL, 0);
+    mem = (PadState *)MemAlloc(__builtin_offsetof(PadState, id50), NULL, 0);
     MemSetAllocFromLow(wasLow);
     MemUnlock();
     pad = NULL;

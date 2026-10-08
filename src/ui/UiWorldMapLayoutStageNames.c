@@ -31,7 +31,7 @@ void UiWorldMapLayoutStageNames(UiScreen *screen)
     if (!(i < map->clearedStage[map->areaGroup[area]])) {
       return;
     }
-    strcpy(map->textSlot[i].text, ((char **)table)[area * 3 + i]);
+    strcpy(map->textSlot[i].text, (const char *)PspPtr(table[area * 3 + i]));
     printer = map->textSlot[i].printer;
     GfxSpriteLayerClear(&printer->layer);
     printer->glyphs = NULL;

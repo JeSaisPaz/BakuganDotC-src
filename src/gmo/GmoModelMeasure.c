@@ -99,7 +99,7 @@ void GmoModelMeasure(void *planCtx, const void *chunk)
           break;
         }
       }
-      GmoPlanReserve(ctx->plan, 0, 4, count * 4);
+      GmoPlanReserve(ctx->plan, 0, (u32)__alignof__(void *), count * (int)sizeof(void *)); /* node part pointers */
       nodeCount++;
       break;
 

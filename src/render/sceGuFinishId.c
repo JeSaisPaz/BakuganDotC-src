@@ -63,7 +63,7 @@ s32 sceGuFinishId(u32 id)
   }
 
   ctx = g_guCurrentContext;
-  ret = ctx->listCurrent - ctx->listStart;
+  ret = (s32)(ctx->listCurrent - ctx->listStart);
   intr = sceKernelCpuSuspendIntr();
   parent = g_guContexts[g_guDeferredMode].parentContext;
   g_guContexts[g_guDeferredMode].parentContext = -1;

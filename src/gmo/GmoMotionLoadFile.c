@@ -30,7 +30,7 @@ CoreNode *GmoMotionLoadFile(void *mgr, const char *filename)
     return (CoreNode *)0x0;
   }
   if (strstr(filename,".gmo") != (char *)0x0) {
-    gmo = (const GmoFileHeader *)file->data;
+    gmo = (const GmoFileHeader *)PspPtr(file->data);
     GmoMotionLoadFromGmo(GmoChunkFind(&gmo->root,3,0));
     return (CoreNode *)0x0;
   }
@@ -70,7 +70,7 @@ CoreNode *GmoMotionLoadFile(void *mgr, const char *filename)
     node = (CoreNode *)ref;
   }
   slot = &((const VtblEntry *)node->vtable)[11];
-  data = file->data;
+  data = PspPtr(file->data);
   ((void (*)(void *, void *))slot->fn)((u8 *)node + slot->delta,data);
   CoreNodeLink(node,g_gmoMotionRegistry,0);
   return node;

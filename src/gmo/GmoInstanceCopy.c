@@ -18,7 +18,7 @@ void *GmoInstanceCopy(void *dst, const void *src, u32 flags, void *plan)
   u32 *out;
   u32 *end;
   const u32 *in;
-  uintptr_t last;
+  u32 last;
   u32 jumpCmd;
   u32 jumpBase;
   u32 word;
@@ -66,9 +66,9 @@ void *GmoInstanceCopy(void *dst, const void *src, u32 flags, void *plan)
 
   out = d->displayList;
   end = out + d->displayListWords;
-  last = (uintptr_t)(end - 1);
-  jumpCmd = ((u32)last & 0xffffff) | 0x09000000;
-  jumpBase = (((u32)last >> 24) << 16) | 0x10000000;
+  last = PspAddr(end - 1);
+  jumpCmd = (last & 0xffffff) | 0x09000000;
+  jumpBase = ((last >> 24) << 16) | 0x10000000;
   in = s->displayList;
   for (; out < end; out++) {
     word = *in++;
@@ -76,11 +76,11 @@ void *GmoInstanceCopy(void *dst, const void *src, u32 flags, void *plan)
     if ((word >> 24) == 1) {
       /* VADDR: full address = BASE high byte (previous word) | low 24 bits */
       addr = ((out[-1] << 8) & 0xff000000) | (word & 0xffffff);
-      if (addr == (u32)(uintptr_t)s->vertices) {
-        addr = (u32)(uintptr_t)d->vertices;
+      if (addr == PspAddr(s->vertices)) {
+        addr = PspAddr(d->vertices);
       }
-      if (addr == (u32)(uintptr_t)s->state) {
-        addr = (u32)(uintptr_t)d->state;
+      if (addr == PspAddr(s->state)) {
+        addr = PspAddr(d->state);
       }
       *out = (addr & 0xffffff) | 0x01000000;
       out[-1] = ((addr >> 24) << 16) | 0x10000000;

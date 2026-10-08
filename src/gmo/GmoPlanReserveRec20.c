@@ -6,7 +6,7 @@
 void GmoPlanReserveRec20(int n, void *plan)
 
 {
-  GmoPlanReserve(plan,0,0x10,n << 5);
+  GmoPlanReserve(plan,0,0x10,n * (int)sizeof(GmoInstance));
   return;
 }
 

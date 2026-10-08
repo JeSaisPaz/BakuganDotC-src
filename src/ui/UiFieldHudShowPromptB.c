@@ -21,7 +21,7 @@ void UiFieldHudShowPromptB(UiFieldHud *self)
   int measured;
 
   textY = 0.0f;
-  measured = UiTextMeasure(0.0f, self->hintPrinter, self->hints[(u16)self->hintId], NULL, NULL,
+  measured = UiTextMeasure(0.0f, self->hintPrinter, (char *)PspPtr(self->hints[(u16)self->hintId]), NULL, NULL,
                            NULL);
   if (measured < 0x10) {
     sprite = 0x2d;
@@ -65,7 +65,7 @@ void UiFieldHudShowPromptB(UiFieldHud *self)
       printer = self->hintPrinter;
       entry = &printer->layer.vtbl[2];
       ((PrintFn)entry->fn)(241.0f, textY + 1.0f, 0.0f, (u8 *)printer + entry->delta,
-                           self->hints[(u16)self->hintId], 1, 0, 0);
+                           (char *)PspPtr(self->hints[(u16)self->hintId]), 1, 0, 0);
       printer = self->hintPrinter;
       printer->outlineColor[0] = g_colorGreen.x;
       printer->outlineColor[1] = g_colorGreen.y;
@@ -74,7 +74,7 @@ void UiFieldHudShowPromptB(UiFieldHud *self)
       printer = self->hintPrinter;
       entry = &printer->layer.vtbl[2];
       ((PrintFn)entry->fn)(240.0f, textY, 0.0f, (u8 *)printer + entry->delta,
-                           self->hints[(u16)self->hintId], 1, 0, 0);
+                           (char *)PspPtr(self->hints[(u16)self->hintId]), 1, 0, 0);
     }
   }
 

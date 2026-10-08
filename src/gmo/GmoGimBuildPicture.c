@@ -81,8 +81,8 @@ void GmoGimBuildPicture(void *arena, const void *picture, void *img)
     track->endFrame = (float)seq->endFrame;
     track->frameRate = (float)seq->frameRate;
     keys = GmoImagePlanTake(*(void **)arena, 0, 4, keyCount * 4);
-    frames = GmoImagePlanTake(*(void **)arena, 0, 4, frameCount * 8 + dataSize);
-    data = (u8 *)frames + frameCount * 8;
+    frames = GmoImagePlanTake(*(void **)arena, 0, (u32)__alignof__(GmoTexChannel), frameCount * (int)sizeof(GmoTexChannel) + dataSize);
+    data = (u8 *)frames + frameCount * (int)sizeof(GmoTexChannel);
     track->frames = frames;
     track->keys = keys;
     memcpy(data, (const u8 *)seq + seq->dataStart, dataSize);

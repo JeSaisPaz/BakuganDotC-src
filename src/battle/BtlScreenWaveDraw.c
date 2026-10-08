@@ -111,14 +111,14 @@ void BtlScreenWaveDraw(BtlScreenWave *wave, void *packet)
 
     *list++ = 0x12801183;
     if (wave->indices != NULL) {
-        uintptr_t addr = (uintptr_t)wave->indices;
+        u32 addr = PspAddr(wave->indices);
 
         list[0] = (u32)(((addr >> 24) & 0xf) << 16) | 0x10000000;
         list[1] = (u32)(addr & 0xffffff) | 0x02000000;
         list += 2;
     }
     if (grid != NULL) {
-        uintptr_t addr = (uintptr_t)grid;
+        u32 addr = PspAddr(grid);
 
         list[0] = (u32)(((addr >> 24) & 0xf) << 16) | 0x10000000;
         list[1] = (u32)(addr & 0xffffff) | 0x01000000;

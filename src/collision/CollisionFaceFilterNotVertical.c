@@ -6,11 +6,11 @@
 
 bool CollisionFaceFilterNotVertical(const CollisionFacePart *part, const u16 *face)
 {
-    const ScePspFVector4 *n = &part->normals[face[3]];
+    const ScePspFVector4 *n = &((const ScePspFVector4 *)PspPtr(part->normals))[face[3]];
     float y;
 
-    if (part->rotation != NULL) {
-        const float *m = part->rotation;
+    if (part->rotation != 0) {
+        const float *m = (const float *)PspPtr(part->rotation);
 
         /* y = lane 1 of `vtfm3.t C000, E100, C200`: the part matrix rows (at 0x0, 0x10, 0x20) loaded
            as columns, so y = Σ_k n[k] · m[4k + 1] */

@@ -53,8 +53,8 @@ void *GmoAttrCopy(void *dst, const void *src, u32 flags, void *plan)
     } else {
         blockSize = (s->block != NULL) ? 0x40 : 0;
         dataSize = (s->data != NULL) ? 0x10 : 0;
-        d->block = GmoPlanTake(plan, 0, 0x40, blockSize);
-        d->data = GmoPlanTake(plan, 0, 0x10, dataSize);
+        d->block = GmoPlanTake(plan, 0, 0x40, (int)blockSize);
+        d->data = GmoPlanTake(plan, 0, 0x10, (int)dataSize);
         memcpy(d->block, s->block, blockSize);
         memcpy(d->data, s->data, dataSize);
     }

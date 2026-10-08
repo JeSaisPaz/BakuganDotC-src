@@ -9,13 +9,13 @@ void CollisionBvhRelocate(CollisionBvhNode *node, const CollisionBvhPart *part)
 
 {
   if (node->kind == 0) {
-    node->leftOffset = node->leftOffset + part->nodeBase;
-    node->rightOffset = node->rightOffset + part->nodeBase;
-    CollisionBvhRelocate(node->left, part);
-    CollisionBvhRelocate(node->right, part);
+    node->left = node->left + part->nodes;
+    node->right = node->right + part->nodes;
+    CollisionBvhRelocate((CollisionBvhNode *)PspPtr(node->left), part);
+    CollisionBvhRelocate((CollisionBvhNode *)PspPtr(node->right), part);
   }
   else {
-    node->triOffset = node->triOffset + part->triBase;
+    node->tri = node->tri + part->tris;
   }
   return;
 }

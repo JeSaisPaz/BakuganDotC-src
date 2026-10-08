@@ -54,7 +54,7 @@ void GameEventUpdateRequestedMessage(GameEvent *self)
     g_uiTalkBalloonLineCount = 3;
     text = "ctllx";
     if ((s32)msgId < (s32)count) {
-      text = (const char *)(uintptr_t)table[msgId];
+      text = (const char *)PspPtr(table[msgId]);
     }
     self->msgWindow = &UiTalkBalloonOpen((void *)text, msgId)->base;
     g_uiTalkBalloonLineCount = 0;

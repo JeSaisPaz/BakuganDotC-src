@@ -20,7 +20,7 @@ void UiTalkBalloonSetSpeaker(UiTalkBalloon *self, s16 speaker)
   self->speakerName = NULL;
   if ((int)speaker < (int)count) {
     self->speaker = speaker;
-    self->speakerName = (char *)(uintptr_t)table[speaker];
+    self->speakerName = (char *)PspPtr(table[speaker]);
   } else {
     self->speaker = -1;
   }

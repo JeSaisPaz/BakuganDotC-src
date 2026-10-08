@@ -29,11 +29,11 @@ s32 CollisionTriangleTestSweptSphere(void *part, const u16 *face, void *query, f
     s32 hit;
 
     planeT = 0.0f;
-    if (!CollisionPlaneTestSweptSphere((const float *)&p->normals[face[3]], query, &planeT,
+    if (!CollisionPlaneTestSweptSphere((const float *)&((const ScePspFVector4 *)PspPtr(p->normals))[face[3]], query, &planeT,
                                        &contact.x)) {
         return 0;
     }
-    verts = p->vertices;
+    verts = (const ScePspFVector4 *)PspPtr(p->vertices);
     g_collisionMeshQuery.closestOnEdge =
         CollisionClosestPointOnTriangle(&verts[face[0]].x, &verts[face[1]].x, &verts[face[2]].x,
                                         &contact.x, &g_collisionMeshQuery.point.x);

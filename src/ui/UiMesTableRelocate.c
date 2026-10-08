@@ -8,7 +8,7 @@
 
 u32 UiMesTableRelocate(u32 *table)
 {
-    uintptr_t base = (uintptr_t)table;
+    u32 base = PspAddr(table);
     u32 first = *table;
     u32 count;
     s32 i;
@@ -20,12 +20,12 @@ u32 UiMesTableRelocate(u32 *table)
             i = 0;
             do {
                 i++;
-                *p = *p + (u32)base;
+                *p = *p + base;
                 p++;
             } while (i < (s32)count);
         }
     } else {
-        count = (first - (u32)base) >> 2;
+        count = (first - base) >> 2;
     }
     return count;
 }

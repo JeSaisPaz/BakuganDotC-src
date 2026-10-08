@@ -23,13 +23,13 @@ bool GfxTextureSetSlotClut(void *tex, int slot, void *clut, bool fromLow)
       stride = 0x400;
     for (i = 0; i < 8; i++) {
       memcpy(t->blocks + i * 0x60, t->inlineBlock, 0x60);
-      addr = (u32)(uintptr_t)t->clutData + i * stride;
+      addr = PspAddr(t->clutData) + i * stride;
       ((u32 *)t->blocks)[i * 0x18 + t->mipCmdIdx + 2] = ((addr >> 24) & 0xf) << 16 | 0xb1000000;
-      addr = (u32)(uintptr_t)t->clutData + i * stride;
+      addr = PspAddr(t->clutData) + i * stride;
       ((u32 *)t->blocks)[i * 0x18 + t->mipCmdIdx + 3] = (addr & 0xffffff) | 0xb0000000;
     }
   }
-  ((u32 *)t->blocks)[slot * 0x18 + t->mipCmdIdx + 2] = (((u32)(uintptr_t)clut >> 24) & 0xf) << 16 | 0xb1000000;
-  ((u32 *)t->blocks)[slot * 0x18 + t->mipCmdIdx + 3] = ((u32)(uintptr_t)clut & 0xffffff) | 0xb0000000;
+  ((u32 *)t->blocks)[slot * 0x18 + t->mipCmdIdx + 2] = ((PspAddr(clut) >> 24) & 0xf) << 16 | 0xb1000000;
+  ((u32 *)t->blocks)[slot * 0x18 + t->mipCmdIdx + 3] = (PspAddr(clut) & 0xffffff) | 0xb0000000;
   return split;
 }

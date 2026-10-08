@@ -16,11 +16,11 @@ void IoPackDirInitTextures(u16 *dir, IoLzsPackage *pkg, u8 fromLow, int *index)
     u16 type = entry->type;
     if (type < 4) {
       if (type >= 3) {
-        GfxTextureInitFromTim2(&pkg->textures[*index], entry->name, entry->data, fromLow);
+        GfxTextureInitFromTim2(&pkg->textures[*index], entry->name, PspPtr(entry->data), fromLow);
         *index = *index + 1;
       }
     } else if (type == 0x78) {
-      IoPackDirInitTextures((u16 *)entry->data, pkg, fromLow, index);
+      IoPackDirInitTextures((u16 *)PspPtr(entry->data), pkg, fromLow, index);
     }
     entry++;
   }

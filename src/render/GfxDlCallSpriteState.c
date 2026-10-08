@@ -7,8 +7,8 @@
 
 u32 *GfxDlCallSpriteState(u32 *list)
 {
-  u32 sub = (u32)(uintptr_t)&g_gfxSpriteSubList;
-  u32 st = (u32)(uintptr_t)g_gfxSpriteStateList;
+  u32 sub = PspAddr(&g_gfxSpriteSubList);
+  u32 st = PspAddr(g_gfxSpriteStateList);
 
   if (g_gfxSpriteStateInit == 0) {
     g_gfxSpriteStateInit = 1;

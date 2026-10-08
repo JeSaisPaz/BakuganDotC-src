@@ -24,7 +24,7 @@ u32 GmoDlBindMesh(GmoDlContext *self, GmoModel *model, u32 dirty)
     ref = (GmoAttr *)(uintptr_t)idx;
     if (((idx + 1U) & 0xffff0000) == 0) {
       if ((idx & 0xffff) < (u32)model->textureCount) {
-        ref = (GmoAttr *)((u8 *)model->textures + idx * 0x10);
+        ref = (GmoAttr *)((GmoLayer *)model->textures + idx);
       }
       else {
         ref = (GmoAttr *)0;
@@ -34,7 +34,7 @@ u32 GmoDlBindMesh(GmoDlContext *self, GmoModel *model, u32 dirty)
       tex = GmoHookFindTextureById(mat->type);
     }
     else {
-      tex = ((void **)ref)[1];
+      tex = ((GmoLayer *)ref)->texture;
     }
     if (self->texture != tex) {
       self->texture = tex;
