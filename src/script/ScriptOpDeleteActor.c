@@ -12,7 +12,7 @@ int ScriptOpDeleteActor(Script *script)
   CoreObject *obj;
   
   ref = ScriptReadRef(script,2);
-  obj = ActorListContains(PspPtr(*ref));
+  obj = ActorListContains(PspPtrOrNull(*ref));
   if (obj != (CoreObject *)0x0) {
     CoreObjectDeferDelete(obj,1);
   }

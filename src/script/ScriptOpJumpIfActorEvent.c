@@ -25,7 +25,7 @@ int ScriptOpJumpIfActorEvent(Script *script)
 
   mode = (s32)ScriptReadU16(script);
   ref = ScriptReadRef(script, 2);
-  actorRef = PspPtr(*ref);
+  actorRef = PspPtrOrNull(*ref);
   ScriptReadU16(script);
   actor = (Actor *)ActorListContains(actorRef);
   jump = 0;

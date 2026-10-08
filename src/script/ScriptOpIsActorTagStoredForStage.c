@@ -20,7 +20,7 @@ int ScriptOpIsActorTagStoredForStage(Script *script)
 
   ref = ScriptReadRef(script, 2);
   /* script variables are 32-bit slots; on the PSP they hold the actor pointer */
-  actor = (Actor *)ActorListContains(PspPtr(*ref));
+  actor = (Actor *)ActorListContains(PspPtrOrNull(*ref));
   if (actor == NULL) {
     return 0;
   }

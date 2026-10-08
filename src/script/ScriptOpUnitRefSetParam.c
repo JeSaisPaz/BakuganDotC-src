@@ -30,7 +30,7 @@ int ScriptOpUnitRefSetParam(Script *script)
 
     cmd = ScriptReadU16(script);
     ref = ScriptReadRef(script, 2);
-    refUnit = (BtlBakugan *)PspPtr(*ref);
+    refUnit = (BtlBakugan *)PspPtrOrNull(*ref);
     v[2] = 0.0f;
     v[1] = 0.0f;
     v[0] = 0.0f;

@@ -63,16 +63,21 @@ void PlatformRandLoadState(const unsigned *state);              /* mtvc RCX0..RC
 
 /* PSP addresses (port spec D4a): the game keeps some pointers in 32-bit words (GE command words, disc
    formats relocated in place, script variable cells). PspAddr(p) is the word the PSP stored for p and
-   PspPtr(a) the pointer back. On the PSP they are the plain casts; a host maps its memory onto PSP-like
-   addresses through two hooks the port defines, so the words keep their size and meaning. */
+   PspPtr(a) the pointer back. PspPtrOrNull(a) is PspPtr for a word that may not be an address (a script
+   cell holding an integer) and that the game validates against a list before use: NULL for a word the
+   host never handed out. On the PSP they are the plain casts; a host maps its memory onto PSP-like
+   addresses through hooks the port defines, so the words keep their size and meaning. */
 #ifdef __mips__ /* uintptr_t (bdc.h's typedef, visible where the macros expand) keeps `src check` quiet */
 #define PspAddr(p) ((unsigned)(uintptr_t)(p))
 #define PspPtr(a) ((void *)(uintptr_t)(a))
+#define PspPtrOrNull(a) ((void *)(uintptr_t)(a))
 #else
 unsigned PlatformPspAddr(const void *p);
 void *PlatformPspPtr(unsigned addr);
+void *PlatformPspPtrOrNull(unsigned addr);
 #define PspAddr(p) PlatformPspAddr(p)
 #define PspPtr(a) PlatformPspPtr(a)
+#define PspPtrOrNull(a) PlatformPspPtrOrNull(a)
 #endif
 
 #endif
@@ -9294,7 +9299,7 @@ typedef struct UiLoadingShared {
 
 typedef union UiTweenSlot {
     UiTween tween;          /* +0x00 transition view: slide s16s at +0x14..+0x18, t/startAlpha/startScale floats at +0x1c..+0x24 */
-    UiPulse pulse;          /* +0x00 pulse view: bytes +0x07/+0x0b, targetScale float at +0x14, sprite pointer at +0x24 */
+    UiPulse pulse;          /* +0x00 pulse view: bytes +0x07/+0x0b, targetScale float at +0x14, sprite PSP address (u32, PspPtr) at +0x24 */
 } UiTweenSlot;
 
 typedef struct UiMainMenuItem {

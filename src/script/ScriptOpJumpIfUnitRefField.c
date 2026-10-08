@@ -28,7 +28,7 @@ int ScriptOpJumpIfUnitRefField(Script *script)
     value = ScriptReadFloat(script);
     target = ScriptReadU16(script);
     jump = 0;
-    unit = (BtlBakugan *)BtlBakuganListFind((BtlBakugan *)PspPtr(refVal));
+    unit = (BtlBakugan *)BtlBakuganListFind((BtlBakugan *)PspPtrOrNull(refVal));
     if (unit == NULL) {
         jump = 1;
     }

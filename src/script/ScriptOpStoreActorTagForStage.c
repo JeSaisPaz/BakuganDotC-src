@@ -14,7 +14,7 @@ int ScriptOpStoreActorTagForStage(Script *script)
   SaveProfile *profile;
 
   ref = ScriptReadRef(script, 2);
-  actorRef = PspPtr(*ref);
+  actorRef = PspPtrOrNull(*ref);
   slot = (u8)ScriptReadU16(script);
   actor = (Actor *)ActorListContains(actorRef);
   if (actor != NULL) {

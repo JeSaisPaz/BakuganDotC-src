@@ -31,9 +31,9 @@ u32 GmoDlDrawNode(GmoDlContext *ctx, GmoModel *model, u32 dirty)
         void *part = *parts;
 
         if (((ref + 1) & ~(uintptr_t)0xffff) == 0) {
-            /* 16-bit index into the model's 0x10-byte part records. */
+            /* 16-bit index into the model's part records (GmoPart, 0x10 bytes on the PSP). */
             if ((ref & 0xffff) < model->partCount) {
-                part = (u8 *)model->parts + ref * 0x10;
+                part = &((GmoPart *)model->parts)[ref];
             } else {
                 part = NULL;
             }

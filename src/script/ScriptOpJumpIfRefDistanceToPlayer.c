@@ -22,7 +22,7 @@ int ScriptOpJumpIfRefDistanceToPlayer(Script *script)
   float d2;
 
   ref = ScriptReadRef(script, 2);
-  self = (BtlBakugan *)PspPtr(*ref);
+  self = (BtlBakugan *)PspPtrOrNull(*ref);
   cmp = ScriptReadU16(script);
   dist = ScriptReadFloat(script);
   target = ScriptReadU16(script);
