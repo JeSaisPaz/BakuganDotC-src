@@ -1,5 +1,12 @@
 // bdc 0x08aa3b30 g_gfxQuadTemplate
 #include "bdc.h"
-// bdc-fix	V	unsigned int	0x29fb30	4	0	
+// bdc-fix	V	unsigned int	0x29fb30	4	0	[0]
+// bdc-fix	V	unsigned int	0x29fb34	4	0	[1]
+// bdc-fix	V	unsigned int	0x29fb38	4	0	[2]
+// bdc-fix	V	unsigned int	0x29fb3c	4	0	[3]
+// bdc-fix	V	unsigned int	0x29fb40	4	0	[4]
 
-__typeof__(u32) g_gfxQuadTemplate = BDC_V(unsigned int, 0x29fb30);
+__typeof__(u32[8]) g_gfxQuadTemplate = {
+    BDC_V(unsigned int, 0x29fb30), BDC_V(unsigned int, 0x29fb34), BDC_V(unsigned int, 0x29fb38),
+    BDC_V(unsigned int, 0x29fb3c), BDC_V(unsigned int, 0x29fb40),
+};
