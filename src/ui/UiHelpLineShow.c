@@ -2,11 +2,10 @@
 #include "bdc.h"
 
 /* Shows help message `msgIndex` of `DOMesHelp` (localized via `SaveFindLocalizedBin`) at screen
-   position (`x`, `y`) in the shared help line: copies the text to `g_helpLineText`, clears the
-   printer layer and re-prints it (printer vtable slot 2), measures it (`UiTextMeasure` into
-   `g_helpLineWidth`/`g_helpLineHeight`/`g_helpLineLines`), records the glyph list head and
-   count (`g_helpLineGlyphHead`, `g_helpLineGlyphCount`) and makes it fully visible
-   (`g_helpLineAlpha` = 1). */
+   position (`x`, `y`) in the shared help line `g_helpLine`: copies the text to its `text`,
+   clears the printer layer and re-prints it (printer vtable slot 2), measures it
+   (`UiTextMeasure` into `width`/`height`/`lines`), records the glyph list head and count
+   (`glyphHead`, `glyphCount`) and makes it fully visible (`alpha` = 1). */
 
 void UiHelpLineShow(float x, float y, u8 msgIndex)
 
@@ -17,18 +16,18 @@ void UiHelpLineShow(float x, float y, u8 msgIndex)
 
   table = SaveFindLocalizedBin("DOMesHelp");
   UiMesTableRelocate(table);
-  strcpy(g_helpLineText, (const char *)PspPtr(table[msgIndex]));
-  printer = g_helpLinePrinter;
+  strcpy(g_helpLine.text, (const char *)PspPtr(table[msgIndex]));
+  printer = g_helpLine.printer;
   GfxSpriteLayerClear(&printer->layer);
   printer->glyphs = NULL;
-  printer = g_helpLinePrinter;
+  printer = g_helpLine.printer;
   entry = &printer->layer.vtbl[2];
   ((void (*)(float, float, float, void *, char *, s32, s32, s32))entry->fn)(
-      x, y, 0.0f, (u8 *)printer + entry->delta, g_helpLineText, 1, 0, 0);
-  UiTextMeasure(0.0f, g_helpLinePrinter, g_helpLineText, &g_helpLineWidth, &g_helpLineHeight,
-                &g_helpLineLines);
-  printer = g_helpLinePrinter;
-  g_helpLineGlyphHead = printer->glyphs;
-  g_helpLineAlpha = 1.0f;
-  g_helpLineGlyphCount = (float)printer->glyphCount;
+      x, y, 0.0f, (u8 *)printer + entry->delta, g_helpLine.text, 1, 0, 0);
+  UiTextMeasure(0.0f, g_helpLine.printer, g_helpLine.text, &g_helpLine.width, &g_helpLine.height,
+                &g_helpLine.lines);
+  printer = g_helpLine.printer;
+  g_helpLine.glyphHead = printer->glyphs;
+  g_helpLine.alpha = 1.0f;
+  g_helpLine.glyphCount = (float)printer->glyphCount;
 }

@@ -3,15 +3,15 @@
 
 /* Allocates a block of `size` bytes aligned to `align` from pool `pool` of the image library's
    block heap (`g_gmoImagePools`): calls the pool allocator for size + alignment slack + a
-   0x10-byte `GmoImageBlock` trailer, places the trailer after the 4-aligned data, links it at
-   the head of the pool's block list and widens the pool's address range. Returns the trailer or
-   NULL. */
+   `GmoImageBlock` trailer (0x10 bytes on the PSP), places the trailer after the data (rounded up
+   to the trailer's alignment, 4 on the PSP), links it at the head of the pool's block list and
+   widens the pool's address range. Returns the trailer or NULL. */
 int *GmoImageHeapAllocBlock(int pool, u32 align, int size)
 {
     GmoImagePool *p = &g_gmoImagePools[pool];
     u32 poolAlign = p->align;
     u32 effAlign = poolAlign;
-    u32 padding = 3;
+    u32 padding = (u32)__alignof__(GmoImageBlock) - 1;
     u8 *raw;
     u8 *data;
     GmoImageBlock *block;
@@ -20,15 +20,16 @@ int *GmoImageHeapAllocBlock(int pool, u32 align, int size)
     if (poolAlign < align) {
         effAlign = align;
     }
-    if (effAlign > 3) {
-        padding = -size & 3;
+    if (effAlign > (u32)__alignof__(GmoImageBlock) - 1) {
+        padding = -size & ((u32)__alignof__(GmoImageBlock) - 1);
     }
-    raw = p->alloc(padding + (effAlign - poolAlign) + size + 0x10);
+    raw = p->alloc(padding + (effAlign - poolAlign) + size + (u32)sizeof(GmoImageBlock));
     if (raw == NULL) {
         return NULL;
     }
     data = (u8 *)(((uintptr_t)raw + (align - 1)) & -(uintptr_t)align);
-    block = (GmoImageBlock *)(((uintptr_t)(data + size) + 3) & ~(uintptr_t)3);
+    block = (GmoImageBlock *)(((uintptr_t)(data + size) + __alignof__(GmoImageBlock) - 1) &
+                              ~(uintptr_t)(__alignof__(GmoImageBlock) - 1));
 
     head = p->blocks;
     p->blocks = block;

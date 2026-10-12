@@ -4,8 +4,9 @@
 /* Allocates the block for pool `pool` of a model-library allocation plan (`GmoImagePlan` layout)
    from the summed alignment-class totals (`sizes`, or the plan's own `totals[pool]`), aligning to
    the largest class used (0x80/0x40/0x10/4). The model-heap block allocation is inlined: calls the
-   pool allocator of `g_gmoHeapPools` for size + alignment slack + a 0x10-byte `GmoImageBlock`
-   trailer, links the trailer at the head of the pool's block list and widens the pool's address
+   pool allocator of `g_gmoHeapPools` for size + alignment slack + a `GmoImageBlock` trailer
+   (0x10 bytes on the PSP, after the data rounded up to its alignment), links the trailer at the
+   head of the pool's block list and widens the pool's address
    range. Stores the block in `blocks[pool]` and sets the four carve cursors of that pool to
    consecutive spans of the block's data. Returns 1 on success or when the total is 0, 0 when the
    allocation fails. */
@@ -45,19 +46,20 @@ int GmoPlanAllocPool(void *plan, int pool, int *sizes)
   hp = &g_gmoHeapPools[pool];
   poolAlign = hp->align;
   effAlign = poolAlign;
-  padding = 3;
+  padding = (u32)__alignof__(GmoImageBlock) - 1;
   if (poolAlign <= align) {
     effAlign = align;
   }
-  if (effAlign > 3) {
-    padding = -total & 3;
+  if (effAlign > (u32)__alignof__(GmoImageBlock) - 1) {
+    padding = -total & ((u32)__alignof__(GmoImageBlock) - 1);
   }
-  raw = hp->alloc(padding + (total + (effAlign - poolAlign)) + 0x10);
+  raw = hp->alloc(padding + (total + (effAlign - poolAlign)) + (u32)sizeof(GmoImageBlock));
   if (raw == NULL) {
     return 0;
   }
   data = (u8 *)(((uintptr_t)raw + align - 1) & -(uintptr_t)align);
-  block = (GmoImageBlock *)(((uintptr_t)(data + total) + 3) & ~(uintptr_t)3);
+  block = (GmoImageBlock *)(((uintptr_t)(data + total) + __alignof__(GmoImageBlock) - 1) &
+                            ~(uintptr_t)(__alignof__(GmoImageBlock) - 1));
 
   head = hp->blocks;
   hp->blocks = block;

@@ -1,11 +1,10 @@
 // bdc 0x089a38e8 UiHelpLineCreate
 #include "bdc.h"
 
-/* Creates the shared help-line text printer: clears the 100-byte help-line state block that starts
-   at `g_helpLinePrinter` (through `g_helpLineText`), allocates a 0xf0-byte
-   `UiTextPrinterCtor` printer from the low end of the heap (font 1, scale 0.8, wrap width 1000,
-   width scale 0.5333), empties `g_helpLineText` and resets `g_helpLineAlpha` to 0 and
-   `g_helpLineAppliedAlpha` to 1. */
+/* Creates the shared help-line text printer: clears the 100-byte help-line state `g_helpLine`
+   (`UiHelpLine`), allocates a 0xf0-byte `UiTextPrinterCtor` printer from the low end of the
+   heap (font 1, scale 0.8, wrap width 1000, width scale 0.5333), empties the text and resets the
+   alpha to 0 and the applied alpha to 1. */
 
 void UiHelpLineCreate(void)
 
@@ -14,8 +13,7 @@ void UiHelpLineCreate(void)
   UiTextPrinter *mem;
   UiTextPrinter *printer;
 
-  /* the original clears the whole 100-byte block 0x08b01098..0x08b010fb in one go */
-  memset(&g_helpLinePrinter, 0, 100);
+  memset(&g_helpLine, 0, sizeof(g_helpLine));
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);
@@ -27,12 +25,12 @@ void UiHelpLineCreate(void)
     UiTextPrinterCtor(mem, NULL, NULL);
     printer = mem;
   }
-  g_helpLinePrinter = printer;
+  g_helpLine.printer = printer;
   UiTextPrinterSetFont(printer, 1);
-  g_helpLinePrinter->scale = 0.8f;
-  g_helpLinePrinter->wrapWidth = 1000.0f;
-  g_helpLinePrinter->widthScale = 0.53333336f;
-  strcpy(g_helpLineText, "");
-  g_helpLineAlpha = 0.0f;
-  g_helpLineAppliedAlpha = 1.0f;
+  g_helpLine.printer->scale = 0.8f;
+  g_helpLine.printer->wrapWidth = 1000.0f;
+  g_helpLine.printer->widthScale = 0.53333336f;
+  strcpy(g_helpLine.text, "");
+  g_helpLine.alpha = 0.0f;
+  g_helpLine.appliedAlpha = 1.0f;
 }

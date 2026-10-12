@@ -9042,6 +9042,19 @@ typedef struct UiGauntletSetup {
     u8 _pad1b5e[0x2];               /* +0x1b5e */
 } UiGauntletSetup;
 
+typedef struct UiHelpLine {
+    UiTextPrinter *printer;   /* 0x00 shared help-line text printer (NULL when not created) */
+    float alpha;              /* 0x04 pending alpha, applied to the glyph sprites by UiHelpLineDraw */
+    float appliedAlpha;       /* 0x08 alpha last applied to the glyph sprites */
+    float glyphCount;         /* 0x0c number of glyph sprites (kept as a float) */
+    u32 unk10;                /* 0x10 never read or written outside the clear */
+    float width;              /* 0x14 measured text width (UiTextMeasure) */
+    float height;             /* 0x18 measured text height */
+    int lines;                /* 0x1c measured line count */
+    GfxSprite *glyphHead;     /* 0x20 first glyph sprite (list through GfxSprite.next) */
+    char text[64];            /* 0x24 text buffer, filled from DOMesHelp */
+} UiHelpLine;
+
 typedef struct UiHologramGallery {
     UiScreen base;                      /* +0x0 screen base; vtable 0x08af4a0c */
     u32 unk6c;                          /* +0x6c zeroed by the ctor */
@@ -20831,15 +20844,7 @@ extern __typeof__(u8[20]) g_equipGridToBakuganId;
 extern __typeof__(u8) g_equipPendingFlag;
 extern __typeof__(float[16]) g_equipViewport4P;
 extern __typeof__(const char *[21]) g_figureModelNames;
-extern __typeof__(float) g_helpLineAlpha;
-extern __typeof__(float) g_helpLineAppliedAlpha;
-extern __typeof__(float) g_helpLineGlyphCount;
-extern __typeof__(GfxSprite*) g_helpLineGlyphHead;
-extern __typeof__(float) g_helpLineHeight;
-extern __typeof__(int) g_helpLineLines;
-extern __typeof__(UiTextPrinter*) g_helpLinePrinter;
-extern __typeof__(char[64]) g_helpLineText;
-extern __typeof__(float) g_helpLineWidth;
+extern __typeof__(UiHelpLine) g_helpLine;
 extern __typeof__(float[18]) g_hologramAttributeColors;
 extern __typeof__(u32[30]) g_hologramGalleryInfoPanelSprites;
 extern __typeof__(u8[14]) g_hologramHelpPanelSprites;
