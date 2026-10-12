@@ -10,7 +10,7 @@
    Enables motion when `GmoMotionMgrExists`, creates a 1-slot sound object, clears `state`,
    `step`, `sweepTimer`, `decay = 1`, finds the lens node `NPC_VXS_003_03` (its +0x60 vec4 becomes
    `lensPos`), `coneAngle = pi/6`, `sweepAngle = 0`, `coneMatrix = identity`, effects NULL. With a
-   lens node, `coneMatrix = rootMatrix * node->localMatrix`, the cone effect 0x2f follows it
+   lens node, `coneMatrix = node->localMatrix * rootMatrix` (row-major), the cone effect 0x2f follows it
    (`GfxEffectSpawnFollowMatrix`) and the spot effect 0x31 (`GfxEffectCreate`) is placed at the
    root translation raised by 0.1. `mode = record->variant & 0xf`, 0 when not below 3. Installs the
    material callback and returns `obj`. */
@@ -106,15 +106,15 @@ CoreObject *GameGimmickCameraCtor(GameGimmickCamera *obj, s32 kind, void *record
   if (obj->lensNode != NULL) {
     model = obj->base.base.data;
     node = (GmoNode *)obj->lensNode;
-    /* vmmul.q M000, M100, M200 with M100 = rootMatrix, M200 = node->localMatrix (fields as columns):
-       field j, lane i = sum_k root[i][k] * local[j][k]. */
+    /* vmmul.q M000, M100, M200 with M100 = rootMatrix, M200 = node->localMatrix:
+       row-major cone = local * root, element [j][i] = sum_k local[j][k] * root[k][i]. */
     dst = (float *)cone;
     for (j = 0; j < 4; j++) {
       for (i = 0; i < 4; i++) {
-        dst[j * 4 + i] = model->rootMatrix[i * 4 + 0] * node->localMatrix[j * 4 + 0] +
-                         model->rootMatrix[i * 4 + 1] * node->localMatrix[j * 4 + 1] +
-                         model->rootMatrix[i * 4 + 2] * node->localMatrix[j * 4 + 2] +
-                         model->rootMatrix[i * 4 + 3] * node->localMatrix[j * 4 + 3];
+        dst[j * 4 + i] = node->localMatrix[j * 4 + 0] * model->rootMatrix[0 * 4 + i] +
+                         node->localMatrix[j * 4 + 1] * model->rootMatrix[1 * 4 + i] +
+                         node->localMatrix[j * 4 + 2] * model->rootMatrix[2 * 4 + i] +
+                         node->localMatrix[j * 4 + 3] * model->rootMatrix[3 * 4 + i];
       }
     }
     obj->coneEffect = GfxEffectSpawnFollowMatrix(g_worldEffectMgr, 0x2f, (float *)cone);

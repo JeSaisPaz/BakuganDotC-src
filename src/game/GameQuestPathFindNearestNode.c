@@ -13,7 +13,8 @@
    hits the one with the smallest `kind` below 5 wins (first one on ties); with no hit the stored
    index is -1. Each compare is preceded by the inlined static-zero guards (`g_staticZeroFGuard`,
    `g_staticZeroF2Guard`), which are only written. The VFPU block is lifted: the rotation is the
-   3x3 part of `A * B^T` (A, B the quaternion product matrices, as `vmmul.q E000, E200, E100`), and
+   3x3 part of the row-major `B * A` (A, B the quaternion product matrices stored row by row,
+   `m[c][r]` = sum over k of `b[c][k] * a[k][r]`, as `vmmul.q E000, E200, E100`), and
    `vtfm4` applies its transpose with the translation `-(R * 0)` kept for NaN/inf inputs. */
 
 void GameQuestPathFindNearestNode(s16 *obj)
@@ -61,7 +62,7 @@ void GameQuestPathFindNearestNode(s16 *obj)
     local[1] = pos->y - node->pos.y;
     local[2] = pos->z - node->pos.z;
     local[3] = pos->w;
-    /* m = A * B^T with A, B the left/right product matrices of the quaternion (columns) */
+    /* m = B * A row-major (a[i], b[i] = rows C1i0 / C2i0 of the quaternion product matrices) */
     q = node->rot;
     a[0][0] = q.w;  a[0][1] = q.z;  a[0][2] = -q.y; a[0][3] = -q.x;
     a[1][0] = -q.z; a[1][1] = q.w;  a[1][2] = q.x;  a[1][3] = -q.y;
@@ -73,7 +74,7 @@ void GameQuestPathFindNearestNode(s16 *obj)
     b[3][0] = -q.x; b[3][1] = -q.y; b[3][2] = -q.z; b[3][3] = q.w;
     for (c = 0; c < 3; c++) {
       for (r = 0; r < 3; r++) {
-        m[c][r] = a[0][r] * b[0][c] + a[1][r] * b[1][c] + a[2][r] * b[2][c] + a[3][r] * b[3][c];
+        m[c][r] = b[c][0] * a[0][r] + b[c][1] * a[1][r] + b[c][2] * a[2][r] + b[c][3] * a[3][r];
       }
     }
     /* inverse: transposed rotation, translation -(R * 0) */

@@ -6,8 +6,8 @@
    inline segment shape (`shapeType = 2`, `g_collisionSegmentVtbl`), `flicker = 0`. The beam
    runs from the model position to the record's second point `beamEnd` (20.12, x20): the model's
    root-matrix X axis is set to distance / 26 (Y/Z diagonal 1), the model is moved to the segment
-   midpoint, its root matrix multiplied by a rotation about Y by -atan2f(dz, dx) (`R * Mᵀ` in the
-   column view, see below) and its translation set to the new position (w = 1). `attached`,
+   midpoint, its root matrix multiplied by a rotation about Y by -atan2f(dz, dx) (`M * R`
+   row-major, see below) and its translation set to the new position (w = 1). `attached`,
    `state`, `step` and `shapeOwner` are cleared; `beamStart` = the original position 10 units up,
    `beamDir` = end point (y raised the same, w = 0) minus `beamStart`, then the shape's recalc
    virtual (slot 9, `CollisionShapeRecalcNop`) runs. `lighting = 1`, `color` = (0, 0, 0, 0),
@@ -75,9 +75,9 @@ CoreObject *GameGimmickIrSensorCtor(GameGimmickIrSensor *obj, s32 kind, void *re
   obj->base.base.pos[1] = obj->base.base.pos[1] + diff[1];
   obj->base.base.pos[2] = obj->base.base.pos[2] + diff[2];
 
-  /* vmmul.q E200, E100, E000 with M100 = rootMatrix (row i of the float[16] = column i) and
-     M000 = columns (c, 0, -s, 0), (0, 1, 0, 0), (s, 0, c, 0), (0, 0, 0, 1): the result is
-     R * M100ᵀ, so new[4i + r] = Σ_k R[r][k] * old[4k + i]. */
+  /* vmmul.q E200, E100, E000 with M100 = rootMatrix (memory row i = column i) and M000 = R with
+     rows (c, 0, -s, 0), (0, 1, 0, 0), (s, 0, c, 0), (0, 0, 0, 1): the result is the row-major
+     product M * R, new[4i + r] = Σ_k old[4i + k] * R[k][r]. */
   model = obj->base.base.data;
   c = __builtin_cosf(yaw);
   s = __builtin_sinf(yaw);
@@ -85,10 +85,10 @@ CoreObject *GameGimmickIrSensorCtor(GameGimmickIrSensor *obj, s32 kind, void *re
     m[i] = model->rootMatrix[i];
   }
   for (i = 0; i < 4; i++) {
-    model->rootMatrix[4 * i + 0] = c * m[i] + s * m[8 + i];
-    model->rootMatrix[4 * i + 1] = m[4 + i];
-    model->rootMatrix[4 * i + 2] = -s * m[i] + c * m[8 + i];
-    model->rootMatrix[4 * i + 3] = m[12 + i];
+    model->rootMatrix[4 * i + 0] = m[4 * i + 0] * c + m[4 * i + 2] * s;
+    model->rootMatrix[4 * i + 1] = m[4 * i + 1];
+    model->rootMatrix[4 * i + 2] = m[4 * i + 0] * -s + m[4 * i + 2] * c;
+    model->rootMatrix[4 * i + 3] = m[4 * i + 3];
   }
 
   model = obj->base.base.data;

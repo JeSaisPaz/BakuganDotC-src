@@ -69,11 +69,11 @@ void UiCollectionFigureResetDetailPose(UiCollectionFigure *self, bool keep)
   rot[13] = 0.0f;
   rot[14] = 0.0f;
   rot[15] = 1.0f;
-  /* vmmul.q E200, E100 (m), E000 (rot): field j lane i = sum_k m[k][j] * rot[k][i]. */
+  /* vmmul.q E200, E100 (m), E000 (rot): row-major m * rot, tmp[j][i] = sum_k m[j][k] * rot[k][i]. */
   for (j = 0; j < 4; j++) {
     for (i = 0; i < 4; i++) {
-      tmp[j * 4 + i] = m[0 * 4 + j] * rot[0 * 4 + i] + m[1 * 4 + j] * rot[1 * 4 + i] +
-                       m[2 * 4 + j] * rot[2 * 4 + i] + m[3 * 4 + j] * rot[3 * 4 + i];
+      tmp[j * 4 + i] = m[j * 4 + 0] * rot[0 * 4 + i] + m[j * 4 + 1] * rot[1 * 4 + i] +
+                       m[j * 4 + 2] * rot[2 * 4 + i] + m[j * 4 + 3] * rot[3 * 4 + i];
     }
   }
   for (i = 0; i < 16; i++) {

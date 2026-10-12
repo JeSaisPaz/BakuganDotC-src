@@ -36,12 +36,13 @@ void GameQuestCamEyeSpringUpdateAxes(GameQuestCamEyeSpring *self)
   r[1][0] = -z; r[1][1] = w;  r[1][2] = x;  r[1][3] = y;
   r[2][0] = y;  r[2][1] = -x; r[2][2] = w;  r[2][3] = z;
   r[3][0] = -x; r[3][1] = -y; r[3][2] = -z; r[3][3] = w;
-  /* column j, lane i of the product; row 3 and column 3 are the identity's */
+  /* vmmul.q E000, E200, E100: m = r * l (m[j][i] = sum_k r[j][k] * l[k][i]); row 3 and
+     column 3 are the identity's */
   for (j = 0; j < 3; j++) {
     for (i = 0; i < 3; i++) {
-      m[j][i] = l[0][i] * r[0][j];
+      m[j][i] = r[j][0] * l[0][i];
       for (k = 1; k < 4; k++) {
-        m[j][i] = m[j][i] + l[k][i] * r[k][j];
+        m[j][i] = m[j][i] + r[j][k] * l[k][i];
       }
     }
     m[j][3] = 0.0f;

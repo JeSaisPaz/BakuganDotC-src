@@ -68,11 +68,12 @@ void UiCollectionSphereResetDetailPose(UiCollectionSphere *self, bool withOffset
   rot[13] = 0.0f;
   rot[14] = 0.0f;
   rot[15] = 1.0f;
-  /* vmmul.q E200, E100 (matrix), E000 (rot): field j lane i = sum_k matrix[k][i] * rot[k][j]. */
+  /* vmmul.q E200, E100 (matrix), E000 (rot): tmp = matrix * rot (row-major),
+     tmp[j][i] = sum_k matrix[j][k] * rot[k][i]. */
   for (j = 0; j < 4; j++) {
     for (i = 0; i < 4; i++) {
-      tmp[j * 4 + i] = matrix[0 * 4 + i] * rot[0 * 4 + j] + matrix[1 * 4 + i] * rot[1 * 4 + j] +
-                       matrix[2 * 4 + i] * rot[2 * 4 + j] + matrix[3 * 4 + i] * rot[3 * 4 + j];
+      tmp[j * 4 + i] = matrix[j * 4 + 0] * rot[0 * 4 + i] + matrix[j * 4 + 1] * rot[1 * 4 + i] +
+                       matrix[j * 4 + 2] * rot[2 * 4 + i] + matrix[j * 4 + 3] * rot[3 * 4 + i];
     }
   }
   for (i = 0; i < 16; i++) {

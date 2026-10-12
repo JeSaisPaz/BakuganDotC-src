@@ -8,7 +8,8 @@
    by 0.1 per frame (up to 1) while `visible`, or out by 0.05 (down to 0) while hidden; once hidden and
    fully transparent it resets `spinSpeed` to 0 instead. */
 
-/* matrix = matrix * rotZ(angle): rows 0 and 1 mix, rows 2 and 3 are kept (identity columns). */
+/* matrix = matrix * rotZ(angle) (row-major, `vmmul.q E200, E100, E000`): in each row, columns 0
+   and 1 mix, columns 2 and 3 are kept (identity rows). */
 static void UiLoadIconRotate(float *matrix, float angle)
 {
   float c = __builtin_cosf(angle);
@@ -16,10 +17,10 @@ static void UiLoadIconRotate(float *matrix, float angle)
   int i;
 
   for (i = 0; i < 4; i++) {
-    float r0 = matrix[i];
-    float r1 = matrix[4 + i];
-    matrix[i] = c * r0 + s * r1;
-    matrix[4 + i] = -s * r0 + c * r1;
+    float a0 = matrix[4 * i];
+    float a1 = matrix[4 * i + 1];
+    matrix[4 * i] = a0 * c + a1 * -s;
+    matrix[4 * i + 1] = a0 * s + a1 * c;
   }
 }
 

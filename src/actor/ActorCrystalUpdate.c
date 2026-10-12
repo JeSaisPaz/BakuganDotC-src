@@ -122,10 +122,10 @@ void ActorCrystalUpdate(ActorCrystal *self)
     b[0][1] = st;
     b[1][0] = -st;
     b[1][1] = ct;
-    /* vmmul.q E200, E100, E000: r = b * transpose(a) (columns r[j][i]). */
+    /* vmmul.q E200, E100, E000: r = a * b (row-major, r[j][i] = sum_k a[j][k] * b[k][i]). */
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            r[j][i] = a[0][j] * b[0][i] + a[1][j] * b[1][i] + a[2][j] * b[2][i] + a[3][j] * b[3][i];
+            r[j][i] = a[j][0] * b[0][i] + a[j][1] * b[1][i] + a[j][2] * b[2][i] + a[j][3] * b[3][i];
         }
     }
     for (n = 0; n < 3; n++) {

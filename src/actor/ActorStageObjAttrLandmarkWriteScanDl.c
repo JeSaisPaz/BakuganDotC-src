@@ -83,12 +83,12 @@ void ActorStageObjAttrLandmarkWriteScanDl(u32 **dl, const float *scroll)
   rot[2][2] = c;
   rot[3][3] = 1.0f;
 
-  /* vmmul.q E200, E100, E000: out[col][row] = sum_k rot[k][row] * mat[k][col]. */
+  /* vmmul.q E200, E100, E000: out = mat * rot, out[col][row] = sum_k mat[col][k] * rot[k][row]. */
   for (col = 0; col < 4; col++) {
     for (row = 0; row < 4; row++) {
       sum = 0.0f;
       for (k = 0; k < 4; k++) {
-        sum = sum + rot[k][row] * mat[k][col];
+        sum = sum + mat[col][k] * rot[k][row];
       }
       out[col][row] = sum;
     }

@@ -189,21 +189,21 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
     yawRot[1][0] = 0.0f; yawRot[1][1] = 1.0f; yawRot[1][2] = 0.0f; yawRot[1][3] = 0.0f;
     yawRot[2][0] = s;    yawRot[2][1] = 0.0f; yawRot[2][2] = c;    yawRot[2][3] = 0.0f;
     yawRot[3][0] = 0.0f; yawRot[3][1] = 0.0f; yawRot[3][2] = 0.0f; yawRot[3][3] = 1.0f;
-    /* vmmul.q E200,E100,E000: yawMtx <- yawRot . yawMtx^T (column-major) */
+    /* vmmul.q E200,E100,E000: yawMtx <- yawMtx * yawRot (row-major) */
     for (i = 0; i < 4; i++) {
       for (r = 0; r < 4; r++) {
-        world[i * 4 + r] = yawMtx[0 * 4 + i] * yawRot[0][r] + yawMtx[1 * 4 + i] * yawRot[1][r] +
-                           yawMtx[2 * 4 + i] * yawRot[2][r] + yawMtx[3 * 4 + i] * yawRot[3][r];
+        world[i * 4 + r] = yawMtx[i * 4 + 0] * yawRot[0][r] + yawMtx[i * 4 + 1] * yawRot[1][r] +
+                           yawMtx[i * 4 + 2] * yawRot[2][r] + yawMtx[i * 4 + 3] * yawRot[3][r];
       }
     }
     for (i = 0; i < 16; i++) {
       yawMtx[i] = world[i];
     }
-    /* world <- rotMtx^T . yawMtx */
+    /* vmmul.q M000,M100 (rotMtx),M200 (yawMtx): world <- yawMtx * rotMtx (row-major) */
     for (j = 0; j < 4; j++) {
       for (r = 0; r < 4; r++) {
-        world[j * 4 + r] = rotMtx[r * 4 + 0] * yawMtx[j * 4 + 0] + rotMtx[r * 4 + 1] * yawMtx[j * 4 + 1] +
-                           rotMtx[r * 4 + 2] * yawMtx[j * 4 + 2] + rotMtx[r * 4 + 3] * yawMtx[j * 4 + 3];
+        world[j * 4 + r] = yawMtx[j * 4 + 0] * rotMtx[0 * 4 + r] + yawMtx[j * 4 + 1] * rotMtx[1 * 4 + r] +
+                           yawMtx[j * 4 + 2] * rotMtx[2 * 4 + r] + yawMtx[j * 4 + 3] * rotMtx[3 * 4 + r];
       }
     }
     for (i = 0; i < 16; i++) {

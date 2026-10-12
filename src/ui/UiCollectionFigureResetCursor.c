@@ -107,8 +107,8 @@ void UiCollectionFigureResetCursor(UiCollectionFigure *self)
     matrix[14] = 0.0f;
     matrix[15] = 1.0f;
 
-    /* rootMatrix = rootMatrix * rotation about X by -0:
-       row k of the result = sum over j of rootMatrix[j][k] * rot[j] */
+    /* rootMatrix = rootMatrix * rotation about X by -0 (vmmul.q E200, E100, E000, row-major):
+       element [k][l] of the result = sum over j of rootMatrix[k][j] * rot[j][l] */
     angle = -0.0f;
     c = __builtin_cosf(angle);
     sn = __builtin_sinf(angle);
@@ -134,8 +134,8 @@ void UiCollectionFigureResetCursor(UiCollectionFigure *self)
     }
     for (k = 0; k < 4; k++) {
       for (l = 0; l < 4; l++) {
-        matrix[k * 4 + l] = src[0 * 4 + k] * rot[0 * 4 + l] + src[1 * 4 + k] * rot[1 * 4 + l] +
-                            src[2 * 4 + k] * rot[2 * 4 + l] + src[3 * 4 + k] * rot[3 * 4 + l];
+        matrix[k * 4 + l] = src[k * 4 + 0] * rot[0 * 4 + l] + src[k * 4 + 1] * rot[1 * 4 + l] +
+                            src[k * 4 + 2] * rot[2 * 4 + l] + src[k * 4 + 3] * rot[3 * 4 + l];
       }
     }
 

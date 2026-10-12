@@ -107,8 +107,9 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
     case 10:
       /* local = rotZ(angle) * scale(width, height, depth): row j of local is rotation column j
          times size j (vrot of angle * 2/pi is cos/sin of the angle). Then
-         m[j][r] = dot(local row j, basis row r), basis = the camera billboard (0) or the sprite
-         matrix (10). */
+         m = local * basis row-major (`vmmul.q M000, M100, M200`, M100 = basis, M200 = local):
+         m[j][r] = sum over k of local[j][k] * basis[k][r], basis = the camera billboard (0) or the
+         sprite matrix (10). */
       angle = sprite->maybe_billboardParams80[2];
       c = __builtin_cosf(angle);
       s = __builtin_sinf(angle);
@@ -135,9 +136,9 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
       }
       for (j = 0; j < 4; j++) {
         for (r = 0; r < 4; r++) {
-          sum = local[j * 4] * basis[r * 4];
+          sum = local[j * 4] * basis[0 * 4 + r];
           for (k = 1; k < 4; k++) {
-            sum = sum + local[j * 4 + k] * basis[r * 4 + k];
+            sum = sum + local[j * 4 + k] * basis[k * 4 + r];
           }
           m[j * 4 + r] = sum;
         }
@@ -156,7 +157,8 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
       break;
     case 3:
       /* 3x3 of the product of the two sign/swizzle matrices of the quaternion q = +0xa0 (vpfxs
-         columns qa[k], qb[k]): m[c][r] = sum_k qa[k][r] * qb[k][c]; row/column 3 identity. */
+         rows qa[k] = C1k0, qb[k] = C2k0; `vmmul.q E000, E200, E100`): m[c][r] = sum_k qb[c][k] *
+         qa[k][r]; row/column 3 identity. */
       lane[0] = sprite->maybe_billboardParamsA0[0];
       lane[1] = sprite->maybe_billboardParamsA0[1];
       lane[2] = sprite->maybe_billboardParamsA0[2];
@@ -171,9 +173,9 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
       qb[3][0] = -lane[0]; qb[3][1] = -lane[1]; qb[3][2] = -lane[2]; qb[3][3] = lane[3];
       for (j = 0; j < 3; j++) {
         for (r = 0; r < 3; r++) {
-          sum = qa[0][r] * qb[0][j];
+          sum = qb[j][0] * qa[0][r];
           for (k = 1; k < 4; k++) {
-            sum = sum + qa[k][r] * qb[k][j];
+            sum = sum + qb[j][k] * qa[k][r];
           }
           m[j * 4 + r] = sum;
         }

@@ -5,7 +5,7 @@
    it: wraps the Euler angles `rot[0..2]` (+0x30/+0x34/+0x38) into (−π, π], then builds the root
    matrix `data(+0x130)->rootMatrix` from diag(`scale`) (+0x40) and a Y rotation by the heading
    π/2 − `rot[1]`, an X rotation by `rot[2]` and a Z rotation by `rot[0]` (each step is the VFPU
-   `vmmul` with transposed operands: new = oldᵀ · R, row-major in memory), and stores `pos` (+0x20)
+   `vmmul.q E200, E…00, E000`: new = old · R, row-major in memory), and stores `pos` (+0x20)
    as its translation row. When `unk148` holds a matrix, the translation row is copied back into
    `pos` and the whole root matrix is then replaced by that matrix. */
 
@@ -23,18 +23,18 @@ static float ActorBallWrapAngle(float a)
   return a;
 }
 
-/* dst[c][r] = sum_k a[k][c] * rot[k][r] (row-major 4x4, element [i][j] at i * 4 + j):
-   the `vmmul.q E200, E100, E000` of the asm with M100 = a and M000 = rot. */
-static void ActorBallMulTransposed(float *dst, const float *a, const float *rot)
+/* dst = a · rot, row-major 4x4 (dst[r][c] = sum_k a[r][k] * rot[k][c]): the displayed
+   `vmmul.q E200, E100, E000` of the asm with M100 = a (rows loaded as columns) and M000 = rot. */
+static void ActorBallMul(float *dst, const float *a, const float *rot)
 {
   float tmp[16];
   int c;
   int r;
 
-  for (c = 0; c < 4; c++) {
-    for (r = 0; r < 4; r++) {
-      tmp[c * 4 + r] = a[0 * 4 + c] * rot[0 * 4 + r] + a[1 * 4 + c] * rot[1 * 4 + r] +
-                       a[2 * 4 + c] * rot[2 * 4 + r] + a[3 * 4 + c] * rot[3 * 4 + r];
+  for (r = 0; r < 4; r++) {
+    for (c = 0; c < 4; c++) {
+      tmp[r * 4 + c] = a[r * 4 + 0] * rot[0 * 4 + c] + a[r * 4 + 1] * rot[1 * 4 + c] +
+                       a[r * 4 + 2] * rot[2 * 4 + c] + a[r * 4 + 3] * rot[3 * 4 + c];
     }
   }
   for (c = 0; c < 16; c++) {
@@ -89,7 +89,7 @@ void ActorBallUpdateMatrix(ActorBall *self)
   rot[13] = 0.0f;
   rot[14] = 0.0f;
   rot[15] = 1.0f;
-  ActorBallMulTransposed(root, diag, rot);
+  ActorBallMul(root, diag, rot);
 
   /* X rotation by rot[2] */
   root = self->base.data->rootMatrix;
@@ -112,7 +112,7 @@ void ActorBallUpdateMatrix(ActorBall *self)
   rot[13] = 0.0f;
   rot[14] = 0.0f;
   rot[15] = 1.0f;
-  ActorBallMulTransposed(root, root, rot);
+  ActorBallMul(root, root, rot);
 
   /* Z rotation by rot[0] */
   root = self->base.data->rootMatrix;
@@ -135,7 +135,7 @@ void ActorBallUpdateMatrix(ActorBall *self)
   rot[13] = 0.0f;
   rot[14] = 0.0f;
   rot[15] = 1.0f;
-  ActorBallMulTransposed(root, root, rot);
+  ActorBallMul(root, root, rot);
 
   /* translation row = pos */
   root = self->base.data->rootMatrix;

@@ -11,8 +11,8 @@
    Otherwise runs the swing pattern `mode` (0 still; 1 sweep yaw at ±0.0179 rad/frame; 2 tilt the
    cone at ±0.00298 rad/frame; both with pauses of 3 frames between swings of 58/117 frames),
    rotates the lens node (`lensPos` * yaw(sweepAngle) * tilt(coneAngle) into `GmoNode.rotate`),
-   rebuilds `coneMatrix` from the model root matrix (transposed, `vmmul.q M000, M100, M200`) times
-   the node matrix, offset by (0,-1,0.9),
+   rebuilds `coneMatrix` as the node matrix times the model root matrix (`vmmul.q M000, M100, M200`,
+   row-major `node * root`), offset by (0,-1,0.9),
    moves the spot sprite to where the cone axis reaches the camera's floor height (keeping the
    sprite's Y), and while swinging (step 1) advances the angles, wrapping `sweepAngle` to ±2pi.
    Bank constant S703 (2/pi) cancels against `vsin.s`'s quarter turns: sin(coneAngle). */
@@ -153,7 +153,7 @@ void GameGimmickCameraScanState(GameGimmickCamera *obj)
   node->rotate[2] = qRot.z;
   node->rotate[3] = qRot.w;
 
-  /* mtx = node matrix; mtx = root^T * mtx (vmmul.q M000, M100, M200); coneMatrix = mtx */
+  /* mtx = node matrix; mtx = mtx * root (row-major, vmmul.q M000, M100, M200); coneMatrix = mtx */
   node = (GmoNode *)obj->lensNode;
   for (a = 0; a < 16; a++) {
     mtx[a] = node->localMatrix[a];
@@ -161,8 +161,8 @@ void GameGimmickCameraScanState(GameGimmickCamera *obj)
   root = obj->base.base.data->rootMatrix;
   for (a = 0; a < 4; a++) {
     for (b = 0; b < 4; b++) {
-      prod[a * 4 + b] = root[b * 4 + 0] * mtx[a * 4 + 0] + root[b * 4 + 1] * mtx[a * 4 + 1] +
-                        root[b * 4 + 2] * mtx[a * 4 + 2] + root[b * 4 + 3] * mtx[a * 4 + 3];
+      prod[a * 4 + b] = mtx[a * 4 + 0] * root[0 * 4 + b] + mtx[a * 4 + 1] * root[1 * 4 + b] +
+                        mtx[a * 4 + 2] * root[2 * 4 + b] + mtx[a * 4 + 3] * root[3 * 4 + b];
     }
   }
   for (a = 0; a < 16; a++) {

@@ -196,7 +196,8 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
     /* Angle vector (0, 1, 0) * pitch, scaled by S703: only its x lane (0*pitch radians) drives the
        X step. The Y and Z vrots read S101/S102, lanes y and z of the uninitialised matrix's first
        column (C100, loaded before any step), in quarter turns. Each step replaces the matrix M
-       (fields as columns) by R * transpose(M) (vmmul.q E200, E200, E000). */
+       (fields as columns) by R * M (vmmul.q E200, E200, E000: column c of the result is the sum
+       over k of M[c][k] * column k of R). */
     offs = ((GameQuestPathSegment *)self->segment)->dir;
     ax = 0.0f * pitch;
     ay = mtx[0][1];
@@ -232,8 +233,8 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
     for (step = 0; step < 3; step++) {
       for (c = 0; c < 4; c++) {
         for (r = 0; r < 4; r++) {
-          nm[c][r] = mtx[0][c] * rot[step][0][r] + mtx[1][c] * rot[step][1][r] +
-                     mtx[2][c] * rot[step][2][r] + mtx[3][c] * rot[step][3][r];
+          nm[c][r] = mtx[c][0] * rot[step][0][r] + mtx[c][1] * rot[step][1][r] +
+                     mtx[c][2] * rot[step][2][r] + mtx[c][3] * rot[step][3][r];
         }
       }
       for (c = 0; c < 4; c++) {

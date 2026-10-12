@@ -22,7 +22,7 @@ void GameQuestCamCtrlSwitchMode(GameQuestCamCtrl *self, s16 camId)
   GameQuestCamEntry *entry;
   const ScePspFVector4 *up;
   float qx, qy, qz, qw;
-  float a[3][4];
+  float a[4][4];
   float b[4][4];
   float m[3][3];
   int i, j;
@@ -49,15 +49,17 @@ void GameQuestCamCtrlSwitchMode(GameQuestCamCtrl *self, s16 camId)
     a[0][0] = qw;  a[0][1] = qz;  a[0][2] = -qy; a[0][3] = -qx;
     a[1][0] = -qz; a[1][1] = qw;  a[1][2] = qx;  a[1][3] = -qy;
     a[2][0] = qy;  a[2][1] = -qx; a[2][2] = qw;  a[2][3] = -qz;
+    a[3][0] = qx;  a[3][1] = qy;  a[3][2] = qz;  a[3][3] = qw;
     /* right matrix columns (M200) */
     b[0][0] = qw;  b[0][1] = qz;  b[0][2] = -qy; b[0][3] = qx;
     b[1][0] = -qz; b[1][1] = qw;  b[1][2] = qx;  b[1][3] = qy;
     b[2][0] = qy;  b[2][1] = -qx; b[2][2] = qw;  b[2][3] = qz;
     b[3][0] = -qx; b[3][1] = -qy; b[3][2] = -qz; b[3][3] = qw;
-    /* column j = M200 * (column j of M100); lane 3 and column 3 become identity */
+    /* vmmul.q E000, E200, E100: column j = M100 * (column j of M200), i.e. row-major
+       m = b * a; lane 3 and column 3 become identity */
     for (j = 0; j < 3; j++) {
       for (i = 0; i < 3; i++) {
-        m[j][i] = a[j][0] * b[0][i] + a[j][1] * b[1][i] + a[j][2] * b[2][i] + a[j][3] * b[3][i];
+        m[j][i] = b[j][0] * a[0][i] + b[j][1] * a[1][i] + b[j][2] * a[2][i] + b[j][3] * a[3][i];
       }
     }
     rot.x.x = m[0][0]; rot.x.y = m[0][1]; rot.x.z = m[0][2]; rot.x.w = 0.0f;

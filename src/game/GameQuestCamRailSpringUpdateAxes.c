@@ -94,7 +94,7 @@ slerpDone:
   (void)slerp;
 
   /* Rotation matrix of the first node's quaternion: left/right product matrices multiplied
-     (vmmul.q E000, E200, E100: rot = left * right^T), last row and column identity. */
+     (vmmul.q E000, E200, E100: rot = left * right), last row and column identity. */
   x = quatA[0];
   y = quatA[1];
   z = quatA[2];
@@ -133,8 +133,8 @@ slerpDone:
   right[3][3] = w;
   for (c = 0; c < 4; c++) {
     for (r = 0; r < 4; r++) {
-      rot[c][r] = left[0][r] * right[0][c] + left[1][r] * right[1][c] +
-                  left[2][r] * right[2][c] + left[3][r] * right[3][c];
+      rot[c][r] = left[0][r] * right[c][0] + left[1][r] * right[c][1] +
+                  left[2][r] * right[c][2] + left[3][r] * right[c][3];
     }
   }
   /* vidt.q R003 / vidt.q C030 */

@@ -3,8 +3,8 @@
 
 /* Draws one placed object of a `.fab` 2D animation clip, mutually recursive with
    `GfxFabClipDraw`: combines the object's 4x4 transform with `parentMtx` (the VFPU
-   `vmmul.q M000, M100, M200`: element `[c][r]` of the result is the dot product of row `r` of
-   `parentMtx` with row `c` of `transform`, as stored), multiplies its colour by
+   `vmmul.q M000, M100, M200`, M100 = `parentMtx`, M200 = `transform`: the row-major product
+   `transform * parentMtx`, element `[r][c]` = sum over k of `transform[r][k] * parentMtx[k][c]`), multiplies its colour by
    `color` and adds `colorAdd` to its additive colour. A nested clip (definition kind `ref[6]` 2)
    returns `GfxFabClipDraw` of `subClip` with the combined matrix and colours. Otherwise it
    emits into `list`: the world matrix (WORLDMATRIXNUMBER 0 + 12 WORLDMATRIXDATA words), material
@@ -33,11 +33,11 @@ u32 *GfxFabObjectDraw(void *obj, u32 *list, const float *parentMtx, void *color,
   const void *uvs;
   int i, k;
 
-  /* vmmul.q M000, M100 (parentMtx), M200 (transform) */
+  /* vmmul.q M000, M100 (parentMtx), M200 (transform): mtx = transform * parentMtx (row-major). */
   for (i = 0; i < 4; i++) {
     for (k = 0; k < 4; k++) {
-      mtx.f[i * 4 + k] = parentMtx[k * 4 + 0] * o->transform[i][0] + parentMtx[k * 4 + 1] * o->transform[i][1] +
-                         parentMtx[k * 4 + 2] * o->transform[i][2] + parentMtx[k * 4 + 3] * o->transform[i][3];
+      mtx.f[i * 4 + k] = o->transform[i][0] * parentMtx[0 * 4 + k] + o->transform[i][1] * parentMtx[1 * 4 + k] +
+                         o->transform[i][2] * parentMtx[2 * 4 + k] + o->transform[i][3] * parentMtx[3 * 4 + k];
     }
   }
   for (i = 0; i < 4; i++) {
