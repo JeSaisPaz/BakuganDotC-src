@@ -7,11 +7,11 @@
 
 void GameFieldRestoreReturnLocation(CoreTask *task)
 {
-  GameFieldPlacedChar *rec = g_gameEventLocationBlock[0];
+  GameFieldPlacedChar *rec = g_gameEventLocationBlock.placed[0];
 
-  rec->pos[0] = g_gameReturnLocationPos[0];
-  rec->pos[1] = g_gameReturnLocationPos[1];
-  rec->pos[2] = g_gameReturnLocationPos[2];
-  rec->rot[1] = g_gameReturnLocationHeading;
+  rec->pos[0] = g_gameEventLocationBlock.returnPos[0];
+  rec->pos[1] = g_gameEventLocationBlock.returnPos[1];
+  rec->pos[2] = g_gameEventLocationBlock.returnPos[2];
+  rec->rot[1] = g_gameEventLocationBlock.returnHeading;
   GameFieldCameraSnapQuestCam((GameFieldCamera *)((GameFieldTask *)task)->camera);
 }

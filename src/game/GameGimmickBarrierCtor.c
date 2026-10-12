@@ -78,7 +78,7 @@ CoreObject *GameGimmickBarrierCtor(GameGimmickBarrier *obj, s32 kind, void *reco
     *dot = '\0';
   }
   rec = (GameGimmickRecord *)obj->base.record;
-  sprintf(suffix, "_col_f%d_%02d_%02d.ctc", g_gameEventFlags[0], g_gameEventFlags[2],
+  sprintf(suffix, "_col_f%d_%02d_%02d.ctc", g_gameEventState.flags[0], g_gameEventState.flags[2],
           rec->barrierColIndex);
   strcat(name, suffix);
 

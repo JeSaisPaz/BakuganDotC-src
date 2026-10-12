@@ -29,11 +29,11 @@ void GameFieldRestoreProgress(void)
     if (counter < 100) {
       capped = counter;
     }
-    g_gameEventFlags[5] = capped;
+    g_gameEventState.flags[5] = capped;
   }
   else {
     src = (const u32 *)SaveGetProfile()->data->eventFlags;
-    dst = (u32 *)g_gameEventFlags;
+    dst = (u32 *)g_gameEventState.flags;
     for (i = 0x21; i != 0; i--) {
       dst[0] = src[0];
       dst[1] = src[1];
@@ -41,7 +41,7 @@ void GameFieldRestoreProgress(void)
       src += 2;
     }
     src = (const u32 *)SaveGetProfile()->data->unlockFlags;
-    dst = (u32 *)g_gameUnlockFlags;
+    dst = (u32 *)&g_gameEventState.spawn;
     dst[0] = src[0];
     dst[1] = src[1];
     dst[2] = src[2];
@@ -52,7 +52,7 @@ void GameFieldRestoreProgress(void)
     }
     else {
       g_scriptGlobalVars[1] = 0x20;
-      g_gameFieldEntryMode = 0;
+      g_gameEventLocationBlock.entryMode = 0;
     }
   }
 }

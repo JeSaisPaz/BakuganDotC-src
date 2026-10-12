@@ -7,7 +7,7 @@
 void GameFieldCharSetBuildGuardList(void *mgr)
 {
   GameFieldCharSet *set = (GameFieldCharSet *)mgr;
-  GameFieldPlacedChar **table = (GameFieldPlacedChar **)g_gameEventLocationBlock;
+  GameFieldPlacedChar **table = g_gameEventLocationBlock.placed;
   u8 count = set->placedCount;
   u8 i = 0;
 

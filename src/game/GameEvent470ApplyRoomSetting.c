@@ -7,7 +7,7 @@
 void GameEvent470ApplyRoomSetting(void)
 
 {
-  if ((*(ushort *)((u8 *)g_gameEventFlags + sizeof(g_gameEventFlags) + g_gameEventFlags[0] * 10 + g_gameEventFlags[2] * 2) & 1) != 0) {
+  if ((*(ushort *)(&g_gameEventState.roomSettings[g_gameEventState.flags[0] * 5 + g_gameEventState.flags[2]]) & 1) != 0) {
     CoreTaskFind(500);
     GameFieldEmptyHookB();
   }

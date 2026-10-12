@@ -14,7 +14,7 @@ void GameEvent470StartEntry(GameEvent470 *self, s16 entry, u8 a, u8 b)
 
   entryRec = &self->base.entries[entry];
   cmds = &self->base.commands[entryRec->first];
-  memcpy(&g_gameEventTransitionArg, g_gameEvent470TransitionDefaults, 8);
+  memcpy(&g_gameEventLocationBlock.transition, g_gameEvent470TransitionDefaults, sizeof(g_gameEventLocationBlock.transition));
   self->talkA = a;
   self->talkB = b;
   GameEventActionListRemoveKind(self->base.actions, 4);

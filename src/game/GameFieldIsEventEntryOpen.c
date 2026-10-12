@@ -12,7 +12,7 @@ s32 GameFieldIsEventEntryOpen(CoreTask *task, u16 id)
   s32 flag;
   u32 set;
 
-  bits = (u32 *)&g_gameEventFlags[8];
+  bits = (u32 *)&g_gameEventState.flags[8];
   entry = (u16 *)GameFieldGetEventEntry(task, id);
   set = 0;
   flag = entry[2];

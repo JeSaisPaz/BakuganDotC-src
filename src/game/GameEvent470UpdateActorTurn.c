@@ -29,7 +29,7 @@ void GameEvent470UpdateActorTurn(GameEvent470 *self)
   case 0:
     self->turnFrame = 0;
     self->actors[self->talkB].endRot[1] = self->turnHeading;
-    if (g_gameEventTransitionKind == 0) {
+    if (g_gameEventLocationBlock.transition.kind == 0) {
       cam = (GameFieldCamera *)g_gfxActiveCamera;
       if (cam->mode != 0) {
         GameFieldCameraBeginBlendToFollow(cam);

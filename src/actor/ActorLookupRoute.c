@@ -12,7 +12,7 @@ void ActorLookupRoute(Actor *self)
 
   place = (ActorNpcPlacement *)self->placement;
   if (place != NULL && self->route == NULL && place->routeMode == 1) {
-    sprintf(name, "f%01d_%02d_%03d.nmt", g_gameEventFlags[0], g_gameEventFlags[2], place->routeIndex);
+    sprintf(name, "f%01d_%02d_%03d.nmt", g_gameEventState.flags[0], g_gameEventState.flags[2], place->routeIndex);
     self->route = CorePackChainFind(g_ioLzsPackages, name);
   }
 }

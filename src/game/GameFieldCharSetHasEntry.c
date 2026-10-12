@@ -5,7 +5,7 @@
 
 s32 GameFieldCharSetHasEntry(void *mgr, u8 entry)
 {
-  GameFieldPlacedChar **table = (GameFieldPlacedChar **)g_gameEventLocationBlock;
+  GameFieldPlacedChar **table = g_gameEventLocationBlock.placed;
   u8 i = 0;
 
   do {

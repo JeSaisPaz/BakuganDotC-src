@@ -10,7 +10,7 @@ void *GameFieldGetEventEntry(CoreTask *task, u16 id)
   u32 *table = ((GameFieldTask *)task)->eventTable;
 
   if (table == NULL) {
-    return g_gameEventDefaultTables[g_gameEventFlags[0]] + id * 8;
+    return g_gameEventDefaultTables[g_gameEventState.flags[0]] + id * 8;
   }
   if (id < table[1]) {
     return &table[2 + id * 2];

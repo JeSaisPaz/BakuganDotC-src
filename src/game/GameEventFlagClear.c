@@ -13,11 +13,11 @@ void GameEventFlagClear(u32 id)
   id &= 0xffff;
   if (id < 2000) {
     if (GameEventFlagInRange(2, (u16)id) != 0) {
-      n = g_gameEventFlags[5] - 1;
-      g_gameEventFlags[5] = (n >= 0) ? n : 0;
+      n = g_gameEventState.flags[5] - 1;
+      g_gameEventState.flags[5] = (n >= 0) ? n : 0;
       return;
     }
-    bits = (u32 *)&g_gameEventFlags[8];
+    bits = (u32 *)&g_gameEventState.flags[8];
     bits[(s32)id >> 5] &= ~(1 << (id & 0x1f));
   }
 }

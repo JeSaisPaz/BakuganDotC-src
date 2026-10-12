@@ -44,29 +44,29 @@ void GameFieldPhaseMain(CoreTask *task)
     GameFieldPlayStageBgm();
     field->subState = 1;
     returned = 0;
-    mode = g_gameFieldEntryMode;
+    mode = g_gameEventLocationBlock.entryMode;
     if (mode == 1) {
-      rec = ((GameFieldPlacedChar **)g_gameEventLocationBlock)[0];
-      ((u32 *)g_gameUnlockFlags)[0] = rec->pos[0];
-      ((u32 *)g_gameUnlockFlags)[1] = rec->pos[1];
-      ((u32 *)g_gameUnlockFlags)[2] = rec->pos[2];
-      ((s16 *)g_gameUnlockFlags)[6] = rec->rot[1];
+      rec = g_gameEventLocationBlock.placed[0];
+      g_gameEventState.spawn.pos[0] = rec->pos[0];
+      g_gameEventState.spawn.pos[1] = rec->pos[1];
+      g_gameEventState.spawn.pos[2] = rec->pos[2];
+      g_gameEventState.spawn.heading = rec->rot[1];
     }
     else if (mode == 2) {
       profile = SaveGetProfile();
-      if (profile->data->stageStates[g_scriptGlobalVars[1]] == 2 && g_gameTransitionParam != -1) {
-        GameFieldReturnToLocation(task, g_gameTransitionParam, g_gameEventTransitionActor);
+      if (profile->data->stageStates[g_scriptGlobalVars[1]] == 2 && g_gameEventLocationBlock.transition.param != -1) {
+        GameFieldReturnToLocation(task, g_gameEventLocationBlock.transition.param, g_gameEventLocationBlock.transition.actor);
         returned = 1;
       }
       if (returned) {
         field->subState = 4;
       }
       else {
-        rec = ((GameFieldPlacedChar **)g_gameEventLocationBlock)[0];
-        ((u32 *)g_gameUnlockFlags)[0] = rec->pos[0];
-        ((u32 *)g_gameUnlockFlags)[1] = rec->pos[1];
-        ((u32 *)g_gameUnlockFlags)[2] = rec->pos[2];
-        ((s16 *)g_gameUnlockFlags)[6] = rec->rot[1];
+        rec = g_gameEventLocationBlock.placed[0];
+        g_gameEventState.spawn.pos[0] = rec->pos[0];
+        g_gameEventState.spawn.pos[1] = rec->pos[1];
+        g_gameEventState.spawn.pos[2] = rec->pos[2];
+        g_gameEventState.spawn.heading = rec->rot[1];
       }
     }
     else {
@@ -77,7 +77,7 @@ void GameFieldPhaseMain(CoreTask *task)
         g_gameFieldReturnKind = 0;
       }
     }
-    g_gameFieldEntryMode = 0;
+    g_gameEventLocationBlock.entryMode = 0;
     if (cam->questCam != NULL) {
       for (i = 0; i < 120; i++) {
         GameFieldCameraUpdateQuestCam(cam);
@@ -144,7 +144,7 @@ void GameFieldPhaseMain(CoreTask *task)
     }
     /* fall through */
   case 0x20:
-    switch (g_gameEventTransitionKind) {
+    switch (g_gameEventLocationBlock.transition.kind) {
     case 0:
       GameFieldEndEventView(task);
       if (field->returnedFlag == 0) {
@@ -153,7 +153,7 @@ void GameFieldPhaseMain(CoreTask *task)
       field->subState = 2;
       break;
     case 1:
-      g_gameFieldEntryMode = 2;
+      g_gameEventLocationBlock.entryMode = 2;
       GameFieldSaveReturnLocationAndLeave(task);
       field->subState = 0x18;
       break;
@@ -162,7 +162,7 @@ void GameFieldPhaseMain(CoreTask *task)
       field->subState = 0x18;
       break;
     case 3:
-      g_gameFieldEntryMode = 1;
+      g_gameEventLocationBlock.entryMode = 1;
       field->leaveRequest = 10;
       field->subState = 0x18;
       break;
@@ -171,12 +171,12 @@ void GameFieldPhaseMain(CoreTask *task)
       field->subState = 0x18;
       break;
     case 5:
-      g_gameFieldEntryMode = 1;
+      g_gameEventLocationBlock.entryMode = 1;
       field->leaveRequest = 0xc;
       field->subState = 0x18;
       break;
     case 6:
-      g_gameFieldEntryMode = 1;
+      g_gameEventLocationBlock.entryMode = 1;
       field->leaveRequest = 0x10;
       field->subState = 0x18;
       break;
@@ -227,7 +227,7 @@ void GameFieldPhaseMain(CoreTask *task)
   case 11:
     /* caught: frame the catching guard and let the alarm ring */
     field->eventView = 1;
-    field->eventViewTimer = (g_gameEventFlags[5] != 0) ? 50 : 90;
+    field->eventViewTimer = (g_gameEventState.flags[5] != 0) ? 50 : 90;
     field->alarmTimer = 60;
     if (field->caughtSlot == 0xff) {
       field->talkPartner = NULL;
@@ -238,10 +238,10 @@ void GameFieldPhaseMain(CoreTask *task)
       GameFieldCameraBeginTalkViewWith(cam, partner);
       slot = &((const VtblEntry *)partner->base.base.vtable)[12];
       if (((GameFieldPartnerTalkFn)slot->fn)((u8 *)partner + slot->delta) != 0) {
-        duration = (g_gameEventFlags[5] != 0) ? 70 : 130;
+        duration = (g_gameEventState.flags[5] != 0) ? 70 : 130;
       }
       else {
-        duration = (g_gameEventFlags[5] != 0) ? 60 : 110;
+        duration = (g_gameEventState.flags[5] != 0) ? 60 : 110;
       }
       field->eventViewTimer = duration;
     }
@@ -280,7 +280,7 @@ void GameFieldPhaseMain(CoreTask *task)
     }
     break;
   case 13:
-    if (g_gameEventFlags[5] != 0) {
+    if (g_gameEventState.flags[5] != 0) {
       field->eventViewTimer = 8;
       field->subState = 0x13;
     }
@@ -366,7 +366,7 @@ void GameFieldPhaseMain(CoreTask *task)
     break;
   case 21:
     if (!GameEventIsBusy(&field->events->base)) {
-      g_gameEventFlags[5]--;
+      g_gameEventState.flags[5]--;
       profile = SaveGetProfile();
       profile->data->fieldCounter--;
       if (profile->data->fieldCounter < 0) {
@@ -432,7 +432,7 @@ void GameFieldPhaseMain(CoreTask *task)
       field->subState = 0;
       break;
     case 0xc:
-      g_scriptGlobalVars[1] = g_gameEventFlags[0] * 4 + g_gameEventFlags[2];
+      g_scriptGlobalVars[1] = g_gameEventState.flags[0] * 4 + g_gameEventState.flags[2];
       field->phase = 3;
       field->subState = 0;
       break;
@@ -510,7 +510,7 @@ void GameFieldPhaseMain(CoreTask *task)
         GameFieldCommitStageProgress(task);
       }
       else {
-        g_gameFieldEntryMode = 1;
+        g_gameEventLocationBlock.entryMode = 1;
       }
       UiFieldHudDisable();
       field->phase = 3;

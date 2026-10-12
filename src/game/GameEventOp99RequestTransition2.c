@@ -10,7 +10,7 @@ void GameEventOp99RequestTransition2(GameEvent *self, u8 flag, s16 arg)
   if ((self->flags & 1) != 0) {
     self->flags = self->flags & 0xfb;
   }
-  g_gameEventTransitionKind = 2;
+  g_gameEventLocationBlock.transition.kind = 2;
   return;
 }
 

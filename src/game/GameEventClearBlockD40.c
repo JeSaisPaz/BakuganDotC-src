@@ -6,7 +6,7 @@
 void GameEventClearBlockD40(void)
 
 {
-  memset(&g_gameEventLocationBlock,0,0x9c);
+  memset(&g_gameEventLocationBlock, 0, sizeof(g_gameEventLocationBlock));
   return;
 }
 

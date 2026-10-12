@@ -11,7 +11,7 @@ void UiAdvSelectMarkChosen(UiAdvSelect *self)
   u32 *bits;
 
   id = g_advSelectEventFlagIds[self->cursor] & 0xffff;
-  bits = (u32 *)&g_gameEventFlags[8];
+  bits = (u32 *)&g_gameEventState.flags[8];
   bits[(s32)id >> 5] |= 1u << (id & 0x1f);
-  *(u32 *)&g_gameEventFlags[0x7c] |= 1;
+  *(u32 *)&g_gameEventState.flags[0x7c] |= 1;
 }

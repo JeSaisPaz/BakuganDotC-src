@@ -34,7 +34,7 @@ void GameFieldCameraLoadQuestCam(GameFieldCamera *cam)
 
   pathFile.data = NULL;
   pathFile.size = 0;
-  sprintf(name, "f%d_quest_%02d_00.ptlb", g_gameEventFlags[0], g_gameEventFlags[2]);
+  sprintf(name, "f%d_quest_%02d_00.ptlb", g_gameEventState.flags[0], g_gameEventState.flags[2]);
   pathFile.data = CorePackChainFind(g_ioLzsPackages, name);
   if (pathFile.data == NULL) {
     return;
@@ -44,7 +44,7 @@ void GameFieldCameraLoadQuestCam(GameFieldCamera *cam)
   camFile.data = NULL;
   camFile.size = 0;
   camFile.f8 = 50.0f;
-  sprintf(name, "f%d_quest_%02d_00.cptb", g_gameEventFlags[0], g_gameEventFlags[2]);
+  sprintf(name, "f%d_quest_%02d_00.cptb", g_gameEventState.flags[0], g_gameEventState.flags[2]);
   camFile.data = CorePackChainFind(g_ioLzsPackages, name);
   if (camFile.data == NULL) {
     return;

@@ -124,7 +124,7 @@ void ActorNpcStateCatchPlayer(ActorNpc *self)
       return;
     }
     player->base.alerted = 1;
-    if (g_gameEventFlags[5] != 0) {
+    if (g_gameEventState.flags[5] != 0) {
       return;
     }
     ActorPlayerTakePenalty(player);

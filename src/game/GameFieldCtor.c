@@ -173,8 +173,8 @@ CoreTask *GameFieldCtor(CoreTask *task)
     SaveGetProfile()->data->curBakugan = 1;
   }
   /* current stage number split into story chapter / sub-stage */
-  g_gameEventFlags[0] = (u8)(g_scriptGlobalVars[1] / 4);
-  g_gameEventFlags[2] = (u8)(g_scriptGlobalVars[1] % 4);
+  g_gameEventState.flags[0] = (u8)(g_scriptGlobalVars[1] / 4);
+  g_gameEventState.flags[2] = (u8)(g_scriptGlobalVars[1] % 4);
 
   pos[2] = 0.0f;
   pos[1] = 0.0f;

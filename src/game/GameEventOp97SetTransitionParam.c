@@ -8,7 +8,7 @@ void GameEventOp97SetTransitionParam(GameEvent *self, s16 arg, s16 unused)
 
 {
   
-  g_gameTransitionParam = arg;
+  g_gameEventLocationBlock.transition.param = arg;
   return;
 }
 

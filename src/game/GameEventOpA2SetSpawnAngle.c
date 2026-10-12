@@ -7,5 +7,5 @@
 void GameEventOpA2SetSpawnAngle(GameEvent *self, u8 flag, s16 arg)
 
 {
-  ((u16 *)&g_gameEventState)[0xbc] = (u16)(s32)((float)(s32)arg * 65536.0f * 0.0027777778f);
+  g_gameEventState.spawn.heading = (u16)(s32)((float)(s32)arg * 65536.0f * 0.0027777778f);
 }

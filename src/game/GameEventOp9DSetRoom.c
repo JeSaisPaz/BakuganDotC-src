@@ -7,8 +7,8 @@
 void GameEventOp9DSetRoom(GameEvent *self, u8 flag, s16 arg)
 
 {
-  g_gameEventFlags[1] = flag;
-  g_gameEventFlags[2] = flag;
+  g_gameEventState.flags[1] = flag;
+  g_gameEventState.flags[2] = flag;
   return;
 }
 

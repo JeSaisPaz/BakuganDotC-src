@@ -76,7 +76,7 @@ void GameFieldGetStoryHint(CoreTask *task, s32 *outChapter, s16 *outHint)
 
     *outChapter = 0;
     *outHint = 0;
-    bits = (const u32 *)&g_gameEventFlags[8];
+    bits = (const u32 *)&g_gameEventState.flags[8];
     if ((*bits >> 2) & 1) {
         *outChapter = 1;
         *outHint = 1;

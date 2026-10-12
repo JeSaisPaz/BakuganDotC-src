@@ -274,10 +274,10 @@ void GameFieldPhaseLoad(CoreTask *task)
                                       &extra->velocity[1]);
     }
     BtlSetAnimPhaseCounter(0x1b);
-    sprintf(name, "f%d.eset", g_gameEventFlags[0]);
+    sprintf(name, "f%d.eset", g_gameEventState.flags[0]);
     eset = CorePackChainFind(g_ioLzsPackages, name);
     field->eventTable = eset;
-    GameFieldLoadObjects(task, g_gameEventFlags[0], g_gameEventFlags[2]);
+    GameFieldLoadObjects(task, g_gameEventState.flags[0], g_gameEventState.flags[2]);
     ActorSetList(&field->npcs);
     ActorStageObjSystemInit();
     ActorBallSetList(&field->ballList);
@@ -294,7 +294,7 @@ void GameFieldPhaseLoad(CoreTask *task)
       charSetResult = charSet;
     }
     field->charSet = charSetResult;
-    GameFieldCharSetLoadFresh(charSetResult, g_gameEventFlags[0], g_gameEventFlags[2], 0);
+    GameFieldCharSetLoadFresh(charSetResult, g_gameEventState.flags[0], g_gameEventState.flags[2], 0);
     ActorFindPlayer();
     break;
 
@@ -343,7 +343,7 @@ void GameFieldPhaseLoad(CoreTask *task)
     events = (GameEvent470 *)CoreTaskCreate(0x1d6, 100);
     field->events = events;
     GameEvent470LoadScript(events, 0, 0, 0, (s32)(uintptr_t)&g_gameEventState, 0, /* bdc: ptr-narrow ok: the callee never reads a4 */
-                           g_gameEventFlags[0], g_gameEventFlags[2]);
+                           g_gameEventState.flags[0], g_gameEventState.flags[2]);
     field->subState = field->subState + 1;
     break;
 

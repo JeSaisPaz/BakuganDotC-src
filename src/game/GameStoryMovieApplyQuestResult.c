@@ -27,8 +27,8 @@ void GameStoryMovieApplyQuestResult(GameStoryMovie *self)
   if (self->questMode == 0) {
     return;
   }
-  g_gameEventFlags[0] = g_scriptGlobalVars[1] / 4;
-  g_gameEventFlags[2] = g_scriptGlobalVars[1] % 4;
+  g_gameEventState.flags[0] = g_scriptGlobalVars[1] / 4;
+  g_gameEventState.flags[2] = g_scriptGlobalVars[1] % 4;
   request = 0;
   data = self->questData;
   if (self->questMode == 2 && data != NULL && data->flagCount != 0) {
@@ -51,22 +51,22 @@ void GameStoryMovieApplyQuestResult(GameStoryMovie *self)
   }
   if (nextMode <= 0) {
     if (nextMode >= 0) {
-      g_gameFieldEntryMode = 1;
+      g_gameEventLocationBlock.entryMode = 1;
       g_scriptGlobalVars[1] = 0x20;
     }
   }
   else if (nextMode < 2) {
     if (SaveGetProfile()->data->playthrough > 0) {
-      g_gameFieldEntryMode = 1;
+      g_gameEventLocationBlock.entryMode = 1;
       g_scriptGlobalVars[1] = 0x20;
     }
     else {
-      g_gameFieldEntryMode = 1;
+      g_gameEventLocationBlock.entryMode = 1;
       request = 10;
     }
   }
   else if (nextMode < 3) {
-    g_gameFieldEntryMode = 2;
+    g_gameEventLocationBlock.entryMode = 2;
     stage = g_scriptGlobalVars[1];
     request = 2;
     GameStageGetInfo(info, (u8)(stage / 4), (u8)(stage % 4));

@@ -29,7 +29,7 @@ void GameFieldSpawnPlacedActor(void *mgr, u8 slot, u8 entryIndex, void *entry, s
 {
   GameFieldCharSet *set = (GameFieldCharSet *)mgr;
   const CharSetEntryBody *e = (const CharSetEntryBody *)entry;
-  GameFieldPlacedChar **table = (GameFieldPlacedChar **)g_gameEventLocationBlock;
+  GameFieldPlacedChar **table = g_gameEventLocationBlock.placed;
   GameFieldPlacedChar *placed;
   GameFieldPlacedChar *rec;
   GameFieldPlacement *actor;

@@ -4432,6 +4432,59 @@ typedef struct GameEventFadeAction {
     u8 skip;                   /* +0x0b skip mode: begin does not seed the record from the fader */
 } GameEventFadeAction;
 
+typedef struct GameFieldPlacedChar {
+    s32 pos[3];                /* +0x00 position (20.12), set by GameEventActorRecordFinish */
+    s16 rot[3];                /* +0x0c angles (1/65536 turn), set by GameEventActorRecordFinish */
+    u8 _unk12;
+    u8 slot;                   /* +0x13 index in the placed table, renumbered by GameFieldCharSetRemoveActor */
+    const VtblEntry *vtbl;     /* +0x14 g_gameFieldPlacementVtbl (GameFieldPlacementCtor) */
+    u8 work18[0xc];            /* +0x18 cleared by GameFieldPlacementCtor */
+    s32 work24;                /* +0x24 */
+    s32 work28;                /* +0x28 */
+    s16 work2c;                /* +0x2c */
+    s16 work2e;                /* +0x2e */
+    s16 eventId;      /* +0x30 follow-up event id (GameFieldHandlePlayerCaught); -1 at construction */
+    s16 work32;                /* +0x32 */
+    s16 id34;                /* +0x34 -1 at construction */
+    u8 modelCode;              /* +0x36 character code, see ActorModelIdFromCode */
+    u8 isGuard;                /* +0x37 nonzero for guard characters */
+    u8 byte38;                 /* +0x38 */
+    u8 routeMode;              /* +0x39 0 none, 1 follow route (ActorSetRoute) */
+    u8 byte3a;                 /* +0x3a */
+    u8 routeIndex;             /* +0x3b route index (not set by GameFieldPlacementCtor) */
+    u8 entry;                  /* +0x3c character-set entry it was spawned from */
+    u8 blend;                  /* +0x3d 2 at construction */
+    u8 entryParam3e;                 /* +0x3e copied from char-set entry byte +0x13 (GameFieldSpawnPlacedActor) */
+    u8 byte3f;                 /* +0x3f */
+    u8 frozenFlag;             /* +0x40 cleared by ActorNpcFreeze */
+    u8 byte41;                 /* +0x41 */
+    u8 entryParam42;                 /* +0x42 copied from char-set entry byte +0x17 */
+    u8 byte43;                 /* +0x43 */
+    u8 mode44;                 /* +0x44 6 at construction */
+    u8 entryParam45;                 /* +0x45 low byte of char-set entry half +0x10 */
+    u8 flags46;                /* +0x46 flag bits; ctor sets bit 0, clears bits 1..7 */
+    u8 flags47;                /* +0x47 flag bits; ctor clears bit 0, sets bits 1 and 2 */
+} GameFieldPlacedChar;
+
+typedef struct GameEventTransition {
+    s16 arg;      /* 0x0 parameter of transition kind 1 (opcode 0x95) */
+    s16 param;    /* 0x2 transition parameter (opcode 0x97; -1 none) */
+    u8 kind;      /* 0x4 requested transition kind (1..6, 0 none) */
+    u8 byte5;     /* 0x5 byte set by opcode 0x98 */
+    u8 actor;     /* 0x6 transition actor index (opcode 0x96) */
+    u8 flags;     /* 0x7 bit 0 from opcode 0x9a, bit 1 from opcode 0x9b */
+} GameEventTransition;
+
+typedef struct GameEventLocationBlock {
+    GameFieldPlacedChar *placed[32];     /* 0x00 placement record per slot (0 = player) */
+    GameEventTransition transition;      /* 0x80 pending field transition */
+    u32 returnPos[3];                    /* 0x88 saved position of the player's record */
+    s16 returnHeading;                   /* 0x94 saved heading (record +0xe) */
+    u8 unk96;                            /* 0x96 */
+    u8 entryMode;                        /* 0x97 how the next field start places the player: 0 restore if requested, 1 current record, 2 return location */
+    u32 unk98;                           /* 0x98 */
+} GameEventLocationBlock;
+
 typedef struct GameEventProp {
     void *model;               /* +0x00 model, null until created */
     s32 scaleX;                /* +0x04 1/4096 fixed point */
@@ -4449,6 +4502,21 @@ typedef struct GameEventPropTween {
     u8 kind;                   /* +0x0a 0 move, 1 rotate, 2 scale, 3 motion wait */
     u8 target;                 /* +0x0b prop slot returned by slot 6 */
 } GameEventPropTween;
+
+typedef struct GameEventSpawn {
+    s32 pos[3];    /* 0x00 position (20.12 fixed point) */
+    s16 heading;   /* 0x0c heading (65536 per turn) */
+    u16 _pad0e;    /* 0x0e */
+} GameEventSpawn;
+
+typedef struct GameEventState {
+    u32 unk00[9];              /* 0x000 not read by name; its address is GameEvent470LoadScript's unused a4 */
+    u8 flags[0x108];           /* 0x024 story event block saved in the profile (eventFlags): [0] area, [1]/[2] room, [5] event counter, +6 halfword, flag bitset from [8] */
+    u16 roomSettings[30];      /* 0x12c per-room words, [area * 5 + room]: bit 0 set, value in bits 1.. (opcodes 0xae/0xaf) */
+    s8 fieldFlags;             /* 0x168 bit 0 set by event opcode 0xb0 */
+    u8 _pad169[3];             /* 0x169 */
+    GameEventSpawn spawn;      /* 0x16c player location, saved in the profile as unlockFlags */
+} GameEventState;
 
 typedef struct GameFieldAux {
     CoreNode base;             /* +0x00 IoLzsPackage header; vtable at +0x20, entry 1: deleting destructor */
@@ -4647,40 +4715,6 @@ typedef struct GameFieldMovieTask {
     u8 _pad28[4];       /* +0x28 */
     const void *cueTable; /* +0x2c voice cue table */
 } GameFieldMovieTask;
-
-typedef struct GameFieldPlacedChar {
-    s32 pos[3];                /* +0x00 position (20.12), set by GameEventActorRecordFinish */
-    s16 rot[3];                /* +0x0c angles (1/65536 turn), set by GameEventActorRecordFinish */
-    u8 _unk12;
-    u8 slot;                   /* +0x13 index in the placed table, renumbered by GameFieldCharSetRemoveActor */
-    const VtblEntry *vtbl;     /* +0x14 g_gameFieldPlacementVtbl (GameFieldPlacementCtor) */
-    u8 work18[0xc];            /* +0x18 cleared by GameFieldPlacementCtor */
-    s32 work24;                /* +0x24 */
-    s32 work28;                /* +0x28 */
-    s16 work2c;                /* +0x2c */
-    s16 work2e;                /* +0x2e */
-    s16 eventId;      /* +0x30 follow-up event id (GameFieldHandlePlayerCaught); -1 at construction */
-    s16 work32;                /* +0x32 */
-    s16 id34;                /* +0x34 -1 at construction */
-    u8 modelCode;              /* +0x36 character code, see ActorModelIdFromCode */
-    u8 isGuard;                /* +0x37 nonzero for guard characters */
-    u8 byte38;                 /* +0x38 */
-    u8 routeMode;              /* +0x39 0 none, 1 follow route (ActorSetRoute) */
-    u8 byte3a;                 /* +0x3a */
-    u8 routeIndex;             /* +0x3b route index (not set by GameFieldPlacementCtor) */
-    u8 entry;                  /* +0x3c character-set entry it was spawned from */
-    u8 blend;                  /* +0x3d 2 at construction */
-    u8 entryParam3e;                 /* +0x3e copied from char-set entry byte +0x13 (GameFieldSpawnPlacedActor) */
-    u8 byte3f;                 /* +0x3f */
-    u8 frozenFlag;             /* +0x40 cleared by ActorNpcFreeze */
-    u8 byte41;                 /* +0x41 */
-    u8 entryParam42;                 /* +0x42 copied from char-set entry byte +0x17 */
-    u8 byte43;                 /* +0x43 */
-    u8 mode44;                 /* +0x44 6 at construction */
-    u8 entryParam45;                 /* +0x45 low byte of char-set entry half +0x10 */
-    u8 flags46;                /* +0x46 flag bits; ctor sets bit 0, clears bits 1..7 */
-    u8 flags47;                /* +0x47 flag bits; ctor clears bit 0, sets bits 1 and 2 */
-} GameFieldPlacedChar;
 
 typedef struct GameFieldPlacementBase {
     u8 pos[0xc];           /* +0 */
@@ -20075,20 +20109,15 @@ extern __typeof__(u16 [7]) g_gameEventDefaultFlags;
 extern __typeof__(u8 *[10]) g_gameEventDefaultTables;
 extern __typeof__(u32[2]) g_gameEventDummyEntry;
 extern __typeof__(VtblEntry[7]) g_gameEventFadeActionVtbl;
-extern __typeof__(s8) g_gameEventFieldFlags;
 extern __typeof__(s64) g_gameEventFixedHalf;
 extern __typeof__(s64) g_gameEventFixedRound64;
 extern __typeof__(s64) g_gameEventFixedScale;
 extern __typeof__(u16[8]) g_gameEventFlagClassBase;
 extern __typeof__(u16[8]) g_gameEventFlagClassLimit;
-extern __typeof__(GameFieldPlacedChar *[32]) g_gameEventLocationBlock;
+extern __typeof__(GameEventLocationBlock) g_gameEventLocationBlock;
 extern __typeof__(VtblEntry[7]) g_gameEventPropTweenVtbl;
 extern __typeof__(u32[10]) g_gameEventSeTable;
-extern __typeof__(u8) g_gameEventState;
-extern __typeof__(u8) g_gameEventTransitionActor;
-extern __typeof__(s16) g_gameEventTransitionArg;
-extern __typeof__(u8) g_gameEventTransitionFlags;
-extern __typeof__(u8) g_gameEventTransitionKind;
+extern __typeof__(GameEventState) g_gameEventState;
 extern __typeof__(u32[21]) g_gameEventVoiceIds;
 extern __typeof__(VtblEntry[14]) g_gameEventVtbl;
 extern __typeof__(u16) g_gameFieldAngle904;
@@ -20124,7 +20153,6 @@ extern __typeof__(s32) g_gameFieldCharAngleWord;
 extern __typeof__(GameFieldCharSet *) g_gameFieldCharSet;
 extern __typeof__(MemberFnPtr[8]) g_gameFieldDrawFns;
 extern __typeof__(s8) g_gameFieldEntryId;
-extern __typeof__(u8) g_gameFieldEntryMode;
 extern __typeof__(s32) g_gameFieldJetStageCount;
 extern __typeof__(u32[17][2]) g_gameFieldJetStageTable;
 extern __typeof__(VtblEntry[7]) g_gameFieldMovieTaskVtbl;
@@ -20222,8 +20250,6 @@ extern __typeof__(AxisVectorConsts) g_gameQuestPathAxisConsts;
 extern __typeof__(GameQuestPathLink *) g_gameQuestPathNullLink;
 extern __typeof__(GameQuestPathNode *) g_gameQuestPathNullNode;
 extern __typeof__(GameQuestPathNodeVec *) g_gameQuestPathNullSection;
-extern __typeof__(s16) g_gameReturnLocationHeading;
-extern __typeof__(u32[3]) g_gameReturnLocationPos;
 extern __typeof__(float[4]) g_gameStageClearColor;
 extern __typeof__(float[4][4]) g_gameStageColliderCallbacks;
 extern __typeof__(u8) g_gameStageExtraModelFlag;
@@ -20257,8 +20283,6 @@ extern __typeof__(const GameStoryMovieCue[913]) g_gameStoryMovieCues;
 extern __typeof__(s8[19][4][6]) g_gameStoryMovieIds;
 extern __typeof__(s32) g_gameStoryMovieSeq;
 extern __typeof__(VtblEntry[7]) g_gameStoryMovieVtbl;
-extern __typeof__(u8) g_gameTransitionByte;
-extern __typeof__(s16) g_gameTransitionParam;
 extern __typeof__(VtblEntry[2]) g_gimmickBarrierStateTable;
 extern __typeof__(VtblEntry[2]) g_gimmickCollidableStateTable;
 extern __typeof__(VtblEntry[3]) g_gimmickCorePointStateTable;
@@ -20753,10 +20777,8 @@ extern __typeof__(ScePspFVector4) g_vecW1;
 extern __typeof__(ScePspFVector4) g_vecX;
 extern __typeof__(GfxSpriteLayer *) g_worldSpriteLayerCopy;
 extern __typeof__(const char *[3]) g_arenaSfoStrings;
-extern __typeof__(u8[264]) g_gameEventFlags;
 extern __typeof__(const char *[7][3]) g_gameSfoStrings;
 extern __typeof__(const char **) g_gameSfoText;
-extern __typeof__(u8[16]) g_gameUnlockFlags;
 extern __typeof__(const char *[14]) g_languageCodes;
 extern __typeof__(const char *[14]) g_languageDirNames;
 extern __typeof__(const char *[14]) g_languageNames;

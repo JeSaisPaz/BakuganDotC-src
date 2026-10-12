@@ -11,8 +11,8 @@ void GameEventOp95RequestTransition1(GameEvent *self, s16 value, s16 arg)
   if ((self->flags & 1) != 0) {
     self->flags = self->flags & 0xfb;
   }
-  g_gameEventTransitionKind = 1;
-  g_gameEventTransitionArg = value;
+  g_gameEventLocationBlock.transition.kind = 1;
+  g_gameEventLocationBlock.transition.arg = value;
   return;
 }
 

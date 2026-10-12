@@ -10,7 +10,7 @@
 void GameEvent470SyncActorRecords(GameEvent470 *self)
 
 {
-  GameFieldPlacedChar **table = (GameFieldPlacedChar **)g_gameEventLocationBlock;
+  GameFieldPlacedChar **table = g_gameEventLocationBlock.placed;
   u8 i = 0;
 
   do {

@@ -10,8 +10,8 @@ void GameEventOp9CRequestAreaChange(GameEvent *self, u8 flag, s16 arg)
   if ((self->flags & 1) != 0) {
     self->flags = self->flags & 0xfb;
   }
-  g_gameEventTransitionKind = 5;
-  g_gameEventFlags[0] = flag;
+  g_gameEventLocationBlock.transition.kind = 5;
+  g_gameEventState.flags[0] = flag;
   return;
 }
 

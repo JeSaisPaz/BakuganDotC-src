@@ -7,10 +7,10 @@
 
 void GameFieldSaveReturnLocation(void)
 {
-  u32 *rec = *(u32 **)g_gameEventLocationBlock;
+  GameFieldPlacedChar *rec = g_gameEventLocationBlock.placed[0];
 
-  g_gameReturnLocationPos[0] = rec[0];
-  g_gameReturnLocationPos[1] = rec[1];
-  g_gameReturnLocationPos[2] = rec[2];
-  g_gameReturnLocationHeading = ((s16 *)rec)[7];
+  g_gameEventLocationBlock.returnPos[0] = rec->pos[0];
+  g_gameEventLocationBlock.returnPos[1] = rec->pos[1];
+  g_gameEventLocationBlock.returnPos[2] = rec->pos[2];
+  g_gameEventLocationBlock.returnHeading = rec->rot[1];
 }

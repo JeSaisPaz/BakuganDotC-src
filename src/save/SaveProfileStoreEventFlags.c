@@ -15,7 +15,7 @@ void SaveProfileStoreEventFlags(void)
   int i;
 
   dst = (u32 *)SaveGetProfile()->data->eventFlags;
-  src = (const u32 *)g_gameEventFlags;
+  src = (const u32 *)g_gameEventState.flags;
   for (i = 0; i < 0x21; i++) {
     dst[0] = src[0];
     dst[1] = src[1];
@@ -23,7 +23,7 @@ void SaveProfileStoreEventFlags(void)
     src += 2;
   }
   dst = (u32 *)SaveGetProfile()->data->unlockFlags;
-  src = (const u32 *)g_gameUnlockFlags;
+  src = (const u32 *)&g_gameEventState.spawn;
   dst[0] = src[0];
   dst[1] = src[1];
   dst[2] = src[2];

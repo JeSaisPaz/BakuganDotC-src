@@ -13,5 +13,5 @@ void GameEventOpA1SetSpawnZ(GameEvent *self, s16 value, s16 unused)
 
   fixed = (s32)value << 12;
   scaled = (s64)fixed << 12;
-  ((s32 *)g_gameUnlockFlags)[2] = (s32)__divdi3(scaled, g_gameFixedScale);
+  g_gameEventState.spawn.pos[2] = (s32)__divdi3(scaled, g_gameFixedScale);
 }

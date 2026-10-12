@@ -5,7 +5,7 @@
 
 void GameFieldCharSetSetActorVisible(void *mgr, u8 entry, u8 visible)
 {
-  GameFieldPlacedChar **table = (GameFieldPlacedChar **)g_gameEventLocationBlock;
+  GameFieldPlacedChar **table = g_gameEventLocationBlock.placed;
   Actor **actors = (Actor **)mgr;
   u8 count = ((GameFieldCharSet *)mgr)->placedCount;
   u8 i = 0;

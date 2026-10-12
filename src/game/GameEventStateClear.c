@@ -8,7 +8,7 @@
 void GameEventStateClear(void)
 
 {
-  memset(&g_gameEventState,0,0x17c);
+  memset(&g_gameEventState, 0, sizeof(g_gameEventState));
   GameEventFlagsSetDefaults();
   return;
 }

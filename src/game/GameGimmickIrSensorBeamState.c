@@ -54,7 +54,7 @@ void GameGimmickIrSensorBeamState(GameGimmickIrSensor *obj)
       if (player != NULL && player->base.detected == 0) {
         player->base.detected = 1;
         ActorSetState(&player->base, 9, 0);
-        if (g_gameEventFlags[5] == 0) {
+        if (g_gameEventState.flags[5] == 0) {
           ActorPlayerTakePenalty(player);
         }
         player->base.waitTimer = 0;

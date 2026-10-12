@@ -35,7 +35,7 @@ void GameGimmickCollidableDtor(GameGimmickCollidable *obj, u32 flags)
     MemFreeAligned(obj->recordCopy[i]);
     obj->recordCopy[i] = NULL;
   }
-  if (obj->noEffect == 0 && g_gameEventFlags[0] == 0 && g_gameEventFlags[2] == 0) {
+  if (obj->noEffect == 0 && g_gameEventState.flags[0] == 0 && g_gameEventState.flags[2] == 0) {
     GfxEffectStopAttached(g_worldEffectMgr, 0x56, &obj->base.base.data->rootMatrix[12]);
   }
   GameGimmickDtor(&obj->base, 0);

@@ -8,7 +8,7 @@
 void GameEvent470AllocActorRecords(GameEvent470 *self)
 
 {
-  GameFieldPlacedChar **table = (GameFieldPlacedChar **)g_gameEventLocationBlock;
+  GameFieldPlacedChar **table = g_gameEventLocationBlock.placed;
   u8 i;
 
   if (self->actors == NULL) {

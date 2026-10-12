@@ -17,16 +17,16 @@ void GameFieldEnterArea(CoreTask *task, bool reload)
 
 {
   GameFieldTask *field = (GameFieldTask *)task;
-  GameFieldPlacedChar **table = (GameFieldPlacedChar **)g_gameEventLocationBlock;
-  s32 *locPos = (s32 *)g_gameUnlockFlags;
-  s16 *locHeading = (s16 *)&g_gameUnlockFlags[0xc];
+  GameFieldPlacedChar **table = g_gameEventLocationBlock.placed;
+  s32 *locPos = g_gameEventState.spawn.pos;
+  s16 *locHeading = &g_gameEventState.spawn.heading;
   GameFieldPlacedChar *rec;
   GameFieldPlacement *player;
   const GameFieldEntryPoint *ep;
   const VtblEntry *ve;
   s32 i;
 
-  GameFieldCharSetReload(field->charSet, g_gameEventFlags[0], g_gameEventFlags[2], 1);
+  GameFieldCharSetReload(field->charSet, g_gameEventState.flags[0], g_gameEventState.flags[2], 1);
   if (reload) {
     field->objList670.tail = NULL;
     field->objList670.head = NULL;
@@ -34,11 +34,11 @@ void GameFieldEnterArea(CoreTask *task, bool reload)
     field->gimmicksTail = NULL;
     field->gimmicks = NULL;
     field->gimmickCount = 0;
-    GameFieldLoadObjects(task, g_gameEventFlags[0], g_gameEventFlags[2]);
+    GameFieldLoadObjects(task, g_gameEventState.flags[0], g_gameEventState.flags[2]);
   }
   GameFieldResetGimmickStates(task, true);
   GameEvent470LoadScript(field->events, 0, 0, 0, (s32)(uintptr_t)&g_gameEventState, 0, /* bdc: ptr-narrow ok: the callee never reads a4 */
-                         g_gameEventFlags[0], g_gameEventFlags[2]);
+                         g_gameEventState.flags[0], g_gameEventState.flags[2]);
   rec = table[0];
   if (reload) {
     for (i = 0; i < 6; i++) {

@@ -12,7 +12,7 @@ void GameEventOpAESetRoomSetting(GameEvent *self, u8 flag, s16 arg)
 
   CoreTaskFind(500);
   GameFieldEmptyHookB();
-  word = (u16 *)((u8 *)g_gameEventFlags + sizeof(g_gameEventFlags) + g_gameEventFlags[0] * 10 + g_gameEventFlags[2] * 2);
+  word = (u16 *)(&g_gameEventState.roomSettings[g_gameEventState.flags[0] * 5 + g_gameEventState.flags[2]]);
   *word = *word | 1;
   *word = (*word & 0xffff0001) | (((u16)arg & 0x7fff) << 1);
 }

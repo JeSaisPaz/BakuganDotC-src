@@ -15,7 +15,7 @@ void GameFieldCommitStageProgress(CoreTask *task)
   u32 stage;
 
   stage = g_scriptGlobalVars[1];
-  g_gameFieldEntryMode = 2;
+  g_gameEventLocationBlock.entryMode = 2;
   field->leaveRequest = 0xe;
   field->nextRequest = 2;
   SaveProfileClearPlacedHolograms();
@@ -27,11 +27,11 @@ void GameFieldCommitStageProgress(CoreTask *task)
     if (SaveGetProfile()->data->mapMovieWatched[17][1] == 0) {
       g_scriptGlobalVars[1] = 0x25;
       SaveProfileSetWord(SaveGetProfile(), 0x33, 0x25);
-      g_gameTransitionParam = *(s16 *)&g_gameEventFlags[6];
-      g_gameReturnLocationPos[0] = g_gameFieldStage37ReturnPos[0];
-      g_gameReturnLocationPos[1] = g_gameFieldStage37ReturnPos[1];
-      g_gameReturnLocationPos[2] = g_gameFieldStage37ReturnPos[2];
-      g_gameReturnLocationHeading = 0x704f;
+      g_gameEventLocationBlock.transition.param = *(s16 *)&g_gameEventState.flags[6];
+      g_gameEventLocationBlock.returnPos[0] = g_gameFieldStage37ReturnPos[0];
+      g_gameEventLocationBlock.returnPos[1] = g_gameFieldStage37ReturnPos[1];
+      g_gameEventLocationBlock.returnPos[2] = g_gameFieldStage37ReturnPos[2];
+      g_gameEventLocationBlock.returnHeading = 0x704f;
     }
     else {
       g_scriptGlobalVars[1] = 0x18;

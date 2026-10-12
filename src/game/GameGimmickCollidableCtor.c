@@ -183,7 +183,7 @@ CoreObject *GameGimmickCollidableCtor(GameGimmickCollidable *obj, s32 kind, void
 
   obj->effectActive = 0;
   obj->noEffect = noEffect;
-  if (noEffect == 0 && g_gameEventFlags[0] == 0 && g_gameEventFlags[2] == 0) {
+  if (noEffect == 0 && g_gameEventState.flags[0] == 0 && g_gameEventState.flags[2] == 0) {
     model = obj->base.base.data;
     obj->effectPos.x = model->rootMatrix[12];
     obj->effectPos.y = model->rootMatrix[13];

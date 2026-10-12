@@ -6,7 +6,7 @@
 void GameEventOp98SetTransitionByte(GameEvent *self, u8 flag, s16 arg)
 
 {
-  g_gameTransitionByte = flag;
+  g_gameEventLocationBlock.transition.byte5 = flag;
   return;
 }
 

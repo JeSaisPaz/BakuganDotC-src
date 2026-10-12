@@ -24,7 +24,7 @@ void GameFieldPhaseSave(CoreTask *task)
     CoreTaskClearFlags(field->worldMapTask, 1);
   }
   SaveProfileClearFlags(SaveGetProfile(), 0x40000000);
-  if (g_gameEventFlags[0] == 8) {
+  if (g_gameEventState.flags[0] == 8) {
     GameFieldOpenPauseMenu(task, 5);
   }
   else {

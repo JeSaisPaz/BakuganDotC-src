@@ -10,8 +10,8 @@ void GameEventOp9ARequestTransition3(GameEvent *self, u8 flag, s16 arg)
   if ((self->flags & 1) != 0) {
     self->flags = self->flags & 0xfb;
   }
-  g_gameEventTransitionKind = '\x03';
-  g_gameEventTransitionFlags = g_gameEventTransitionFlags & 0xfe | flag & 1;
+  g_gameEventLocationBlock.transition.kind = '\x03';
+  g_gameEventLocationBlock.transition.flags = g_gameEventLocationBlock.transition.flags & 0xfe | flag & 1;
   return;
 }
 

@@ -65,7 +65,7 @@ u32 GameFieldHandleInput(CoreTask *task)
     return ret;
   }
   if ((pad->pressed & 8) != 0) {
-    if (g_gameEventFlags[0] == 8) {
+    if (g_gameEventState.flags[0] == 8) {
       GameFieldOpenPauseMenu(task, 5);
     } else {
       GameFieldOpenPauseMenu(task, 4);
@@ -85,7 +85,7 @@ u32 GameFieldHandleInput(CoreTask *task)
       ((GameFieldPlacedChar *)player->base.placement)->byte3a = talk->placementSlot;
       ActorPlayerDropBall(player);
       GameFieldCharSetFreezeAll(field->charSet);
-      loc = *(GameFieldPlacedChar **)g_gameEventLocationBlock;
+      loc = g_gameEventLocationBlock.placed[0];
       GameFieldStartEvent(task, loc->eventId, 0, loc->byte3a, false);
       GameFieldCloseHud();
       ret = 5;
@@ -199,7 +199,7 @@ u32 GameFieldHandleInput(CoreTask *task)
     GameFieldCameraBeginHold((GameFieldCamera *)field->camera);
     return 0x1c;
   case 6000:
-    g_gameEventFlags[2] = (u8)(((GameGimmickRecord *)g->record)->entrySlot & 0xf);
+    g_gameEventState.flags[2] = (u8)(((GameGimmickRecord *)g->record)->entrySlot & 0xf);
     g_gameFieldEntryId = (s8)((((GameGimmickRecord *)g->record)->entrySlot & 0xf0) >> 4);
     GameFieldCharSetFreezeActor(field->charSet, 0);
     return 6;
@@ -219,7 +219,7 @@ u32 GameFieldHandleInput(CoreTask *task)
   if (entry[1] != 0) {
     entry = (u16 *)GameFieldGetEventEntry(task, GameGimmickGetRecordParam(g));
     flag = entry[1];
-    bits = (u32 *)&g_gameEventFlags[8];
+    bits = (u32 *)&g_gameEventState.flags[8];
     if (((bits[flag / 32] >> (flag % 32)) & 1) != 0) {
       run = false;
     }

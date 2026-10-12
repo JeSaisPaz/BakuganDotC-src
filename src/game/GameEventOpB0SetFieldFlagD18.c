@@ -7,7 +7,7 @@
 void GameEventOpB0SetFieldFlagD18(GameEvent *self, u8 flag, s16 arg)
 
 {
-  g_gameEventFieldFlags = (g_gameEventFieldFlags & 0xfe) | (flag & 1);
+  g_gameEventState.fieldFlags = (g_gameEventState.fieldFlags & 0xfe) | (flag & 1);
   return;
 }
 

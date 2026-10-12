@@ -8,6 +8,6 @@
 void GameFieldRestoreStage20EventWord(void)
 {
   if (g_scriptGlobalVars[1] == 0x14) {
-    *(s16 *)&g_gameEventFlags[6] = g_gameTransitionParam;
+    *(s16 *)&g_gameEventState.flags[6] = g_gameEventLocationBlock.transition.param;
   }
 }

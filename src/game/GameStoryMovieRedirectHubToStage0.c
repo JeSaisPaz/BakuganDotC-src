@@ -16,8 +16,8 @@ void GameStoryMovieRedirectHubToStage0(GameStoryMovie *self)
 
   if (self->questMode == 0 && self->set == 0 && g_scriptGlobalVars[1] == 0x20 &&
       SaveGetProfile()->data->mapMovieWatched[1][0] == 0) {
-    g_gameEventFlags[0] = (u8)(g_scriptGlobalVars[1] / 4);
-    g_gameEventFlags[2] = (u8)(g_scriptGlobalVars[1] % 4);
+    g_gameEventState.flags[0] = (u8)(g_scriptGlobalVars[1] / 4);
+    g_gameEventState.flags[2] = (u8)(g_scriptGlobalVars[1] % 4);
     g_scriptGlobalVars[1] = 0;
     profile = SaveGetProfile();
     profile->data->stageProfileByte = (u8)(g_scriptGlobalVars[1] / 4);
@@ -25,7 +25,7 @@ void GameStoryMovieRedirectHubToStage0(GameStoryMovie *self)
     profile->data->stageSlot = (u8)(g_scriptGlobalVars[1] % 4);
     mapId = GameStageToMapId(g_scriptGlobalVars[1]);
     g_scriptGlobalVars[15] = mapId;
-    g_gameFieldEntryMode = 1;
+    g_gameEventLocationBlock.entryMode = 1;
     g_scriptGlobalVars[13] = 6;
     g_scriptGlobalVars[3] = 0;
   }

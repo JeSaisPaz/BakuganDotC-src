@@ -93,13 +93,13 @@ void UiUnlockResultApplyReward(UiUnlockResult *self)
     if (profile->data->fieldCounter >= 100)
       profile->data->fieldCounter = 99;
     counter = SaveGetProfile()->data->fieldCounter;
-    g_gameEventFlags[5] = counter < 100 ? counter : 99;
+    g_gameEventState.flags[5] = counter < 100 ? counter : 99;
     profile = SaveGetProfile();
     for (i = 0; i < 0x21; i++) {
       flags.words[i * 2] = ((u32 *)profile->data->eventFlags)[i * 2];
       flags.words[i * 2 + 1] = ((u32 *)profile->data->eventFlags)[i * 2 + 1];
     }
-    flags.bytes[5] = g_gameEventFlags[5];
+    flags.bytes[5] = g_gameEventState.flags[5];
     profile = SaveGetProfile();
     for (i = 0; i < 0x21; i++) {
       ((u32 *)profile->data->eventFlags)[i * 2] = flags.words[i * 2];

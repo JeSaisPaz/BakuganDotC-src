@@ -12,7 +12,7 @@ void GameEventOpAFClearRoomSetting(GameEvent *self, u8 flag, s16 arg)
   
   task = CoreTaskFind(500);
   GameFieldEmptyHookA(task);
-  roomWord = (ushort *)((u8 *)g_gameEventFlags + sizeof(g_gameEventFlags) + g_gameEventFlags[0] * 10 + g_gameEventFlags[2] * 2);
+  roomWord = (ushort *)(&g_gameEventState.roomSettings[g_gameEventState.flags[0] * 5 + g_gameEventState.flags[2]]);
   *roomWord = *roomWord & 0xfffe;
   *roomWord = *roomWord & 1;
   return;

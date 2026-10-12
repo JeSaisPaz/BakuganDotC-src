@@ -10,5 +10,5 @@ void GameEventOp9FSetSpawnX(GameEvent *self, s16 value, s16 unused)
   s64 scaled;
 
   scaled = (s64)((s32)value << 12) << 12;
-  ((s32 *)g_gameUnlockFlags)[0] = (s32)__divdi3(scaled, g_gameFixedScale);
+  g_gameEventState.spawn.pos[0] = (s32)__divdi3(scaled, g_gameFixedScale);
 }

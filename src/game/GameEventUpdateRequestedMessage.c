@@ -40,8 +40,8 @@ void GameEventUpdateRequestedMessage(GameEvent *self)
       }
       return;
     }
-    area = g_gameEventFlags[0];
-    room = g_gameEventFlags[2];
+    area = g_gameEventState.flags[0];
+    room = g_gameEventState.flags[2];
     sprintf(name, "mes_f%d_%02d_%s.bin", area, room, SaveGetLanguageName());
     table = CorePackChainFind(g_ioLzsPackages, name);
     savedIndex = self->cmdIndex;

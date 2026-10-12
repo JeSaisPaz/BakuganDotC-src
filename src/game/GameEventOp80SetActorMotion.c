@@ -8,7 +8,7 @@
 void GameEventOp80SetActorMotion(GameEvent470 *self, u8 flag, s16 arg) {
     u32 actor = flag;
     u8 blend = (u8)arg;
-    u8 **table = (u8 **)g_gameEventLocationBlock;
+    u8 **table = (u8 **)g_gameEventLocationBlock.placed;
 
     if (actor == 100) {
         actor = self->talkPartner;

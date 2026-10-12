@@ -10,7 +10,7 @@ void GameEventOp96SetTransitionActor(GameEvent470 *self, u8 flag, s16 arg)
   if (flag == 'd') {
     flag = self->talkPartner;
   }
-  g_gameEventTransitionActor = flag;
+  g_gameEventLocationBlock.transition.actor = flag;
   return;
 }
 

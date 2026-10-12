@@ -6,7 +6,7 @@
 
 void GameFieldCharSetDeletePlacement(void *mgr, u8 slot)
 {
-    GameFieldPlacement **placements = (GameFieldPlacement **)g_gameEventLocationBlock;
+    GameFieldPlacement **placements = (GameFieldPlacement **)g_gameEventLocationBlock.placed;
     GameFieldPlacement *obj = placements[slot];
 
     if (obj != NULL) {

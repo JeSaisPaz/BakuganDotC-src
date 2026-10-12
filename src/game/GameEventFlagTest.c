@@ -14,11 +14,11 @@ bool GameEventFlagTest(u32 id)
   id &= 0xffff;
   if (id < 2000) {
     if (GameEventFlagInRange(2, (u16)id) != 0) {
-      if (g_gameEventFlags[5] != 0) {
+      if (g_gameEventState.flags[5] != 0) {
         return true;
       }
     } else {
-      bits = (u32 *)&g_gameEventFlags[8];
+      bits = (u32 *)&g_gameEventState.flags[8];
       if (((bits[(s32)id >> 5] >> (id & 0x1f)) & 1) != 0) {
         return true;
       }

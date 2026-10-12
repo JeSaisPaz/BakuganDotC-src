@@ -17,8 +17,8 @@ void GameEventFlagSet(u32 id)
 
   if ((s32)i < 2000) {
     if (GameEventFlagInRange(2, (u16)id) != 0) {
-      n = g_gameEventFlags[5] + 1;
-      g_gameEventFlags[5] = (n < 100) ? n : 99;
+      n = g_gameEventState.flags[5] + 1;
+      g_gameEventState.flags[5] = (n < 100) ? n : 99;
       return;
     }
     if (GameEventFlagIs3dbOr3dc((s16)i) == 0) {
@@ -26,7 +26,7 @@ void GameEventFlagSet(u32 id)
         GameEventFlagSyncUpgrade(GameEventFlagRangeIndex(5, (s16)i));
         return;
       }
-      bits = (u32 *)&g_gameEventFlags[8];
+      bits = (u32 *)&g_gameEventState.flags[8];
       bits[(s32)i >> 5] |= 1 << (i & 0x1f);
     }
   }

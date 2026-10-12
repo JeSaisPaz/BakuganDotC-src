@@ -9,7 +9,7 @@
 void GameFieldCharSetRemoveActor(void *mgr, u8 entry)
 {
   GameFieldCharSet *set = (GameFieldCharSet *)mgr;
-  GameFieldPlacedChar **table = (GameFieldPlacedChar **)g_gameEventLocationBlock;
+  GameFieldPlacedChar **table = g_gameEventLocationBlock.placed;
   u8 count = set->placedCount;
   u8 i = 0;
   GameFieldPlacement **slot;

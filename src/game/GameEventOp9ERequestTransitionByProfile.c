@@ -28,8 +28,8 @@ void GameEventOp9ERequestTransitionByProfile(GameEvent *self, u8 flag, s16 arg)
     }
   }
   if (i != 6) {
-    g_gameEventTransitionKind = 6;
+    g_gameEventLocationBlock.transition.kind = 6;
   } else {
-    g_gameEventTransitionKind = 3;
+    g_gameEventLocationBlock.transition.kind = 3;
   }
 }
