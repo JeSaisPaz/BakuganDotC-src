@@ -16,7 +16,7 @@ void UiTitleDraw(UiScreen *screen)
       self = screen->spriteLayer;
     }
     else {
-      GfxFabListDraw(&screen->bgAnimList);
+      GfxFabListDraw((void **)&screen->bgAnimList.head);
       self = screen->spriteLayer;
     }
     GfxSpriteLayerDraw(self,packet);

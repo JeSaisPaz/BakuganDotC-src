@@ -8,7 +8,7 @@ u16 GfxFabGetFrameCount(GfxFab *fab)
 {
   GfxFabClip *clip;
 
-  clip = fab->clips;
+  clip = (GfxFabClip *)fab->clips.head;
   if (clip != NULL && clip->def != NULL) {
     return clip->def->lastFrame;
   }

@@ -11,7 +11,7 @@
    5 waits until `age` >= 31, then goes on to state 10 this frame;
    10 counts `lifetime` down (deleted once it was negative), blinks once it is below 90, and when
      `BtlItemFindPicker` finds a unit stops blinking, goes to state 11 and sets the homing curve
-     (`homeYaw` +-pi/2 by the low bit of `g_btlItemListCount`, `homePitch` 0.2pi + random 0.2pi,
+     (`homeYaw` +-pi/2 by the low bit of the `g_btlItemList` count, `homePitch` 0.2pi + random 0.2pi,
      `homeCurve` 1);
    11 flies to the picker's position + 100 up: within distance 80 (squared < 6400) applies the
      pickup (`BtlItemApplyPickup`) and deletes the item; otherwise moves `pos` by `reserved58`
@@ -103,7 +103,7 @@ void BtlItemUpdate(void *item)
     }
     self->blinking = 0;
     self->state = self->state + 1;
-    if ((g_btlItemListCount & 1) != 0) {
+    if ((g_btlItemList.count & 1) != 0) {
       self->homeYaw = 1.5707964f;
     } else {
       self->homeYaw = -1.5707964f;

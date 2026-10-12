@@ -12,7 +12,7 @@ void GfxDeferredDeleteFlush(void)
   CoreObject *next;
   const VtblEntry *entry;
 
-  obj = g_gfxDeferredDeleteHead;
+  obj = g_gfxDeferredDeleteHead.head;
   if (obj != (CoreObject *)0x0) {
     do {
       entry = &((const VtblEntry *)obj->vtable)[1];

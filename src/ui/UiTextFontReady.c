@@ -9,6 +9,6 @@ bool UiTextFontReady(void)
 {
   void *tex;
 
-  tex = GfxTryFindTexture(g_uiTextFontName);
+  tex = GfxTryFindTexture(g_uiTextFontName[0]);
   return tex != (void *)0x0;
 }

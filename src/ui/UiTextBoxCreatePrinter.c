@@ -25,7 +25,7 @@ s32 UiTextBoxCreatePrinter(UiTextBox *box, s32 maxChars)
     MemUnlock();
     self_00 = (UiTextPrinter *)0x0;
     if (self != (UiTextPrinter *)0x0) {
-      UiTextPrinterCtor(self,0,(char **)&g_uiTextFontName);
+      UiTextPrinterCtor(self,0,(char **)g_uiTextFontName);
       self_00 = self;
     }
     box->printer = self_00;

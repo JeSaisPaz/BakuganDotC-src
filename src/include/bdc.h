@@ -2981,9 +2981,7 @@ typedef struct GfxFab {
     u16 **defs;                       /* +0x080 array of definition record pointers (first u16 = id) */
     u16 defCount;                     /* +0x084 */
     u8 _unk086[0x2];                  /* +0x086 */
-    GfxFabClip *clips;                /* +0x088 head of the clip list (next at clip+4) */
-    u32 unk08c;                       /* +0x08c cleared by init */
-    u32 unk090;                       /* +0x090 cleared by init */
+    CoreObjectList clips;             /* +0x088 clip list (GfxFabClipCtor appends; head first clip, next at clip+4) */
     GfxFabClip *rootClip;             /* +0x094 first clip, driven by GfxFabSeek/GfxFabAdvanceTo/GfxFabDraw */
     float depth;                      /* +0x098 draw depth (100.0 at init, GfxFabInit) */
     u8 loop;                          /* +0x09c loop flag: a clip past its last frame restarts instead of holding (GfxFabClipUpdate); 0 at init (GfxFabInit), 1 for the HUD charge gauges (BtlHudPhaseBuild) */
@@ -3270,7 +3268,7 @@ typedef struct BtlItem {
     s32 state;                   /* +0x054 BtlItemUpdate state: 0 appear, 1 pop-up bounce, 5 settle, 10 live, 11 flying to the picker (cleared by BtlItemInit) */
     float reserved58;            /* +0x058 homing speed in BtlItemUpdate state 11 (+2 per frame up to 60, capped at 1.5x the distance); cleared by BtlItemInit */
     s32 pickedUp;                /* +0x05c age when despawned, 0 while live (BtlItemDespawn; cleared by BtlItemInit) */
-    float homeYaw;               /* +0x060 state 11 sideways curve angle, +-pi/2 by the low bit of g_btlItemListCount (BtlItemUpdate) */
+    float homeYaw;               /* +0x060 state 11 sideways curve angle, +-pi/2 by the low bit of g_btlItemList.count (BtlItemUpdate) */
     float homePitch;             /* +0x064 state 11 upward curve angle, 0.2pi..0.4pi random (BtlItemUpdate) */
     float homeCurve;             /* +0x068 weight of homeYaw/homePitch: 1.0 at pickup, -0.03 per frame down to 0 (BtlItemUpdate) */
     s32 lifetime;                /* +0x06c 500 frames from BtlItemInit */
@@ -4770,7 +4768,7 @@ typedef struct GameFieldTask {
     s32 npcCount;              /* +0x630 NPC list count */
     CoreObjectList objList634; /* +0x634 model list run by GameFieldUpdateWorld (GfxModelChainUpdateMotion) */
     CoreObjectList objList640; /* +0x640 model list run by GameFieldUpdateWorld (GfxModelChainUpdateMotion) */
-    u8 ballList[0xc];          /* +0x64c object list handed to ActorBallSetList */
+    CoreObjectList ballList;   /* +0x64c object list handed to ActorBallSetList */
     GameGimmick *gimmicks;     /* +0x658 head of the gimmick list (next at +4) */
     GameGimmick *gimmicksTail; /* +0x65c tail of the gimmick list (cleared with the head by GameFieldEnterArea, same head/tail/count shape as CoreObjectList) */
     s32 gimmickCount;          /* +0x660 gimmick list count */
@@ -8137,9 +8135,7 @@ typedef struct UiScreen {
     u8 closeRequested;      /* 0x4c set by the owner to make UiScreenUpdateCommon remove (and delete) the task */
     u8 pad4d[3];
     void *bgData;           /* 0x50 non-NULL when the screen owns a background animation */
-    void *bgAnimList;       /* 0x54 head of the background animation list (FUN_089f89f8 update / FUN_089f8a34 draw) */
-    u32 unk58;              /* 0x58 */
-    u32 unk5c;              /* 0x5c */
+    CoreObjectList bgAnimList; /* 0x54 background animation list (GfxFabCtorFromPack parent; GfxFabListUpdate/GfxFabListDraw) */
     u32 unk60;              /* 0x60 */
     u32 unk64;              /* 0x64 */
     u8 unk68;               /* 0x68 */
@@ -9330,9 +9326,7 @@ typedef struct UiLoadingShared {
     u8 _unk08[4];            /* +0x08 */
     UiTextBox *box;          /* +0x0c message box */
     GfxFab *fab;             /* +0x10 animation player */
-    void *fabList;           /* +0x14 head of the fab object list (GfxFabListDraw) */
-    u32 animAux18;           /* +0x18 cleared with the fab list by UiLoadingInitShared; no reader known */
-    u32 animAux1c;           /* +0x1c cleared with the fab list by UiLoadingInitShared; no reader known */
+    CoreObjectList fabList;  /* +0x14 fab object list (GfxFabCtor parent, GfxFabListDraw) */
     IoData *tipData;         /* +0x20 data request of the tip pictures (TIM2), released by UiLoadingDtor */
     CoreObject *tipTexture;  /* +0x24 tip texture (GfxTextureCtor, 0x140 bytes) shown on sprite 0 */
     s32 fabFrame;            /* +0x28 flash fab frame, cleared when the fab is created (UiLoadingStateSetup) */
@@ -18668,9 +18662,7 @@ extern __typeof__(BtlBakugan *) g_btlAttackHitOwner;
 extern __typeof__(ScePspFVector4) g_btlAttackHitPoint;
 extern __typeof__(void *) g_btlAttackHitShape;
 extern __typeof__(float[10]) g_btlAttackLevelFactors;
-extern __typeof__(CoreObject *) g_btlAttackList;
-extern __typeof__(s32) g_btlAttackListCount;
-extern __typeof__(CoreObject *) g_btlAttackListTail;
+extern __typeof__(CoreObjectList) g_btlAttackList;
 extern __typeof__(BtlAttackParams[142]) g_btlAttackParamTable;
 extern __typeof__(CoreNode *) g_btlAttackSndObject;
 extern __typeof__(s32) g_btlAttackSoundLastFrame;
@@ -18842,9 +18834,7 @@ extern __typeof__(void *[11]) g_btlHudStatusIconStateJumpTable;
 extern __typeof__(VtblEntry[7]) g_btlHudVtbl;
 extern __typeof__(VtblEntry[2]) g_btlInputVtbl;
 extern __typeof__(void *) g_btlItemEffectMgr;
-extern __typeof__(CoreObject *) g_btlItemList;
-extern __typeof__(s32) g_btlItemListCount;
-extern __typeof__(CoreObject *) g_btlItemListTail;
+extern __typeof__(CoreObjectList) g_btlItemList;
 extern __typeof__(void *) g_btlItemObjList;
 extern __typeof__(BtlItemSpawnDelayRow[4]) g_btlItemSpawnDelays;
 extern __typeof__(u8) g_btlItemSpawnEnabled;
@@ -20038,7 +20028,7 @@ extern __typeof__(u8) g_cxxBadAllocTypeId;
 extern __typeof__(CxxTypeInfo) g_cxxBadAllocTypeInfo;
 extern __typeof__(void *[6]) g_cxxBadAllocVtable;
 extern __typeof__(const CxxBaseClassEntry[1]) g_cxxBadExceptionBases;
-extern __typeof__(void *) g_cxxBadExceptionCtorCleanup;
+extern __typeof__(CxxEhCleanupEntry) g_cxxBadExceptionCtorCleanup;
 extern __typeof__(void *) g_cxxBadExceptionDtorCleanup;
 extern __typeof__(u8) g_cxxBadExceptionTypeId;
 extern __typeof__(CxxTypeInfo) g_cxxBadExceptionTypeInfo;
@@ -20054,7 +20044,7 @@ extern __typeof__(int) g_cxxEhHandlerIndex;
 extern __typeof__(CxxEhBlock *) g_cxxEhStackTop;
 extern __typeof__(u8[0x2000]) g_cxxEhStaticBuffer;
 extern __typeof__(CxxEhRegion) g_cxxEhStaticRegion;
-extern __typeof__(void *) g_cxxExceptionDtorCleanup;
+extern __typeof__(CxxEhCleanupEntry) g_cxxExceptionDtorCleanup;
 extern __typeof__(CxxGlobalRecord *) g_cxxGlobalObjects;
 extern __typeof__(s32) g_cxxInTerminate;
 extern __typeof__(void *) g_cxxNewHandler;
@@ -20574,9 +20564,7 @@ extern __typeof__(u32) g_gfxCameraOrthoTransInit;
 extern __typeof__(VtblEntry[3]) g_gfxCameraVtbl;
 extern __typeof__(u32) g_gfxConstWord14;
 extern __typeof__(GfxModel *) g_gfxCurrentModel;
-extern __typeof__(s32) g_gfxDeferredDeleteCount;
-extern __typeof__(CoreObject *) g_gfxDeferredDeleteHead;
-extern __typeof__(CoreObject *) g_gfxDeferredDeleteTail;
+extern __typeof__(CoreObjectList) g_gfxDeferredDeleteHead;
 extern __typeof__(float) g_gfxDepthCenter;
 extern __typeof__(GfxDisplay *) g_gfxDisplay;
 extern __typeof__(u8[510]) g_gfxDistortionGridIndices;
@@ -21188,9 +21176,7 @@ extern __typeof__(u32) g_uiSharedAnimAux;
 extern __typeof__(u8) g_uiSharedAnimDone;
 extern __typeof__(u32) g_uiSharedAnimEndFrame;
 extern __typeof__(u32) g_uiSharedAnimFrame;
-extern __typeof__(void *) g_uiSharedAnimList;
-extern __typeof__(s32) g_uiSharedAnimListCount;
-extern __typeof__(void *) g_uiSharedAnimListTail;
+extern __typeof__(CoreObjectList) g_uiSharedAnimList;
 extern __typeof__(GfxFab **) g_uiSharedAnims;
 extern __typeof__(VtblEntry[7]) g_uiSharedBgVtable;
 extern __typeof__(u8[32]) g_uiSharedBlock;
@@ -21216,7 +21202,7 @@ extern __typeof__(ScePspFVector4) g_uiTalkBalloonVecA;
 extern __typeof__(ScePspFVector4) g_uiTalkBalloonVecB;
 extern __typeof__(ScePspFVector4) g_uiTalkBalloonVecC;
 extern __typeof__(VtblEntry[7]) g_uiTalkBalloonVtbl;
-extern __typeof__(const char *) g_uiTextFontName;
+extern __typeof__(const char *[2]) g_uiTextFontName;
 extern __typeof__(float) g_uiTextMeasureBreakWidth;
 extern __typeof__(VtblEntry[6]) g_uiTextPrinterVtbl;
 extern __typeof__(void **) g_uiTextRenderHolder;

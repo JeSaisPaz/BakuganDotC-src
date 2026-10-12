@@ -21,7 +21,7 @@ void UiTitleMenuLoadPhase(UiScreen *screen)
       UiScreenAnimCreate(screen, "title.fab", 0);
       ((GfxFab **)screen->bgData)[0]->loop = 1;
       ((GfxFab **)screen->bgData)[0]->depth = 10.0f;
-      GfxFabListUpdate(&screen->bgAnimList);
+      GfxFabListUpdate((void **)&screen->bgAnimList.head);
       screen->phaseStep = screen->phaseStep + 1;
       return;
     }

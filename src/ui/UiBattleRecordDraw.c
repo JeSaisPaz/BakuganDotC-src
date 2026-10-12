@@ -12,7 +12,7 @@ void UiBattleRecordDraw(UiBattleRecord *self)
   GfxSpriteLayer *layer;
   
   if ((self->base).bgData != (void *)0x0) {
-    GfxFabListDraw(&(self->base).bgAnimList);
+    GfxFabListDraw((void **)&(self->base).bgAnimList.head);
   }
   layer = (self->base).spriteLayer;
   if (layer != (GfxSpriteLayer *)0x0) {

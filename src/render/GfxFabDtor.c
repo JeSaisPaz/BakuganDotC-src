@@ -41,7 +41,7 @@ void GfxFabDtor(GfxFab *fab, u32 flags)
             MemUnlock();
         }
         /* +0x88..+0x90 is an embedded CoreObjectList (head `clips`, tail, count) */
-        CoreObjectListDeleteAll((CoreObjectList *)&fab->clips);
+        CoreObjectListDeleteAll(&fab->clips);
     }
     CoreObjectDtor((CoreObject *)fab, 0);
     if (flags & 1) {

@@ -10,7 +10,7 @@ void UiSharedBgDraw(UiScreen *screen)
 {
   GfxScreenCameraSetViewOffset((float *)&g_gfxVecZero);
   if (g_uiSharedAnims != (GfxFab **)0) {
-    GfxFabListDraw(&g_uiSharedAnimList);
+    GfxFabListDraw((void **)&g_uiSharedAnimList.head);
   }
   return;
 }

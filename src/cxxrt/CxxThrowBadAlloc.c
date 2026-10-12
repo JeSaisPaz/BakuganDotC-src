@@ -23,7 +23,7 @@ void CxxThrowBadAlloc(void)
   cleanup.next = (CxxEhFrame *)&spec;
   g_cxxEhFrameStack = &cleanup;
   cleanup.kind = 1;
-  cleanup.entries = (CxxEhCleanupEntry *)&g_cxxExceptionDtorCleanup;
+  cleanup.entries = &g_cxxExceptionDtorCleanup;
   cleanup.objects = object;
   cleanup.region = g_cxxEhCurrentRegion;
   g_cxxEhCurrentRegion = 0xffff;

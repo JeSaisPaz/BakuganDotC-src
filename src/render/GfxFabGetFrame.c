@@ -9,7 +9,7 @@ u32 GfxFabGetFrame(GfxFab *fab)
 {
   GfxFabClip *clip;
 
-  clip = fab->clips;
+  clip = (GfxFabClip *)fab->clips.head;
   if (clip == NULL) {
     return 0;
   }

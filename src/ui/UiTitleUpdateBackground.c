@@ -21,7 +21,7 @@ s32 UiTitleUpdateBackground(UiScreen *screen)
         GfxFabAdvanceTo(fabs[1], title->skipFrameB);
         GfxFabAdvanceTo(fabs[3], title->skipFrameC);
       } else {
-        GfxFabListUpdate(&screen->bgAnimList);
+        GfxFabListUpdate((void **)&screen->bgAnimList.head);
       }
     } else {
       GfxFabUpdate(fabs[2]);

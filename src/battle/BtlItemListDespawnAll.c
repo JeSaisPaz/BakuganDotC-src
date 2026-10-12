@@ -8,7 +8,7 @@ void BtlItemListDespawnAll(void)
     CoreObject *item;
     CoreObject *next;
 
-    item = g_btlItemList;
+    item = g_btlItemList.head;
     while (item != NULL) {
         next = item->next;
         BtlItemDespawn(item);

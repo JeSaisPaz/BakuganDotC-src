@@ -79,9 +79,9 @@ void UiLoadingInitShared(void)
     sprite->angle = 0.0f;
   }
   shared->fab = NULL;
-  shared->animAux18 = 0;
-  shared->fabList = NULL;
-  shared->animAux1c = 0;
+  shared->fabList.tail = NULL;
+  shared->fabList.head = NULL;
+  shared->fabList.count = 0;
 
   MemLock();
   low = MemIsAllocFromLow();

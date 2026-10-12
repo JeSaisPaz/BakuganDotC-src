@@ -5,7 +5,7 @@
    delete themselves). Called by `BtlMainUpdateScene` and `BtlMainPhaseSceneOnly`. */
 void BtlItemListUpdateAll(void)
 {
-    CoreObject *item = g_btlItemList;
+    CoreObject *item = g_btlItemList.head;
     CoreObject *next;
 
     while (item != NULL) {

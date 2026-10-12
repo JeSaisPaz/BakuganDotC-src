@@ -54,7 +54,7 @@ int ActorStageObjPropDetectContact(ActorStageObjProp *self)
     }
   }
 
-  for (attack = (BtlAttack *)g_btlAttackList; attack != NULL;
+  for (attack = (BtlAttack *)g_btlAttackList.head; attack != NULL;
        attack = (BtlAttack *)attack->base.next) {
     attackRadius = BtlAttackGetRadius(attack);
     if (BtlAttackUsesLinkedTarget(attack) == 0) {

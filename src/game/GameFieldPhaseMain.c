@@ -136,7 +136,7 @@ void GameFieldPhaseMain(CoreTask *task)
       break;
     }
     field->pulseActive = 0;
-    ActorBallSetList(field->ballList);
+    ActorBallSetList(&field->ballList);
     if (field->itemBoxOpened != 0) {
       field->itemBoxOpened = 0;
       field->subState = 0x1f;

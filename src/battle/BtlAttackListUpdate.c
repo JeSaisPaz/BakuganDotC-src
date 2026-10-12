@@ -10,7 +10,7 @@ void BtlAttackListUpdate(void)
     BtlAttack *next;
 
     BtlAttackListResolvePendingHits();
-    attack = (BtlAttack *)g_btlAttackList;
+    attack = (BtlAttack *)g_btlAttackList.head;
     while (attack != NULL) {
         next = (BtlAttack *)attack->base.next;
         BtlAttackUpdate(attack);

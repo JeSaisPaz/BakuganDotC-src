@@ -9,7 +9,7 @@
    `UiBattleRecordMenuPhase`, `UiBattleRecordOpenPhase`, `UiBattleRecordModeListPhase`,
    `UiBattleRecordTotalListPhase`; `UiBattleRecordDtor`, `UiBattleRecordDraw`.
    Clears the state words and the four statistics arrays, allocates the zeroed 8-byte shared
-   animation table `g_uiSharedAnims` from the low heap, clears `bgAnimList`/`unk58`/`unk5c`,
+   animation table `g_uiSharedAnims` from the low heap, clears `bgAnimList`,
    fills `owned[i]` with profile bit i+1 of `bakuganBitsA` (non-zero = owned), makes the stick
    emulate the d-pad and hands the shared background over (`UiScreenKeepSharedBg`).
    Returns `self`. */
@@ -42,9 +42,9 @@ UiBattleRecord *UiBattleRecordCtor(UiBattleRecord *self)
   MemUnlock();
   g_uiSharedAnims = (GfxFab **)anims;
   memset(anims, 0, 2 * sizeof(GfxFab *));
-  self->base.unk58 = 0;
-  self->base.bgAnimList = NULL;
-  self->base.unk5c = 0;
+  self->base.bgAnimList.tail = NULL;
+  self->base.bgAnimList.head = NULL;
+  self->base.bgAnimList.count = 0;
   for (i = 0; i < 20; i++) {
     profile = SaveGetProfile();
     bit = i + 1;

@@ -22,7 +22,7 @@ void *CxxBadExceptionCtor(void *self)
   cleanup.next = &ctorFrame;
   g_cxxEhFrameStack = &cleanup;
   cleanup.kind = 1;
-  cleanup.entries = (CxxEhCleanupEntry *)&g_cxxBadExceptionCtorCleanup;
+  cleanup.entries = &g_cxxBadExceptionCtorCleanup;
   cleanup.objects = &ehObj;
   cleanup.region = g_cxxEhCurrentRegion;
   g_cxxEhCurrentRegion = 0xffff;

@@ -7,7 +7,7 @@ int BtlItemListCountKind(s32 kind)
     int count = 0;
     CoreObject *node;
 
-    for (node = g_btlItemList; node != NULL; node = node->next) {
+    for (node = g_btlItemList.head; node != NULL; node = node->next) {
         if (((BtlItem *)node)->type == kind) {
             count++;
         }

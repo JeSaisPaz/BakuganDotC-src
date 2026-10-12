@@ -7,7 +7,7 @@ void *BtlAttackListFind(BtlAttack *self)
 {
     CoreObject *node;
 
-    for (node = g_btlAttackList; node != NULL; node = node->next) {
+    for (node = g_btlAttackList.head; node != NULL; node = node->next) {
         if (node == &self->base) {
             return node;
         }

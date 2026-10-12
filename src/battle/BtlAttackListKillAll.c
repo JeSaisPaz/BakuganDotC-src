@@ -9,7 +9,7 @@ void BtlAttackListKillAll(void)
   BtlAttack *attack;
   BtlAttack *next;
 
-  attack = (BtlAttack *)g_btlAttackList;
+  attack = (BtlAttack *)g_btlAttackList.head;
   while (attack != NULL) {
     next = (BtlAttack *)attack->base.next;
     attack->age = 0x7fffffff;

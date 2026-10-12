@@ -15,8 +15,8 @@ void UiSharedBgUpdate(UiScreen *screen)
   UiScreenUpdateCommon(screen);
   if ((closing == 0) && (g_uiSharedAnims != (GfxFab **)0)) {
     if (g_gfxDisplay->frameSkip != 0) {
-      GfxFabListUpdate((void **)&g_uiSharedAnimList);
+      GfxFabListUpdate((void **)&g_uiSharedAnimList.head);
     }
-    GfxFabListUpdate((void **)&g_uiSharedAnimList);
+    GfxFabListUpdate((void **)&g_uiSharedAnimList.head);
   }
 }

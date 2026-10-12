@@ -9,7 +9,7 @@ GfxFabClip *GfxFabGetClip(GfxFab *fab, int index)
   GfxFabClip *clip;
   int i;
 
-  clip = fab->clips;
+  clip = (GfxFabClip *)fab->clips.head;
   i = 0;
   while (clip != NULL) {
     if (i == index) {

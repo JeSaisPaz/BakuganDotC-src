@@ -35,7 +35,7 @@ void UiUpgradeDraw(UiUpgrade *self)
   u32 rgb;
 
   if (self->base.bgData != NULL) {
-    GfxFabListDraw(&self->base.bgAnimList);
+    GfxFabListDraw((void **)&self->base.bgAnimList.head);
   }
   if (self->base.spriteLayer != NULL) {
     packet = GfxNewRenderPacket(50.0f);

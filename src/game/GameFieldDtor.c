@@ -61,7 +61,7 @@ void GameFieldDtor(CoreTask *task, u32 flags)
   GfxModelChainDeleteAll((CoreObject *)field->npcs);
   GfxModelChainDeleteAll(field->objList634.head);
   GfxModelChainDeleteAll(field->objList640.head);
-  GfxModelChainDeleteAll(((CoreObjectList *)field->ballList)->head);
+  GfxModelChainDeleteAll(field->ballList.head);
   GfxModelChainDeleteAll((CoreObject *)field->gimmicks);
   GfxModelChainDeleteAll(field->objList670.head);
   ActorStageObjSystemShutdown();

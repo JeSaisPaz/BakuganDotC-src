@@ -9,7 +9,7 @@ void GfxFabUpdate(GfxFab *fab)
 {
   GfxFabClip *clip;
 
-  for (clip = fab->clips; clip != NULL; clip = clip->next) {
+  for (clip = (GfxFabClip *)fab->clips.head; clip != NULL; clip = clip->next) {
     GfxFabClipUpdate(clip);
   }
 }

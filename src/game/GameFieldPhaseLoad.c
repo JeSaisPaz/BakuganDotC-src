@@ -280,7 +280,7 @@ void GameFieldPhaseLoad(CoreTask *task)
     GameFieldLoadObjects(task, g_gameEventFlags[0], g_gameEventFlags[2]);
     ActorSetList(&field->npcs);
     ActorStageObjSystemInit();
-    ActorBallSetList(field->ballList);
+    ActorBallSetList(&field->ballList);
     field->subState = field->subState + 1;
     MemLock();
     fromLow = MemIsAllocFromLow();

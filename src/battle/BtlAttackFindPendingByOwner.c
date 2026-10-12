@@ -7,7 +7,7 @@ void *BtlAttackFindPendingByOwner(void *owner)
 {
     BtlAttack *atk;
 
-    for (atk = (BtlAttack *)g_btlAttackList; atk != NULL; atk = (BtlAttack *)atk->base.next) {
+    for (atk = (BtlAttack *)g_btlAttackList.head; atk != NULL; atk = (BtlAttack *)atk->base.next) {
         if (atk->pendingHit != 0 && (void *)atk->owner == owner) {
             return atk;
         }

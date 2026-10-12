@@ -11,7 +11,7 @@ void UiScreenDrawBg(UiScreen *screen)
 {
   GfxScreenCameraSetViewOffset(&g_gfxVecZero.x);
   if (screen->bgData != (void *)0x0) {
-    GfxFabListDraw(&screen->bgAnimList);
+    GfxFabListDraw((void **)&screen->bgAnimList.head);
   }
   return;
 }

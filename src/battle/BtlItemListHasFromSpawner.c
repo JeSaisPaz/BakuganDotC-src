@@ -7,7 +7,7 @@ int BtlItemListHasFromSpawner(void *spawner)
 {
     CoreObject *node;
 
-    for (node = g_btlItemList; node != NULL; node = node->next) {
+    for (node = g_btlItemList.head; node != NULL; node = node->next) {
         BtlItem *item = (BtlItem *)node;
 
         if (item->pickedUp == 0 && item->spawner == spawner) {

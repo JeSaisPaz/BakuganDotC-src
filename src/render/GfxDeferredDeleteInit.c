@@ -7,9 +7,9 @@
 void GfxDeferredDeleteInit(void)
 
 {
-  g_gfxDeferredDeleteTail = (CoreObject *)0x0;
-  g_gfxDeferredDeleteHead = (CoreObject *)0x0;
-  g_gfxDeferredDeleteCount = 0;
+  g_gfxDeferredDeleteHead.tail = (CoreObject *)0x0;
+  g_gfxDeferredDeleteHead.head = (CoreObject *)0x0;
+  g_gfxDeferredDeleteHead.count = 0;
   return;
 }
 

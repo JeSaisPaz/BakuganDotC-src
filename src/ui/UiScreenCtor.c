@@ -52,17 +52,17 @@ CoreTask *UiScreenCtor(CoreTask *task)
   screen->pad = pad;
   pad->dpadEmulatesStick = 0;
   screen->bgData = NULL;
-  screen->unk58 = 0;
-  screen->bgAnimList = NULL;
-  screen->unk5c = 0;
+  screen->bgAnimList.tail = NULL;
+  screen->bgAnimList.head = NULL;
+  screen->bgAnimList.count = 0;
   screen->unk68 = 0;
   screen->unk60 = 0;
   screen->unk64 = 0;
   if (g_uiKeepSharedBg == 0) {
     g_uiSharedAnims = NULL;
-    g_uiSharedAnimListTail = NULL;
-    g_uiSharedAnimList = NULL;
-    g_uiSharedAnimListCount = 0;
+    g_uiSharedAnimList.tail = NULL;
+    g_uiSharedAnimList.head = NULL;
+    g_uiSharedAnimList.count = 0;
     g_uiSharedAnimDone = 0;
     g_uiSharedAnimFrame = 0;
     g_uiSharedAnimEndFrame = 0;

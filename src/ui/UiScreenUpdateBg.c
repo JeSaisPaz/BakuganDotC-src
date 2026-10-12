@@ -8,7 +8,7 @@ void UiScreenUpdateBg(UiScreen *screen)
 
 {
   if (screen->bgData != (void *)0x0) {
-    GfxFabListUpdate(&screen->bgAnimList);
+    GfxFabListUpdate((void **)&screen->bgAnimList.head);
   }
   return;
 }

@@ -11,10 +11,10 @@ void BtlAttackEndOwnedSustained(void *owner)
     BtlAttack *attack;
     BtlAttack *next;
 
-    if (g_btlAttackList == NULL) {
+    if (g_btlAttackList.head == NULL) {
         return;
     }
-    for (attack = (BtlAttack *)g_btlAttackList; attack != NULL; attack = next) {
+    for (attack = (BtlAttack *)g_btlAttackList.head; attack != NULL; attack = next) {
         next = (BtlAttack *)attack->base.next;
         switch (attack->type) {
         case 0x0c:

@@ -62,7 +62,7 @@ s32 BtlAiSeekItemCheck(BtlAi *self)
                     }
                 }
 
-                for (node = g_btlItemList; node != NULL; node = node->next) {
+                for (node = g_btlItemList.head; node != NULL; node = node->next) {
                     BtlItem *item = (BtlItem *)node;
 
                     if (item->type == 3) {
@@ -95,7 +95,7 @@ s32 BtlAiSeekItemCheck(BtlAi *self)
                 if (candidates != 0) {
                     s32 pick = 0;
 
-                    node = g_btlItemList;
+                    node = g_btlItemList.head;
                     while (pick < candidates - 1) {
                         pick = (u8)(pick + 1);
                         node = node->next;

@@ -8,7 +8,7 @@ CoreObject *BtlAiFindIncomingAttack(BtlAi *self)
 {
     CoreObject *obj;
 
-    for (obj = g_btlAttackList; obj != NULL; obj = obj->next) {
+    for (obj = g_btlAttackList.head; obj != NULL; obj = obj->next) {
         BtlAttack *attack = (BtlAttack *)obj;
 
         if (BtlAttackParamsIsFlag08Clear(attack->type) == 0) {

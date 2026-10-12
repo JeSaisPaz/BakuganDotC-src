@@ -29,9 +29,9 @@ UiUpgrade *UiUpgradeCtor(UiUpgrade *self)
   MemUnlock();
   self->base.bgData = block;
   memset(block, 0, sizeof(GfxFab *));
-  self->base.unk58 = 0;
-  self->base.bgAnimList = NULL;
-  self->base.unk5c = 0;
+  self->base.bgAnimList.tail = NULL;
+  self->base.bgAnimList.head = NULL;
+  self->base.bgAnimList.count = 0;
 
   MemLock();
   wasLow = MemIsAllocFromLow();

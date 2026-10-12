@@ -82,7 +82,7 @@ int BtlAttackCheckClash(BtlAttack *self)
             g_btlClashSelfCapsule.axis[2] * g_btlClashSelfCapsule.axis[2]);
     }
     selfCancelled = 0;
-    for (other = (BtlAttack *)g_btlAttackList; other != NULL; other = next) {
+    for (other = (BtlAttack *)g_btlAttackList.head; other != NULL; other = next) {
         next = (BtlAttack *)other->base.next;
         if (other == self || other->owner == self->owner || other->endFrame != 0 ||
             other->cancelled != 0) {

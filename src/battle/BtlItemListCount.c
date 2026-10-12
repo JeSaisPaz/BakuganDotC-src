@@ -7,7 +7,7 @@ int BtlItemListCount(void)
     int count = 0;
     CoreObject *item;
 
-    for (item = g_btlItemList; item != NULL; item = item->next) {
+    for (item = g_btlItemList.head; item != NULL; item = item->next) {
         count++;
     }
     return count;

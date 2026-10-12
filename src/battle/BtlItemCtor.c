@@ -19,7 +19,7 @@ BtlItem *BtlItemCtor(BtlItem *self, s32 type, float *pos)
     self->basePos[2] = self->pos[2];
     self->basePos[3] = self->pos[3];
     BtlItemInit(self, type);
-    CoreObjectListAppend(&self->base, (CoreObjectList *)&g_btlItemList);
+    CoreObjectListAppend(&self->base, &g_btlItemList);
     self->picker = NULL;
     return self;
 }

@@ -7,9 +7,9 @@
 void BtlAttackSystemInit(void *effectMgr)
 {
     g_btlAttackEffectMgr = effectMgr;
-    g_btlAttackListTail = NULL;
-    g_btlAttackList = NULL;
-    g_btlAttackListCount = 0;
+    g_btlAttackList.tail = NULL;
+    g_btlAttackList.head = NULL;
+    g_btlAttackList.count = 0;
     g_btlAttackSndObject = SndObjectCreate(SndGetObjectList(), 8);
     SndObjectSetPos((SndObject *)g_btlAttackSndObject, 0.0f, 0.0f, 0.0f);
 }

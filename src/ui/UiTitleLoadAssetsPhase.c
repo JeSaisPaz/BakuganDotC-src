@@ -60,6 +60,6 @@ void UiTitleLoadAssetsPhase(UiScreen *screen)
   ((GfxFab **)screen->bgData)[3]->depth = 11.0f;
   title->skipFrameC = GfxFabGetFrameCount(((GfxFab **)screen->bgData)[3]);
 
-  GfxFabListUpdate(&screen->bgAnimList);
+  GfxFabListUpdate((void **)&screen->bgAnimList.head);
   screen->phaseStep = screen->phaseStep + 1;
 }

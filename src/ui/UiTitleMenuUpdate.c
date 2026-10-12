@@ -31,7 +31,7 @@ void UiTitleMenuUpdate(UiScreen *screen)
   closeRequested = screen->closeRequested;
   UiScreenUpdateCommon(screen);
   if (closeRequested == 0 && screen->bgData != (void *)0x0) {
-    GfxFabListUpdate(&screen->bgAnimList);
+    GfxFabListUpdate((void **)&screen->bgAnimList.head);
   }
   return;
 }

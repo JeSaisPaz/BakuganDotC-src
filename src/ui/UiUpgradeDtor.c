@@ -31,7 +31,7 @@ void UiUpgradeDtor(UiUpgrade *self, u32 flags)
       ((void (*)(void *, int))entry->fn)((char *)self->textPrinter + entry->delta, 3);
       self->textPrinter = (UiTextPrinter *)0x0;
     }
-    CoreObjectListDeleteAll((CoreObjectList *)&self->base.bgAnimList);
+    CoreObjectListDeleteAll(&self->base.bgAnimList);
     bgData = self->base.bgData;
     if (bgData != (void *)0x0) {
       MemLock();

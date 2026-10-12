@@ -12,7 +12,6 @@ BtlAttack *BtlAttackCtor(BtlAttack *self, void *owner, s32 type)
     self->owner = owner;
     self->type = type;
     BtlAttackInit(self, type);
-    /* g_btlAttackList is typed as its head word; the holder (head/tail/count) starts there. */
-    CoreObjectListAppend(&self->base, (CoreObjectList *)&g_btlAttackList);
+    CoreObjectListAppend(&self->base, &g_btlAttackList);
     return self;
 }

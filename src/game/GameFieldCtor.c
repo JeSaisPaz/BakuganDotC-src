@@ -135,9 +135,9 @@ CoreTask *GameFieldCtor(CoreTask *task)
   field->objList634.tail = NULL;
   field->objList634.head = NULL;
   field->objList634.count = 0;
-  ((CoreObjectList *)field->ballList)->tail = NULL;
-  ((CoreObjectList *)field->ballList)->head = NULL;
-  ((CoreObjectList *)field->ballList)->count = 0;
+  field->ballList.tail = NULL;
+  field->ballList.head = NULL;
+  field->ballList.count = 0;
   field->gimmicksTail = NULL;
   field->gimmicks = NULL;
   field->gimmickCount = 0;

@@ -10,10 +10,10 @@ void GfxDeferredDelete(CoreObject *obj)
 {
   s32 listed;
   
-  listed = CoreObjectListContains(&g_gfxDeferredDeleteHead,obj);
+  listed = CoreObjectListContains(&g_gfxDeferredDeleteHead.head,obj);
   if (listed == 0) {
     CoreObjectUnlink(obj);
-    CoreObjectListAppend(obj,(CoreObjectList *)&g_gfxDeferredDeleteHead);
+    CoreObjectListAppend(obj,&g_gfxDeferredDeleteHead);
   }
   return;
 }

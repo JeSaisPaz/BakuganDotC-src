@@ -70,7 +70,7 @@ void GameFieldDrawScene(CoreTask *task)
   *dl = 0x19000001;
   dl = dl + 1;
   dl = GameFieldDrawParticles(task, dl, (void **)&field->npcs);
-  dl = GameFieldDrawModelListRelative(dl, (void **)field->ballList, 0);
+  dl = GameFieldDrawModelListRelative(dl, (void **)&field->ballList.head, 0);
   dl = GameFieldDrawModelListRelative(dl, (void **)&field->objList634, 0);
   dl = GameFieldDrawModelListRelative(dl, (void **)&field->gimmicks, 0);
   dl = GameFieldDrawModelListRelative(dl, (void **)&field->objList670, 0);
@@ -81,7 +81,7 @@ void GameFieldDrawScene(CoreTask *task)
   }
   GfxModelListDrawTranslucent(&dl, stageObjs, true);
   GfxModelListDrawTranslucent(&dl, field->npcs, true);
-  GfxModelListDrawTranslucent(&dl, ((CoreObjectList *)field->ballList)->head, true);
+  GfxModelListDrawTranslucent(&dl, field->ballList.head, true);
   GfxModelListDrawTranslucent(&dl, field->objList634.head, true);
   GfxModelListDrawTranslucent(&dl, field->gimmicks, true);
   GfxModelListDrawTranslucent(&dl, field->objList670.head, true);

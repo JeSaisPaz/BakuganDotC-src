@@ -21,7 +21,7 @@ void UiScreenDtor(UiScreen *screen, u32 flags)
   }
   screen->base.vtable = &g_uiScreenVtable;
   GfxWaitGeIdle();
-  CoreObjectListDeleteAll((CoreObjectList *)&screen->bgAnimList);
+  CoreObjectListDeleteAll(&screen->bgAnimList);
   block = screen->bgData;
   if (block != NULL) {
     MemLock();
@@ -32,7 +32,7 @@ void UiScreenDtor(UiScreen *screen, u32 flags)
   screen->bgData = NULL;
   if (g_uiKeepSharedBg == 0) {
     UiSharedBgClose();
-    CoreObjectListDeleteAll((CoreObjectList *)&g_uiSharedAnimList);
+    CoreObjectListDeleteAll(&g_uiSharedAnimList);
     if (g_uiSharedAnims != NULL) {
       MemLock();
       MemFree(g_uiSharedAnims, NULL, 0);

@@ -17,7 +17,7 @@ void UiLoadingDraw(UiLoading *self)
   }
   if (active) {
     if (g_uiLoadingShared->fab != NULL) {
-      GfxFabListDraw((void **)&g_uiLoadingShared->fabList);
+      GfxFabListDraw((void **)&g_uiLoadingShared->fabList.head);
     }
     packet = GfxNewRenderPacket(1610.0f);
     GfxSpriteLayerDraw(g_uiLoadingShared->layer, packet);

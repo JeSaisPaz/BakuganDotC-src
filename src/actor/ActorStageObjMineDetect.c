@@ -53,7 +53,7 @@ int ActorStageObjMineDetect(ActorStageObjMine *self)
     }
   }
 
-  for (attack = (BtlAttack *)g_btlAttackList; attack != NULL;
+  for (attack = (BtlAttack *)g_btlAttackList.head; attack != NULL;
        attack = (BtlAttack *)attack->base.next) {
     attackSq = BtlAttackGetRadius(attack);
     attackSq = attackSq * attackSq;

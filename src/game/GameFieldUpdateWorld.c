@@ -40,7 +40,7 @@ void GameFieldUpdateWorld(CoreTask *task)
   GfxModelChainUpdateMotion((CoreObject *)field->npcs);
   GfxModelChainUpdateMotion(field->objList634.head);
   GfxModelChainUpdateMotion(field->objList640.head);
-  GfxModelChainUpdateMotion(((CoreObjectList *)field->ballList)->head);
+  GfxModelChainUpdateMotion(field->ballList.head);
   GfxModelChainUpdateMotion((CoreObject *)field->gimmicks);
   GfxModelChainUpdateMotion(field->objList670.head);
   ActorSyncRouteGroups();
