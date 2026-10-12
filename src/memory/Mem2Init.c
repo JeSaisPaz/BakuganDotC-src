@@ -3,7 +3,8 @@
 
 /* Constructor of `MemMng2` (`COMemMng2`, a second allocator over an arbitrary address range,
    source `Mem/COMemMng2.cpp`): installs `g_memMng2Vtbl`, stores the allocation alignment,
-   allocates the 0x40-byte state block and a record array of `maxBlocks` 16-byte `MemBlock`s from
+   allocates the `MemMng` state block (0x40 bytes on the PSP) and a record array of `maxBlocks`
+   `MemBlock`s (16 bytes each on the PSP) from
    the game heap (low end when `fromLow`; the heap's placement policy is restored after each
    allocation), then calls `Mem2Reset`(base, size) and sets `flag18 = 0`, `flag19 = 1`.
    Returns `self`. */

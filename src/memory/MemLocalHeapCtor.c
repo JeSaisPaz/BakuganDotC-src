@@ -5,10 +5,11 @@
 
 /* Constructor of a `MemLocalHeap` over a caller buffer (`COMemMng.cpp`, vtable
    `g_memLocalHeapVtbl`): the buffer starts with the `MemMng` header (`state`), whose first
-   block sits right after it; total size `size`, used 0, free `size - 0x40`, block count 0, empty
+   block sits right after it, at `sizeof(MemMng)` rounded up to 16 (0x40 on the PSP); total size
+   `size`, used 0, free `size` minus that offset, block count 0, empty
    used/free `MemBlockList`s; one free block spanning the rest is inserted (`MemBlockInit`,
    `MemListInsert`) and the block count becomes 1. Unlike `MemInit`, `freeSize` keeps the
-   block header's 0x10 bytes. Sets `flag0c = 0`, `flag0d = 1`. Returns `self`. */
+   block header's `sizeof(MemBlock)` bytes (0x10 on the PSP). Sets `flag0c = 0`, `flag0d = 1`. Returns `self`. */
 void *MemLocalHeapCtor(MemLocalHeap *self, void *buffer, u32 size, u32 align)
 {
     MemMng *state = buffer;

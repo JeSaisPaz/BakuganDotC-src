@@ -2,8 +2,9 @@
 #include "bdc.h"
 
 /* Allocates `size` bytes (rounded up to the heap alignment) from a `MemLocalHeap`: first-fit
-   search of the free list; when the block can also hold a 0x10-byte header after the request, the
-   remainder becomes a new free block (`MemBlockInit`, block count + 1, free bytes - 0x10).
+   search of the free list; when the block can also hold a `MemBlock` header (0x10 bytes on the PSP) after
+   the request, the remainder becomes a new free block (`MemBlockInit`, block count + 1, free bytes
+   minus `sizeof(MemBlock)`).
    The block moves to the used list and the used/free counters are updated. Returns the data
    pointer, or NULL when there is no header or no fitting block. */
 void *MemLocalHeapAlloc(MemLocalHeap *self, u32 size, char *file, s32 line)

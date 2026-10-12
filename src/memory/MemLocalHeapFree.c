@@ -5,7 +5,7 @@
    its `data` tag; it is moved from the used to the free list, the counters are updated, and it is
    coalesced with the physically following free block (when its `next` starts right after it) and
    then into the preceding one (size non-zero, ending right at the header), each merge reclaiming
-   0x10 header bytes and one block. Returns 1 on success, 0 without a state, for NULL or a bad tag
+   `sizeof(MemBlock)` header bytes (0x10 on the PSP) and one block. Returns 1 on success, 0 without a state, for NULL or a bad tag
    (the `MemListRemove` result is tested but it only fails for a NULL block; list membership is
    not checked). */
 int MemLocalHeapFree(MemLocalHeap *self, void *ptr)

@@ -7,11 +7,11 @@
    returned pointer (for a caller-supplied `ptr` only when `writeCookie`), and calls the
    constructor on each of the `n` elements (stride `size`), with an exception-cleanup frame
    (`CxxEhPushArrayFrame`, chain head `g_cxxEhFrameStack`) registered while it runs when the
-   runtime allocated the block or a destructor (`unwindFlag`) is given. Returns the array pointer,
+   runtime allocated the block or a destructor (`dtor`) is given. Returns the array pointer,
    or NULL if allocation fails. Takes 12 argument words (8 in registers, the rest on the stack);
    callers go through `CxxVecNew`. */
 
-void *CxxVecNewEx(void *ptr, u32 count, s32 size, s32 ctorArg, void *ctor, s32 unwindFlag, void *allocator, void *dealloc, s32 twoArgs, s32 writeCookie, s32 unused11, s32 cookieSize)
+void *CxxVecNewEx(void *ptr, u32 count, s32 size, s32 ctorArg, void *ctor, void *dtor, void *allocator, void *dealloc, s32 twoArgs, s32 writeCookie, s32 unused11, s32 cookieSize)
 
 {
   u8 frame[0x70]; /* generic EH frame area; CxxEhArrayFrame at its start */
@@ -24,7 +24,7 @@ void *CxxVecNewEx(void *ptr, u32 count, s32 size, s32 ctorArg, void *ctor, s32 u
   u8 *elem;
 
   allocated = (ptr == NULL);
-  pushFrame = (unwindFlag != 0) | allocated;
+  pushFrame = (dtor != NULL) | allocated;
   if (ptr == NULL || writeCookie != 0) {
     byteSize = count * size;
     if (ptr == NULL) {
@@ -52,7 +52,7 @@ void *CxxVecNewEx(void *ptr, u32 count, s32 size, s32 ctorArg, void *ctor, s32 u
     rec.f14 = allocated;
     rec.f04 = count;
     rec.f08 = size;
-    rec.f18 = (void *)(intptr_t)unwindFlag;
+    rec.f18 = dtor;
     rec.f1c = dealloc;
     rec.f20 = twoArgs;
     rec.f00 = ptr;
@@ -66,7 +66,7 @@ void *CxxVecNewEx(void *ptr, u32 count, s32 size, s32 ctorArg, void *ctor, s32 u
       else {
         ((void (*)(void *, s32))ctor)(elem, ctorArg);
       }
-      if (unwindFlag != 0) {
+      if (dtor != NULL) {
         rec.f0c++;
       }
       if (ctorArg != 0) {

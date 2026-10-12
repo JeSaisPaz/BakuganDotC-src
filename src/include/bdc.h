@@ -101,7 +101,10 @@ void *PlatformPspPtrOrNull(unsigned addr);
 #endif
 
 /* setjmp/longjmp over C++ try frames (port spec D6a): CxxEhTryFrame.jmpBuf keeps the PSP's 0x5c-byte
-   jmp_buf. Host builds use the compiler's builtin pair (5 words, no C library); `longjmp` always passes 1 here. */
+   jmp_buf. Host builds use the compiler's builtin pair (5 words, no C library); `longjmp` always passes 1 here.
+   On LP64, CxxEhTryFrame.jmpBuf sits at +0x0c (4-aligned), so the builtin stores pointer words
+   through a 4-aligned address: x86_64 tolerates that, a strict-alignment host would need the field
+   realigned. */
 #ifdef __mips__
 #define BDC_SETJMP(env) setjmp(env)
 #define BDC_LONGJMP(env) longjmp((env), 1)
@@ -13262,8 +13265,8 @@ void CxxUnexpected(void);
 void CxxVecDeallocate(void *ptr, u32 size, void *dtor, void *dealloc, int twoArgs, int cookie);
 void CxxVecDelete(void *ptr, u32 count, u32 size, void *dtor, int doFree, int cookie);
 void CxxVecDeleteEx(void *ptr, u32 count, u32 size, void *dtor, int doFree, void *dealloc, int twoArgs, int cookie);
-void *CxxVecNew(void *ptr, s32 count, s32 size, void *ctor, s32 unwindFlag);
-void *CxxVecNewEx(void *ptr, u32 count, s32 size, s32 ctorArg, void *ctor, s32 unwindFlag, void *allocator, void *dealloc, s32 twoArgs, s32 writeCookie, s32 unused11, s32 cookieSize);
+void *CxxVecNew(void *ptr, s32 count, s32 size, void *ctor, void *dtor);
+void *CxxVecNewEx(void *ptr, u32 count, s32 size, s32 ctorArg, void *ctor, void *dtor, void *allocator, void *dealloc, s32 twoArgs, s32 writeCookie, s32 unused11, s32 cookieSize);
 void *CxxVecNewSimple(void *ptr, u32 count, s32 size, void *ctor);
 void CxxZeroMemory(void *ptr, size_t size);
 void GameClearLastActivatedObject(void);
