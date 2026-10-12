@@ -45,7 +45,15 @@ void GmoMaterialApplyAttr(float weight, void *mat, s32 type, s32 index, const fl
       return;
     }
   }
-  rgba = (u32 *)((u8 *)a + slot[0]);
+  /* slot[0] is the colour's offset in the PSP's record (0x2c diffuse, 0x30 specular, 0x38
+     emission); the named field keeps it on a host layout (PC port) */
+  if (slot[0] == 0x2c) {
+    rgba = &a->diffuse;
+  } else if (slot[0] == 0x30) {
+    rgba = &a->specular;
+  } else {
+    rgba = &a->emission;
+  }
   if (blend == 1) {
     v[0] = 1.0f;
     v[1] = 1.0f;

@@ -23,6 +23,7 @@ void GmoMotionAdvance(float dt, float weight, GmoModel *model, GmoMotionSlot *sl
     u16 *cursor;
     const GmoChannelDesc *desc;
     GmoNode *node;
+    float *dst;
     const u8 *keys;
     const u8 *last;
     const u8 *key;
@@ -228,7 +229,16 @@ void GmoMotionAdvance(float dt, float weight, GmoModel *model, GmoMotionSlot *sl
                 weight = 0.0f;
             }
         }
-        GmoMotionBlendValue(weight, (float *)((u8 *)node + desc->offset), blend, (s32)type, value);
+        /* desc->offset is the vector's offset in the PSP's 0xc0-byte node (0x50 translate, 0x60
+           rotate, 0x70 scale); the named field keeps it on a host layout (PC port) */
+        if (desc->offset == 0x50) {
+            dst = node->translate;
+        } else if (desc->offset == 0x60) {
+            dst = node->rotate;
+        } else {
+            dst = node->scale;
+        }
+        GmoMotionBlendValue(weight, dst, blend, (s32)type, value);
         node->flags42 = (u16)((node->flags42 & ~(u32)desc->clearMask) | desc->setMask);
     }
 }

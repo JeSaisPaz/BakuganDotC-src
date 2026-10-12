@@ -87,7 +87,15 @@ void GmoNodeApplyAttr(float weight, GmoNode *self, s32 type, s32 unused, const f
     idx = 6;
   }
   slot = g_gmoNodeAttrSlots[idx];
-  vec = (float *)((u8 *)self + slot[0]);
+  /* slot[0] is the vector's offset in the PSP's 0xc0-byte node (0x50 translate, 0x60 rotate,
+     0x70 scale); the named field keeps it on a host layout (PC port) */
+  if (slot[0] == 0x50) {
+    vec = self->translate;
+  } else if (slot[0] == 0x60) {
+    vec = self->rotate;
+  } else {
+    vec = self->scale;
+  }
 
   q.x = value[0];
   q.y = value[1];
