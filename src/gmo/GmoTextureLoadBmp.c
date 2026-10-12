@@ -9,17 +9,17 @@
 
 s32 GmoTextureLoadBmp(void *img, void *data, u32 size, s32 index)
 {
-    u8 plan[0x70] __attribute__((aligned(16)));
+    GmoImagePlan plan __attribute__((aligned(16)));
     s32 result;
 
-    GmoImagePlanInit(plan);
-    if (GmoBmpMeasure(img, data, size, index, plan) == 0) {
+    GmoImagePlanInit(&plan);
+    if (GmoBmpMeasure(img, data, size, index, &plan) == 0) {
         return 0;
     }
-    if (GmoImagePlanCommit(plan) == 0) {
+    if (GmoImagePlanCommit(&plan) == 0) {
         return 0;
     }
-    result = GmoBmpBuild(img, data, size, index, plan);
-    GmoImagePlanFree(plan);
+    result = GmoBmpBuild(img, data, size, index, &plan);
+    GmoImagePlanFree(&plan);
     return result;
 }

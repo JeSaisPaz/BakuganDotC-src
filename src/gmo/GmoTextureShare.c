@@ -11,7 +11,7 @@
 void *GmoTextureShare(void *img, u32 flags)
 {
     GmoTexture *tex = (GmoTexture *)img;
-    u8 plan[0x70];
+    GmoImagePlan plan;
 
     if (tex == NULL) {
         return NULL;
@@ -20,14 +20,14 @@ void *GmoTextureShare(void *img, u32 flags)
         tex->refCount++;
         return tex;
     }
-    GmoImagePlanInit(plan);
-    if (GmoTextureArrayMeasureClone(tex, 1, flags, plan) == 0) {
+    GmoImagePlanInit(&plan);
+    if (GmoTextureArrayMeasureClone(tex, 1, flags, &plan) == 0) {
         return NULL;
     }
-    if (GmoImagePlanCommit(plan) == 0) {
+    if (GmoImagePlanCommit(&plan) == 0) {
         return NULL;
     }
-    tex = GmoTextureArrayClone(tex, 1, flags, plan);
-    GmoImagePlanFree(plan);
+    tex = GmoTextureArrayClone(tex, 1, flags, &plan);
+    GmoImagePlanFree(&plan);
     return tex;
 }

@@ -63,5 +63,5 @@ void GmoPlanFree(void *plan)
       pool->free(b->alloc);
     }
   }
-  memset(plan, 0, 0x6c);
+  memset(plan, 0, sizeof(GmoImagePlan));
 }

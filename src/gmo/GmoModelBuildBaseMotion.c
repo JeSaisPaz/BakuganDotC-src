@@ -19,7 +19,7 @@
 s32 GmoModelBuildBaseMotion(GmoModel *self)
 
 {
-  s32 plan[0x6c / 4];
+  GmoImagePlan plan;
   u32 channels[0x200]; /* target | attribute << 16 | use count << 24 */
   float values[16] __attribute__((aligned(16)));
   u32 rgba;
@@ -53,7 +53,7 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
   if (self->nodeCount == 0 && self->materialCount == 0) {
     return 0;
   }
-  GmoPlanInit(plan);
+  GmoPlanInit(&plan);
 
   /* Collect the distinct channels, counting the tracks without kind bit 2 per channel. */
   total = 0;
@@ -112,8 +112,8 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
   /* Reserve the new track and cursor arrays of every slot and one key block per channel. */
   if (slots > 0) {
     for (m = 0; m < self->motionCount + 1; m++) {
-      GmoPlanReserveRec10A(n, plan);
-      GmoPlanReserve(plan, 0, 4, n * 2);
+      GmoPlanReserveRec10A(n, &plan);
+      GmoPlanReserve(&plan, 0, 4, n * 2);
     }
   }
   for (i = 0; i < n; i++) {
@@ -151,7 +151,7 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
       size = 0;
       break;
     }
-    GmoPlanReserve(plan, 0, 4, size + 4);
+    GmoPlanReserve(&plan, 0, 4, size + 4);
   }
 
   /* Apply the old base slot at frame 0. */
@@ -160,15 +160,15 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
     GmoMotionApplyTrack(0.0f, g_gmoBaseMotionWeight, (GmoMotionTrack *)PspPtr(info->tracks) + i,
                         (u16 *)PspPtr(info->table) + i, self);
   }
-  if (GmoPlanCommit(plan) == 0) {
+  if (GmoPlanCommit((int *)&plan) == 0) {
     return 0;
   }
 
   /* Move every slot's tracks to their channel index in a new array. */
   for (m = 0; m < self->motionCount + 1; m++) {
     info = (GmoMotionInfo *)self->motions + m;
-    newTracks = GmoPlanTakeRec10A(n, plan);
-    newCursors = GmoPlanTake(plan, 0, 4, n * 2);
+    newTracks = GmoPlanTakeRec10A(n, &plan);
+    newCursors = GmoPlanTake(&plan, 0, 4, n * 2);
     memset(newCursors, 0, n * 2);
     for (i = 0; i < info->trackCount; i++) {
       track = &((GmoMotionTrack *)PspPtr(info->tracks))[i];
@@ -193,7 +193,7 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
         }
       }
       if (idx >= 0) {
-        GmoTrackCopy(&newTracks[idx], track, 0, plan);
+        GmoTrackCopy(&newTracks[idx], track, 0, &plan);
       }
     }
     GmoMotionTrackArrayRelease((short *)PspPtr(info->tracks), info->trackCount);
@@ -213,7 +213,7 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
         continue;
       }
       if (src != NULL) {
-        GmoTrackCopy(track, src, 0, plan);
+        GmoTrackCopy(track, src, 0, &plan);
         src = track;
         continue;
       }
@@ -352,7 +352,7 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
         }
       }
 
-      block = GmoPlanTake(plan, 0, 4, count * 4 + 1);
+      block = GmoPlanTake(&plan, 0, 4, count * 4 + 1);
       memcpy(block + 1, values, count * 4);
       block[0] = 0;
       attr = (key >> 16) & 0xff;
@@ -377,6 +377,6 @@ s32 GmoModelBuildBaseMotion(GmoModel *self)
       track->data = PspAddr(block);
     }
   }
-  GmoPlanFree(plan);
+  GmoPlanFree(&plan);
   return 1;
 }

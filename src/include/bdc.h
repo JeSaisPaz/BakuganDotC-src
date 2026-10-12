@@ -6163,7 +6163,7 @@ typedef struct GmoMotionInfo {
 } GmoMotionInfo;
 
 typedef struct GmoMotionEntry {
-    u8 node[0x24];                 /* 0x00 CoreNode header (flattened) */
+    struct CoreNode node;          /* 0x00 CoreNode header */
     void *arrayOwner;              /* 0x24 0 = individually allocated, 1 = element of a CxxVecNew array, else the array block + 0x10 (carried by the last element) */
     u8 pinned;                     /* 0x28 1 after construction; maybe_GmoMotionFreeAll(all = 0) only frees entries with this set */
     u8 pad29[3];                   /* 0x29 */
@@ -6229,7 +6229,7 @@ typedef struct GmoMotionRecord {
 } GmoMotionRecord;
 
 typedef struct GmoMotionRef {
-    u8 node[0x24];             /* 0x00 CoreNode header (flattened) */
+    struct CoreNode node;      /* 0x00 CoreNode header */
     u32 arrayOwner;            /* 0x24 cleared at construction */
     u8 pinned;                 /* 0x28 1 */
     u8 pad29[3];               /* 0x29 */

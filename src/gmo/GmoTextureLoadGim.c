@@ -8,14 +8,14 @@
    0 when the data is not GIM (`MIG.00.1PSP`) or allocation fails. */
 
 s32 GmoTextureLoadGim(void *img, void *data, u32 size, s32 index) {
-    u8 plan[0x70];
+    GmoImagePlan plan;
     s32 ok;
 
-    GmoImagePlanInit(plan);
-    ok = GmoGimMeasure(img, data, size, index, plan);
-    if (ok != 0 && GmoImagePlanCommit(plan) != 0) {
-        ok = GmoGimBuild(img, data, size, index, plan);
-        GmoImagePlanFree(plan);
+    GmoImagePlanInit(&plan);
+    ok = GmoGimMeasure(img, data, size, index, &plan);
+    if (ok != 0 && GmoImagePlanCommit(&plan) != 0) {
+        ok = GmoGimBuild(img, data, size, index, &plan);
+        GmoImagePlanFree(&plan);
         return ok;
     }
     return 0;

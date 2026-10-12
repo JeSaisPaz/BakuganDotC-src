@@ -8,7 +8,7 @@ void GmoPlanInit(void *plan)
 
 {
   if (plan != (void *)0x0) {
-    memset(plan,0,0x6c);
+    memset(plan,0,sizeof(GmoImagePlan));
     return;
   }
   return;

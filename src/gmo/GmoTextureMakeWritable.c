@@ -8,14 +8,14 @@
    `GmoImagePlanFree`. Returns 1 on success, 0 on failure. */
 
 s32 GmoTextureMakeWritable(void *tex, u32 flags) {
-    u8 plan[0x70];
+    GmoImagePlan plan;
     s32 ok;
 
-    GmoImagePlanInit(plan);
-    ok = GmoTextureMeasureWritable(tex, flags, plan);
-    if (ok != 0 && GmoImagePlanCommit(plan) != 0) {
-        ok = GmoTextureBuildWritable(tex, flags, plan);
-        GmoImagePlanFree(plan);
+    GmoImagePlanInit(&plan);
+    ok = GmoTextureMeasureWritable(tex, flags, &plan);
+    if (ok != 0 && GmoImagePlanCommit(&plan) != 0) {
+        ok = GmoTextureBuildWritable(tex, flags, &plan);
+        GmoImagePlanFree(&plan);
         return ok;
     }
     return 0;

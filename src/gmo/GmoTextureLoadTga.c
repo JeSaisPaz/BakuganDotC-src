@@ -9,17 +9,17 @@
 
 s32 GmoTextureLoadTga(void *img, void *data, u32 size, s32 index)
 {
-    u8 plan[0x70] __attribute__((aligned(16)));
+    GmoImagePlan plan __attribute__((aligned(16)));
     s32 result;
 
-    GmoImagePlanInit(plan);
-    if (GmoTgaMeasure(img, data, size, index, plan) == 0) {
+    GmoImagePlanInit(&plan);
+    if (GmoTgaMeasure(img, data, size, index, &plan) == 0) {
         return 0;
     }
-    if (GmoImagePlanCommit(plan) == 0) {
+    if (GmoImagePlanCommit(&plan) == 0) {
         return 0;
     }
-    result = GmoTgaBuild(img, data, size, index, plan);
-    GmoImagePlanFree(plan);
+    result = GmoTgaBuild(img, data, size, index, &plan);
+    GmoImagePlanFree(&plan);
     return result;
 }

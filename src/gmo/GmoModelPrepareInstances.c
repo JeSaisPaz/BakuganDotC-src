@@ -11,14 +11,14 @@
 
 int GmoModelPrepareInstances(GmoModel *self, u32 flags)
 {
-  int plan[28];
+  GmoImagePlan plan;
   GmoPart *part;
   GmoMesh *mesh;
   int i;
   int j;
   int result;
 
-  GmoPlanInit(plan);
+  GmoPlanInit(&plan);
   if (self == NULL) {
     return 0;
   }
@@ -28,15 +28,15 @@ int GmoModelPrepareInstances(GmoModel *self, u32 flags)
       for (j = 0; j < (int)part->meshCount; j++) {
         mesh = &part->meshes[j];
         if (GmoMeshFindInstance(mesh, 1, 0) == NULL && mesh->instances != NULL) {
-          GmoInstanceArrayMeasureCopy(mesh->instances, 1, 0x80000001, plan);
+          GmoInstanceArrayMeasureCopy(mesh->instances, 1, 0x80000001, &plan);
         }
       }
     }
   }
-  if (GmoPlanCommit(plan) == 0) {
+  if (GmoPlanCommit((int *)&plan) == 0) {
     return 0;
   }
-  result = GmoModelCreateInstances(self, flags, plan);
-  GmoPlanFree(plan);
+  result = GmoModelCreateInstances(self, flags, &plan);
+  GmoPlanFree(&plan);
   return result;
 }

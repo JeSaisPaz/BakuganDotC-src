@@ -8,17 +8,17 @@
 
 void *GmoCreateMotionArray(int n)
 {
-  int plan[28];
+  GmoImagePlan plan;
   int committed;
   void *array;
 
-  GmoPlanInit(plan);
-  GmoPlanReserve(plan, 0, 0x10, n * (int)sizeof(GmoMotionInfo));
-  committed = GmoPlanCommit(plan);
+  GmoPlanInit(&plan);
+  GmoPlanReserve(&plan, 0, 0x10, n * (int)sizeof(GmoMotionInfo));
+  committed = GmoPlanCommit((int *)&plan);
   array = (void *)0x0;
   if (committed != 0) {
-    array = GmoPlanTakeArray(plan, 0, 0x10, (int)sizeof(GmoMotionInfo), n, GmoMotionRecordCtor);
-    GmoPlanFree(plan);
+    array = GmoPlanTakeArray(&plan, 0, 0x10, (int)sizeof(GmoMotionInfo), n, GmoMotionRecordCtor);
+    GmoPlanFree(&plan);
   }
   return array;
 }
