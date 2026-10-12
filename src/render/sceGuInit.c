@@ -4,7 +4,7 @@
 /* Statically linked libgu `sceGuInit`: on first call fetches the GE eDRAM base
    (`sceGeEdramGetAddr`), resets the library state (`GfxGuInitContexts`), creates the
    `"SceGuSignal"` event flag (`g_guSignalEventFlag`), registers the GE signal/finish callbacks
-   (`sceGeSetCallback`, both with the settings block starting at `g_guSignalCallback` as argument)
+   (`sceGeSetCallback`, both with the settings block starting at `g_guSettings` as argument)
    and enqueues `g_guGeInitList`, waiting for it with `sceGeListSync`/`sceGeDrawSync`; then sets
    `g_guInitialized` and returns 0. A repeat call returns `0x80000020`; a failing
    `sceKernelCreateEventFlag`, `sceGeSetCallback` or `sceGeListEnQueue` returns its error code after
@@ -22,13 +22,13 @@ s32 sceGuInit(void)
     ret = sceKernelCreateEventFlag("SceGuSignal", 0x200, 1, NULL);
     if (ret >= 0) {
       cb.finish_func = (SceGeCallback)GfxGuCallbackFin;
-      g_guSignalEventFlag = ret;
+      g_guSettings.signalEventFlag = ret;
       cb.signal_func = (SceGeCallback)GfxGuCallbackSig;
-      cb.signal_arg = &g_guSignalCallback;
-      cb.finish_arg = &g_guSignalCallback;
+      cb.signal_arg = &g_guSettings;
+      cb.finish_arg = &g_guSettings;
       ret = sceGeSetCallback(&cb);
       if (ret < 0) {
-        sceKernelDeleteEventFlag(g_guSignalEventFlag);
+        sceKernelDeleteEventFlag(g_guSettings.signalEventFlag);
       }
       else {
         g_guGeCallbackId = ret;
@@ -40,11 +40,11 @@ s32 sceGuInit(void)
           g_guInitialized = 1;
           return 0;
         }
-        sceKernelDeleteEventFlag(g_guSignalEventFlag);
+        sceKernelDeleteEventFlag(g_guSettings.signalEventFlag);
         sceGeUnsetCallback(g_guGeCallbackId);
         g_guGeCallbackId = -1;
       }
-      g_guSignalEventFlag = -1;
+      g_guSettings.signalEventFlag = -1;
     }
   }
   return ret;

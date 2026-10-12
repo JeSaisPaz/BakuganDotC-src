@@ -66,7 +66,7 @@ s32 sceGuStart(s32 cid, void *list, s32 size)
   }
 
   if (g_guDeferredMode == 0) {
-    g_guState4c = 0;
+    g_guSettings.signalOffset = 0;
     id = sceGeListEnQueue(g_guCurrentContext->listStart, g_guCurrentContext->listCurrent,
                           g_guGeCallbackId, (SceGeListArgs *)&g_guListArgs);
     if (id < 0) {

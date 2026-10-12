@@ -59,6 +59,6 @@ void GfxGuInitContexts(void)
         ctx++;
     }
 
-    g_guSignalCallback = 0;
-    g_guFinishCallback = 0;
+    g_guSettings.signalHandler = 0;
+    g_guSettings.finishHandler = 0;
 }

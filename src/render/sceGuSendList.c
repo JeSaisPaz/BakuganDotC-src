@@ -12,7 +12,7 @@ int sceGuSendList(int mode, const void *list, SceGeContext *context, u32 numStac
   int id;
 
   args.size = 0x10;
-  g_guState4c = 0;
+  g_guSettings.signalOffset = 0;
   args.ctx = context;
   args.numStacks = numStacks;
   args.stacks = stacks;
