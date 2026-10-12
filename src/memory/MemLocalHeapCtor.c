@@ -17,10 +17,10 @@ void *MemLocalHeapCtor(MemLocalHeap *self, void *buffer, u32 size, u32 align)
     self->vtbl = g_memLocalHeapVtbl;
     self->align = align;
     self->state = state;
-    state->pool = (MemBlock *)(state + 1);
+    state->pool = (MemBlock *)((u8 *)state + ((sizeof(MemMng) + 15) & ~15u));
     self->state->totalSize = size;
     self->state->usedSize = 0;
-    self->state->freeSize = self->state->totalSize - 0x40;
+    self->state->freeSize = self->state->totalSize - ((sizeof(MemMng) + 15) & ~15u);
     self->state->blockCount = 0;
     self->state->unk18 = 0;
     /* The list headers are block-shaped sentinels; the init sets their cursor slot, cleared below. */
@@ -29,7 +29,7 @@ void *MemLocalHeapCtor(MemLocalHeap *self, void *buffer, u32 size, u32 align)
     self->state->usedList.cursor = NULL;
     self->state->freeList.cursor = NULL;
     blk = self->state->pool;
-    MemBlockInit(blk, self->state->freeSize - 0x10, LOCAL_HEAP_SRC, 0x5e);
+    MemBlockInit(blk, self->state->freeSize - sizeof(MemBlock), LOCAL_HEAP_SRC, 0x5e);
     MemListInsert(&self->state->freeList, blk, true);
     self->state->blockCount++;
     self->flag0c = 0;

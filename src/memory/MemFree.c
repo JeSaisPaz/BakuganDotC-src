@@ -36,18 +36,18 @@ bool MemFree(void *ptr, const char *file, s32 line)
 
     next = blk->next;
     if (next != NULL && (MemBlock *)((u8 *)blk->data + blk->size) == next) {
-        blk->size = next->size + blk->size + 0x10;
+        blk->size = next->size + blk->size + sizeof(MemBlock);
         MemListRemove(&g_memMng->freeList, next);
-        g_memMng->freeSize += 0x10;
+        g_memMng->freeSize += sizeof(MemBlock);
         g_memMng->blockCount--;
     }
 
     prev = blk->prev;
     if (prev != NULL && prev != (MemBlock *)&g_memMng->freeList &&
         (MemBlock *)((u8 *)prev->data + prev->size) == blk) {
-        prev->size = blk->size + prev->size + 0x10;
+        prev->size = blk->size + prev->size + sizeof(MemBlock);
         MemListRemove(&g_memMng->freeList, blk);
-        g_memMng->freeSize += 0x10;
+        g_memMng->freeSize += sizeof(MemBlock);
         g_memMng->blockCount--;
     }
     return true;

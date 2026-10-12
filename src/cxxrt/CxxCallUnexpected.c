@@ -29,7 +29,7 @@ void CxxCallUnexpected(void)
   tryFrame.handlers = &g_cxxCallUnexpectedHandlers;
   tryFrame.caught = NULL;
   tryFrame.region = g_cxxEhCurrentRegion;
-  if (setjmp(tryFrame.jmpBuf) == 0) {
+  if (BDC_SETJMP(tryFrame.jmpBuf) == 0) {
     CxxUnexpected();
   }
   else {

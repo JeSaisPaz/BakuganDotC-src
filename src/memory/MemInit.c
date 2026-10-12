@@ -4,7 +4,8 @@
 #define MEM_SRC "c:/bullets/bkn2pspsys/src/pspsys/sys/Mem/FOMemMng.cpp"
 
 /* Creates the game heap: destroys any previous one (`MemShutdown`), allocates a 16-byte-aligned
-   buffer of `size` (rounded up to 16) and lays out a `MemMng` header (0x40 bytes) plus one free
+   buffer of `size` (rounded up to 16) and lays out a `MemMng` header (0x40 bytes on the PSP;
+   rounded up to 16 bytes elsewhere) plus one free
    `MemBlock` covering the rest, switches allocation to the low end (`MemSetAllocFromLow`), then
    creates `g_memMutex` (`MemCreateMutex`). Result stored in `g_memMng`. Only the `pool` store
    is guarded against a failed `memalign`; the rest writes through the NULL pointer. */
@@ -22,11 +23,11 @@ void MemInit(u32 size)
     mng = memalign(0x10, size);
     g_memMng = mng;
     if (mng != NULL) {
-        mng->pool = (MemBlock *)(mng + 1);
+        mng->pool = (MemBlock *)((u8 *)mng + ((sizeof(MemMng) + 15) & ~15u));
     }
     mng->totalSize = size;
     mng->usedSize = 0;
-    mng->freeSize = mng->totalSize - 0x40;
+    mng->freeSize = mng->totalSize - ((sizeof(MemMng) + 15) & ~15u);
     mng->blockCount = 0;
     MemSetAllocFromLow(true);
     g_memMng->unk18 = 0;
@@ -36,9 +37,9 @@ void MemInit(u32 size)
     blk = g_memMng->pool;
     g_memMng->usedList.cursor = NULL;
     g_memMng->freeList.cursor = NULL;
-    MemBlockInit(blk, g_memMng->freeSize - 0x10, MEM_SRC, 0x20f);
+    MemBlockInit(blk, g_memMng->freeSize - sizeof(MemBlock), MEM_SRC, 0x20f);
     MemListInsert(&g_memMng->freeList, blk, true);
-    g_memMng->freeSize -= 0x10;
+    g_memMng->freeSize -= sizeof(MemBlock);
     g_memMng->blockCount++;
     MemCreateMutex();
 }

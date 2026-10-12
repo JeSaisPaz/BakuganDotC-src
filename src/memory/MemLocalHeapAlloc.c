@@ -30,16 +30,16 @@ void *MemLocalHeapAlloc(MemLocalHeap *self, u32 size, char *file, s32 line)
         return NULL;
     }
 
-    if (blk->size < size + 0x10) {
+    if (blk->size < size + sizeof(MemBlock)) {
         MemListRemove(&state->freeList, blk);
     } else {
         MemListRemove(&state->freeList, blk);
         rest = (MemBlock *)((u8 *)blk->data + size);
-        MemBlockInit(rest, blk->size - size - 0x10, file, line);
+        MemBlockInit(rest, blk->size - size - sizeof(MemBlock), file, line);
         MemListInsert(&self->state->freeList, rest, true);
         blk->size = size;
         self->state->blockCount++;
-        self->state->freeSize -= 0x10;
+        self->state->freeSize -= sizeof(MemBlock);
     }
     MemListInsert(&self->state->usedList, blk, false);
     self->state->usedSize += blk->size;

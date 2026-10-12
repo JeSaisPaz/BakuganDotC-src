@@ -10,7 +10,7 @@ void MemLocalHeapDtor(MemLocalHeap *self, u32 flags)
         return;
     }
     self->vtbl = g_memLocalHeapVtbl;
-    memset(self->state, 0, 0x40);
+    memset(self->state, 0, sizeof(MemMng));
     if ((flags & 1) != 0) {
         MemLock();
         MemFree(self, NULL, 0);

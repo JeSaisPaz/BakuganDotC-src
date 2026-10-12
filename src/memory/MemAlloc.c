@@ -9,7 +9,7 @@
    Placement follows `MemIsAllocFromLow`: from low takes the first free block that fits and
    splits the remainder off its top as a new free block; otherwise the last (highest-address)
    fitting block is used and the allocation is carved from its top end, leaving the shrunk block
-   in the free list. A block is split only when it is more than `size + 0x10` (header) bytes.
+   in the free list. A block is split only when it is more than `size` plus a block header.
    On failure the heap totals are printed. */
 void *MemAlloc(s32 size, const char *file, s32 line)
 {
@@ -41,20 +41,20 @@ void *MemAlloc(s32 size, const char *file, s32 line)
         }
 
         if (found != NULL) {
-            if ((u32)size + 0x10 < found->size) {
+            if ((u32)size + sizeof(MemBlock) < found->size) {
                 if (fromLow) {
                     MemListRemove(&g_memMng->freeList, found);
                     rest = (MemBlock *)((u8 *)found->data + size);
-                    MemBlockInit(rest, found->size - size - 0x10, file, line);
+                    MemBlockInit(rest, found->size - size - sizeof(MemBlock), file, line);
                     MemListInsert(&g_memMng->freeList, rest, true);
                     found->size = size;
                 } else {
-                    found->size = found->size - size - 0x10;
+                    found->size = found->size - size - sizeof(MemBlock);
                     found = (MemBlock *)((u8 *)found->data + found->size);
                     MemBlockInit(found, size, file, line);
                 }
                 g_memMng->blockCount++;
-                g_memMng->freeSize -= 0x10;
+                g_memMng->freeSize -= sizeof(MemBlock);
                 usedList = &g_memMng->usedList;
             } else {
                 MemListRemove(&g_memMng->freeList, found);

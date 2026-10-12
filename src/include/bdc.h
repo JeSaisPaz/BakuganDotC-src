@@ -80,6 +80,36 @@ void *PlatformPspPtrOrNull(unsigned addr);
 #define PspPtrOrNull(a) PlatformPspPtrOrNull(a)
 #endif
 
+/* Import hooks (port spec D6a): PSP imports that a PC host serves as plain platform calls (cache
+   maintenance, lightweight mutexes, debug print, vblank and delay waits, the RTC clock). A host build
+   renames them to `Platform*`, so the port defines no `sce*` symbol and their callers need no override;
+   a MIPS build keeps the import, so its objects are unchanged. Contracts: the `sce` notes'. */
+#ifndef __mips__
+#define sceKernelDcacheWritebackAll PlatformKernelDcacheWritebackAll
+#define sceKernelDcacheWritebackRange PlatformKernelDcacheWritebackRange
+#define sceKernelDcacheWritebackInvalidateRange PlatformKernelDcacheWritebackInvalidateRange
+#define sceKernelCreateLwMutex PlatformKernelCreateLwMutex
+#define sceKernelDeleteLwMutex PlatformKernelDeleteLwMutex
+#define sceKernelLockLwMutex PlatformKernelLockLwMutex
+#define sceKernelLockLwMutexCB PlatformKernelLockLwMutexCB
+#define sceKernelUnlockLwMutex PlatformKernelUnlockLwMutex
+#define sceKernelPrintf PlatformKernelPrintf
+#define sceDisplayWaitVblankStartCB PlatformDisplayWaitVblankStartCB
+#define sceKernelDelayThread PlatformKernelDelayThread
+#define sceKernelDelayThreadCB PlatformKernelDelayThreadCB
+#define sceRtcGetCurrentClockLocalTime PlatformRtcGetCurrentClockLocalTime
+#endif
+
+/* setjmp/longjmp over C++ try frames (port spec D6a): CxxEhTryFrame.jmpBuf keeps the PSP's 0x5c-byte
+   jmp_buf. Host builds use the compiler's builtin pair (5 words, no C library); `longjmp` always passes 1 here. */
+#ifdef __mips__
+#define BDC_SETJMP(env) setjmp(env)
+#define BDC_LONGJMP(env) longjmp((env), 1)
+#else
+#define BDC_SETJMP(env) __builtin_setjmp((void **)(env))
+#define BDC_LONGJMP(env) __builtin_longjmp((void **)(env), 1)
+#endif
+
 #endif
 typedef unsigned char uchar; typedef unsigned short ushort; typedef unsigned int uint;
 typedef unsigned long ulong; typedef long long longlong; typedef unsigned long long ulonglong;

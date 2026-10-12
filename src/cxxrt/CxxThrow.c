@@ -151,7 +151,7 @@ int CxxThrow(void)
       g_cxxEhCaughtObject = obj;
     }
     tryFrame->caught = rec;
-    longjmp(tryFrame->jmpBuf, 1);
+    BDC_LONGJMP(tryFrame->jmpBuf);
   }
   else if (target->kind == 2) {
     g_cxxEhFrameStack = ((CxxEhFrame *)g_cxxEhFrameStack)->next;
