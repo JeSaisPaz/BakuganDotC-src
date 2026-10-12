@@ -33,14 +33,14 @@ char UiTalkShowMessage(void *win, u32 faceId, s32 msgId, s32 force, s32 duration
         return 0;
     }
     if ((u32)hud->talkKind != faceId) {
-        s16 *entry = UiLayoutGetEntry(4, 0x81);
+        UiLayoutEntry *entry = UiLayoutGetEntry(4, 0x81);
 
         sprintf(name, "tips_kao%02d", faceId);
         face->texture = GfxFindTexture(name);
-        face->posX = (float)entry[0];
+        face->posX = (float)entry->x;
         face->posW = 0.0f;
-        face->posY = (float)entry[1];
-        face->posZ = (float)(entry[2] + 200);
+        face->posY = (float)entry->y;
+        face->posZ = (float)(entry->z + 200);
         hud->talkKind = faceId;
     }
     for (i = 0x82; i < 0x84; i++) {

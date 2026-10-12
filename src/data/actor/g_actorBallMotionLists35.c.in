@@ -1,0 +1,10 @@
+// bdc 0x08a918c4 g_actorBallMotionLists35
+#include "bdc.h"
+// bdc-fix	STR	char *	0x28d8a8	0	0	[0].name
+// bdc-fix	V	int	0x28d8cc	4	0	[1].slot
+// bdc-fix	STR	char *	0x28cda8	0	0	[1].name
+
+__typeof__(ActorBallMotionEntry[2]) g_actorBallMotionLists35 = {
+    { .name = (const char *)BDC_STR(0x28d8a8) },
+    { .slot = BDC_V(int, 0x28d8cc), .name = (const char *)BDC_STR(0x28cda8) },
+};

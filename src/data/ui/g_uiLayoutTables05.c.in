@@ -1,0 +1,5 @@
+// bdc 0x08a3bb48 g_uiLayoutTables05
+#include "bdc.h"
+// bdc-fix	STR	char *	0x237b44	0	0	[0].texture
+
+__typeof__(UiLayoutEntry[1]) g_uiLayoutTables05 = { { .texture = (const char *)BDC_STR(0x237b44) } };

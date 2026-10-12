@@ -1,7 +1,15 @@
 // bdc 0x08a3a740 g_uiLayoutTables02
 #include "bdc.h"
-// bdc-fix	V	short	0x236744	2	0	[2]
-// bdc-fix	V	short	0x23674a	2	0	[5]
-// bdc-fix	V	short	0x23674c	2	0	[6]
+// bdc-fix	V	short	0x236744	2	0	[0].z
+// bdc-fix	V	short	0x23674a	2	0	[0].w
+// bdc-fix	V	short	0x23674c	2	0	[0].h
+// bdc-fix	STR	char *	0x236738	0	0	[0].texture
 
-__typeof__(s16[8]) g_uiLayoutTables02 = { 0, 0, BDC_V(short, 0x236744), 0, 0, BDC_V(short, 0x23674a), BDC_V(short, 0x23674c) };
+__typeof__(UiLayoutEntry[1]) g_uiLayoutTables02 = {
+    {
+        .z = BDC_V(short, 0x236744),
+        .w = BDC_V(short, 0x23674a),
+        .h = BDC_V(short, 0x23674c),
+        .texture = (const char *)BDC_STR(0x236738),
+    },
+};

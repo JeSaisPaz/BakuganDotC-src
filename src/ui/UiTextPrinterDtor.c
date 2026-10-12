@@ -12,7 +12,7 @@ void UiTextPrinterDtor(UiTextPrinter *self, u32 flags)
   
   if (self != (UiTextPrinter *)0x0) {
     ptr = self->fontTextures;
-    (self->layer).vtbl = &g_uiTextPrinterVtbl;
+    (self->layer).vtbl = g_uiTextPrinterVtbl;
     if (ptr != (void **)0x0) {
       MemLock();
       MemFree(ptr,(char *)0x0,0);

@@ -1,5 +1,125 @@
 // bdc 0x08a97090 g_gameStageSpawnTables03
 #include "bdc.h"
-// bdc-fix	V	int	0x293090	4	0	[0]
+// bdc-fix	V	int	0x293090	4	0	[0].count
+// bdc-fix	V	int	0x293098	4	0	[1].count
+// bdc-fix	V	int	0x2930a0	4	0	[2].count
+// bdc-fix	V	int	0x2930a8	4	0	[3].count
+// bdc-fix	V	int	0x2930b0	4	0	[4].count
+// bdc-fix	V	int	0x2930b8	4	0	[5].count
+// bdc-fix	V	int	0x2930c0	4	0	[6].count
+// bdc-fix	V	int	0x2930c8	4	0	[7].count
+// bdc-fix	V	int	0x2930d0	4	0	[8].count
+// bdc-fix	V	int	0x2930d8	4	0	[9].count
+// bdc-fix	V	int	0x2930e0	4	0	[10].count
+// bdc-fix	V	int	0x2930e8	4	0	[11].count
+// bdc-fix	V	int	0x2930f0	4	0	[12].count
+// bdc-fix	V	int	0x2930f8	4	0	[13].count
+// bdc-fix	V	int	0x293100	4	0	[14].count
+// bdc-fix	V	int	0x293108	4	0	[15].count
+// bdc-fix	V	int	0x293110	4	0	[16].count
+// bdc-fix	V	int	0x293118	4	0	[17].count
+// bdc-fix	V	int	0x293120	4	0	[18].count
+// bdc-fix	V	int	0x293128	4	0	[19].count
+// bdc-fix	V	int	0x293130	4	0	[20].count
+// bdc-fix	V	int	0x293138	4	0	[21].count
+// bdc-fix	V	int	0x293140	4	0	[22].count
+// bdc-fix	V	int	0x293148	4	0	[23].count
 
-__typeof__(s32[1]) g_gameStageSpawnTables03 = { BDC_V(int, 0x293090) };
+__typeof__(GameStageSpawnPointList[24]) g_gameStageSpawnTables03 = {
+    {
+        .count = BDC_V(int, 0x293090),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints,
+    },
+    {
+        .count = BDC_V(int, 0x293098),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints,
+    },
+    {
+        .count = BDC_V(int, 0x2930a0),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints,
+    },
+    {
+        .count = BDC_V(int, 0x2930a8),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints,
+    },
+    {
+        .count = BDC_V(int, 0x2930b0),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[1],
+    },
+    {
+        .count = BDC_V(int, 0x2930b8),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[1],
+    },
+    {
+        .count = BDC_V(int, 0x2930c0),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[1],
+    },
+    {
+        .count = BDC_V(int, 0x2930c8),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[1],
+    },
+    {
+        .count = BDC_V(int, 0x2930d0),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[2],
+    },
+    {
+        .count = BDC_V(int, 0x2930d8),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[2],
+    },
+    {
+        .count = BDC_V(int, 0x2930e0),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[2],
+    },
+    {
+        .count = BDC_V(int, 0x2930e8),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[2],
+    },
+    {
+        .count = BDC_V(int, 0x2930f0),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[6],
+    },
+    {
+        .count = BDC_V(int, 0x2930f8),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[6],
+    },
+    {
+        .count = BDC_V(int, 0x293100),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[6],
+    },
+    {
+        .count = BDC_V(int, 0x293108),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[6],
+    },
+    {
+        .count = BDC_V(int, 0x293110),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[7],
+    },
+    {
+        .count = BDC_V(int, 0x293118),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[7],
+    },
+    {
+        .count = BDC_V(int, 0x293120),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[7],
+    },
+    {
+        .count = BDC_V(int, 0x293128),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[7],
+    },
+    {
+        .count = BDC_V(int, 0x293130),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[8],
+    },
+    {
+        .count = BDC_V(int, 0x293138),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[8],
+    },
+    {
+        .count = BDC_V(int, 0x293140),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[8],
+    },
+    {
+        .count = BDC_V(int, 0x293148),
+        .records = (struct GameStageSpawnPoint *)&g_gameStageSpawnPoints[8],
+    },
+};

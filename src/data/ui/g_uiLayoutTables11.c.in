@@ -1,6 +1,691 @@
 // bdc 0x08a3c5bc g_uiLayoutTables11
 #include "bdc.h"
-// bdc-fix	V	short	0x2385c6	2	0	[5]
-// bdc-fix	V	short	0x2385c8	2	0	[6]
+// bdc-fix	V	short	0x2385c6	2	0	[0].w
+// bdc-fix	V	short	0x2385c8	2	0	[0].h
+// bdc-fix	STR	char *	0x238310	0	0	[0].texture
+// bdc-fix	V	short	0x2385d0	2	0	[1].x
+// bdc-fix	V	short	0x2385d2	2	0	[1].y
+// bdc-fix	V	short	0x2385d4	2	0	[1].z
+// bdc-fix	V	short	0x2385da	2	0	[1].w
+// bdc-fix	V	short	0x2385dc	2	0	[1].h
+// bdc-fix	STR	char *	0x2384f0	0	0	[1].texture
+// bdc-fix	V	short	0x2385e4	2	0	[2].x
+// bdc-fix	V	short	0x2385e6	2	0	[2].y
+// bdc-fix	V	short	0x2385e8	2	0	[2].z
+// bdc-fix	V	short	0x2385ee	2	0	[2].w
+// bdc-fix	V	short	0x2385f0	2	0	[2].h
+// bdc-fix	STR	char *	0x2384fc	0	0	[2].texture
+// bdc-fix	V	short	0x2385f8	2	0	[3].x
+// bdc-fix	V	short	0x2385fa	2	0	[3].y
+// bdc-fix	V	short	0x2385fc	2	0	[3].z
+// bdc-fix	V	short	0x238602	2	0	[3].w
+// bdc-fix	V	short	0x238604	2	0	[3].h
+// bdc-fix	STR	char *	0x238508	0	0	[3].texture
+// bdc-fix	V	short	0x23860c	2	0	[4].x
+// bdc-fix	V	short	0x23860e	2	0	[4].y
+// bdc-fix	V	short	0x238610	2	0	[4].z
+// bdc-fix	V	short	0x238616	2	0	[4].w
+// bdc-fix	V	short	0x238618	2	0	[4].h
+// bdc-fix	STR	char *	0x2384f0	0	0	[4].texture
+// bdc-fix	V	short	0x238620	2	0	[5].x
+// bdc-fix	V	short	0x238622	2	0	[5].y
+// bdc-fix	V	short	0x238624	2	0	[5].z
+// bdc-fix	V	short	0x23862a	2	0	[5].w
+// bdc-fix	V	short	0x23862c	2	0	[5].h
+// bdc-fix	STR	char *	0x2384fc	0	0	[5].texture
+// bdc-fix	V	short	0x238634	2	0	[6].x
+// bdc-fix	V	short	0x238636	2	0	[6].y
+// bdc-fix	V	short	0x238638	2	0	[6].z
+// bdc-fix	V	short	0x23863e	2	0	[6].w
+// bdc-fix	V	short	0x238640	2	0	[6].h
+// bdc-fix	STR	char *	0x238508	0	0	[6].texture
+// bdc-fix	V	short	0x238648	2	0	[7].x
+// bdc-fix	V	short	0x23864a	2	0	[7].y
+// bdc-fix	V	short	0x23864c	2	0	[7].z
+// bdc-fix	V	short	0x238652	2	0	[7].w
+// bdc-fix	V	short	0x238654	2	0	[7].h
+// bdc-fix	STR	char *	0x2384f0	0	0	[7].texture
+// bdc-fix	V	short	0x23865c	2	0	[8].x
+// bdc-fix	V	short	0x23865e	2	0	[8].y
+// bdc-fix	V	short	0x238660	2	0	[8].z
+// bdc-fix	V	short	0x238666	2	0	[8].w
+// bdc-fix	V	short	0x238668	2	0	[8].h
+// bdc-fix	STR	char *	0x2384fc	0	0	[8].texture
+// bdc-fix	V	short	0x238670	2	0	[9].x
+// bdc-fix	V	short	0x238672	2	0	[9].y
+// bdc-fix	V	short	0x238674	2	0	[9].z
+// bdc-fix	V	short	0x23867a	2	0	[9].w
+// bdc-fix	V	short	0x23867c	2	0	[9].h
+// bdc-fix	STR	char *	0x238508	0	0	[9].texture
+// bdc-fix	V	short	0x238684	2	0	[10].x
+// bdc-fix	V	short	0x238686	2	0	[10].y
+// bdc-fix	V	short	0x238688	2	0	[10].z
+// bdc-fix	V	short	0x23868e	2	0	[10].w
+// bdc-fix	V	short	0x238690	2	0	[10].h
+// bdc-fix	STR	char *	0x2384f0	0	0	[10].texture
+// bdc-fix	V	short	0x238698	2	0	[11].x
+// bdc-fix	V	short	0x23869a	2	0	[11].y
+// bdc-fix	V	short	0x23869c	2	0	[11].z
+// bdc-fix	V	short	0x2386a2	2	0	[11].w
+// bdc-fix	V	short	0x2386a4	2	0	[11].h
+// bdc-fix	STR	char *	0x2384fc	0	0	[11].texture
+// bdc-fix	V	short	0x2386ac	2	0	[12].x
+// bdc-fix	V	short	0x2386ae	2	0	[12].y
+// bdc-fix	V	short	0x2386b0	2	0	[12].z
+// bdc-fix	V	short	0x2386b6	2	0	[12].w
+// bdc-fix	V	short	0x2386b8	2	0	[12].h
+// bdc-fix	STR	char *	0x238508	0	0	[12].texture
+// bdc-fix	V	short	0x2386c0	2	0	[13].x
+// bdc-fix	V	short	0x2386c2	2	0	[13].y
+// bdc-fix	V	short	0x2386c4	2	0	[13].z
+// bdc-fix	V	short	0x2386ca	2	0	[13].w
+// bdc-fix	V	short	0x2386cc	2	0	[13].h
+// bdc-fix	STR	char *	0x2384f0	0	0	[13].texture
+// bdc-fix	V	short	0x2386d4	2	0	[14].x
+// bdc-fix	V	short	0x2386d6	2	0	[14].y
+// bdc-fix	V	short	0x2386d8	2	0	[14].z
+// bdc-fix	V	short	0x2386de	2	0	[14].w
+// bdc-fix	V	short	0x2386e0	2	0	[14].h
+// bdc-fix	STR	char *	0x2384fc	0	0	[14].texture
+// bdc-fix	V	short	0x2386e8	2	0	[15].x
+// bdc-fix	V	short	0x2386ea	2	0	[15].y
+// bdc-fix	V	short	0x2386ec	2	0	[15].z
+// bdc-fix	V	short	0x2386f2	2	0	[15].w
+// bdc-fix	V	short	0x2386f4	2	0	[15].h
+// bdc-fix	STR	char *	0x238508	0	0	[15].texture
+// bdc-fix	V	short	0x2386fc	2	0	[16].x
+// bdc-fix	V	short	0x2386fe	2	0	[16].y
+// bdc-fix	V	short	0x238700	2	0	[16].z
+// bdc-fix	V	short	0x238706	2	0	[16].w
+// bdc-fix	V	short	0x238708	2	0	[16].h
+// bdc-fix	STR	char *	0x2384f0	0	0	[16].texture
+// bdc-fix	V	short	0x238710	2	0	[17].x
+// bdc-fix	V	short	0x238712	2	0	[17].y
+// bdc-fix	V	short	0x238714	2	0	[17].z
+// bdc-fix	V	short	0x23871a	2	0	[17].w
+// bdc-fix	V	short	0x23871c	2	0	[17].h
+// bdc-fix	STR	char *	0x2384fc	0	0	[17].texture
+// bdc-fix	V	short	0x238724	2	0	[18].x
+// bdc-fix	V	short	0x238726	2	0	[18].y
+// bdc-fix	V	short	0x238728	2	0	[18].z
+// bdc-fix	V	short	0x23872e	2	0	[18].w
+// bdc-fix	V	short	0x238730	2	0	[18].h
+// bdc-fix	STR	char *	0x238508	0	0	[18].texture
+// bdc-fix	V	short	0x23873a	2	0	[19].y
+// bdc-fix	V	short	0x23873c	2	0	[19].z
+// bdc-fix	V	short	0x238742	2	0	[19].w
+// bdc-fix	V	short	0x238744	2	0	[19].h
+// bdc-fix	STR	char *	0x238318	0	0	[19].texture
+// bdc-fix	V	short	0x238750	2	0	[20].z
+// bdc-fix	V	short	0x238756	2	0	[20].w
+// bdc-fix	V	short	0x238758	2	0	[20].h
+// bdc-fix	STR	char *	0x238510	0	0	[20].texture
+// bdc-fix	V	short	0x238760	2	0	[21].x
+// bdc-fix	V	short	0x238762	2	0	[21].y
+// bdc-fix	V	short	0x238764	2	0	[21].z
+// bdc-fix	V	short	0x23876a	2	0	[21].w
+// bdc-fix	V	short	0x23876c	2	0	[21].h
+// bdc-fix	STR	char *	0x23851c	0	0	[21].texture
+// bdc-fix	V	short	0x238774	2	0	[22].x
+// bdc-fix	V	short	0x238776	2	0	[22].y
+// bdc-fix	V	short	0x238778	2	0	[22].z
+// bdc-fix	V	short	0x23877e	2	0	[22].w
+// bdc-fix	V	short	0x238780	2	0	[22].h
+// bdc-fix	STR	char *	0x23851c	0	0	[22].texture
+// bdc-fix	V	short	0x238788	2	0	[23].x
+// bdc-fix	V	short	0x23878a	2	0	[23].y
+// bdc-fix	V	short	0x23878c	2	0	[23].z
+// bdc-fix	V	short	0x238792	2	0	[23].w
+// bdc-fix	V	short	0x238794	2	0	[23].h
+// bdc-fix	STR	char *	0x23851c	0	0	[23].texture
+// bdc-fix	V	short	0x23879c	2	0	[24].x
+// bdc-fix	V	short	0x23879e	2	0	[24].y
+// bdc-fix	V	short	0x2387a0	2	0	[24].z
+// bdc-fix	V	short	0x2387a6	2	0	[24].w
+// bdc-fix	V	short	0x2387a8	2	0	[24].h
+// bdc-fix	STR	char *	0x238528	0	0	[24].texture
+// bdc-fix	V	short	0x2387b0	2	0	[25].x
+// bdc-fix	V	short	0x2387b2	2	0	[25].y
+// bdc-fix	V	short	0x2387b4	2	0	[25].z
+// bdc-fix	V	short	0x2387ba	2	0	[25].w
+// bdc-fix	V	short	0x2387bc	2	0	[25].h
+// bdc-fix	STR	char *	0x238528	0	0	[25].texture
+// bdc-fix	V	short	0x2387c4	2	0	[26].x
+// bdc-fix	V	short	0x2387c6	2	0	[26].y
+// bdc-fix	V	short	0x2387c8	2	0	[26].z
+// bdc-fix	V	short	0x2387ce	2	0	[26].w
+// bdc-fix	V	short	0x2387d0	2	0	[26].h
+// bdc-fix	STR	char *	0x238528	0	0	[26].texture
+// bdc-fix	V	short	0x2387d8	2	0	[27].x
+// bdc-fix	V	short	0x2387da	2	0	[27].y
+// bdc-fix	V	short	0x2387dc	2	0	[27].z
+// bdc-fix	V	short	0x2387e2	2	0	[27].w
+// bdc-fix	V	short	0x2387e4	2	0	[27].h
+// bdc-fix	STR	char *	0x238538	0	0	[27].texture
+// bdc-fix	V	short	0x2387ec	2	0	[28].x
+// bdc-fix	V	short	0x2387ee	2	0	[28].y
+// bdc-fix	V	short	0x2387f0	2	0	[28].z
+// bdc-fix	V	short	0x2387f6	2	0	[28].w
+// bdc-fix	V	short	0x2387f8	2	0	[28].h
+// bdc-fix	STR	char *	0x238544	0	0	[28].texture
+// bdc-fix	V	short	0x238800	2	0	[29].x
+// bdc-fix	V	short	0x238802	2	0	[29].y
+// bdc-fix	V	short	0x238804	2	0	[29].z
+// bdc-fix	V	short	0x23880a	2	0	[29].w
+// bdc-fix	V	short	0x23880c	2	0	[29].h
+// bdc-fix	STR	char *	0x238544	0	0	[29].texture
+// bdc-fix	V	short	0x238814	2	0	[30].x
+// bdc-fix	V	short	0x238816	2	0	[30].y
+// bdc-fix	V	short	0x238818	2	0	[30].z
+// bdc-fix	V	short	0x23881e	2	0	[30].w
+// bdc-fix	V	short	0x238820	2	0	[30].h
+// bdc-fix	STR	char *	0x238544	0	0	[30].texture
+// bdc-fix	V	short	0x238828	2	0	[31].x
+// bdc-fix	V	short	0x23882a	2	0	[31].y
+// bdc-fix	V	short	0x23882c	2	0	[31].z
+// bdc-fix	V	short	0x238832	2	0	[31].w
+// bdc-fix	V	short	0x238834	2	0	[31].h
+// bdc-fix	STR	char *	0x238558	0	0	[31].texture
+// bdc-fix	V	short	0x23883c	2	0	[32].x
+// bdc-fix	V	short	0x23883e	2	0	[32].y
+// bdc-fix	V	short	0x238840	2	0	[32].z
+// bdc-fix	V	short	0x238846	2	0	[32].w
+// bdc-fix	V	short	0x238848	2	0	[32].h
+// bdc-fix	STR	char *	0x238558	0	0	[32].texture
+// bdc-fix	V	short	0x238850	2	0	[33].x
+// bdc-fix	V	short	0x238852	2	0	[33].y
+// bdc-fix	V	short	0x238854	2	0	[33].z
+// bdc-fix	V	short	0x23885a	2	0	[33].w
+// bdc-fix	V	short	0x23885c	2	0	[33].h
+// bdc-fix	STR	char *	0x238558	0	0	[33].texture
+// bdc-fix	V	short	0x238864	2	0	[34].x
+// bdc-fix	V	short	0x238866	2	0	[34].y
+// bdc-fix	V	short	0x238868	2	0	[34].z
+// bdc-fix	V	short	0x23886e	2	0	[34].w
+// bdc-fix	V	short	0x238870	2	0	[34].h
+// bdc-fix	STR	char *	0x23856c	0	0	[34].texture
+// bdc-fix	V	short	0x238878	2	0	[35].x
+// bdc-fix	V	short	0x23887a	2	0	[35].y
+// bdc-fix	V	short	0x23887c	2	0	[35].z
+// bdc-fix	V	short	0x238880	2	0	[35].v
+// bdc-fix	V	short	0x238882	2	0	[35].w
+// bdc-fix	V	short	0x238884	2	0	[35].h
+// bdc-fix	STR	char *	0x23856c	0	0	[35].texture
+// bdc-fix	V	short	0x23888c	2	0	[36].x
+// bdc-fix	V	short	0x23888e	2	0	[36].y
+// bdc-fix	V	short	0x238890	2	0	[36].z
+// bdc-fix	V	short	0x238894	2	0	[36].v
+// bdc-fix	V	short	0x238896	2	0	[36].w
+// bdc-fix	V	short	0x238898	2	0	[36].h
+// bdc-fix	STR	char *	0x23856c	0	0	[36].texture
+// bdc-fix	V	short	0x2388a0	2	0	[37].x
+// bdc-fix	V	short	0x2388a2	2	0	[37].y
+// bdc-fix	V	short	0x2388a4	2	0	[37].z
+// bdc-fix	V	short	0x2388aa	2	0	[37].w
+// bdc-fix	V	short	0x2388ac	2	0	[37].h
+// bdc-fix	STR	char *	0x23857c	0	0	[37].texture
+// bdc-fix	V	short	0x2388b4	2	0	[38].x
+// bdc-fix	V	short	0x2388b6	2	0	[38].y
+// bdc-fix	V	short	0x2388b8	2	0	[38].z
+// bdc-fix	V	short	0x2388bc	2	0	[38].v
+// bdc-fix	V	short	0x2388be	2	0	[38].w
+// bdc-fix	V	short	0x2388c0	2	0	[38].h
+// bdc-fix	STR	char *	0x23857c	0	0	[38].texture
+// bdc-fix	V	short	0x2388c8	2	0	[39].x
+// bdc-fix	V	short	0x2388ca	2	0	[39].y
+// bdc-fix	V	short	0x2388cc	2	0	[39].z
+// bdc-fix	V	short	0x2388d0	2	0	[39].v
+// bdc-fix	V	short	0x2388d2	2	0	[39].w
+// bdc-fix	V	short	0x2388d4	2	0	[39].h
+// bdc-fix	STR	char *	0x23857c	0	0	[39].texture
+// bdc-fix	V	short	0x2388dc	2	0	[40].x
+// bdc-fix	V	short	0x2388de	2	0	[40].y
+// bdc-fix	V	short	0x2388e0	2	0	[40].z
+// bdc-fix	V	short	0x2388e6	2	0	[40].w
+// bdc-fix	V	short	0x2388e8	2	0	[40].h
+// bdc-fix	STR	char *	0x238588	0	0	[40].texture
+// bdc-fix	V	short	0x2388f0	2	0	[41].x
+// bdc-fix	V	short	0x2388f2	2	0	[41].y
+// bdc-fix	V	short	0x2388f4	2	0	[41].z
+// bdc-fix	V	short	0x2388fa	2	0	[41].w
+// bdc-fix	V	short	0x2388fc	2	0	[41].h
+// bdc-fix	STR	char *	0x238588	0	0	[41].texture
+// bdc-fix	V	short	0x238904	2	0	[42].x
+// bdc-fix	V	short	0x238906	2	0	[42].y
+// bdc-fix	V	short	0x238908	2	0	[42].z
+// bdc-fix	V	short	0x23890c	2	0	[42].v
+// bdc-fix	V	short	0x23890e	2	0	[42].w
+// bdc-fix	V	short	0x238910	2	0	[42].h
+// bdc-fix	STR	char *	0x238598	0	0	[42].texture
+// bdc-fix	V	short	0x238918	2	0	[43].x
+// bdc-fix	V	short	0x23891a	2	0	[43].y
+// bdc-fix	V	short	0x23891c	2	0	[43].z
+// bdc-fix	V	short	0x238922	2	0	[43].w
+// bdc-fix	V	short	0x238924	2	0	[43].h
+// bdc-fix	STR	char *	0x238598	0	0	[43].texture
+// bdc-fix	V	short	0x23892c	2	0	[44].x
+// bdc-fix	V	short	0x23892e	2	0	[44].y
+// bdc-fix	V	short	0x238930	2	0	[44].z
+// bdc-fix	V	short	0x238936	2	0	[44].w
+// bdc-fix	V	short	0x238938	2	0	[44].h
+// bdc-fix	STR	char *	0x2385a8	0	0	[44].texture
+// bdc-fix	V	short	0x238940	2	0	[45].x
+// bdc-fix	V	short	0x238942	2	0	[45].y
+// bdc-fix	V	short	0x238944	2	0	[45].z
+// bdc-fix	V	short	0x23894a	2	0	[45].w
+// bdc-fix	V	short	0x23894c	2	0	[45].h
+// bdc-fix	STR	char *	0x2365ec	0	0	[45].texture
+// bdc-fix	V	short	0x238954	2	0	[46].x
+// bdc-fix	V	short	0x238956	2	0	[46].y
+// bdc-fix	V	short	0x238958	2	0	[46].z
+// bdc-fix	V	short	0x23895e	2	0	[46].w
+// bdc-fix	V	short	0x238960	2	0	[46].h
+// bdc-fix	STR	char *	0x2365ec	0	0	[46].texture
+// bdc-fix	V	short	0x238968	2	0	[47].x
+// bdc-fix	V	short	0x23896a	2	0	[47].y
+// bdc-fix	V	short	0x23896c	2	0	[47].z
+// bdc-fix	V	short	0x238972	2	0	[47].w
+// bdc-fix	V	short	0x238974	2	0	[47].h
+// bdc-fix	STR	char *	0x238364	0	0	[47].texture
+// bdc-fix	V	short	0x23897c	2	0	[48].x
+// bdc-fix	V	short	0x23897e	2	0	[48].y
+// bdc-fix	V	short	0x238980	2	0	[48].z
+// bdc-fix	V	short	0x238984	2	0	[48].v
+// bdc-fix	V	short	0x238986	2	0	[48].w
+// bdc-fix	V	short	0x238988	2	0	[48].h
+// bdc-fix	STR	char *	0x238364	0	0	[48].texture
 
-__typeof__(s16[8]) g_uiLayoutTables11 = { 0, 0, 0, 0, 0, BDC_V(short, 0x2385c6), BDC_V(short, 0x2385c8) };
+__typeof__(UiLayoutEntry[49]) g_uiLayoutTables11 = {
+    {
+        .w = BDC_V(short, 0x2385c6),
+        .h = BDC_V(short, 0x2385c8),
+        .texture = (const char *)BDC_STR(0x238310),
+    },
+    {
+        .x = BDC_V(short, 0x2385d0),
+        .y = BDC_V(short, 0x2385d2),
+        .z = BDC_V(short, 0x2385d4),
+        .w = BDC_V(short, 0x2385da),
+        .h = BDC_V(short, 0x2385dc),
+        .texture = (const char *)BDC_STR(0x2384f0),
+    },
+    {
+        .x = BDC_V(short, 0x2385e4),
+        .y = BDC_V(short, 0x2385e6),
+        .z = BDC_V(short, 0x2385e8),
+        .w = BDC_V(short, 0x2385ee),
+        .h = BDC_V(short, 0x2385f0),
+        .texture = (const char *)BDC_STR(0x2384fc),
+    },
+    {
+        .x = BDC_V(short, 0x2385f8),
+        .y = BDC_V(short, 0x2385fa),
+        .z = BDC_V(short, 0x2385fc),
+        .w = BDC_V(short, 0x238602),
+        .h = BDC_V(short, 0x238604),
+        .texture = (const char *)BDC_STR(0x238508),
+    },
+    {
+        .x = BDC_V(short, 0x23860c),
+        .y = BDC_V(short, 0x23860e),
+        .z = BDC_V(short, 0x238610),
+        .w = BDC_V(short, 0x238616),
+        .h = BDC_V(short, 0x238618),
+        .texture = (const char *)BDC_STR(0x2384f0),
+    },
+    {
+        .x = BDC_V(short, 0x238620),
+        .y = BDC_V(short, 0x238622),
+        .z = BDC_V(short, 0x238624),
+        .w = BDC_V(short, 0x23862a),
+        .h = BDC_V(short, 0x23862c),
+        .texture = (const char *)BDC_STR(0x2384fc),
+    },
+    {
+        .x = BDC_V(short, 0x238634),
+        .y = BDC_V(short, 0x238636),
+        .z = BDC_V(short, 0x238638),
+        .w = BDC_V(short, 0x23863e),
+        .h = BDC_V(short, 0x238640),
+        .texture = (const char *)BDC_STR(0x238508),
+    },
+    {
+        .x = BDC_V(short, 0x238648),
+        .y = BDC_V(short, 0x23864a),
+        .z = BDC_V(short, 0x23864c),
+        .w = BDC_V(short, 0x238652),
+        .h = BDC_V(short, 0x238654),
+        .texture = (const char *)BDC_STR(0x2384f0),
+    },
+    {
+        .x = BDC_V(short, 0x23865c),
+        .y = BDC_V(short, 0x23865e),
+        .z = BDC_V(short, 0x238660),
+        .w = BDC_V(short, 0x238666),
+        .h = BDC_V(short, 0x238668),
+        .texture = (const char *)BDC_STR(0x2384fc),
+    },
+    {
+        .x = BDC_V(short, 0x238670),
+        .y = BDC_V(short, 0x238672),
+        .z = BDC_V(short, 0x238674),
+        .w = BDC_V(short, 0x23867a),
+        .h = BDC_V(short, 0x23867c),
+        .texture = (const char *)BDC_STR(0x238508),
+    },
+    {
+        .x = BDC_V(short, 0x238684),
+        .y = BDC_V(short, 0x238686),
+        .z = BDC_V(short, 0x238688),
+        .w = BDC_V(short, 0x23868e),
+        .h = BDC_V(short, 0x238690),
+        .texture = (const char *)BDC_STR(0x2384f0),
+    },
+    {
+        .x = BDC_V(short, 0x238698),
+        .y = BDC_V(short, 0x23869a),
+        .z = BDC_V(short, 0x23869c),
+        .w = BDC_V(short, 0x2386a2),
+        .h = BDC_V(short, 0x2386a4),
+        .texture = (const char *)BDC_STR(0x2384fc),
+    },
+    {
+        .x = BDC_V(short, 0x2386ac),
+        .y = BDC_V(short, 0x2386ae),
+        .z = BDC_V(short, 0x2386b0),
+        .w = BDC_V(short, 0x2386b6),
+        .h = BDC_V(short, 0x2386b8),
+        .texture = (const char *)BDC_STR(0x238508),
+    },
+    {
+        .x = BDC_V(short, 0x2386c0),
+        .y = BDC_V(short, 0x2386c2),
+        .z = BDC_V(short, 0x2386c4),
+        .w = BDC_V(short, 0x2386ca),
+        .h = BDC_V(short, 0x2386cc),
+        .texture = (const char *)BDC_STR(0x2384f0),
+    },
+    {
+        .x = BDC_V(short, 0x2386d4),
+        .y = BDC_V(short, 0x2386d6),
+        .z = BDC_V(short, 0x2386d8),
+        .w = BDC_V(short, 0x2386de),
+        .h = BDC_V(short, 0x2386e0),
+        .texture = (const char *)BDC_STR(0x2384fc),
+    },
+    {
+        .x = BDC_V(short, 0x2386e8),
+        .y = BDC_V(short, 0x2386ea),
+        .z = BDC_V(short, 0x2386ec),
+        .w = BDC_V(short, 0x2386f2),
+        .h = BDC_V(short, 0x2386f4),
+        .texture = (const char *)BDC_STR(0x238508),
+    },
+    {
+        .x = BDC_V(short, 0x2386fc),
+        .y = BDC_V(short, 0x2386fe),
+        .z = BDC_V(short, 0x238700),
+        .w = BDC_V(short, 0x238706),
+        .h = BDC_V(short, 0x238708),
+        .texture = (const char *)BDC_STR(0x2384f0),
+    },
+    {
+        .x = BDC_V(short, 0x238710),
+        .y = BDC_V(short, 0x238712),
+        .z = BDC_V(short, 0x238714),
+        .w = BDC_V(short, 0x23871a),
+        .h = BDC_V(short, 0x23871c),
+        .texture = (const char *)BDC_STR(0x2384fc),
+    },
+    {
+        .x = BDC_V(short, 0x238724),
+        .y = BDC_V(short, 0x238726),
+        .z = BDC_V(short, 0x238728),
+        .w = BDC_V(short, 0x23872e),
+        .h = BDC_V(short, 0x238730),
+        .texture = (const char *)BDC_STR(0x238508),
+    },
+    {
+        .y = BDC_V(short, 0x23873a),
+        .z = BDC_V(short, 0x23873c),
+        .w = BDC_V(short, 0x238742),
+        .h = BDC_V(short, 0x238744),
+        .texture = (const char *)BDC_STR(0x238318),
+    },
+    {
+        .z = BDC_V(short, 0x238750),
+        .w = BDC_V(short, 0x238756),
+        .h = BDC_V(short, 0x238758),
+        .texture = (const char *)BDC_STR(0x238510),
+    },
+    {
+        .x = BDC_V(short, 0x238760),
+        .y = BDC_V(short, 0x238762),
+        .z = BDC_V(short, 0x238764),
+        .w = BDC_V(short, 0x23876a),
+        .h = BDC_V(short, 0x23876c),
+        .texture = (const char *)BDC_STR(0x23851c),
+    },
+    {
+        .x = BDC_V(short, 0x238774),
+        .y = BDC_V(short, 0x238776),
+        .z = BDC_V(short, 0x238778),
+        .w = BDC_V(short, 0x23877e),
+        .h = BDC_V(short, 0x238780),
+        .texture = (const char *)BDC_STR(0x23851c),
+    },
+    {
+        .x = BDC_V(short, 0x238788),
+        .y = BDC_V(short, 0x23878a),
+        .z = BDC_V(short, 0x23878c),
+        .w = BDC_V(short, 0x238792),
+        .h = BDC_V(short, 0x238794),
+        .texture = (const char *)BDC_STR(0x23851c),
+    },
+    {
+        .x = BDC_V(short, 0x23879c),
+        .y = BDC_V(short, 0x23879e),
+        .z = BDC_V(short, 0x2387a0),
+        .w = BDC_V(short, 0x2387a6),
+        .h = BDC_V(short, 0x2387a8),
+        .texture = (const char *)BDC_STR(0x238528),
+    },
+    {
+        .x = BDC_V(short, 0x2387b0),
+        .y = BDC_V(short, 0x2387b2),
+        .z = BDC_V(short, 0x2387b4),
+        .w = BDC_V(short, 0x2387ba),
+        .h = BDC_V(short, 0x2387bc),
+        .texture = (const char *)BDC_STR(0x238528),
+    },
+    {
+        .x = BDC_V(short, 0x2387c4),
+        .y = BDC_V(short, 0x2387c6),
+        .z = BDC_V(short, 0x2387c8),
+        .w = BDC_V(short, 0x2387ce),
+        .h = BDC_V(short, 0x2387d0),
+        .texture = (const char *)BDC_STR(0x238528),
+    },
+    {
+        .x = BDC_V(short, 0x2387d8),
+        .y = BDC_V(short, 0x2387da),
+        .z = BDC_V(short, 0x2387dc),
+        .w = BDC_V(short, 0x2387e2),
+        .h = BDC_V(short, 0x2387e4),
+        .texture = (const char *)BDC_STR(0x238538),
+    },
+    {
+        .x = BDC_V(short, 0x2387ec),
+        .y = BDC_V(short, 0x2387ee),
+        .z = BDC_V(short, 0x2387f0),
+        .w = BDC_V(short, 0x2387f6),
+        .h = BDC_V(short, 0x2387f8),
+        .texture = (const char *)BDC_STR(0x238544),
+    },
+    {
+        .x = BDC_V(short, 0x238800),
+        .y = BDC_V(short, 0x238802),
+        .z = BDC_V(short, 0x238804),
+        .w = BDC_V(short, 0x23880a),
+        .h = BDC_V(short, 0x23880c),
+        .texture = (const char *)BDC_STR(0x238544),
+    },
+    {
+        .x = BDC_V(short, 0x238814),
+        .y = BDC_V(short, 0x238816),
+        .z = BDC_V(short, 0x238818),
+        .w = BDC_V(short, 0x23881e),
+        .h = BDC_V(short, 0x238820),
+        .texture = (const char *)BDC_STR(0x238544),
+    },
+    {
+        .x = BDC_V(short, 0x238828),
+        .y = BDC_V(short, 0x23882a),
+        .z = BDC_V(short, 0x23882c),
+        .w = BDC_V(short, 0x238832),
+        .h = BDC_V(short, 0x238834),
+        .texture = (const char *)BDC_STR(0x238558),
+    },
+    {
+        .x = BDC_V(short, 0x23883c),
+        .y = BDC_V(short, 0x23883e),
+        .z = BDC_V(short, 0x238840),
+        .w = BDC_V(short, 0x238846),
+        .h = BDC_V(short, 0x238848),
+        .texture = (const char *)BDC_STR(0x238558),
+    },
+    {
+        .x = BDC_V(short, 0x238850),
+        .y = BDC_V(short, 0x238852),
+        .z = BDC_V(short, 0x238854),
+        .w = BDC_V(short, 0x23885a),
+        .h = BDC_V(short, 0x23885c),
+        .texture = (const char *)BDC_STR(0x238558),
+    },
+    {
+        .x = BDC_V(short, 0x238864),
+        .y = BDC_V(short, 0x238866),
+        .z = BDC_V(short, 0x238868),
+        .w = BDC_V(short, 0x23886e),
+        .h = BDC_V(short, 0x238870),
+        .texture = (const char *)BDC_STR(0x23856c),
+    },
+    {
+        .x = BDC_V(short, 0x238878),
+        .y = BDC_V(short, 0x23887a),
+        .z = BDC_V(short, 0x23887c),
+        .v = BDC_V(short, 0x238880),
+        .w = BDC_V(short, 0x238882),
+        .h = BDC_V(short, 0x238884),
+        .texture = (const char *)BDC_STR(0x23856c),
+    },
+    {
+        .x = BDC_V(short, 0x23888c),
+        .y = BDC_V(short, 0x23888e),
+        .z = BDC_V(short, 0x238890),
+        .v = BDC_V(short, 0x238894),
+        .w = BDC_V(short, 0x238896),
+        .h = BDC_V(short, 0x238898),
+        .texture = (const char *)BDC_STR(0x23856c),
+    },
+    {
+        .x = BDC_V(short, 0x2388a0),
+        .y = BDC_V(short, 0x2388a2),
+        .z = BDC_V(short, 0x2388a4),
+        .w = BDC_V(short, 0x2388aa),
+        .h = BDC_V(short, 0x2388ac),
+        .texture = (const char *)BDC_STR(0x23857c),
+    },
+    {
+        .x = BDC_V(short, 0x2388b4),
+        .y = BDC_V(short, 0x2388b6),
+        .z = BDC_V(short, 0x2388b8),
+        .v = BDC_V(short, 0x2388bc),
+        .w = BDC_V(short, 0x2388be),
+        .h = BDC_V(short, 0x2388c0),
+        .texture = (const char *)BDC_STR(0x23857c),
+    },
+    {
+        .x = BDC_V(short, 0x2388c8),
+        .y = BDC_V(short, 0x2388ca),
+        .z = BDC_V(short, 0x2388cc),
+        .v = BDC_V(short, 0x2388d0),
+        .w = BDC_V(short, 0x2388d2),
+        .h = BDC_V(short, 0x2388d4),
+        .texture = (const char *)BDC_STR(0x23857c),
+    },
+    {
+        .x = BDC_V(short, 0x2388dc),
+        .y = BDC_V(short, 0x2388de),
+        .z = BDC_V(short, 0x2388e0),
+        .w = BDC_V(short, 0x2388e6),
+        .h = BDC_V(short, 0x2388e8),
+        .texture = (const char *)BDC_STR(0x238588),
+    },
+    {
+        .x = BDC_V(short, 0x2388f0),
+        .y = BDC_V(short, 0x2388f2),
+        .z = BDC_V(short, 0x2388f4),
+        .w = BDC_V(short, 0x2388fa),
+        .h = BDC_V(short, 0x2388fc),
+        .texture = (const char *)BDC_STR(0x238588),
+    },
+    {
+        .x = BDC_V(short, 0x238904),
+        .y = BDC_V(short, 0x238906),
+        .z = BDC_V(short, 0x238908),
+        .v = BDC_V(short, 0x23890c),
+        .w = BDC_V(short, 0x23890e),
+        .h = BDC_V(short, 0x238910),
+        .texture = (const char *)BDC_STR(0x238598),
+    },
+    {
+        .x = BDC_V(short, 0x238918),
+        .y = BDC_V(short, 0x23891a),
+        .z = BDC_V(short, 0x23891c),
+        .w = BDC_V(short, 0x238922),
+        .h = BDC_V(short, 0x238924),
+        .texture = (const char *)BDC_STR(0x238598),
+    },
+    {
+        .x = BDC_V(short, 0x23892c),
+        .y = BDC_V(short, 0x23892e),
+        .z = BDC_V(short, 0x238930),
+        .w = BDC_V(short, 0x238936),
+        .h = BDC_V(short, 0x238938),
+        .texture = (const char *)BDC_STR(0x2385a8),
+    },
+    {
+        .x = BDC_V(short, 0x238940),
+        .y = BDC_V(short, 0x238942),
+        .z = BDC_V(short, 0x238944),
+        .w = BDC_V(short, 0x23894a),
+        .h = BDC_V(short, 0x23894c),
+        .texture = (const char *)BDC_STR(0x2365ec),
+    },
+    {
+        .x = BDC_V(short, 0x238954),
+        .y = BDC_V(short, 0x238956),
+        .z = BDC_V(short, 0x238958),
+        .w = BDC_V(short, 0x23895e),
+        .h = BDC_V(short, 0x238960),
+        .texture = (const char *)BDC_STR(0x2365ec),
+    },
+    {
+        .x = BDC_V(short, 0x238968),
+        .y = BDC_V(short, 0x23896a),
+        .z = BDC_V(short, 0x23896c),
+        .w = BDC_V(short, 0x238972),
+        .h = BDC_V(short, 0x238974),
+        .texture = (const char *)BDC_STR(0x238364),
+    },
+    {
+        .x = BDC_V(short, 0x23897c),
+        .y = BDC_V(short, 0x23897e),
+        .z = BDC_V(short, 0x238980),
+        .v = BDC_V(short, 0x238984),
+        .w = BDC_V(short, 0x238986),
+        .h = BDC_V(short, 0x238988),
+        .texture = (const char *)BDC_STR(0x238364),
+    },
+};

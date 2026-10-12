@@ -44,6 +44,6 @@ bool UiNetLobbySlideAnimShow(UiNetLobbySlideAnim *anim, u8 reset)
     ease = (1.0f - __builtin_cosf(angle)) * 0.5f;
     done = false;
   }
-  anim->sprite->posX = (float)*anim->layoutPos + (float)anim->offset * (1.0f - ease);
+  anim->sprite->posX = (float)anim->layoutPos->x + (float)anim->offset * (1.0f - ease);
   return done;
 }

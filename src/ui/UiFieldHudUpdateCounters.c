@@ -25,7 +25,7 @@ void UiFieldHudUpdateCounters(UiFieldHud *self)
     s32 i;
     float shift;
     GfxSprite *sprite;
-    s16 *entry;
+    UiLayoutEntry *entry;
 
     black[0] = 0.0f;
     black[1] = 0.0f;
@@ -143,7 +143,7 @@ void UiFieldHudUpdateCounters(UiFieldHud *self)
     ((GfxSprite **)self->base.data)[0x3d]->flags |= 1;
     for (i = 0x37; i < 0x3e; i++) {
         entry = UiLayoutGetEntry(0xc, i);
-        ((GfxSprite **)self->base.data)[i]->posX = (float)entry[0] - shift;
+        ((GfxSprite **)self->base.data)[i]->posX = (float)entry->x - shift;
     }
 
     if (self->player->scan != 0) {

@@ -30,8 +30,131 @@
 // bdc-fix	STR	char *	0x29659c	0	0	[27]
 // bdc-fix	STR	char *	0x2965b0	0	0	[28]
 // bdc-fix	STR	char *	0x2965c8	0	0	[29]
+// bdc-fix	STR	char *	0x2965e0	0	0	[30]
+// bdc-fix	STR	char *	0x2965f4	0	0	[31]
+// bdc-fix	STR	char *	0x296608	0	0	[32]
+// bdc-fix	STR	char *	0x296574	0	0	[33]
+// bdc-fix	STR	char *	0x29661c	0	0	[34]
+// bdc-fix	STR	char *	0x296630	0	0	[35]
+// bdc-fix	STR	char *	0x296644	0	0	[36]
+// bdc-fix	STR	char *	0x296574	0	0	[37]
+// bdc-fix	STR	char *	0x29665c	0	0	[38]
+// bdc-fix	STR	char *	0x296670	0	0	[39]
+// bdc-fix	STR	char *	0x296684	0	0	[40]
+// bdc-fix	STR	char *	0x296574	0	0	[41]
+// bdc-fix	STR	char *	0x296698	0	0	[42]
+// bdc-fix	STR	char *	0x2966ac	0	0	[43]
+// bdc-fix	STR	char *	0x2966c0	0	0	[44]
+// bdc-fix	STR	char *	0x296574	0	0	[45]
+// bdc-fix	STR	char *	0x2966d4	0	0	[46]
+// bdc-fix	STR	char *	0x2966e8	0	0	[47]
+// bdc-fix	STR	char *	0x2966fc	0	0	[48]
+// bdc-fix	STR	char *	0x296574	0	0	[49]
+// bdc-fix	STR	char *	0x296710	0	0	[50]
+// bdc-fix	STR	char *	0x296724	0	0	[51]
+// bdc-fix	STR	char *	0x296738	0	0	[52]
+// bdc-fix	STR	char *	0x296574	0	0	[53]
+// bdc-fix	STR	char *	0x29674c	0	0	[54]
+// bdc-fix	STR	char *	0x296760	0	0	[55]
+// bdc-fix	STR	char *	0x296774	0	0	[56]
+// bdc-fix	STR	char *	0x296574	0	0	[57]
+// bdc-fix	STR	char *	0x296788	0	0	[58]
+// bdc-fix	STR	char *	0x29679c	0	0	[59]
+// bdc-fix	STR	char *	0x2967b0	0	0	[60]
+// bdc-fix	STR	char *	0x2965c8	0	0	[61]
+// bdc-fix	STR	char *	0x2967c8	0	0	[62]
+// bdc-fix	STR	char *	0x2967dc	0	0	[63]
+// bdc-fix	STR	char *	0x2967f0	0	0	[64]
+// bdc-fix	STR	char *	0x296574	0	0	[65]
+// bdc-fix	STR	char *	0x296804	0	0	[66]
+// bdc-fix	STR	char *	0x296818	0	0	[67]
+// bdc-fix	STR	char *	0x29682c	0	0	[68]
+// bdc-fix	STR	char *	0x296574	0	0	[69]
+// bdc-fix	STR	char *	0x296840	0	0	[70]
+// bdc-fix	STR	char *	0x296854	0	0	[71]
+// bdc-fix	STR	char *	0x296868	0	0	[72]
+// bdc-fix	STR	char *	0x296574	0	0	[73]
+// bdc-fix	STR	char *	0x29687c	0	0	[74]
+// bdc-fix	STR	char *	0x296890	0	0	[75]
+// bdc-fix	STR	char *	0x2968a4	0	0	[76]
+// bdc-fix	STR	char *	0x296574	0	0	[77]
+// bdc-fix	STR	char *	0x2968b8	0	0	[78]
+// bdc-fix	STR	char *	0x2968cc	0	0	[79]
+// bdc-fix	STR	char *	0x2968e0	0	0	[80]
+// bdc-fix	STR	char *	0x296574	0	0	[81]
+// bdc-fix	STR	char *	0x2968f4	0	0	[82]
+// bdc-fix	STR	char *	0x296908	0	0	[83]
+// bdc-fix	STR	char *	0x29691c	0	0	[84]
+// bdc-fix	STR	char *	0x296574	0	0	[85]
+// bdc-fix	STR	char *	0x296934	0	0	[86]
+// bdc-fix	STR	char *	0x296948	0	0	[87]
+// bdc-fix	STR	char *	0x29695c	0	0	[88]
+// bdc-fix	STR	char *	0x296574	0	0	[89]
+// bdc-fix	STR	char *	0x296974	0	0	[90]
+// bdc-fix	STR	char *	0x296988	0	0	[91]
+// bdc-fix	STR	char *	0x29699c	0	0	[92]
+// bdc-fix	STR	char *	0x296574	0	0	[93]
+// bdc-fix	STR	char *	0x2969b4	0	0	[94]
+// bdc-fix	STR	char *	0x2969c8	0	0	[95]
+// bdc-fix	STR	char *	0x2969dc	0	0	[96]
+// bdc-fix	STR	char *	0x296574	0	0	[97]
+// bdc-fix	STR	char *	0x2969f4	0	0	[98]
+// bdc-fix	STR	char *	0x296a08	0	0	[99]
+// bdc-fix	STR	char *	0x296a1c	0	0	[100]
+// bdc-fix	STR	char *	0x296574	0	0	[101]
+// bdc-fix	STR	char *	0x296a34	0	0	[102]
+// bdc-fix	STR	char *	0x296a48	0	0	[103]
+// bdc-fix	STR	char *	0x296a48	0	0	[104]
+// bdc-fix	STR	char *	0x296a60	0	0	[105]
+// bdc-fix	STR	char *	0x296560	0	0	[106]
+// bdc-fix	STR	char *	0x296a60	0	0	[107]
+// bdc-fix	STR	char *	0x296588	0	0	[108]
+// bdc-fix	STR	char *	0x296a60	0	0	[109]
+// bdc-fix	STR	char *	0x296560	0	0	[110]
+// bdc-fix	STR	char *	0x296a60	0	0	[111]
+// bdc-fix	STR	char *	0x296588	0	0	[112]
+// bdc-fix	STR	char *	0x296a60	0	0	[113]
+// bdc-fix	STR	char *	0x296560	0	0	[114]
+// bdc-fix	STR	char *	0x296a60	0	0	[115]
+// bdc-fix	STR	char *	0x296588	0	0	[116]
+// bdc-fix	STR	char *	0x296a60	0	0	[117]
+// bdc-fix	STR	char *	0x296560	0	0	[118]
+// bdc-fix	STR	char *	0x296a60	0	0	[119]
+// bdc-fix	STR	char *	0x296588	0	0	[120]
+// bdc-fix	STR	char *	0x296a60	0	0	[121]
+// bdc-fix	STR	char *	0x296560	0	0	[122]
+// bdc-fix	STR	char *	0x296a60	0	0	[123]
+// bdc-fix	STR	char *	0x296588	0	0	[124]
+// bdc-fix	STR	char *	0x296a60	0	0	[125]
+// bdc-fix	STR	char *	0x296560	0	0	[126]
+// bdc-fix	STR	char *	0x296a60	0	0	[127]
+// bdc-fix	STR	char *	0x296588	0	0	[128]
+// bdc-fix	STR	char *	0x296a60	0	0	[129]
+// bdc-fix	STR	char *	0x296560	0	0	[130]
+// bdc-fix	STR	char *	0x296a60	0	0	[131]
+// bdc-fix	STR	char *	0x296588	0	0	[132]
+// bdc-fix	STR	char *	0x296a60	0	0	[133]
+// bdc-fix	STR	char *	0x296560	0	0	[134]
+// bdc-fix	STR	char *	0x296a60	0	0	[135]
+// bdc-fix	STR	char *	0x296588	0	0	[136]
+// bdc-fix	STR	char *	0x296a60	0	0	[137]
+// bdc-fix	STR	char *	0x296560	0	0	[138]
+// bdc-fix	STR	char *	0x296a60	0	0	[139]
+// bdc-fix	STR	char *	0x296588	0	0	[140]
+// bdc-fix	STR	char *	0x296a60	0	0	[141]
+// bdc-fix	STR	char *	0x296560	0	0	[142]
+// bdc-fix	STR	char *	0x296a60	0	0	[143]
+// bdc-fix	STR	char *	0x296588	0	0	[144]
+// bdc-fix	STR	char *	0x296a60	0	0	[145]
+// bdc-fix	STR	char *	0x296560	0	0	[146]
+// bdc-fix	STR	char *	0x296a60	0	0	[147]
+// bdc-fix	STR	char *	0x296588	0	0	[148]
+// bdc-fix	STR	char *	0x296a60	0	0	[149]
+// bdc-fix	STR	char *	0x296560	0	0	[150]
+// bdc-fix	STR	char *	0x296a60	0	0	[151]
+// bdc-fix	STR	char *	0x296588	0	0	[152]
 
-__typeof__(char *[30]) g_btlDemoScbNames = {
+__typeof__(char *[154]) g_btlDemoScbNames = {
     (char *)BDC_STR(0x296398), (char *)BDC_STR(0x29639c), (char *)BDC_STR(0x2963ac),
     (char *)BDC_STR(0x2963c0), (char *)BDC_STR(0x2963d4), (char *)BDC_STR(0x2963e8),
     (char *)BDC_STR(0x2963fc), (char *)BDC_STR(0x29640c), (char *)BDC_STR(0x296420),
@@ -42,4 +165,45 @@ __typeof__(char *[30]) g_btlDemoScbNames = {
     (char *)BDC_STR(0x296528), (char *)BDC_STR(0x29653c), (char *)BDC_STR(0x29654c),
     (char *)BDC_STR(0x296560), (char *)BDC_STR(0x296574), (char *)BDC_STR(0x296588),
     (char *)BDC_STR(0x29659c), (char *)BDC_STR(0x2965b0), (char *)BDC_STR(0x2965c8),
+    (char *)BDC_STR(0x2965e0), (char *)BDC_STR(0x2965f4), (char *)BDC_STR(0x296608),
+    (char *)BDC_STR(0x296574), (char *)BDC_STR(0x29661c), (char *)BDC_STR(0x296630),
+    (char *)BDC_STR(0x296644), (char *)BDC_STR(0x296574), (char *)BDC_STR(0x29665c),
+    (char *)BDC_STR(0x296670), (char *)BDC_STR(0x296684), (char *)BDC_STR(0x296574),
+    (char *)BDC_STR(0x296698), (char *)BDC_STR(0x2966ac), (char *)BDC_STR(0x2966c0),
+    (char *)BDC_STR(0x296574), (char *)BDC_STR(0x2966d4), (char *)BDC_STR(0x2966e8),
+    (char *)BDC_STR(0x2966fc), (char *)BDC_STR(0x296574), (char *)BDC_STR(0x296710),
+    (char *)BDC_STR(0x296724), (char *)BDC_STR(0x296738), (char *)BDC_STR(0x296574),
+    (char *)BDC_STR(0x29674c), (char *)BDC_STR(0x296760), (char *)BDC_STR(0x296774),
+    (char *)BDC_STR(0x296574), (char *)BDC_STR(0x296788), (char *)BDC_STR(0x29679c),
+    (char *)BDC_STR(0x2967b0), (char *)BDC_STR(0x2965c8), (char *)BDC_STR(0x2967c8),
+    (char *)BDC_STR(0x2967dc), (char *)BDC_STR(0x2967f0), (char *)BDC_STR(0x296574),
+    (char *)BDC_STR(0x296804), (char *)BDC_STR(0x296818), (char *)BDC_STR(0x29682c),
+    (char *)BDC_STR(0x296574), (char *)BDC_STR(0x296840), (char *)BDC_STR(0x296854),
+    (char *)BDC_STR(0x296868), (char *)BDC_STR(0x296574), (char *)BDC_STR(0x29687c),
+    (char *)BDC_STR(0x296890), (char *)BDC_STR(0x2968a4), (char *)BDC_STR(0x296574),
+    (char *)BDC_STR(0x2968b8), (char *)BDC_STR(0x2968cc), (char *)BDC_STR(0x2968e0),
+    (char *)BDC_STR(0x296574), (char *)BDC_STR(0x2968f4), (char *)BDC_STR(0x296908),
+    (char *)BDC_STR(0x29691c), (char *)BDC_STR(0x296574), (char *)BDC_STR(0x296934),
+    (char *)BDC_STR(0x296948), (char *)BDC_STR(0x29695c), (char *)BDC_STR(0x296574),
+    (char *)BDC_STR(0x296974), (char *)BDC_STR(0x296988), (char *)BDC_STR(0x29699c),
+    (char *)BDC_STR(0x296574), (char *)BDC_STR(0x2969b4), (char *)BDC_STR(0x2969c8),
+    (char *)BDC_STR(0x2969dc), (char *)BDC_STR(0x296574), (char *)BDC_STR(0x2969f4),
+    (char *)BDC_STR(0x296a08), (char *)BDC_STR(0x296a1c), (char *)BDC_STR(0x296574),
+    (char *)BDC_STR(0x296a34), (char *)BDC_STR(0x296a48), (char *)BDC_STR(0x296a48),
+    (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296560), (char *)BDC_STR(0x296a60),
+    (char *)BDC_STR(0x296588), (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296560),
+    (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296588), (char *)BDC_STR(0x296a60),
+    (char *)BDC_STR(0x296560), (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296588),
+    (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296560), (char *)BDC_STR(0x296a60),
+    (char *)BDC_STR(0x296588), (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296560),
+    (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296588), (char *)BDC_STR(0x296a60),
+    (char *)BDC_STR(0x296560), (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296588),
+    (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296560), (char *)BDC_STR(0x296a60),
+    (char *)BDC_STR(0x296588), (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296560),
+    (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296588), (char *)BDC_STR(0x296a60),
+    (char *)BDC_STR(0x296560), (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296588),
+    (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296560), (char *)BDC_STR(0x296a60),
+    (char *)BDC_STR(0x296588), (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296560),
+    (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296588), (char *)BDC_STR(0x296a60),
+    (char *)BDC_STR(0x296560), (char *)BDC_STR(0x296a60), (char *)BDC_STR(0x296588),
 };

@@ -1,7 +1,7 @@
 // bdc 0x08abd748 g_actorBallMotionLists
 #include "bdc.h"
 
-__typeof__(ActorBallMotionEntry *[20]) g_actorBallMotionLists = {
+__typeof__(ActorBallMotionEntry *[44]) g_actorBallMotionLists = {
     (struct ActorBallMotionEntry *)&g_actorBallMotionLists00,
     (struct ActorBallMotionEntry *)&g_actorBallMotionLists01,
     (struct ActorBallMotionEntry *)&g_actorBallMotionLists02,
@@ -22,4 +22,28 @@ __typeof__(ActorBallMotionEntry *[20]) g_actorBallMotionLists = {
     (struct ActorBallMotionEntry *)&g_actorBallMotionLists17,
     (struct ActorBallMotionEntry *)&g_actorBallMotionLists18,
     (struct ActorBallMotionEntry *)&g_actorBallMotionLists19,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists20,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists21,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists22,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists23,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists24,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists25,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists26,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists27,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists28,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists29,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists30,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists31,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists32,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists33,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists34,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists35,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists36,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists37,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists38,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists39,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists40,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists41,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists42,
+    (struct ActorBallMotionEntry *)&g_actorBallMotionLists43,
 };

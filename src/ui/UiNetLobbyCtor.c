@@ -60,7 +60,7 @@ UiNetLobby *UiNetLobbyCtor(UiNetLobby *self)
     MemUnlock();
     if (anim != NULL) {
       UiNetLobbySlideAnimCtor(anim, ((GfxSprite **)self->base.data)[sprite],
-                              g_uiLayoutTables[14] + sprite * 10);
+                              &g_uiLayoutTables[14][sprite]);
     }
     self->panels[i] = anim;
   }

@@ -1,12 +1,45 @@
 // bdc 0x08a3d964 g_uiLayoutTables16
 #include "bdc.h"
-// bdc-fix	V	short	0x239964	2	0	[0]
-// bdc-fix	V	short	0x239966	2	0	[1]
-// bdc-fix	V	short	0x239968	2	0	[2]
-// bdc-fix	V	short	0x23996e	2	0	[5]
-// bdc-fix	V	short	0x239970	2	0	[6]
+// bdc-fix	V	short	0x239964	2	0	[0].x
+// bdc-fix	V	short	0x239966	2	0	[0].y
+// bdc-fix	V	short	0x239968	2	0	[0].z
+// bdc-fix	V	short	0x23996e	2	0	[0].w
+// bdc-fix	V	short	0x239970	2	0	[0].h
+// bdc-fix	STR	char *	0x236874	0	0	[0].texture
+// bdc-fix	V	short	0x239978	2	0	[1].x
+// bdc-fix	V	short	0x23997a	2	0	[1].y
+// bdc-fix	V	short	0x23997c	2	0	[1].z
+// bdc-fix	V	short	0x239982	2	0	[1].w
+// bdc-fix	V	short	0x239984	2	0	[1].h
+// bdc-fix	STR	char *	0x239944	0	0	[1].texture
+// bdc-fix	V	short	0x23998c	2	0	[2].x
+// bdc-fix	V	short	0x239990	2	0	[2].z
+// bdc-fix	V	short	0x239996	2	0	[2].w
+// bdc-fix	V	short	0x239998	2	0	[2].h
+// bdc-fix	STR	char *	0x239954	0	0	[2].texture
 
-__typeof__(s16[8]) g_uiLayoutTables16 = {
-    BDC_V(short, 0x239964), BDC_V(short, 0x239966), BDC_V(short, 0x239968), 0, 0,
-    BDC_V(short, 0x23996e), BDC_V(short, 0x239970),
+__typeof__(UiLayoutEntry[3]) g_uiLayoutTables16 = {
+    {
+        .x = BDC_V(short, 0x239964),
+        .y = BDC_V(short, 0x239966),
+        .z = BDC_V(short, 0x239968),
+        .w = BDC_V(short, 0x23996e),
+        .h = BDC_V(short, 0x239970),
+        .texture = (const char *)BDC_STR(0x236874),
+    },
+    {
+        .x = BDC_V(short, 0x239978),
+        .y = BDC_V(short, 0x23997a),
+        .z = BDC_V(short, 0x23997c),
+        .w = BDC_V(short, 0x239982),
+        .h = BDC_V(short, 0x239984),
+        .texture = (const char *)BDC_STR(0x239944),
+    },
+    {
+        .x = BDC_V(short, 0x23998c),
+        .z = BDC_V(short, 0x239990),
+        .w = BDC_V(short, 0x239996),
+        .h = BDC_V(short, 0x239998),
+        .texture = (const char *)BDC_STR(0x239954),
+    },
 };

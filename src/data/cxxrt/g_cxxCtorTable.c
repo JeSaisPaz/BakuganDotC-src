@@ -1,7 +1,7 @@
 // bdc 0x08af5bc8 g_cxxCtorTable
 #include "bdc.h"
 
-__typeof__(CxxCtorEntry[48]) g_cxxCtorTable = {
+__typeof__(CxxCtorEntry[49]) g_cxxCtorTable = {
     { .fn = (void (*)(void))UiNameEntryColorsStaticInit },
     { .fn = (void (*)(void))GfxUnusedTextureStaticInit },
     { .fn = (void (*)(void))CxxStaffCreditTableCopyStaticInit },

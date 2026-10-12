@@ -1,15 +1,18 @@
 // bdc 0x089dd738 GmoDlCallStateListA
 #include "bdc.h"
 
-/* Writes a GE `CALL` to the static state list at `0x08aa301c` and, if texture slot `slot`
-   (`g_gmoStateTextures``[slot]`) is set, that texture's commands (`GfxTextureWriteCall`).
+/* Writes a GE `BASE` + `CALL` of the static state list `g_gmoStateListA` and, if texture slot
+   `slot` (`g_gmoStateTextures``[slot]`) is set, that texture's commands (`GfxTextureWriteCall`).
    Returns the advanced list pointer (`list + 2`, or the texture call's result). */
 
 u32 *GmoDlCallStateListA(u32 *list, s32 slot)
 
 {
-  *list = 0x10080000;
-  list[1] = 0xaaa301c;
+  u32 addr;
+
+  addr = PspAddr(g_gmoStateListA); /* GE address of the list */
+  list[0] = ((addr >> 0x18) & 0xf) << 0x10 | 0x10000000; /* BASE */
+  list[1] = (addr & 0xffffff) | 0xa000000;                /* CALL */
   if (g_gmoStateTextures[slot] != (void *)0x0) {
     return GfxTextureWriteCall(g_gmoStateTextures[slot],list + 2,0);
   }

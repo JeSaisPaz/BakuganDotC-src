@@ -600,8 +600,80 @@
 // bdc-fix	STR	char *	0x28baa4	0	0	[597]
 // bdc-fix	STR	char *	0x28babc	0	0	[598]
 // bdc-fix	STR	char *	0x28bac8	0	0	[599]
+// bdc-fix	STR	char *	0x28bae8	0	0	[600]
+// bdc-fix	STR	char *	0x28bb00	0	0	[601]
+// bdc-fix	STR	char *	0x28bb0c	0	0	[602]
+// bdc-fix	STR	char *	0x28bb2c	0	0	[603]
+// bdc-fix	STR	char *	0x28bb48	0	0	[604]
+// bdc-fix	STR	char *	0x28bb54	0	0	[605]
+// bdc-fix	STR	char *	0x28bb74	0	0	[606]
+// bdc-fix	STR	char *	0x28bb90	0	0	[607]
+// bdc-fix	STR	char *	0x28bb9c	0	0	[608]
+// bdc-fix	STR	char *	0x28bbbc	0	0	[609]
+// bdc-fix	STR	char *	0x28bbd8	0	0	[610]
+// bdc-fix	STR	char *	0x28bbe4	0	0	[611]
+// bdc-fix	STR	char *	0x28bc04	0	0	[612]
+// bdc-fix	STR	char *	0x28bc20	0	0	[613]
+// bdc-fix	STR	char *	0x28bc2c	0	0	[614]
+// bdc-fix	STR	char *	0x289858	0	0	[615]
+// bdc-fix	STR	char *	0x28bc4c	0	0	[616]
+// bdc-fix	STR	char *	0x28bc58	0	0	[617]
+// bdc-fix	STR	char *	0x289858	0	0	[618]
+// bdc-fix	STR	char *	0x28bc70	0	0	[619]
+// bdc-fix	STR	char *	0x28bc78	0	0	[620]
+// bdc-fix	STR	char *	0x289858	0	0	[621]
+// bdc-fix	STR	char *	0x289858	0	0	[622]
+// bdc-fix	STR	char *	0x28bc80	0	0	[623]
+// bdc-fix	STR	char *	0x289858	0	0	[624]
+// bdc-fix	STR	char *	0x289858	0	0	[625]
+// bdc-fix	STR	char *	0x28bc98	0	0	[626]
+// bdc-fix	STR	char *	0x289858	0	0	[627]
+// bdc-fix	STR	char *	0x289858	0	0	[628]
+// bdc-fix	STR	char *	0x28bcb0	0	0	[629]
+// bdc-fix	STR	char *	0x289858	0	0	[630]
+// bdc-fix	STR	char *	0x289858	0	0	[631]
+// bdc-fix	STR	char *	0x28bcc8	0	0	[632]
+// bdc-fix	STR	char *	0x289858	0	0	[633]
+// bdc-fix	STR	char *	0x289858	0	0	[634]
+// bdc-fix	STR	char *	0x28bce0	0	0	[635]
+// bdc-fix	STR	char *	0x289858	0	0	[636]
+// bdc-fix	STR	char *	0x289858	0	0	[637]
+// bdc-fix	STR	char *	0x28bcf8	0	0	[638]
+// bdc-fix	STR	char *	0x289858	0	0	[639]
+// bdc-fix	STR	char *	0x289858	0	0	[640]
+// bdc-fix	STR	char *	0x28bd10	0	0	[641]
+// bdc-fix	STR	char *	0x289858	0	0	[642]
+// bdc-fix	STR	char *	0x289858	0	0	[643]
+// bdc-fix	STR	char *	0x28bd28	0	0	[644]
+// bdc-fix	STR	char *	0x289858	0	0	[645]
+// bdc-fix	STR	char *	0x289858	0	0	[646]
+// bdc-fix	STR	char *	0x28bd40	0	0	[647]
+// bdc-fix	STR	char *	0x289858	0	0	[648]
+// bdc-fix	STR	char *	0x289858	0	0	[649]
+// bdc-fix	STR	char *	0x28bd58	0	0	[650]
+// bdc-fix	STR	char *	0x289858	0	0	[651]
+// bdc-fix	STR	char *	0x289858	0	0	[652]
+// bdc-fix	STR	char *	0x28bd70	0	0	[653]
+// bdc-fix	STR	char *	0x289858	0	0	[654]
+// bdc-fix	STR	char *	0x289858	0	0	[655]
+// bdc-fix	STR	char *	0x28bd88	0	0	[656]
+// bdc-fix	STR	char *	0x289858	0	0	[657]
+// bdc-fix	STR	char *	0x289858	0	0	[658]
+// bdc-fix	STR	char *	0x28bda0	0	0	[659]
+// bdc-fix	STR	char *	0x289858	0	0	[660]
+// bdc-fix	STR	char *	0x289858	0	0	[661]
+// bdc-fix	STR	char *	0x28bdb8	0	0	[662]
+// bdc-fix	STR	char *	0x289858	0	0	[663]
+// bdc-fix	STR	char *	0x289858	0	0	[664]
+// bdc-fix	STR	char *	0x28bdd0	0	0	[665]
+// bdc-fix	STR	char *	0x289858	0	0	[666]
+// bdc-fix	STR	char *	0x289858	0	0	[667]
+// bdc-fix	STR	char *	0x28bde8	0	0	[668]
+// bdc-fix	STR	char *	0x289858	0	0	[669]
+// bdc-fix	STR	char *	0x289858	0	0	[670]
+// bdc-fix	STR	char *	0x28be00	0	0	[671]
 
-__typeof__(const char *[600]) g_actorStageObjModelTable = {
+__typeof__(const char *[672]) g_actorStageObjModelTable = {
     (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x28985c),
     (const char *)BDC_STR(0x289868), (const char *)BDC_STR(0x289870),
     (const char *)BDC_STR(0x289884), (const char *)BDC_STR(0x289890),
@@ -902,4 +974,40 @@ __typeof__(const char *[600]) g_actorStageObjModelTable = {
     (const char *)BDC_STR(0x28ba5c), (const char *)BDC_STR(0x28ba78),
     (const char *)BDC_STR(0x28ba84), (const char *)BDC_STR(0x28baa4),
     (const char *)BDC_STR(0x28babc), (const char *)BDC_STR(0x28bac8),
+    (const char *)BDC_STR(0x28bae8), (const char *)BDC_STR(0x28bb00),
+    (const char *)BDC_STR(0x28bb0c), (const char *)BDC_STR(0x28bb2c),
+    (const char *)BDC_STR(0x28bb48), (const char *)BDC_STR(0x28bb54),
+    (const char *)BDC_STR(0x28bb74), (const char *)BDC_STR(0x28bb90),
+    (const char *)BDC_STR(0x28bb9c), (const char *)BDC_STR(0x28bbbc),
+    (const char *)BDC_STR(0x28bbd8), (const char *)BDC_STR(0x28bbe4),
+    (const char *)BDC_STR(0x28bc04), (const char *)BDC_STR(0x28bc20),
+    (const char *)BDC_STR(0x28bc2c), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x28bc4c), (const char *)BDC_STR(0x28bc58),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x28bc70),
+    (const char *)BDC_STR(0x28bc78), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x28bc80),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x28bc98), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x28bcb0),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x28bcc8), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x28bce0),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x28bcf8), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x28bd10),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x28bd28), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x28bd40),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x28bd58), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x28bd70),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x28bd88), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x28bda0),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x28bdb8), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x28bdd0),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x28bde8), (const char *)BDC_STR(0x289858),
+    (const char *)BDC_STR(0x289858), (const char *)BDC_STR(0x28be00),
 };

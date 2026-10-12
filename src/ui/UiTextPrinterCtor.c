@@ -18,7 +18,7 @@ UiTextPrinter *UiTextPrinterCtor(UiTextPrinter *self, void *texList, char **font
   int i;
 
   GfxSpriteLayerCtor(&self->layer, 0);
-  self->layer.vtbl = &g_uiTextPrinterVtbl;
+  self->layer.vtbl = g_uiTextPrinterVtbl;
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);

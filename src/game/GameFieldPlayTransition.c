@@ -16,7 +16,7 @@ bool GameFieldPlayTransition(CoreTask *task, char start)
     GameFieldTask *field = (GameFieldTask *)task;
     SaveProfile *profile;
     GfxFader *fader;
-    s16 *record;
+    UiLayoutEntry *record;
     s32 count;
     bool tensChange;
     bool onesChange;

@@ -11,29 +11,29 @@ void GameStageSpawnFieldPoints(void)
 {
   SaveProfile *self;
   u32 variant;
-  s32 *pair;
+  GameStageSpawnPointList *list;
   s32 count;
-  s32 *rec;
+  GameStageSpawnPoint *rec;
   s32 id;
   s32 kind;
   float pos[4] __attribute__((aligned(16)));
 
   self = SaveGetProfile();
   variant = SaveProfileGetWord(self, 8);
-  pair = g_gameStageSpawnTables[variant] + g_gameStageIndex * 2;
-  count = pair[0];
-  rec = ((s32 **)pair)[1];
+  list = g_gameStageSpawnTables[variant] + g_gameStageIndex;
+  count = list->count;
+  rec = list->records;
   if (g_gameStageSpawned == 0) {
-    for (id = 0; id < count; id++, rec += 12) {
-      kind = rec[0];
+    for (id = 0; id < count; id++, rec++) {
+      kind = rec->kind;
       if (0 < kind && kind < 4 && GameStageIsOtherPointKind(kind) != 0) {
-        const float *src = (const float *)(rec + 4);
+        const float *src = rec->pos;
         g_gameStageSpawned = 1;
         pos[0] = src[0];
         pos[1] = src[1];
         pos[2] = src[2];
         pos[3] = src[3];
-        GameFieldPointCreate(pos, kind, id, ((float *)rec)[8]);
+        GameFieldPointCreate(pos, kind, id, rec->heading);
       }
     }
   }

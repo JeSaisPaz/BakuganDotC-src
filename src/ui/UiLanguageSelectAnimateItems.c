@@ -15,7 +15,7 @@ void UiLanguageSelectAnimateItems(void *self)
 
 {
   UiLanguageSelect *ls = (UiLanguageSelect *)self;
-  s16 *entry;
+  UiLayoutEntry *entry;
   GfxSprite *spr;
   GfxSprite *sel;
   s32 i;
@@ -26,7 +26,7 @@ void UiLanguageSelectAnimateItems(void *self)
   for (i = 0; i < 7; i++) {
     entry = UiLayoutGetEntry(0x21, i + 4);
     spr = ls->sprites[4 + i];
-    spr->posZ = (float)entry[2];
+    spr->posZ = (float)entry->z;
     if (i == ls->cursor) {
       spr->texture = ls->paneOnTex;
       scale = ls->itemScale[i];
@@ -60,14 +60,14 @@ void UiLanguageSelectAnimateItems(void *self)
 
     entry = UiLayoutGetEntry(0x21, i + 0xc);
     spr = ls->sprites[0xc + i];
-    spr->posZ = (float)entry[2];
+    spr->posZ = (float)entry->z;
     if (i == ls->cursor) {
       spr->posZ = spr->posZ - 10.0f;
     }
 
     entry = UiLayoutGetEntry(0x21, i + 0x13);
     spr = ls->sprites[0x13 + i];
-    spr->posZ = (float)entry[2];
+    spr->posZ = (float)entry->z;
     if (i == ls->cursor) {
       spr->posZ = spr->posZ - 10.0f;
     }
@@ -76,12 +76,12 @@ void UiLanguageSelectAnimateItems(void *self)
   entry = UiLayoutGetEntry(0x21, ls->cursor + 4);
   spr = ls->sprites[0xb];
   GfxSpriteSetTopLeftPivot(spr);
-  spr->posY = (float)entry[1];
+  spr->posY = (float)entry->y;
   GfxSpriteCenterPivot(spr);
   scale = ls->itemScale[ls->cursor];
   GfxSpriteSetScaleRotation(spr, scale, scale, 0.0f, false);
   entry = UiLayoutGetEntry(0x21, 0xb);
-  spr->posZ = (float)(entry[2] - 10);
+  spr->posZ = (float)(entry->z - 10);
 
   t = ls->frameCount % 60;
   if (!(t < 30)) {

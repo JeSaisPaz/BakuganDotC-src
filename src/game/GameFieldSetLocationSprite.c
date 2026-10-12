@@ -12,7 +12,7 @@ void GameFieldSetLocationSprite(CoreTask *task, u8 index)
 {
   GameFieldTask *field = (GameFieldTask *)task;
   u32 i = index;
-  s16 *record;
+  UiLayoutEntry *record;
   GfxSprite *old;
   GfxSprite *label;
 

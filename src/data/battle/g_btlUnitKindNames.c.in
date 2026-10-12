@@ -44,8 +44,28 @@
 // bdc-fix	STR	char *	0x24d4d8	0	0	[44]
 // bdc-fix	STR	char *	0x24d4e4	0	0	[45]
 // bdc-fix	STR	char *	0x24d4f4	0	0	[46]
+// bdc-fix	STR	char *	0x24d500	0	0	[88]
+// bdc-fix	STR	char *	0x24d508	0	0	[89]
+// bdc-fix	STR	char *	0x24d510	0	0	[90]
+// bdc-fix	STR	char *	0x24d518	0	0	[91]
+// bdc-fix	STR	char *	0x24d520	0	0	[92]
+// bdc-fix	STR	char *	0x24d528	0	0	[93]
+// bdc-fix	STR	char *	0x24d530	0	0	[94]
+// bdc-fix	STR	char *	0x24d538	0	0	[95]
+// bdc-fix	STR	char *	0x24d540	0	0	[96]
+// bdc-fix	STR	char *	0x24d548	0	0	[97]
+// bdc-fix	STR	char *	0x24d550	0	0	[98]
+// bdc-fix	STR	char *	0x24d558	0	0	[99]
+// bdc-fix	STR	char *	0x24d560	0	0	[100]
+// bdc-fix	STR	char *	0x24d568	0	0	[101]
+// bdc-fix	STR	char *	0x24d570	0	0	[102]
+// bdc-fix	STR	char *	0x24d578	0	0	[103]
+// bdc-fix	STR	char *	0x24d580	0	0	[104]
+// bdc-fix	STR	char *	0x24d588	0	0	[105]
+// bdc-fix	STR	char *	0x24d590	0	0	[106]
+// bdc-fix	STR	char *	0x24d598	0	0	[107]
 
-__typeof__(char *[48]) g_btlUnitKindNames = {
+__typeof__(char *[132]) g_btlUnitKindNames = {
     NULL, (char *)BDC_STR(0x24d2b4), (char *)BDC_STR(0x24d2c4), (char *)BDC_STR(0x24d2d4),
     (char *)BDC_STR(0x24d2dc), (char *)BDC_STR(0x24d2e8), (char *)BDC_STR(0x24d2f0),
     (char *)BDC_STR(0x24d2fc), (char *)BDC_STR(0x24d304), (char *)BDC_STR(0x24d30c),
@@ -60,5 +80,14 @@ __typeof__(char *[48]) g_btlUnitKindNames = {
     (char *)BDC_STR(0x24d46c), (char *)BDC_STR(0x24d478), (char *)BDC_STR(0x24d488),
     (char *)BDC_STR(0x24d494), (char *)BDC_STR(0x24d4a0), (char *)BDC_STR(0x24d4ac),
     (char *)BDC_STR(0x24d4bc), (char *)BDC_STR(0x24d4cc), (char *)BDC_STR(0x24d4d8),
-    (char *)BDC_STR(0x24d4e4), (char *)BDC_STR(0x24d4f4),
+    (char *)BDC_STR(0x24d4e4), (char *)BDC_STR(0x24d4f4), NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL, (char *)BDC_STR(0x24d500), (char *)BDC_STR(0x24d508), (char *)BDC_STR(0x24d510),
+    (char *)BDC_STR(0x24d518), (char *)BDC_STR(0x24d520), (char *)BDC_STR(0x24d528),
+    (char *)BDC_STR(0x24d530), (char *)BDC_STR(0x24d538), (char *)BDC_STR(0x24d540),
+    (char *)BDC_STR(0x24d548), (char *)BDC_STR(0x24d550), (char *)BDC_STR(0x24d558),
+    (char *)BDC_STR(0x24d560), (char *)BDC_STR(0x24d568), (char *)BDC_STR(0x24d570),
+    (char *)BDC_STR(0x24d578), (char *)BDC_STR(0x24d580), (char *)BDC_STR(0x24d588),
+    (char *)BDC_STR(0x24d590), (char *)BDC_STR(0x24d598),
 };

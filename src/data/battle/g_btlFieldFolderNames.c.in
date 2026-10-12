@@ -7,9 +7,13 @@
 // bdc-fix	STR	char *	0x27f998	0	0	[4]
 // bdc-fix	STR	char *	0x27f9a0	0	0	[5]
 // bdc-fix	STR	char *	0x27f9ac	0	0	[6]
+// bdc-fix	STR	char *	0x27f9b4	0	0	[7]
+// bdc-fix	STR	char *	0x27f9b8	0	0	[8]
+// bdc-fix	STR	char *	0x27f9c4	0	0	[9]
 
-__typeof__(char *[7]) g_btlFieldFolderNames = {
+__typeof__(char *[11]) g_btlFieldFolderNames = {
     (char *)BDC_STR(0x27f978), (char *)BDC_STR(0x27f980), (char *)BDC_STR(0x27f988),
     (char *)BDC_STR(0x27f990), (char *)BDC_STR(0x27f998), (char *)BDC_STR(0x27f9a0),
-    (char *)BDC_STR(0x27f9ac),
+    (char *)BDC_STR(0x27f9ac), (char *)BDC_STR(0x27f9b4), (char *)BDC_STR(0x27f9b8),
+    (char *)BDC_STR(0x27f9c4),
 };

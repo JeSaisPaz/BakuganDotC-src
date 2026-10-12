@@ -7,9 +7,18 @@
 // bdc-fix	STR	char *	0x29d9e8	0	0	[4]
 // bdc-fix	STR	char *	0x29d9ec	0	0	[5]
 // bdc-fix	STR	char *	0x29d9f0	0	0	[6]
+// bdc-fix	STR	char *	0x29d9d8	0	0	[7]
+// bdc-fix	STR	char *	0x29d9d8	0	0	[8]
+// bdc-fix	STR	char *	0x29d9d8	0	0	[9]
+// bdc-fix	STR	char *	0x29d9d8	0	0	[10]
+// bdc-fix	STR	char *	0x29d9d8	0	0	[11]
+// bdc-fix	STR	char *	0x29d9f4	0	0	[12]
+// bdc-fix	STR	char *	0x29d9dc	0	0	[13]
 
-__typeof__(char *[7]) g_soundLangDirNames = {
+__typeof__(char *[14]) g_soundLangDirNames = {
     (char *)BDC_STR(0x29d9d8), (char *)BDC_STR(0x29d9dc), (char *)BDC_STR(0x29d9e0),
     (char *)BDC_STR(0x29d9e4), (char *)BDC_STR(0x29d9e8), (char *)BDC_STR(0x29d9ec),
-    (char *)BDC_STR(0x29d9f0),
+    (char *)BDC_STR(0x29d9f0), (char *)BDC_STR(0x29d9d8), (char *)BDC_STR(0x29d9d8),
+    (char *)BDC_STR(0x29d9d8), (char *)BDC_STR(0x29d9d8), (char *)BDC_STR(0x29d9d8),
+    (char *)BDC_STR(0x29d9f4), (char *)BDC_STR(0x29d9dc),
 };

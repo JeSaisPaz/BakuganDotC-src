@@ -39,7 +39,7 @@ void UiLoadingStateSetup(UiLoading *self)
     }
   } else if (self->step == 1) {
     for (i = 0; i < 23; i++) {
-      entry = (UiLayoutEntry *)UiLayoutGetEntry(0x2b, i);
+      entry = UiLayoutGetEntry(0x2b, i);
       sprite = g_uiLoadingShared->sprites[i];
       sprite->texture = GfxFindTexture(entry->texture);
       if (i >= 11 && i <= 16) {

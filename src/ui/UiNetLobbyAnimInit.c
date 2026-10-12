@@ -4,7 +4,7 @@
 /* Initialises a `UiNetLobbySlideAnim`: sprite, layout position and frame counter 0 (vtable slot
    +0x10). */
 
-void UiNetLobbyAnimInit(UiNetLobbySlideAnim *anim, GfxSprite *sprite, s16 *layoutPos)
+void UiNetLobbyAnimInit(UiNetLobbySlideAnim *anim, GfxSprite *sprite, const UiLayoutEntry *layoutPos)
 
 {
   anim->sprite = sprite;

@@ -1,0 +1,23 @@
+// bdc 0x08aa3058 g_gmoStateListB
+#include "bdc.h"
+// bdc-fix	V	unsigned int	0x29f058	4	0	[0]
+// bdc-fix	V	unsigned int	0x29f05c	4	0	[1]
+// bdc-fix	V	unsigned int	0x29f060	4	0	[2]
+// bdc-fix	V	unsigned int	0x29f064	4	0	[3]
+// bdc-fix	V	unsigned int	0x29f068	4	0	[4]
+// bdc-fix	V	unsigned int	0x29f06c	4	0	[5]
+// bdc-fix	V	unsigned int	0x29f070	4	0	[6]
+// bdc-fix	V	unsigned int	0x29f074	4	0	[7]
+// bdc-fix	V	unsigned int	0x29f078	4	0	[8]
+// bdc-fix	V	unsigned int	0x29f07c	4	0	[9]
+// bdc-fix	V	unsigned int	0x29f080	4	0	[10]
+// bdc-fix	V	unsigned int	0x29f084	4	0	[11]
+// bdc-fix	V	unsigned int	0x29f088	4	0	[12]
+
+__typeof__(const u32[13]) g_gmoStateListB = {
+    BDC_V(unsigned int, 0x29f058), BDC_V(unsigned int, 0x29f05c), BDC_V(unsigned int, 0x29f060),
+    BDC_V(unsigned int, 0x29f064), BDC_V(unsigned int, 0x29f068), BDC_V(unsigned int, 0x29f06c),
+    BDC_V(unsigned int, 0x29f070), BDC_V(unsigned int, 0x29f074), BDC_V(unsigned int, 0x29f078),
+    BDC_V(unsigned int, 0x29f07c), BDC_V(unsigned int, 0x29f080), BDC_V(unsigned int, 0x29f084),
+    BDC_V(unsigned int, 0x29f088),
+};

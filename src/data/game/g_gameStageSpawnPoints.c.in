@@ -1,0 +1,85 @@
+// bdc 0x08a96ca0 g_gameStageSpawnPoints
+#include "bdc.h"
+// bdc-fix	V	int	0x292ca0	4	0	[0].kind
+// bdc-fix	V	float	0x292cb0	4	0	[0].pos[0]
+// bdc-fix	V	float	0x292cb4	4	0	[0].pos[1]
+// bdc-fix	V	float	0x292cb8	4	0	[0].pos[2]
+// bdc-fix	V	int	0x292cd0	4	0	[1].kind
+// bdc-fix	V	float	0x292ce0	4	0	[1].pos[0]
+// bdc-fix	V	float	0x292ce4	4	0	[1].pos[1]
+// bdc-fix	V	float	0x292ce8	4	0	[1].pos[2]
+// bdc-fix	V	int	0x292d00	4	0	[2].kind
+// bdc-fix	V	float	0x292d10	4	0	[2].pos[0]
+// bdc-fix	V	float	0x292d14	4	0	[2].pos[1]
+// bdc-fix	V	float	0x292d18	4	0	[2].pos[2]
+// bdc-fix	V	int	0x292d30	4	0	[3].kind
+// bdc-fix	V	float	0x292d40	4	0	[3].pos[0]
+// bdc-fix	V	float	0x292d44	4	0	[3].pos[1]
+// bdc-fix	V	float	0x292d48	4	0	[3].pos[2]
+// bdc-fix	V	float	0x292d50	4	0	[3].heading
+// bdc-fix	V	unsigned int	0x292d54	4	0	[3]._unk24
+// bdc-fix	V	int	0x292d60	4	0	[4].kind
+// bdc-fix	V	float	0x292d70	4	0	[4].pos[0]
+// bdc-fix	V	float	0x292d74	4	0	[4].pos[1]
+// bdc-fix	V	float	0x292d78	4	0	[4].pos[2]
+// bdc-fix	V	int	0x292d90	4	0	[5].kind
+// bdc-fix	V	float	0x292da0	4	0	[5].pos[0]
+// bdc-fix	V	float	0x292da4	4	0	[5].pos[1]
+// bdc-fix	V	float	0x292da8	4	0	[5].pos[2]
+// bdc-fix	V	float	0x292db0	4	0	[5].heading
+// bdc-fix	V	unsigned int	0x292db4	4	0	[5]._unk24
+// bdc-fix	V	int	0x292dc0	4	0	[6].kind
+// bdc-fix	V	float	0x292dd0	4	0	[6].pos[0]
+// bdc-fix	V	float	0x292dd4	4	0	[6].pos[1]
+// bdc-fix	V	float	0x292dd8	4	0	[6].pos[2]
+// bdc-fix	V	int	0x292df0	4	0	[7].kind
+// bdc-fix	V	float	0x292e00	4	0	[7].pos[0]
+// bdc-fix	V	float	0x292e04	4	0	[7].pos[1]
+// bdc-fix	V	float	0x292e08	4	0	[7].pos[2]
+// bdc-fix	V	int	0x292e20	4	0	[8].kind
+// bdc-fix	V	float	0x292e30	4	0	[8].pos[0]
+// bdc-fix	V	float	0x292e34	4	0	[8].pos[1]
+// bdc-fix	V	float	0x292e38	4	0	[8].pos[2]
+
+__typeof__(GameStageSpawnPoint[9]) g_gameStageSpawnPoints = {
+    {
+        .kind = BDC_V(int, 0x292ca0),
+        .pos = { BDC_V(float, 0x292cb0), BDC_V(float, 0x292cb4), BDC_V(float, 0x292cb8) },
+    },
+    {
+        .kind = BDC_V(int, 0x292cd0),
+        .pos = { BDC_V(float, 0x292ce0), BDC_V(float, 0x292ce4), BDC_V(float, 0x292ce8) },
+    },
+    {
+        .kind = BDC_V(int, 0x292d00),
+        .pos = { BDC_V(float, 0x292d10), BDC_V(float, 0x292d14), BDC_V(float, 0x292d18) },
+    },
+    {
+        .kind = BDC_V(int, 0x292d30),
+        .pos = { BDC_V(float, 0x292d40), BDC_V(float, 0x292d44), BDC_V(float, 0x292d48) },
+        .heading = BDC_V(float, 0x292d50),
+        ._unk24 = BDC_V(unsigned int, 0x292d54),
+    },
+    {
+        .kind = BDC_V(int, 0x292d60),
+        .pos = { BDC_V(float, 0x292d70), BDC_V(float, 0x292d74), BDC_V(float, 0x292d78) },
+    },
+    {
+        .kind = BDC_V(int, 0x292d90),
+        .pos = { BDC_V(float, 0x292da0), BDC_V(float, 0x292da4), BDC_V(float, 0x292da8) },
+        .heading = BDC_V(float, 0x292db0),
+        ._unk24 = BDC_V(unsigned int, 0x292db4),
+    },
+    {
+        .kind = BDC_V(int, 0x292dc0),
+        .pos = { BDC_V(float, 0x292dd0), BDC_V(float, 0x292dd4), BDC_V(float, 0x292dd8) },
+    },
+    {
+        .kind = BDC_V(int, 0x292df0),
+        .pos = { BDC_V(float, 0x292e00), BDC_V(float, 0x292e04), BDC_V(float, 0x292e08) },
+    },
+    {
+        .kind = BDC_V(int, 0x292e20),
+        .pos = { BDC_V(float, 0x292e30), BDC_V(float, 0x292e34), BDC_V(float, 0x292e38) },
+    },
+};

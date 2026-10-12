@@ -18,7 +18,7 @@ CoreTask *GameFieldCtor(CoreTask *task)
   GfxSpriteLayer *layer;
   GfxSprite *sprite;
   PadState *pad;
-  s16 *record;
+  UiLayoutEntry *record;
   bool fromLow;
   s32 i;
   float pos[4] __attribute__((aligned(16)));

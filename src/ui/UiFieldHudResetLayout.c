@@ -9,7 +9,7 @@
 
 void UiFieldHudResetLayout(UiFieldHud *self)
 {
-  s16 *entry;
+  UiLayoutEntry *entry;
   UiTextPrinter *printer;
   int i;
 
@@ -26,9 +26,9 @@ void UiFieldHudResetLayout(UiFieldHud *self)
     entry = UiLayoutGetEntry(0xc, i);
     ((GfxSprite **)self->base.data)[i]->flags &= ~1u;
     ((GfxSprite **)self->base.data)[i]->alpha = 1.0f;
-    ((GfxSprite **)self->base.data)[i]->posX = (float)entry[0];
-    ((GfxSprite **)self->base.data)[i]->posY = (float)entry[1];
-    ((GfxSprite **)self->base.data)[i]->posZ = (float)entry[2];
+    ((GfxSprite **)self->base.data)[i]->posX = (float)entry->x;
+    ((GfxSprite **)self->base.data)[i]->posY = (float)entry->y;
+    ((GfxSprite **)self->base.data)[i]->posZ = (float)entry->z;
   }
   for (i = 0x43; i < 0x48; i++) {
     ((GfxSprite **)self->base.data)[i]->alpha = 1.0f;

@@ -23,7 +23,7 @@ int UiLayoutCreateSprites(void *group, GfxSprite **outSprites, u32 layout)
   if ((int)layout < 0 || layout >= 0x40) {
     return 0;
   }
-  entry = (const UiLayoutEntry *)g_uiLayoutTables[layout];
+  entry = g_uiLayoutTables[layout];
   for (i = 0; i < g_uiLayoutCounts[layout]; i++, entry++, outSprites++) {
     pos[0] = (float)entry->x;
     pos[1] = (float)entry->y;

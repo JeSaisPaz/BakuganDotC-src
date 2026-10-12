@@ -3,9 +3,9 @@
 
 /* Constructor of the slide animator `UiNetLobbySlideAnim`: base ctor (no sprite), vtable `0x08af4c34`, Init
    with `sprite`/`layoutPos` through the vtable, offset and mode 0. */
-UiNetLobbySlideAnim *UiNetLobbySlideAnimCtor(UiNetLobbySlideAnim *anim, GfxSprite *sprite, s16 *layoutPos)
+UiNetLobbySlideAnim *UiNetLobbySlideAnimCtor(UiNetLobbySlideAnim *anim, GfxSprite *sprite, const UiLayoutEntry *layoutPos)
 {
-    typedef void (*InitFn)(void *, GfxSprite *, s16 *);
+    typedef void (*InitFn)(void *, GfxSprite *, const UiLayoutEntry *);
 
     UiNetLobbyAnimBaseCtor(anim, NULL, NULL);
     anim->vtable = g_uiNetLobbySlideAnimVtbl;
