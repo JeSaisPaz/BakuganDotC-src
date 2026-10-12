@@ -120,10 +120,10 @@ void BtlBakuganPushApartFromUnits(BtlBakugan *self, float *delta, u32 flags)
             push[2] = push[2] + rel[2];
         } else if (lenSq <= 0.00100000005f) {
             /* origin = push collider's sphere centre (collider1 re-read after the calls) */
-            origin[0] = ((CollisionSphereQuery *)self->collider1->shapeDesc)->center.x;
-            origin[1] = ((CollisionSphereQuery *)self->collider1->shapeDesc)->center.y;
-            origin[2] = ((CollisionSphereQuery *)self->collider1->shapeDesc)->center.z;
-            origin[3] = ((CollisionSphereQuery *)self->collider1->shapeDesc)->center.w;
+            origin[0] = ((CollisionSphereQuery *)self->collider1->shapeBlock.desc)->center.x;
+            origin[1] = ((CollisionSphereQuery *)self->collider1->shapeBlock.desc)->center.y;
+            origin[2] = ((CollisionSphereQuery *)self->collider1->shapeBlock.desc)->center.z;
+            origin[3] = ((CollisionSphereQuery *)self->collider1->shapeBlock.desc)->center.w;
             yaw = self->base.rot[1] + 3.14159274f;
             if (!(yaw <= 3.14159274f)) {
                 yaw = yaw - 6.28318548f;

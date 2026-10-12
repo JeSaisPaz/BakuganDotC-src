@@ -214,7 +214,7 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
       root[i] = yawMtx[i];
     }
     if (self->collider != NULL) {
-      ((CollisionCollider *)self->collider)->attachDirty = 1;
+      ((CollisionCollider *)self->collider)->shapeBlock.dirty = 1;
     }
     break;
   case 2:

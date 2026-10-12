@@ -6,6 +6,6 @@
 void *GfxGetFeedbackTexture(void)
 
 {
-  return g_feedbackTexture;
+  return &g_feedbackTexture;
 }
 

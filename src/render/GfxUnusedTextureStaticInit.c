@@ -8,7 +8,7 @@
 
 void GfxUnusedTextureStaticInit(void)
 {
-  GfxTexture *t = (GfxTexture *)g_unusedTexture;
+  GfxTexture *t = &g_unusedTexture;
 
   CoreObjectInit((CoreObject *)t, (CoreObject *)0x0);
   t->vtbl = g_gfxTextureVtbl;

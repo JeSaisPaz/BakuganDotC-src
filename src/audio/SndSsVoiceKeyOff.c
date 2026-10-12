@@ -2,8 +2,8 @@
 #include "bdc.h"
 
 /* Keys off voice `voice`: a keyed-on voice (state 3) moves from the active list to the free list
-   with state 5 and a SAS key-off (`SndSasKeyOff`), or, when its sustain flag (`field18`) is set,
-   to the sustained list with state 7 (key-off deferred to the pedal release). Any other non-free
+   with state 5 and a SAS key-off (`SndSasKeyOff`), or, when its sustain flag (`params.sustain`)
+   is set, to the sustained list with state 7 (key-off deferred to the pedal release). Any other non-free
    state is left as is. Then marks the voice changed (`g_sndSsVoicePendingMask |= 1 << voice`, under
    the voice mutex). Returns 0, `0x80450011` bad voice, `0x80450012` voice free (state 0),
    `0x80450013` when the voice is keyed on and `paused` is set; `0x80450001` when the layer is not
@@ -28,7 +28,7 @@ s32 SndSsVoiceKeyOff(u32 voice, s32 paused)
     if (paused != 0) {
       return (s32)0x80450013;
     }
-    if (v->field18 == 0) {
+    if (v->params.sustain == 0) {
       moved = SndSsVoiceListMove(&g_sndSsVoiceActiveCount, (u8 **)g_sndSsVoiceActiveList,
                                  (s32 *)&g_sndSsVoiceFreeCount, (u8 **)g_sndSsVoiceFreeList, voice);
       moved[1] = 5;

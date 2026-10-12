@@ -23,7 +23,7 @@ u32 SndSsVoiceMaskByChannelAll(u32 channel, s32 handle)
       voice = g_sndSsVoices;
       do {
         if (voice->state == 3 || voice->state == 7 || voice->state == 5) {
-          if (voice->channel == channel && voice->handle == handle) {
+          if (voice->params.channel == channel && voice->params.handle == handle) {
             if ((bit & g_sndSsVoicePendingMask) != 0) {
               mask |= bit;
             } else {

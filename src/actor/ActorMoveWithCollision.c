@@ -314,7 +314,7 @@ int ActorMoveWithCollision(Actor *self, float *delta)
         swept->dir.y = r;
         swept->dir.z = 0.0f;
         swept->dir.w = 0.0f;
-        hit = CollisionRaycast(self->collisionMask, swept->shapeBlock, 4);
+        hit = CollisionRaycast(self->collisionMask, &swept->shapeBlock, 4);
         if (hit != NULL && self->base.pos[1] + 1.0f < g_collisionHitResult.point.y) {
             /* off = (start + dir) - hit point, horizontal */
             off[0] = (swept->start.x + swept->dir.x) - g_collisionHitResult.point.x;
@@ -399,7 +399,7 @@ int ActorMoveWithCollision(Actor *self, float *delta)
             r = self->radius;
             swept->radius = r;
             swept->start.w = r * r;
-            hit = CollisionRaycast(self->collisionMask, swept->shapeBlock, 2);
+            hit = CollisionRaycast(self->collisionMask, &swept->shapeBlock, 2);
             if (hit == NULL) {
                 self->base.pos[1] = self->base.pos[1] + delta[1];
             } else {

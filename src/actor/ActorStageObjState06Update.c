@@ -44,7 +44,7 @@ void ActorStageObjState06Update(ActorStageObjBase *self)
         }
         collider = (CollisionCollider *)self->collider;
         if (collider != NULL) {
-            collider->attachDirty = 1;
+            collider->shapeBlock.dirty = 1;
         }
         break;
     case 2:

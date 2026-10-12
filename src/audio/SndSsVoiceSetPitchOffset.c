@@ -13,6 +13,6 @@ s32 SndSsVoiceSetPitchOffset(u32 voice, s32 offset)
   if (voice >= g_sndSsVoiceCount) {
     return (s32)0x80450011;
   }
-  g_sndSsVoices[voice].field64 = (u32)offset;
+  g_sndSsVoices[voice].params.pitchOffset = (u32)offset;
   return 0;
 }

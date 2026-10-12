@@ -54,10 +54,10 @@ void ActorCreateCollider(Actor *self)
   z = self->collShape.axis[2];
   self->collShape.axisLen = __builtin_sqrtf(x * x + y * y + z * z);
   CollisionColliderInit(&collider->node, (const u32 *)&self->collShape, 0, self, 0);
-  ((CollisionCollider *)self->collider2)->byte104 = 0;
+  ((CollisionCollider *)self->collider2)->shapeBlock.installed = 0;
   collider = (CollisionCollider *)self->collider2;
-  collider->attachMatrix = (float (*)[4])self->mtx;
-  collider->attachDirty = 1;
+  collider->shapeBlock.matrix = (float (*)[4])self->mtx;
+  collider->shapeBlock.dirty = 1;
 
   collider = NULL;
   MemLock();
@@ -80,8 +80,8 @@ void ActorCreateCollider(Actor *self)
   self->bodyShape.radiusSq = radius * radius;
   CollisionColliderInit(&((CollisionCollider *)self->bodyCollider)->node,
                         (const u32 *)&self->bodyShape, 0, self, 0);
-  ((CollisionCollider *)self->bodyCollider)->byte104 = 0;
-  sphere = (CollisionSphere *)((CollisionCollider *)self->bodyCollider)->shapeDesc;
+  ((CollisionCollider *)self->bodyCollider)->shapeBlock.installed = 0;
+  sphere = (CollisionSphere *)((CollisionCollider *)self->bodyCollider)->shapeBlock.desc;
   root = &self->base.data->rootMatrix[0xc];
   x = root[0];
   y = root[1];

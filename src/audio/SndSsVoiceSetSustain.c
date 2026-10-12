@@ -1,7 +1,7 @@
 // bdc 0x08a22d8c SndSsVoiceSetSustain
 #include "bdc.h"
 
-/* Sets or releases the sustain (damper) flag of voice `voice`: `on = 1` sets `field18` on a keyed-on
+/* Sets or releases the sustain (damper) flag of voice `voice`: `on = 1` sets `params.sustain` on a keyed-on
    voice; `on = 0` clears it, and a voice held by the pedal (state 7) is finally keyed off (moved to
    the free list, state 5, `SndSasKeyOff`). Marks the voice changed. Returns 0, `0x80450011` bad
    voice, `0x8045000a` bad `on`, `0x80450012` voice free, `0x80450013` when `paused` is set,
@@ -27,17 +27,17 @@ s32 SndSsVoiceSetSustain(u32 voice, s32 paused, u32 on)
 
   if (on != 0) {
     if (state == 3)
-      v->field18 = on;
+      v->params.sustain = on;
   } else if (state == 7) {
     v = (SndSsVoice *)SndSsVoiceListMove(&g_sndSsVoiceSustainedCount,
                                          (u8 **)g_sndSsVoiceSustainedList,
                                          (s32 *)&g_sndSsVoiceFreeCount,
                                          (u8 **)g_sndSsVoiceFreeList, voice);
     v->state = 5;
-    v->field18 = 0;
+    v->params.sustain = 0;
     SndSasKeyOff(v->sasVoice);
   } else if (state == 3) {
-    v->field18 = 0;
+    v->params.sustain = 0;
   }
 
   sceKernelLockLwMutex((SceLwMutex *)&g_sndSsVoiceMutex, 1, NULL);

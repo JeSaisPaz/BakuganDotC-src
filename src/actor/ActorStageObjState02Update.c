@@ -168,7 +168,7 @@ void ActorStageObjState02Update(ActorStageObjBase *self)
       self->fade = self->fade - 0.02f;
     }
     if (self->collider != NULL) {
-      ((CollisionCollider *)self->collider)->attachDirty = 1;
+      ((CollisionCollider *)self->collider)->shapeBlock.dirty = 1;
     }
 
     if (self->fade <= 0.0f) {

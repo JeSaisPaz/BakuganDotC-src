@@ -45,12 +45,12 @@ void *ActorCrystalStandCtor(void *stand, const char *gmoName)
     self->collider = collider;
     CollisionColliderInitMesh((CoreNode *)collider, CorePackChainFind(g_ioLzsPackages, colName), 9,
                               self, 0);
-    self->collider->byte104 = 0;
+    self->collider->shapeBlock.installed = 0;
     self->collider->hitField144 = 1;
     self->collider->owner = self;
     collider = self->collider;
-    collider->attachMatrix = (float (*)[4])self->base.data->rootMatrix;
-    collider->attachDirty = 1;
+    collider->shapeBlock.matrix = (float (*)[4])self->base.data->rootMatrix;
+    collider->shapeBlock.dirty = 1;
     collider = self->collider;
     collider->hitTimer = -1;
     collider->flags |= 1;

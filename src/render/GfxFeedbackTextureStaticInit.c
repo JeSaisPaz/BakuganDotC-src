@@ -11,7 +11,7 @@
 
 void GfxFeedbackTextureStaticInit(void)
 {
-  GfxTexture *t = (GfxTexture *)&g_feedbackTexture;
+  GfxTexture *t = &g_feedbackTexture;
 
   CoreObjectInit((CoreObject *)t, (CoreObject *)0x0);
   t->vtbl = g_gfxTextureVtbl;

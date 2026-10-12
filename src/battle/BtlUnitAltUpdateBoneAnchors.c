@@ -82,8 +82,8 @@ void BtlUnitAltUpdateBoneAnchors(BtlUnitAlt *self)
     unit->anchorMatrix[3][1] = unit->anchorMatrix[3][1] + moved[1];
     unit->anchorMatrix[3][2] = unit->anchorMatrix[3][2] + moved[2];
     body = unit->collider0;
-    body->attachDirty = 1;
-    sphere = unit->collider1->shapeDesc;
+    body->shapeBlock.dirty = 1;
+    sphere = unit->collider1->shapeBlock.desc;
     root = unit->base.data->rootMatrix;
     /* sphere center = root matrix row 3 (lv.q/sv.q quad copy) */
     sphere->center.x = root[12];

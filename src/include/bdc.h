@@ -581,6 +581,34 @@ typedef struct BtlStats {
 
 typedef float Mat4Row[4];
 
+typedef struct CollisionShapeBlock {
+    s32 type;                 /* +0x00 shape header type (written by CollisionShapeSetup for types 1-4, 6) */
+    const VtblEntry *vtbl;    /* +0x04 shape vtable (g_collisionRayVtbl, g_collisionSegmentVtbl, ...) */
+    u8 _unk08[0x8];           /* +0x08 shape payload */
+    s32 subType;              /* +0x10 type-4 capsule: type of the embedded segment sub-shape header (2) */
+    const VtblEntry *subVtbl; /* +0x14 type-4 capsule: sub-shape vtable (g_collisionSegmentVtbl) */
+    u8 _unk18[0x98];          /* +0x18 shape payload */
+    u8 boxInvValid;           /* +0xb0 type-6 box: cached-inverse valid flag (CollisionBox.invValid) */
+    u8 _unkb1[0xf];           /* +0xb1 shape payload */
+    s32 shapeType;            /* +0xc0 installed descriptor type (0..6, 8 = mesh); CollisionTestShape dispatches on it */
+    void *desc;               /* +0xc4 installed shape descriptor */
+    void **parts;             /* +0xc8 mesh: part pointer array */
+    void *worldVerts;         /* +0xcc mesh: writable copies of the MESH part headers, 0xc0 bytes each (keepWorldVerts), else NULL */
+    s32 partCount;            /* +0xd0 mesh: part count */
+    u8 installed;             /* +0xd4 set to 1 by CollisionShapeSetup; CollisionInitQueryShapes clears it again */
+    u8 _unkd5[0x3];           /* +0xd5 */
+    s32 reservedD8;           /* +0xd8 cleared by CollisionShapeBlockInit */
+    u8 dirty;                 /* +0xdc set to 1 by CollisionShapeBlockInit (CollisionCollider +0x10c) */
+    u8 _unkdd[0x3];           /* +0xdd */
+    Mat4Row *matrix;          /* +0xe0 matrix the shape follows (CollisionCollider +0x110) */
+    void *shape;              /* +0xe4 pointer to the shape header (this block) once installed, else NULL */
+    union {
+        s8 surfaceIds[16];    /* +0xe8 mesh: surface id per ATTR chunk (g_collisionSurfaceNames index, -1 = none); indexed by a face's surface nibble */
+        s32 surfaceIdWords[4]; /* +0xe8 word view: CollisionMeshLoad fills it with -1 */
+    };
+    u8 _unkf8[0x8];           /* +0xf8 */
+} CollisionShapeBlock;
+
 typedef struct ScePspFVector4 ScePspFVector4;
 struct ScePspFVector4 {
     float x;
@@ -592,15 +620,7 @@ struct ScePspFVector4 {
 typedef struct CollisionCollider {
     CoreNode node;              /* +0x00 base node (vtable 0x08af1684 at +0x20) */
     u8 _unk24[0xc];             /* +0x24 */
-    u8 shapeBlock[0xc4];        /* +0x30 shape block (CollisionShapeBlockInit/Setup/SetMesh) */
-    void *shapeDesc;            /* +0xf4 shape descriptor passed to CollisionColliderInit (sphere: CollisionSphereQuery; BtlBakuganUpdateBoneAnchors moves it) */
-    u8 _unkf8[0xc];             /* +0xf8 */
-    u8 byte104;                 /* +0x104 cleared after CollisionColliderInitMesh by BtlStageCreateMapCollider and BtlBakuganInitColliders, role unknown */
-    u8 _unk105[0x7];            /* +0x105 */
-    u8 attachDirty;             /* +0x10c set to 1 when attachMatrix changed (BtlBakuganCreateColliders, BtlBakuganUpdateBoneAnchors) */
-    u8 _unk10d[0x3];            /* +0x10d */
-    Mat4Row *attachMatrix;      /* +0x110 matrix the collider follows (BtlBakugan.anchorMatrix) */
-    u8 _unk114[0x1c];           /* +0x114 */
+    CollisionShapeBlock shapeBlock; /* +0x30 shape block (CollisionShapeBlockInit/Setup/SetMesh), 0x100 bytes on the PSP: its desc (+0xf4, the shape descriptor passed to CollisionColliderInit; sphere: CollisionSphereQuery, BtlBakuganUpdateBoneAnchors moves it), installed (+0x104, cleared after CollisionColliderInitMesh by BtlStageCreateMapCollider/BtlBakuganInitColliders), dirty (+0x10c, set when matrix changed) and matrix (+0x110, the matrix the collider follows, e.g. BtlBakugan.anchorMatrix) are the collider fields once named shapeDesc/byte104/attachDirty/attachMatrix */
     u32 flags;                  /* +0x130 bit 0 hit active, 0x10 hit pending, 0x40 no push-apart; bits 1/2 skip raycasts */
     u32 layer;                  /* +0x134 layer tested by CollisionRaycast */
     void *owner;                /* +0x138 owning object (actor/unit/gimmick), set by CollisionColliderInit */
@@ -1351,7 +1371,7 @@ typedef struct ActorCrystalSpawnTask {
 
 typedef struct ActorCrystalStand {
     GfxModel base;                    /* +0x000 */
-    CollisionCollider *collider;      /* +0x140 mesh collider from `<name>_col.ctc`, 0 when the pack has none; its attachMatrix follows the model's root matrix (ActorCrystalStandSyncCollider) */
+    CollisionCollider *collider;      /* +0x140 mesh collider from `<name>_col.ctc`, 0 when the pack has none; its shapeBlock.matrix follows the model's root matrix (ActorCrystalStandSyncCollider) */
     u8 _unk144[0xc];                  /* +0x144 */
 } ActorCrystalStand;
 
@@ -1824,7 +1844,7 @@ typedef struct ActorStageObjLandmark {
     float orbPos[4];           /* +0x390 orb position (aura effects) */
     union {
         u8 _unk3a0[0x40];      /* +0x3a0 raw view (used by the ctor) */
-        float helperMatrix[4][4]; /* +0x3a0 copy of the unit's anchorMatrix; the helper collider's attachMatrix */
+        float helperMatrix[4][4]; /* +0x3a0 copy of the unit's anchorMatrix; the helper collider's shapeBlock.matrix */
     };
     CollisionBox *collisionMesh; /* +0x3e0 occlusion box (type 6) built by the ctor from the model bounds; freed by the destructor */
     s32 step;                  /* +0x3e4 step counter of the current state */
@@ -3701,34 +3721,6 @@ typedef struct CollisionRayShape {
     ScePspFVector4 invDir;    /* +0x30 1/dir per component (a constant where the component is 0) */
 } CollisionRayShape;
 
-typedef struct CollisionShapeBlock {
-    s32 type;                 /* +0x00 shape header type (written by CollisionShapeSetup for types 1-4, 6) */
-    const VtblEntry *vtbl;    /* +0x04 shape vtable (g_collisionRayVtbl, g_collisionSegmentVtbl, ...) */
-    u8 _unk08[0x8];           /* +0x08 shape payload */
-    s32 subType;              /* +0x10 type-4 capsule: type of the embedded segment sub-shape header (2) */
-    const VtblEntry *subVtbl; /* +0x14 type-4 capsule: sub-shape vtable (g_collisionSegmentVtbl) */
-    u8 _unk18[0x98];          /* +0x18 shape payload */
-    u8 boxInvValid;           /* +0xb0 type-6 box: cached-inverse valid flag (CollisionBox.invValid) */
-    u8 _unkb1[0xf];           /* +0xb1 shape payload */
-    s32 shapeType;            /* +0xc0 installed descriptor type (0..6, 8 = mesh); CollisionTestShape dispatches on it */
-    void *desc;               /* +0xc4 installed shape descriptor */
-    void **parts;             /* +0xc8 mesh: part pointer array */
-    void *worldVerts;         /* +0xcc mesh: writable copies of the MESH part headers, 0xc0 bytes each (keepWorldVerts), else NULL */
-    s32 partCount;            /* +0xd0 mesh: part count */
-    u8 installed;             /* +0xd4 set to 1 by CollisionShapeSetup; CollisionInitQueryShapes clears it again */
-    u8 _unkd5[0x3];           /* +0xd5 */
-    s32 reservedD8;           /* +0xd8 cleared by CollisionShapeBlockInit */
-    u8 dirty;                 /* +0xdc set to 1 by CollisionShapeBlockInit (CollisionCollider.attachDirty) */
-    u8 _unkdd[0x3];           /* +0xdd */
-    Mat4Row *matrix;          /* +0xe0 matrix the shape follows (CollisionCollider.attachMatrix) */
-    void *shape;              /* +0xe4 pointer to the shape header (this block) once installed, else NULL */
-    union {
-        s8 surfaceIds[16];    /* +0xe8 mesh: surface id per ATTR chunk (g_collisionSurfaceNames index, -1 = none); indexed by a face's surface nibble */
-        s32 surfaceIdWords[4]; /* +0xe8 word view: CollisionMeshLoad fills it with -1 */
-    };
-    u8 _unkf8[0x8];           /* +0xf8 */
-} CollisionShapeBlock;
-
 typedef struct CollisionSweptSphereDesc {
     int type;                     /* +0x00 shape type (4 = swept sphere) */
     const VtblEntry *vtbl;        /* +0x04 `g_collisionCapsuleVtbl` */
@@ -3740,7 +3732,7 @@ typedef struct CollisionSweptSphereDesc {
     ScePspFVector4 dir;           /* +0x30 sweep vector; w = its length */
     float radius;                 /* +0x40 sphere radius */
     u8 _unk44[0xc];               /* +0x44 */
-    u8 shapeBlock[0x4];           /* +0x50 first shape block (CollisionShapeSetup; real size unknown) */
+    CollisionShapeBlock shapeBlock; /* +0x50 first swept-sphere shape block (CollisionShapeBlockInit/Setup; 0x100 bytes, up to g_gfxEffectCamDir) */
 } CollisionSweptSphereDesc;
 
 typedef struct CoreListNode {
@@ -7800,24 +7792,50 @@ typedef struct SndManager {
     u8 unk8be6[2];           /* 0x8be6 */
 } SndManager;
 
+typedef struct SndSsToneParams {
+    u32 isNoise;          /* +0x00 1 = noise tone, 0 = sampled */
+    u8 *sampleAddr;       /* +0x04 absolute sample address (pbd + VAG offset) */
+    u32 sampleSize;       /* +0x08 */
+    u8 noiseClock;        /* +0x0c */
+    u8 _pad0d[3];         /* +0x0d */
+    u32 sampleRate;       /* +0x10 */
+    s32 pitch;            /* +0x14 not filled by SndSsBankGetToneParams: SndSsBuildKeyOnParams stores the SAS pitch here (0x1000 = original rate, clamped 1..0x4000), used as is when the note is 0xff */
+    u32 volume;           /* +0x18 base level for SndSsPanToVolumes (first pair) */
+    u8 pan;               /* +0x1c */
+    u8 _pad1d[3];         /* +0x1d */
+    u32 volume2;          /* +0x20 base level for SndSsPanToVolumes (second pair) */
+    u8 pan2;              /* +0x24 */
+    u8 _pad25[3];         /* +0x25 */
+    u32 adsr1;            /* +0x28 */
+    u32 adsr2;            /* +0x2c */
+    s8 fineTune;          /* +0x30 tone fine tune (cents-like, *0x7f/100), last SndSsNoteToPitch argument */
+    u8 centerNote;        /* +0x31 tone centre note */
+    s8 centerFine;        /* +0x32 tone centre fine tune (*0x7f/100) */
+    u8 bendDown;           /* +0x33 */
+    u8 bendUp;             /* +0x34 */
+    u8 _pad35[3];         /* +0x35 */
+    s32 keyGroup;          /* +0x38 */
+    s32 priority;          /* +0x3c */
+} SndSsToneParams;
+
 typedef struct SndSsKeyOnParams {
-    s32 handle;        /* +0x00 owner handle, voice +0x10 */
-    u32 bankId;        /* +0x04 bank id */
-    u32 flags;         /* +0x08 key-on flags (0/1) */
-    u32 toneData[4];   /* +0x0c tone/VAG data written by SndSsBankGetToneParams (0x40 bytes from here) */
-    u32 sampleRate;    /* +0x1c tone sample rate, voice +0x2c */
-    s32 pitch;         /* +0x20 SAS pitch (0x1000 = original rate), clamped 1..0x4000 */
-    u8 _pad24[0x18];   /* +0x24 */
-    s8 fineTune;       /* +0x3c tone fine tune */
-    u8 centerNote;     /* +0x3d tone centre note */
-    s8 centerFine;     /* +0x3e tone centre fine tune */
-    u8 _pad3f[5];      /* +0x3f */
-    s32 keyGroup;      /* +0x44 key group (0 = none), voice +0x54 */
-    s32 priority;      /* +0x48 voice allocation priority, voice +0x58 */
-    u8 channel;        /* +0x4c MIDI channel, voice +0x5c */
-    u8 note;           /* +0x4d note, voice +0x5d */
-    u8 _pad4e[2];      /* +0x4e */
-    s32 volPan[2];     /* +0x50 caller's volPan words; volPan[1] is also added to the pitch */
+    s32 handle;            /* +0x00 owner handle (-1 = none) */
+    u32 bankId;            /* +0x04 bank id (-1 after SndSsVoiceReset) */
+    u32 sustain;           /* +0x08 key-on flags argument (0/1): sustain (damper) held, see SndSsVoiceSetSustain / SndSsVoiceKeyOff */
+    SndSsToneParams tone;  /* +0x0c filled by SndSsBankGetToneParams; tone.pitch holds the SAS pitch */
+    u8 channel;            /* +0x4c MIDI channel (0xff = none) */
+    u8 note;               /* +0x4d note (0xff = raw pitch) */
+    u8 _pad4e[2];          /* +0x4e */
+    union {
+        u32 volPanWord;    /* +0x50 the four bytes below as one word (the caller's first volPan word, copied whole by SndSsBuildKeyOnParams) */
+        struct {
+            u8 volume;     /* +0x50 0..0x7f (SndSsVoiceSetVolume) */
+            u8 pan;        /* +0x51 0..0x7f (SndSsVoiceSetPan) */
+            u8 volume2;    /* +0x52 0..0x7f (SndSsVoiceSetVolume2) */
+            u8 pan2;       /* +0x53 0..0x7f (SndSsVoiceSetPan2) */
+        };
+    };
+    s32 pitchOffset;       /* +0x54 caller's second volPan word, added to the pitch (SndSsVoiceSetPitchOffset) */
 } SndSsKeyOnParams;
 
 typedef struct SndSsPhdHeader {
@@ -7909,76 +7927,17 @@ typedef struct SndSsSeqTrack {
     SndSsSeqChannel channels[16]; /* +0x38 */
 } SndSsSeqTrack;
 
-typedef struct SndSsToneParams {
-    u32 isNoise;          /* +0x00 1 = noise tone, 0 = sampled */
-    u8 *sampleAddr;       /* +0x04 absolute sample address (pbd + VAG offset) */
-    u32 sampleSize;       /* +0x08 */
-    u8 noiseClock;        /* +0x0c */
-    u8 _pad0d[3];         /* +0x0d */
-    u32 sampleRate;       /* +0x10 */
-    u32 _unk14;           /* +0x14 */
-    u32 volume;           /* +0x18 base level for SndSsPanToVolumes (first pair) */
-    u8 pan;               /* +0x1c */
-    u8 _pad1d[3];         /* +0x1d */
-    u32 volume2;          /* +0x20 base level for SndSsPanToVolumes (second pair) */
-    u8 pan2;              /* +0x24 */
-    u8 _pad25[3];         /* +0x25 */
-    u32 adsr1;            /* +0x28 */
-    u32 adsr2;            /* +0x2c */
-    u8 fineTune;          /* +0x30 */
-    u8 centerNote;        /* +0x31 */
-    u8 centerFine;        /* +0x32 */
-    u8 bendDown;           /* +0x33 */
-    u8 bendUp;             /* +0x34 */
-    u8 _pad35[3];         /* +0x35 */
-    s32 keyGroup;          /* +0x38 */
-    s32 priority;          /* +0x3c */
-} SndSsToneParams;
-
 typedef struct SndSsVoice {
-    u8 sasVoice;          /* +0x00 SAS voice index */
-    u8 state;             /* +0x01 3 keyed on, 5 free, 7 released but held by sustain */
-    u8 _pad02[2];         /* +0x02 */
-    u32 field04;          /* +0x04 cleared by SndSsVoiceInit */
-    u8 volL;              /* +0x08 reset 0 */
-    u8 panL;              /* +0x09 reset 0x40 */
-    u8 volR;              /* +0x0a reset 0 */
-    u8 panR;              /* +0x0b reset 0x40 */
-    u32 field0c;          /* +0x0c reset 0 */
-    s32 handle;           /* +0x10 reset -1 */
-    s32 field14;          /* +0x14 reset -1 */
-    u32 field18;          /* +0x18 cleared by SndSsVoiceInit */
-    s32 field1c;          /* +0x1c reset 1 */
-    void *field20;        /* +0x20 VAG sample address (reset 0) */
-    u32 field24;          /* +0x24 reset 0 */
-    u8 field28;           /* +0x28 reset 0 */
-    u8 _pad29[3];         /* +0x29 */
-    u32 sampleRate;       /* +0x2c reset -1 */
-    u32 pitch;            /* +0x30 raw SAS pitch used when note == 0xff */
-    u32 field34;          /* +0x34 reset 0 */
-    u8 field38;           /* +0x38 reset 0x40 */
-    u8 _pad39[3];         /* +0x39 */
-    u32 field3c;          /* +0x3c reset 0 */
-    u8 field40;           /* +0x40 reset 0x40 */
-    u8 _pad41[3];         /* +0x41 */
-    u32 field44;          /* +0x44 reset 0 */
-    u32 field48;          /* +0x48 reset 0 */
-    s8 centerNote;        /* +0x4c */
-    u8 centerNoteU;       /* +0x4d */
-    s8 fine;              /* +0x4e fine tune */
-    u8 bendDown;          /* +0x4f pitch-bend range down */
-    u8 bendUp;            /* +0x50 pitch-bend range up */
-    u8 _pad51[3];         /* +0x51 */
-    s32 keyGroup;         /* +0x54 reset -1 */
-    s32 priority;         /* +0x58 reset -1 */
-    u8 channel;           /* +0x5c reset 0xff */
-    u8 note;              /* +0x5d played note */
-    u8 _pad5e[2];         /* +0x5e */
-    u8 volume;            /* +0x60 0..0x7f */
-    u8 pan;               /* +0x61 0..0x7f */
-    u8 volume2;           /* +0x62 0..0x7f */
-    u8 pan2;              /* +0x63 reset 0x40 */
-    u32 field64;          /* +0x64 reset 0 */
+    u8 sasVoice;              /* +0x00 SAS voice index */
+    u8 state;                 /* +0x01 3 keyed on, 5 free, 7 released but held by sustain */
+    u8 _pad02[2];             /* +0x02 */
+    u32 field04;              /* +0x04 envelope height (SndSsSynthesize; cleared by SndSsVoiceInit) */
+    u8 volL;                  /* +0x08 applied copy of params.volume (reset 0) */
+    u8 panL;                  /* +0x09 applied copy of params.pan (reset 0x40) */
+    u8 volR;                  /* +0x0a applied copy of params.volume2 (reset 0) */
+    u8 panR;                  /* +0x0b applied copy of params.pan2 (reset 0x40) */
+    u32 field0c;              /* +0x0c applied copy of params.pitchOffset (reset 0) */
+    SndSsKeyOnParams params;  /* +0x10 key-on block copied by SndSsVoiceQueueKeyOn; SndSsVoiceReset sets handle/bankId/keyGroup/priority/sampleRate -1, channel 0xff, isNoise 1, pans 0x40 */
 } SndSsVoice;
 
 typedef struct SndWaveMixArgs {
@@ -11344,10 +11303,10 @@ int SndSasSetVoice(int voice, void *vagAddr, int size, int loop);
 int SndSasSetVolume(int voice, int left, int right, int effectLeft, int effectRight);
 int SndSasTerm(void);
 void SndShutdown(void);
-s32 SndSsBankGetToneParams(u32 bankId, u32 tone, u32 *out);
+s32 SndSsBankGetToneParams(u32 bankId, u32 tone, SndSsToneParams *out);
 s32 SndSsBankRegister(void **record, void *phd, void *pbd);
 s32 SndSsBankUnregister(u32 bankId);
-s32 SndSsBuildKeyOnParams(u32 bankId, u32 tone, u8 channel, u32 note, s32 pitch, u32 flags, s32 handle, const s32 *volPan, u32 *out);
+s32 SndSsBuildKeyOnParams(u32 bankId, u32 tone, u8 channel, u32 note, s32 pitch, u32 flags, s32 handle, const s32 *volPan, SndSsKeyOnParams *out);
 u32 SndSsChannelSetSustain(u32 channel, u32 on, s32 handle);
 u32 SndSsFindVoicesByHandle(u32 group, s32 handle);
 u32 SndSsGetVoiceStatus(u32 voiceId);
@@ -11395,7 +11354,7 @@ s32 SndSsSynthesizeWithMix(void *inout, s32 leftVol, s32 rightVol);
 s32 SndSsTerm(void);
 u8 SndSsVagDecodeBlock(s16 *out, const u8 *block, s16 *history);
 s32 SndSsVoiceAlloc(u32 priority);
-s32 SndSsVoiceApplyKeyOn(u8 *cmd);
+s32 SndSsVoiceApplyKeyOn(SndSsVoice *voice);
 void SndSsVoiceGetToneInfo(s32 voice, u32 *bendUp, u32 *bendDown, u32 *note, s32 *centerNote, u32 *centerNoteU, s32 *fine, u32 *sampleRate);
 s32 SndSsVoiceInit(u32 numVoices);
 s32 SndSsVoiceKeyOff(u32 voice, s32 paused);
@@ -11406,7 +11365,7 @@ u32 SndSsVoiceMaskByChannelAll(u32 channel, s32 handle);
 u32 SndSsVoiceMaskByHandle(s32 handle);
 u32 SndSsVoiceMaskByKeyGroup(s32 group);
 u32 SndSsVoiceMaskByNote(const u8 *chanNote, s32 handle);
-s32 SndSsVoiceQueueKeyOn(u32 voiceId, s32 mode, const void *params);
+s32 SndSsVoiceQueueKeyOn(u32 voiceId, s32 mode, const SndSsKeyOnParams *params);
 void SndSsVoiceReset(SndSsVoice *voice);
 s32 SndSsVoiceSetPan(u32 voice, u32 pan);
 s32 SndSsVoiceSetPan2(u32 voice, u32 pan);
@@ -20548,7 +20507,7 @@ extern __typeof__(ScePspFVector4) g_colorWhite;
 extern __typeof__(ScePspFVector4) g_colorYellow;
 extern __typeof__(void **) g_faderSlots;
 extern __typeof__(GfxFader *[2]) g_faderTable;
-extern __typeof__(u8[320]) g_feedbackTexture;
+extern __typeof__(GfxTexture) g_feedbackTexture;
 extern __typeof__(CxxGlobalRecord) g_feedbackTextureDtorRecord;
 extern __typeof__(u32) g_geWorldDataCmdTemplate;
 extern __typeof__(u32) g_geWorldMatrixDataCmd;
@@ -20770,7 +20729,7 @@ extern __typeof__(CoreNodeGroup) g_renderPacketList;
 extern __typeof__(void *) g_renderPacketPool;
 extern __typeof__(u8) g_screenFlashVerts;
 extern __typeof__(void *) g_textureList;
-extern __typeof__(u8[320]) g_unusedTexture;
+extern __typeof__(GfxTexture) g_unusedTexture;
 extern __typeof__(CxxGlobalRecord) g_unusedTextureDtorRecord;
 extern __typeof__(ScePspFVector4) g_vecDown;
 extern __typeof__(ScePspFVector4) g_vecNegX;

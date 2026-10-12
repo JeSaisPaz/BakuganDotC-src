@@ -1,13 +1,13 @@
 // bdc 0x08a2113c SndSsBankGetToneParams
 #include "bdc.h"
 
-/* Copies the parameters of tone `tone` of bank `bankId` into the SndSsToneParams block at `out`: for
+/* Copies the parameters of tone `tone` of bank `bankId` into the SndSsToneParams block `out`: for
    a sampled tone the VAG entry (`SndSsPhdGetVag`) gives the absolute sample address (`pbd +
    offset`), size and rate; a tone whose VAG index is -1 is a noise tone (`isNoise = 1`, noise clock
    from the tone). Then the tone's two volume/pan pairs, ADSR words, fine tune, centre note/fine and
    pitch-bend ranges, key group and priority. Returns 0, or `0x80450005` when the tone or its VAG entry is missing. */
 
-s32 SndSsBankGetToneParams(u32 bankId, u32 tone, u32 *out)
+s32 SndSsBankGetToneParams(u32 bankId, u32 tone, SndSsToneParams *out)
 {
   SndSsToneParams *params;
   void ***entry;
@@ -16,7 +16,7 @@ s32 SndSsBankGetToneParams(u32 bankId, u32 tone, u32 *out)
   SndSsPhdTone *toneEntry;
   SndSsPhdVag *vag;
 
-  params = (SndSsToneParams *)out;
+  params = out;
   entry = &g_sndSsBankTable[bankId];
   bank = *entry;
   ret = SndSsPhdGetTone(bank[0], tone, (void **)&toneEntry);

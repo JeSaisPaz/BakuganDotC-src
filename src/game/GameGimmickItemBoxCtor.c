@@ -76,12 +76,12 @@ CoreObject *GameGimmickItemBoxCtor(GameGimmickItemBox *obj, s32 kind, void *reco
   mesh = CorePackChainFind(g_ioLzsPackages, g_itemBoxColliderName);
   CollisionColliderInitMesh((CoreNode *)collider, mesh, 9, obj, 0);
 
-  ((CollisionCollider *)obj->base.attached)->byte104 = 0;
+  ((CollisionCollider *)obj->base.attached)->shapeBlock.installed = 0;
   ((CollisionCollider *)obj->base.attached)->hitField144 = 0;
   ((CollisionCollider *)obj->base.attached)->owner = obj;
   collider = (CollisionCollider *)obj->base.attached;
-  collider->attachMatrix = (float (*)[4])&obj->colliderMatrix;
-  collider->attachDirty = 1;
+  collider->shapeBlock.matrix = (float (*)[4])&obj->colliderMatrix;
+  collider->shapeBlock.dirty = 1;
 
   m = obj->base.base.data->rootMatrix;
   rec = (GameGimmickRecord *)record;

@@ -14,7 +14,7 @@ s32 SndSsVoiceSetPan(u32 voice, u32 pan)
     result = -0x7fbaffef;
     if ((voice < g_sndSsVoiceCount) && (result = -0x7fbafff6, pan < 0x80)) {
       result = 0;
-      g_sndSsVoices[voice].pan = (u8)pan;
+      g_sndSsVoices[voice].params.pan = (u8)pan;
     }
   }
   return result;

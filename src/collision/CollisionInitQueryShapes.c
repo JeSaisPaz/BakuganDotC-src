@@ -9,7 +9,7 @@
 
 void CollisionInitQueryShapes(void)
 {
-  CollisionShapeBlock *swept = (CollisionShapeBlock *)g_collisionSweptSphereDesc.shapeBlock;
+  CollisionShapeBlock *swept = &g_collisionSweptSphereDesc.shapeBlock;
 
   CollisionShapeSetup((u32 *)&g_collisionRayBlock, (u32 *)&g_collisionRayDesc);
   g_collisionRayBlock.installed = 0;

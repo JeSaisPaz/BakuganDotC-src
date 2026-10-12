@@ -11,7 +11,7 @@ void CollisionColliderDtor(CoreNode *collider, u32 flags)
 
   if (collider != (CoreNode *)0x0) {
     collider->vtable = &g_collisionColliderVtable;
-    CollisionShapeBlockDtor(c->shapeBlock, 2);
+    CollisionShapeBlockDtor(&c->shapeBlock, 2);
     CoreNodeDtor(collider, 0);
     if ((flags & 1) != 0) {
       MemLock();

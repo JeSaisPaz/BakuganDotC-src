@@ -28,7 +28,7 @@ CoreNode *BtlStageCreateMapCollider(const char *name)
     }
     mesh = CorePackChainFind(g_ioLzsPackages, (char *)name);
     CollisionColliderInitMesh((CoreNode *)collider, mesh, 8, 0, 0);
-    collider->byte104 = 0;
+    collider->shapeBlock.installed = 0;
     collider->flags = collider->flags | 1;
     return (CoreNode *)collider;
 }

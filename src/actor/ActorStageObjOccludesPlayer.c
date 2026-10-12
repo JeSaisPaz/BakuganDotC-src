@@ -108,8 +108,8 @@ int ActorStageObjOccludesPlayer(void *unused, ActorStageObjBase *self, void *pla
   g_collisionSweptSphereDesc.dir.w = __builtin_sqrtf(g_collisionSweptSphereDesc.dir.x * g_collisionSweptSphereDesc.dir.x +
                                                      g_collisionSweptSphereDesc.dir.y * g_collisionSweptSphereDesc.dir.y +
                                                      g_collisionSweptSphereDesc.dir.z * g_collisionSweptSphereDesc.dir.z);
-  block = CollisionShapeBlockPrepare(g_collisionSweptSphereDesc.shapeBlock);
-  if (CollisionMeshTestShape(((CollisionCollider *)self->collider)->shapeBlock, block, delta, 0xffffffffu) != 0) {
+  block = CollisionShapeBlockPrepare(&g_collisionSweptSphereDesc.shapeBlock);
+  if (CollisionMeshTestShape(&((CollisionCollider *)self->collider)->shapeBlock, block, delta, 0xffffffffu) != 0) {
     hidden = 1;
     a = *alpha - 0.1f;
     *alpha = a;

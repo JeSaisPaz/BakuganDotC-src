@@ -127,12 +127,12 @@ void ActorStageObjBaseInit(ActorStageObjBase *self, u32 *pos)
       }
       self->collider = col;
       CollisionColliderInitMesh((CoreNode *)col, CorePackChainFind(g_ioLzsPackages, name), 9, self, 0);
-      ((CollisionCollider *)self->collider)->byte104 = 0;
+      ((CollisionCollider *)self->collider)->shapeBlock.installed = 0;
       ((CollisionCollider *)self->collider)->hitField144 = 1;
       ((CollisionCollider *)self->collider)->owner = self;
       col = self->collider;
-      col->attachMatrix = (Mat4Row *)self->base.data->rootMatrix;
-      col->attachDirty = 1;
+      col->shapeBlock.matrix = (Mat4Row *)self->base.data->rootMatrix;
+      col->shapeBlock.dirty = 1;
       kind = self->kind;
       switch (kind) {
       case 6:

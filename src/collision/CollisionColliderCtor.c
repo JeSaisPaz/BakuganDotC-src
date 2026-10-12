@@ -16,7 +16,7 @@ CoreNode *CollisionColliderCtor(CoreNode *collider_, u32 flags)
 
   CoreNodeCtor(collider_, (CoreNode *)0x0);
   collider->node.vtable = &g_collisionColliderVtable;
-  CollisionShapeBlockInit(collider->shapeBlock);
+  CollisionShapeBlockInit(&collider->shapeBlock);
   collider->byte180 = 0;
   if ((flags & 2) != 0) {
     CoreNodeGroupAppend(collider_, &g_collisionRaycastColliders);

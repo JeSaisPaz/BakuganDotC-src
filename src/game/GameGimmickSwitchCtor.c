@@ -82,14 +82,14 @@ CoreObject *GameGimmickSwitchCtor(GameGimmickSwitch *obj, s32 kind, void *record
   mesh = CorePackChainFind(g_ioLzsPackages, name);
   CollisionColliderInitMesh((CoreNode *)collider, mesh, 9, obj, 0);
 
-  ((CollisionCollider *)obj->base.attached)->byte104 = 0;
+  ((CollisionCollider *)obj->base.attached)->shapeBlock.installed = 0;
   ((CollisionCollider *)obj->base.attached)->hitField144 = 0;
   ((CollisionCollider *)obj->base.attached)->flags &= ~2u;
   ((CollisionCollider *)obj->base.attached)->owner = obj;
   model = obj->base.base.data;
   collider = (CollisionCollider *)obj->base.attached;
-  collider->attachMatrix = (float (*)[4])model->rootMatrix;
-  collider->attachDirty = 1;
+  collider->shapeBlock.matrix = (float (*)[4])model->rootMatrix;
+  collider->shapeBlock.dirty = 1;
 
   MemLock();
   fromLow = MemIsAllocFromLow();
@@ -111,7 +111,7 @@ CoreObject *GameGimmickSwitchCtor(GameGimmickSwitch *obj, s32 kind, void *record
   obj->shapeParam = 3.0f;
   obj->shapePos.w = 3.0f * 3.0f;
   CollisionColliderInit(obj->pressCollider, (const u32 *)&obj->shapeType, 9, obj, 0);
-  ((CollisionCollider *)obj->pressCollider)->byte104 = 0;
+  ((CollisionCollider *)obj->pressCollider)->shapeBlock.installed = 0;
 
   /* center.xyz = (pos.x, pos.y + 14, pos.z) + 3 * (cos, 0, sin)(pi/2 - rot[1]); center.w is
      never written (an uninitialised stack word that the asm copies into the sphere's radiusSq,
@@ -126,7 +126,7 @@ CoreObject *GameGimmickSwitchCtor(GameGimmickSwitch *obj, s32 kind, void *record
   center[0] = center[0] + offset[0];
   center[1] = center[1] + offset[1];
   center[2] = center[2] + offset[2];
-  sphere = (CollisionSphere *)((CollisionCollider *)obj->pressCollider)->shapeDesc;
+  sphere = (CollisionSphere *)((CollisionCollider *)obj->pressCollider)->shapeBlock.desc;
   sphere->center[0] = center[0];
   sphere->center[1] = center[1];
   sphere->center[2] = center[2];

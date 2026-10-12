@@ -14,8 +14,8 @@ u32 SndSsVoiceMaskByNote(const u8 *chanNote, s32 handle)
   if (g_sndSsVoiceState != -1 && chanNote != NULL) {
     for (i = 0; i < g_sndSsVoiceCount; i++) {
       SndSsVoice *v = &g_sndSsVoices[i];
-      if ((v->state == 3 || v->state == 7) && v->channel == chanNote[0] && v->note == chanNote[1] &&
-          v->handle == handle) {
+      if ((v->state == 3 || v->state == 7) && v->params.channel == chanNote[0] &&
+          v->params.note == chanNote[1] && v->params.handle == handle) {
         mask |= bit;
       }
       bit <<= 1;

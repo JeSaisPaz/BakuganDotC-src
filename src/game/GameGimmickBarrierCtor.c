@@ -97,13 +97,13 @@ CoreObject *GameGimmickBarrierCtor(GameGimmickBarrier *obj, s32 kind, void *reco
   mesh = CorePackChainFind(g_ioLzsPackages, name);
   CollisionColliderInitMesh((CoreNode *)collider, mesh, 0x19, obj, 0);
 
-  ((CollisionCollider *)obj->base.attached)->byte104 = 0;
+  ((CollisionCollider *)obj->base.attached)->shapeBlock.installed = 0;
   ((CollisionCollider *)obj->base.attached)->hitField144 = 0;
   ((CollisionCollider *)obj->base.attached)->owner = obj;
   model = obj->base.base.data;
   collider = (CollisionCollider *)obj->base.attached;
-  collider->attachMatrix = (float (*)[4])model->rootMatrix;
-  collider->attachDirty = 1;
+  collider->shapeBlock.matrix = (float (*)[4])model->rootMatrix;
+  collider->shapeBlock.dirty = 1;
   GameGimmickBarrierBindNode(obj);
   obj->pulseTimer = 0;
   obj->pulseDown = 0;

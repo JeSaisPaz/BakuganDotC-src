@@ -19,7 +19,7 @@ void ActorProbeGround(Actor *self)
   if (self->noGroundProbe != 0) {
     return;
   }
-  sphere = (CollisionSphere *)((CollisionCollider *)self->bodyCollider)->shapeDesc;
+  sphere = (CollisionSphere *)((CollisionCollider *)self->bodyCollider)->shapeBlock.desc;
   g_collisionRayDesc.origin.x = sphere->center[0];
   g_collisionRayDesc.origin.y = sphere->center[1];
   g_collisionRayDesc.origin.z = sphere->center[2];

@@ -139,8 +139,8 @@ CoreObject *GameGimmickCorePointCtor(GameGimmickCorePoint *obj, s32 kind, void *
   obj->shapeParam = 3.0f;
   obj->shapePos.w = 3.0f * 3.0f;
   CollisionColliderInit((CoreNode *)obj->base.attached, (const u32 *)&obj->shapeType, 9, obj, 0);
-  ((CollisionCollider *)obj->base.attached)->byte104 = 0;
-  sphere = (CollisionSphere *)((CollisionCollider *)obj->base.attached)->shapeDesc;
+  ((CollisionCollider *)obj->base.attached)->shapeBlock.installed = 0;
+  sphere = (CollisionSphere *)((CollisionCollider *)obj->base.attached)->shapeBlock.desc;
   /* 16-byte copy: pos.w lands in radiusSq, recalculated by slot 9 */
   sphere->center[0] = obj->base.base.pos[0];
   sphere->center[1] = obj->base.base.pos[1];

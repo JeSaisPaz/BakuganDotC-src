@@ -34,7 +34,7 @@ s32 ActorBallCheckHit(float radius, ActorBall *ball, float *pos, float *vel, s32
   layerMask = ((1u << ((CollisionCollider *)((Actor *)ball->owner)->collider2)->layer) ^ 0x01bf0f7eu) |
               0x08000000u | 0x10000000u;
   desc = &g_collisionSweptSphereDesc;
-  block = (CollisionShapeBlock *)desc->shapeBlock;
+  block = &desc->shapeBlock;
   query = &g_actorBallHitQuery;
 
   /* Sweep with twice the radius for the object query. */

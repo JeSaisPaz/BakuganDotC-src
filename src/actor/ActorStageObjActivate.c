@@ -60,16 +60,16 @@ void ActorStageObjActivate(void *obj)
       self->helperMatrix[i][j] = self->unit->base.anchorMatrix[i][j];
     }
   }
-  self->helper->attachMatrix = self->helperMatrix;
-  self->helper->attachDirty = 1;
+  self->helper->shapeBlock.matrix = self->helperMatrix;
+  self->helper->shapeBlock.dirty = 1;
   /* sv.q of the bank constant C720 = (0, 0, 0, 0). */
-  shapeDesc = (CollisionCapsule *)self->helper->shapeDesc;
+  shapeDesc = (CollisionCapsule *)self->helper->shapeBlock.desc;
   ((float *)shapeDesc->segmentHead)[0] = 0.0f;
   ((float *)shapeDesc->segmentHead)[1] = 0.0f;
   ((float *)shapeDesc->segmentHead)[2] = 0.0f;
   ((float *)shapeDesc->segmentHead)[3] = 0.0f;
-  self->helper->byte104 = 0;
-  self->helper->attachDirty = 1;
+  self->helper->shapeBlock.installed = 0;
+  self->helper->shapeBlock.dirty = 1;
   ActorStageObjUpdateTransform(&self->base);
   return;
 }

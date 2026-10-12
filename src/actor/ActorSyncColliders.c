@@ -17,7 +17,7 @@ void ActorSyncColliders(Actor *self)
   self->mtx[13] = pos[1];
   self->mtx[14] = pos[2];
   self->mtx[15] = pos[3];
-  sphere = (CollisionSphereQuery *)((CollisionCollider *)self->bodyCollider)->shapeDesc;
+  sphere = (CollisionSphereQuery *)((CollisionCollider *)self->bodyCollider)->shapeBlock.desc;
   pos = &self->base.data->rootMatrix[12];
   sphere->center.x = pos[0];
   sphere->center.y = pos[1];
@@ -26,5 +26,5 @@ void ActorSyncColliders(Actor *self)
   sphere->center.y = sphere->center.y + sphere->radius;
   update = &sphere->vtbl[9];
   ((void (*)(void *))update->fn)((u8 *)sphere + update->delta);
-  ((CollisionCollider *)self->collider2)->attachDirty = 1;
+  ((CollisionCollider *)self->collider2)->shapeBlock.dirty = 1;
 }

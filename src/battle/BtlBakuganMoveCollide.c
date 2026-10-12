@@ -302,7 +302,7 @@ char BtlBakuganMoveCollide(BtlBakugan *self, float *delta, u32 flags)
             swept->start.y = swept->start.y + sphere->radius;
             swept->radius = sphere->radius;
             swept->start.w = sphere->radius * sphere->radius;
-            if (CollisionRaycast(self->collisionMask, swept->shapeBlock, 1) != NULL) {
+            if (CollisionRaycast(self->collisionMask, &swept->shapeBlock, 1) != NULL) {
                 bestT = g_collisionHitInfo.bestT;
                 MoveCollideCopy(stepNormal, hitNormal);
                 MoveCollideCopy(segment->start, sweptStart);
@@ -371,7 +371,7 @@ char BtlBakuganMoveCollide(BtlBakugan *self, float *delta, u32 flags)
         swept->dir.y = value;
         swept->dir.z = 0.0f;
         swept->dir.w = 0.0f;
-        if (CollisionRaycast(self->collisionMask, swept->shapeBlock, 4) != NULL &&
+        if (CollisionRaycast(self->collisionMask, &swept->shapeBlock, 4) != NULL &&
             pos[1] + swept->radius * 1.20000005f < g_collisionHitResult.point.y) {
             MoveCollideAdd(probeTop, sweptStart, sweptDir);
             MoveCollideSub(push, probeTop, hitPoint);
@@ -432,7 +432,7 @@ char BtlBakuganMoveCollide(BtlBakugan *self, float *delta, u32 flags)
         swept->dir.w = 0.0f;
         swept->radius = self->radius;
         swept->start.w = self->radius * self->radius;
-        floor = CollisionRaycast(self->collisionMask, swept->shapeBlock, 2);
+        floor = CollisionRaycast(self->collisionMask, &swept->shapeBlock, 2);
         self->contactObj = floor;
         if (floor == NULL) {
             pos[1] = pos[1] + delta[1];
@@ -528,7 +528,7 @@ char BtlBakuganMoveCollide(BtlBakugan *self, float *delta, u32 flags)
             value = sphere->radius * 0.5f;
             swept->radius = value;
             swept->start.w = value * value;
-            if (CollisionRaycast(self->collisionMask, swept->shapeBlock, 0) != NULL) {
+            if (CollisionRaycast(self->collisionMask, &swept->shapeBlock, 0) != NULL) {
                 MoveCollideCopy(pos, startPos);
                 self->stateFlags = self->stateFlags & 0xbfffffffu;
                 result = 1;

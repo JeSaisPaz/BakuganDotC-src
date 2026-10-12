@@ -79,7 +79,7 @@ void ActorStageObjBreakPieceCraneCollapse(ActorStageObjBreakPiece *self)
     g_collisionSweptSphereDesc.dir.z = nodePos.z;
     g_collisionSweptSphereDesc.radius = 10.0f;
     g_collisionSweptSphereDesc.start.w = 10.0f * 10.0f;
-    if (CollisionRaycast(0x31bf337e, g_collisionSweptSphereDesc.shapeBlock, 2) != NULL) {
+    if (CollisionRaycast(0x31bf337e, &g_collisionSweptSphereDesc.shapeBlock, 2) != NULL) {
       GfxEffectSpawnWithOwner(g_btlUnitEffectMgr, 9, head, self);
       if (SndHasListener()) {
         SndEmitterCreateAtPos(SndGetListener(), 0x20000d, head, 0, 1);

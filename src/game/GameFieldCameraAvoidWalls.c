@@ -63,7 +63,7 @@ void GameFieldCameraAvoidWalls(GameFieldCamera *cam)
     moved = 0;
     dist = 1.0f;
 
-    if (CollisionRaycast(0x37bf0700, desc->shapeBlock, 1) != NULL) {
+    if (CollisionRaycast(0x37bf0700, &desc->shapeBlock, 1) != NULL) {
         /* hit = dir * bestT; dir = normalize(dir) * 4; hit += dir; dist = |hit| */
         t = g_collisionHitInfo.bestT;
         hit.x = desc->dir.x * t;
@@ -130,7 +130,7 @@ void GameFieldCameraAvoidWalls(GameFieldCamera *cam)
             desc->dir.w = 0.0f;
             dist = g_gameFieldCameraDefaultDistance;
 
-            if (CollisionRaycast(0x37bf0700, desc->shapeBlock, 1) != NULL) {
+            if (CollisionRaycast(0x37bf0700, &desc->shapeBlock, 1) != NULL) {
                 t = g_collisionHitInfo.bestT;
                 hit2.x = desc->dir.x * t;
                 hit2.y = desc->dir.y * t;

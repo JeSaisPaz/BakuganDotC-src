@@ -25,7 +25,7 @@ s32 GameGimmickIrSensorHitsPlayer(GameGimmickIrSensor *obj)
   }
   if (player != (Actor *)0) {
     GameGimmickIrSensorShape *shape =
-        (GameGimmickIrSensorShape *)((CollisionCollider *)player->bodyCollider)->shapeDesc;
+        (GameGimmickIrSensorShape *)((CollisionCollider *)player->bodyCollider)->shapeBlock.desc;
     const VtblEntry *test = &shape->vtbl[2];
 
     if (((s32 (*)(void *, void *, void *))test->fn)((u8 *)shape + test->delta, &obj->shapeType, scratch)) {

@@ -113,7 +113,7 @@ void ActorStageObjEggCrystalBreak(ActorStageObjEggCrystal *self)
         unit->collider0->flags |= 1;
         unit->collider0->flags |= 0x40;
         unit->collider0->flags |= 4;
-        unit->collider0->attachDirty = 1;
+        unit->collider0->shapeBlock.dirty = 1;
       }
       if (unit->collider1 != NULL) {
         unit->collider1->flags |= 1;
@@ -121,7 +121,7 @@ void ActorStageObjEggCrystalBreak(ActorStageObjEggCrystal *self)
         unit->collider1->flags |= 0x40;
         unit->collider1->flags |= 4;
         /* sphere centre (and the radius² slot) = model translation, centre Y raised by the radius */
-        sphere = (CollisionSphere *)unit->collider1->shapeDesc;
+        sphere = (CollisionSphere *)unit->collider1->shapeBlock.desc;
         sphere->center[0] = self->base.base.data->rootMatrix[12];
         sphere->center[1] = self->base.base.data->rootMatrix[13];
         sphere->center[2] = self->base.base.data->rootMatrix[14];

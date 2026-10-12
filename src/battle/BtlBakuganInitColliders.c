@@ -71,10 +71,10 @@ void BtlBakuganInitColliders(BtlBakugan *self)
                                               self->bodyShape.axis[1] * self->bodyShape.axis[1] +
                                               self->bodyShape.axis[2] * self->bodyShape.axis[2]);
     CollisionColliderInit(&self->collider0->node, (const u32 *)&self->bodyShape, 0, self, 0);
-    self->collider0->byte104 = 0;
+    self->collider0->shapeBlock.installed = 0;
     collider = self->collider0;
-    collider->attachMatrix = self->anchorMatrix;
-    collider->attachDirty = 1;
+    collider->shapeBlock.matrix = self->anchorMatrix;
+    collider->shapeBlock.dirty = 1;
 
     MemLock();
     fromLow = MemIsAllocFromLow();
@@ -97,8 +97,8 @@ void BtlBakuganInitColliders(BtlBakugan *self)
     self->pushShape.radius = r;
     self->pushShape.center.w = r * r;
     CollisionColliderInit(&self->collider1->node, (const u32 *)&self->pushShape, 0, self, 0);
-    self->collider1->byte104 = 0;
-    sphere = (CollisionSphereQuery *)self->collider1->shapeDesc;
+    self->collider1->shapeBlock.installed = 0;
+    sphere = (CollisionSphereQuery *)self->collider1->shapeBlock.desc;
     root = self->base.data->rootMatrix;
     /* sphere center = root matrix row 3 (lv.q/sv.q quad copy) */
     sphere->center.x = root[12];

@@ -219,7 +219,7 @@ float CollisionPhysBoxStep(CollisionPhysBox *self)
             g_collisionSweptSphereDesc.radius = self->radius;
             g_collisionSweptSphereDesc.start = movePos;
             g_collisionSweptSphereDesc.dir = delta;
-            if (CollisionRaycast(0x3fbf2700, g_collisionSweptSphereDesc.shapeBlock, 0) != NULL) {
+            if (CollisionRaycast(0x3fbf2700, &g_collisionSweptSphereDesc.shapeBlock, 0) != NULL) {
                 float cosv;
                 float k;
                 const VtblEntry *e;

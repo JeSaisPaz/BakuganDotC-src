@@ -22,14 +22,14 @@ s32 SndSsKeyOnToneVoice(u32 bankId, u32 voice, u32 tone, u32 channel, u32 note, 
     return (s32)0x80450011;
   }
   ret = SndSsBuildKeyOnParams(bankId, tone, (u8)channel, note, pitch, flags, handle,
-                              (const s32 *)volPan, (u32 *)&params);
+                              (const s32 *)volPan, &params);
   if (ret != 0) {
     return ret;
   }
   pauseMask = SndSasGetPauseFlag();
-  if (params.keyGroup != 0) {
+  if (params.tone.keyGroup != 0) {
     v = 0;
-    groupMask = SndSsVoiceMaskByKeyGroup(params.keyGroup);
+    groupMask = SndSsVoiceMaskByKeyGroup(params.tone.keyGroup);
     pauseBits = pauseMask;
     if (0 < (u32)g_sndSsMaxVoices) {
       do {

@@ -19,7 +19,7 @@ u32 SndSsVoiceMaskByKeyGroup(s32 group)
             voice = g_sndSsVoices;
             do {
                 i++;
-                if ((voice->state == 3 || voice->state == 7) && voice->keyGroup == group) {
+                if ((voice->state == 3 || voice->state == 7) && voice->params.tone.keyGroup == group) {
                     mask |= bit;
                 }
                 bit <<= 1;

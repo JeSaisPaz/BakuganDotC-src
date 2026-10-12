@@ -20,14 +20,14 @@ s32 SndSsKeyOnTone(u32 bankId, u32 tone, u32 channel, u32 note, s32 pitch, u32 f
   s32 ret;
 
   ret = SndSsBuildKeyOnParams(bankId, tone, (u8)channel, note, pitch, flags, handle,
-                              (const s32 *)volPan, (u32 *)&params);
+                              (const s32 *)volPan, &params);
   if (ret != 0) {
     return ret;
   }
   pauseMask = SndSasGetPauseFlag();
-  if (params.keyGroup != 0) {
+  if (params.tone.keyGroup != 0) {
     voice = 0;
-    groupMask = SndSsVoiceMaskByKeyGroup(params.keyGroup);
+    groupMask = SndSsVoiceMaskByKeyGroup(params.tone.keyGroup);
     pauseBits = pauseMask;
     if (0 < g_sndSsMaxVoices) {
       do {
@@ -45,7 +45,7 @@ s32 SndSsKeyOnTone(u32 bankId, u32 tone, u32 channel, u32 note, s32 pitch, u32 f
       } while (voice < g_sndSsMaxVoices);
     }
   }
-  voice = SndSsVoiceAlloc(params.priority);
+  voice = SndSsVoiceAlloc(params.tone.priority);
   if (voice < 0) {
     return (s32)0x80450010;
   }

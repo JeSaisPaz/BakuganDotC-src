@@ -23,7 +23,7 @@ void *CollisionRaycast(u32 layerMask, void *query, s32 flags)
   CollisionSetFaceFilter(flags);
   while (cur != (CollisionCollider *)0) {
     if ((cur->flags & 6) == 0 && ((1 << (cur->layer & 0x1f)) & layerMask) != 0) {
-      if (CollisionTestShape(query, cur->shapeBlock, scratch, layerMask) != 0) {
+      if (CollisionTestShape(query, &cur->shapeBlock, scratch, layerMask) != 0) {
         hit = cur;
       }
     }

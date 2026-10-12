@@ -83,7 +83,7 @@ void GfxEffectHitTest(float radius, float length, GfxEffect *effect, s32 param4,
     /* dir.w = |dir.xyz| */
     desc->dir.w = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y +
                                   desc->dir.z * desc->dir.z);
-    block = (CollisionShapeBlock *)desc->shapeBlock;
+    block = &desc->shapeBlock;
     query->shape = block;
     desc = (CollisionSweptSphereDesc *)block->shape;
     desc->start.x = effect->pos[0];

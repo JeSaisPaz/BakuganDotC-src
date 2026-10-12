@@ -34,7 +34,7 @@ void CollisionQueryShapesStaticInit(void)
   g_collisionSweptSphereDesc.subVtbl = g_collisionSegmentVtbl;
   g_collisionSweptSphereDesc.subType = 2;
   g_collisionSweptSphereDesc.type = 4;
-  CollisionShapeBlockInit(g_collisionSweptSphereDesc.shapeBlock);
+  CollisionShapeBlockInit(&g_collisionSweptSphereDesc.shapeBlock);
   CxxRegisterGlobalObject(&g_collisionQueryBlockRecords[6]);
   CollisionShapeBlockInit(&g_collisionSweptSphereBlock2);
   CxxRegisterGlobalObject(&g_collisionQueryBlockRecords[7]);

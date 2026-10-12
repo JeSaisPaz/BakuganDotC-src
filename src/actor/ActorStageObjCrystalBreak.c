@@ -114,7 +114,7 @@ void ActorStageObjCrystalBreak(ActorStageObjCrystal *self)
         collider->flags = collider->flags | 0x40;
         collider = ((BtlBakugan *)self->unit)->collider0;
         collider->flags = collider->flags | 4;
-        ((BtlBakugan *)self->unit)->collider0->attachDirty = 1;
+        ((BtlBakugan *)self->unit)->collider0->shapeBlock.dirty = 1;
       }
       if (((BtlBakugan *)self->unit)->collider1 != NULL) {
         collider = ((BtlBakugan *)self->unit)->collider1;
@@ -124,7 +124,7 @@ void ActorStageObjCrystalBreak(ActorStageObjCrystal *self)
         collider->flags = collider->flags | 0x40;
         collider = ((BtlBakugan *)self->unit)->collider1;
         collider->flags = collider->flags | 4;
-        sphere = (CollisionSphere *)((BtlBakugan *)self->unit)->collider1->shapeDesc;
+        sphere = (CollisionSphere *)((BtlBakugan *)self->unit)->collider1->shapeBlock.desc;
         /* centre + radiusSq <- model translation (one quad copy) */
         for (i = 0; i < 3; i++) {
           sphere->center[i] = self->base.base.data->rootMatrix[12 + i];

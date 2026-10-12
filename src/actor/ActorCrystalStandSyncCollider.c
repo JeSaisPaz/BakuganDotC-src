@@ -8,6 +8,6 @@ void ActorCrystalStandSyncCollider(ActorCrystalStand *stand)
 {
   CollisionCollider *collider = stand->collider;
 
-  collider->attachMatrix = (Mat4Row *)stand->base.data->rootMatrix;
-  collider->attachDirty = 1;
+  collider->shapeBlock.matrix = (Mat4Row *)stand->base.data->rootMatrix;
+  collider->shapeBlock.dirty = 1;
 }

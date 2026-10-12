@@ -59,13 +59,13 @@ CoreObject *GameGimmickCameraCtor(GameGimmickCamera *obj, s32 kind, void *record
   mesh = CorePackChainFind(g_ioLzsPackages, (char *)g_gameGimmickCameraColName);
   CollisionColliderInitMesh((CoreNode *)collider, mesh, 9, obj, 0);
 
-  ((CollisionCollider *)obj->base.attached)->byte104 = 0;
+  ((CollisionCollider *)obj->base.attached)->shapeBlock.installed = 0;
   ((CollisionCollider *)obj->base.attached)->hitField144 = 0;
   ((CollisionCollider *)obj->base.attached)->owner = obj;
   model = obj->base.base.data;
   collider = (CollisionCollider *)obj->base.attached;
-  collider->attachMatrix = (float (*)[4])model->rootMatrix;
-  collider->attachDirty = 1;
+  collider->shapeBlock.matrix = (float (*)[4])model->rootMatrix;
+  collider->shapeBlock.dirty = 1;
   if (GmoMotionMgrExists()) {
     GfxModelEnableMotion(&obj->base.base);
   }

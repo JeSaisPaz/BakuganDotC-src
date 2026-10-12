@@ -54,8 +54,8 @@ CoreObject *GameGimmickTouchSpotCtor(GameGimmickTouchSpot *obj, s32 kind, void *
   obj->shapePos.w = radius * radius;
   CollisionColliderInit((CoreNode *)obj->base.attached, (const u32 *)&obj->shapeType, 9, obj, 0);
 
-  ((CollisionCollider *)obj->base.attached)->byte104 = 0;
-  sphere = (CollisionSphere *)((CollisionCollider *)obj->base.attached)->shapeDesc;
+  ((CollisionCollider *)obj->base.attached)->shapeBlock.installed = 0;
+  sphere = (CollisionSphere *)((CollisionCollider *)obj->base.attached)->shapeBlock.desc;
   /* sphere centre and radius² slot = model root translation (x, y, z, w) */
   root = &obj->base.base.data->rootMatrix[12];
   sphere->center[0] = root[0];

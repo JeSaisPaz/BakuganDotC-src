@@ -44,10 +44,10 @@ BtlBakugan *BtlTargetPointCtor(float offsetY, float radius, BtlBakugan *unit, fl
             }
         }
         if (unit->collider0 != NULL) {
-            unit->collider0->attachDirty = 1;
+            unit->collider0->shapeBlock.dirty = 1;
         }
         if (unit->collider1 != NULL) {
-            unit->collider1->attachDirty = 1;
+            unit->collider1->shapeBlock.dirty = 1;
         }
     }
     unit->targetPointVariant = 2;

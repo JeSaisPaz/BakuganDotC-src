@@ -74,7 +74,7 @@ int BtlBakuganMotionHitCheck(BtlBakugan *self, void *ev)
     desc->dir.w = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y +
                                   desc->dir.z * desc->dir.z);
 
-    query->shape = desc->shapeBlock;
+    query->shape = &desc->shapeBlock;
     query->ownerCollider = self->collider0;
     query->owner = self;
     query->heading = self->base.rot[1];

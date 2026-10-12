@@ -9,11 +9,11 @@ void SndSsVoiceGetToneInfo(s32 voice, u32 *bendUp, u32 *bendDown, u32 *note, s32
 {
   SndSsVoice *v = &g_sndSsVoices[voice];
 
-  *bendUp = v->bendUp;
-  *bendDown = v->bendDown;
-  *note = v->note;
-  *centerNote = v->centerNote;
-  *centerNoteU = v->centerNoteU;
-  *fine = v->fine;
-  *sampleRate = v->sampleRate;
+  *bendUp = v->params.tone.bendUp;
+  *bendDown = v->params.tone.bendDown;
+  *note = v->params.note;
+  *centerNote = v->params.tone.fineTune;
+  *centerNoteU = v->params.tone.centerNote;
+  *fine = v->params.tone.centerFine;
+  *sampleRate = v->params.tone.sampleRate;
 }

@@ -74,9 +74,9 @@ void BtlBakuganUpdateBoneAnchors(BtlBakugan *self)
         self->anchorMatrix[3][2] = self->anchorMatrix[3][2] + moved[2];
     }
     body = self->collider0;
-    body->attachDirty = 1;
+    body->shapeBlock.dirty = 1;
     push = self->collider1;
-    sphere = push->shapeDesc;
+    sphere = push->shapeBlock.desc;
     root = self->base.data->rootMatrix;
     /* sphere center = root matrix row 3 (lv.q/sv.q quad copy) */
     sphere->center.x = root[12];

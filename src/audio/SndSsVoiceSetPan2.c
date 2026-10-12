@@ -16,6 +16,6 @@ s32 SndSsVoiceSetPan2(u32 voice, u32 pan)
   if (pan >= 0x80) {
     return (s32)0x8045000a;
   }
-  g_sndSsVoices[voice].pan2 = (u8)pan;
+  g_sndSsVoices[voice].params.pan2 = (u8)pan;
   return 0;
 }

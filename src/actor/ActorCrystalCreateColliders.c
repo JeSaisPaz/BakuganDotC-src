@@ -57,10 +57,10 @@ void ActorCrystalCreateColliders(ActorCrystal *self)
                             self->base.bodyShape.axis[2] * self->base.bodyShape.axis[2]);
   self->base.bodyShape.axisLen = axisLen;
   CollisionColliderInit(&self->base.collider0->node, (const u32 *)&self->base.bodyShape, 0, self, 0);
-  self->base.collider0->byte104 = 0;
+  self->base.collider0->shapeBlock.installed = 0;
   collider = self->base.collider0;
-  collider->attachMatrix = self->base.anchorMatrix;
-  collider->attachDirty = 1;
+  collider->shapeBlock.matrix = self->base.anchorMatrix;
+  collider->shapeBlock.dirty = 1;
 
   MemLock();
   fromLow = MemIsAllocFromLow();
@@ -90,16 +90,16 @@ void ActorCrystalCreateColliders(ActorCrystal *self)
                             self->pushShape.axis[2] * self->pushShape.axis[2]);
   self->pushShape.axisLen = axisLen;
   CollisionColliderInit(&collider->node, (const u32 *)&self->pushShape, 0, self, 0);
-  self->base.collider1->byte104 = 0;
+  self->base.collider1->shapeBlock.installed = 0;
   /* bank constant C720 = (0, 0, 0, 0) */
-  desc = (CollisionCapsule *)self->base.collider1->shapeDesc;
+  desc = (CollisionCapsule *)self->base.collider1->shapeBlock.desc;
   ((float *)desc->segmentHead)[0] = 0.0f;
   ((float *)desc->segmentHead)[1] = 0.0f;
   ((float *)desc->segmentHead)[2] = 0.0f;
   ((float *)desc->segmentHead)[3] = 0.0f;
   collider = self->base.collider1;
-  collider->attachMatrix = self->base.anchorMatrix;
-  collider->attachDirty = 1;
+  collider->shapeBlock.matrix = self->base.anchorMatrix;
+  collider->shapeBlock.dirty = 1;
   collider = self->base.collider1;
   collider->flags = collider->flags | 1;
   collider->hitTimer = 0;

@@ -256,7 +256,7 @@ track:
                     }
                 }
                 __builtin_memcpy(hit, self->pos, sizeof hit);
-                if (CollisionTestShape(desc->shapeBlock, unit->collider0->shapeBlock, hit,
+                if (CollisionTestShape(&desc->shapeBlock, &unit->collider0->shapeBlock, hit,
                                        0xffffffff) != 0) {
                     dx = self->pos[0] - hit[0];
                     dy = self->pos[1] - hit[1];
@@ -295,11 +295,11 @@ track:
                 mask = 3;
             }
             collider = (CollisionCollider *)g_btlAttackHitCollider;
-            if (collider->attachMatrix != NULL) {
+            if (collider->shapeBlock.matrix != NULL) {
                 unit = (BtlBakugan *)((CollisionCollider *)g_btlAttackHitCollider)->owner;
                 if ((self->param1 & mask) == 0) {
                     __builtin_memcpy(offset, self->pos, sizeof offset);
-                    anchor = ((CollisionCollider *)g_btlAttackHitCollider)->attachMatrix[3];
+                    anchor = ((CollisionCollider *)g_btlAttackHitCollider)->shapeBlock.matrix[3];
                     entry = &((const VtblEntry *)unit->base.base.vtable)[11];
                     if (((int (*)(void *))entry->fn)((u8 *)unit + entry->delta) != 0 ||
                         (entry = &((const VtblEntry *)unit->base.base.vtable)[19],

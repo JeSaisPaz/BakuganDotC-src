@@ -83,7 +83,7 @@ char CollisionHitQuery(u32 layerMask, float *query, char soft, void *exclude)
     if ((col->flags & 0x200) != 0 && q->attackId == 22) {
       goto next;
     }
-    if (CollisionTestShape(q->shape, col->shapeBlock, &contact.x, layerMask) == 0) {
+    if (CollisionTestShape(q->shape, &col->shapeBlock, &contact.x, layerMask) == 0) {
       goto next;
     }
 

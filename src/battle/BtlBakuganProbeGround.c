@@ -47,7 +47,7 @@ void BtlBakuganProbeGround(BtlBakugan *self)
         g_collisionSweptSphereDesc.dir.x * g_collisionSweptSphereDesc.dir.x +
         g_collisionSweptSphereDesc.dir.y * g_collisionSweptSphereDesc.dir.y +
         g_collisionSweptSphereDesc.dir.z * g_collisionSweptSphereDesc.dir.z);
-    hit = CollisionRaycast(0x3fbf2700, g_collisionSweptSphereDesc.shapeBlock, 0);
+    hit = CollisionRaycast(0x3fbf2700, &g_collisionSweptSphereDesc.shapeBlock, 0);
     if (hit != (void *)0) {
       self->groundPoint[0] = pos[0];
       self->groundPoint[1] = pos[1];

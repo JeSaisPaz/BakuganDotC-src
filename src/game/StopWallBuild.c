@@ -53,8 +53,8 @@ void StopWallBuild(StopWall *self, s32 id)
     }
     self->collider = collider;
     CollisionColliderInit((CoreNode *)collider, (const u32 *)self->shape, 8, NULL, 0);
-    ((CollisionCollider *)self->collider)->byte104 = 0;
+    ((CollisionCollider *)self->collider)->shapeBlock.installed = 0;
     ((CollisionCollider *)self->collider)->flags |= 1;
-    ((CollisionCollider *)self->collider)->attachDirty = 1;
+    ((CollisionCollider *)self->collider)->shapeBlock.dirty = 1;
   }
 }

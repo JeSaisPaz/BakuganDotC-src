@@ -299,7 +299,7 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
         g_collisionSweptSphereDesc.dir.y * g_collisionSweptSphereDesc.dir.y +
         g_collisionSweptSphereDesc.dir.z * g_collisionSweptSphereDesc.dir.z);
     hitDist = dist2;
-    if (CollisionRaycast(mask, g_collisionSweptSphereDesc.shapeBlock, 0) != NULL) {
+    if (CollisionRaycast(mask, &g_collisionSweptSphereDesc.shapeBlock, 0) != NULL) {
       hitDist = ThrowAimDistSq(&g_collisionHitResult.point.x, origin);
     }
     if (!(dist2 <= hitDist)) {

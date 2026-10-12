@@ -39,12 +39,12 @@ int CollisionTestPair(u32 layerMask, void *other, float *query, char exact)
   }
   if (exact == 0) {
     owner = (CollisionCollider *)q->ownerCollider;
-    ownerBlock = (CollisionShapeBlock *)owner->shapeBlock;
-    if (CollisionTestShape(ownerBlock, col->shapeBlock, &contact.x, layerMask) == 0) {
+    ownerBlock = &owner->shapeBlock;
+    if (CollisionTestShape(ownerBlock, &col->shapeBlock, &contact.x, layerMask) == 0) {
       center = CollisionTestPairShapeCenter((CollisionShapeBlock *)ownerBlock->shape);
       ownerCenter = *center;
       center = CollisionTestPairShapeCenter(
-          (CollisionShapeBlock *)((CollisionShapeBlock *)col->shapeBlock)->shape);
+          (CollisionShapeBlock *)col->shapeBlock.shape);
       otherCenter = *center;
       /* mid = ownerCenter + (otherCenter - ownerCenter) * 0.9f, staged through `mid` */
       mid.x = ownerCenter.x + (otherCenter.x - ownerCenter.x) * 0.9f;
@@ -58,7 +58,7 @@ int CollisionTestPair(u32 layerMask, void *other, float *query, char exact)
     if ((col->flags & 0x13) != 0) {
       return 0;
     }
-    if (CollisionTestShape(q->shape, col->shapeBlock, &contact.x, layerMask) == 0) {
+    if (CollisionTestShape(q->shape, &col->shapeBlock, &contact.x, layerMask) == 0) {
       return 0;
     }
   }

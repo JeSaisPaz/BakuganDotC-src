@@ -15,7 +15,7 @@ s32 SndSsVoiceListFindSteal(u8 **list, u32 count, u32 priority)
   minHeight = 0xffffffff;
   for (i = 0; i < count; i++) {
     SndSsVoice *v = (SndSsVoice *)list[i];
-    if ((u32)v->priority <= priority) {
+    if ((u32)v->params.tone.priority <= priority) {
       cand[n++] = v;
       if (v->field04 < minHeight) {
         minHeight = v->field04;

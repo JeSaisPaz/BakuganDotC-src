@@ -13,7 +13,7 @@ void CollisionColliderInit(CoreNode *collider_, const u32 *shape, u32 layer, voi
 {
   CollisionCollider *collider = (CollisionCollider *)collider_;
 
-  CollisionShapeSetup((u32 *)collider->shapeBlock, (u32 *)shape);
+  CollisionShapeSetup((u32 *)&collider->shapeBlock, (u32 *)shape);
   CollisionColliderClearHit(collider);
   collider->layer = layer;
   collider->owner = owner;

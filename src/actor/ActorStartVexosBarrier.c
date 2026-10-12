@@ -50,15 +50,15 @@ void ActorStartVexosBarrier(Actor *self)
     CollisionColliderInitMesh(&collider->node,mesh,9,self,0);
     collider = (CollisionCollider *)crystal->auxObject;
     collider->flags = collider->flags | 1;
-    ((CollisionCollider *)crystal->auxObject)->byte104 = 0;
+    ((CollisionCollider *)crystal->auxObject)->shapeBlock.installed = 0;
     ((CollisionCollider *)crystal->auxObject)->hitField144 = 1;
     ((CollisionCollider *)crystal->auxObject)->owner = self;
     collider = (CollisionCollider *)crystal->auxObject;
     collider->hitTimer = -1;
     collider->flags = collider->flags | 1;
     collider = (CollisionCollider *)crystal->auxObject;
-    collider->attachMatrix = crystal->facingMatrix;
-    collider->attachDirty = 1;
+    collider->shapeBlock.matrix = crystal->facingMatrix;
+    collider->shapeBlock.dirty = 1;
     ActorCrystalUpdateMatrices(crystal);
     crystal->base.collider0->hitTimer = 0;
     crystal->base.collider0->flags = crystal->base.collider0->flags | 1;

@@ -12,10 +12,10 @@ void CollisionColliderInitMesh(CoreNode *collider_, void *mesh, u32 layer, void 
   CollisionCollider *collider = (CollisionCollider *)collider_;
 
   if (layer == 8) {
-    CollisionShapeSetMesh(collider->shapeBlock, mesh, false);
+    CollisionShapeSetMesh(&collider->shapeBlock, mesh, false);
   }
   else {
-    CollisionShapeSetMesh(collider->shapeBlock, mesh, true);
+    CollisionShapeSetMesh(&collider->shapeBlock, mesh, true);
   }
   CollisionColliderClearHit(collider);
   collider->layer = layer;

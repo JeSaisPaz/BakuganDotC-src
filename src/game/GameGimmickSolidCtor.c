@@ -61,13 +61,13 @@ CoreObject *GameGimmickSolidCtor(GameGimmick *obj, s32 kind, void *record, u16 t
   mesh = CorePackChainFind(g_ioLzsPackages, name);
   CollisionColliderInitMesh((CoreNode *)collider, mesh, 9, obj, 0);
 
-  ((CollisionCollider *)obj->attached)->byte104 = 0;
+  ((CollisionCollider *)obj->attached)->shapeBlock.installed = 0;
   ((CollisionCollider *)obj->attached)->hitField144 = 0;
   ((CollisionCollider *)obj->attached)->flags &= ~2u;
   ((CollisionCollider *)obj->attached)->owner = obj;
   model = obj->base.data;
   collider = (CollisionCollider *)obj->attached;
-  collider->attachMatrix = (float (*)[4])model->rootMatrix;
-  collider->attachDirty = 1;
+  collider->shapeBlock.matrix = (float (*)[4])model->rootMatrix;
+  collider->shapeBlock.dirty = 1;
   return &obj->base.base;
 }

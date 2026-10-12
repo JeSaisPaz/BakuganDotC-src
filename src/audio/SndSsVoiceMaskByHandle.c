@@ -21,7 +21,7 @@ u32 SndSsVoiceMaskByHandle(s32 handle)
     i = 0;
     do {
       i++;
-      if (((s8)voice->state == 3 || (s8)voice->state == 7) && voice->handle == handle) {
+      if (((s8)voice->state == 3 || (s8)voice->state == 7) && voice->params.handle == handle) {
         mask |= bit;
       }
       bit <<= 1;

@@ -26,7 +26,7 @@ s32 SndSsVoiceInit(u32 numVoices)
       voice = g_sndSsVoices;
       do {
         voice->state = 5;
-        voice->field18 = 0;
+        voice->params.sustain = 0;
         voice->field04 = 0;
         SndSsVoiceReset(voice);
         voice->sasVoice = (u8)i;

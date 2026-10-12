@@ -25,27 +25,30 @@ void SndSsVoiceUpdateParams(void)
         if (v->state == 0) {
             continue;
         }
-        if (v->volL != v->volume || v->panL != v->pan || v->volR != v->volume2 ||
-            v->panR != v->pan2) {
-            SndSsPanToVolumes(v->field34, v->volume, v->field38, v->pan, &left, &right);
-            SndSsPanToVolumes(v->field3c, v->volume2, v->field40, v->pan2, &effectLeft,
-                              &effectRight);
+        if (v->volL != v->params.volume || v->panL != v->params.pan ||
+            v->volR != v->params.volume2 || v->panR != v->params.pan2) {
+            SndSsPanToVolumes(v->params.tone.volume, v->params.volume, v->params.tone.pan,
+                              v->params.pan, &left, &right);
+            SndSsPanToVolumes(v->params.tone.volume2, v->params.volume2, v->params.tone.pan2,
+                              v->params.pan2, &effectLeft, &effectRight);
             SndSasSetVolume(i, left, right, effectLeft, effectRight);
             SndSsStoreVoiceVolumes(i, left, right, effectLeft, effectRight);
-            v->volL = v->volume;
-            v->panL = v->pan;
-            v->volR = v->volume2;
-            v->panR = v->pan2;
+            v->volL = v->params.volume;
+            v->panL = v->params.pan;
+            v->volR = v->params.volume2;
+            v->panR = v->params.pan2;
         }
-        if (v->field0c != v->field64) {
-            if (v->note == 0xff) {
-                base = v->pitch;
+        if (v->field0c != v->params.pitchOffset) {
+            if (v->params.note == 0xff) {
+                base = v->params.tone.pitch;
             } else {
-                u16 factor = SndSsNoteToPitch(v->centerNoteU, (s16)((v->fine * 127) / 100),
-                                              v->note, (s16)((v->centerNote * 127) / 100));
-                base = (v->sampleRate * factor) / 44100;
+                u16 factor = SndSsNoteToPitch(v->params.tone.centerNote,
+                                              (s16)((v->params.tone.centerFine * 127) / 100),
+                                              v->params.note,
+                                              (s16)((v->params.tone.fineTune * 127) / 100));
+                base = (v->params.tone.sampleRate * factor) / 44100;
             }
-            pitch = (s32)(base + v->field64);
+            pitch = (s32)(base + v->params.pitchOffset);
             if (pitch > 0x4000) {
                 pitch = 0x4000;
             }
@@ -53,7 +56,7 @@ void SndSsVoiceUpdateParams(void)
                 pitch = 1;
             }
             SndSasSetPitch(v->sasVoice, pitch);
-            v->field0c = v->field64;
+            v->field0c = v->params.pitchOffset;
         }
     }
 }

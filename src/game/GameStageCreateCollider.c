@@ -24,9 +24,9 @@ CoreNode *GameStageCreateCollider(char *name)
     }
     mesh = CorePackChainFind(g_ioLzsPackages, name);
     CollisionColliderInitMesh((CoreNode *)collider, mesh, 8, NULL, 0);
-    collider->byte104 = 0;
+    collider->shapeBlock.installed = 0;
     collider->flags |= 1;
-    collider->attachMatrix = (float (*)[4])g_gameStageColliderCallbacks;
-    collider->attachDirty = 1;
+    collider->shapeBlock.matrix = (float (*)[4])g_gameStageColliderCallbacks;
+    collider->shapeBlock.dirty = 1;
     return (CoreNode *)collider;
 }

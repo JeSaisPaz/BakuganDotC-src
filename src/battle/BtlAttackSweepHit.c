@@ -58,7 +58,7 @@ u32 BtlAttackSweepHit(float radius, BtlAttack *self, float *from, float *to, s32
     len = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y +
                           desc->dir.z * desc->dir.z);
     desc->dir.w = len;
-    g_btlAttackHitShape = desc->shapeBlock;
+    g_btlAttackHitShape = &desc->shapeBlock;
     g_btlAttackHitOwner = self->owner;
     g_btlAttackHitHeading = atan2f(to[2], to[0]);
     g_btlAttackHitKind = hitKind;
@@ -86,7 +86,7 @@ u32 BtlAttackSweepHit(float radius, BtlAttack *self, float *from, float *to, s32
         return hit;
     }
 
-    if (CollisionRaycast(0x2fb72700, desc->shapeBlock, 0) != NULL) {
+    if (CollisionRaycast(0x2fb72700, &desc->shapeBlock, 0) != NULL) {
         hit = 1;
         /* hit point = contact point (whole vector) */
         g_btlAttackHitPoint = g_collisionHitResult.point;

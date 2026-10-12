@@ -42,12 +42,12 @@ CoreObject *GameGimmickSteamCtor(GameGimmickSteam *obj, s32 kind, void *record, 
   mesh = CorePackChainFind(g_ioLzsPackages, "Steam_Wall.ctc");
   CollisionColliderInitMesh((CoreNode *)collider, mesh, 9, obj, 0);
 
-  ((CollisionCollider *)obj->base.attached)->byte104 = 0;
+  ((CollisionCollider *)obj->base.attached)->shapeBlock.installed = 0;
   ((CollisionCollider *)obj->base.attached)->hitField144 = 0;
   ((CollisionCollider *)obj->base.attached)->owner = obj;
   collider = (CollisionCollider *)obj->base.attached;
-  collider->attachMatrix = (float (*)[4])obj->base.base.data->rootMatrix;
-  collider->attachDirty = 1;
+  collider->shapeBlock.matrix = (float (*)[4])obj->base.base.data->rootMatrix;
+  collider->shapeBlock.dirty = 1;
   ((CollisionCollider *)obj->base.attached)->flags |= 4;
   obj->venting = 0;
   return (CoreObject *)obj;

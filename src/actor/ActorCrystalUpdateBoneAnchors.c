@@ -31,16 +31,16 @@ void ActorCrystalUpdateBoneAnchors(ActorCrystal *self)
         }
     }
     if (self->base.collider0 != NULL) {
-        self->base.collider0->attachDirty = 1;
+        self->base.collider0->shapeBlock.dirty = 1;
     }
     if (self->base.collider1 != NULL) {
-        self->base.collider1->attachDirty = 1;
+        self->base.collider1->shapeBlock.dirty = 1;
     }
     if (self->collider2 != NULL) {
-        ((CollisionCollider *)self->collider2)->attachDirty = 1;
+        ((CollisionCollider *)self->collider2)->shapeBlock.dirty = 1;
     }
     if (self->auxObject != NULL) {
-        ((CollisionCollider *)self->auxObject)->attachDirty = 1;
+        ((CollisionCollider *)self->auxObject)->shapeBlock.dirty = 1;
     }
     angle = 1.57079637f - self->base.base.rot[1];
     if (!(angle <= 3.14159274f)) {

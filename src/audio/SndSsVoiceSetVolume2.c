@@ -14,7 +14,7 @@ s32 SndSsVoiceSetVolume2(u32 voice, u32 volume)
     result = -0x7fbaffef;
     if ((voice < g_sndSsVoiceCount) && (result = -0x7fbafff6, volume < 0x80)) {
       result = 0;
-      g_sndSsVoices[voice].volume2 = (u8)volume;
+      g_sndSsVoices[voice].params.volume2 = (u8)volume;
     }
   }
   return result;

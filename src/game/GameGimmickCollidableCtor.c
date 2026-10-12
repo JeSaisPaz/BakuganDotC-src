@@ -103,13 +103,13 @@ CoreObject *GameGimmickCollidableCtor(GameGimmickCollidable *obj, s32 kind, void
   mesh = CorePackChainFind(g_ioLzsPackages, name);
   CollisionColliderInitMesh((CoreNode *)collider, mesh, 0x13, obj, 0);
 
-  ((CollisionCollider *)obj->base.attached)->byte104 = 0;
+  ((CollisionCollider *)obj->base.attached)->shapeBlock.installed = 0;
   ((CollisionCollider *)obj->base.attached)->hitField144 = 0;
   ((CollisionCollider *)obj->base.attached)->owner = obj;
   model = obj->base.base.data;
   collider = (CollisionCollider *)obj->base.attached;
-  collider->attachMatrix = (float (*)[4])model->rootMatrix;
-  collider->attachDirty = 1;
+  collider->shapeBlock.matrix = (float (*)[4])model->rootMatrix;
+  collider->shapeBlock.dirty = 1;
 
   MemLock();
   fromLow = MemIsAllocFromLow();
@@ -144,7 +144,7 @@ CoreObject *GameGimmickCollidableCtor(GameGimmickCollidable *obj, s32 kind, void
   e = &obj->shapeVtbl[9];
   ((void (*)(void *))e->fn)((u8 *)&obj->shapeType + e->delta);
   CollisionColliderInit(obj->hitCollider, (const u32 *)&obj->shapeType, 0xb, obj, 0);
-  ((CollisionCollider *)obj->hitCollider)->byte104 = 0;
+  ((CollisionCollider *)obj->hitCollider)->shapeBlock.installed = 0;
 
   /* center.xyz = (pos.x, pos.y + 7, pos.z); offset = 3 * (cos, 0, sin)(pi/2 - rot[1]) with x and
      z then zeroed; center.w is never written (uninitialised stack word, copied as is) */
@@ -156,7 +156,7 @@ CoreObject *GameGimmickCollidableCtor(GameGimmickCollidable *obj, s32 kind, void
   center[0] = center[0] + 0.0f;
   center[1] = center[1] + 0.0f;
   center[2] = center[2] + 0.0f;
-  sphere = (CollisionSphere *)((CollisionCollider *)obj->hitCollider)->shapeDesc;
+  sphere = (CollisionSphere *)((CollisionCollider *)obj->hitCollider)->shapeBlock.desc;
   /* sphere centre and radius² slot = center (sv.q; radiusSq gets the uninitialised lane) */
   sphere->center[0] = center[0];
   sphere->center[1] = center[1];

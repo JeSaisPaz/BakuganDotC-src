@@ -209,7 +209,7 @@ void ActorStageObjState08Update(ActorStageObjBase *self)
             self->base.data->rootMatrix[i] = mtx[i];
         }
         if (self->collider != NULL) {
-            ((CollisionCollider *)self->collider)->attachDirty = 1;
+            ((CollisionCollider *)self->collider)->shapeBlock.dirty = 1;
         }
         break;
     case 2:

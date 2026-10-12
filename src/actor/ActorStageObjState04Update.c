@@ -105,6 +105,6 @@ void ActorStageObjState04Update(ActorStageObjBase *self)
     ActorStageObjSpawnRemains(self);
   }
   if (self->collider != NULL) {
-    ((CollisionCollider *)self->collider)->attachDirty = 1;
+    ((CollisionCollider *)self->collider)->shapeBlock.dirty = 1;
   }
 }

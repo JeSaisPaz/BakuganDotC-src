@@ -112,7 +112,7 @@ void ActorSeparateFromActors(Actor *self, float *delta)
       pushedThis = 1;
     } else if (dist <= 0.001f) {
       /* origin = body sphere centre (all four words) */
-      sphere = (CollisionSphere *)((CollisionCollider *)self->bodyCollider)->shapeDesc;
+      sphere = (CollisionSphere *)((CollisionCollider *)self->bodyCollider)->shapeBlock.desc;
       origin[0] = sphere->center[0];
       origin[1] = sphere->center[1];
       origin[2] = sphere->center[2];
