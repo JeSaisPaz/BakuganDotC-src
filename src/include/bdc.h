@@ -20582,7 +20582,7 @@ extern __typeof__(u32) g_gfxFogColorCmd;
 extern __typeof__(BtlArenaFog *) g_gfxFogParams;
 extern __typeof__(s32) g_gfxFrameIndex;
 extern __typeof__(s32) g_gfxGeFinishTime;
-extern __typeof__(u32) g_gfxGeListBuf;
+extern __typeof__(u32[1024]) g_gfxGeListBuf;
 extern __typeof__(u32) g_gfxGeListSize;
 extern __typeof__(ScePspFMatrix4) g_gfxIdentityMatrix;
 extern __typeof__(float[4]) g_gfxLayerZoomDefaultPivot;
