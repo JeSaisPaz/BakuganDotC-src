@@ -27,23 +27,23 @@ s32 CollisionTestShape(void *query, void *block, float *hit, u32 flags)
   switch (((CollisionShapeBlock *)block)->shapeType) {
   case 1:
     entry = &queryShape->vtbl[1];
-    return ((s32 (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
+    return ((bool (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
                                                          blockShape, hit);
   case 2:
     entry = &queryShape->vtbl[2];
-    return ((s32 (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
+    return ((bool (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
                                                          blockShape, hit);
   case 3:
     entry = &queryShape->vtbl[3];
-    return ((s32 (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
+    return ((bool (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
                                                          blockShape, hit);
   case 4:
     entry = &queryShape->vtbl[4];
-    return ((s32 (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
+    return ((bool (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
                                                          blockShape, hit);
   case 6:
     entry = &queryShape->vtbl[5];
-    result = ((s32 (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
+    result = ((bool (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
                                                            blockShape, hit);
     if (result != 0) {
       g_collisionHitInfo.bestDist = 0.0f;
