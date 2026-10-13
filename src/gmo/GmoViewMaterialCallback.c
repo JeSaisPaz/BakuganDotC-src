@@ -376,7 +376,9 @@ void GmoViewMaterialCallback(GmoDlContext *ctx)
 
     /* Sutherland-Hodgman against each plane; inside is dot(plane, pos) <= 0 */
     plane = g_gmoClipPlanes;
-    planesEnd = g_gmoClipPlanesEnd;
+    /* the PSP loads g_gmoClipPlanesEnd, which points one past the six planes (at g_gmoClipDepthBias, the next
+       global there); a host does not keep the two globals adjacent */
+    planesEnd = &g_gmoClipPlanes[sizeof(g_gmoClipPlanes) / sizeof(g_gmoClipPlanes[0])];
     in = polyA;
     outBase = polyB;
     nv = 3;
