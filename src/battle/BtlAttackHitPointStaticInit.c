@@ -5,8 +5,8 @@
    hit record (filled by `BtlAttackSweepHit` and read by the attack updates). */
 void BtlAttackHitPointStaticInit(void)
 {
-    g_btlAttackHitPoint.x = 0.0f;
-    g_btlAttackHitPoint.y = 0.0f;
-    g_btlAttackHitPoint.z = 0.0f;
-    g_btlAttackHitPoint.w = 0.0f;
+    g_btlAttackHitQuery.contact.x = 0.0f;
+    g_btlAttackHitQuery.contact.y = 0.0f;
+    g_btlAttackHitQuery.contact.z = 0.0f;
+    g_btlAttackHitQuery.contact.w = 0.0f;
 }

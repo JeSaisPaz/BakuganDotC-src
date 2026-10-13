@@ -68,7 +68,7 @@ void BtlAttackType80Update(BtlAttack *self)
         effect->dir[1] = step[1];
         effect->dir[2] = step[2];
         effect->dir[3] = step[3];
-        g_btlAttackHitCollider = NULL;
+        g_btlAttackHitQuery.hitCollider = NULL;
         body = self->owner->collider0;
         savedLayer = body->layer;
         if (BtlAttackSweepHit(self->radius, self, self->pos, step, 0xa3, 3, 0, 0x3fbf2700) != 0 ||

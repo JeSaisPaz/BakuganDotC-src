@@ -19,7 +19,7 @@ void BtlAttackType42Update(BtlAttack *self)
     }
     BtlAttackSteerToTarget(40.0f, 80.0f, self, 1, NULL);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, 0x65, 3, 0, 0x31bf337e) != 0) {
-        BtlAttackSetPendingHit(self, 0x1b, &g_btlAttackHitPoint.x);
+        BtlAttackSetPendingHit(self, 0x1b, &g_btlAttackHitQuery.contact.x);
         return;
     }
     /* pos.xyz += vel.xyz (vadd.t; w kept) */

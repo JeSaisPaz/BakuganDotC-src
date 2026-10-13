@@ -5,7 +5,7 @@
    falling strike. After frame 60 it ends (`BtlAttackEnd`). On frame 0 it sets the velocity to
    (0, -100, 0, 0), points its effect along `g_vecDown` and plays sound 0x100001f. Later frames
    test clashes (`BtlAttackCheckClash`) and sweep for hits (hit kind 0xa0, arg 3); on a hit they
-   spawn impact 0x1b at `g_btlAttackHitPoint` when `g_btlAttackHitCollider` is set (else 0x103),
+   spawn impact 0x1b at `g_btlAttackHitQuery` when `g_btlAttackHitQuery``.hitCollider` is set (else 0x103),
    play 0x200099 and end; otherwise move the position by the velocity (xyz, w kept). */
 
 void BtlAttackType7DUpdate(BtlAttack *self)
@@ -28,10 +28,10 @@ void BtlAttackType7DUpdate(BtlAttack *self)
     }
     BtlAttackCheckClash(self);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, 0xa0, 3, 0, 0x31bf337e) != 0) {
-        if (g_btlAttackHitCollider != NULL) {
-            GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitPoint.x);
+        if (g_btlAttackHitQuery.hitCollider != NULL) {
+            GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitQuery.contact.x);
         } else {
-            GfxEffectSpawn(g_btlAttackEffectMgr, 0x103, &g_btlAttackHitPoint.x);
+            GfxEffectSpawn(g_btlAttackEffectMgr, 0x103, &g_btlAttackHitQuery.contact.x);
         }
         BtlAttackPlaySound(self, 0x200099, NULL, 0, 0);
         BtlAttackEnd(self);

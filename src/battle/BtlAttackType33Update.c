@@ -7,7 +7,7 @@
    (`BtlAttackSteerToTarget` speed 0, height 40) and then sets `turnRate` 0.02. Later, unless
    `BtlAttackResolveClash` (impact 0x1b) consumed it, homes at speed 30 / height 130 and sweeps
    for hits (kind 0x56, flags 3, `BtlAttackSweepHit`): on a hit spawns impact 0x1b at `pos`
-   when no collider was hit or its `layer` is 9 (`g_btlAttackHitCollider`), plays sound
+   when no collider was hit or its `layer` is 9 (`g_btlAttackHitQuery``.hitCollider`), plays sound
    0x200097 (`BtlAttackPlaySound`) and ends; otherwise copies `dir` to the effect's `dir` and
    advances `pos` by `vel`. */
 void BtlAttackType33Update(BtlAttack *self)
@@ -35,7 +35,7 @@ void BtlAttackType33Update(BtlAttack *self)
     }
     BtlAttackSteerToTarget(30.0f, 130.0f, self, 1, NULL);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, 0x56, 3, 0, 0x31bf337e) != 0) {
-        collider = (CollisionCollider *)g_btlAttackHitCollider;
+        collider = (CollisionCollider *)g_btlAttackHitQuery.hitCollider;
         if (collider == NULL || collider->layer == 9) {
             GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, self->pos);
         }

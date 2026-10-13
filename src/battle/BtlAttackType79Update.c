@@ -6,7 +6,7 @@
    it scales `vel.xyz` by 40 (w = 0), rotates it about the y axis by `paramF2` radians, copies it
    to its effect's `dir` and normalizes that (w = 0; a zero vector stays zero). Afterwards it runs
    `BtlAttackCheckClash` and sweeps from `pos` along `vel` for hits (hit id 0x9c, kind 3,
-   `BtlAttackSweepHit`): a hit spawns impact 0x1b at `g_btlAttackHitPoint`, plays sound
+   `BtlAttackSweepHit`): a hit spawns impact 0x1b at `g_btlAttackHitQuery`, plays sound
    0x200099 (`BtlAttackPlaySound`) and ends; otherwise `pos.xyz += vel.xyz`. */
 void BtlAttackType79Update(BtlAttack *self)
 {
@@ -52,7 +52,7 @@ void BtlAttackType79Update(BtlAttack *self)
     }
     BtlAttackCheckClash(self);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, 0x9c, 3, 0, 0x31bf337e) != 0) {
-        GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitPoint.x);
+        GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitQuery.contact.x);
         BtlAttackPlaySound(self, 0x200099, NULL, 0, 0);
         BtlAttackEnd(self);
         return;

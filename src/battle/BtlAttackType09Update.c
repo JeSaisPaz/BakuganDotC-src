@@ -6,7 +6,7 @@
    0 it scales `vel` by 50 (x, y, z; the asm also stores a stale w lane, left out).
    On later frames it runs the clash test (`BtlAttackCheckClash`, result ignored), sweeps
    the hit test along `vel` (hit kind 0x2c, arg 3, mask `0x31bf337e`, `BtlAttackSweepHit`) and on
-   a hit spawns impact effect 0x7e at `g_btlAttackHitPoint` owned by the attack's owner Bakugan
+   a hit spawns impact effect 0x7e at `g_btlAttackHitQuery` owned by the attack's owner Bakugan
    and ends; otherwise the position advances by `vel` (x, y, z; w kept). */
 
 void BtlAttackType09Update(BtlAttack *self)
@@ -29,7 +29,7 @@ void BtlAttackType09Update(BtlAttack *self)
     BtlAttackCheckClash(self);
     pos = self->pos;
     if (BtlAttackSweepHit(self->radius, self, pos, self->vel, 0x2c, 3, 0, 0x31bf337e) != 0) {
-        effect = (GfxEffect *)GfxEffectSpawn(g_btlAttackEffectMgr, 0x7e, &g_btlAttackHitPoint.x);
+        effect = (GfxEffect *)GfxEffectSpawn(g_btlAttackEffectMgr, 0x7e, &g_btlAttackHitQuery.contact.x);
         owner = self->owner;
         effect->ownerBakugan = owner;
         if (owner != NULL) {

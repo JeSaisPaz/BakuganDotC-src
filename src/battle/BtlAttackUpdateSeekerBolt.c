@@ -45,7 +45,7 @@ void BtlAttackUpdateSeekerBolt(BtlAttack *self, s32 hitKind)
     vel = self->vel;
     if (BtlAttackSweepHit(self->radius, self, pos, vel, hitKind, 3, 0, 0x31bf337e) != 0) {
         BtlAttackPlaySound(self, 0x200097, NULL, 0, 0);
-        GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitPoint.x);
+        GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitQuery.contact.x);
         BtlAttackEnd(self);
         BtlAttackStopSeekerEffects(g_btlAttackEffectMgr, pos);
         return;

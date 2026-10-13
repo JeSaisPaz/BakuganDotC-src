@@ -1,0 +1,5 @@
+// bdc 0x08aba930 g_btlAttackHitQuery
+#include "bdc.h"
+// bdc-fix	V	int	0x2b6950	4	0	.hitParam
+
+__typeof__(CollisionQuery) g_btlAttackHitQuery = { .hitParam = BDC_V(int, 0x2b6950) };

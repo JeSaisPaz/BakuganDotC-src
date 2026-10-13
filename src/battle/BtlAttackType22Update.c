@@ -6,7 +6,7 @@
    0.03. Later frames, unless `BtlAttackResolveClash` (impact 0xc5) consumed it, home at speed 70
    with a 60-unit height offset (`BtlAttackSteerToTarget`) and sweep along the velocity
    (`BtlAttackSweepHit`, hit id 0x45, kind 3); a hit queues impact 0xc5 at
-   `g_btlAttackHitPoint` (`BtlAttackSetPendingHit`). Otherwise it spawns three trail effects
+   `g_btlAttackHitQuery` (`BtlAttackSetPendingHit`). Otherwise it spawns three trail effects
    0xc4 on `g_btlAttackEffectMgr` (`GfxEffectSpawn`) at `pos` + k x 0.334 x `vel` (k = 0..2,
    trail w = pos w) and moves `pos` by `vel` (xyz, w kept). */
 void BtlAttackType22Update(BtlAttack *self)
@@ -32,7 +32,7 @@ void BtlAttackType22Update(BtlAttack *self)
     pos = self->pos;
     vel = self->vel;
     if (BtlAttackSweepHit(self->radius, self, pos, vel, 0x45, 3, 0, 0x31bf337e) != 0) {
-        BtlAttackSetPendingHit(self, 0xc5, &g_btlAttackHitPoint.x);
+        BtlAttackSetPendingHit(self, 0xc5, &g_btlAttackHitQuery.contact.x);
         return;
     }
     trail[0] = pos[0];

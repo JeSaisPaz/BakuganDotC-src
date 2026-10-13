@@ -55,7 +55,7 @@ void BtlAttackType3AUpdate(BtlAttack *self)
         }
         if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, hitKind, 3, 0, 0x31bf337e)
             != 0) {
-            BtlAttackSetPendingHit(self, 0xc5, &g_btlAttackHitPoint.x);
+            BtlAttackSetPendingHit(self, 0xc5, &g_btlAttackHitQuery.contact.x);
             return;
         }
         self->pos[0] = self->pos[0] + self->vel[0];

@@ -74,7 +74,7 @@ void BtlAttackUpdateArcShot(BtlAttack *self, s32 hitKind)
     }
     BtlAttackSteerToTarget(35.0f, 80.0f, self, 1, NULL);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, hitKind, 3, 0, 0x31bf337e) != 0) {
-        BtlAttackSetPendingHit(self, 0xbb, &g_btlAttackHitPoint.x);
+        BtlAttackSetPendingHit(self, 0xbb, &g_btlAttackHitQuery.contact.x);
         return;
     }
     /* pos.xyz += vel.xyz (w kept) */

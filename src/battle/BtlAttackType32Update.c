@@ -35,7 +35,7 @@ void BtlAttackType32Update(BtlAttack *self)
     BtlAttackSteerToTarget(50.0f, 80.0f, self, 1, NULL);
     vel = self->vel;
     if (BtlAttackSweepHit(self->radius, self, pos, vel, 0x55, 3, 0, 0x31bf337e) != 0) {
-        BtlAttackSetPendingHit(self, 0x1b, &g_btlAttackHitPoint.x);
+        BtlAttackSetPendingHit(self, 0x1b, &g_btlAttackHitQuery.contact.x);
         GfxEffectStopAttached(g_btlAttackEffectMgr, 0x1d1, pos);
         return;
     }

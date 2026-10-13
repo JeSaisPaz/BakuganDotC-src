@@ -6,7 +6,7 @@
    0, bank S713). Later: when `cancelled` or clashing
    (`BtlAttackCheckClash`) spawns effect 0x1a at `pos` and ends; else sweeps for hits along
    `vel` (`BtlAttackSweepHit` with `hitId`, flags 3); on a hit normalises `vel`, spawns the
-   directed impact 0x9f at `g_btlAttackHitPoint` (`GfxEffectSpawnDirected`) carrying the
+   directed impact 0x9f at `g_btlAttackHitQuery` (`GfxEffectSpawnDirected`) carrying the
    owner and its id, and ends; otherwise advances `pos` by `vel`. Every ending stops the trail
    effect attached to `pos` (`GfxEffectStopAttached`). */
 void BtlAttackUpdateStraightShot(BtlAttack *self, s32 hitId)
@@ -45,7 +45,7 @@ void BtlAttackUpdateStraightShot(BtlAttack *self, s32 hitId)
         self->vel[1] = VfSat1(self->vel[1] * k);
         self->vel[2] = VfSat1(self->vel[2] * k);
         self->vel[3] = 0.0f;
-        impact = GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0x9f, &g_btlAttackHitPoint.x, self->vel);
+        impact = GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0x9f, &g_btlAttackHitQuery.contact.x, self->vel);
         impact->ownerBakugan = self->owner;
         if (self->owner != NULL) {
             impact->ownerId = self->owner->base.base.id;

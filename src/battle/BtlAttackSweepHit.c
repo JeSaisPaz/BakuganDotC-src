@@ -5,15 +5,15 @@
    `start = from`, `dir = to` (whole vectors) and `radius`; on the attack's first two frames
    (`age < 2`) or with `fromOwner` set it shifts the sweep by the horizontal offset of `from` from the
    owner's position (`dir += d`, `start -= d`, d.y = 0). Fills the shared hit query record at
-   `g_btlAttackHitPoint` (shape, owner, heading `atan2f(to.z, to.x)`, `hitKind`; the global
+   `g_btlAttackHitQuery` (shape, owner, heading `atan2f(to.z, to.x)`, `hitKind`; the global
    attack flags take `flags`) and queries `CollisionHitQuery` on `mask` without the owner's own
    body layer: above radius 30 once on its layers 1..5 and once more with radius 30 on
    `0x1bf0300`. Without a collider hit it tries `CollisionRaycast` (`0x2fb72700`), giving the
    contact point lifted by 10, and then the arena bounds (`BtlStageGetArenaBounds`): a sweep whose
    start is outside them in x/z and whose `start.y + dir.y` is below the radius hits at the sweep's
-   midpoint at height `radius`; both clear `g_btlAttackHitCollider`. A collider hit on a live unit
+   midpoint at height `radius`; both clear `g_btlAttackHitQuery``.hitCollider`. A collider hit on a live unit
    (`BtlBakuganListFind`) queues the hit on it (`BtlBakuganQueueHit`). Returns non-zero on a
-   hit, the hit point left in `g_btlAttackHitPoint`. */
+   hit, the hit point left in `g_btlAttackHitQuery`. */
 u32 BtlAttackSweepHit(float radius, BtlAttack *self, float *from, float *to, s32 hitKind, s32 flags, char fromOwner, u32 mask)
 {
     CollisionSweptSphereDesc *desc = &g_collisionSweptSphereDesc;
@@ -58,21 +58,21 @@ u32 BtlAttackSweepHit(float radius, BtlAttack *self, float *from, float *to, s32
     len = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y +
                           desc->dir.z * desc->dir.z);
     desc->dir.w = len;
-    g_btlAttackHitShape = &desc->shapeBlock;
-    g_btlAttackHitOwner = self->owner;
-    g_btlAttackHitHeading = atan2f(to[2], to[0]);
-    g_btlAttackHitKind = hitKind;
+    g_btlAttackHitQuery.shape = &desc->shapeBlock;
+    g_btlAttackHitQuery.owner = self->owner;
+    g_btlAttackHitQuery.heading = atan2f(to[2], to[0]);
+    g_btlAttackHitQuery.attackId = hitKind;
     g_collisionAttackFlags = flags;
 
     if (!(radius <= 30.0f)) {
-        char hitLarge = CollisionHitQuery(layerMask & 0x3e, &g_btlAttackHitPoint.x, 1, NULL);
+        char hitLarge = CollisionHitQuery(layerMask & 0x3e, (float *)&g_btlAttackHitQuery, 1, NULL);
         char hitSmall;
 
         desc->radius = 30.0f;
-        hitSmall = CollisionHitQuery(0x1bf0300, &g_btlAttackHitPoint.x, 1, NULL);
+        hitSmall = CollisionHitQuery(0x1bf0300, (float *)&g_btlAttackHitQuery, 1, NULL);
         hit = (hitLarge | hitSmall) != 0;
     } else {
-        hit = CollisionHitQuery(layerMask, &g_btlAttackHitPoint.x, 1, NULL);
+        hit = CollisionHitQuery(layerMask, (float *)&g_btlAttackHitQuery, 1, NULL);
     }
 
     if (hit != 0) {
@@ -89,9 +89,9 @@ u32 BtlAttackSweepHit(float radius, BtlAttack *self, float *from, float *to, s32
     if (CollisionRaycast(0x2fb72700, &desc->shapeBlock, 0) != NULL) {
         hit = 1;
         /* hit point = contact point (whole vector) */
-        g_btlAttackHitPoint = g_collisionHitResult.point;
-        g_btlAttackHitPoint.y += 10.0f;
-        g_btlAttackHitCollider = NULL;
+        g_btlAttackHitQuery.contact = g_collisionHitResult.point;
+        g_btlAttackHitQuery.contact.y += 10.0f;
+        g_btlAttackHitQuery.hitCollider = NULL;
         return hit;
     }
 
@@ -108,12 +108,12 @@ u32 BtlAttackSweepHit(float radius, BtlAttack *self, float *from, float *to, s32
             mid[1] = desc->start.y + half[1];
             mid[2] = desc->start.z + half[2];
             mid[3] = desc->start.w;
-            g_btlAttackHitPoint.x = mid[0];
-            g_btlAttackHitPoint.y = mid[1];
-            g_btlAttackHitPoint.z = mid[2];
-            g_btlAttackHitPoint.w = mid[3];
-            g_btlAttackHitPoint.y = desc->radius;
-            g_btlAttackHitCollider = NULL;
+            g_btlAttackHitQuery.contact.x = mid[0];
+            g_btlAttackHitQuery.contact.y = mid[1];
+            g_btlAttackHitQuery.contact.z = mid[2];
+            g_btlAttackHitQuery.contact.w = mid[3];
+            g_btlAttackHitQuery.contact.y = desc->radius;
+            g_btlAttackHitQuery.hitCollider = NULL;
         }
     }
     return hit;

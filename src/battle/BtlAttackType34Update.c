@@ -39,7 +39,7 @@ void BtlAttackType34Update(BtlAttack *self)
     }
     BtlAttackCheckClash(self);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, 0x57, 3, 0, 0x31bf337e) != 0) {
-        GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitPoint.x);
+        GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitQuery.contact.x);
         GfxEffectStopAttached(g_btlAttackEffectMgr, 0x23f, self->pos);
         GfxEffectStopAttached(g_btlAttackEffectMgr, 0x240, self->pos);
         BtlAttackPlaySound(self, 0x200098, NULL, 0, 0);

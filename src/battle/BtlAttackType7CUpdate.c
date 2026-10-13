@@ -142,7 +142,7 @@ void BtlAttackType7CUpdate(BtlAttack *self)
         BtlAttackSweepHit(self->radius, self, pos, self->vel, 0x9f, 3, 0, 0x31bf337e) != 0) {
         self->param0 = 1;
         BtlAttackPlaySound(self, 0x200099, NULL, 0, 0);
-        GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitPoint.x);
+        GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitQuery.contact.x);
     }
     if (self->age >= 9) {
         /* dir += (up - dir) x paramF0 (all four lanes); effectDir = -dir (w kept) */

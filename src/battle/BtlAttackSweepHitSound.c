@@ -5,12 +5,12 @@
    `g_collisionSweptSphereDesc` with `start = from`, `dir = to` (whole vectors) and half `radius`;
    on the attack's first frame (`age == 0`) or with `fromOwner` set it shifts the sweep by the
    horizontal offset of `from` from the owner's position (`dir += d`, `start -= d`, d.y = 0). Fills the
-   shared hit query record at `g_btlAttackHitPoint` (shape, owner, heading `atan2f(to.z, to.x)`,
+   shared hit query record at `g_btlAttackHitQuery` (shape, owner, heading `atan2f(to.z, to.x)`,
    `hitKind`, collider cleared; the global attack flags take `flags`). Below radius 30 a world
    `CollisionRaycast` (`0x2fb72500`) hit, and then a `CollisionHitQuery` hit on `0x1bf0300`, each
    count as a hit: the hit point becomes the contact point lifted by 10 and the sweep is shortened
    to end 50 past the contact. The full radius sweep then queries `mask` without the owner's own body
-   layer (layers 1..5 only): a hit counts only if it found a collider (`g_btlAttackHitCollider`);
+   layer (layers 1..5 only): a hit counts only if it found a collider (`g_btlAttackHitQuery``.hitCollider`);
    a miss still queues a hit (`BtlBakuganQueueHit`) on the unit owning
    `g_collisionLastHitCollider` if that unit is live (`BtlBakuganListFind`). The hit point is
    restored to its value before that last query. From the second frame on a hit plays the attack's
@@ -49,20 +49,20 @@ int BtlAttackSweepHitSound(float radius, BtlAttack *self, float *from, float *to
     desc->start.w = desc->radius * desc->radius;
     /* dir.w = |dir.xyz| */
     desc->dir.w = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z);
-    g_btlAttackHitShape = &desc->shapeBlock;
-    g_btlAttackHitOwner = self->owner;
-    g_btlAttackHitHeading = atan2f(to[2], to[0]);
-    g_btlAttackHitKind = hitKind;
-    g_btlAttackHitCollider = NULL;
+    g_btlAttackHitQuery.shape = &desc->shapeBlock;
+    g_btlAttackHitQuery.owner = self->owner;
+    g_btlAttackHitQuery.heading = atan2f(to[2], to[0]);
+    g_btlAttackHitQuery.attackId = hitKind;
+    g_btlAttackHitQuery.hitCollider = NULL;
     hit = 0;
     g_collisionAttackFlags = flags;
 
     if (radius < 30.0f) {
         if (CollisionRaycast(0x2fb72500, &desc->shapeBlock, 0) != NULL) {
             hit = 1;
-            g_btlAttackHitPoint = g_collisionHitResult.point;
-            g_btlAttackHitPoint.y += 10.0f;
-            g_btlAttackHitCollider = NULL;
+            g_btlAttackHitQuery.contact = g_collisionHitResult.point;
+            g_btlAttackHitQuery.contact.y += 10.0f;
+            g_btlAttackHitQuery.hitCollider = NULL;
             /* len = |contact.xyz - from.xyz| + 50 */
             {
                 float dx = g_collisionHitResult.point.x - from[0];
@@ -85,11 +85,11 @@ int BtlAttackSweepHitSound(float radius, BtlAttack *self, float *from, float *to
         }
     }
 
-    if (CollisionHitQuery(0x1bf0300, &g_btlAttackHitPoint.x, 1, NULL) != 0) {
+    if (CollisionHitQuery(0x1bf0300, (float *)&g_btlAttackHitQuery, 1, NULL) != 0) {
         hit = 1;
-        g_btlAttackHitPoint = g_collisionHitResult.point;
-        g_btlAttackHitPoint.y += 10.0f;
-        g_btlAttackHitCollider = NULL;
+        g_btlAttackHitQuery.contact = g_collisionHitResult.point;
+        g_btlAttackHitQuery.contact.y += 10.0f;
+        g_btlAttackHitQuery.hitCollider = NULL;
         /* len = |contact.xyz - from.xyz| + 50 */
         {
             float dx = g_collisionHitResult.point.x - from[0];
@@ -113,9 +113,9 @@ int BtlAttackSweepHitSound(float radius, BtlAttack *self, float *from, float *to
     /* dir.w = |dir.xyz| */
     desc->dir.w = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z);
 
-    saved = g_btlAttackHitPoint;
-    if (CollisionHitQuery(layerMask & 0x3e, &g_btlAttackHitPoint.x, 1, NULL) != 0) {
-        if (g_btlAttackHitCollider != NULL) {
+    saved = g_btlAttackHitQuery.contact;
+    if (CollisionHitQuery(layerMask & 0x3e, (float *)&g_btlAttackHitQuery, 1, NULL) != 0) {
+        if (g_btlAttackHitQuery.hitCollider != NULL) {
             hit = 1;
         }
     } else if (g_collisionLastHitCollider != NULL) {
@@ -125,10 +125,10 @@ int BtlAttackSweepHitSound(float radius, BtlAttack *self, float *from, float *to
             BtlBakuganQueueHit(unit, (s16)self->type, self->owner);
         }
     }
-    g_btlAttackHitPoint = saved;
+    g_btlAttackHitQuery.contact = saved;
 
     if (self->age != 0 && hit != 0) {
-        BtlAttackPlaySound(self, self->params.hitSound, &g_btlAttackHitPoint.x, 0, 0);
+        BtlAttackPlaySound(self, self->params.hitSound, &g_btlAttackHitQuery.contact.x, 0, 0);
     }
     return hit;
 }

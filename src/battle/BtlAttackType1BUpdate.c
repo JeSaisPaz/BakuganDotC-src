@@ -71,7 +71,7 @@ static void BtlAttackType1BMulSwapYZ(float *m)
    the new `dir` (rows scaled by (1, 1, -1), times g_gfxSwapYZMatrix) and sets the turn rate to 0.04.
    Later frames: multiplies the turn rate by 0.95, homes at speed 100 / height 60
    (BtlAttackSteerToTarget) and sweeps for hits (id 0x3e, kind 3); on a hit it spawns impact 0xb8
-   at the hit point when a collider was hit (g_btlAttackHitCollider), else 0xb9 plus sound
+   at the hit point when a collider was hit (g_btlAttackHitQuery.hitCollider), else 0xb9 plus sound
    0x200099, and ends; otherwise advances `pos.xyz` by `vel`. Every frame that does not end
    re-orients the attached effect's matrix along `dir` (times g_gfxSwapYZMatrix). */
 void BtlAttackType1BUpdate(BtlAttack *self)
@@ -121,10 +121,10 @@ void BtlAttackType1BUpdate(BtlAttack *self)
         self->turnRate = self->turnRate * 0.949999988f; /* 0x3f733333 */
         BtlAttackSteerToTarget(100.0f, 60.0f, self, 1, NULL);
         if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, 0x3e, 3, 0, 0x31bf337e) != 0) {
-            if (g_btlAttackHitCollider != NULL) {
-                GfxEffectSpawn(g_btlAttackEffectMgr, 0xb8, &g_btlAttackHitPoint.x);
+            if (g_btlAttackHitQuery.hitCollider != NULL) {
+                GfxEffectSpawn(g_btlAttackEffectMgr, 0xb8, &g_btlAttackHitQuery.contact.x);
             } else {
-                GfxEffectSpawn(g_btlAttackEffectMgr, 0xb9, &g_btlAttackHitPoint.x);
+                GfxEffectSpawn(g_btlAttackEffectMgr, 0xb9, &g_btlAttackHitQuery.contact.x);
                 BtlAttackPlaySound(self, 0x200099, NULL, 0, 0);
             }
             BtlAttackEnd(self);

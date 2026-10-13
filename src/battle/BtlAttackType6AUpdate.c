@@ -7,7 +7,7 @@
    pushes `pos` 80 units sideways (`dir` rotated about Y by -pi/2 with weave step
    `paramF1 = 0.1` when the delay is below 21, else by +pi/2 with -0.1) and 25 up. From frame `param0` on (on that frame setting the effect key to 2 and
    playing `0xd0001f`) it homes with `BtlAttackSteerToTarget(20.0, 100.0)`, tests clashes and
-   sweeps for hits; on a hit it spawns effect 0xfb at `g_btlAttackHitPoint` tagged with the
+   sweeps for hits; on a hit it spawns effect 0xfb at `g_btlAttackHitQuery` tagged with the
    owner, stops 0x208, plays `0x200098` and ends. Otherwise it advances the weave phase
    `paramF0 += paramF1`, turns `dir` about Y by sin(phase) * 0.03 radians, copies -dir to
    the effect's `dir` and moves `pos` by `vel`. */
@@ -67,7 +67,7 @@ void BtlAttackType6AUpdate(BtlAttack *self)
     BtlAttackSteerToTarget(20.0f, 100.0f, self, 1, NULL);
     BtlAttackCheckClash(self);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, 0x8d, 3, 0, 0x31bf337e) != 0) {
-        effect = (GfxEffect *)GfxEffectSpawn(g_btlAttackEffectMgr, 0xfb, &g_btlAttackHitPoint.x);
+        effect = (GfxEffect *)GfxEffectSpawn(g_btlAttackEffectMgr, 0xfb, &g_btlAttackHitQuery.contact.x);
         owner = self->owner;
         effect->ownerBakugan = owner;
         if (owner != NULL) {

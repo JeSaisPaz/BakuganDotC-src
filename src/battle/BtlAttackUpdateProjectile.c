@@ -7,7 +7,7 @@
    On later frames it first resolves clashes (`BtlAttackResolveClash` with `hitEffect`; returns
    when that handled the attack) and sweeps for hits (`BtlAttackSweepHit` radius, pos -> vel,
    `hitKind`, kind 3, mask 0x31bf337e): with `flagB` a hit becomes a pending hit at
-   `g_btlAttackHitPoint` (`BtlAttackSetPendingHit`); without it a hit spawns `hitEffect` at
+   `g_btlAttackHitQuery` (`BtlAttackSetPendingHit`); without it a hit spawns `hitEffect` at
    `pos`, ends and stops the trail. Movement: with `flagA` it homes
    (`BtlAttackSteerToTarget(speed, maxSpeed, self, 1, NULL)`) and adds `vel` to `pos`, except on
    frame 0. Without `flagA`, frame 0 aims a side-launched shot (`paramF2 != 0`) at the target unit
@@ -42,7 +42,7 @@ void BtlAttackUpdateProjectile(float speed, float maxSpeed, BtlAttack *self, s32
         if (flagB != 0) {
             if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, hitKind, 3, 0,
                                   0x31bf337e) != 0) {
-                BtlAttackSetPendingHit(self, hitEffect, &g_btlAttackHitPoint.x);
+                BtlAttackSetPendingHit(self, hitEffect, &g_btlAttackHitQuery.contact.x);
                 return;
             }
         } else {

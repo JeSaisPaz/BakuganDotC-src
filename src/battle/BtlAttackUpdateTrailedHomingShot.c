@@ -98,7 +98,7 @@ void BtlAttackUpdateTrailedHomingShot(BtlAttack *self, s32 hitId)
     }
     BtlAttackSteerToTarget(100.0f, 60.0f, self, 1, NULL);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, hitId, 3, 0, 0x31bf337e) != 0) {
-        BtlAttackSetPendingHit(self, 0xb8, &g_btlAttackHitPoint.x);
+        BtlAttackSetPendingHit(self, 0xb8, &g_btlAttackHitQuery.contact.x);
         return;
     }
     /* trailPos = pos; trailStep.xyz = vel.xyz * 0.2, through C710 so w = S713 = 0 */

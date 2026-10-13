@@ -321,7 +321,7 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
         }
         if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, hitEffect, 3, 0,
                               0x31bf337e) != 0) {
-            BtlAttackSetPendingHit(self, hitId, &g_btlAttackHitPoint.x);
+            BtlAttackSetPendingHit(self, hitId, &g_btlAttackHitQuery.contact.x);
             return;
         }
     }

@@ -6,7 +6,7 @@
    higher. Afterwards, unless `BtlAttackResolveClash` (impact 0xc5) consumed it, it homes at
    speed 40 / height 60 (`BtlAttackSteerToTarget`) and sweeps from `pos` along `vel` for hits
    (`hitId`, kind 3, `BtlAttackSweepHit`): a hit queues impact 0xc5 at
-   `g_btlAttackHitPoint` (`BtlAttackSetPendingHit`), otherwise `pos.xyz += vel.xyz` (w kept). */
+   `g_btlAttackHitQuery` (`BtlAttackSetPendingHit`), otherwise `pos.xyz += vel.xyz` (w kept). */
 void BtlAttackUpdateRisingHomingShot(BtlAttack *self, s32 hitId)
 {
     s32 variant;
@@ -28,7 +28,7 @@ void BtlAttackUpdateRisingHomingShot(BtlAttack *self, s32 hitId)
     }
     BtlAttackSteerToTarget(40.0f, 60.0f, self, 1, NULL);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, hitId, 3, 0, 0x31bf337e) != 0) {
-        BtlAttackSetPendingHit(self, 0xc5, &g_btlAttackHitPoint.x);
+        BtlAttackSetPendingHit(self, 0xc5, &g_btlAttackHitQuery.contact.x);
         return;
     }
     self->pos[0] = self->pos[0] + self->vel[0];

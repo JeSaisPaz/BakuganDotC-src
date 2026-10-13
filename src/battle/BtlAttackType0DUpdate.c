@@ -19,8 +19,8 @@ static inline void BtlAttackType0DBurst(BtlAttack *self)
    0, VFPU bank S713). Later frames: on cancellation or a clash (`BtlAttackCheckClash`)
    it bursts (effect 0x1b at the position, sound 0x200097, end); otherwise it sweeps from
    `pos + auxVec` to `vel - auxVec` (xyz; `BtlAttackSweepHit`, hit kind 0x30, arg 1). A hit with
-   no world collider (`g_btlAttackHitCollider`) bursts; a collider hit spawns effect 0x1b at
-   `g_btlAttackHitPoint` on even `param0` counts, increments `param0` and plays the sound every
+   no world collider (`g_btlAttackHitQuery``.hitCollider`) bursts; a collider hit spawns effect 0x1b at
+   `g_btlAttackHitQuery` on even `param0` counts, increments `param0` and plays the sound every
    fourth count. Finally, once `phase` is non-zero, `pos.xyz += vel.xyz`. */
 void BtlAttackType0DUpdate(BtlAttack *self)
 {
@@ -68,12 +68,12 @@ void BtlAttackType0DUpdate(BtlAttack *self)
     from[2] = self->pos[2] + self->auxVec[2];
     from[3] = self->pos[3];
     if (BtlAttackSweepHit(self->radius, self, from, to, 0x30, 1, 0, 0x31bf337e) != 0) {
-        if (g_btlAttackHitCollider == NULL) {
+        if (g_btlAttackHitQuery.hitCollider == NULL) {
             BtlAttackType0DBurst(self);
             return;
         }
         if ((self->param0 & 1) == 0) {
-            GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitPoint.x);
+            GfxEffectSpawn(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitQuery.contact.x);
         }
         self->param0++;
         if ((self->param0 & 3) == 0) {

@@ -284,22 +284,22 @@ track:
     if (self->age < duration &&
         BtlAttackSweepHitSound(width * 6.0f * 0.5f, self, self->pos, self->segment, hitKind, 0, 1,
                                0x31bf337e) != 0) {
-        if (g_btlAttackHitCollider != NULL) {
-            collider = (CollisionCollider *)g_btlAttackHitCollider;
+        if (g_btlAttackHitQuery.hitCollider != NULL) {
+            collider = (CollisionCollider *)g_btlAttackHitQuery.hitCollider;
             kind = (s32)((BtlBakugan *)collider->owner)->base.base.unk08;
         }
-        if (g_btlAttackHitCollider != NULL && kind != 0 && kind < 0x84) {
+        if (g_btlAttackHitQuery.hitCollider != NULL && kind != 0 && kind < 0x84) {
             /* hit on a unit */
             mask = 0;
             if (NetPlayHasManager() && SaveGetProfileFlag0() != 0) {
                 mask = 3;
             }
-            collider = (CollisionCollider *)g_btlAttackHitCollider;
+            collider = (CollisionCollider *)g_btlAttackHitQuery.hitCollider;
             if (collider->shapeBlock.matrix != NULL) {
-                unit = (BtlBakugan *)((CollisionCollider *)g_btlAttackHitCollider)->owner;
+                unit = (BtlBakugan *)((CollisionCollider *)g_btlAttackHitQuery.hitCollider)->owner;
                 if ((self->param1 & mask) == 0) {
                     __builtin_memcpy(offset, self->pos, sizeof offset);
-                    anchor = ((CollisionCollider *)g_btlAttackHitCollider)->shapeBlock.matrix[3];
+                    anchor = ((CollisionCollider *)g_btlAttackHitQuery.hitCollider)->shapeBlock.matrix[3];
                     entry = &((const VtblEntry *)unit->base.base.vtable)[11];
                     if (((int (*)(void *))entry->fn)((u8 *)unit + entry->delta) != 0 ||
                         (entry = &((const VtblEntry *)unit->base.base.vtable)[19],
@@ -354,9 +354,9 @@ track:
                     __builtin_memcpy(fx->offset, offset, sizeof fx->offset);
                 }
                 if (kind < 0x21 && (unit->flags & 0x10) != 0) {
-                    dx = self->pos[0] - g_btlAttackHitPoint.x;
-                    dy = self->pos[1] - g_btlAttackHitPoint.y;
-                    dz = self->pos[2] - g_btlAttackHitPoint.z;
+                    dx = self->pos[0] - g_btlAttackHitQuery.contact.x;
+                    dy = self->pos[1] - g_btlAttackHitQuery.contact.y;
+                    dz = self->pos[2] - g_btlAttackHitQuery.contact.z;
                     dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
                     len = dist * 0.100000001f + 5.0f;
                     if (len < 10.0f) {
@@ -379,10 +379,10 @@ track:
             SaveGetProfileFlag0();
             if ((self->param0 & 1) == 0) {
                 /* spot = (hit point.xyz + normal.xyz * 3, hit point.w) */
-                spot[0] = g_btlAttackHitPoint.x + g_collisionHitResult.normal.x * 3.0f;
-                spot[1] = g_btlAttackHitPoint.y + g_collisionHitResult.normal.y * 3.0f;
-                spot[2] = g_btlAttackHitPoint.z + g_collisionHitResult.normal.z * 3.0f;
-                spot[3] = g_btlAttackHitPoint.w;
+                spot[0] = g_btlAttackHitQuery.contact.x + g_collisionHitResult.normal.x * 3.0f;
+                spot[1] = g_btlAttackHitQuery.contact.y + g_collisionHitResult.normal.y * 3.0f;
+                spot[2] = g_btlAttackHitQuery.contact.z + g_collisionHitResult.normal.z * 3.0f;
+                spot[3] = g_btlAttackHitQuery.contact.w;
                 fx = GfxEffectSpawnDirected(g_btlAttackEffectMgr, worldHitFx, spot,
                                             &g_collisionHitResult.normal.x);
                 entry = &((const VtblEntry *)fx->base.vtable)[2];
@@ -453,15 +453,15 @@ track:
             self->param0 = self->param0 + 1;
         }
 
-        if (g_btlAttackHitCollider != NULL) {
-            kind = (s32)((BtlBakugan *)((CollisionCollider *)g_btlAttackHitCollider)->owner)
+        if (g_btlAttackHitQuery.hitCollider != NULL) {
+            kind = (s32)((BtlBakugan *)((CollisionCollider *)g_btlAttackHitQuery.hitCollider)->owner)
                        ->base.base.unk08;
         }
         if (width < 18.0f &&
-            (g_btlAttackHitCollider == NULL || kind == 0 || kind >= 0x84)) {
-            dx = self->pos[0] - g_btlAttackHitPoint.x;
-            dy = self->pos[1] - g_btlAttackHitPoint.y;
-            dz = self->pos[2] - g_btlAttackHitPoint.z;
+            (g_btlAttackHitQuery.hitCollider == NULL || kind == 0 || kind >= 0x84)) {
+            dx = self->pos[0] - g_btlAttackHitQuery.contact.x;
+            dy = self->pos[1] - g_btlAttackHitQuery.contact.y;
+            dz = self->pos[2] - g_btlAttackHitQuery.contact.z;
             dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
             len = dist * 0.100000001f + 5.0f;
             if (len < 10.0f) {

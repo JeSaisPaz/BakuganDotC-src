@@ -9,7 +9,7 @@
    `localMatrix` and `pos` = `mtx` x `g_btlAttackType07Offset` (40, 0, 0; w = 1). The target
    point is the target unit's (`BtlFindBakuganById`) `pos` raised by 0.8 x its height, swept
    towards from `pos` (`BtlAttackSweepHit`, radius 10, kind 0x94, flags 3, mask `0x31bf337e`);
-   without a target it sweeps along `vel` and takes `g_btlAttackHitPoint` on a hit, else the
+   without a target it sweeps along `vel` and takes `g_btlAttackHitQuery` on a hit, else the
    point 500 units out along the owner's yaw (`rot.y`). It spawns effect 0xeb at `pos` and, every
    third frame, 0xec at the target point. The effect's `dir` becomes the normalised beam direction
    (each lane clamped to [-1, 1], w = 0; a zero-length beam gives (0, 0, 0)), `vec1d0.x` = 0.1 x
@@ -122,10 +122,10 @@ void BtlAttackType07Update(BtlAttack *self)
         toPoint[3] = point[3];
         BtlAttackSweepHit(10.0f, self, self->pos, toPoint, 0x94, 3, 0, 0x31bf337e);
     } else if (BtlAttackSweepHit(10.0f, self, self->pos, self->vel, 0x94, 3, 0, 0x31bf337e) != 0) {
-        point[0] = g_btlAttackHitPoint.x;
-        point[1] = g_btlAttackHitPoint.y;
-        point[2] = g_btlAttackHitPoint.z;
-        point[3] = g_btlAttackHitPoint.w;
+        point[0] = g_btlAttackHitQuery.contact.x;
+        point[1] = g_btlAttackHitQuery.contact.y;
+        point[2] = g_btlAttackHitQuery.contact.z;
+        point[3] = g_btlAttackHitQuery.contact.w;
     } else {
         /* point = pos + (cos, 0, sin)(yaw) x 500 (xyz; w = 0 from the vrot) */
         yaw = self->owner->base.rot[1];

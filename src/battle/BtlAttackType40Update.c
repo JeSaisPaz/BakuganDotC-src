@@ -6,7 +6,7 @@
    non-zero, snaps onto the target (`BtlAttackSteerToTarget` speed 0, height 40 with turn rate
    1) and sets turn rate 0.08. Later frames, unless `BtlAttackResolveClash` (impact 0xb8)
    consumed it: homes at speed 35 with a 40-unit height offset, sweeps for hits along its velocity
-   (`BtlAttackSweepHit`, hit id 0x63, kind 3) queuing impact 0xb8 at `g_btlAttackHitPoint`
+   (`BtlAttackSweepHit`, hit id 0x63, kind 3) queuing impact 0xb8 at `g_btlAttackHitQuery`
    (`BtlAttackSetPendingHit`); otherwise its effect's `dir` takes the attack's `dir` and the
    position advances by `vel` (xyz, w kept). */
 
@@ -30,7 +30,7 @@ void BtlAttackType40Update(BtlAttack *self)
     }
     BtlAttackSteerToTarget(35.0f, 40.0f, self, 1, NULL);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, 99, 3, 0, 0x31bf337e) != 0) {
-        BtlAttackSetPendingHit(self, 0xb8, &g_btlAttackHitPoint.x);
+        BtlAttackSetPendingHit(self, 0xb8, &g_btlAttackHitQuery.contact.x);
         return;
     }
     {

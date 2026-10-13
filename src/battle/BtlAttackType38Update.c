@@ -14,7 +14,7 @@
    (cos, 0, sin)(paramF0) * ((0.2 - turnRate) * 1500 + 100) is built, the phase advances by
    0.04 and the rocket homes (`BtlAttackSteerToTarget`) at height
    (0.2 - turnRate) * 500 + 80 - age * 0.5. After `BtlAttackCheckClash`, a sweep hit (kind 0x5b)
-   spawns impact 0xe6 at `g_btlAttackHitPoint`, shows `_rocket`, deletes the model, plays sound
+   spawns impact 0xe6 at `g_btlAttackHitQuery`, shows `_rocket`, deletes the model, plays sound
    0x200098 and ends. Otherwise: the attached effect takes `dir`, `pos += vel` (xyz), `effect2`
    takes `pos`, its matrix is the basis along `dir` (with `g_vecUp`; a zero-length axis scales
    to 0) times a rotation about Z by paramF2 radians. */
@@ -110,7 +110,7 @@ void BtlAttackType38Update(BtlAttack *self)
                            self, 0, offset);
     BtlAttackCheckClash(self);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, 0x5b, 3, 0, 0x31bf337e) != 0) {
-        GfxEffectSpawn(g_btlAttackEffectMgr, 0xe6, &g_btlAttackHitPoint.x);
+        GfxEffectSpawn(g_btlAttackEffectMgr, 0xe6, &g_btlAttackHitQuery.contact.x);
         GfxModelSetMaterialVisibleByName(&self->owner->base, "_rocket", true);
         CoreObjectDeferDelete(&((GfxEffect *)self->effect2)->model->base, 0);
         BtlAttackPlaySound(self, 0x200098, NULL, 0, 0);

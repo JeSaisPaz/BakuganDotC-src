@@ -18,7 +18,7 @@
    aim point, wrapped to (-pi, pi], is turned 0.1 of the way (at most 0.0873 rad, scaled by `turn`)
    when it exceeds 0.0873 rad. Then `vel.y` drops by 0.5 (gravity), the effect's `dir` becomes
    the normalised `vel`, and `BtlAttackSweepHit` (hit kind `hitKind`, flags 3, mask 0x31bf337e)
-   runs with `g_btlAttackHitCollider` cleared. On a hit the hit point is raised by 20 and
+   runs with `g_btlAttackHitQuery``.hitCollider` cleared. On a hit the hit point is raised by 20 and
    `hitEffect` (0x25/0x9b +1 when `SaveGetProfileFlag0` is set) is spawned there with the owner
    and its id recorded; it ends and returns 1. Otherwise `pos` advances by `vel` x `paramF1` and it
    returns 0. */
@@ -215,13 +215,13 @@ u32 BtlAttackUpdateGuided(float turn, float side, BtlAttack *self, s32 hitKind, 
     effect->dir[1] = VfSat1(effect->dir[1] * inv);
     effect->dir[2] = VfSat1(effect->dir[2] * inv);
     effect->dir[3] = 0.0f;
-    g_btlAttackHitCollider = NULL;
+    g_btlAttackHitQuery.hitCollider = NULL;
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, hitKind, 3, 0, 0x31bf337e) != 0) {
-        g_btlAttackHitPoint.y = g_btlAttackHitPoint.y + 20.0f;
+        g_btlAttackHitQuery.contact.y = g_btlAttackHitQuery.contact.y + 20.0f;
         if ((hitEffect == 0x25 || hitEffect == 0x9b) && SaveGetProfileFlag0() != 0) {
             hitEffect = hitEffect + 1;
         }
-        hitFx = (GfxEffect *)GfxEffectSpawn(g_btlAttackEffectMgr, hitEffect, &g_btlAttackHitPoint.x);
+        hitFx = (GfxEffect *)GfxEffectSpawn(g_btlAttackEffectMgr, hitEffect, &g_btlAttackHitQuery.contact.x);
         owner = self->owner;
         hitFx->ownerBakugan = owner;
         if (owner != NULL) {

@@ -7,7 +7,7 @@
    gives a zero vector) with `dir.w` = 0, and rotates it about Y by 1 degree (-1 when `paramF2` is 0).
    On later frames, unless `BtlAttackResolveClash` (impact 0xa8) consumed it, homes at speed 60 /
    height 20 (`BtlAttackSteerToTarget`), sweeps for hits (kind 0x35, flags 3, `BtlAttackSweepHit`)
-   queuing impact 0xa8 at `g_btlAttackHitPoint` on a hit, else advances `pos` by `vel`. Every frame
+   queuing impact 0xa8 at `g_btlAttackHitQuery` on a hit, else advances `pos` by `vel`. Every frame
    not ended by a hit copies `dir` into the effect's `dir`. */
 void BtlAttackType12Update(BtlAttack *self)
 {
@@ -56,7 +56,7 @@ void BtlAttackType12Update(BtlAttack *self)
         }
         BtlAttackSteerToTarget(60.0f, 20.0f, self, 1, NULL);
         if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, 0x35, 3, 0, 0x31bf337e) != 0) {
-            BtlAttackSetPendingHit(self, 0xa8, &g_btlAttackHitPoint.x);
+            BtlAttackSetPendingHit(self, 0xa8, &g_btlAttackHitQuery.contact.x);
             return;
         }
         self->pos[0] = self->pos[0] + self->vel[0];

@@ -97,7 +97,7 @@ static void BtlAttackType3EMulSwapYZ(float *m)
    type 0x3f with height 80, turn decay and no offset, type 0x3e with height
    (0.3 - turnRate) * 500 + 80 and the wobble offset. Then `BtlAttackResolveClash` (impact 0xc5,
    0x9b for 0x3f) may end it; a sweep hit (kind 0x61 / 0x62, `BtlAttackSweepHit`) sets a pending
-   hit at `g_btlAttackHitPoint` (`BtlAttackSetPendingHit`); else `pos.xyz += vel.xyz`. Every
+   hit at `g_btlAttackHitQuery` (`BtlAttackSetPendingHit`); else `pos.xyz += vel.xyz`. Every
    frame that continues orients the attached effect's matrix along `dir` (basis with `g_vecUp`)
    and multiplies it by `g_gfxSwapYZMatrix`. */
 void BtlAttackType3EUpdate(BtlAttack *self)
@@ -199,7 +199,7 @@ void BtlAttackType3EUpdate(BtlAttack *self)
         }
         if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, hitKind, 3, 0, 0x31bf337e) !=
             0) {
-            BtlAttackSetPendingHit(self, impact, &g_btlAttackHitPoint.x);
+            BtlAttackSetPendingHit(self, impact, &g_btlAttackHitQuery.contact.x);
             return;
         }
         self->pos[0] = self->pos[0] + self->vel[0];

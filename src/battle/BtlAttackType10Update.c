@@ -88,17 +88,17 @@ void BtlAttackType10Update(BtlAttack *self)
 
     if (self->age < 0x34 &&
         BtlAttackSweepHit(self->radius, self, self->pos, self->segment, 0x33, 0, 1, 0x31bf337e)) {
-        if (g_btlAttackHitCollider != NULL) {
+        if (g_btlAttackHitQuery.hitCollider != NULL) {
             if (self->param1 % 3 == 0) {
-                GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitPoint.x, self->vel);
+                GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0x1b, &g_btlAttackHitQuery.contact.x, self->vel);
                 BtlAttackPlaySound(self, 0x200099, NULL, 0, 0);
             }
         } else if (self->param1 % 4 == 0) {
             /* spawnPos = hit point + contact normal * 3 (xyz, w from the hit point) */
-            spawnPos[0] = g_btlAttackHitPoint.x + g_collisionHitResult.normal.x * 3.0f;
-            spawnPos[1] = g_btlAttackHitPoint.y + g_collisionHitResult.normal.y * 3.0f;
-            spawnPos[2] = g_btlAttackHitPoint.z + g_collisionHitResult.normal.z * 3.0f;
-            spawnPos[3] = g_btlAttackHitPoint.w;
+            spawnPos[0] = g_btlAttackHitQuery.contact.x + g_collisionHitResult.normal.x * 3.0f;
+            spawnPos[1] = g_btlAttackHitQuery.contact.y + g_collisionHitResult.normal.y * 3.0f;
+            spawnPos[2] = g_btlAttackHitQuery.contact.z + g_collisionHitResult.normal.z * 3.0f;
+            spawnPos[3] = g_btlAttackHitQuery.contact.w;
             GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0x1b, spawnPos, &g_collisionHitResult.normal.x);
             BtlAttackPlaySound(self, 0x200099, NULL, 0, 0);
         }

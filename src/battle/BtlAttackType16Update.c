@@ -54,7 +54,7 @@ void BtlAttackType16Update(BtlAttack *self)
     BtlAttackSteerToTarget(20.0f, 100.0f, self, 1, NULL);
     BtlAttackCheckClash(self);
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, 0x39, 3, 0, 0x31bf337e) != 0) {
-        hitEffect = (GfxEffect *)GfxEffectSpawn(g_btlAttackEffectMgr, 0xaf, &g_btlAttackHitPoint.x);
+        hitEffect = (GfxEffect *)GfxEffectSpawn(g_btlAttackEffectMgr, 0xaf, &g_btlAttackHitQuery.contact.x);
         owner = self->owner;
         hitEffect->ownerBakugan = owner;
         if (owner != NULL) {

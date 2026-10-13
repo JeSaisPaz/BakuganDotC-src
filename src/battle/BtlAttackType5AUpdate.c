@@ -48,7 +48,7 @@ void BtlAttackType5AUpdate(BtlAttack *self)
         ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
     }
     if (BtlAttackSweepHit(self->radius, self, pos, vel, 0x7d, 3, 0, 0x31bf337e) != 0) {
-        GfxEffectSpawn(g_btlAttackEffectMgr, 0x7f, &g_btlAttackHitPoint.x);
+        GfxEffectSpawn(g_btlAttackEffectMgr, 0x7f, &g_btlAttackHitQuery.contact.x);
         GfxEffectStopAttached(g_btlAttackEffectMgr, 0x26a, pos);
         GfxEffectStopAttached(g_btlAttackEffectMgr, 0x26b, pos);
         BtlAttackEnd(self);

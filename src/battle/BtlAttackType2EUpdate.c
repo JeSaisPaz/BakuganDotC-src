@@ -6,7 +6,7 @@
    it does nothing; on later frames, unless `BtlAttackResolveClash` (impact effect 0xbb) consumed
    it, it homes at speed 35 with an 80-unit height offset and turn decay
    (`BtlAttackSteerToTarget`), sweeps the hit test along `vel` (hit kind 0x51, arg 3, mask
-   `0x31bf337e`, `BtlAttackSweepHit`) and on a hit queues impact 0xbb at `g_btlAttackHitPoint`
+   `0x31bf337e`, `BtlAttackSweepHit`) and on a hit queues impact 0xbb at `g_btlAttackHitQuery`
    (`BtlAttackSetPendingHit`); otherwise the position advances by `vel` (x, y, z; w kept). */
 
 void BtlAttackType2EUpdate(BtlAttack *self)
@@ -23,7 +23,7 @@ void BtlAttackType2EUpdate(BtlAttack *self)
     BtlAttackSteerToTarget(35.0f, 80.0f, self, 1, NULL);
     pos = self->pos;
     if (BtlAttackSweepHit(self->radius, self, pos, self->vel, 0x51, 3, 0, 0x31bf337e) != 0) {
-        BtlAttackSetPendingHit(self, 0xbb, &g_btlAttackHitPoint.x);
+        BtlAttackSetPendingHit(self, 0xbb, &g_btlAttackHitQuery.contact.x);
         return;
     }
     /* pos.xyz += vel.xyz (w kept) */
