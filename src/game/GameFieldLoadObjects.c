@@ -22,16 +22,16 @@
    bank's S713); the crystals get the yaw in `w`. Yaws are `heading * 2pi / 65535` wrapped into
    (-pi, pi]. */
 
-/* The original inlines this low-heap `new` sequence at every spawn. */
-#define FIELD_NEW(dst, size)            \
-  do {                                  \
-    bool fromLow_;                      \
-    MemLock();                          \
-    fromLow_ = MemIsAllocFromLow();     \
-    MemSetAllocFromLow(true);           \
-    (dst) = MemAlloc((size), NULL, 0);  \
-    MemSetAllocFromLow(fromLow_);       \
-    MemUnlock();                        \
+/* The original inlines this low-heap `new` sequence at every spawn; the size is the object's type. */
+#define FIELD_NEW(dst)                          \
+  do {                                          \
+    bool fromLow_;                              \
+    MemLock();                                  \
+    fromLow_ = MemIsAllocFromLow();             \
+    MemSetAllocFromLow(true);                   \
+    (dst) = MemAlloc(sizeof(*(dst)), NULL, 0);  \
+    MemSetAllocFromLow(fromLow_);               \
+    MemUnlock();                                \
   } while (0)
 
 /* The record's 20.12 fixed-point position scaled by 20 (`vscl.t` by 20.0f), `w` = 0. */
@@ -95,7 +95,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
     case 0x77: {
       GameGimmickEffectMarker *marker;
 
-      FIELD_NEW(marker, 400);
+      FIELD_NEW(marker);
       if (marker != NULL) {
         GameGimmickEffectMarkerCtor(marker, 0, rec, (u16)rec->recordType, 0);
       }
@@ -112,7 +112,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
     case 0x1774: {
       GameGimmickTriggerZone *zone;
 
-      FIELD_NEW(zone, 0x270);
+      FIELD_NEW(zone);
       if (zone != NULL) {
         GameGimmickTriggerZoneCtor(zone, 0, rec, (u16)rec->recordType, 0);
       }
@@ -122,7 +122,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
     case 0x322: {
       GameGimmickCollectionBox *box;
 
-      FIELD_NEW(box, 0x220);
+      FIELD_NEW(box);
       if (box != NULL) {
         GameGimmickCollectionBoxCtor(box, 0x10, rec, (u16)rec->recordType, 0);
       }
@@ -132,7 +132,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
     case 0x325: {
       GameGimmickJetDoor *door;
 
-      FIELD_NEW(door, 0x1b0);
+      FIELD_NEW(door);
       if (door != NULL) {
         GameGimmickJetDoorCtor(door, 0x11, rec, (u16)rec->recordType, 0);
       }
@@ -142,7 +142,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
     case 0xbbe: {
       GameGimmickTouchSpot *spot;
 
-      FIELD_NEW(spot, 0x1c0);
+      FIELD_NEW(spot);
       if (spot != NULL) {
         GameGimmickTouchSpotCtor(spot, 0, rec, (u16)rec->recordType, 0);
       }
@@ -153,7 +153,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
       GameGimmickSwitch *sw;
 
       gimmick = NULL;
-      FIELD_NEW(sw, 0x1e0);
+      FIELD_NEW(sw);
       if (sw != NULL) {
         GameGimmickSwitchCtor(sw, 1, rec, (u16)rec->recordType, 0);
         gimmick = &sw->base;
@@ -169,7 +169,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
       GameGimmickBarrier *barrier;
 
       gimmick = NULL;
-      FIELD_NEW(barrier, 0x1a0);
+      FIELD_NEW(barrier);
       if (barrier != NULL) {
         GameGimmickBarrierCtor(barrier, 2, rec, (u16)rec->recordType, 0);
         gimmick = &barrier->base;
@@ -184,7 +184,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
     case 0xbd0: {
       GameGimmickCollidable *collidable;
 
-      FIELD_NEW(collidable, 0x1f0);
+      FIELD_NEW(collidable);
       if (collidable != NULL) {
         GameGimmickCollidableCtor(collidable, 7, rec, (u16)rec->recordType, 0, -1);
       }
@@ -195,7 +195,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
       GameGimmick *solid;
 
       gimmick = NULL;
-      FIELD_NEW(solid, 0x180);
+      FIELD_NEW(solid);
       if (solid != NULL) {
         GameGimmickSolidCtor(solid, 8, rec, (u16)rec->recordType, 0);
         gimmick = solid;
@@ -210,7 +210,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
     case 0xbd2: {
       GameGimmickSteam *steam;
 
-      FIELD_NEW(steam, 400);
+      FIELD_NEW(steam);
       if (steam != NULL) {
         GameGimmickSteamCtor(steam, 5, rec, (u16)rec->recordType, 0);
       }
@@ -220,7 +220,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
     case 0xbd9: {
       GameGimmickCamera *camera;
 
-      FIELD_NEW(camera, 0x260);
+      FIELD_NEW(camera);
       if (camera != NULL) {
         GameGimmickCameraCtor(camera, 3, rec, (u16)rec->recordType, 0);
       }
@@ -230,7 +230,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
     case 0xbda: {
       GameGimmickIrSensor *sensor;
 
-      FIELD_NEW(sensor, 0x200);
+      FIELD_NEW(sensor);
       if (sensor != NULL) {
         GameGimmickIrSensorCtor(sensor, 4, rec, (u16)rec->recordType, 0);
       }
@@ -241,7 +241,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
       GameGimmickCollidable *collidable;
       s32 index;
 
-      FIELD_NEW(collidable, 0x1f0);
+      FIELD_NEW(collidable);
       if (collidable != NULL) {
         index = field->collidableCount;
         field->collidableCount = index + 1;
@@ -257,7 +257,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
         break;
       }
       gimmick = NULL;
-      FIELD_NEW(itemBox, 0x200);
+      FIELD_NEW(itemBox);
       if (itemBox != NULL) {
         GameGimmickItemBoxCtor(itemBox, 9, rec, (u16)rec->recordType, 0);
         gimmick = &itemBox->base;
@@ -295,7 +295,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
       }
       FIELD_POS(pos, rec);
       pos[3] = heading;
-      FIELD_NEW(crystal, 0xa90);
+      FIELD_NEW(crystal);
       if (crystal != NULL) {
         ActorCrystalCtor(crystal, 0x21, 2, pos, 0, crystalType, crystalType);
       }
@@ -334,7 +334,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
       }
       FIELD_POS(pos, rec);
       pos[3] = heading;
-      FIELD_NEW(stageObj, 0x3a0);
+      FIELD_NEW(stageObj);
       node = NULL;
       if (stageObj != NULL) {
         ActorStageObjCrystalCtor(stageObj, pos, variants[idx], (u16)rec->recordType);
@@ -377,7 +377,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
         break;
       }
       if (kind != 0) {
-        FIELD_NEW(corePoint, 0x2e0);
+        FIELD_NEW(corePoint);
         if (corePoint != NULL) {
           GameGimmickCorePointCtor(corePoint, kind, rec, (u16)rec->recordType, 0);
         }
