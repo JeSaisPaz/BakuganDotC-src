@@ -201,8 +201,32 @@
 // bdc-fix	V	float	0x27edc8	4	0	[35][3]
 // bdc-fix	V	float	0x27edcc	4	0	[35][4]
 // bdc-fix	V	float	0x27edd0	4	0	[35][5]
+// bdc-fix	V	float	0x27edd4	4	0	[36][0]
+// bdc-fix	V	float	0x27edd8	4	0	[36][1]
+// bdc-fix	V	float	0x27eddc	4	0	[36][2]
+// bdc-fix	V	float	0x27ede0	4	0	[36][3]
+// bdc-fix	V	float	0x27ede4	4	0	[36][4]
+// bdc-fix	V	float	0x27ede8	4	0	[36][5]
+// bdc-fix	V	float	0x27edec	4	0	[37][0]
+// bdc-fix	V	float	0x27edf0	4	0	[37][1]
+// bdc-fix	V	float	0x27edf4	4	0	[37][2]
+// bdc-fix	V	float	0x27edf8	4	0	[37][3]
+// bdc-fix	V	float	0x27edfc	4	0	[37][4]
+// bdc-fix	V	float	0x27ee00	4	0	[37][5]
+// bdc-fix	V	float	0x27ee04	4	0	[38][0]
+// bdc-fix	V	float	0x27ee08	4	0	[38][1]
+// bdc-fix	V	float	0x27ee0c	4	0	[38][2]
+// bdc-fix	V	float	0x27ee10	4	0	[38][3]
+// bdc-fix	V	float	0x27ee14	4	0	[38][4]
+// bdc-fix	V	float	0x27ee18	4	0	[38][5]
+// bdc-fix	V	float	0x27ee1c	4	0	[39][0]
+// bdc-fix	V	float	0x27ee20	4	0	[39][1]
+// bdc-fix	V	float	0x27ee24	4	0	[39][2]
+// bdc-fix	V	float	0x27ee28	4	0	[39][3]
+// bdc-fix	V	float	0x27ee2c	4	0	[39][4]
+// bdc-fix	V	float	0x27ee30	4	0	[39][5]
 
-__typeof__(float[36][6]) g_btlArenaBounds = {
+__typeof__(float[40][6]) g_btlArenaBounds = {
     {
         BDC_V(float, 0x27ea74), BDC_V(float, 0x27ea78), BDC_V(float, 0x27ea7c),
         BDC_V(float, 0x27ea80), BDC_V(float, 0x27ea84), BDC_V(float, 0x27ea88),
@@ -346,5 +370,21 @@ __typeof__(float[36][6]) g_btlArenaBounds = {
     {
         BDC_V(float, 0x27edbc), 0, BDC_V(float, 0x27edc4), BDC_V(float, 0x27edc8),
         BDC_V(float, 0x27edcc), BDC_V(float, 0x27edd0),
+    },
+    {
+        BDC_V(float, 0x27edd4), BDC_V(float, 0x27edd8), BDC_V(float, 0x27eddc),
+        BDC_V(float, 0x27ede0), BDC_V(float, 0x27ede4), BDC_V(float, 0x27ede8),
+    },
+    {
+        BDC_V(float, 0x27edec), BDC_V(float, 0x27edf0), BDC_V(float, 0x27edf4),
+        BDC_V(float, 0x27edf8), BDC_V(float, 0x27edfc), BDC_V(float, 0x27ee00),
+    },
+    {
+        BDC_V(float, 0x27ee04), BDC_V(float, 0x27ee08), BDC_V(float, 0x27ee0c),
+        BDC_V(float, 0x27ee10), BDC_V(float, 0x27ee14), BDC_V(float, 0x27ee18),
+    },
+    {
+        BDC_V(float, 0x27ee1c), BDC_V(float, 0x27ee20), BDC_V(float, 0x27ee24),
+        BDC_V(float, 0x27ee28), BDC_V(float, 0x27ee2c), BDC_V(float, 0x27ee30),
     },
 };

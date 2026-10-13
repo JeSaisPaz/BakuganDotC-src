@@ -15,7 +15,8 @@ void BtlBakuganRunState(BtlBakugan *self)
     void *fn = e->pfn;
 
     if (e->index != 0) {
-        const VtblEntry *vtbl = *(const VtblEntry **)(obj + (intptr_t)e->pfn);
+        /* pfn holds delta2, the vptr offset in the object: 0x14, the CoreObject vtable, in every entry */
+        const VtblEntry *vtbl = (const VtblEntry *)((CoreObject *)obj)->vtable;
         const VtblEntry *entry = &vtbl[e->index];
 
         fn = entry->fn;

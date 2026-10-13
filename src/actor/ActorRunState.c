@@ -13,7 +13,8 @@ void ActorRunState(Actor *self)
   void *fn = e->pfn;
 
   if (e->index != 0) {
-    const VtblEntry *entry = &(*(const VtblEntry **)(obj + (intptr_t)e->pfn))[e->index];
+    /* pfn holds delta2, the vptr offset in the object: 0x14, the CoreObject vtable, in every entry */
+    const VtblEntry *entry = &((const VtblEntry *)((CoreObject *)obj)->vtable)[e->index];
 
     fn = entry->fn;
     obj += entry->delta;

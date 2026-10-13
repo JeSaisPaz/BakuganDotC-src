@@ -416,8 +416,68 @@
 // bdc-fix	V	float	0x27e4b4	4	0	[27].ambient[0]
 // bdc-fix	V	float	0x27e4b8	4	0	[27].ambient[1]
 // bdc-fix	V	float	0x27e4bc	4	0	[27].ambient[2]
+// bdc-fix	V	float	0x27e6a0	4	0	[36].dir[0]
+// bdc-fix	V	float	0x27e6a4	4	0	[36].dir[1]
+// bdc-fix	V	float	0x27e6a8	4	0	[36].dir[2]
+// bdc-fix	V	float	0x27e6ac	4	0	[36].color[0]
+// bdc-fix	V	float	0x27e6b0	4	0	[36].color[1]
+// bdc-fix	V	float	0x27e6b4	4	0	[36].color[2]
+// bdc-fix	V	float	0x27e6b8	4	0	[36].dir2[0]
+// bdc-fix	V	float	0x27e6bc	4	0	[36].dir2[1]
+// bdc-fix	V	float	0x27e6c0	4	0	[36].dir2[2]
+// bdc-fix	V	float	0x27e6c4	4	0	[36].color2[0]
+// bdc-fix	V	float	0x27e6c8	4	0	[36].color2[1]
+// bdc-fix	V	float	0x27e6cc	4	0	[36].color2[2]
+// bdc-fix	V	float	0x27e6d0	4	0	[36].ambient[0]
+// bdc-fix	V	float	0x27e6d4	4	0	[36].ambient[1]
+// bdc-fix	V	float	0x27e6d8	4	0	[36].ambient[2]
+// bdc-fix	V	float	0x27e6dc	4	0	[37].dir[0]
+// bdc-fix	V	float	0x27e6e0	4	0	[37].dir[1]
+// bdc-fix	V	float	0x27e6e4	4	0	[37].dir[2]
+// bdc-fix	V	float	0x27e6e8	4	0	[37].color[0]
+// bdc-fix	V	float	0x27e6ec	4	0	[37].color[1]
+// bdc-fix	V	float	0x27e6f0	4	0	[37].color[2]
+// bdc-fix	V	float	0x27e6f4	4	0	[37].dir2[0]
+// bdc-fix	V	float	0x27e6f8	4	0	[37].dir2[1]
+// bdc-fix	V	float	0x27e6fc	4	0	[37].dir2[2]
+// bdc-fix	V	float	0x27e700	4	0	[37].color2[0]
+// bdc-fix	V	float	0x27e704	4	0	[37].color2[1]
+// bdc-fix	V	float	0x27e708	4	0	[37].color2[2]
+// bdc-fix	V	float	0x27e70c	4	0	[37].ambient[0]
+// bdc-fix	V	float	0x27e710	4	0	[37].ambient[1]
+// bdc-fix	V	float	0x27e714	4	0	[37].ambient[2]
+// bdc-fix	V	float	0x27e718	4	0	[38].dir[0]
+// bdc-fix	V	float	0x27e71c	4	0	[38].dir[1]
+// bdc-fix	V	float	0x27e720	4	0	[38].dir[2]
+// bdc-fix	V	float	0x27e724	4	0	[38].color[0]
+// bdc-fix	V	float	0x27e728	4	0	[38].color[1]
+// bdc-fix	V	float	0x27e72c	4	0	[38].color[2]
+// bdc-fix	V	float	0x27e730	4	0	[38].dir2[0]
+// bdc-fix	V	float	0x27e734	4	0	[38].dir2[1]
+// bdc-fix	V	float	0x27e738	4	0	[38].dir2[2]
+// bdc-fix	V	float	0x27e73c	4	0	[38].color2[0]
+// bdc-fix	V	float	0x27e740	4	0	[38].color2[1]
+// bdc-fix	V	float	0x27e744	4	0	[38].color2[2]
+// bdc-fix	V	float	0x27e748	4	0	[38].ambient[0]
+// bdc-fix	V	float	0x27e74c	4	0	[38].ambient[1]
+// bdc-fix	V	float	0x27e750	4	0	[38].ambient[2]
+// bdc-fix	V	float	0x27e754	4	0	[39].dir[0]
+// bdc-fix	V	float	0x27e758	4	0	[39].dir[1]
+// bdc-fix	V	float	0x27e75c	4	0	[39].dir[2]
+// bdc-fix	V	float	0x27e760	4	0	[39].color[0]
+// bdc-fix	V	float	0x27e764	4	0	[39].color[1]
+// bdc-fix	V	float	0x27e768	4	0	[39].color[2]
+// bdc-fix	V	float	0x27e76c	4	0	[39].dir2[0]
+// bdc-fix	V	float	0x27e770	4	0	[39].dir2[1]
+// bdc-fix	V	float	0x27e774	4	0	[39].dir2[2]
+// bdc-fix	V	float	0x27e778	4	0	[39].color2[0]
+// bdc-fix	V	float	0x27e77c	4	0	[39].color2[1]
+// bdc-fix	V	float	0x27e780	4	0	[39].color2[2]
+// bdc-fix	V	float	0x27e784	4	0	[39].ambient[0]
+// bdc-fix	V	float	0x27e788	4	0	[39].ambient[1]
+// bdc-fix	V	float	0x27e78c	4	0	[39].ambient[2]
 
-__typeof__(BtlStageLight[36]) g_btlStageLights = {
+__typeof__(BtlStageLight[40]) g_btlStageLights = {
     {
         .dir = { BDC_V(float, 0x27de30), BDC_V(float, 0x27de34), BDC_V(float, 0x27de38) },
         .color = { BDC_V(float, 0x27de3c), BDC_V(float, 0x27de40), BDC_V(float, 0x27de44) },
@@ -613,5 +673,34 @@ __typeof__(BtlStageLight[36]) g_btlStageLights = {
         .dir2 = { BDC_V(float, 0x27e49c), BDC_V(float, 0x27e4a0), BDC_V(float, 0x27e4a4) },
         .color2 = { BDC_V(float, 0x27e4a8), BDC_V(float, 0x27e4ac), BDC_V(float, 0x27e4b0) },
         .ambient = { BDC_V(float, 0x27e4b4), BDC_V(float, 0x27e4b8), BDC_V(float, 0x27e4bc) },
+    },
+    {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+    {
+        .dir = { BDC_V(float, 0x27e6a0), BDC_V(float, 0x27e6a4), BDC_V(float, 0x27e6a8) },
+        .color = { BDC_V(float, 0x27e6ac), BDC_V(float, 0x27e6b0), BDC_V(float, 0x27e6b4) },
+        .dir2 = { BDC_V(float, 0x27e6b8), BDC_V(float, 0x27e6bc), BDC_V(float, 0x27e6c0) },
+        .color2 = { BDC_V(float, 0x27e6c4), BDC_V(float, 0x27e6c8), BDC_V(float, 0x27e6cc) },
+        .ambient = { BDC_V(float, 0x27e6d0), BDC_V(float, 0x27e6d4), BDC_V(float, 0x27e6d8) },
+    },
+    {
+        .dir = { BDC_V(float, 0x27e6dc), BDC_V(float, 0x27e6e0), BDC_V(float, 0x27e6e4) },
+        .color = { BDC_V(float, 0x27e6e8), BDC_V(float, 0x27e6ec), BDC_V(float, 0x27e6f0) },
+        .dir2 = { BDC_V(float, 0x27e6f4), BDC_V(float, 0x27e6f8), BDC_V(float, 0x27e6fc) },
+        .color2 = { BDC_V(float, 0x27e700), BDC_V(float, 0x27e704), BDC_V(float, 0x27e708) },
+        .ambient = { BDC_V(float, 0x27e70c), BDC_V(float, 0x27e710), BDC_V(float, 0x27e714) },
+    },
+    {
+        .dir = { BDC_V(float, 0x27e718), BDC_V(float, 0x27e71c), BDC_V(float, 0x27e720) },
+        .color = { BDC_V(float, 0x27e724), BDC_V(float, 0x27e728), BDC_V(float, 0x27e72c) },
+        .dir2 = { BDC_V(float, 0x27e730), BDC_V(float, 0x27e734), BDC_V(float, 0x27e738) },
+        .color2 = { BDC_V(float, 0x27e73c), BDC_V(float, 0x27e740), BDC_V(float, 0x27e744) },
+        .ambient = { BDC_V(float, 0x27e748), BDC_V(float, 0x27e74c), BDC_V(float, 0x27e750) },
+    },
+    {
+        .dir = { BDC_V(float, 0x27e754), BDC_V(float, 0x27e758), BDC_V(float, 0x27e75c) },
+        .color = { BDC_V(float, 0x27e760), BDC_V(float, 0x27e764), BDC_V(float, 0x27e768) },
+        .dir2 = { BDC_V(float, 0x27e76c), BDC_V(float, 0x27e770), BDC_V(float, 0x27e774) },
+        .color2 = { BDC_V(float, 0x27e778), BDC_V(float, 0x27e77c), BDC_V(float, 0x27e780) },
+        .ambient = { BDC_V(float, 0x27e784), BDC_V(float, 0x27e788), BDC_V(float, 0x27e78c) },
     },
 };

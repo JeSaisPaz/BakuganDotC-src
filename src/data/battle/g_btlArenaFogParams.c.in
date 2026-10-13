@@ -100,8 +100,20 @@
 // bdc-fix	V	float	0x27dda8	4	0	[34].scale
 // bdc-fix	V	float	0x27ddb0	4	0	[35].range
 // bdc-fix	V	float	0x27ddb4	4	0	[35].scale
+// bdc-fix	V	unsigned int	0x27ddb8	4	0	[36].color
+// bdc-fix	V	float	0x27ddbc	4	0	[36].range
+// bdc-fix	V	float	0x27ddc0	4	0	[36].scale
+// bdc-fix	V	unsigned int	0x27ddc4	4	0	[37].color
+// bdc-fix	V	float	0x27ddc8	4	0	[37].range
+// bdc-fix	V	float	0x27ddcc	4	0	[37].scale
+// bdc-fix	V	unsigned int	0x27ddd0	4	0	[38].color
+// bdc-fix	V	float	0x27ddd4	4	0	[38].range
+// bdc-fix	V	float	0x27ddd8	4	0	[38].scale
+// bdc-fix	V	unsigned int	0x27dddc	4	0	[39].color
+// bdc-fix	V	float	0x27dde0	4	0	[39].range
+// bdc-fix	V	float	0x27dde4	4	0	[39].scale
 
-__typeof__(BtlArenaFog[36]) g_btlArenaFogParams = {
+__typeof__(BtlArenaFog[40]) g_btlArenaFogParams = {
     {
         .color = BDC_V(unsigned int, 0x27dc08),
         .range = BDC_V(float, 0x27dc0c),
@@ -250,4 +262,24 @@ __typeof__(BtlArenaFog[36]) g_btlArenaFogParams = {
     { .range = BDC_V(float, 0x27dd98), .scale = BDC_V(float, 0x27dd9c) },
     { .range = BDC_V(float, 0x27dda4), .scale = BDC_V(float, 0x27dda8) },
     { .range = BDC_V(float, 0x27ddb0), .scale = BDC_V(float, 0x27ddb4) },
+    {
+        .color = BDC_V(unsigned int, 0x27ddb8),
+        .range = BDC_V(float, 0x27ddbc),
+        .scale = BDC_V(float, 0x27ddc0),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27ddc4),
+        .range = BDC_V(float, 0x27ddc8),
+        .scale = BDC_V(float, 0x27ddcc),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27ddd0),
+        .range = BDC_V(float, 0x27ddd4),
+        .scale = BDC_V(float, 0x27ddd8),
+    },
+    {
+        .color = BDC_V(unsigned int, 0x27dddc),
+        .range = BDC_V(float, 0x27dde0),
+        .scale = BDC_V(float, 0x27dde4),
+    },
 };

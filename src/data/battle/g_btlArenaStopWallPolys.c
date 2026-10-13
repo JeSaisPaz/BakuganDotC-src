@@ -1,7 +1,7 @@
 // bdc 0x08abd3e0 g_btlArenaStopWallPolys
 #include "bdc.h"
 
-__typeof__(const float *[36]) g_btlArenaStopWallPolys = {
+__typeof__(const float *[40]) g_btlArenaStopWallPolys = {
     (const float *)&g_btlArenaStopWallPolys00, (const float *)&g_btlArenaStopWallPolys01,
     (const float *)&g_btlArenaStopWallPolys02, (const float *)&g_btlArenaStopWallPolys01,
     (const float *)&g_btlArenaStopWallPolys04, (const float *)&g_btlArenaStopWallPolys05,

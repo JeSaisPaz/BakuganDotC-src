@@ -69,7 +69,8 @@ void ActorCrystalUpdateLogic(ActorCrystal *self)
     obj = (u8 *)self + member->delta;
     fn = member->pfn;
     if (member->index != 0) {
-        entry = &(*(const VtblEntry **)(obj + (uintptr_t)member->pfn))[member->index];
+        /* pfn holds delta2, the vptr offset in the object: 0x14, the CoreObject vtable, in every entry */
+        entry = &((const VtblEntry *)((CoreObject *)obj)->vtable)[member->index];
         fn = entry->fn;
         obj += entry->delta;
     }
