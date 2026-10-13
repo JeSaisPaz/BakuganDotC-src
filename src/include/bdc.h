@@ -594,17 +594,45 @@ typedef struct BtlStats {
     u8 _unk16c[4];            /* +0x16c */
 } BtlStats;
 
+typedef struct ScePspFVector4 ScePspFVector4;
+struct ScePspFVector4 {
+    float x;
+    float y;
+    float z;
+    float w;
+};
+
+typedef struct ScePspFMatrix4 ScePspFMatrix4;
+struct ScePspFMatrix4 {
+    ScePspFVector4 x;
+    ScePspFVector4 y;
+    ScePspFVector4 z;
+    ScePspFVector4 w;
+};
+
+typedef struct CollisionBox {
+    s32 type;                       /* +0x00 shape type, 6 */
+    const VtblEntry *vtbl;          /* +0x04 0x08af5684 */
+    u8 _unk08[0x8];
+    ScePspFVector4 aabbMin;         /* +0x10 local box min; the float[8] AABB passed to CollisionAabb* starts here */
+    ScePspFVector4 aabbMax;         /* +0x20 local box max */
+    ScePspFMatrix4 transform;       /* +0x30 box-to-world; row w (+0x60) is the centre (`CollisionBoxGetCenter`) */
+    ScePspFMatrix4 invTransform;    /* +0x70 cached inverse of transform */
+    u8 invValid;                    /* +0xb0 invTransform is current; cleared by `CollisionBoxTransform` / `CollisionShapeSetup` */
+} CollisionBox;
+
 typedef float Mat4Row[4];
 
 typedef struct CollisionShapeBlock {
-    s32 type;                 /* +0x00 shape header type (written by CollisionShapeSetup for types 1-4, 6) */
-    const VtblEntry *vtbl;    /* +0x04 shape vtable (g_collisionRayVtbl, g_collisionSegmentVtbl, ...) */
-    u8 _unk08[0x8];           /* +0x08 shape payload */
-    s32 subType;              /* +0x10 type-4 capsule: type of the embedded segment sub-shape header (2) */
-    const VtblEntry *subVtbl; /* +0x14 type-4 capsule: sub-shape vtable (g_collisionSegmentVtbl) */
-    u8 _unk18[0x98];          /* +0x18 shape payload */
-    u8 boxInvValid;           /* +0xb0 type-6 box: cached-inverse valid flag (CollisionBox.invValid) */
-    u8 _unkb1[0xf];           /* +0xb1 shape payload */
+    union {
+        struct {
+            s32 type;                 /* +0x00 shape header type (written by CollisionShapeSetup for types 1-4, 6) */
+            const VtblEntry *vtbl;    /* +0x04 shape vtable (g_collisionRayVtbl, g_collisionSegmentVtbl, ...) */
+        };
+        CollisionCapsule capsule;     /* +0x00 type-4 view: CollisionShapeSetup writes the embedded segment sub-shape header (capsule.segment.type 2, .info g_collisionSegmentVtbl) */
+        CollisionBox box;             /* +0x00 type-6 view: CollisionShapeSetup clears box.invValid (+0xb0) */
+        u8 _shape[0xc0];              /* +0x00 shape payload: the world-space copy of desc (ray, segment, sphere, capsule or box) */
+    };
     s32 shapeType;            /* +0xc0 installed descriptor type (0..6, 8 = mesh); CollisionTestShape dispatches on it */
     void *desc;               /* +0xc4 installed shape descriptor */
     void **parts;             /* +0xc8 mesh: part pointer array */
@@ -623,14 +651,6 @@ typedef struct CollisionShapeBlock {
     };
     u8 _unkf8[0x8];           /* +0xf8 */
 } CollisionShapeBlock;
-
-typedef struct ScePspFVector4 ScePspFVector4;
-struct ScePspFVector4 {
-    float x;
-    float y;
-    float z;
-    float w;
-};
 
 typedef struct CollisionCollider {
     CoreNode node;              /* +0x00 base node (vtable 0x08af1684 at +0x20) */
@@ -814,14 +834,6 @@ typedef struct GfxSprite {
     u8 _pad_144[12];                     /* 0x144 not accessed */
     float toCamera[4];                   /* 0x150 camera position minus sprite position, filled by FUN_089f4e10 */
 } GfxSprite;
-
-typedef struct ScePspFMatrix4 ScePspFMatrix4;
-struct ScePspFMatrix4 {
-    ScePspFVector4 x;
-    ScePspFVector4 y;
-    ScePspFVector4 z;
-    ScePspFVector4 w;
-};
 
 typedef struct GfxSpriteLayer {
     s32 is3D;                  /* +0x00 */
@@ -1234,17 +1246,6 @@ typedef struct BtlBakugan {
     u8 stage36HintFlag;               /* +0x665 nonzero (with script var 11 == 9) starts stage-0x24 advice hint B (BtlHudAdviceStage36HintB) */
     u8 _unk666[0xa];                  /* +0x666 */
 } BtlBakugan;
-
-typedef struct CollisionBox {
-    s32 type;                       /* +0x00 shape type, 6 */
-    const VtblEntry *vtbl;          /* +0x04 0x08af5684 */
-    u8 _unk08[0x8];
-    ScePspFVector4 aabbMin;         /* +0x10 local box min; the float[8] AABB passed to CollisionAabb* starts here */
-    ScePspFVector4 aabbMax;         /* +0x20 local box max */
-    ScePspFMatrix4 transform;       /* +0x30 box-to-world; row w (+0x60) is the centre (`CollisionBoxGetCenter`) */
-    ScePspFMatrix4 invTransform;    /* +0x70 cached inverse of transform */
-    u8 invValid;                    /* +0xb0 invTransform is current; cleared by `CollisionBoxTransform` / `CollisionShapeSetup` */
-} CollisionBox;
 
 typedef struct ActorCrystal {
     BtlBakugan base;           /* +0x000 */

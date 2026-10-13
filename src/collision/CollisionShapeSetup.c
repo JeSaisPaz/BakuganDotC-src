@@ -5,7 +5,7 @@
    `desc[0]` in `shapeType` and `desc` itself in `desc`, sets `installed = 1` and, for types 1, 2, 3,
    4 and 6, writes the shape header (`type`, vtable: ray, segment, sphere, capsule, box) at the start
    of the block and saves the block pointer in `shape`. Type 4 additionally writes the embedded type-2
-   segment sub-shape header (`subType`, `subVtbl`); type 6 clears `boxInvValid`. Types 0, 5, 7, 8 and
+   segment sub-shape header (`capsule.segment`); type 6 clears `box.invValid`. Types 0, 5, 7, 8 and
    anything above only record the type. */
 
 void CollisionShapeSetup(u32 *block, u32 *desc)
@@ -50,8 +50,8 @@ void CollisionShapeSetup(u32 *block, u32 *desc)
     shape = NULL;
     if (b != NULL) {
       b->vtbl = g_collisionCapsuleVtbl;
-      b->subVtbl = g_collisionSegmentVtbl;
-      b->subType = 2;
+      b->capsule.segment.info = (void *)g_collisionSegmentVtbl;
+      b->capsule.segment.type = 2;
       b->type = 4;
       shape = b;
     }
@@ -63,7 +63,7 @@ void CollisionShapeSetup(u32 *block, u32 *desc)
     shape = NULL;
     if (b != NULL) {
       b->vtbl = g_collisionBoxVtbl;
-      b->boxInvValid = 0;
+      b->box.invValid = 0;
       b->type = 6;
       shape = b;
     }
