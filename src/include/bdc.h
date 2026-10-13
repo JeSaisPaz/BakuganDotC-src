@@ -20631,7 +20631,7 @@ extern __typeof__(const char[3]) g_gfxMaterialCodePrefix;
 extern __typeof__(const GfxMaterialState) g_gfxMaterialStateDefault;
 extern __typeof__(u16[1280]) g_gfxMeshObjDefaultVertices;
 extern __typeof__(u8) g_gfxMeshObjDepthTest;
-extern __typeof__(u32[8]) g_gfxMeshObjLightList;
+extern __typeof__(u32[26]) g_gfxMeshObjLightList;
 extern __typeof__(CoreObjectList) g_gfxMeshObjList0;
 extern __typeof__(CoreObjectList) g_gfxMeshObjList1;
 extern __typeof__(CoreObjectList) g_gfxMeshObjList2;

@@ -5,8 +5,32 @@
 // bdc-fix	V	unsigned int	0x2b5e58	4	0	[2]
 // bdc-fix	V	unsigned int	0x2b5e5c	4	0	[3]
 // bdc-fix	V	unsigned int	0x2b5e60	4	0	[4]
+// bdc-fix	V	unsigned int	0x2b5e70	4	0	[8]
+// bdc-fix	V	unsigned int	0x2b5e74	4	0	[9]
+// bdc-fix	V	unsigned int	0x2b5e78	4	0	[10]
+// bdc-fix	V	unsigned int	0x2b5e7c	4	0	[11]
+// bdc-fix	V	unsigned int	0x2b5e80	4	0	[12]
+// bdc-fix	V	unsigned int	0x2b5e84	4	0	[13]
+// bdc-fix	V	unsigned int	0x2b5e88	4	0	[14]
+// bdc-fix	V	unsigned int	0x2b5e8c	4	0	[15]
+// bdc-fix	V	unsigned int	0x2b5e90	4	0	[16]
+// bdc-fix	V	unsigned int	0x2b5e94	4	0	[17]
+// bdc-fix	V	unsigned int	0x2b5e98	4	0	[18]
+// bdc-fix	V	unsigned int	0x2b5e9c	4	0	[19]
+// bdc-fix	V	unsigned int	0x2b5ea0	4	0	[20]
+// bdc-fix	V	unsigned int	0x2b5ea4	4	0	[21]
+// bdc-fix	V	unsigned int	0x2b5ea8	4	0	[22]
+// bdc-fix	V	unsigned int	0x2b5eac	4	0	[23]
+// bdc-fix	V	unsigned int	0x2b5eb0	4	0	[24]
+// bdc-fix	V	unsigned int	0x2b5eb4	4	0	[25]
 
-__typeof__(u32[8]) g_gfxMeshObjLightList = {
+__typeof__(u32[26]) g_gfxMeshObjLightList = {
     BDC_V(unsigned int, 0x2b5e50), BDC_V(unsigned int, 0x2b5e54), BDC_V(unsigned int, 0x2b5e58),
-    BDC_V(unsigned int, 0x2b5e5c), BDC_V(unsigned int, 0x2b5e60),
+    BDC_V(unsigned int, 0x2b5e5c), BDC_V(unsigned int, 0x2b5e60), 0, 0, 0,
+    BDC_V(unsigned int, 0x2b5e70), BDC_V(unsigned int, 0x2b5e74), BDC_V(unsigned int, 0x2b5e78),
+    BDC_V(unsigned int, 0x2b5e7c), BDC_V(unsigned int, 0x2b5e80), BDC_V(unsigned int, 0x2b5e84),
+    BDC_V(unsigned int, 0x2b5e88), BDC_V(unsigned int, 0x2b5e8c), BDC_V(unsigned int, 0x2b5e90),
+    BDC_V(unsigned int, 0x2b5e94), BDC_V(unsigned int, 0x2b5e98), BDC_V(unsigned int, 0x2b5e9c),
+    BDC_V(unsigned int, 0x2b5ea0), BDC_V(unsigned int, 0x2b5ea4), BDC_V(unsigned int, 0x2b5ea8),
+    BDC_V(unsigned int, 0x2b5eac), BDC_V(unsigned int, 0x2b5eb0), BDC_V(unsigned int, 0x2b5eb4),
 };
