@@ -52,10 +52,15 @@ int BtlBakuganProcessMotionEvents(BtlBakugan *self)
     float effectDir[4] __attribute__((aligned(16)));
     ScePspFVector4 nodePos __attribute__((aligned(16)));
 
-    set = self->attackMotions[self->attackIndex];
+    /* PSP: the set is read before the combo test, also with `attackIndex` -1 (set by
+       BtlBakuganStartAttack), i.e. the word before the kind's table: NULL for 29 of the 32 kind
+       tables. On a host that word is another global's, so -1 gives no set (PC port). */
+    set = NULL;
     savedBlocked = self->attackSpawnBlocked;
     if (self->comboIndex != -1) {
         set = BtlBakuganGetComboStepMotionSet(self);
+    } else if (self->attackIndex >= 0) {
+        set = self->attackMotions[self->attackIndex];
     }
     if (BtlCameraTaskExists() != 0) {
         BtlGetCameraTask();
