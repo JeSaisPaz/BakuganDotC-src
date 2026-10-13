@@ -13013,7 +13013,7 @@ int CollisionTestPair(u32 layerMask, void *other, float *query, char exact);
 s32 CollisionTestShape(void *query, void *block, float *hit, u32 flags);
 bool CollisionTriangleTestRay(const CollisionFacePart *part, const u16 *face, const CollisionRayShape *query, float *bestT);
 bool CollisionTriangleTestSegment(const CollisionFacePart *part, const u16 *face, const CollisionRayShape *query, float *bestT);
-bool CollisionTriangleTestSphere(const float *a, const float *b, const float *c, const void *query, float *distSq);
+bool CollisionTriangleTestSphere(const float *a, const float *b, const float *c, const CollisionSphereQuery *query, float *distSq);
 s32 CollisionTriangleTestSweptSphere(void *part, const u16 *face, void *query, float *bestT);
 void CollisionUnitCornersStaticInit(void);
 void CoreBackgroundProcessCreate(void);
