@@ -12,7 +12,7 @@ bool CollisionCapsuleOverlapCapsule(const void *a, const void *b)
   float distSq;
   float r;
 
-  distSq = CollisionSegmentSegmentDistSq(&capA->segmentHead, &capB->segmentHead);
+  distSq = CollisionSegmentSegmentDistSq(&capA->segment, &capB->segment);
   r = capA->radius + capB->radius;
   return distSq <= r * r;
 }

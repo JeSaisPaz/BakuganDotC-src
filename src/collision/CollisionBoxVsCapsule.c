@@ -19,7 +19,7 @@ bool CollisionBoxVsCapsule(CollisionBox *self, void *capsule, ScePspFVector4 *ou
 
     if (g_collisionBoxCapsuleQueryInit == 0) {
         g_collisionBoxCapsuleQueryInit = 1;
-        axisSeg = (SegmentShape *)g_collisionBoxCapsuleQueryShape.segmentHead;
+        axisSeg = &g_collisionBoxCapsuleQueryShape.segment;
         g_collisionBoxCapsuleQueryShape.vtbl = g_collisionCapsuleVtbl;
         axisSeg->info = (void *)g_collisionSegmentVtbl;
         axisSeg->type = 2;

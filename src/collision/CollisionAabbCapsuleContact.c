@@ -3,7 +3,7 @@
 
 /* If the capsule overlaps the AABB (`CollisionAabbOverlapCapsule`), writes the box centre into
    g_collisionAabbCenterTmp (an inlined `CollisionAabbCenter`), finds the point of the capsule axis
-   (`segmentHead`: start/axis) closest to it (`CollisionSegmentClosestPoint`) and writes to `out`
+   (`segment`: start/axis) closest to it (`CollisionSegmentClosestPoint`) and writes to `out`
    the contact point on the capsule surface toward the box:
    `closest + normalize(boxCentre - closest) * radius` (a zero-length direction gives a zero offset,
    `out` = `closest`). Returns the overlap result; `out` is untouched on a miss. */
@@ -26,7 +26,7 @@ bool CollisionAabbCapsuleContact(const float *aabb, const void *capsule, ScePspF
         g_collisionAabbCenterTmp.y = (aabb[1] + aabb[5]) * 0.5f;
         g_collisionAabbCenterTmp.z = (aabb[2] + aabb[6]) * 0.5f;
         g_collisionAabbCenterTmp.w = 0.0f;
-        CollisionSegmentClosestPoint(c->segmentHead, &g_collisionAabbCenterTmp, &t, &closest);
+        CollisionSegmentClosestPoint(&c->segment, &g_collisionAabbCenterTmp, &t, &closest);
         center = CollisionAabbCenter((const ScePspFVector4 *)aabb);
         diff.x = center->x - closest.x;
         diff.y = center->y - closest.y;

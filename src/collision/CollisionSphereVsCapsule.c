@@ -16,7 +16,7 @@ bool CollisionSphereVsCapsule(const void *sphere, const void *capsule, ScePspFVe
   float r;
   ScePspFVector4 mid;
 
-  distSq = CollisionSegmentClosestPoint(cap->segmentHead, c, g_collisionClosestParams, p);
+  distSq = CollisionSegmentClosestPoint(&cap->segment, c, g_collisionClosestParams, p);
   r = sph->radius + cap->radius;
   mid.x = p->x + (c->x - p->x) * 0.5f;
   mid.y = p->y + (c->y - p->y) * 0.5f;

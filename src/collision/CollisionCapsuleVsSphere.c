@@ -13,7 +13,7 @@ bool CollisionCapsuleVsSphere(const void *capsuleArg, const void *sphereArg, Sce
     float sum;
     bool hit;
 
-    distSq = CollisionSegmentClosestPoint(&capsule->segmentHead, (const ScePspFVector4 *)sphere->center,
+    distSq = CollisionSegmentClosestPoint(&capsule->segment, (const ScePspFVector4 *)sphere->center,
                                           g_collisionClosestParams, g_collisionClosestPoints);
     sum = capsule->radius + sphere->radius;
     hit = distSq <= sum * sum;

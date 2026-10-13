@@ -10,7 +10,7 @@
 bool CollisionCapsuleVsRay(const void *capsuleArg, const void *ray, ScePspFVector4 *out)
 {
     const CollisionCapsule *capsule = capsuleArg;
-    float distSq = CollisionRaySegmentDistSq(&capsule->segmentHead, ray);
+    float distSq = CollisionRaySegmentDistSq(&capsule->segment, ray);
     ScePspFVector4 p0;
     ScePspFVector4 p1;
     float dx;

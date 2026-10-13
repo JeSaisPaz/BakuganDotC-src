@@ -91,12 +91,13 @@ void ActorCrystalCreateColliders(ActorCrystal *self)
   self->pushShape.axisLen = axisLen;
   CollisionColliderInit(&collider->node, (const u32 *)&self->pushShape, 0, self, 0);
   self->base.collider1->shapeBlock.installed = 0;
-  /* bank constant C720 = (0, 0, 0, 0) */
+  /* sv.q of the bank constant C720 = (0, 0, 0, 0) over the segment view's header (+0x10..+0x1f): its type,
+     descriptor and two unknown words. */
   desc = (CollisionCapsule *)self->base.collider1->shapeBlock.desc;
-  ((float *)desc->segmentHead)[0] = 0.0f;
-  ((float *)desc->segmentHead)[1] = 0.0f;
-  ((float *)desc->segmentHead)[2] = 0.0f;
-  ((float *)desc->segmentHead)[3] = 0.0f;
+  desc->segment.type = 0;
+  desc->segment.info = NULL;
+  desc->segment.reserved08[0] = 0;
+  desc->segment.reserved08[1] = 0;
   collider = self->base.collider1;
   collider->shapeBlock.matrix = self->base.anchorMatrix;
   collider->shapeBlock.dirty = 1;

@@ -16,8 +16,8 @@ void *BtlBakuganCtorTargetPoint(BtlBakugan *self)
   GfxModelCtorEmpty(&self->base);
   self->base.base.vtable = g_btlBakuganVtbl;
   self->bodyShape.vtbl = g_collisionCapsuleVtbl;
-  ((SegmentShape *)self->bodyShape.segmentHead)->info = (void *)g_collisionSegmentVtbl;
-  ((SegmentShape *)self->bodyShape.segmentHead)->type = 2;
+  self->bodyShape.segment.info = (void *)g_collisionSegmentVtbl;
+  self->bodyShape.segment.type = 2;
   self->bodyShape.type = 4;
   self->pushShape.vtbl = g_collisionSphereVtbl;
   self->pushShape.type = 3;

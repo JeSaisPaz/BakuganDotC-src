@@ -62,12 +62,13 @@ void ActorStageObjActivate(void *obj)
   }
   self->helper->shapeBlock.matrix = self->helperMatrix;
   self->helper->shapeBlock.dirty = 1;
-  /* sv.q of the bank constant C720 = (0, 0, 0, 0). */
+  /* sv.q of the bank constant C720 = (0, 0, 0, 0) over the segment view's header (+0x10..+0x1f): its type,
+     descriptor and two unknown words. */
   shapeDesc = (CollisionCapsule *)self->helper->shapeBlock.desc;
-  ((float *)shapeDesc->segmentHead)[0] = 0.0f;
-  ((float *)shapeDesc->segmentHead)[1] = 0.0f;
-  ((float *)shapeDesc->segmentHead)[2] = 0.0f;
-  ((float *)shapeDesc->segmentHead)[3] = 0.0f;
+  shapeDesc->segment.type = 0;
+  shapeDesc->segment.info = NULL;
+  shapeDesc->segment.reserved08[0] = 0;
+  shapeDesc->segment.reserved08[1] = 0;
   self->helper->shapeBlock.installed = 0;
   self->helper->shapeBlock.dirty = 1;
   ActorStageObjUpdateTransform(&self->base);

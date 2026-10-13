@@ -113,7 +113,7 @@ s32 CollisionMeshTestShape(void *meshBlock, void *query, float *hit, u32 surface
     case 4:
         if (g_collisionMeshCapsuleQueryInit == 0) {
             g_collisionMeshCapsuleQueryInit = 1;
-            capsuleSegment = (SegmentShape *)g_collisionMeshCapsuleQuery.segmentHead;
+            capsuleSegment = &g_collisionMeshCapsuleQuery.segment;
             g_collisionMeshCapsuleQuery.vtbl = g_collisionCapsuleVtbl;
             capsuleSegment->info = g_collisionSegmentVtbl;
             capsuleSegment->type = 2;

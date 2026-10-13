@@ -43,8 +43,8 @@ ActorStageObjLandmark *ActorStageObjLandmarkCtor(ActorStageObjLandmark *self, fl
   ActorStageObjBaseCtor(&self->base, 0xb1, pos);
   self->base.base.base.vtable = g_actorStageObjLandmarkVtbl;
   self->capsule.vtbl = g_collisionCapsuleVtbl;
-  ((SegmentShape *)self->capsule.segmentHead)->info = (void *)g_collisionSegmentVtbl;
-  ((SegmentShape *)self->capsule.segmentHead)->type = 2;
+  self->capsule.segment.info = (void *)g_collisionSegmentVtbl;
+  self->capsule.segment.type = 2;
   self->capsule.type = 4;
   self->step = 0;
   self->timer = 0;

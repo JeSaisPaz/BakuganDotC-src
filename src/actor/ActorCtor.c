@@ -25,8 +25,8 @@ Actor *ActorCtor(Actor *self, s32 modelId)
   GfxModelCtor(&self->base, g_btlModelNames[modelId], 0);
   self->base.base.vtable = &g_actorVtbl;
   self->collShape.vtbl = g_collisionCapsuleVtbl;
-  ((SegmentShape *)self->collShape.segmentHead)->info = (void *)g_collisionSegmentVtbl;
-  ((SegmentShape *)self->collShape.segmentHead)->type = 2;
+  self->collShape.segment.info = (void *)g_collisionSegmentVtbl;
+  self->collShape.segment.type = 2;
   self->collShape.type = 4;
   self->bodyShape.vtbl = g_collisionSphereVtbl;
   self->bodyShape.type = 3;

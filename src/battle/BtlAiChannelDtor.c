@@ -32,7 +32,7 @@ void BtlAiChannelDtor(BtlAiChannel *self, u32 flags)
         table->total = 0;
         table->totalValid = 0;
     }
-    CxxVecDelete(self->weights, 10, 0x10, BtlAiWeightTableDtor, 0, 0);
+    CxxVecDelete(self->weights, 10, sizeof(BtlAiWeightTable), BtlAiWeightTableDtor, 0, 0);
     if (flags & 1) {
         MemLock();
         MemFree(self, NULL, 0);

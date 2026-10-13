@@ -37,8 +37,8 @@ int BtlAttackCheckClash(BtlAttack *self)
     if (g_btlClashSelfCapsuleInit == 0) {
         g_btlClashSelfCapsuleInit = 1;
         g_btlClashSelfCapsule.vtbl = g_collisionCapsuleVtbl;
-        ((SegmentShape *)g_btlClashSelfCapsule.segmentHead)->info = (void *)g_collisionSegmentVtbl;
-        ((SegmentShape *)g_btlClashSelfCapsule.segmentHead)->type = 2;
+        g_btlClashSelfCapsule.segment.info = (void *)g_collisionSegmentVtbl;
+        g_btlClashSelfCapsule.segment.type = 2;
         g_btlClashSelfCapsule.type = 4;
     }
     if (g_btlClashOtherSphereInit == 0) {
@@ -49,8 +49,8 @@ int BtlAttackCheckClash(BtlAttack *self)
     if (g_btlClashOtherCapsuleInit == 0) {
         g_btlClashOtherCapsuleInit = 1;
         g_btlClashOtherCapsule.vtbl = g_collisionCapsuleVtbl;
-        ((SegmentShape *)g_btlClashOtherCapsule.segmentHead)->info = (void *)g_collisionSegmentVtbl;
-        ((SegmentShape *)g_btlClashOtherCapsule.segmentHead)->type = 2;
+        g_btlClashOtherCapsule.segment.info = (void *)g_collisionSegmentVtbl;
+        g_btlClashOtherCapsule.segment.type = 2;
         g_btlClashOtherCapsule.type = 4;
     }
     selfCategory = ((int)(s16)g_btlAttackTypeInfo[self->type] & 0xfc00U) >> 10;

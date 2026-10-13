@@ -14,7 +14,7 @@ s32 CollisionCapsuleVsCapsule(const void *a, const void *b, ScePspFVector4 *out)
   ScePspFVector4 p0;
   ScePspFVector4 p1;
 
-  distSq = CollisionSegmentSegmentDistSq(&capA->segmentHead, &capB->segmentHead);
+  distSq = CollisionSegmentSegmentDistSq(&capA->segment, &capB->segment);
   r = capA->radius + capB->radius;
   p0 = g_collisionClosestPoints[0];
   p1 = g_collisionClosestPoints[1];

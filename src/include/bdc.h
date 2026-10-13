@@ -351,15 +351,30 @@ typedef struct VtblEntry {
     void *fn;    /* +0x4 code pointer */
 } VtblEntry;
 
+typedef struct SegmentShape {
+    s32 type;            /* +0x00 shape kind; 2 = segment (SndPointSegmentDistSq) */
+    void *info;          /* +0x04 static descriptor; SndPointSegmentDistSq stores 0x08af5564 */
+    u32 reserved08[2];   /* +0x08 no reader found; zeroed with type/info by the sv.q of `ActorCrystalCreateColliders` and `ActorStageObjActivate` on a capsule's segment view */
+    float start[4];      /* +0x10 start point (w unused) */
+    float dir[4];        /* +0x20 end minus start (w unused) */
+} SegmentShape;
+
 typedef struct CollisionCapsule {
     s32 type;                       /* +0x00 shape type, 4 */
     const VtblEntry *vtbl;          /* +0x04 0x08af5624 */
     u8 _unk08[8];                   /* +0x08 */
-    u8 segmentHead[0x10];           /* +0x10 start of the embedded SegmentShape view: its `start`/`dir` are this shape's `start`/`axis` */
-    float start[3];                 /* +0x20 axis start point (xyz; `CollisionCapsuleGetCenter` returns this as a quad) */
-    float radiusSq;                 /* +0x2c radius squared (the quad's w slot) */
-    float axis[3];                  /* +0x30 axis vector, end minus start */
-    float axisLen;                  /* +0x3c length of axis, set by `CollisionCapsuleRecalc` */
+    union {
+        SegmentShape segment;       /* +0x10 embedded segment view (type 2, descriptor 0x08af5564): its `start`/`dir` are `start`/`axis` below, their w lanes `radiusSq`/`axisLen` */
+        struct {
+            s32 _segmentType;       /* +0x10 segment.type */
+            void *_segmentInfo;     /* +0x14 segment.info */
+            u8 _unk18[8];           /* +0x18 segment.reserved08 */
+            float start[3];         /* +0x20 axis start point (xyz; `CollisionCapsuleGetCenter` returns this as a quad) */
+            float radiusSq;         /* +0x2c radius squared (the quad's w slot) */
+            float axis[3];          /* +0x30 axis vector, end minus start */
+            float axisLen;          /* +0x3c length of axis, set by `CollisionCapsuleRecalc` */
+        };
+    };
     float radius;                   /* +0x40 */
 } CollisionCapsule;
 
@@ -7629,14 +7644,6 @@ typedef struct ScriptTrackLocal {
     u8 childState;           /* 0x24 0 = no child, 1 = child script running, 2 = child finished */
     u8 pad25[3];             /* 0x25 */
 } ScriptTrackLocal;
-
-typedef struct SegmentShape {
-    s32 type;            /* +0x00 shape kind; 2 = segment (SndPointSegmentDistSq) */
-    void *info;          /* +0x04 static descriptor; SndPointSegmentDistSq stores 0x08af5564 */
-    u8 _unk08[8];        /* +0x08 */
-    float start[4];      /* +0x10 start point (w unused) */
-    float dir[4];        /* +0x20 end minus start (w unused) */
-} SegmentShape;
 
 typedef struct SndAudioSettings {
     void **bankTable;         /* +0x00 0x100-byte table of registered bank pointers (allocated by SndManagerInit, indexed by SndSsBankRegister) */
