@@ -4,12 +4,13 @@
 /* Constructor of the quest-field camera controller (field camera `+0x5c4`, see
    `GameFieldCameraReset`; tables from `GameQuestParsePathTable`/`GameQuestParseCamTable`)
    (vtable `g_questCamCtrlVtbl` at `+0x2c`, base `GameQuestCamCtrlBaseCtor`): clears the two mode slots
-   `+0x38`/`+0x3c`, copies the node cursor `+0x30`, `+0x34` and `+0x44` from `desc`, sets the
+   `+0x38`/`+0x3c`, copies the node cursor (`desc->params`), `collision` and `radius` from the
+   `GameQuestCamCtrlDesc` `desc`, sets the
    current node `+0x48 = -1`, finds the nearest path node (`GameQuestPathFindNearestNode`),
    switches to that node's camera (`GameQuestCamCtrlSwitchMode`) and runs one snapped step
    (`GameQuestCamCtrlStep` with dt 1/60 and the snap flag `+0x4a` set). Returns `ctrl`. */
 
-GameQuestCamCtrl *GameQuestCamCtrlCtor(GameQuestCamCtrl *self, void *desc)
+GameQuestCamCtrl *GameQuestCamCtrlCtor(GameQuestCamCtrl *self, const GameQuestCamCtrlDesc *desc)
 
 {
   GameQuestCamCtrlBaseCtor(self,desc);
@@ -20,9 +21,9 @@ GameQuestCamCtrl *GameQuestCamCtrlCtor(GameQuestCamCtrl *self, void *desc)
   self->camSet = 0;
   self->node = -1;
   self->snap = '\0';
-  self->nodeCursor = ((GameQuestCamCtrl *)desc)->nodeCursor;
-  self->radius = ((GameQuestCamCtrl *)desc)->radius;
-  self->collision = ((GameQuestCamCtrl *)desc)->collision;
+  self->nodeCursor = (s16 *)desc->params;
+  self->radius = desc->radius;
+  self->collision = desc->collision;
   GameQuestPathFindNearestNode(self->nodeCursor);
   GameQuestCamCtrlSwitchMode(self,*self->nodeCursor);
   self->snap = '\x01';
