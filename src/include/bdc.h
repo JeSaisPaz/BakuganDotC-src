@@ -3598,7 +3598,25 @@ typedef struct BtlUnitAlt {
 
 typedef struct BtlUnitMode4 {
     BtlBakugan base;            /* +0x000 */
-    u8 _unk670[0x5c];           /* +0x670 CPU-unit fields (base ctor; same layout as BtlCpuUnit) */
+    /* +0x670..+0x6d0: BtlCpuUnit's fields, written by its constructor BtlCpuUnitCtor (same layout on every target) */
+    BtlBakugan *ally;           /* +0x670 BtlCpuUnit.ally */
+    u8 aiStarted;               /* +0x674 BtlCpuUnit.aiStarted */
+    u8 _unk675[0x3];            /* +0x675 */
+    GfxModel *ballModel;        /* +0x678 BtlCpuUnit.ballModel */
+    u8 _unk67c[0x4];            /* +0x67c */
+    float ctorVecs[2][4];       /* +0x680 BtlCpuUnit.ctorVecs */
+    s32 allyIndex;              /* +0x6a0 BtlCpuUnit.allyIndex */
+    s32 ballEntryStep;          /* +0x6a4 BtlCpuUnit.ballEntryStep */
+    s32 ballEntryTimer;         /* +0x6a8 BtlCpuUnit.ballEntryTimer */
+    float ballEntryGrow;        /* +0x6ac BtlCpuUnit.ballEntryGrow */
+    u8 flag6b0;                 /* +0x6b0 BtlCpuUnit.flag6b0 */
+    u8 _unk6b1[0x3];            /* +0x6b1 */
+    s32 aiLevel;                /* +0x6b4 BtlCpuUnit.aiLevel */
+    s32 spawnerId;              /* +0x6b8 BtlCpuUnit.spawnerId */
+    u8 flag6bc;                 /* +0x6bc BtlCpuUnit.flag6bc */
+    u8 _unk6bd[0x7];            /* +0x6bd */
+    s32 targetStyle;            /* +0x6c4 BtlCpuUnit.targetStyle */
+    ActorStageObjEggCrystal *word6c8; /* +0x6c8 BtlCpuUnit.word6c8 */
     BtlAi *ai;                  /* +0x6cc AI object, may be NULL (BtlCpuUnit.ai; BtlUnitMode4Update) */
     float prevPos[4];           /* +0x6d0 previous position (BtlUnitMode4Ctor) */
     float retreatPoint[4];      /* +0x6e0 retreat target point; start position at construction */
