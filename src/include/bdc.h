@@ -6264,7 +6264,7 @@ typedef struct GmoMotionRecord {
 
 typedef struct GmoMotionRef {
     struct CoreNode node;      /* 0x00 CoreNode header */
-    u32 arrayOwner;            /* 0x24 cleared at construction */
+    void *arrayOwner;          /* 0x24 cleared at construction; the base field GmoMotionEntry's arrayOwner shares (GmoMotionFree reads it for both classes) */
     u8 pinned;                 /* 0x28 1 */
     u8 pad29[3];               /* 0x29 */
     void *info;                /* 0x2c the pack data itself: starts with a GmoMotionInfo */

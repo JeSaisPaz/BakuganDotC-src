@@ -12,7 +12,7 @@ void GmoMotionFree(void *mgr, CoreNode *entry)
 {
   GmoMotionRef *ref = (GmoMotionRef *)entry;
   const VtblEntry *vt;
-  u32 owner = ref->arrayOwner;
+  uintptr_t owner = (uintptr_t)ref->arrayOwner;
   void *block;
 
   if (owner == 0) {
@@ -23,7 +23,7 @@ void GmoMotionFree(void *mgr, CoreNode *entry)
   } else if (owner >= 2) {
     vt = (const VtblEntry *)entry->vtable + 1;
     ((void (*)(void *, u32))vt->fn)((u8 *)entry + vt->delta, 2);
-    block = (u32 *)(uintptr_t)owner - 4; /* array block header precedes element 0 */
+    block = (u32 *)owner - 4; /* array block header precedes element 0 */
     if (block != (void *)0x0) {
       MemLock();
       MemFree(block, (char *)0x0, 0);
