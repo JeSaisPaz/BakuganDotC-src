@@ -9,7 +9,7 @@
    kind 0x2c is false when the target exists, is in state 0, `value` is non-zero and
    `targetIdleFrames / 30` is below `value`; every other case (kind 0 included) goes to
    `BtlAiEvalCondition`. */
-bool BtlAiEvalConditionXZ(float value, BtlAi *self, u8 kind, s32 op)
+s32 BtlAiEvalConditionXZ(float value, BtlAi *self, u8 kind, s32 op)
 {
     float dist;
     float limit;
@@ -20,7 +20,7 @@ bool BtlAiEvalConditionXZ(float value, BtlAi *self, u8 kind, s32 op)
             limit = value * 10.0f;
             switch (op) {
             case 0:
-                return true;
+                return 1;
             case 1:
                 return dist < limit;
             case 2:
@@ -35,12 +35,12 @@ bool BtlAiEvalConditionXZ(float value, BtlAi *self, u8 kind, s32 op)
                 return !(dist <= limit);
             case 7:
             default:
-                return false;
+                return 0;
             }
         }
     } else if (kind == 0x2c && self->target != NULL && self->target->state == 0 &&
                !(value == 0.0f) && self->targetIdleFrames * 0.0333333351f < value) {
-        return false;
+        return 0;
     }
     return BtlAiEvalCondition(value, self, kind, op);
 }

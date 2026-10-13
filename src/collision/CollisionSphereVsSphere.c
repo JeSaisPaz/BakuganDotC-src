@@ -8,7 +8,7 @@
    centres coincide the direction is zero and `out` is the centre of `sphere`.
    Returns the overlap flag; on a miss `out` is untouched. */
 
-bool CollisionSphereVsSphere(const CollisionSphere *sphere, const CollisionSphere *other,
+s32 CollisionSphereVsSphere(const CollisionSphere *sphere, const CollisionSphere *other,
                              ScePspFVector4 *out)
 {
   float dx = other->center[0] - sphere->center[0];

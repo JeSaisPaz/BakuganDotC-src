@@ -10,7 +10,7 @@
    frames`. The camera vector's `w` lane is written with a stale VFPU value (S713, never set
    here: `vscl.t` writes only xyz) and is left out of the C. */
 
-bool GameEventCamTweenUpdate(GameEventCamTween *self)
+s32 GameEventCamTweenUpdate(GameEventCamTween *self)
 {
   float v[3];
   GameEventCamKeys *keys;

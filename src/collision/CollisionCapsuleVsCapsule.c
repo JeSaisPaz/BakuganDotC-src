@@ -4,7 +4,7 @@
 /* Capsule shape method for capsule queries (type-4 slot 3): segment/segment closest points; hit
    when distSq <= (radiusA + radiusB)², `out` = midpoint of the two closest points (all four lanes). */
 
-bool CollisionCapsuleVsCapsule(const void *a, const void *b, ScePspFVector4 *out)
+s32 CollisionCapsuleVsCapsule(const void *a, const void *b, ScePspFVector4 *out)
 
 {
   const CollisionCapsule *capA = a;

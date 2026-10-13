@@ -4,7 +4,7 @@
 /* Vtable slot 32 of the guard classes: stores the position of `Bip01_Head` in `+0x3f0` and the
    `Bone01` node in `+0x3e0`; returns whether `Bone01` exists. */
 
-bool ActorNpcGuardFindHead(ActorNpc *self)
+s32 ActorNpcGuardFindHead(ActorNpc *self)
 
 {
   void *node;
