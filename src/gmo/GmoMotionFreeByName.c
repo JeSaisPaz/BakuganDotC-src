@@ -15,7 +15,7 @@ void GmoMotionFreeByName(void *mgr, const char *name)
   while (entry != (CoreNode *)0x0) {
     vt = (const VtblEntry *)entry->vtable + 5;
     next = entry->next;
-    if (((int (*)(void *, const char *))vt->fn)((u8 *)entry + vt->delta, name) != 0) {
+    if (((bool (*)(void *, const char *))vt->fn)((u8 *)entry + vt->delta, name) != 0) {
       GmoMotionFree(mgr, entry);
     }
     entry = next;

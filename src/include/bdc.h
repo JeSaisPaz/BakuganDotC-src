@@ -10017,25 +10017,6 @@ typedef struct UiTalkBalloonSprite {
     u8 _unk181[3];          /* +0x181 */
 } UiTalkBalloonSprite;
 
-typedef struct UiTalkTask {
-    CoreTask base;          /* +0x000 task header (id 0x6e) */
-    u8 _unk010[0x464];      /* +0x010 */
-    u32 backColours[3];     /* +0x474 RGBA rows of the talk background gradient (BtlMainDrawTalk); cleared by UiTalkHideCutInSprites */
-    u8 _unk480[0xb4];       /* +0x480 */
-    u32 overlayColours[3];  /* +0x534 RGBA rows of the two-band overlay BtlMainDrawScene draws over the battle while the player's unit is respawning (respawnCountdown) */
-    u8 _unk540[0x10c];      /* +0x540 */
-    u32 closeRequest;       /* +0x64c close-request word (UiTalkRequestClose sets 1; BtlHud uses the same slot as msgStep) */
-    u8 _unk650[0x8];        /* +0x650 */
-    s32 closeValue;         /* +0x658 value stored by UiTalkRequestClose */
-    s32 closeAux;           /* +0x65c set to -1 by UiTalkRequestClose */
-    u8 _unk660[0x290];      /* +0x660 */
-    u32 windowKind;         /* +0x8f0 current window kind; 6-0xb and 0xf use the narrow text indent (UiTalkUsesNarrowIndent) */
-    u8 _unk8f4[0x25];       /* +0x8f4 */
-    u8 heldEventScript;     /* +0x919 set when the voiced message suspended the battle event script (UiTalkShowMessage); the talk window resumes it (UiTalkWindowStep) and BtlMainPhaseExit leaves it suspended */
-    u8 _unk91a[0x2ce];      /* +0x91a */
-    s32 captionState;       /* +0xbe8 caption state: 0 idle, 1..99 showing, 100 dismiss requested (UiCaptionSetText, UiCaptionIsShowing) */
-} UiTalkTask;
-
 typedef struct UiTextTask {
     CoreTask base;     /* 0x00 */
     s32 step;          /* 0x10 init step, cleared by the constructor */
@@ -16396,7 +16377,7 @@ bool UiBattleRuleSelectUpdatePanelTween(UiBattleRuleSelect *self, bool out);
 bool UiBattleRuleSelectUpdateSubWindow(UiBattleRuleSelect *self, u8 closing);
 void UiBattleRuleSelectWaitPhase(UiBattleRuleSelect *self);
 int UiButtonCellOffset(u8 button, u16 base);
-s32 UiCaptionIsShowing(UiTalkTask *win);
+s32 UiCaptionIsShowing(BtlHud *win);
 void UiCaptionSetText(void *win, char show, s32 arg, const char *text, s32 duration);
 int UiCardEquipAdjustGauge(UiCardEquip *self);
 void UiCardEquipAnimateTabButton(UiCardEquip *self);

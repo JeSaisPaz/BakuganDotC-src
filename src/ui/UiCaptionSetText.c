@@ -14,7 +14,7 @@ void UiCaptionSetText(void *win, char show, s32 arg, const char *text, s32 durat
     s32 len;
 
     if (show == 0) {
-        if (UiCaptionIsShowing((UiTalkTask *)win) == 0) {
+        if (UiCaptionIsShowing((BtlHud *)win) == 0) {
             UiSetWindowActive(0xe, 0);
         } else {
             hud->hintState = 100;

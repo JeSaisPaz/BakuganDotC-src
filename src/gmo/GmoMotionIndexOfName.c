@@ -14,7 +14,7 @@ s32 GmoMotionIndexOfName(void *mgr, const char *name)
 
   for (node = g_gmoMotionRegistry->next; node != NULL; node = node->next) {
     nameCmp = &((const VtblEntry *)node->vtable)[5];
-    if (((s32 (*)(void *, const char *))nameCmp->fn)((u8 *)node + nameCmp->delta, name) != 0) {
+    if (((bool (*)(void *, const char *))nameCmp->fn)((u8 *)node + nameCmp->delta, name) != 0) {
       return index;
     }
     index++;

@@ -14,7 +14,7 @@ bool GmoMotionContains(void *mgr, const char *name)
   entry = g_gmoMotionRegistry->next;
   while (entry != (CoreNode *)0x0) {
     vt = (const VtblEntry *)entry->vtable + 5;
-    if (((int (*)(void *, const char *))vt->fn)((u8 *)entry + vt->delta, name) != 0) {
+    if (((bool (*)(void *, const char *))vt->fn)((u8 *)entry + vt->delta, name) != 0) {
       if (((GmoMotionMgr *)mgr)->replaceExisting != 0) {
         GmoMotionFree(mgr, entry);
         return false;

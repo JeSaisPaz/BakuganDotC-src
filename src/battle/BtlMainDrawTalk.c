@@ -4,7 +4,7 @@
 /* Draw phase 4 of the battle main task (talk): with UI window 0 inactive just a white screen
    tint (sort key 0); otherwise, on sort key 110, the 2D state (`GfxPacketCall2DState`) and the
    talk window's two-band background gradient (`GfxPacketDrawGradientBands`, rows
-   `g_btlTalkBackBandYs`, colours `UiTalkTask` `backColours`) plus `BtlMainDrawScene`. Then,
+   `g_btlTalkBackBandYs`, colours `BtlHud` `cutInColor`) plus `BtlMainDrawScene`. Then,
    on sort key 1050, the dim colour `dimColor` when its alpha is above 0. */
 
 void BtlMainDrawTalk(BtlMain *self)
