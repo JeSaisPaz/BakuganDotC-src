@@ -6,9 +6,9 @@
    `0x08af5684` box; slot k tests against a query of type k+1, type 6 for slot 4): forwards to the
    sphere's "vs ray" method (slot 0, `CollisionSphereVsRay`) with the arguments swapped. */
 
-bool CollisionRayVsSphere(CollisionRayShape *ray, void *other)
+bool CollisionRayVsSphere(CollisionRayShape *ray, void *other, ScePspFVector4 *out)
 
 {
   const VtblEntry *entry = ((CollisionRayShape *)other)->vtbl + 1;
-  return ((bool (*)(void *, CollisionRayShape *))entry->fn)((char *)other + entry->delta, ray);
+  return ((bool (*)(void *, CollisionRayShape *, ScePspFVector4 *))entry->fn)((char *)other + entry->delta, ray, out);
 }

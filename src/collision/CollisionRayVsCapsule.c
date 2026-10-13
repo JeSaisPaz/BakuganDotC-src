@@ -4,9 +4,9 @@
 /* Ray shape method for capsule targets (type-1 vtable slot 3): forwards to the capsule's "vs ray"
    method (`CollisionCapsuleVsRay`). */
 
-bool CollisionRayVsCapsule(CollisionRayShape *ray, void *other)
+bool CollisionRayVsCapsule(CollisionRayShape *ray, void *other, ScePspFVector4 *out)
 
 {
   const VtblEntry *entry = ((CollisionRayShape *)other)->vtbl + 1;
-  return ((bool (*)(void *, CollisionRayShape *))entry->fn)((char *)other + entry->delta, ray);
+  return ((bool (*)(void *, CollisionRayShape *, ScePspFVector4 *))entry->fn)((char *)other + entry->delta, ray, out);
 }
