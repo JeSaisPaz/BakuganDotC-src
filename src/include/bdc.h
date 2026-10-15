@@ -1845,14 +1845,9 @@ typedef struct ActorStageObjLandmark {
         };
     };
     CollisionCollider *helper; /* +0x32c helper collider; hides the HP gauge while it exists */
-    union {
-        u8 _unk330[0x60];      /* +0x330 raw view (used by the ctor) */
-        CollisionCapsule capsule; /* +0x330 helper collider shape: start (0.1,0,0), axis (0,700,0), radius 230 (`ActorStageObjActivate`) */
-        struct {
-            u8 _unk330a[0x50];     /* +0x330 */
-            float knockDir[4];     /* +0x380 knock-back direction on death, 10 units along the heading (`ActorStageObjLandmarkOnHit`; read by `ActorStageObjLandmarkBreak`) */
-        };
-    };
+    CollisionCapsule capsule;  /* +0x330 helper collider shape: start (0.1,0,0), axis (0,700,0), radius 230 (`ActorStageObjActivate`) */
+    u8 _unk374[0xc];           /* +0x374 */
+    float knockDir[4];         /* +0x380 knock-back direction on death, 10 units along the heading (`ActorStageObjLandmarkOnHit`; read by `ActorStageObjLandmarkBreak`); PC port: no longer a union view over the capsule, which is 0x58 bytes on a 64-bit host and covered it */
     float orbPos[4];           /* +0x390 orb position (aura effects) */
     union {
         u8 _unk3a0[0x40];      /* +0x3a0 raw view (used by the ctor) */

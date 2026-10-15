@@ -8,7 +8,19 @@
    written to `g_gfxActiveCamera` as floats `/ 4096 * 20` through the VFPU), kind 2 the fov
    (written to the camera's `fov` as a float); other kinds only count. Returns true once `frame >=
    frames`. The camera vector's `w` lane is written with a stale VFPU value (S713, never set
-   here: `vscl.t` writes only xyz) and is left out of the C. */
+   here: `vscl.t` writes only xyz) and is left out of the C. A tween of 0 frames divides by zero:
+   the Allegrex `div` does not trap (LO = -1 for a non-negative dividend, 1 for a negative one, as
+   PPSSPP models it), so the tween ends after one frame; `CamTweenDiv` keeps that on a host, where an
+   integer division by zero traps. */
+
+/* The Allegrex `div` quotient: no trap on a zero divisor. */
+static s32 CamTweenDiv(s32 a, s32 b)
+{
+  if (b == 0) {
+    return a < 0 ? 1 : -1;
+  }
+  return a / b;
+}
 
 s32 GameEventCamTweenUpdate(GameEventCamTween *self)
 {
@@ -28,7 +40,7 @@ s32 GameEventCamTweenUpdate(GameEventCamTween *self)
     d0 = keys->eyeEnd[0] - start0;
     d1 = keys->eyeEnd[1] - keys->eyeStart[1];
     d2 = keys->eyeEnd[2] - keys->eyeStart[2];
-    t = ((s32)self->frame << 12) / (s32)self->frames;
+    t = CamTweenDiv((s32)self->frame << 12, (s32)self->frames);
     keys->eye[0] = (s32)(((s64)t * d0) >> 12) + start0;
     keys->eye[1] = (s32)(((s64)t * d1) >> 12) + keys->eyeStart[1];
     keys->eye[2] = (s32)(((s64)t * d2) >> 12) + keys->eyeStart[2];
@@ -50,7 +62,7 @@ s32 GameEventCamTweenUpdate(GameEventCamTween *self)
     d0 = keys->targetEnd[0] - start0;
     d1 = keys->targetEnd[1] - keys->targetStart[1];
     d2 = keys->targetEnd[2] - keys->targetStart[2];
-    t = ((s32)self->frame << 12) / (s32)self->frames;
+    t = CamTweenDiv((s32)self->frame << 12, (s32)self->frames);
     keys->target[0] = (s32)(((s64)t * d0) >> 12) + start0;
     keys->target[1] = (s32)(((s64)t * d1) >> 12) + keys->targetStart[1];
     keys->target[2] = (s32)(((s64)t * d2) >> 12) + keys->targetStart[2];
@@ -69,8 +81,8 @@ s32 GameEventCamTweenUpdate(GameEventCamTween *self)
   case 2:
     keys = self->keys;
     keys->fov = keys->fovStart +
-                (u16)((((s32)keys->fovEnd - (s32)keys->fovStart) * (s32)self->frame) /
-                      (s32)self->frames);
+                (u16)CamTweenDiv(((s32)keys->fovEnd - (s32)keys->fovStart) * (s32)self->frame,
+                                 (s32)self->frames);
     g_gfxActiveCamera->fov = (float)(s32)self->keys->fov;
     break;
   default:
