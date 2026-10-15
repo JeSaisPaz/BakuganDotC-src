@@ -8,7 +8,7 @@ void GameFieldPlacementDtor(void *rec, u32 flags)
 
 {
   if (rec != (void *)0x0) {
-    ((GameFieldPlacement *)rec)->vtbl = g_gameFieldPlacementVtbl;
+    ((GameFieldPlacedChar *)rec)->vtbl = g_gameFieldPlacementVtbl;
     GameFieldPlacementBaseDtor(rec,0);
     if ((flags & 1) != 0) {
       MemLock();

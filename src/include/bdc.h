@@ -1465,7 +1465,9 @@ typedef struct ActorNpcPlacement {
     s32 pos[3];                /* +0x00 position in 1/4096 units (x 20 for world units) */
     s16 angles[3];             /* +0x0c rotation angles (ActorNpcPlacementAnglesToRadians) */
     u8 routeFlag;              /* +0x12 cleared by ActorSetRoute mode 0 */
-    u8 _unk13[0x23];           /* +0x13 */
+    u8 slot;                   /* +0x13 index in the placed table */
+    const VtblEntry *vtbl;     /* +0x14 g_gameFieldPlacementVtbl: the record's vtable (GameFieldPlacedChar) */
+    u8 _unk18[0x1e];           /* +0x18 */
     u8 charCode;               /* +0x36 character code (ActorModelIdFromCode; 7 and 10 are not talk targets, ActorPlayerFindTalkTarget) */
     u8 placed;                 /* +0x37 non-zero when the NPC is placed in the current area */
     u8 _unk38;                 /* +0x38 */
@@ -4469,7 +4471,7 @@ typedef struct GameEventFadeAction {
 typedef struct GameFieldPlacedChar {
     s32 pos[3];                /* +0x00 position (20.12), set by GameEventActorRecordFinish */
     s16 rot[3];                /* +0x0c angles (1/65536 turn), set by GameEventActorRecordFinish */
-    u8 _unk12;
+    u8 routeFlag;              /* +0x12 cleared by ActorSetRoute mode 0 and GameEventOp80SetActorMotion (ActorNpcPlacement view) */
     u8 slot;                   /* +0x13 index in the placed table, renumbered by GameFieldCharSetRemoveActor */
     const VtblEntry *vtbl;     /* +0x14 g_gameFieldPlacementVtbl (GameFieldPlacementCtor) */
     u8 work18[0xc];            /* +0x18 cleared by GameFieldPlacementCtor */
@@ -4490,7 +4492,7 @@ typedef struct GameFieldPlacedChar {
     u8 blend;                  /* +0x3d 2 at construction */
     u8 entryParam3e;                 /* +0x3e copied from char-set entry byte +0x13 (GameFieldSpawnPlacedActor) */
     u8 byte3f;                 /* +0x3f */
-    u8 frozenFlag;             /* +0x40 cleared by ActorNpcFreeze */
+    u8 frozenFlag;             /* +0x40 cleared by ActorNpcFreeze; placed idle-motion selector (ActorPlayPlacedMotion), set by GameEventOp80SetActorMotion */
     u8 byte41;                 /* +0x41 */
     u8 entryParam42;                 /* +0x42 copied from char-set entry byte +0x17 */
     u8 byte43;                 /* +0x43 */
