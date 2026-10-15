@@ -3,14 +3,14 @@
 
 /* Radar/minimap step of the field HUD screen (task 3001, `UiFieldHudCtor`; sprite array
    `base.data`): computes the view angle from `viewDir` (`atan2f`), then walks the actor list
-   (`setupState`) and, from slot 0x48, gives each non-player actor a blip: template 16 for NPC
+   (`actorList`) and, from slot 0x48, gives each non-player actor a blip: template 16 for NPC
    models 0x4e..0x53, else template 15, shown and stencil-tested against 8 (models 7/0x1f hidden
    on stage 1, model 0x55 hidden), placed by `UiFieldHudPlaceRadarBlip`. NPC models also get a
    view cone (template 25) scaled by `viewDist * 0.018`, sized, moved onto the blip and turned by
    `viewHeading + viewAngle - pi/2`; while the field guard-blind state is 2 the cone is shown
    (cloaked guards 0x4f: blip and cone follow `ActorNpcCloakIsHidden`), otherwise the cone is
    hidden; a cone whose view-cone object is invisible is hidden. Leftover actor slots up to
-   `iconBase + 0x48` are hidden. Then the target gimmicks (`targetMark` list): cameras 0xbd9 get
+   `iconBase + 0x48` are hidden. Then the target gimmicks (`targetList`): cameras 0xbd9 get
    blip 16 plus cone 25 turned by `viewAngle - (rot.y + sweepAngle)` (shown only in guard-blind
    state 2), 0xbc7 gets blip 63, 0x1778/0xbdf get blip 15, shown and placed only while `active`
    and vtable slot 17 returns 0. Slots up to `iconBase + targetCount + 0x48` are hidden, and
@@ -56,7 +56,7 @@ void UiFieldHudUpdateRadar(UiFieldHud *self)
 
   viewAngle = atan2f(self->viewDir[0], self->viewDir[1]) - 1.5707964f;
   slot = 0x48;
-  for (actor = *(Actor **)self->setupState; actor != NULL;
+  for (actor = self->actorList; actor != NULL;
        actor = (Actor *)actor->base.base.next) {
     if (actor->isPlayer != 0) {
       continue;
@@ -125,7 +125,7 @@ void UiFieldHudUpdateRadar(UiFieldHud *self)
   }
 
   angle = atan2f(self->viewDir[0], self->viewDir[1]);
-  for (g = *(GameGimmick **)self->targetMark; g != NULL; g = (GameGimmick *)g->base.base.next) {
+  for (g = self->targetList; g != NULL; g = (GameGimmick *)g->base.base.next) {
     if (g->typeId == 0xbd9) {
       GfxSpriteCopy(HUD_SPRITE(16), HUD_SPRITE(slot));
       HUD_SPRITE(slot)->flags |= 1;

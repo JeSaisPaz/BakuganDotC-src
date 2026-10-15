@@ -2,7 +2,7 @@
 #include "bdc.h"
 
 /* Phase 1 of the field HUD. Does nothing while there is no actor list (`ActorGetList`) or the
-   list is empty. Otherwise stores the first actor in `setupState`, counts the target gimmicks
+   list is empty. Otherwise stores the first actor in `actorList`, counts the target gimmicks
    (`UiFieldHudCountTargets`), stores the player (`ActorFindPlayer`) and walks the actor list:
    every actor adds one icon, NPC models 0x4e..0x53 a second one, and model 0x53 also adds one
    to `targetCount`. The icon count minus one goes to both words of `iconBase`. Then allocates
@@ -24,14 +24,14 @@ void UiFieldHudSetupPhase(UiFieldHud *self)
     return;
   }
   actor = *(Actor **)ActorGetList();
-  *(Actor **)self->setupState = actor;
+  self->actorList = actor;
   if (actor == NULL) {
     return;
   }
   UiFieldHudCountTargets(self);
   self->player = ActorFindPlayer();
   iconCount = (s32 *)self->iconBase;
-  for (actor = *(Actor **)self->setupState; actor != NULL;
+  for (actor = self->actorList; actor != NULL;
        actor = (Actor *)actor->base.base.next) {
     iconCount[0]++;
     if (actor->base.base.unk08 >= 0x4e && actor->base.base.unk08 < 0x54) {

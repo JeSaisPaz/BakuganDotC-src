@@ -13,10 +13,7 @@ UiFieldHud *UiFieldHudCtor(UiFieldHud *self)
   UiScreenCtor((CoreTask *)self);
   (self->base).base.vtable = g_uiFieldHudVtbl;
   UiFieldHudFaderCtor(&self->fader);
-  self->setupState[0] = '\0';
-  self->setupState[1] = '\0';
-  self->setupState[2] = '\0';
-  self->setupState[3] = '\0';
+  self->actorList = NULL;
   self->player = (ActorPlayer *)0x0;
   self->iconBase[0] = '\0';
   self->iconBase[1] = '\0';
@@ -51,10 +48,7 @@ UiFieldHud *UiFieldHudCtor(UiFieldHud *self)
   self->scrollPos = 0;
   self->targetCount = 0;
   self->targetsDone = 0;
-  self->targetMark[0] = '\0';
-  self->targetMark[1] = '\0';
-  self->targetMark[2] = '\0';
-  self->targetMark[3] = '\0';
+  self->targetList = NULL;
   self->hintPrinter = (UiTextPrinter *)0x0;
   self->hints = (u32 *)0x0;
   self->blinkA = 0;

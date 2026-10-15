@@ -2,7 +2,7 @@
 #include "bdc.h"
 
 /* Counts the target gimmicks of the field's gimmick list (`GameFieldTask.gimmicks`) for the field
-   HUD, starting at the list head saved in `targetMark`: `targetCount` (total) and `targetsDone`
+   HUD, starting at the list head saved in `targetList`: `targetCount` (total) and `targetsDone`
    both grow by 2 for type 0xbd9 and by 1 for types 0xbc7, 0x1778 and 0xbdf; an unbroken breakable
    container (type 0xbdc, `+0x1e0` clear) adds to `targetCount` only, 1 for record contents kind
    0..2 and 3 for kinds 3..5 (larger kinds add nothing). Returns early when there is no field
@@ -22,11 +22,11 @@ void UiFieldHudCountTargets(UiFieldHud *self)
     return;
   }
   g = ((GameFieldTask *)GameFieldFindTask())->gimmicks;
-  *(GameGimmick **)self->targetMark = g;
+  self->targetList = g;
   if (g == NULL) {
     return;
   }
-  g = *(GameGimmick **)self->targetMark;
+  g = self->targetList;
   self->targetCount = 0;
   self->targetsDone = 0;
   while (g != NULL) {

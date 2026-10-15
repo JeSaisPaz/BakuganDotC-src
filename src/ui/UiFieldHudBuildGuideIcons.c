@@ -10,9 +10,9 @@
    0x44 (copy of 0x15) and the hidden guide icons 0x45..0x47 (`guide_ico_13`, `guide_ico_12`,
    `guide_ico_05`, `UiFieldHudCreateHiddenSprite`) placed over sprites 0x26/0x27/0x26, and sets up
    the blip templates 15, 16 and 25 (view cone; both orange-red `g_colorOrangeRed`), 63 and 14. Then, from slot 0x48, one blip per
-   non-player actor of the actor list (`setupState`): template 15, or for NPC models 0x4e..0x53
+   non-player actor of the actor list (`actorList`): template 15, or for NPC models 0x4e..0x53
    template 16 plus a view cone (template 25 scaled by `viewDist * 0.018`, rotated by
-   `viewHeading + pi/2`); one or two per target gimmick (`targetMark` list: 0xbd9 → 16 + cone 25
+   `viewHeading + pi/2`); one or two per target gimmick (`targetList`: 0xbd9 → 16 + cone 25
    scaled 1.8, 0xbc7 → 63, 0x1778/0xbdf → 15); then template-15 blips up to slot
    `iconBase + targetCount + 0x48`. Every new sprite is allocated as a `GfxSprite`, added to the
    layer `base.spriteLayer`, stencil-tested against 8 and hidden; finally sprites 0..0x47 are
@@ -215,7 +215,7 @@ void UiFieldHudBuildGuideIcons(UiFieldHud *self)
 
   /* One blip (plus a view cone for NPC models 0x4e..0x53) per non-player actor. */
   slot = 0x48;
-  for (actor = *(Actor **)self->setupState; actor != NULL;
+  for (actor = self->actorList; actor != NULL;
        actor = (Actor *)actor->base.base.next) {
     if (actor->isPlayer != 0) {
       continue;
@@ -270,7 +270,7 @@ void UiFieldHudBuildGuideIcons(UiFieldHud *self)
   GfxSpriteSetStencilTest(HUD_SPRITE(14), true, 8);
 
   /* Target gimmick blips. */
-  for (g = *(GameGimmick **)self->targetMark; g != NULL; g = (GameGimmick *)g->base.base.next) {
+  for (g = self->targetList; g != NULL; g = (GameGimmick *)g->base.base.next) {
     if (g->typeId == 0xbd9) {
       HUD_NEW_SPRITE(HUD_SPRITE(slot));
       GfxSpriteLayerAdd(self->base.spriteLayer, (CoreObject *)HUD_SPRITE(slot));

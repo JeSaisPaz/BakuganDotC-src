@@ -8992,7 +8992,7 @@ typedef struct UiEquip {
 typedef struct UiFieldHud {
     UiScreen base;              /* +0x00 */
     void *fader;                /* +0x6c 0xc-byte fader state {state, sprites, alpha} (UiFieldHudFaderCtor/Init/Update) */
-    u8 setupState[0x4];          /* +0x70 */
+    struct Actor *actorList;    /* +0x70 head of the actor list (ActorGetList), stored by UiFieldHudSetupPhase; NULL from the ctor */
     ActorPlayer *player;        /* +0x74 field player (flags +0x3a0/+0x3a1/+0x3b0/+0x3b1, gauges) */
     u8 iconBase[0x8];            /* +0x78 */
     float mapRect[4];           /* +0x80 stage map rectangle from the table 0x08abebec; [2]/[3] = origin (UiFieldHudWorldToRadar) */
@@ -9012,7 +9012,7 @@ typedef struct UiFieldHud {
     s32 scrollPos;              /* +0xc8 slide-in counter of UiFieldHudMainPhase: +15 per frame, step ends at 90 */
     s32 targetCount;            /* +0xcc target gimmicks of the field (UiFieldHudCountTargets) */
     s32 targetsDone;            /* +0xd0 incremented by UiFieldHudIncrementCounter */
-    u8 targetMark[0x4];          /* +0xd4 written as bytes by UiFieldHudCountTargets, read as a word by UiFieldHudUpdateRadar */
+    struct GameGimmick *targetList; /* +0xd4 head of the field's gimmick list (GameFieldTask.gimmicks), stored by UiFieldHudCountTargets; NULL from the ctor */
     UiTextPrinter *hintPrinter; /* +0xd8 hint text printer (UiFieldHudLoadHints; font 3, scale 0.7) */
     u32 *hints;                 /* +0xdc relocated mes_Adventure_hint_<lang>.bin table; entries are PSP addresses (PspPtr) */
     float promptY;              /* +0xe0 prompt slide position, -48 .. 48 */
