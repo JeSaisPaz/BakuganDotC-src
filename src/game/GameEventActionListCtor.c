@@ -12,7 +12,7 @@ GameEventActionList *GameEventActionListCtor(GameEventActionList *self)
   (self->base).vtable = g_gameEventActionListVtbl;
   self->state = '\0';
   self->count = '\0';
-  memset(self->actions,0,0x40);
+  memset(self->actions,0,sizeof(self->actions));
   return self;
 }
 

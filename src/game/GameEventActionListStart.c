@@ -8,7 +8,7 @@ void GameEventActionListStart(GameEventActionList *self)
 
 {
   self->count = '\0';
-  memset(self->actions,0,0x40);
+  memset(self->actions,0,sizeof(self->actions));
   self->state = '\x01';
   CoreTaskInsert(self,100);
   return;

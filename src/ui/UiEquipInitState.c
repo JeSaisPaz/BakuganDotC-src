@@ -76,9 +76,9 @@ void UiEquipInitState(UiEquip *self)
     self->gaugeScroll[i].scrollFast = -1.0f;
     self->gaugeScroll[i].scrollSlow = -1.0f;
   }
-  memset(self->bakuganModels, 0, 0x10);
-  memset(self->pedestalModels, 0, 0x10);
-  memset(&self->slotCameras, 0, 4);
+  memset(self->bakuganModels, 0, sizeof(self->bakuganModels));
+  memset(self->pedestalModels, 0, sizeof(self->pedestalModels));
+  memset(&self->slotCameras, 0, sizeof(self->slotCameras));
   if (self->playerCount < 3) {
     MemLock();
     fromLow = MemIsAllocFromLow();
