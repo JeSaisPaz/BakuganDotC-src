@@ -2,6 +2,6 @@
 #include "bdc.h"
 
 __typeof__(s32 *[3]) g_btlDemoMotionIdTables = {
-    (int *)&g_btlDemoSceneSoundIds[735], (int *)&g_btlDemoMotionIdTables01,
+    (int *)&g_btlDemoMotionIdTables00, (int *)&g_btlDemoMotionIdTables01,
     (int *)&g_btlDemoMotionIdTables02,
 };

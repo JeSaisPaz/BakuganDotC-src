@@ -4,13 +4,18 @@
 /* Maps a sound cue number of the `.scb` scene files to the engine's sound id for the battle demo
    scene player: cues 0..0x2df (and negative cues, unchecked) are looked up in
    g_btlDemoSceneSoundIds; cues 0x33c..0x34d and 0x7f6..0x802 are hard-coded in two `switch`es
-   (0xa0000a..0x100000b and 0x430001e..0x430002a); every other cue returns -1. */
+   (0xa0000a..0x100000b and 0x430001e..0x430002a); every other cue returns -1.
+   The sound table holds 735 ids: cue 0x2df reads the next word in the original, the first entry
+   of `g_btlDemoMotionIdTables00`, which this C reads by name. */
 
 s32 BtlDemoSceneMapSoundId(void *player, s32 cue)
 {
   (void)player;
 
   if (cue < 0x2e0) {
+    if (cue == 0x2df) {
+      return g_btlDemoMotionIdTables00[0];
+    }
     return g_btlDemoSceneSoundIds[cue];
   }
   if (cue < 0x34e) {

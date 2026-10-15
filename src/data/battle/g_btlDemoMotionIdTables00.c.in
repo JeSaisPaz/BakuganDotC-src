@@ -1,0 +1,7 @@
+// bdc 0x08ac0e24 g_btlDemoMotionIdTables00
+#include "bdc.h"
+// bdc-fix	V	int	0x2bce24	4	0	[0]
+// bdc-fix	V	int	0x2bce28	4	0	[1]
+// bdc-fix	V	int	0x2bce2c	4	0	[2]
+
+__typeof__(s32[3]) g_btlDemoMotionIdTables00 = { BDC_V(int, 0x2bce24), BDC_V(int, 0x2bce28), BDC_V(int, 0x2bce2c) };

@@ -707,9 +707,8 @@
 // bdc-fix	V	int	0x2bce18	4	0	[732]
 // bdc-fix	V	int	0x2bce1c	4	0	[733]
 // bdc-fix	V	int	0x2bce20	4	0	[734]
-// bdc-fix	V	int	0x2bce24	4	0	[735]
 
-__typeof__(s32[736]) g_btlDemoSceneSoundIds = {
+__typeof__(s32[735]) g_btlDemoSceneSoundIds = {
     BDC_V(int, 0x2bc2a8), BDC_V(int, 0x2bc2ac), BDC_V(int, 0x2bc2b0), BDC_V(int, 0x2bc2b4), 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, BDC_V(int, 0x2bc2fc), BDC_V(int, 0x2bc300),
     BDC_V(int, 0x2bc304), BDC_V(int, 0x2bc308), BDC_V(int, 0x2bc30c), BDC_V(int, 0x2bc310),
@@ -887,5 +886,5 @@ __typeof__(s32[736]) g_btlDemoSceneSoundIds = {
     BDC_V(int, 0x2bcdec), BDC_V(int, 0x2bcdf0), BDC_V(int, 0x2bcdf4), BDC_V(int, 0x2bcdf8),
     BDC_V(int, 0x2bcdfc), BDC_V(int, 0x2bce00), BDC_V(int, 0x2bce04), BDC_V(int, 0x2bce08),
     BDC_V(int, 0x2bce0c), BDC_V(int, 0x2bce10), BDC_V(int, 0x2bce14), BDC_V(int, 0x2bce18),
-    BDC_V(int, 0x2bce1c), BDC_V(int, 0x2bce20), BDC_V(int, 0x2bce24),
+    BDC_V(int, 0x2bce1c), BDC_V(int, 0x2bce20),
 };
