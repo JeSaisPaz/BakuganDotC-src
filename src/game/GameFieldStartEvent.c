@@ -14,7 +14,7 @@ void GameFieldStartEvent(CoreTask *task, s16 id, u8 a, u8 b, bool keepBalls)
   GameEvent470StartEntry(field->events,id,a,b);
   if (!keepBalls) {
     ActorBallSetList(&field->ballList);
-    field->eventView = 1;
+    field->camera.eventView = 1;
   }
   return;
 }

@@ -17,7 +17,7 @@ void GameFieldPhaseMain(CoreTask *task)
 
 {
   GameFieldTask *field = (GameFieldTask *)task;
-  GameFieldCamera *cam = (GameFieldCamera *)field->camera;
+  GameFieldCamera *cam = &field->camera;
   GameFieldPlacedChar *rec;
   GfxFader *fader;
   GfxFader *src;
@@ -226,7 +226,7 @@ void GameFieldPhaseMain(CoreTask *task)
     break;
   case 11:
     /* caught: frame the catching guard and let the alarm ring */
-    field->eventView = 1;
+    field->camera.eventView = 1;
     field->eventViewTimer = (g_gameEventState.flags[5] != 0) ? 50 : 90;
     field->alarmTimer = 60;
     if (field->caughtSlot == 0xff) {
@@ -332,7 +332,7 @@ void GameFieldPhaseMain(CoreTask *task)
     GfxFaderStart(GfxGetActiveFader(), 10);
     GameFieldCameraReset(cam, 1, 0);
     GameFieldCameraUpdate(cam);
-    field->eventView = 0;
+    field->camera.eventView = 0;
     field->subState = 1;
     break;
   case 17:

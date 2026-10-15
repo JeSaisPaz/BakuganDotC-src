@@ -28,7 +28,7 @@ void UiMainMenuDtor(UiMainMenu *self, u32 flags)
     GfxTextureMoveToMainRam("f0_z_sea01");
     GfxTextureMoveToMainRam("worldmap");
     UiHelpLineDestroy();
-    GfxCameraDtor((CoreNode *)self->camera, 2);
+    GfxCameraDtor(&self->camera.base, 2);
     UiScreenDtor(&self->base, 0);
     if ((flags & 1) != 0) {
         MemLock();

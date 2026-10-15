@@ -20,7 +20,7 @@ UiMainMenu *UiMainMenuCtor(UiMainMenu *self)
 
   UiScreenCtor((CoreTask *)self);
   self->base.base.vtable = g_uiMainMenuVtbl;
-  GfxCameraCtor((CoreNode *)self->camera);
+  GfxCameraCtor(&self->camera.base);
   if (NetPlayHasManager()) {
     NetPlayRequestAbort(NetPlayGetManager());
   }

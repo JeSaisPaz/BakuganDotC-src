@@ -127,7 +127,7 @@ u32 GameFieldHandleInput(CoreTask *task)
       ActorSetState(&actor->base, 10, 0);
       actor->talkTarget = g;
     }
-    field->eventView = 1;
+    field->camera.eventView = 1;
     return 0x1e;
   }
 
@@ -143,7 +143,7 @@ u32 GameFieldHandleInput(CoreTask *task)
       SndManagerPlay(SndGetManager(), 0, 0, 0);
     }
     GameFieldCharSetFreezeAll(field->charSet);
-    GameFieldCameraBeginHold((GameFieldCamera *)field->camera);
+    GameFieldCameraBeginHold(&field->camera);
     GameFieldSaveReturnLocation();
     field->nextRequest = 0xb;
     g_gameFieldReturnKind = 2;
@@ -155,7 +155,7 @@ u32 GameFieldHandleInput(CoreTask *task)
       SndManagerPlay(SndGetManager(), 0, 0, 0);
     }
     GameFieldCharSetFreezeAll(field->charSet);
-    GameFieldCameraBeginHold((GameFieldCamera *)field->camera);
+    GameFieldCameraBeginHold(&field->camera);
     return 0x1c;
   }
 
@@ -167,7 +167,7 @@ u32 GameFieldHandleInput(CoreTask *task)
   switch (g->typeId) {
   case 0x322:
     GameFieldCharSetFreezeAll(field->charSet);
-    GameFieldCameraBeginHold((GameFieldCamera *)field->camera);
+    GameFieldCameraBeginHold(&field->camera);
     GameFieldSaveReturnLocation();
     field->nextRequest = 0xb;
     g_gameFieldReturnKind = 2;
@@ -175,7 +175,7 @@ u32 GameFieldHandleInput(CoreTask *task)
     return 0x18;
   case 0x323:
     GameFieldCharSetFreezeAll(field->charSet);
-    GameFieldCameraBeginHold((GameFieldCamera *)field->camera);
+    GameFieldCameraBeginHold(&field->camera);
     return 0x1a;
   case 0x324:
     if (SndHasManager()) {
@@ -196,7 +196,7 @@ u32 GameFieldHandleInput(CoreTask *task)
     return 0x18;
   case 0x325:
     GameFieldCharSetFreezeAll(field->charSet);
-    GameFieldCameraBeginHold((GameFieldCamera *)field->camera);
+    GameFieldCameraBeginHold(&field->camera);
     return 0x1c;
   case 6000:
     g_gameEventState.flags[2] = (u8)(((GameGimmickRecord *)g->record)->entrySlot & 0xf);

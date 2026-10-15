@@ -44,7 +44,7 @@ void GameFieldUpdateWorld(CoreTask *task)
   GfxModelChainUpdateMotion((CoreObject *)field->gimmicks);
   GfxModelChainUpdateMotion(field->objList670.head);
   ActorSyncRouteGroups();
-  GameFieldCameraUpdate((GameFieldCamera *)field->camera);
+  GameFieldCameraUpdate(&field->camera);
   GfxCameraUpdateShake(g_gfxActiveCamera);
   GfxCameraUpdate(g_gfxActiveCamera, 2);
   if (field->worldMapTask != NULL) {

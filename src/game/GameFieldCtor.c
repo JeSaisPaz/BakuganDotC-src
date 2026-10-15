@@ -25,7 +25,7 @@ CoreTask *GameFieldCtor(CoreTask *task)
 
   CoreTaskInit(task);
   field->base.vtable = g_gameFieldTaskVtbl;
-  GameFieldCameraCtor((GameFieldCamera *)field->camera);
+  GameFieldCameraCtor(&field->camera);
   field->setupGimmick = NULL;
   field->alarmLoopHandle = 0;
   field->triggerByContact = 0;

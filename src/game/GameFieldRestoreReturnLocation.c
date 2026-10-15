@@ -13,5 +13,5 @@ void GameFieldRestoreReturnLocation(CoreTask *task)
   rec->pos[1] = g_gameEventLocationBlock.returnPos[1];
   rec->pos[2] = g_gameEventLocationBlock.returnPos[2];
   rec->rot[1] = g_gameEventLocationBlock.returnHeading;
-  GameFieldCameraSnapQuestCam((GameFieldCamera *)((GameFieldTask *)task)->camera);
+  GameFieldCameraSnapQuestCam(&((GameFieldTask *)task)->camera);
 }

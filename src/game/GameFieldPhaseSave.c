@@ -48,7 +48,7 @@ void GameFieldPhaseSave(CoreTask *task)
     fader->end[3] = 0.0f;
     GfxFaderStart(GfxGetActiveFader(), 20);
   }
-  if (field->cameraMode == 4) {
+  if (field->camera.mode == 4) {
     GameFieldPlayStageBgm();
     field->subState = 2;
   }

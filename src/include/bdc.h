@@ -3046,7 +3046,7 @@ typedef struct BtlHud {
     GfxSprite **arenaSprites;         /* +0x060 */
     BtlBakugan *gateCutInUnit;        /* +0x064 unit passed to BtlHudUpdateGateCardCutIn (NULL = none) */
     BtlBakugan *abilityCutInUnit;     /* +0x068 unit passed to BtlHudUpdateAbilityCutIn (NULL = none) */
-    u8 package[0x44];                 /* +0x06c IoLzsPackage built by BtlHudCtor (IoLzsPackageCtor) */
+    IoLzsPackage package;             /* +0x06c layout package built by BtlHudCtor (IoLzsPackageCtor) */
     s32 phase;                        /* +0x0b0 phase index 0..9 into the update/draw method tables */
     s32 phaseStep;                    /* +0x0b4 step inside the current phase */
     s32 savedAlphaCount;              /* +0x0b8 sprite count whose alpha BtlHudPhaseBattleEnd saves (0x106 set by BtlHudPhaseBuild) */
@@ -4576,6 +4576,22 @@ typedef struct GameFieldCamParam {
     u8 payload[1];   /* +0x10 payload returned by GameFieldCamParamGetPayload */
 } GameFieldCamParam;
 
+typedef struct GameFieldCameraHeadView {
+    void *spring;              /* +0x00 0x40-byte spring state (GameFieldCameraSpringCtor) */
+    u8 _unk04[0xc];            /* +0x04 */
+    float targetLook[4];       /* +0x10 look-at target (midpoint of player head and object) */
+    float targetEye[4];        /* +0x20 eye target */
+} GameFieldCameraHeadView;
+
+typedef struct GameFieldCameraAimView {
+    void *spring;              /* +0x00 0x40-byte spring state (GameFieldCameraSpringCtor) */
+    u8 _unk04[0xc];            /* +0x04 */
+    float eye[4];              /* +0x10 eye target */
+    float lookAt[4];           /* +0x20 look-at target */
+    float dir[4];              /* +0x30 aim direction, reset to (1,0,0,0) */
+    u8 _unk40[0x10];           /* +0x40 */
+} GameFieldCameraAimView;
+
 typedef struct GameFieldCamera {
     GfxCamera base;                /* +0x000 generic camera (GfxCameraCtor); fov 50.0, 45.0 with a quest camera */
     void *target;                  /* +0x2a0 followed actor; 0 = none (GameFieldCameraSetTarget) */
@@ -4608,12 +4624,12 @@ typedef struct GameFieldCamera {
     u32 ctorWord3b0;               /* +0x3b0 zeroed by the constructor, no reader seen */
     u32 ctorWord3b4;               /* +0x3b4 zeroed by the constructor, no reader seen */
     u8 ctorByte3b8;                /* +0x3b8 0xff after the constructor, no reader seen */
-    u8 ctorByte3b9;                /* +0x3b9 zeroed by the constructor, no reader seen */
+    u8 eventView;                  /* +0x3b9 event view active flag (GameFieldTask +0x3d9): set by GameFieldStartEvent / GameFieldHandleInput / GameFieldPhaseMain, cleared by GameFieldEndEventView; zeroed by the constructor */
     u8 _unk3ba[2];                 /* +0x3ba */
     float orbitPitch;              /* +0x3bc pitch offset of the orbit mode (GameFieldCameraModeOrbit) */
     u8 mode9[0x10];                /* +0x3c0 mode-9 helper (GameFieldCameraMode9Ctor) */
-    u8 headView[0x30];             /* +0x3d0 head-view helper (GameFieldCameraHeadViewCtor) */
-    u8 aimView[0x50];              /* +0x400 aim-view helper (GameFieldCameraAimViewCtor) */
+    GameFieldCameraHeadView headView; /* +0x3d0 head-view helper (GameFieldCameraHeadViewCtor) */
+    GameFieldCameraAimView aimView;   /* +0x400 aim-view helper (GameFieldCameraAimViewCtor) */
     ScePspFVector4 ctorVec450;     /* +0x450 zero vector after the constructor, no reader seen */
     u8 ctorFlag460;                /* +0x460 zeroed by the constructor, no reader seen */
     u8 _unk461[3];                 /* +0x461 */
@@ -4633,24 +4649,8 @@ typedef struct GameFieldCamera {
     u8 _unk580[0x44];              /* +0x580 */
     void *questCam;                /* +0x5c4 quest camera controller (GameQuestCamCtrlCtor, 0x50 bytes) */
     void *questCamParams;          /* +0x5c8 its parameter object (0x20 bytes, vtable 0x08af6de0) */
-    u8 _unk5cc[0x104];             /* +0x5cc */
+    u8 _unk5cc[0x4];               /* +0x5cc */
 } GameFieldCamera;
-
-typedef struct GameFieldCameraAimView {
-    void *spring;              /* +0x00 0x40-byte spring state (GameFieldCameraSpringCtor) */
-    u8 _unk04[0xc];            /* +0x04 */
-    float eye[4];              /* +0x10 eye target */
-    float lookAt[4];           /* +0x20 look-at target */
-    float dir[4];              /* +0x30 aim direction, reset to (1,0,0,0) */
-    u8 _unk40[0x10];           /* +0x40 */
-} GameFieldCameraAimView;
-
-typedef struct GameFieldCameraHeadView {
-    void *spring;              /* +0x00 0x40-byte spring state (GameFieldCameraSpringCtor) */
-    u8 _unk04[0xc];            /* +0x04 */
-    float targetLook[4];       /* +0x10 look-at target (midpoint of player head and object) */
-    float targetEye[4];        /* +0x20 eye target */
-} GameFieldCameraHeadView;
 
 typedef struct GameFieldCameraMode9State {
     float lookVel[4];    /* +0x00 look-at velocity */
@@ -4808,11 +4808,7 @@ typedef struct GameFieldTask {
     CoreTask base;             /* +0x00 vtable g_gameFieldTaskVtbl; id saved to profile word 0x1d by GameFieldDtor */
     GameFieldAux *aux;         /* +0x10 owned object deleted by GameFieldDtor (virtual destructor, vtable at +0x20) */
     u8 _unk014[0xc];
-    u8 camera[0x2cc - 0x20];  /* +0x20 embedded GameFieldCamera (mode at +0x2cc) */
-    s32 cameraMode;            /* +0x2cc camera mode (GameFieldCamera +0x2ac) */
-    u8 _unk2d0[0x3d9 - 0x2d0];
-    u8 eventView;              /* +0x3d9 event view active flag */
-    u8 _unk3da[0x5f0 - 0x3da];
+    GameFieldCamera camera;    /* +0x20 embedded field camera (GameFieldCameraCtor; mode at +0x2cc, eventView at +0x3d9) */
     PadState *pad;             /* +0x5f0 main controller state (g_padState) captured by GameFieldCtor */
     GfxSpriteLayer *spriteLayer; /* +0x5f4 2D sprite layer drawn by GameFieldDrawLoading */
     GfxSpriteLayer *layers[3]; /* +0x5f8 sprite layers updated each frame by GameFieldUpdateWorld (order [2], [0], [1]) */
@@ -9421,7 +9417,7 @@ typedef struct UiMainMenu {
     void *baseNode;             /* +0x6a4 node "_02_base" of baseModel */
     float *baseMatrix;          /* +0x6a8 baseNode + 0x80, 4x4 matrix rewritten per move */
     u8 _unk6ac[0x4];            /* +0x6ac */
-    u8 camera[0x2a0];           /* +0x6b0 GfxCamera (GfxCameraCtor/GfxCameraInit, 0x2a0 bytes) */
+    GfxCamera camera;           /* +0x6b0 menu camera (GfxCameraCtor/GfxCameraInit, 0x2a0 bytes) */
     float itemHome[5][4];       /* +0x950 orbit radius/height per item (UiOrbitPoint reads [0] and [2]) */
     float lineScroll[4];        /* +0x9a0 UV scroll of psp_line__BA (UiMainMenuScrollLine) */
     float seaScroll[4];         /* +0x9b0 UV scroll of psp_sea__DS2 (UiMainMenuScrollSea) */
@@ -9448,7 +9444,7 @@ typedef struct UiMainMenu {
 } UiMainMenu;
 
 typedef struct UiWindowFrame {
-    u8 _base[0x80];         /* 0x00 sprite layer (GfxSpriteLayerCtor); +0x1c = first border sprite (chain via sprite+4), +0x74 = frame vtable 0x08af5954 */
+    GfxSpriteLayer base;    /* 0x00 sprite layer (GfxSpriteLayerCtor); +0x1c = first border sprite (chain via sprite+4), +0x74 = frame vtable 0x08af5954 */
     CoreObject object;      /* 0x80 CoreObjectInit, vtable 0x08af59bc at +0x94 */
     u8 unk98[4];            /* 0x98 cleared by the ctor */
     u32 flags;              /* 0x9c bit0 visible, bit1 animating, bit2 highlighted, bit3 close runs backwards */

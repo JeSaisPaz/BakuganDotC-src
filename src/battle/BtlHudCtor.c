@@ -36,7 +36,7 @@ BtlHud *BtlHudCtor(BtlHud *self)
 
     CoreTaskInit(&self->base);
     self->base.vtable = g_btlHudVtbl;
-    IoLzsPackageCtor((IoLzsPackage *)self->package);
+    IoLzsPackageCtor(&self->package);
     self->layer = NULL;
     self->sprites = NULL;
     self->resultLayer = NULL;

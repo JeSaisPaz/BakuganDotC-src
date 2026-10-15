@@ -105,7 +105,7 @@ void BtlHudDtor(BtlHud *self, u32 flags)
         }
     }
 
-    IoLzsPackageDtor((IoLzsPackage *)self->package, 2);
+    IoLzsPackageDtor(&self->package, 2);
     CoreTaskDestroy(&self->base, 0);
     if ((flags & 1) != 0) {
         MemLock();

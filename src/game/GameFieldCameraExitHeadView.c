@@ -7,7 +7,7 @@
 void GameFieldCameraExitHeadView(GameFieldCamera *cam)
 
 {
-  GameFieldCameraHeadViewExit(cam->headView);
+  GameFieldCameraHeadViewExit(&cam->headView);
   return;
 }
 

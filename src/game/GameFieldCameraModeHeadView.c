@@ -12,7 +12,7 @@ void GameFieldCameraModeHeadView(GameFieldCamera *cam)
   
   outEye = (cam->base).eye;
   if (cam->target != (void *)0x0) {
-    GameFieldCameraHeadViewUpdate(cam->headView,outEye,(cam->base).target);
+    GameFieldCameraHeadViewUpdate(&cam->headView,outEye,(cam->base).target);
     GameFieldCameraFadeNearPlayer(outEye);
   }
   return;

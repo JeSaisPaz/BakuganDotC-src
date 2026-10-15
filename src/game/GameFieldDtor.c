@@ -126,7 +126,7 @@ void GameFieldDtor(CoreTask *task, u32 flags)
   }
 
   GameFieldGuardBlindDtor(&field->guardBlind, 2);
-  GameFieldCameraDtor((GameFieldCamera *)field->camera, 2);
+  GameFieldCameraDtor(&field->camera, 2);
   CoreTaskDestroy(task, 0);
   if ((flags & 1) != 0) {
     MemLock();

@@ -7,7 +7,7 @@
 void GameFieldCameraExitAim(GameFieldCamera *cam)
 
 {
-  GameFieldCameraAimViewExit(cam->aimView);
+  GameFieldCameraAimViewExit(&cam->aimView);
   return;
 }
 

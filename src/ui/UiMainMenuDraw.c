@@ -37,7 +37,7 @@ void UiMainMenuDraw(UiMainMenu *self)
   list = GfxPacketBeginChunk(packet);
 
   if (self->baseModel != NULL) {
-    list = GfxDlWriteLightState(list, (GfxCamera *)self->camera, 1);
+    list = GfxDlWriteLightState(list, &self->camera, 1);
     alpha = g_colorWhite.w;
     if (!(alpha <= 1.0f)) {
       alpha = 1.0f;
@@ -75,7 +75,7 @@ void UiMainMenuDraw(UiMainMenu *self)
 
   for (i = 0; i < 5; i++) {
     if (self->models[i] != NULL) {
-      list = GfxDlWriteLightState(list, (GfxCamera *)self->camera, 1);
+      list = GfxDlWriteLightState(list, &self->camera, 1);
       alpha = g_colorWhite.w;
       if (!(alpha <= 1.0f)) {
         alpha = 1.0f;

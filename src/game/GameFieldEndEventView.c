@@ -11,9 +11,9 @@ void GameFieldEndEventView(CoreTask *self)
   GameFieldTask *task = (GameFieldTask *)self;
 
   GameFieldCharSetRestartAll(task->charSet);
-  if (task->cameraMode != 0) {
-    GameFieldCameraBeginBlendToFollow((GameFieldCamera *)task->camera);
+  if (task->camera.mode != 0) {
+    GameFieldCameraBeginBlendToFollow(&task->camera);
   }
   task->eventViewTimer = 16;
-  task->eventView = 0;
+  task->camera.eventView = 0;
 }

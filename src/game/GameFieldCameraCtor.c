@@ -21,8 +21,8 @@ void *GameFieldCameraCtor(GameFieldCamera *cam)
   GfxCameraCtor((CoreNode *)cam);
   cam->base.base.vtable = g_gameFieldCameraVtbl;
   GameFieldCameraMode9Ctor((GameFieldCameraMode9State **)cam->mode9);
-  GameFieldCameraHeadViewCtor(cam->headView);
-  GameFieldCameraAimViewCtor(cam->aimView);
+  GameFieldCameraHeadViewCtor(&cam->headView);
+  GameFieldCameraAimViewCtor(&cam->aimView);
   GfxCameraInit(&cam->base);
   cam->base.fov = 50.0f;
   cam->base.eye[0] = 0.0f;
@@ -61,7 +61,7 @@ void *GameFieldCameraCtor(GameFieldCamera *cam)
   cam->wallAvoidTimer = 0;
   cam->talkBlend = 0;
   cam->stepState = 0;
-  cam->ctorByte3b9 = 0;
+  cam->eventView = 0;
   cam->ctorWord3b0 = 0;
   cam->ctorWord3b4 = 0;
   cam->ctorByte3b8 = 0xff;

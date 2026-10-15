@@ -126,7 +126,7 @@ void UiMainMenuCreateModels(UiMainMenu *self)
 
   memset(self->items, 0, 200);
   memset(self->baseState, 0, 0x28);
-  cam = (GfxCamera *)self->camera;
+  cam = &self->camera;
   GfxCameraInit(cam);
   cam->target[0] = 0.0f;
   cam->target[1] = 0.0f;

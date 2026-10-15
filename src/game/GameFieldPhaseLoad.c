@@ -299,7 +299,7 @@ void GameFieldPhaseLoad(CoreTask *task)
     break;
 
   case 6:
-    fieldCam = (GameFieldCamera *)field->camera;
+    fieldCam = &field->camera;
     GameFieldCameraSetTarget(fieldCam, ActorFindPlayer());
     g_gfxActiveCamera = &fieldCam->base;
     GameFieldCameraLoadQuestCam(fieldCam);

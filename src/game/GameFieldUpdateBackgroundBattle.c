@@ -124,7 +124,7 @@ void GameFieldUpdateBackgroundBattle(CoreTask *task)
           vol = 1.0f;
         }
         if (!(vol <= 0.0f)) {
-          cam = (GameFieldCamera *)gf->camera;
+          cam = &gf->camera;
           cam->shakeTimer = (s16)(g_bgBattleWildaTimer >> 1);
           cam->shakeAmplitude = vol;
           SndEmitterCreateAtPos(SndGetListener(), 0x2c000c9, pos, 0, 1);

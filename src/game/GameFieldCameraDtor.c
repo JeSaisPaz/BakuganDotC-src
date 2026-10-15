@@ -31,8 +31,8 @@ void GameFieldCameraDtor(GameFieldCamera *cam, u32 flags)
     }
     GameQuestPathSetUnload();
     GameQuestCamTableUnload();
-    GameFieldCameraAimViewDtor(cam->aimView, 2);
-    GameFieldCameraHeadViewDtor(cam->headView, 2);
+    GameFieldCameraAimViewDtor(&cam->aimView, 2);
+    GameFieldCameraHeadViewDtor(&cam->headView, 2);
     GameFieldCameraMode9Dtor((GameFieldCameraMode9State **)cam->mode9, 2);
     GfxCameraDtor(&cam->base.base, 0);
     if ((flags & 1) != 0) {

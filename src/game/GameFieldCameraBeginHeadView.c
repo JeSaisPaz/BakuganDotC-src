@@ -14,6 +14,6 @@ void GameFieldCameraBeginHeadView(GameFieldCamera *cam, void *obj)
     for (i = 0; i < 4; i++) v[8+i] = ((const float *)obj)[i];
     for (i = 0; i < 4; i++) v[0+i] = cam->base.eye[i];
     for (i = 0; i < 4; i++) v[4+i] = cam->base.target[i];
-    GameFieldCameraHeadViewBegin(cam->headView,v);
+    GameFieldCameraHeadViewBegin(&cam->headView,v);
   }
 }

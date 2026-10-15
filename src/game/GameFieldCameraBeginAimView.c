@@ -15,5 +15,5 @@ void GameFieldCameraBeginAimView(GameFieldCamera *cam)
     view[i] = cam->base.eye[i];
   for (i = 0; i < 4; i++)
     view[4 + i] = cam->base.target[i];
-  GameFieldCameraAimViewBegin((GameFieldCameraAimView *)cam->aimView, view);
+  GameFieldCameraAimViewBegin(&cam->aimView, view);
 }
