@@ -28,7 +28,7 @@ s32 GameGimmickIrSensorHitsPlayer(GameGimmickIrSensor *obj)
         (GameGimmickIrSensorShape *)((CollisionCollider *)player->bodyCollider)->shapeBlock.desc;
     const VtblEntry *test = &shape->vtbl[2];
 
-    if (((s32 (*)(void *, void *, void *))test->fn)((u8 *)shape + test->delta, &obj->shapeType, scratch)) {
+    if (((bool (*)(void *, void *, void *))test->fn)((u8 *)shape + test->delta, &obj->shapeType, scratch)) {
       hit = 1;
     }
   }
