@@ -5142,7 +5142,7 @@ typedef struct GameQuestCamEntry {
     float f40;                 /* +0x40 record +0x28; path pitch, negative = default pi/2 (GameQuestCamUpdatePitch) */
     float distance;            /* +0x44 record +0x2c; distance passed to the spring-by-distance step */
     float sideOffset;          /* +0x48 record +0x30, 600 when below FLT_EPSILON */
-    float f4c;                 /* +0x4c record +0x34 */
+    float f4c;                 /* +0x4c record +0x34; look-ahead scale, lerped along a segment by GameQuestCamPathModeSmooth */
     float extra0;              /* +0x50 record +0x38 (3.9 default); copied to ctrl extra[0] */
     float extra1;              /* +0x54 record +0x3c (30000 default); copied to ctrl extra[1] */
     s32 type;                  /* +0x58 camera type (u8 at record +0x52; 1 = fixed, 2 = point) */
