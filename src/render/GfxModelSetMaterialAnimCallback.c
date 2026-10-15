@@ -9,13 +9,13 @@ bool GfxModelSetMaterialAnimCallback(GfxModel *self, const char *name, void *cal
 
 {
   s32 index;
-  void **mat;
+  GmoMaterial *mat;
 
   index = GfxModelFindMaterialIndexBySubstr2(self, name);
   if (index != -1) {
-    mat = GmoModelGetMaterial(self->data, index);
-    ((void **)mat[1])[2] = callback;
-    ((void **)mat[1])[3] = arg;
+    mat = (GmoMaterial *)GmoModelGetMaterial(self->data, index);
+    ((GfxMaterialState *)mat->info)->animCallback = callback;
+    ((GfxMaterialState *)mat->info)->animArg = arg;
     return true;
   }
   return false;
