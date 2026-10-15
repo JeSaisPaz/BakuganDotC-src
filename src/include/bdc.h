@@ -16178,7 +16178,7 @@ s32 SysUtilSavedataGetResult(void);
 int SysUtilSavedataHandlerAbort(SysUtilSavedataHandler *self);
 SysUtilSavedataHandler *SysUtilSavedataHandlerCtor(SysUtilSavedataHandler *self);
 void SysUtilSavedataHandlerDtor(SysUtilSavedataHandler *self, u32 flags);
-void SysUtilSavedataHandlerRefreshState(SysUtilSavedataHandler *self);
+s32 SysUtilSavedataHandlerRefreshState(SysUtilSavedataHandler *self);
 s32 SysUtilSavedataHandlerRequest(SysUtilSavedataHandler *self, u32 request);
 s32 SysUtilSavedataHandlerService(SysUtilSavedataHandler *self);
 int SysUtilSavedataHandlerUpdate(SysUtilSavedataHandler *self);

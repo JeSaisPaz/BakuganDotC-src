@@ -21,7 +21,7 @@ u32 GmoDlBindMesh(GmoDlContext *self, GmoModel *model, u32 dirty)
     self->meshState = mat->flags;
     idx = mat->layerRef;
     dirty = dirty | state | mat->flags;
-    ref = (GmoLayer *)PspPtr(idx);
+    ref = (GmoLayer *)PspPtrOrNull(idx);   /* an index word is no address: the index path below replaces it */
     if (((idx + 1U) & 0xffff0000) == 0) {
       if ((idx & 0xffff) < (u32)model->textureCount) {
         ref = (GmoLayer *)model->textures + idx;

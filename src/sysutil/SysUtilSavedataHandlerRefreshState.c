@@ -2,14 +2,15 @@
 #include "bdc.h"
 
 /* Savedata handler virtual: stores `sceUtilitySavedataGetStatus()` in the handler's dialog state
-   word (`+4`, read by `SysUtilHandlerGetState`). */
+   word (`+4`, read by `SysUtilHandlerGetState`) and returns it (the caller
+   `SysUtilSavedataHandlerUpdate` compares it with 2). */
 
-void SysUtilSavedataHandlerRefreshState(SysUtilSavedataHandler *self)
+s32 SysUtilSavedataHandlerRefreshState(SysUtilSavedataHandler *self)
 
 {
   int status;
 
   status = sceUtilitySavedataGetStatus();
   (self->base).state = status;
-  return;
+  return status;
 }
