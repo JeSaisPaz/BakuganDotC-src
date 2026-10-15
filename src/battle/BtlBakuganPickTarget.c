@@ -12,7 +12,10 @@
 s32 BtlBakuganPickTarget(BtlBakugan *self, s32 mode)
 {
     struct {
-        u32 id;
+        union {
+            u32 id;
+            void *item;   /* the slot is pointer-sized: GfxCombSortByDepth sorts {pointer, float} pairs */
+        };
         float depth;
     } pairs[21];
     BtlBakugan *unit;
