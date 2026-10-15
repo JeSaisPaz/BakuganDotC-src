@@ -8805,18 +8805,24 @@ typedef struct UiComboList {
 } UiComboList;
 
 typedef struct UiConfirmDialog {
-    CoreTask base;                  /* +0x0000 */
-    u8 _unk0010[0x8];               /* +0x0010 */
-    GfxSpriteLayer *spriteLayer;    /* +0x0018 dialog sprite layer, drawn by UiConfirmDialogDraw */
-    GfxSprite **sprites;            /* +0x001c sprite table built by UiConfirmDialogSetupPhase (16 entries: [8]/[9] button frames, [11]/[12] labels, [14] cursor, [15] highlight) */
-    PadState *pad;                  /* +0x0020 pad state (from UiScreenCtor); the ctor forces its stickEmulatesDpad to 1 */
     union {
-        u32 unk24;                  /* +0x0024 cleared by UiConfirmDialogCtor; non-zero = net-play pad mode (UiConfirmDialogMainPhase) */
-        PadState *netPad;           /* +0x0024 UiPauseMainPhase stores the pause screen's pad here (as in UiScreen.netPad) */
+        UiScreen screen;            /* +0x0000 the UiScreen base (UiScreenCtor); the named fields below are its prefix */
+        struct {
+            CoreTask base;                  /* +0x0000 */
+            CoreTask *suspendedTask;        /* +0x0010 UiScreen.suspendedTask */
+            struct UiScreen *selfScreen;    /* +0x0014 UiScreen.self */
+            GfxSpriteLayer *spriteLayer;    /* +0x0018 dialog sprite layer, drawn by UiConfirmDialogDraw */
+            GfxSprite **sprites;            /* +0x001c UiScreen.data: sprite table built by UiConfirmDialogSetupPhase (16 entries: [8]/[9] button frames, [11]/[12] labels, [14] cursor, [15] highlight) */
+            PadState *pad;                  /* +0x0020 pad state (from UiScreenCtor); the ctor forces its stickEmulatesDpad to 1 */
+            union {
+                u32 unk24;                  /* +0x0024 cleared by UiConfirmDialogCtor; non-zero = net-play pad mode (UiConfirmDialogMainPhase) */
+                PadState *netPad;           /* +0x0024 UiPauseMainPhase stores the pause screen's pad here (as in UiScreen.netPad) */
+            };
+            u32 state;                      /* +0x0028 screen state (UiScreen.phase; SetField index 3) */
+            u32 subState;                   /* +0x002c reset to 0 when state changes (UiScreen.phaseStep) */
+        };
     };
-    u32 state;                      /* +0x0028 screen state (SetField index 3) */
-    u32 subState;                   /* +0x002c reset to 0 when state changes */
-    u8 _unk0030[0x40];              /* +0x0030 */
+    u8 _unk006c[0x4];               /* +0x006c */
     u32 unk70;                      /* +0x0070 cleared then set to 1 by UiConfirmDialogCtor */
     UiTextPrinter *textPrinter;     /* +0x0074 message text box */
     float textAlpha;                /* +0x0078 message outline alpha set by UiConfirmDialogDraw */
