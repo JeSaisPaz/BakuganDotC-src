@@ -2,8 +2,8 @@
 #include "bdc.h"
 
 /* Slot 6 of the path camera mode: when attached to a segment, updates the pitch
-   (`GameQuestCamUpdatePitch`), resets the attached state when a previous segment exists
-   (`GameQuestCamModeResetAttached`), interpolates the segment end nodes' `distance` (`+0x44`) by
+   (`GameQuestCamUpdatePitch`), runs the current sub-state's update with the previous segment's
+   direction when a previous segment exists (`GameQuestCamModeResetAttached`), interpolates the segment end nodes' `distance` (`+0x44`) by
    the unclamped `t` into the far smoothing time, and their `extra0`/`extra1` (`+0x50`/`+0x54`) by
    `t` clamped below at 0 into the controller's `extra[0]`/`extra[1]`; without a segment the far
    time is 1.8. Then spring-accelerates towards `point` (`GameQuestCamSpringAccelerateByDistance`,
@@ -27,7 +27,8 @@ void GameQuestCamPathModeUpdateEye(float dt, GameQuestCamPathMode *self)
   if (self->segment != NULL) {
     GameQuestCamUpdatePitch(self);
     if (self->prevSegment != NULL) {
-      GameQuestCamModeResetAttached(&self->base);
+      GameQuestCamModeResetAttached(&self->base,
+                                    &((const GameQuestPathSegment *)self->prevSegment)->dir.x, dt);
     }
     seg = (GameQuestPathSegment *)self->segment;
     t = seg->t;

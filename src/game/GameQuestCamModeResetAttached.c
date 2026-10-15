@@ -1,19 +1,15 @@
 // bdc 0x088fd4ac GameQuestCamModeResetAttached
 #include "bdc.h"
 
-/* Calls slot `+0x24` (reset) of the quest camera mode's attached object `+0x90` (vtable at its
-   `+4`). */
+/* Runs the update (vtable slot 4, `+0x24`) of the quest camera mode's current sub-state (`state`,
+   `+0x90`, a `GameQuestCamSubState`) with the caller's `move` vector and `dt`, passed on
+   untouched (`a1`/`f12`). */
 
-typedef struct CamAttached {
-  void *unk0;
-  const VtblEntry *vtbl; /* +0x04 */
-} CamAttached;
-
-void GameQuestCamModeResetAttached(GameQuestCamModeBase *self)
+void GameQuestCamModeResetAttached(GameQuestCamModeBase *self, const float *move, float dt)
 
 {
-  CamAttached *obj = (CamAttached *)self->state;
+  GameQuestCamSubState *obj = (GameQuestCamSubState *)self->state;
   const VtblEntry *e = &obj->vtbl[4];
 
-  ((void (*)(void *))e->fn)((char *)obj + e->delta);
+  ((void (*)(void *, const float *, float))e->fn)((char *)obj + e->delta, move, dt);
 }

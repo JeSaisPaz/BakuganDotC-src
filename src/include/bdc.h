@@ -14022,7 +14022,7 @@ GameQuestCamModeBase *GameQuestCamModeBaseCtor(GameQuestCamModeBase *self, void 
 void GameQuestCamModeBaseDtor(GameQuestCamModeBase *self, u32 flags);
 void GameQuestCamModeBaseStaticInit(void);
 void GameQuestCamModeCaptureTargetPos(GameQuestCamModeBase *self);
-void GameQuestCamModeResetAttached(GameQuestCamModeBase *self);
+void GameQuestCamModeResetAttached(GameQuestCamModeBase *self, const float *move, float dt);
 void GameQuestCamModeResetSmooth(GameQuestCamModeBase *self);
 void GameQuestCamModeSmooth(float dt, GameQuestCamModeBase *self, float *dir, float leadScale);
 void GameQuestCamModeSyncNode(GameQuestCamModeBase *self);

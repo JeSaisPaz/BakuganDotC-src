@@ -3,22 +3,13 @@
 
 /* Update of the quest camera mode's sub-state 1 (`GameQuestCamSubState`, vtable 0x08af6f68, entry
    4): while the followed target moves (`GameQuestCamModeTargetMoved`) along the current path
-   direction (`dot(move, dir) > 0`, `dir` at +0x50 of the object the mode's `entry` points to),
+   direction (`dot(move, dir) > 0`, `dir` = the `step` of the look spring the mode's `entry`
+   slot holds, `&ctrl->look`),
    accumulates `dt` in `mode->watchTime`; otherwise (not moving, or dot <= 0) the timer is reset to
    0. Once the timer exceeds `mode->watchDelay`, it is reset, the current sub-state is exited
    (vtable entry 2), `stateIndex` becomes 2 and sub-state 2 (`GameQuestCamDirSwitchUpdate`) is
    entered (vtable entry 1) with argument 0 (out of range: the zeroed dummy
    `g_questCamNullState`). */
-
-/* Partial view of the object the mode's `entry` refers to (first word). */
-typedef struct CamDirWatchNode {
-  u8 _unk00[0x50];
-  ScePspFVector4 dir; /* +0x50 path direction */
-} CamDirWatchNode;
-
-typedef struct CamDirWatchEntry {
-  CamDirWatchNode *node; /* +0x00 */
-} CamDirWatchEntry;
 
 void GameQuestCamDirWatchFwdUpdate(void *state, const float *move, float dt)
 {
@@ -36,7 +27,7 @@ void GameQuestCamDirWatchFwdUpdate(void *state, const float *move, float dt)
     self->mode->watchTime = 0.0f;
     return;
   }
-  dir = ((CamDirWatchEntry *)self->mode->entry)->node->dir;
+  dir = (*(GameQuestCamSpring **)self->mode->entry)->step;
   dot = dir.x * move[0] + dir.y * move[1] + dir.z * move[2];
   if (dot <= 0.0f) {
     t = 0.0f;

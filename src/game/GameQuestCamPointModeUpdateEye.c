@@ -17,7 +17,7 @@ void GameQuestCamPointModeUpdateEye(float dt, GameQuestCamPointMode *self)
   ((self->base).base.base.ctrl)->extra[1] = self->entry->extra1;
   ((self->base).base.base.ctrl)->extra[0] = self->entry->extra0;
   if (((self->base).base.base.ctrl)->snap == '\0') {
-    GameQuestCamModeResetAttached(&self->base);
+    GameQuestCamModeResetAttached(&self->base, &self->descPos.x, dt);
   }
   if (self->entry->collide != '\0') {
     GameQuestCamResolveCollision(dt,(GameQuestCamSpring *)self);
