@@ -19892,7 +19892,7 @@ extern __typeof__(s16[2]) g_btlVignetteTopYs;
 extern __typeof__(ScePspFVector4) g_btlVulcanCalfOffset;
 extern __typeof__(s32) g_btlVulcanCalfOffsetInited;
 extern __typeof__(char *[33]) g_charMotionFiles;
-extern __typeof__(char **[33]) g_charMotionNameLists;
+extern __typeof__(char **[35]) g_charMotionNameLists;
 extern __typeof__(char *[32][297]) g_charMotionNames;
 extern __typeof__(GfxEffectMgr *) g_worldEffectMgr;
 extern __typeof__(GfxSpriteLayer *) g_worldSpriteLayer;

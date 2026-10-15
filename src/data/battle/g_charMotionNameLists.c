@@ -1,7 +1,7 @@
 // bdc 0x08ab9c2c g_charMotionNameLists
 #include "bdc.h"
 
-__typeof__(char **[33]) g_charMotionNameLists = {
+__typeof__(char **[35]) g_charMotionNameLists = {
     NULL, (char **)&g_charMotionNames[16], (char **)&g_charMotionNames[11],
     (char **)&g_charMotionNames[9], (char **)&g_charMotionNames[7], (char **)&g_charMotionNames[4],
     (char **)&g_charMotionNames[17], (char **)&g_charMotionNames[19],
