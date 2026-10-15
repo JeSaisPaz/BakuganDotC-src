@@ -857,12 +857,6 @@ typedef struct GfxSprite {
     float toCamera[4];                   /* 0x150 camera position minus sprite position, filled by FUN_089f4e10 */
 } GfxSprite;
 
-typedef struct CoreObjectList {
-    struct CoreObject *head;   /* 0x00 first object, NULL when empty */
-    struct CoreObject *tail;   /* 0x04 last object */
-    s32 count;                 /* 0x08 number of objects */
-} CoreObjectList;
-
 typedef struct GfxSpriteLayer {
     s32 is3D;                  /* +0x00 */
     u8 sorted;                 /* +0x04 sort flag read by the draw methods */
@@ -872,7 +866,9 @@ typedef struct GfxSpriteLayer {
     GfxSprite *poolLast;       /* +0x10 last slot handed out */
     s32 poolUsed;              /* +0x14 */
     s32 maxSorted;             /* +0x18 1000 for 2D, 500 for 3D */
-    CoreObjectList list;       /* +0x1c draw list header (CoreObjectListAppend): head/tail/count */
+    GfxSprite *head;           /* +0x1c draw list (CoreObjectListAppend) */
+    GfxSprite *tail;           /* +0x20 */
+    s32 count;                 /* +0x24 */
     u32 layerMask;             /* +0x28 */
     u8 _unk2c[0x4];
     ScePspFMatrix4 view;       /* +0x30 GfxSpriteLayerResetView / GfxSpriteLayerSetZoom */
@@ -2342,6 +2338,12 @@ typedef struct PadState {
     u8 flag58;             /* 0x58 set by FUN_089ce5f4 in BootEndOfFrame while 0 */
     u8 pad59[3];           /* 0x59 */
 } PadState;
+
+typedef struct CoreObjectList {
+    struct CoreObject *head;   /* 0x00 first object, NULL when empty */
+    struct CoreObject *tail;   /* 0x04 last object */
+    s32 count;                 /* 0x08 number of objects */
+} CoreObjectList;
 
 typedef struct GfxCamera {
     CoreNode base;             /* +0x000 vtable at +0x20 */
