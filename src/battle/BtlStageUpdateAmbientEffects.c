@@ -100,7 +100,7 @@ void BtlStageUpdateAmbientEffects(void)
       if (NetPlayHasManager() && SaveGetProfileFlag0() != 0) {
         period = 150;
       }
-      if (g_btlMapFlashTimer % period == 0) {
+      if (BDC_MOD(g_btlMapFlashTimer, period) == 0) {
         unit = BtlPickRandomOtherFighter(((BtlHud *)UiGetTalkTask())->gateCutInUnit);
         if (unit != NULL) {
           for (i = 0; i < 4; i++) {

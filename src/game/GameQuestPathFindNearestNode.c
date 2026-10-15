@@ -47,7 +47,10 @@ void GameQuestPathFindNearestNode(s16 *obj)
   best = -1;
   bestKind = 5;
   idx = 0;
-  for (i = 0; i < set->cur->count; i++) {
+  /* PC port: `cur` is NULL when the file's first section has no records (f5_quest_02_00.ptlb,
+     Vexos base 02) or there is none; the PSP reads `count` at NULL+8 as 0 and skips the loop, a
+     64-bit host faults. The `cur != NULL` test (one extra branch in the MIPS) gives the PSP result. */
+  for (i = 0; set->cur != NULL && i < set->cur->count; i++) {
     vec = set->cur;
     if ((i > -1) && (i < vec->count)) {
       slot = &vec->data[i];

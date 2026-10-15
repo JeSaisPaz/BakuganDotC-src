@@ -20,7 +20,7 @@ float SndDecOutGetVolume(SndDecOut *dec)
     dec->fadeLeft = 0;
   }
   else {
-    pct = ((((dec->fadeTotal - dec->fadeLeft) * 100) / dec->fadeTotal) * (pct - dec->volFrom)) /
+    pct = ((BDC_DIV(((dec->fadeTotal - dec->fadeLeft) * 100), dec->fadeTotal)) * (pct - dec->volFrom)) /
             100 + dec->volFrom;
   }
   if ((dec->mode != 2) && (dec->mode != 6)) {

@@ -246,19 +246,19 @@ bool UiTextPrinterPrint(float x, float y, float margin, UiTextPrinter *self, cha
     }
 
     /* printable glyph: one sprite from the font sheet */
-    perRow = (int)(0x200u / (u32)self->cellW);
-    perCol = (int)(0x200u / (u32)self->cellH);
+    perRow = (int)(BDC_DIV(0x200u, (u32)self->cellW));
+    perCol = (int)(BDC_DIV(0x200u, (u32)self->cellH));
     slot = 0;
     perPage = perRow * perCol;
-    texture = self->fontTextures[glyph / perPage];
+    texture = self->fontTextures[BDC_DIV(glyph, perPage)];
     sprite = GfxSpriteLayerCreateTemplateSprite(&self->layer, texture, pen);
     if (self->glyphs == NULL) {
       self->glyphs = sprite;
     }
-    glyph = glyph % perPage;
+    glyph = BDC_MOD(glyph, perPage);
     self->glyphCount = self->glyphCount + 1;
-    u = (float)(u32)((glyph % perRow) * (u32)self->cellW);
-    v = (float)(u32)((glyph / perCol) * (u32)self->cellH);
+    u = (float)(u32)((BDC_MOD(glyph, perRow)) * (u32)self->cellW);
+    v = (float)(u32)((BDC_DIV(glyph, perCol)) * (u32)self->cellH);
     sprite->texture = texture;
     UiSpriteSetSize(self->cellW, self->cellH, sprite);
     if (self->scale == 1.0f) {

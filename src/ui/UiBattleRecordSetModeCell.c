@@ -49,7 +49,7 @@ void UiBattleRecordSetModeCell(UiBattleRecord *self, s32 row, s32 bakugan, s32 c
       value = 0;
     } else {
       total = wins + self->losses[bakugan] + self->draws[bakugan];
-      value = (wins * 100) / total;
+      value = BDC_DIV((wins * 100), total);
       if (!((float)(wins * 100) / (float)total <= (float)value)) {
         value = value + 1;
       } else if (value == 0) {

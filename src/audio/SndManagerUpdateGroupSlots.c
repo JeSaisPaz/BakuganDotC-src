@@ -45,7 +45,7 @@ static void ReadGroupToneRange(SndGroupSlot *slot, u8 *phd)
     tn = (SndSsPhdToneChunk *)(phd + ((SndSsPhdHeader *)phd)->toneOffset);
     if (tn->magic[0] == 'P' && tn->magic[1] == 'P' && tn->magic[2] == 'T' &&
         tn->magic[3] == 'N') {
-      slot->soundCount = (s16)((tn->size - 0x18) / tn->entrySize);
+      slot->soundCount = (s16)(BDC_DIV((tn->size - 0x18), tn->entrySize));
       slot->firstSound = (s16)tn->firstTone;
       slot->lastSound = (s16)tn->lastTone;
     }

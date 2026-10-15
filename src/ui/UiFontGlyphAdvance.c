@@ -19,7 +19,7 @@ static float UiFontWidthAt(const float *table, int glyph)
   for (i = 0; i < 3; i++) {
     if (table == run[i]) {
       if (glyph >= 0 && glyph < n * (3 - i)) {
-        return run[i + glyph / n][glyph % n];
+        return run[i + BDC_DIV(glyph, n)][BDC_MOD(glyph, n)];
       }
       return 0.0f;
     }

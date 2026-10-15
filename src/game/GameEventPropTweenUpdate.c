@@ -27,7 +27,7 @@ u8 GameEventPropTweenUpdate(GameEventPropTween *self)
   frames = self->frames;
   switch (self->kind) {
   case 0:
-    t = (s32)(frame << 12) / (s32)frames;
+    t = BDC_DIV((s32)(frame << 12), (s32)frames);
     d0 = rec->endPos[0] - rec->startPos[0];
     d1 = rec->endPos[1] - rec->startPos[1];
     d2 = rec->endPos[2] - rec->startPos[2];
@@ -39,15 +39,13 @@ u8 GameEventPropTweenUpdate(GameEventPropTween *self)
     break;
   case 1:
     rec->rot[0] = rec->startRot[0] +
-                  ((s16)(rec->endRot[0] - rec->startRot[0]) * (s32)frame) / (s32)frames;
+                  BDC_DIV(((s16)(rec->endRot[0] - rec->startRot[0]) * (s32)frame), (s32)frames);
     rec = self->rec;
     rec->rot[1] = rec->startRot[1] +
-                  ((s16)(rec->endRot[1] - rec->startRot[1]) * (s32)self->frame) /
-                      (s32)self->frames;
+                  BDC_DIV(((s16)(rec->endRot[1] - rec->startRot[1]) * (s32)self->frame), (s32)self->frames);
     rec = self->rec;
     rec->rot[2] = rec->startRot[2] +
-                  ((s16)(rec->endRot[2] - rec->startRot[2]) * (s32)self->frame) /
-                      (s32)self->frames;
+                  BDC_DIV(((s16)(rec->endRot[2] - rec->startRot[2]) * (s32)self->frame), (s32)self->frames);
     GameEventPropSetRot(self->rec->prop, self->rec->rot);
     break;
   case 2:
@@ -64,12 +62,12 @@ u8 GameEventPropTweenUpdate(GameEventPropTween *self)
     } else {
       den = (s32)((float)(s32)(frames << 12) - 0.5f);
     }
-    rec->scale = startScale + (s32)(((s64)num << 12) / den);
+    rec->scale = startScale + (s32)(BDC_DIV(((s64)num << 12), den));
     GameEventPropSetScale(self->rec->prop, self->rec->scale);
     break;
   case 3:
-    self->frame = (s32)frame % (s32)frames;
-    s = GameEventPropSinFixed(((s32)(self->frame << 16) / (s32)frames) & 0xffff);
+    self->frame = BDC_MOD((s32)frame, (s32)frames);
+    s = GameEventPropSinFixed((BDC_DIV((s32)(self->frame << 16), (s32)frames)) & 0xffff);
     rec = self->rec;
     rec->pos[1] = rec->bobBaseY + (s32)(((s64)s * rec->bobAmp + g_gameEventFixedRound64) >> 12);
     GameEventPropSetPos(self->rec->prop, self->rec->pos);

@@ -32,7 +32,7 @@ s32 SndSsSeqTick(void)
         if (tempo < 0) {
           tempo = 0;
         }
-        track->elapsed += track->delta * (u32)(tempo / (s32)track->division);
+        track->elapsed += track->delta * (u32)(BDC_DIV(tempo, (s32)track->division));
       }
       track = g_sndSsSeqTracks[i];
       if (!(track->elapsed < blockUs)) {

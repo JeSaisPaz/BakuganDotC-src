@@ -127,8 +127,8 @@ int GmoTextureWriteDl(void *texp, u32 **dl, u32 *end, u32 flags)
         cur = 0;
         next = 0;
         if (track != NULL) {
-          next = track->frameB0 % frames;
-          cur = track->frameA0 % frames;
+          next = BDC_MOD(track->frameB0, frames);
+          cur = BDC_MOD(track->frameA0, frames);
           if (next < 0) {
             next += frames;
           }
@@ -192,8 +192,8 @@ int GmoTextureWriteDl(void *texp, u32 **dl, u32 *end, u32 flags)
         cur = 0;
         next = 0;
         if (track != NULL) {
-          next = track->frameB1 % frames;
-          cur = track->frameA1 % frames;
+          next = BDC_MOD(track->frameB1, frames);
+          cur = BDC_MOD(track->frameA1, frames);
           if (next < 0) {
             next += frames;
           }

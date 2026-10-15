@@ -21,7 +21,7 @@ u8 GameEventActorTweenUpdate(GameEventActorTween *self)
 
   self->frame++;
   if (self->kind == 0) {
-    t = ((s32)self->frame << 12) / (s32)self->frames;
+    t = BDC_DIV(((s32)self->frame << 12), (s32)self->frames);
     rec = self->rec;
     start0 = rec->startPos[0];
     d0 = rec->endPos[0] - start0;
@@ -38,13 +38,13 @@ u8 GameEventActorTweenUpdate(GameEventActorTween *self)
   } else if (self->kind == 1) {
     rec = self->rec;
     rec->rot[0] = rec->startRot[0] +
-        ((s32)(s16)(rec->endRot[0] - rec->startRot[0]) * (s32)self->frame) / (s32)self->frames;
+        BDC_DIV(((s32)(s16)(rec->endRot[0] - rec->startRot[0]) * (s32)self->frame), (s32)self->frames);
     rec = self->rec;
     rec->rot[1] = rec->startRot[1] +
-        ((s32)(s16)(rec->endRot[1] - rec->startRot[1]) * (s32)self->frame) / (s32)self->frames;
+        BDC_DIV(((s32)(s16)(rec->endRot[1] - rec->startRot[1]) * (s32)self->frame), (s32)self->frames);
     rec = self->rec;
     rec->rot[2] = rec->startRot[2] +
-        ((s32)(s16)(rec->endRot[2] - rec->startRot[2]) * (s32)self->frame) / (s32)self->frames;
+        BDC_DIV(((s32)(s16)(rec->endRot[2] - rec->startRot[2]) * (s32)self->frame), (s32)self->frames);
     rec = self->rec;
     ch = (GameFieldPlacedChar *)rec->actor;
     ch->rot[0] = rec->rot[0];

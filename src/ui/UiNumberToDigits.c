@@ -22,7 +22,7 @@ void UiNumberToDigits(u8 *out, u32 value, u8 digits, u8 terminator)
 
   k = 0;
   while (pow != 1) {
-    buf[k] = (u8)(value / pow);
+    buf[k] = (u8)(BDC_DIV(value, pow));
     value -= buf[k] * pow;
     k++;
     pow /= 10;

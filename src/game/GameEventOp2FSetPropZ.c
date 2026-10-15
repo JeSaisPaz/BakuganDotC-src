@@ -7,5 +7,5 @@
 void GameEventOp2FSetPropZ(GameEvent *self, u8 flag, s16 arg)
 
 {
-  self->props[flag].endPos[2] = (s32)(((s64)arg << 12) / g_gameEventFixedScale);
+  self->props[flag].endPos[2] = (s32)(BDC_DIV(((s64)arg << 12), g_gameEventFixedScale));
 }

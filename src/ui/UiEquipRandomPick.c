@@ -49,7 +49,7 @@ s32 UiEquipRandomPick(UiEquip *self)
     } else {
       for (;;) {
         rtc = CoreRtcGetMicrosecond();
-        self->roulettePick = (u8)((s32)rtc % (s32)self->rouletteCount);
+        self->roulettePick = (u8)(BDC_MOD((s32)rtc, (s32)self->rouletteCount));
         if (self->gridCursor !=
             UiEquipMapBakuganIndex(self, 1, self->rouletteList[self->roulettePick])) {
           self->gridCursor =

@@ -79,14 +79,14 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
         }
         if (self->inWater == 0) {
             GfxEffectSpawn(g_worldEffectMgr, 0x29, pos);
-        } else if (self->frameCounter % frames == 0) {
+        } else if (BDC_MOD(self->frameCounter, frames) == 0) {
             GfxEffectSpawn(g_worldEffectMgr, 0x2a, pos);
         }
         if (self->inWater == 0 && self->base.velocity[1] < -8.0f && self->airborneFrames > 8) {
             GfxEffectSpawn(g_worldEffectMgr, 0x2c, pos);
             BtlBakuganPlayKindSound(self, 10, 0, 0);
         }
-        if ((frames < 10 && self->frameCounter % frames == 0) || self->inWater == 0) {
+        if ((frames < 10 && BDC_MOD(self->frameCounter, frames) == 0) || self->inWater == 0) {
             /* dir *= 0.1 (w = S713 = 0) */
             for (i = 0; i < 3; i++) {
                 dir[i] = dir[i] * 0.1f;
@@ -150,7 +150,7 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
         if (self->slowWalk == 0 && self->base.velocity[1] < -8.0f && self->airborneFrames > 8) {
             GfxEffectSpawn(g_worldEffectMgr, 0x35, pos2);
         }
-        if ((frames < 10 && self->frameCounter % frames == 0) || self->slowWalk == 0) {
+        if ((frames < 10 && BDC_MOD(self->frameCounter, frames) == 0) || self->slowWalk == 0) {
             for (i = 0; i < 3; i++) {
                 dir2[i] = dir2[i] * 0.1f;
             }
@@ -199,7 +199,7 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
         }
         if (self->inWater12To1B == 0) {
             GfxEffectSpawn(g_worldEffectMgr, 0x32, pos3);
-        } else if (self->frameCounter % frames == 0) {
+        } else if (BDC_MOD(self->frameCounter, frames) == 0) {
             GfxEffectSpawn(g_worldEffectMgr, 0x33, pos3);
         }
         if (self->inWater12To1B == 0 && self->base.velocity[1] < -8.0f &&
@@ -207,7 +207,7 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
             GfxEffectSpawn(g_worldEffectMgr, 0x30, pos3);
             BtlBakuganPlayKindSound(self, 10, 0, 0);
         }
-        if ((frames < 10 && self->frameCounter % frames == 0) || self->inWater12To1B == 0) {
+        if ((frames < 10 && BDC_MOD(self->frameCounter, frames) == 0) || self->inWater12To1B == 0) {
             for (i = 0; i < 3; i++) {
                 dir3[i] = dir3[i] * 0.1f;
             }

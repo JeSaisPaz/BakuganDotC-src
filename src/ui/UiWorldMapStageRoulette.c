@@ -46,7 +46,7 @@ int UiWorldMapStageRoulette(UiScreen *screen)
     for (;;) {
       u32 rtc = CoreRtcGetMicrosecond();
       count = map->rouletteCount;
-      map->roulettePick = (u8)((s32)rtc % (s32)count);
+      map->roulettePick = (u8)(BDC_MOD((s32)rtc, (s32)count));
       if (map->stage != map->rouletteItems[map->roulettePick]) {
         map->stage = map->rouletteItems[map->roulettePick];
         break;

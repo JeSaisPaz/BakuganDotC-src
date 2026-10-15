@@ -60,7 +60,7 @@ void GmoGimBuildImage(void *arena, const void *block, void *tex, u32 kind)
       off = 0;
       if (level >= 0 && level < hdr->levels) {
         offsets = (const u32 *)((const u8 *)hdr + hdr->dataEnd);
-        idx = frame % (int)hdr->frames;
+        idx = BDC_MOD(frame, (int)hdr->frames);
         if (idx < 0) {
           idx += hdr->frames;
         }

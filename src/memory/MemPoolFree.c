@@ -7,7 +7,7 @@
    must be freed on the heap. */
 bool MemPoolFree(MemPool *pool, void *ptr)
 {
-    u32 index = (u32)((u8 *)ptr - (u8 *)pool->base) / (u32)pool->itemSize;
+    u32 index = BDC_DIV((u32)((u8 *)ptr - (u8 *)pool->base), (u32)pool->itemSize);
     u32 *word = pool->bitmap;
 
     if (index > (u32)pool->count) {

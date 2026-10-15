@@ -18,7 +18,7 @@ void *GmoTextureGetImageFrame(void *tex, int level, int frame)
     if (list != NULL && level >= 0 && level < (int)list->levelCount) {
       slot = list->levels + level;
       if (frame != 0) {
-        idx = frame % (int)list->frameCount;
+        idx = BDC_MOD(frame, (int)list->frameCount);
         if (idx < 0) {
           idx += list->frameCount;
         }

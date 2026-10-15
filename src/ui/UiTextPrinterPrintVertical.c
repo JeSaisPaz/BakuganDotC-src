@@ -116,14 +116,14 @@ void UiTextPrinterPrintVertical(float x, float y, UiTextPrinter *self, const cha
       continue;
     }
 
-    cellsPerRow = 0x200 / (u32)self->cellW;
-    cellsPerCol = 0x200 / (u32)self->cellH;
+    cellsPerRow = BDC_DIV(0x200, (u32)self->cellW);
+    cellsPerCol = BDC_DIV(0x200, (u32)self->cellH);
     perPage = (int)(cellsPerRow * cellsPerCol);
-    texture = self->fontTextures[glyph / perPage];
+    texture = self->fontTextures[BDC_DIV(glyph, perPage)];
     sprite = GfxSpriteLayerCreateTemplateSprite(&self->layer, texture, pos);
-    cell = glyph % perPage;
-    u = (float)((u32)(cell % (int)cellsPerRow) * (u32)self->cellW);
-    v = (float)((u32)(cell / (int)cellsPerCol) * (u32)self->cellH);
+    cell = BDC_MOD(glyph, perPage);
+    u = (float)((u32)(BDC_MOD(cell, (int)cellsPerRow)) * (u32)self->cellW);
+    v = (float)((u32)(BDC_DIV(cell, (int)cellsPerCol)) * (u32)self->cellH);
     sprite->texture = texture;
     if (self->scale == 1.0f) {
       GfxSpriteSetSize(sprite, self->cellW, self->cellH);

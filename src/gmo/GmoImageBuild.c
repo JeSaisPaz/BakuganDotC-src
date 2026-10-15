@@ -40,7 +40,7 @@ int GmoImageBuild(GmoImage *self, u32 fmt, u8 flags16, int width, int height, in
   self->heightAlign = (u8)heightAlign;
   self->format = (u16)fmt;
   self->width = (u16)width;
-  self->widthAlign = (u8)((alignBytes << 3) / bpp);
+  self->widthAlign = (u8)(BDC_DIV((alignBytes << 3), bpp));
   rowUnits = levels * ((bpp * width + 0xff) / 0x100);
   if (rowUnits > 0x20) {
     rowUnits = 0x20;

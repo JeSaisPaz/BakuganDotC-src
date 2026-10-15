@@ -65,7 +65,7 @@ u16 Atan2Fixed16(s32 x, s32 y)
     if (den == 0) {
         return 0;
     }
-    index = (s32)(((s64)num << 12) / (s64)den) >> 5;
+    index = (s32)(BDC_DIV(((s64)num << 12), (s64)den)) >> 5;
     if (add) {
         return (u16)(base + g_atanFixed16Table[index]);
     }

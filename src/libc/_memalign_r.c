@@ -52,7 +52,7 @@ void *_memalign_r(_reent *reent, size_t alignment, size_t size)
 
     p = MallocMemToChunk(mem);
     chunkSize = p->size & ~(u32)3;
-    if ((uintptr_t)mem % alignment != 0) {
+    if (BDC_MOD((uintptr_t)mem, alignment) != 0) {
         newp = MallocMemToChunk(
             (void *)(((uintptr_t)mem + alignment - 1) & -(uintptr_t)alignment));
         if ((u8 *)newp - (u8 *)p < MALLOC_MINSIZE) {

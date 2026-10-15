@@ -23,7 +23,7 @@ void UiTextPrinterPrintSjis(float x, float y, UiTextPrinter *self, char *text)
   float rect[4];
   float sjisRect[4];
 
-  perRow = 0x200 / (int)self->cellW;
+  perRow = BDC_DIV(0x200, (int)self->cellW);
   pen[0] = (float)(int)x;
   pen[1] = (float)(int)y;
   pen[2] = 0.0f;
@@ -88,8 +88,8 @@ void UiTextPrinterPrintSjis(float x, float y, UiTextPrinter *self, char *text)
       glyph = text[pos] - 0x20;
       if (!(pen[0] <= -16.0f)) {
         sprite = GfxSpriteLayerCreateSprite(&self->layer, self->fontTextures[0], pen, false);
-        rect[0] = (float)(glyph % perRow) * self->cellW + 0.1f;
-        rect[1] = (float)(glyph / perRow) * self->cellH;
+        rect[0] = (float)(BDC_MOD(glyph, perRow)) * self->cellW + 0.1f;
+        rect[1] = (float)(BDC_DIV(glyph, perRow)) * self->cellH;
         /* Compare chain as in the asm: only a 24 px cell gets the half-texel y nudge. */
         if (!(self->cellW == 12.0f) && !(self->cellW == 16.0f) && self->cellW == 24.0f) {
           rect[1] = rect[1] + 0.5f;

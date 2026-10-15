@@ -87,8 +87,7 @@ void GameDebugStageSelectUpdate(GameDebugStageSelect *self)
     } else if ((pad->repeat & 0x20) != 0) {
       if (self->cursor > 0) {
         if (self->cursor < 2) {
-          self->stage = (self->stage + g_gameDebugStageCounts[self->region] + 1) %
-                        g_gameDebugStageCounts[self->region];
+          self->stage = BDC_MOD((self->stage + g_gameDebugStageCounts[self->region] + 1), g_gameDebugStageCounts[self->region]);
         }
       } else if (self->cursor >= 0) {
         self->stage = 0;
@@ -97,8 +96,7 @@ void GameDebugStageSelectUpdate(GameDebugStageSelect *self)
     } else if ((pad->repeat & 0x80) != 0) {
       if (self->cursor > 0) {
         if (self->cursor < 2) {
-          self->stage = (self->stage + g_gameDebugStageCounts[self->region] - 1) %
-                        g_gameDebugStageCounts[self->region];
+          self->stage = BDC_MOD((self->stage + g_gameDebugStageCounts[self->region] - 1), g_gameDebugStageCounts[self->region]);
         }
       } else if (self->cursor >= 0) {
         self->stage = 0;

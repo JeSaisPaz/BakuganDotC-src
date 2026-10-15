@@ -27,7 +27,7 @@ u32 GmoModelBuildCachedDl(GmoModel *self, u32 **buf, u32 *size)
   if (count < 2) {
     return GmoDlCacheEmitInline(self, buf, size, -1);
   }
-  slot = (s16)((cache->curCopy + 1) % (s32)count);
+  slot = (s16)(BDC_MOD((cache->curCopy + 1), (s32)count));
   cache->curCopy = slot;
   emit = slot;
   if (slot >= 0 && slot < (s32)count) {

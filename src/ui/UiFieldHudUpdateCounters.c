@@ -98,7 +98,7 @@ void UiFieldHudUpdateCounters(UiFieldHud *self)
     leading = 0;
     divisor = 1000000;
     for (i = 0; i < 7; i++) {
-        digit = (self->shownPoints / divisor) % 10;
+        digit = (BDC_DIV(self->shownPoints, divisor)) % 10;
         GfxSpriteSetCell(((GfxSprite **)self->base.data)[0x37 + i], (float)(digit / 5),
                          (float)(digit % 5));
         if (decreasing) {

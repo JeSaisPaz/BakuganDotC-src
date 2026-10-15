@@ -20,7 +20,7 @@ void SndDecOutSetVolume(SndDecOut *dec, s32 percent, s32 fadeMs)
   }
   dec->volFrom = dec->volTo;
   dec->volTo = percent;
-  blocks = ((fadeMs * 0xac44) / 1000) / SndGetManager()->framesPerBlock;
+  blocks = BDC_DIV(((fadeMs * 0xac44) / 1000), SndGetManager()->framesPerBlock);
   dec->fadeTotal = blocks;
   dec->fadeLeft = blocks;
   if (blocks == 0) {

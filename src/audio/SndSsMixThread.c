@@ -147,7 +147,7 @@ s32 SndSsMixThread(SceSize args, void *argp)
           if ((flags & 0x100000) == 0) {
             v->level = 0x7f;
           } else {
-            v->level = ((v->fadeLen - v->fadeCount) * 0x7f) / v->fadeLen;
+            v->level = BDC_DIV(((v->fadeLen - v->fadeCount) * 0x7f), v->fadeLen);
             if (v->level < 0) {
               v->level = 0;
             }

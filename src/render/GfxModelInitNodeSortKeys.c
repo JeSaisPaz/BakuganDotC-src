@@ -48,7 +48,7 @@ void GfxModelInitNodeSortKeys(GfxModel *self)
             }
         }
         if (count > 0) {
-            node->drawGroup = (u16)(sum / count);
+            node->drawGroup = (u16)(BDC_DIV(sum, count));
         } else {
             node->drawGroup = 0x18;
         }

@@ -27,7 +27,7 @@ void UiBattleRecordSetTotalCell(UiBattleRecord *self, s32 row, s32 bakugan)
     for (i = 0; i < 20; i++) {
       total += self->battles[i];
     }
-    percent = (count * 100) / total;
+    percent = BDC_DIV((count * 100), total);
     if (!(((float)count * 100.0f) / (float)total <= (float)percent)) {
       percent++;
     } else if (percent == 0) {

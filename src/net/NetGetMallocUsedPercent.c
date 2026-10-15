@@ -13,7 +13,7 @@ s32 NetGetMallocUsedPercent(void)
   percent = 100;
   if (NetAdhocHasManager()) {
     if (sceNetGetMallocStat(&g_netMallocStat) == 0) {
-      percent = 100 - (g_netMallocStat.free * 100) / g_netMallocStat.pool;
+      percent = 100 - BDC_DIV((g_netMallocStat.free * 100), g_netMallocStat.pool);
     }
   }
   return percent;

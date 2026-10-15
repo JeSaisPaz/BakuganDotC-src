@@ -13,6 +13,6 @@ bool GameEventFadeActionUpdate(GameEventFadeAction *self)
   rec = self->rec;
   self->frame = self->frame + 1;
   delta = (s16)(rec->target - rec->start);
-  rec->cur = rec->start + (delta * (int)self->frame) / (int)self->frames;
+  rec->cur = rec->start + BDC_DIV((delta * (int)self->frame), (int)self->frames);
   return self->frames <= self->frame;
 }

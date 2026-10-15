@@ -38,7 +38,7 @@ void CxxVecDeleteEx(void *ptr, u32 count, u32 size, void *dtor, int doFree, void
       }
     }
     byteSize = count;
-    count = byteSize / size;
+    count = BDC_DIV(byteSize, size);
   }
   rec.f04 = count;
   if (dtor != NULL) {

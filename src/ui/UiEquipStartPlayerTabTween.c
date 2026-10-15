@@ -58,7 +58,7 @@ void UiEquipStartPlayerTabTween(UiEquip *self, u8 out)
     k = i - self->spriteIdx[0x1d];
     per = self->spriteIdx[0x1e];
     UiEquipSetHandicapStarTexture(self, sprite,
-                                  self->handicap[k / per] / ((k % per) * 50 + 50) != 0);
+                                  BDC_DIV(self->handicap[BDC_DIV(k, per)], ((BDC_MOD(k, per)) * 50 + 50)) != 0);
     UiTweenBegin(1.5f, out, ((GfxSprite **)self->base.data)[i], tween, 3);
   }
 
@@ -67,7 +67,7 @@ void UiEquipStartPlayerTabTween(UiEquip *self, u8 out)
   for (i = self->spriteIdx[0x41];
        i < self->spriteIdx[0x41] + self->playerCount * self->spriteIdx[0x42]; i++, tween++) {
     sprite = ((GfxSprite **)self->base.data)[i];
-    if ((i - self->spriteIdx[0x41]) / self->spriteIdx[0x42] == self->editPlayer) {
+    if (BDC_DIV((i - self->spriteIdx[0x41]), self->spriteIdx[0x42]) == self->editPlayer) {
       sprite->flags |= 1;
       sprite = ((GfxSprite **)self->base.data)[i];
     }
@@ -83,12 +83,12 @@ void UiEquipStartPlayerTabTween(UiEquip *self, u8 out)
   for (i = self->spriteIdx[0x49];
        i < self->spriteIdx[0x49] + self->playerCount * self->spriteIdx[0x4a]; i++, tween++) {
     sprite = ((GfxSprite **)self->base.data)[i];
-    if (!(self->editPlayer < (i - self->spriteIdx[0x49]) / self->spriteIdx[0x4a])) {
+    if (!(self->editPlayer < BDC_DIV((i - self->spriteIdx[0x49]), self->spriteIdx[0x4a]))) {
       sprite->flags |= 1;
       k = i - self->spriteIdx[0x49];
       per = self->spriteIdx[0x4a];
       GfxSpriteSetCell(((GfxSprite **)self->base.data)[i], 0.0f,
-                       (float)(u8)(self->handicap[k / per] / ((k % per) * 50 + 50) - 1));
+                       (float)(u8)(BDC_DIV(self->handicap[BDC_DIV(k, per)], ((BDC_MOD(k, per)) * 50 + 50)) - 1));
       sprite = ((GfxSprite **)self->base.data)[i];
     }
     UiTweenBegin(1.5f, out, sprite, tween, 3);

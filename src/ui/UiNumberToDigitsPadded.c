@@ -18,7 +18,7 @@ void UiNumberToDigitsPadded(u8 *out, u32 value, u8 digits, u8 terminator)
     }
     d = 0;
     while (pow != 1) {
-        *p = (u8)(value / pow);
+        *p = (u8)(BDC_DIV(value, pow));
         value = value - *p * pow;
         d++;
         p = buf + d;

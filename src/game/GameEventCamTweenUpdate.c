@@ -19,7 +19,7 @@ static s32 CamTweenDiv(s32 a, s32 b)
   if (b == 0) {
     return a < 0 ? 1 : -1;
   }
-  return a / b;
+  return BDC_DIV(a, b);
 }
 
 s32 GameEventCamTweenUpdate(GameEventCamTween *self)

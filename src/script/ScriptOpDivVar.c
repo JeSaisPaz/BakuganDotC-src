@@ -11,7 +11,7 @@ int ScriptOpDivVar(Script *script)
 
   var = ScriptReadRef(script,2);
   value = ScriptReadU32(script);
-  *var = (int)*var / (int)value;
+  *var = BDC_DIV((int)*var, (int)value);
   return 0;
 }
 

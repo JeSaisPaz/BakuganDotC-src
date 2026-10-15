@@ -18,7 +18,7 @@ void *GmoImageGetLevelData(const GmoImage *self, s32 level, s32 frame)
     return self->levels[level];
   }
   count = (s32)self->frameCount;
-  idx = frame % count;
+  idx = BDC_MOD(frame, count);
   if (idx < 0) {
     idx += count;
   }

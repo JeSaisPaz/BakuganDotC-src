@@ -17,6 +17,6 @@ void GameEventOp3EDivPropScale(GameEvent *self, u8 flag, s16 arg)
     } else {
       f = f - 0.5f;
     }
-    rec->endScale = (s32)(((long long)rec->endScale << 12) / (long long)(s32)f);
+    rec->endScale = (s32)(BDC_DIV(((long long)rec->endScale << 12), (long long)(s32)f));
   }
 }

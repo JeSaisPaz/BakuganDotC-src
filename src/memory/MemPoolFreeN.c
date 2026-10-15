@@ -11,7 +11,7 @@ bool MemPoolFreeN(MemPool *pool, void *ptr, s32 n)
     bool freed = false;
     u8 *item = ptr;
 
-    if ((u32)(item - (u8 *)pool->base) / (u32)pool->itemSize + n > (u32)pool->count) {
+    if (BDC_DIV((u32)(item - (u8 *)pool->base), (u32)pool->itemSize) + n > (u32)pool->count) {
         return false;
     }
     for (; n > 0; n--) {

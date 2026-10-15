@@ -83,7 +83,7 @@ void GameGimmickCorePointUpdateBounce(GameGimmickCorePoint *obj)
     obj->hopStep.w = 0.0f;
   }
   obj->hopFrame = 0;
-  obj->hopFrames = (s16)((s32)g_corePointHopFrames / (s32)obj->hopCount);
+  obj->hopFrames = (s16)(BDC_DIV((s32)g_corePointHopFrames, (s32)obj->hopCount));
   obj->hopWeight = 0.5f;
   obj->hopStart.x = obj->hopEnd.x;
   obj->hopStart.y = obj->hopEnd.y;

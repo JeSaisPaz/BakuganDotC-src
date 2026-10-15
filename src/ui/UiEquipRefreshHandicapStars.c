@@ -17,13 +17,13 @@ void UiEquipRefreshHandicapStars(UiEquip *self, u8 player)
     k = i - self->spriteIdx[0x1d];
     UiEquipSetHandicapStarTexture(
         self, ((GfxSprite **)self->base.data)[i],
-        self->handicap[k / self->spriteIdx[0x1e]] / ((k % self->spriteIdx[0x1e]) * 50 + 50) != 0);
+        BDC_DIV(self->handicap[BDC_DIV(k, self->spriteIdx[0x1e])], ((BDC_MOD(k, self->spriteIdx[0x1e])) * 50 + 50)) != 0);
   }
   for (i = self->spriteIdx[0x49] + self->spriteIdx[0x4a] * player;
        i < self->spriteIdx[0x49] + self->spriteIdx[0x4a] * (player + 1); i++) {
     k = i - self->spriteIdx[0x49];
     GfxSpriteSetCell(
         ((GfxSprite **)self->base.data)[i], 0.0f,
-        (float)(u8)(self->handicap[k / self->spriteIdx[0x4a]] / ((k % self->spriteIdx[0x4a]) * 50 + 50) - 1));
+        (float)(u8)(BDC_DIV(self->handicap[BDC_DIV(k, self->spriteIdx[0x4a])], ((BDC_MOD(k, self->spriteIdx[0x4a])) * 50 + 50)) - 1));
   }
 }
