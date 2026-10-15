@@ -20,7 +20,7 @@ void GfxTextureInitVramTarget(void *tex, char *name, void *vram)
     }
     t->singleSlot = 1;
     t->blocks = t->inlineBlock;
-    memset(&t->rec38Type, 0, 0x20);
+    memset(&t->rec38Type, 0, __builtin_offsetof(GfxTexture, _unk058) - __builtin_offsetof(GfxTexture, rec38Type));
     t->rec38Type = 1;
     t->rec38Owner = t;
     memset(&t->gmo, 0, sizeof(GmoTexture));

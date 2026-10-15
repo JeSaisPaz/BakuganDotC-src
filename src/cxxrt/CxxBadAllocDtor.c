@@ -14,7 +14,7 @@ void CxxBadAllocDtor(void *exc, u32 flags)
   u32 ehPad;
   void **ehFrame;
   u8 ehCleanupKind;
-  void **ehCleanupDesc;
+  CxxEhCleanupEntry *ehCleanupDesc;
   u8 *ehObjSlot;
   u16 savedRegion;
   

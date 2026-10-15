@@ -20,7 +20,7 @@ void UiCardEquipCreateNamePrinter(UiCardEquip *self)
   MemUnlock();
   self_01 = (UiTextPrinter *)0x0;
   if (self_00 != (UiTextPrinter *)0x0) {
-    UiTextPrinterCtor(self_00,0,&g_uiCardEquipFontNames);
+    UiTextPrinterCtor(self_00,0,g_uiCardEquipFontNames);
     self_01 = self_00;
   }
   self->namePrinter = self_01;

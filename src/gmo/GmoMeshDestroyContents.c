@@ -17,7 +17,7 @@ void *GmoMeshDestroyContents(GmoMesh *mesh)
     if (((material + 1) & 0xffff0000) == 0) {
       material = 0;
     }
-    GmoMaterialArrayRelease((short *)(uintptr_t)material, 1);
+    GmoMaterialArrayRelease((short *)PspPtrOrNull(material), 1);
     GmoInstanceArrayRelease((short *)mesh->instances, 1);
     GmoHeapReleaseThunk(0, mesh->patchScale);
     GmoHeapReleaseThunk(0, mesh->skinData);

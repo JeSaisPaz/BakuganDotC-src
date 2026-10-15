@@ -7,7 +7,7 @@
 void UiScrollLoopInit(u8 on, GfxSprite *a, GfxSprite *b, UiScrollLoop *rec)
 
 {
-  memset(rec,0,0x10);
+  memset(rec,0,sizeof(UiScrollLoop));
   rec->on = on;
   rec->a = a;
   rec->b = b;

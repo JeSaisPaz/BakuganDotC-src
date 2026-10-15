@@ -20,7 +20,7 @@ void UiCollectionCardCreateHelpPrinter(UiCollectionCard *self)
   MemUnlock();
   self_01 = (UiTextPrinter *)0x0;
   if (self_00 != (UiTextPrinter *)0x0) {
-    UiTextPrinterCtor(self_00,0,&g_uiCollectionCardFontNames);
+    UiTextPrinterCtor(self_00,0,g_uiCollectionCardFontNames);
     self_01 = self_00;
   }
   self->helpPrinter = self_01;

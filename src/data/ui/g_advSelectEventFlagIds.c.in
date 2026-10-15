@@ -4,8 +4,10 @@
 // bdc-fix	V	unsigned int	0x297dbc	4	0	[1]
 // bdc-fix	V	unsigned int	0x297dc0	4	0	[2]
 // bdc-fix	V	unsigned int	0x297dc4	4	0	[3]
+// bdc-fix	V	unsigned int	0x297dc8	4	0	[4]
+// bdc-fix	V	unsigned int	0x297dcc	4	0	[5]
 
-__typeof__(u32[4]) g_advSelectEventFlagIds = {
+__typeof__(u32[6]) g_advSelectEventFlagIds = {
     BDC_V(unsigned int, 0x297db8), BDC_V(unsigned int, 0x297dbc), BDC_V(unsigned int, 0x297dc0),
-    BDC_V(unsigned int, 0x297dc4),
+    BDC_V(unsigned int, 0x297dc4), BDC_V(unsigned int, 0x297dc8), BDC_V(unsigned int, 0x297dcc),
 };

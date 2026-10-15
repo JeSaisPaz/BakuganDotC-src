@@ -23,7 +23,7 @@ void GfxTextureInitFromTim2(void *tex, const char *name, void *data, u8 flag)
     u32 height;
     s32 palettes;
 
-    memset(&t->rec38Type, 0, 0x20);
+    memset(&t->rec38Type, 0, __builtin_offsetof(GfxTexture, _unk058) - __builtin_offsetof(GfxTexture, rec38Type));
     t->rec38Type = 1;
     t->rec38Owner = t;
     t->clutData = NULL;

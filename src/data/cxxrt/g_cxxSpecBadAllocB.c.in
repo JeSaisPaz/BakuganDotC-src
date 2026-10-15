@@ -1,0 +1,5 @@
+// bdc 0x08af11b8 g_cxxSpecBadAllocB
+#include "bdc.h"
+// bdc-fix	V	unsigned char	0x2ed1bc	1	0	.flags
+
+__typeof__(CxxEhHandlerEntry) g_cxxSpecBadAllocB = { .type = (struct CxxTypeInfo *)&g_cxxBadAllocTypeInfo, .flags = BDC_V(unsigned char, 0x2ed1bc) };

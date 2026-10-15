@@ -6,7 +6,7 @@
 void UiCellBlinkInit(u8 on, GfxSprite *sprite, UiCellBlink *rec)
 
 {
-  memset(rec,0,0x10);
+  memset(rec,0,sizeof(UiCellBlink));
   rec->on = on;
   rec->sprite = sprite;
   return;

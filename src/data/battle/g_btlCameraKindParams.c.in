@@ -140,8 +140,99 @@
 // bdc-fix	V	float	0x261ed0	4	0	[20].param[4]
 // bdc-fix	V	float	0x261ed4	4	0	[20].param[5]
 // bdc-fix	V	float	0x261ed8	4	0	[20].param[6]
+// bdc-fix	V	float	0x261edc	4	0	[21].param[0]
+// bdc-fix	V	float	0x261ee0	4	0	[21].param[1]
+// bdc-fix	V	float	0x261ee4	4	0	[21].param[2]
+// bdc-fix	V	float	0x261ee8	4	0	[21].param[3]
+// bdc-fix	V	float	0x261eec	4	0	[21].param[4]
+// bdc-fix	V	float	0x261ef0	4	0	[21].param[5]
+// bdc-fix	V	float	0x261ef4	4	0	[21].param[6]
+// bdc-fix	V	float	0x261ef8	4	0	[22].param[0]
+// bdc-fix	V	float	0x261efc	4	0	[22].param[1]
+// bdc-fix	V	float	0x261f00	4	0	[22].param[2]
+// bdc-fix	V	float	0x261f04	4	0	[22].param[3]
+// bdc-fix	V	float	0x261f08	4	0	[22].param[4]
+// bdc-fix	V	float	0x261f0c	4	0	[22].param[5]
+// bdc-fix	V	float	0x261f10	4	0	[22].param[6]
+// bdc-fix	V	float	0x261f14	4	0	[23].param[0]
+// bdc-fix	V	float	0x261f18	4	0	[23].param[1]
+// bdc-fix	V	float	0x261f1c	4	0	[23].param[2]
+// bdc-fix	V	float	0x261f20	4	0	[23].param[3]
+// bdc-fix	V	float	0x261f24	4	0	[23].param[4]
+// bdc-fix	V	float	0x261f28	4	0	[23].param[5]
+// bdc-fix	V	float	0x261f2c	4	0	[23].param[6]
+// bdc-fix	V	float	0x261f30	4	0	[24].param[0]
+// bdc-fix	V	float	0x261f34	4	0	[24].param[1]
+// bdc-fix	V	float	0x261f38	4	0	[24].param[2]
+// bdc-fix	V	float	0x261f3c	4	0	[24].param[3]
+// bdc-fix	V	float	0x261f40	4	0	[24].param[4]
+// bdc-fix	V	float	0x261f44	4	0	[24].param[5]
+// bdc-fix	V	float	0x261f48	4	0	[24].param[6]
+// bdc-fix	V	float	0x261f4c	4	0	[25].param[0]
+// bdc-fix	V	float	0x261f50	4	0	[25].param[1]
+// bdc-fix	V	float	0x261f54	4	0	[25].param[2]
+// bdc-fix	V	float	0x261f58	4	0	[25].param[3]
+// bdc-fix	V	float	0x261f5c	4	0	[25].param[4]
+// bdc-fix	V	float	0x261f60	4	0	[25].param[5]
+// bdc-fix	V	float	0x261f64	4	0	[25].param[6]
+// bdc-fix	V	float	0x261f68	4	0	[26].param[0]
+// bdc-fix	V	float	0x261f6c	4	0	[26].param[1]
+// bdc-fix	V	float	0x261f70	4	0	[26].param[2]
+// bdc-fix	V	float	0x261f74	4	0	[26].param[3]
+// bdc-fix	V	float	0x261f78	4	0	[26].param[4]
+// bdc-fix	V	float	0x261f7c	4	0	[26].param[5]
+// bdc-fix	V	float	0x261f80	4	0	[26].param[6]
+// bdc-fix	V	float	0x261f84	4	0	[27].param[0]
+// bdc-fix	V	float	0x261f88	4	0	[27].param[1]
+// bdc-fix	V	float	0x261f8c	4	0	[27].param[2]
+// bdc-fix	V	float	0x261f90	4	0	[27].param[3]
+// bdc-fix	V	float	0x261f94	4	0	[27].param[4]
+// bdc-fix	V	float	0x261f98	4	0	[27].param[5]
+// bdc-fix	V	float	0x261f9c	4	0	[27].param[6]
+// bdc-fix	V	float	0x261fa0	4	0	[28].param[0]
+// bdc-fix	V	float	0x261fa4	4	0	[28].param[1]
+// bdc-fix	V	float	0x261fa8	4	0	[28].param[2]
+// bdc-fix	V	float	0x261fac	4	0	[28].param[3]
+// bdc-fix	V	float	0x261fb0	4	0	[28].param[4]
+// bdc-fix	V	float	0x261fb4	4	0	[28].param[5]
+// bdc-fix	V	float	0x261fb8	4	0	[28].param[6]
+// bdc-fix	V	float	0x261fbc	4	0	[29].param[0]
+// bdc-fix	V	float	0x261fc0	4	0	[29].param[1]
+// bdc-fix	V	float	0x261fc4	4	0	[29].param[2]
+// bdc-fix	V	float	0x261fc8	4	0	[29].param[3]
+// bdc-fix	V	float	0x261fcc	4	0	[29].param[4]
+// bdc-fix	V	float	0x261fd0	4	0	[29].param[5]
+// bdc-fix	V	float	0x261fd4	4	0	[29].param[6]
+// bdc-fix	V	float	0x261fd8	4	0	[30].param[0]
+// bdc-fix	V	float	0x261fdc	4	0	[30].param[1]
+// bdc-fix	V	float	0x261fe0	4	0	[30].param[2]
+// bdc-fix	V	float	0x261fe4	4	0	[30].param[3]
+// bdc-fix	V	float	0x261fe8	4	0	[30].param[4]
+// bdc-fix	V	float	0x261fec	4	0	[30].param[5]
+// bdc-fix	V	float	0x261ff0	4	0	[30].param[6]
+// bdc-fix	V	float	0x261ff4	4	0	[31].param[0]
+// bdc-fix	V	float	0x261ff8	4	0	[31].param[1]
+// bdc-fix	V	float	0x261ffc	4	0	[31].param[2]
+// bdc-fix	V	float	0x262000	4	0	[31].param[3]
+// bdc-fix	V	float	0x262004	4	0	[31].param[4]
+// bdc-fix	V	float	0x262008	4	0	[31].param[5]
+// bdc-fix	V	float	0x26200c	4	0	[31].param[6]
+// bdc-fix	V	float	0x262010	4	0	[32].param[0]
+// bdc-fix	V	float	0x262014	4	0	[32].param[1]
+// bdc-fix	V	float	0x262018	4	0	[32].param[2]
+// bdc-fix	V	float	0x26201c	4	0	[32].param[3]
+// bdc-fix	V	float	0x262020	4	0	[32].param[4]
+// bdc-fix	V	float	0x262024	4	0	[32].param[5]
+// bdc-fix	V	float	0x262028	4	0	[32].param[6]
+// bdc-fix	V	float	0x26202c	4	0	[33].param[0]
+// bdc-fix	V	float	0x262030	4	0	[33].param[1]
+// bdc-fix	V	float	0x262034	4	0	[33].param[2]
+// bdc-fix	V	float	0x262038	4	0	[33].param[3]
+// bdc-fix	V	float	0x26203c	4	0	[33].param[4]
+// bdc-fix	V	float	0x262040	4	0	[33].param[5]
+// bdc-fix	V	float	0x262044	4	0	[33].param[6]
 
-__typeof__(BtlCameraKindParams[21]) g_btlCameraKindParams = {
+__typeof__(BtlCameraKindParams[34]) g_btlCameraKindParams = {
     {0},
     {
         .param = {
@@ -281,6 +372,97 @@ __typeof__(BtlCameraKindParams[21]) g_btlCameraKindParams = {
             BDC_V(float, 0x261ec0), BDC_V(float, 0x261ec4), BDC_V(float, 0x261ec8),
             BDC_V(float, 0x261ecc), BDC_V(float, 0x261ed0), BDC_V(float, 0x261ed4),
             BDC_V(float, 0x261ed8),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261edc), BDC_V(float, 0x261ee0), BDC_V(float, 0x261ee4),
+            BDC_V(float, 0x261ee8), BDC_V(float, 0x261eec), BDC_V(float, 0x261ef0),
+            BDC_V(float, 0x261ef4),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261ef8), BDC_V(float, 0x261efc), BDC_V(float, 0x261f00),
+            BDC_V(float, 0x261f04), BDC_V(float, 0x261f08), BDC_V(float, 0x261f0c),
+            BDC_V(float, 0x261f10),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261f14), BDC_V(float, 0x261f18), BDC_V(float, 0x261f1c),
+            BDC_V(float, 0x261f20), BDC_V(float, 0x261f24), BDC_V(float, 0x261f28),
+            BDC_V(float, 0x261f2c),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261f30), BDC_V(float, 0x261f34), BDC_V(float, 0x261f38),
+            BDC_V(float, 0x261f3c), BDC_V(float, 0x261f40), BDC_V(float, 0x261f44),
+            BDC_V(float, 0x261f48),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261f4c), BDC_V(float, 0x261f50), BDC_V(float, 0x261f54),
+            BDC_V(float, 0x261f58), BDC_V(float, 0x261f5c), BDC_V(float, 0x261f60),
+            BDC_V(float, 0x261f64),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261f68), BDC_V(float, 0x261f6c), BDC_V(float, 0x261f70),
+            BDC_V(float, 0x261f74), BDC_V(float, 0x261f78), BDC_V(float, 0x261f7c),
+            BDC_V(float, 0x261f80),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261f84), BDC_V(float, 0x261f88), BDC_V(float, 0x261f8c),
+            BDC_V(float, 0x261f90), BDC_V(float, 0x261f94), BDC_V(float, 0x261f98),
+            BDC_V(float, 0x261f9c),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261fa0), BDC_V(float, 0x261fa4), BDC_V(float, 0x261fa8),
+            BDC_V(float, 0x261fac), BDC_V(float, 0x261fb0), BDC_V(float, 0x261fb4),
+            BDC_V(float, 0x261fb8),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261fbc), BDC_V(float, 0x261fc0), BDC_V(float, 0x261fc4),
+            BDC_V(float, 0x261fc8), BDC_V(float, 0x261fcc), BDC_V(float, 0x261fd0),
+            BDC_V(float, 0x261fd4),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261fd8), BDC_V(float, 0x261fdc), BDC_V(float, 0x261fe0),
+            BDC_V(float, 0x261fe4), BDC_V(float, 0x261fe8), BDC_V(float, 0x261fec),
+            BDC_V(float, 0x261ff0),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x261ff4), BDC_V(float, 0x261ff8), BDC_V(float, 0x261ffc),
+            BDC_V(float, 0x262000), BDC_V(float, 0x262004), BDC_V(float, 0x262008),
+            BDC_V(float, 0x26200c),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x262010), BDC_V(float, 0x262014), BDC_V(float, 0x262018),
+            BDC_V(float, 0x26201c), BDC_V(float, 0x262020), BDC_V(float, 0x262024),
+            BDC_V(float, 0x262028),
+        },
+    },
+    {
+        .param = {
+            BDC_V(float, 0x26202c), BDC_V(float, 0x262030), BDC_V(float, 0x262034),
+            BDC_V(float, 0x262038), BDC_V(float, 0x26203c), BDC_V(float, 0x262040),
+            BDC_V(float, 0x262044),
         },
     },
 };

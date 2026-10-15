@@ -18,7 +18,7 @@ void GameEventActionListRemoveMatching(GameEventActionList *self, s32 kind, u8 t
     if (((s32 (*)(void *))e->fn)((u8 *)action + e->delta) == kind) {
       action = self->actions[i];
       e = &action->vtbl[6];
-      if (((u32 (*)(void *))e->fn)((u8 *)action + e->delta) == target) {
+      if (((u8 (*)(void *))e->fn)((u8 *)action + e->delta) == target) {
         GameEventActionListRemoveAt(self, (u8)i);
       }
     }

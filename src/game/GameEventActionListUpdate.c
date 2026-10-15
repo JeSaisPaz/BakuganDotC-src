@@ -17,7 +17,7 @@ void GameEventActionListUpdate(GameEventActionList *self)
         GameEventAction *action = self->actions[i];
         const VtblEntry *e = &action->vtbl[4];
 
-        if (((s32 (*)(void *))e->fn)((u8 *)action + e->delta) != 0) {
+        if (((u8 (*)(void *))e->fn)((u8 *)action + e->delta) != 0) {
           GameEventActionListRemoveAt(self, (u8)i);
         } else {
           i = (i + 1) & 0xff;

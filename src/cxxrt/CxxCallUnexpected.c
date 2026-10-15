@@ -26,7 +26,7 @@ void CxxCallUnexpected(void)
   tryFrame.next = (CxxEhFrame *)&cleanup;
   g_cxxEhFrameStack = &tryFrame;
   tryFrame.kind = 0;
-  tryFrame.handlers = &g_cxxCallUnexpectedHandlers;
+  tryFrame.handlers = (int *)&g_cxxCallUnexpectedHandlers;
   tryFrame.caught = NULL;
   tryFrame.region = g_cxxEhCurrentRegion;
   if (BDC_SETJMP(tryFrame.jmpBuf) == 0) {

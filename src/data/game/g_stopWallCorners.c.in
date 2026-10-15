@@ -11,10 +11,17 @@
 // bdc-fix	V	float	0x281244	4	0	[3][0]
 // bdc-fix	V	float	0x281248	4	0	[3][1]
 // bdc-fix	V	float	0x28124c	4	0	[3][2]
+// bdc-fix	V	float	0x281250	4	0	[4][0]
+// bdc-fix	V	float	0x281258	4	0	[4][2]
+// bdc-fix	V	float	0x28125c	4	0	[5][0]
+// bdc-fix	V	float	0x281260	4	0	[5][1]
+// bdc-fix	V	float	0x281264	4	0	[5][2]
 
-__typeof__(float[4][3]) g_stopWallCorners = {
+__typeof__(float[6][3]) g_stopWallCorners = {
     { BDC_V(float, 0x281220), BDC_V(float, 0x281224), BDC_V(float, 0x281228) },
     { BDC_V(float, 0x28122c), BDC_V(float, 0x281230), BDC_V(float, 0x281234) },
     { BDC_V(float, 0x281238), 0, BDC_V(float, 0x281240) },
     { BDC_V(float, 0x281244), BDC_V(float, 0x281248), BDC_V(float, 0x28124c) },
+    { BDC_V(float, 0x281250), 0, BDC_V(float, 0x281258) },
+    { BDC_V(float, 0x28125c), BDC_V(float, 0x281260), BDC_V(float, 0x281264) },
 };

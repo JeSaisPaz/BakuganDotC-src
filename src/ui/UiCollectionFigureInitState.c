@@ -48,7 +48,7 @@ void UiCollectionFigureInitState(UiCollectionFigure *self)
     break;
   }
   memset(self->dim, 0, sizeof(self->dim));
-  memset(&self->helpPrinter, 0, 0x224);
+  memset(&self->helpPrinter, 0, __builtin_offsetof(UiCollectionFigure, _unk10cc) - __builtin_offsetof(UiCollectionFigure, helpPrinter));
   UiCollectionFigureCreateHelpPrinter(self);
   switch (self->category) {
   case 0:

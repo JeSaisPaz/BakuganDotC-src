@@ -25,7 +25,7 @@ void UiWorldMapCreateTextSlots(UiScreen *screen)
     MemUnlock();
     printer = NULL;
     if (mem != NULL) {
-      UiTextPrinterCtor(mem, 0, &g_uiWorldMapFontNames);
+      UiTextPrinterCtor(mem, 0, g_uiWorldMapFontNames);
       printer = mem;
     }
     map->textSlot[i].printer = printer;

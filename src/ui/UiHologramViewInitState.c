@@ -11,7 +11,8 @@ void UiHologramViewInitState(UiHologramView *self)
   memset(&self->blinkOn, 0, 0x10);
   self->entryIndex = 0;
   UiHologramViewLoadKindTable(self, self->kind);
-  memset(&self->printer, 0, 0x224);
+  memset(&self->printer, 0,
+         __builtin_offsetof(UiHologramView, helpDone) - __builtin_offsetof(UiHologramView, printer));
   self->helpDone = 0;
   self->helpStep = 0;
   memset(self->screenFade, 0, 0x10);

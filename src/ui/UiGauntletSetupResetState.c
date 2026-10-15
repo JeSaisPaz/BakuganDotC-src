@@ -20,7 +20,8 @@ void UiGauntletSetupResetState(UiGauntletSetup *self)
   self->pushRequested = '\0';
   self->pushPlaying = '\0';
   UiGauntletSetupLoadCardSlots(self);
-  memset(&self->namePrinter,0,0x448);
+  memset(&self->namePrinter,0,
+         __builtin_offsetof(UiGauntletSetup,nameGlyphX) - __builtin_offsetof(UiGauntletSetup,namePrinter));
   memset(self->cardInfo,0,0x10);
   return;
 }

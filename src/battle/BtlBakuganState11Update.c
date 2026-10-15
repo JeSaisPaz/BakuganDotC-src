@@ -30,7 +30,9 @@
    or forward at the melee step speed, lerping the velocity by 0.3. Without a target at entry
    velocity x/z are damped by 0.85. Counts `attackFrame`, and `attackEventFrame` from phase 2.
    Normalisations follow the listing: a zero-length vector gives 0 (bank S713), xyz clamped to
-   [-1, 1], lane w 0. */
+   [-1, 1], lane w 0. A kind outside `g_btlKindArtSequences` (the `BtlUnitAlt` kinds 0x15..0x20,
+   whose state 11 runs this handler; the original reads two zero words and then
+   `g_btlAiRangeConsts` past the table) gets no sequence (NULL). */
 
 typedef void (*BtlSetMotionSpeedFn)(float speed, void *self);
 
@@ -70,7 +72,11 @@ void BtlBakuganState11Update(BtlBakugan *self)
         hadTarget = true;
     }
     set = (const BtlAttackMotionSet *)self->attackMotions[self->attackIndex];
-    steps = g_btlKindArtSequences[self->base.base.unk08];
+    steps = NULL;
+    if ((u32)self->base.base.unk08 <
+        sizeof(g_btlKindArtSequences) / sizeof(g_btlKindArtSequences[0])) {
+        steps = g_btlKindArtSequences[self->base.base.unk08];
+    }
     threshold = 0.980000019f;
     BtlBakuganTurnTowardTarget(self, NULL);
     self->stateFlags |= 0x400000;

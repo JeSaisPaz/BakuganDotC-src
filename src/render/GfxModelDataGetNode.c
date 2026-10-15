@@ -11,7 +11,7 @@ GmoNode *GfxModelDataGetNode(GmoModel *data, u32 index)
 {
   if (data != (GmoModel *)0x0) {
     if ((index + 1 & 0xffff0000) != 0) {
-      return (GmoNode *)(uintptr_t)index;
+      return (GmoNode *)PspPtr(index);
     }
     if ((index & 0xffff) < (uint)data->nodeCount) {
       return data->nodes + index;

@@ -1,0 +1,10 @@
+// bdc 0x08af11a8 g_cxxBadExceptionDtorCleanup
+#include "bdc.h"
+// bdc-fix	V	unsigned short	0x2ed1ae	2	0	.next
+// bdc-fix	V	unsigned char	0x2ed1b0	1	0	.flags
+
+__typeof__(CxxEhCleanupEntry) g_cxxBadExceptionDtorCleanup = {
+    .fn = (void *)CxxExceptionDtor,
+    .next = BDC_V(unsigned short, 0x2ed1ae),
+    .flags = BDC_V(unsigned char, 0x2ed1b0),
+};

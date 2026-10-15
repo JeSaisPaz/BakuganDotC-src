@@ -52,7 +52,7 @@ GameEvent *GameEventCtor(GameEvent *self)
   self->blocking = 0;
   self->flags |= 0x04;
   self->flags &= ~0x08;
-  memset(&self->script, 0, 0x10);
+  memset(&self->script, 0, __builtin_offsetof(GameEvent, cmd) - __builtin_offsetof(GameEvent, script));
   memset(self->msgIds, 0, sizeof(self->msgIds));
   memset(self->msgAttrs, 0, sizeof(self->msgAttrs));
   return self;

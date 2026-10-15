@@ -62,7 +62,7 @@ void *GmoAttrCopy(void *dst, const void *src, u32 flags, void *plan)
         d->child->refCount++;
     }
     /* layerRef values -1..0xfffe are indices / "none", not record addresses */
-    layer = (void *)(uintptr_t)d->layerRef;
+    layer = PspPtrOrNull(d->layerRef);
     if (((d->layerRef + 1) & 0xffff0000) == 0) {
         layer = NULL;
     }

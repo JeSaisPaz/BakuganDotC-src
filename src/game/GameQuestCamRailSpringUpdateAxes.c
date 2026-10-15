@@ -10,25 +10,13 @@
    (`g_gameQuestCamRailSpringAxisConsts` +0x40) into `goal`. `goal` xyz is then scaled by `dist`
    (its w becomes the bank zero S713, 0.0f) and the controller's `eye` xyz added. */
 
-typedef struct RailSpringPathNode {
-  char pad[0x10];
-  float quat[4];
-} RailSpringPathNode;
-
-typedef struct RailSpringPathSet {
-  RailSpringPathNode *from;
-  RailSpringPathNode *to;
-  char pad[0x18];
-  float t;
-} RailSpringPathSet;
-
 void GameQuestCamRailSpringUpdateAxes(void *spring)
 
 {
   GameQuestCamEyeSpring *self = (GameQuestCamEyeSpring *)spring;
-  const RailSpringPathSet *pathSet = (const RailSpringPathSet *)self->pathSet;
-  const float *quatA = pathSet->from->quat;
-  const float *quatB = pathSet->to->quat;
+  const GameQuestPathSegment *pathSet = (const GameQuestPathSegment *)self->pathSet;
+  const float *quatA = pathSet->from->vec10;
+  const float *quatB = pathSet->to->vec10;
   const float *up = &g_gameQuestCamRailSpringAxisConsts.up.x;
   float slerp[4];
   float qb[4];

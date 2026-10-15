@@ -1,5 +1,5 @@
 // bdc 0x08ac36b0 g_uiCollectionSphereFontNames
 #include "bdc.h"
-// bdc-fix	STR	char *	0x29a14c	0	0	
+// bdc-fix	STR	char *	0x29a14c	0	0	[0]
 
-__typeof__(char *) g_uiCollectionSphereFontNames = (char *)BDC_STR(0x29a14c);
+__typeof__(char *[2]) g_uiCollectionSphereFontNames = { (char *)BDC_STR(0x29a14c) };

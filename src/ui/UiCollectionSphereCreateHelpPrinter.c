@@ -20,7 +20,7 @@ void UiCollectionSphereCreateHelpPrinter(UiCollectionSphere *self)
   MemUnlock();
   self_01 = (UiTextPrinter *)0x0;
   if (self_00 != (UiTextPrinter *)0x0) {
-    UiTextPrinterCtor(self_00,0,&g_uiCollectionSphereFontNames);
+    UiTextPrinterCtor(self_00,0,g_uiCollectionSphereFontNames);
     self_01 = self_00;
   }
   self->helpPrinter = self_01;

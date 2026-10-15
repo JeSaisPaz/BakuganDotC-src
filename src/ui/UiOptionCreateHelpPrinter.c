@@ -12,7 +12,7 @@ void UiOptionCreateHelpPrinter(UiOption *self)
   UiTextPrinter *mem;
   UiTextPrinter *printer;
 
-  memset(&self->helpPrinter, 0, 100);
+  memset(&self->helpPrinter, 0, __builtin_offsetof(UiOption, netFlag) - __builtin_offsetof(UiOption, helpPrinter));
   MemLock();
   fromLow = MemIsAllocFromLow();
   MemSetAllocFromLow(true);

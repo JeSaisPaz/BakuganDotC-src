@@ -18,7 +18,7 @@ void UiCollectionCardInitState(UiCollectionCard *self)
   memset(&self->bobOn,0,0xc);
   memset(self->dim,0,sizeof(self->dim));
   memset(&self->fastScroll,0,4);
-  memset(&self->helpPrinter,0,0x224);
+  memset(&self->helpPrinter,0,__builtin_offsetof(UiCollectionCard, previewOn) - __builtin_offsetof(UiCollectionCard, helpPrinter));
   UiCollectionCardCreateHelpPrinter(self);
   memset(&self->previewOn,0,0xc);
   return;

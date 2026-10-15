@@ -63,7 +63,7 @@ UiMainMenu *UiMainMenuCtor(UiMainMenu *self)
   self->base.pad->stickEmulatesDpad = 1;
   UiScreenKeepSharedBg(&self->base);
   memset(self->models, 0, sizeof(self->models));
-  memset(&self->baseModel, 0, 4);
+  memset(&self->baseModel, 0, sizeof(self->baseModel));
   memset(&self->moveDir, 0, 0xc);   /* moveDir .. moveT */
   memset(&self->lightMode, 0, 0xc); /* lightMode .. lightPulse */
   self->leave = 0;

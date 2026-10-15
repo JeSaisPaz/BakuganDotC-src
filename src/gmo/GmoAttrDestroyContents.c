@@ -24,7 +24,7 @@ void *GmoAttrDestroyContents(void *attr)
         }
     }
     if (((a->layerRef + 1) & 0xffff0000) != 0) {
-        layer = (GmoLayer *)(uintptr_t)a->layerRef;
+        layer = (GmoLayer *)PspPtr(a->layerRef);
         if (layer != NULL) {
             layer->f00--;
             if (layer->f00 == 0) {

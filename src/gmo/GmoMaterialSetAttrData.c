@@ -10,7 +10,7 @@
 void GmoMaterialSetAttrData(void *mat, u32 index, const u32 *data)
 {
   GmoMaterial *m = (GmoMaterial *)mat;
-  GmoAttr *a = (GmoAttr *)(uintptr_t)index;
+  GmoAttr *a = (GmoAttr *)PspPtr(index);
   u32 *dst;
 
   if (m == NULL) {

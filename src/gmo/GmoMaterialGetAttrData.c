@@ -19,7 +19,7 @@ void *GmoMaterialGetAttrData(GmoMaterial *mat, u32 index)
         }
         attr = &mat->attrs[index];
     } else {
-        attr = (GmoAttr *)(uintptr_t)index;
+        attr = (GmoAttr *)PspPtr(index);
     }
     if (attr == NULL) {
         return NULL;

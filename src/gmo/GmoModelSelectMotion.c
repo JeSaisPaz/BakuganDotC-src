@@ -14,7 +14,7 @@ void GmoModelSelectMotion(float frame, GmoModel *self, u32 index)
   if (self != NULL) {
     self->motionBlend = frame;
     self->motionIndex = (s16)index;
-    motion = (GmoMotionRecord *)(uintptr_t)index;
+    motion = (GmoMotionRecord *)PspPtrOrNull(index);
     if (((index + 1) & 0xffff0000) == 0) {
       motion = NULL;
       if ((index & 0xffff) <= (u32)self->motionCount) {

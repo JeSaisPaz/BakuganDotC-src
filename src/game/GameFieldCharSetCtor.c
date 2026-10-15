@@ -17,7 +17,7 @@ void *GameFieldCharSetCtor(void *mgr)
   set->guardCount = 0;
   set->eventDepth = 0;
   g_gameFieldCharSet = set;
-  memset(set, 0, 0x80);
+  memset(set->actors, 0, sizeof(set->actors));
   memset(&set->events[0x20], 0, 0x20);
   memset(&set->events[0], 0, 0x20);
   return mgr;

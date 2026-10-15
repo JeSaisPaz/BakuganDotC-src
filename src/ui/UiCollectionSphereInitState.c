@@ -51,6 +51,7 @@ void UiCollectionSphereInitState(UiCollectionSphere *self)
     break;
   }
   memset(self->dim, 0, sizeof(self->dim));
-  memset(&self->helpPrinter, 0, 0x224);
+  memset(&self->helpPrinter, 0,
+         __builtin_offsetof(UiCollectionSphere, motionButtonMask) - __builtin_offsetof(UiCollectionSphere, helpPrinter));
   UiCollectionSphereCreateHelpPrinter(self);
 }

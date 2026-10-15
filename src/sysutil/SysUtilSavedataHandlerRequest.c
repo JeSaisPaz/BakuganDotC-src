@@ -33,7 +33,7 @@ s32 SysUtilSavedataHandlerRequest(SysUtilSavedataHandler *self, u32 request)
       g_savedataParams->params.icon0FileData.size = size;
       g_savedataParams->params.icon0FileData.bufSize = size;
       newData = &g_savedataParams->newData;
-      memset(newData, 0, 0x14);
+      memset(newData, 0, sizeof(*newData));
       g_savedataParams->params.newData = newData;
       newData->icon0.buf = PspPtr(entry->data);
       size = entry->size;
