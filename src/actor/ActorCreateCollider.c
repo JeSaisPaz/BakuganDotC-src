@@ -7,7 +7,7 @@
    - `collider2` (type 1) gets the capsule `collShape`: start 0, axis (0, 10, 0), radius 2.5,
      `axisLen` = |axis|; it is attached to `mtx` (`attachMatrix`, `attachDirty = 1`).
    - `bodyCollider` (type 2) gets the sphere `bodyShape`: centre and radiusSq zeroed (VFPU bank
-     C720 = 0), radius 5.6 (`separationRadius`, radiusSq = 5.6^2). After `CollisionColliderInit`
+    C720 = 0), radius 5.6 (`bodyShape.radius`, radiusSq = 5.6^2). After `CollisionColliderInit`
      the installed sphere (`shapeDesc`) gets the model root position row
      (`base.data->rootMatrix[12..15]`, its w landing in `radiusSq`), is raised by its radius and
      refreshed (virtual slot 9, `CollisionSphereRecalc`); then flags bit0 is set and `hitTimer`
@@ -76,7 +76,7 @@ void ActorCreateCollider(Actor *self)
   self->bodyShape.center[2] = 0.0f;
   self->bodyShape.radiusSq = 0.0f;
   radius = 5.6f;
-  self->separationRadius = radius;
+  self->bodyShape.radius = radius;
   self->bodyShape.radiusSq = radius * radius;
   CollisionColliderInit(&((CollisionCollider *)self->bodyCollider)->node,
                         (const u32 *)&self->bodyShape, 0, self, 0);

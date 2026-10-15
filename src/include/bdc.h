@@ -412,13 +412,7 @@ typedef struct Actor {
     u8 _unk1c9[0x7];           /* +0x1c9 */
     CollisionCapsule collShape; /* +0x1d0 body collision capsule (type 4, segment view type 2 at +0x1e0); ActorCreateCollider passes it to CollisionColliderInit, the robot ctor resizes it */
     u8 _unk214[0xc];           /* +0x214 */
-    union {
-        CollisionSphere bodyShape; /* +0x220 sphere shape of bodyCollider (ActorCreateCollider: radius 5.6, centre = model root position raised by the radius) */
-        struct {
-            u8 _bodyShapeHead[0x20]; /* +0x220 bodyShape type/vtbl/centre/radiusSq */
-            float separationRadius;  /* +0x240 = bodyShape.radius; horizontal push-out radius (ActorSeparateFromActors) */
-        };
-    };
+    CollisionSphere bodyShape; /* +0x220 sphere shape of bodyCollider (ActorCreateCollider: radius 5.6, centre = model root position raised by the radius); its radius (+0x240) is the horizontal push-out radius (ActorSeparateFromActors) */
     u8 _unk244[0xc];           /* +0x244 */
     float fallSpeed;           /* +0x250 */
     u8 _unk254[0xc];           /* +0x254 */

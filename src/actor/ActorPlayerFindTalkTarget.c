@@ -4,7 +4,7 @@
 /* Finds the actor the player can talk to: from a point 7 units in front of the player (heading
    `rot[1]`: x += 7 cos, z += 7 sin), picks the nearest other actor of the actor list
    (`ActorGetList`) by horizontal (XZ) squared distance that lies within 2x/4x/3x the player's
-   `separationRadius` (sector 1 / 0 / other of `ActorGetFacingSectorFrom`); guards (models
+   `bodyShape.radius` (sector 1 / 0 / other of `ActorGetFacingSectorFrom`); guards (models
    0x4e..0x53) and actors whose placement `charCode` is 7 or 10 are rejected. Sets
    `talkTargetInReach` and returns the actor, or 0 (also at once while stealthed,
    `ActorPlayerIsStealthed`, or when the player is not in state 0, 1 or 6). */
@@ -43,7 +43,7 @@ void *ActorPlayerFindTalkTarget(ActorPlayer *self)
     dx = point[0] - actor->base.pos[0];
     dz = point[2] - actor->base.pos[2];
     dist = dx * dx + 0.0f + dz * dz;
-    radius = self->base.separationRadius;
+    radius = self->base.bodyShape.radius;
     if (ActorGetFacingSectorFrom(&self->base, actor->base.pos) == 1) {
       radius = radius * 2.0f;
     } else if (ActorGetFacingSectorFrom(&self->base, actor->base.pos) != 0) {

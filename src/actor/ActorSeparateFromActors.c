@@ -5,13 +5,13 @@
    its flag 0x40 (no push-apart) is set. Otherwise walks `g_actorList` and, for every other actor
    that is not model id 0x54 and has a `bodyCollider` without flag 4, whose vertical offset is under
    28.8 units: the horizontal offset self − other is taken, and if it is shorter than
-   2·`separationRadius` (and longer than 0.001) a push along it of
+   2·`bodyShape.radius` (and longer than 0.001) a push along it of
    min(2r − dist, 100)·0.7·weight is added to an accumulator (weight = vertical overlap / 24, at
    most 1); coincident actors (dist ≤ 0.001) are pushed 5·weight along the reversed heading
    `rot[1]` + π, or along the heading itself when `CollisionRaycastRayB` from the body sphere
    centre along the reversed heading (length 2r) hits. When self `isPlayer`, every actor that
    caused a push gets `pushed` = 1 (self's own `pushed` is cleared at entry). If any push happened,
-   the accumulator is clamped to length `separationRadius`, applied with `ActorMoveWithCollision`
+   the accumulator is clamped to length `bodyShape.radius`, applied with `ActorMoveWithCollision`
    (with `flags` 0x10 set and the collider's 0x40 set for the call, restored if it was clear), and
    when the push opposes the horizontal part of `delta`, `delta` is scaled by
    1 / (1 − 6·|push|·cos), cos being the cosine between the two directions (delta[3] is written 0).
@@ -91,8 +91,8 @@ void ActorSeparateFromActors(Actor *self, float *delta)
     }
     diff[1] = 0.0f;
     dist = __builtin_sqrtf(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
-    if (dist < self->separationRadius * 2.0f && !(dist <= 0.001f)) {
-      push = self->separationRadius * 2.0f - dist;
+    if (dist < self->bodyShape.radius * 2.0f && !(dist <= 0.001f)) {
+      push = self->bodyShape.radius * 2.0f - dist;
       if (!(push <= 100.0f)) {
         push = 100.0f;
       }
@@ -124,7 +124,7 @@ void ActorSeparateFromActors(Actor *self, float *delta)
         heading = heading + 6.28318548f;
       }
       /* diff = (cos, 0, sin)(heading) * 2r (vrot of heading·2/π) */
-      len = self->separationRadius * 2.0f;
+      len = self->bodyShape.radius * 2.0f;
       diff[0] = __builtin_cosf(heading) * len;
       diff[1] = 0.0f * len;
       diff[2] = __builtin_sinf(heading) * len;
@@ -155,11 +155,11 @@ void ActorSeparateFromActors(Actor *self, float *delta)
   }
   lenSq = accum[0] * accum[0] + accum[1] * accum[1] + accum[2] * accum[2];
   zero = 0.0f;
-  if (!(lenSq <= self->separationRadius * self->separationRadius)) {
-    /* accum = normalize(accum) * separationRadius (w = S713 = 0) */
+  if (!(lenSq <= self->bodyShape.radius * self->bodyShape.radius)) {
+    /* accum = normalize(accum) * bodyShape.radius (w = S713 = 0) */
     len = accum[0] * accum[0] + accum[1] * accum[1] + accum[2] * accum[2];
     inv = (len == 0.0f) ? 0.0f : VfRsq(len);
-    scale = inv * self->separationRadius;
+    scale = inv * self->bodyShape.radius;
     accum[0] = accum[0] * scale;
     accum[1] = accum[1] * scale;
     accum[2] = accum[2] * scale;
