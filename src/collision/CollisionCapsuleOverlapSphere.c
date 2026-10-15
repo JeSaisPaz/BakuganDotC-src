@@ -8,11 +8,11 @@ bool CollisionCapsuleOverlapSphere(const void *capsule, const void *sphere)
 
 {
   const CollisionCapsule *cap = capsule;
-  const float *sph = sphere;
+  const CollisionSphere *sph = sphere;
   float distSq;
   float r;
 
-  distSq = SegmentDistSqToPoint((SegmentShape *)&cap->segment, sph + 4);
-  r = cap->radius + sph[8];
+  distSq = SegmentDistSqToPoint((SegmentShape *)&cap->segment, sph->center);
+  r = cap->radius + sph->radius;
   return distSq <= r * r;
 }

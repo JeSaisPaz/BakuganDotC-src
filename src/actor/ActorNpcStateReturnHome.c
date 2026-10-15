@@ -49,6 +49,6 @@ void ActorNpcStateReturnHome(ActorNpc *self)
     entry = (const VtblEntry *)self->base.base.base.vtable + 46;
     self->aiState = 0;
     self->subStep = 0;
-    ((void (*)(void *, s32))entry->fn)((char *)self + entry->delta, 1);
+    ((void (*)(void *, u8))entry->fn)((char *)self + entry->delta, 1);
   }
 }

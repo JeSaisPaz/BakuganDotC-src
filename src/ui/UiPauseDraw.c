@@ -27,7 +27,7 @@ void UiPauseDraw(UiPause *self)
       self->hintPrinters[i]->outlineColor[3] = self->hintAlpha;
       printer = self->hintPrinters[i];
       entry = &printer->layer.vtbl[2];
-      ((void (*)(float, float, float, void *, char *, s32, s32, s32))entry->fn)(
+      ((void (*)(float, float, float, void *, char *, u8, s32, u8))entry->fn)(
           230.0f, (float)y, 0.0f, (u8 *)printer + entry->delta, self->hintText[i], 1, 0, 0);
       printer = self->hintPrinters[i];
       entry = &printer->layer.vtbl[5];

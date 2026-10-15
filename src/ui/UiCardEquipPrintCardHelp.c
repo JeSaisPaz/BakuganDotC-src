@@ -35,11 +35,11 @@ void UiCardEquipPrintCardHelp(UiCardEquip *self, u8 cardId)
   entry = &printer->layer.vtbl[2];
   anchor = ((GfxSprite **)self->base.data)[self->groups[0x13][0] + self->selBakugan];
   if (self->bakuganCount < 3) {
-    ((void (*)(float, float, float, void *, char *, s32, s32, s32))entry->fn)(
+    ((void (*)(float, float, float, void *, char *, u8, s32, u8))entry->fn)(
         anchor->posX, anchor->posY, 0.0f, (u8 *)printer + entry->delta, dst, 1, 0, 0);
   }
   else {
-    ((void (*)(float, float, float, void *, char *, s32, s32, s32))entry->fn)(
+    ((void (*)(float, float, float, void *, char *, u8, s32, u8))entry->fn)(
         anchor->posX, anchor->posY - 5.0f, 0.0f, (u8 *)printer + entry->delta, dst, 1, 0, 0);
   }
   UiTextMeasure(0.0f, self->helpPrinter, dst, &self->helpWidth, &self->helpHeight,

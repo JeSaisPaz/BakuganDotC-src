@@ -118,7 +118,7 @@ static void ScriptMsgPrint(BtlHud *self)
     }
     printer = self->overlayObj[1];
     print = &printer->layer.vtbl[2];
-    ((void (*)(float, float, float, void *, char *, s32, s32, s32))print->fn)(
+    ((void (*)(float, float, float, void *, char *, u8, s32, u8))print->fn)(
         (float)x, (float)y, 0.0f, (u8 *)printer + print->delta, self->msgText, 0, 0, 0);
 }
 

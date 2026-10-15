@@ -77,7 +77,7 @@ static void RatingPrint(UiTextPrinter *printer, char *text, s32 x, s32 y)
     const VtblEntry *print;
 
     print = &printer->layer.vtbl[2];
-    ((void (*)(float, float, float, void *, char *, s32, s32, s32))print->fn)(
+    ((void (*)(float, float, float, void *, char *, u8, s32, u8))print->fn)(
         (float)x, (float)y, 0.0f, (u8 *)printer + print->delta, text, 0, 0, 0);
 }
 

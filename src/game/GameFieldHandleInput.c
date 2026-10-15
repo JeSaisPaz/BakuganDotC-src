@@ -250,7 +250,7 @@ u32 GameFieldHandleInput(CoreTask *task)
   }
   if (notify) {
     e = &((const VtblEntry *)g->base.base.vtable)[16];
-    ((void (*)(void *, s32))e->fn)((char *)g + e->delta, 0);
+    ((void (*)(void *, u8))e->fn)((char *)g + e->delta, 0);
   }
   return ret;
 }

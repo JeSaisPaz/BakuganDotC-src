@@ -28,7 +28,7 @@ void UiEquipPrintCardName(UiEquip *self, u8 cardId)
   printer = self->namePrinter;
   sprite = ((GfxSprite **)self->base.data)[self->spriteIdx[0x13] + self->editPlayer];
   vt = &printer->layer.vtbl[2];
-  ((void (*)(float, float, float, void *, char *, u32, u32, u32))vt->fn)(
+  ((void (*)(float, float, float, void *, char *, u8, u32, u8))vt->fn)(
       sprite->posX, sprite->posY - 40.0f, 0.0f, (char *)printer + vt->delta, dst, 1, 0, 0);
   UiTextMeasure(0.0f, self->namePrinter, dst, &self->nameWidth, &self->nameHeight,
                 &self->nameLines);

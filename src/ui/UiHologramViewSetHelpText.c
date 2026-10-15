@@ -35,7 +35,7 @@ void UiHologramViewSetHelpText(UiHologramView *self, s8 hide, u16 sprite)
     printer = self->printer;
     anchor = ((GfxSprite **)self->base.data)[sprite];
     entry = &printer->layer.vtbl[2];
-    ((void (*)(float, float, float, void *, char *, s32, s32, s32))entry->fn)(
+    ((void (*)(float, float, float, void *, char *, u8, s32, u8))entry->fn)(
         anchor->posX + 16.0f, anchor->posY, 0.0f, (u8 *)printer + entry->delta, dst, 1, 0, 0);
     UiTextMeasure(0.0f, self->printer, dst, &self->textW, &self->textH, &self->textLines);
 

@@ -85,7 +85,7 @@ void UiUnlockResultSetHelpText(UiUnlockResult *self)
   printer = self->printers[1];
   anchor = ((GfxSprite **)self->base.data)[3];
   entry = &printer->layer.vtbl[2];
-  ((void (*)(float, float, float, void *, char *, s32, s32, s32))entry->fn)(
+  ((void (*)(float, float, float, void *, char *, u8, s32, u8))entry->fn)(
       anchor->posX, anchor->posY, 0.0f, (u8 *)printer + entry->delta, dst, 1, 0, 0);
   UiTextMeasure(0.0f, self->printers[1], dst, &self->textWidth[1], &self->textHeight[1],
                 &self->textLines[1]);

@@ -25,7 +25,7 @@ void ActorNpcGuardStateInvestigate(ActorNpcGuard *self)
     ActorNpcShowHeadEffect(npc, 0x29, 1, 1);
     entry = (const VtblEntry *)npc->base.base.base.vtable + 46;
     npc->subStep = 1;
-    ((void (*)(void *, s32))entry->fn)((char *)self + entry->delta, 0);
+    ((void (*)(void *, u8))entry->fn)((char *)self + entry->delta, 0);
     self->lookMode = 1;
     npc->timer = 30;
     break;
@@ -87,7 +87,7 @@ void ActorNpcGuardStateInvestigate(ActorNpcGuard *self)
     entry = (const VtblEntry *)npc->base.base.base.vtable + 46;
     npc->subStep = 0;
     npc->forceUpdate = 0;
-    ((void (*)(void *, s32))entry->fn)((char *)self + entry->delta, 1);
+    ((void (*)(void *, u8))entry->fn)((char *)self + entry->delta, 1);
     self->lookMode = 0;
     break;
   default:

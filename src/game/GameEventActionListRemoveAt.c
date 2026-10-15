@@ -16,7 +16,7 @@ void GameEventActionListRemoveAt(GameEventActionList *self, u8 index)
 
     action = self->actions[i];
     stop = &action->vtbl[3];
-    ((void (*)(void *, int))stop->fn)((u8 *)action + stop->delta, 0);
+    ((void (*)(void *, u8))stop->fn)((u8 *)action + stop->delta, 0);
     action = self->actions[i];
     if (action != NULL) {
       const VtblEntry *del = &action->vtbl[1];

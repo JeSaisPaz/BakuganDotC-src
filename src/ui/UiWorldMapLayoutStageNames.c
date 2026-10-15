@@ -37,7 +37,7 @@ void UiWorldMapLayoutStageNames(UiScreen *screen)
     printer->glyphs = NULL;
     printer = map->textSlot[i].printer;
     entry = &printer->layer.vtbl[2];
-    ((void (*)(float, float, float, void *, char *, s32, s32, s32))entry->fn)(
+    ((void (*)(float, float, float, void *, char *, u8, s32, u8))entry->fn)(
         map->panelPos[0], map->panelPos[1] - 19.0f, 0.0f, (u8 *)printer + entry->delta,
         map->textSlot[i].text, 1, 0, 0);
     UiTextMeasure(0.0f, map->textSlot[i].printer, map->textSlot[i].text, &map->textSlot[i].textW,

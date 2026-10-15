@@ -59,7 +59,7 @@ void UiCollectionSphereSetHelpText(UiCollectionSphere *self)
   printer = self->helpPrinter;
   anchor = ((GfxSprite **)self->base.data)[69];
   entry = &printer->layer.vtbl[2];
-  ((void (*)(float, float, float, void *, char *, s32, s32, s32))entry->fn)(
+  ((void (*)(float, float, float, void *, char *, u8, s32, u8))entry->fn)(
       anchor->posX, anchor->posY, 0.0f, (u8 *)printer + entry->delta, dst, 1, 0, 0);
   UiTextMeasure(0.0f, self->helpPrinter, dst, &self->helpWidth, &self->helpTextH, &self->helpLines);
 

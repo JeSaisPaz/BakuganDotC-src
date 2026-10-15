@@ -14,7 +14,7 @@ void GameEventActionListClear(GameEventActionList *self)
     if (action != NULL) {
       const VtblEntry *stop = &action->vtbl[3];
 
-      ((void (*)(void *, int))stop->fn)((u8 *)action + stop->delta, 0);
+      ((void (*)(void *, u8))stop->fn)((u8 *)action + stop->delta, 0);
       action = self->actions[i];
       if (action != NULL) {
         const VtblEntry *del = &action->vtbl[1];

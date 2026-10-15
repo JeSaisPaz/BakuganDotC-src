@@ -15,7 +15,7 @@ void ActorStateRouteWalk(Actor *self)
     u8 pushed;
     void *player;
 
-    if (((int (*)(float, float, void *, float *, int, int))walk->fn)(
+    if (((int (*)(float, float, void *, float *, int, s8))walk->fn)(
             self->walkSpeed, 2.0f, (u8 *)self + walk->delta, self->routeTarget, 0, 0) != 0) {
       ActorSetStateBase(self, 9, 0);
       self->waitTimer = 0;

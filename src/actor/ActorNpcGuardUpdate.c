@@ -14,7 +14,7 @@ void ActorNpcGuardUpdate(ActorNpcGuard *self)
   state = (self->base).aiState;
   if (((state != 5) && (state != 10)) && (self->lookMode != 0)) {
     entry = &((const VtblEntry *)(self->base).base.base.base.vtable)[46];
-    ((void (*)(void *, s32))entry->fn)((u8 *)self + entry->delta,1);
+    ((void (*)(void *, u8))entry->fn)((u8 *)self + entry->delta,1);
     self->lookMode = 0;
   }
   return;

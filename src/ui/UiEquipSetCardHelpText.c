@@ -35,7 +35,7 @@ void UiEquipSetCardHelpText(UiEquip *self, u8 index)
   entry = &printer->layer.vtbl[2];
   anchor = ((GfxSprite **)self->base.data)[self->spriteIdx[0x13] + self->editPlayer];
   /* The 2-player (playerCount < 3) and 4-player branches compile to the identical call. */
-  ((void (*)(float, float, float, void *, char *, s32, s32, s32))entry->fn)(
+  ((void (*)(float, float, float, void *, char *, u8, s32, u8))entry->fn)(
       anchor->posX, anchor->posY - -8.0f, 0.0f, (u8 *)printer + entry->delta, dst, 1, 0, 0);
   UiTextMeasure(0.0f, self->helpPrinter, dst, &self->helpWidth, &self->helpHeight,
                 &self->helpLines);
