@@ -66,7 +66,7 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
   float m[16];
   float relPos[4];
 
-  head = (GfxSprite *)self->list.head;
+  head = self->head;
   dl = GfxPacketBeginChunk(packet);
   dl = GfxDlCall2DState(dl);
   dl[0] = 0xc6000101;
