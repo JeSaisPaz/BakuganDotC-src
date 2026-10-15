@@ -113,6 +113,34 @@ void *PlatformPspPtrOrNull(unsigned addr);
 #define BDC_LONGJMP(env) __builtin_longjmp((void **)(env), 1)
 #endif
 
+/* Integer division with the Allegrex results (port scan class h): `div`/`divu` never trap. A zero divisor
+   leaves LO = -1 (1 for a negative dividend) and HI = the dividend for `div`; LO = 0xffff for a dividend
+   up to 0xffff, else 0xffffffff, and HI = the dividend for `divu`; INT_MIN / -1 gives LO = INT_MIN and
+   HI = 0 (PPSSPP's IR interpreter, ops Div/DivU). A host traps on these (SIGFPE), so every `/` and `%`
+   whose divisor is not a constant goes through BDC_DIV/BDC_MOD. 64-bit operands (libgcc's __divdi3 &
+   co. on the PSP, which leave a zero divisor undefined) follow the 32-bit `div` convention. The MIPS
+   build keeps the plain operators: same objects. */
+#ifdef __mips__
+#define BDC_DIV(a, b) ((a) / (b))
+#define BDC_MOD(a, b) ((a) % (b))
+#else
+static inline int BdcDivS32(int a, int b) { return b == 0 ? (a < 0 ? 1 : -1) : b == -1 ? (int)(0u - (unsigned)a) : a / b; }
+static inline int BdcModS32(int a, int b) { return b == 0 ? a : b == -1 ? 0 : a % b; }
+static inline unsigned BdcDivU32(unsigned a, unsigned b) { return b == 0 ? (a <= 0xffffu ? 0xffffu : 0xffffffffu) : a / b; }
+static inline unsigned BdcModU32(unsigned a, unsigned b) { return b == 0 ? a : a % b; }
+static inline long long BdcDivS64(long long a, long long b)
+{
+  return b == 0 ? (a < 0 ? 1 : -1) : b == -1 ? (long long)(0ull - (unsigned long long)a) : a / b;
+}
+static inline long long BdcModS64(long long a, long long b) { return b == 0 ? a : b == -1 ? 0 : a % b; }
+static inline unsigned long long BdcDivU64(unsigned long long a, unsigned long long b) { return b == 0 ? ~0ull : a / b; }
+static inline unsigned long long BdcModU64(unsigned long long a, unsigned long long b) { return b == 0 ? a : a % b; }
+#define BDC_DIV(a, b) _Generic((a) + (b), int: BdcDivS32, unsigned: BdcDivU32, long: BdcDivS64, \
+                               unsigned long: BdcDivU64, long long: BdcDivS64, unsigned long long: BdcDivU64)((a), (b))
+#define BDC_MOD(a, b) _Generic((a) + (b), int: BdcModS32, unsigned: BdcModU32, long: BdcModS64, \
+                               unsigned long: BdcModU64, long long: BdcModS64, unsigned long long: BdcModU64)((a), (b))
+#endif
+
 #endif
 typedef unsigned char uchar; typedef unsigned short ushort; typedef unsigned int uint;
 typedef unsigned long ulong; typedef long long longlong; typedef unsigned long long ulonglong;
@@ -5225,7 +5253,11 @@ typedef struct GameQuestCamModeEntry {
     ScePspFVector4 pos;        /* +0x00 fixed point the fixed camera mode copies to its spring goal */
     float rotation[4];         /* +0x10 orientation quaternion (x, y, z, w); the point mode ctor rotates `up` by it */
     ScePspFVector4 point;      /* +0x20 point the point camera mode reports (GetPoint) */
-    u8 _unk30[0x14];           /* +0x30 */
+    s16 *subData;              /* +0x30 GameQuestCamEntry.subData: a pointer, so the fields after it sit where GameQuestCamEntry's do on a 64-bit host */
+    s32 subCap;                /* +0x34 */
+    s32 subCount;              /* +0x38 */
+    s32 id;                    /* +0x3c */
+    float f40;                 /* +0x40 */
     float distance;            /* +0x44 distance passed to the spring-by-distance step */
     float sideOffset;          /* +0x48 sideways swing distance (x1.5) of the point mode follow offset */
     float leadScale;           /* +0x4c lead scale passed to GameQuestCamModeSmooth by the point mode */

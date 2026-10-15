@@ -11,7 +11,7 @@ void UiBakuganSelectUpdateModel(UiBakuganSelect *self)
   void *model = self->model;
 
   if (model != NULL) {
-    const VtblEntry *update = &((const VtblEntry *const *)model)[5][7];
+    const VtblEntry *update = &((const VtblEntry *)((GfxModel *)model)->base.vtable)[7];
 
     ((void (*)(void *))update->fn)((u8 *)model + update->delta);
   }
