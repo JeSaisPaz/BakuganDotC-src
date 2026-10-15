@@ -45,7 +45,7 @@ u16 GmoImageBlockRelease(void *block)
       if (p->flag != 0) {
         head = g_gmoImageBlockFreeHead;
         tail = g_gmoImageBlockFreeTail;
-        memcpy(&b->prev, &head, 4);
+        b->prev = (GmoImageBlock *)(uintptr_t)head; /* the original copies the 4-byte template word */
         b->pool = (u8)tail;
         b->offset = (u8)(tail >> 8);
         b->refCount = (s16)(tail >> 16);

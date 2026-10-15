@@ -222,8 +222,64 @@
 // bdc-fix	V	float	0x2927cc	4	0	[31][4]
 // bdc-fix	V	float	0x2927d0	4	0	[31][5]
 // bdc-fix	V	float	0x2927d4	4	0	[31][6]
+// bdc-fix	V	float	0x2927d8	4	0	[32][0]
+// bdc-fix	V	float	0x2927dc	4	0	[32][1]
+// bdc-fix	V	float	0x2927e0	4	0	[32][2]
+// bdc-fix	V	float	0x2927e4	4	0	[32][3]
+// bdc-fix	V	float	0x2927e8	4	0	[32][4]
+// bdc-fix	V	float	0x2927ec	4	0	[32][5]
+// bdc-fix	V	float	0x2927f0	4	0	[32][6]
+// bdc-fix	V	float	0x2927f4	4	0	[33][0]
+// bdc-fix	V	float	0x2927f8	4	0	[33][1]
+// bdc-fix	V	float	0x2927fc	4	0	[33][2]
+// bdc-fix	V	float	0x292800	4	0	[33][3]
+// bdc-fix	V	float	0x292804	4	0	[33][4]
+// bdc-fix	V	float	0x292808	4	0	[33][5]
+// bdc-fix	V	float	0x29280c	4	0	[33][6]
+// bdc-fix	V	float	0x292810	4	0	[34][0]
+// bdc-fix	V	float	0x292814	4	0	[34][1]
+// bdc-fix	V	float	0x292818	4	0	[34][2]
+// bdc-fix	V	float	0x29281c	4	0	[34][3]
+// bdc-fix	V	float	0x292820	4	0	[34][4]
+// bdc-fix	V	float	0x292824	4	0	[34][5]
+// bdc-fix	V	float	0x292828	4	0	[34][6]
+// bdc-fix	V	float	0x29282c	4	0	[35][0]
+// bdc-fix	V	float	0x292830	4	0	[35][1]
+// bdc-fix	V	float	0x292834	4	0	[35][2]
+// bdc-fix	V	float	0x292838	4	0	[35][3]
+// bdc-fix	V	float	0x29283c	4	0	[35][4]
+// bdc-fix	V	float	0x292840	4	0	[35][5]
+// bdc-fix	V	float	0x292844	4	0	[35][6]
+// bdc-fix	V	float	0x292848	4	0	[36][0]
+// bdc-fix	V	float	0x29284c	4	0	[36][1]
+// bdc-fix	V	float	0x292850	4	0	[36][2]
+// bdc-fix	V	float	0x292854	4	0	[36][3]
+// bdc-fix	V	float	0x292858	4	0	[36][4]
+// bdc-fix	V	float	0x29285c	4	0	[36][5]
+// bdc-fix	V	float	0x292860	4	0	[36][6]
+// bdc-fix	V	float	0x292864	4	0	[37][0]
+// bdc-fix	V	float	0x292868	4	0	[37][1]
+// bdc-fix	V	float	0x29286c	4	0	[37][2]
+// bdc-fix	V	float	0x292870	4	0	[37][3]
+// bdc-fix	V	float	0x292874	4	0	[37][4]
+// bdc-fix	V	float	0x292878	4	0	[37][5]
+// bdc-fix	V	float	0x29287c	4	0	[37][6]
+// bdc-fix	V	float	0x292880	4	0	[38][0]
+// bdc-fix	V	float	0x292884	4	0	[38][1]
+// bdc-fix	V	float	0x292888	4	0	[38][2]
+// bdc-fix	V	float	0x29288c	4	0	[38][3]
+// bdc-fix	V	float	0x292890	4	0	[38][4]
+// bdc-fix	V	float	0x292894	4	0	[38][5]
+// bdc-fix	V	float	0x292898	4	0	[38][6]
+// bdc-fix	V	float	0x29289c	4	0	[39][0]
+// bdc-fix	V	float	0x2928a0	4	0	[39][1]
+// bdc-fix	V	float	0x2928a4	4	0	[39][2]
+// bdc-fix	V	float	0x2928a8	4	0	[39][3]
+// bdc-fix	V	float	0x2928ac	4	0	[39][4]
+// bdc-fix	V	float	0x2928b0	4	0	[39][5]
+// bdc-fix	V	float	0x2928b4	4	0	[39][6]
 
-__typeof__(float[32][7]) g_gameStageSunTable = {
+__typeof__(float[40][7]) g_gameStageSunTable = {
     {
         BDC_V(float, 0x292458), BDC_V(float, 0x29245c), BDC_V(float, 0x292460),
         BDC_V(float, 0x292464), BDC_V(float, 0x292468), BDC_V(float, 0x29246c),
@@ -381,5 +437,45 @@ __typeof__(float[32][7]) g_gameStageSunTable = {
         BDC_V(float, 0x2927bc), BDC_V(float, 0x2927c0), BDC_V(float, 0x2927c4),
         BDC_V(float, 0x2927c8), BDC_V(float, 0x2927cc), BDC_V(float, 0x2927d0),
         BDC_V(float, 0x2927d4),
+    },
+    {
+        BDC_V(float, 0x2927d8), BDC_V(float, 0x2927dc), BDC_V(float, 0x2927e0),
+        BDC_V(float, 0x2927e4), BDC_V(float, 0x2927e8), BDC_V(float, 0x2927ec),
+        BDC_V(float, 0x2927f0),
+    },
+    {
+        BDC_V(float, 0x2927f4), BDC_V(float, 0x2927f8), BDC_V(float, 0x2927fc),
+        BDC_V(float, 0x292800), BDC_V(float, 0x292804), BDC_V(float, 0x292808),
+        BDC_V(float, 0x29280c),
+    },
+    {
+        BDC_V(float, 0x292810), BDC_V(float, 0x292814), BDC_V(float, 0x292818),
+        BDC_V(float, 0x29281c), BDC_V(float, 0x292820), BDC_V(float, 0x292824),
+        BDC_V(float, 0x292828),
+    },
+    {
+        BDC_V(float, 0x29282c), BDC_V(float, 0x292830), BDC_V(float, 0x292834),
+        BDC_V(float, 0x292838), BDC_V(float, 0x29283c), BDC_V(float, 0x292840),
+        BDC_V(float, 0x292844),
+    },
+    {
+        BDC_V(float, 0x292848), BDC_V(float, 0x29284c), BDC_V(float, 0x292850),
+        BDC_V(float, 0x292854), BDC_V(float, 0x292858), BDC_V(float, 0x29285c),
+        BDC_V(float, 0x292860),
+    },
+    {
+        BDC_V(float, 0x292864), BDC_V(float, 0x292868), BDC_V(float, 0x29286c),
+        BDC_V(float, 0x292870), BDC_V(float, 0x292874), BDC_V(float, 0x292878),
+        BDC_V(float, 0x29287c),
+    },
+    {
+        BDC_V(float, 0x292880), BDC_V(float, 0x292884), BDC_V(float, 0x292888),
+        BDC_V(float, 0x29288c), BDC_V(float, 0x292890), BDC_V(float, 0x292894),
+        BDC_V(float, 0x292898),
+    },
+    {
+        BDC_V(float, 0x29289c), BDC_V(float, 0x2928a0), BDC_V(float, 0x2928a4),
+        BDC_V(float, 0x2928a8), BDC_V(float, 0x2928ac), BDC_V(float, 0x2928b0),
+        BDC_V(float, 0x2928b4),
     },
 };

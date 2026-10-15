@@ -81,7 +81,7 @@ release:
   if (p->flag != 0) {
     head = g_gmoHeapBlockFreeHead;
     tail = g_gmoHeapBlockFreeTail;
-    memcpy(&b->prev, &head, 4);
+    b->prev = (GmoImageBlock *)(uintptr_t)head; /* the original copies the 4-byte template word */
     b->next = p->freeList;
     b->pool = (u8)tail;
     b->offset = (u8)(tail >> 8);

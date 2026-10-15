@@ -18,6 +18,15 @@
    VFPU lift: the per-corner offsets start as the bank's C720 (0, 0, 0, 0); S713 (0) is the
    zero-length fallback of every `vcmovt` and the `w` of every `vpfxd`-masked `vscl.t` result. */
 
+/* Byte `n` of `g_collisionPhysBoxNeighbours` as the PSP reads it: the 24-byte table is followed in
+   memory by `g_collisionPhysBoxEdges`, which the push-out loop reads for rows 6 and 7. */
+static u8 PhysBoxNeighbourByte(s32 n)
+{
+    const s32 size = (s32)sizeof(g_collisionPhysBoxNeighbours);
+
+    return n < size ? g_collisionPhysBoxNeighbours[n] : g_collisionPhysBoxEdges[n - size];
+}
+
 static inline float PhysBoxDot3(const ScePspFVector4 *a, const ScePspFVector4 *b)
 {
     return a->x * b->x + a->y * b->y + a->z * b->z;
@@ -151,8 +160,9 @@ float CollisionPhysBoxStep(CollisionPhysBox *self)
         half = depth * 0.5f;
         quarter = half * 0.5f;
         for (j = 0; j < 8; j++) {
-            /* UB (original binary): reads 8 bytes from row i, past the table for i >= 6 */
-            if ((s32)nb[j] == j) {
+            /* UB (original binary): reads 8 bytes from row i, past the table into
+               g_collisionPhysBoxEdges for i >= 6 (PhysBoxNeighbourByte keeps those bytes) */
+            if ((s32)PhysBoxNeighbourByte(i * 3 + j) == j) {
                 self->pos[j].y = self->pos[j].y - half;
             } else {
                 self->pos[j].y = self->pos[j].y - quarter;

@@ -30,7 +30,7 @@
 // bdc-fix	V	int	0x2897e8	4	0	[27].count
 // bdc-fix	V	int	0x2897f0	4	0	[28].count
 
-__typeof__(BtlStagePlacementList[29]) g_gameStageLayoutTables00 = {
+__typeof__(BtlStagePlacementList[40]) g_gameStageLayoutTables00 = {
     {
         .count = BDC_V(int, 0x289710),
         .records = (struct BtlStagePlacement *)&g_btlStagePlacements[2266],
