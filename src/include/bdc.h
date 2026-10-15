@@ -20258,7 +20258,7 @@ extern __typeof__(BtlStagePlacementList[29]) g_gameStageLayoutTables00;
 extern __typeof__(u8[1]) g_gameStageLights;
 extern __typeof__(float[4]) g_gameStageLocatorPos;
 extern __typeof__(char *[11]) g_gameStageModelNames;
-extern __typeof__(char[32]) g_gameStagePackPath;
+extern __typeof__(char[131]) g_gameStagePackPath;
 extern __typeof__(s32) g_gameStagePoint;
 extern __typeof__(float[45][4]) g_gameStagePropPositions;
 extern __typeof__(u8[10]) g_gameStageRecAreaBase;
