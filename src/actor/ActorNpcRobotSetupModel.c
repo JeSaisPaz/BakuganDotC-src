@@ -7,12 +7,12 @@
 void ActorNpcRobotSetupModel(ActorNpc *self)
 
 {
-  float *shadow;
+  BtlShadow *shadow;
 
   GfxModelForEachMaterial((GfxModel *)self, ActorNpcRobotModelMaterialCallback, (void *)0x0);
-  shadow = (float *)self->base.shadow;
-  shadow[7] = 0.0f;
-  shadow[4] = 25.0f;
-  shadow[5] = 25.0f;
-  shadow[6] = 25.0f;
+  shadow = (BtlShadow *)self->base.shadow;
+  shadow->size[3] = 0.0f;
+  shadow->size[0] = 25.0f;
+  shadow->size[1] = 25.0f;
+  shadow->size[2] = 25.0f;
 }

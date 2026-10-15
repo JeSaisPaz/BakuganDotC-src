@@ -28,7 +28,7 @@ s32 BtlAiPickNearestClass5COr7CInView(BtlAi *self)
     vtbl = (const VtblEntry *)unit->base.base.vtable;
     if (((int (*)(void *))vtbl[11].fn)((u8 *)unit + vtbl[11].delta) == 0) {
       vtbl = (const VtblEntry *)unit->base.base.vtable;
-      if (((int (*)(void *))vtbl[15].fn)((u8 *)unit + vtbl[15].delta) == 0) {
+      if (((bool (*)(void *))vtbl[15].fn)((u8 *)unit + vtbl[15].delta) == 0) {
         continue;
       }
     }

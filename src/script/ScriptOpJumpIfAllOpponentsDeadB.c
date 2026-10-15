@@ -29,7 +29,7 @@ int ScriptOpJumpIfAllOpponentsDeadB(Script *script)
         const VtblEntry *vf19;
         const VtblEntry *vf17;
 
-        if (((int (*)(void *))isTargetPoint->fn)((u8 *)obj + isTargetPoint->delta) != 0) {
+        if (((bool (*)(void *))isTargetPoint->fn)((u8 *)obj + isTargetPoint->delta) != 0) {
             vf19 = &((const VtblEntry *)obj->vtable)[19];
             if (((int (*)(void *))vf19->fn)((u8 *)obj + vf19->delta) != 1) {
                 continue;

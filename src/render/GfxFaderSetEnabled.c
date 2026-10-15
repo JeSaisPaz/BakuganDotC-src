@@ -9,7 +9,7 @@ void GfxFaderSetEnabled(GfxFader *self, u8 enabled)
 
 {
   self->active = enabled;
-  ((void (*)(void *))self->vtbl[2].fn)((u8 *)self + self->vtbl[2].delta);
+  ((void (*)(void *, s32))self->vtbl[2].fn)((u8 *)self + self->vtbl[2].delta, enabled);
   return;
 }
 

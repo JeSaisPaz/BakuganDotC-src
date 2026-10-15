@@ -20,7 +20,7 @@ int BtlCheckEnemiesDefeated(void *main, bool startCinematic)
         const VtblEntry *slot14 = &((const VtblEntry *)obj->vtable)[14];
         const VtblEntry *slot19;
 
-        if (((int (*)(void *))slot14->fn)((u8 *)obj + slot14->delta) != 0) {
+        if (((bool (*)(void *))slot14->fn)((u8 *)obj + slot14->delta) != 0) {
             slot19 = &((const VtblEntry *)obj->vtable)[19];
             if (((int (*)(void *))slot19->fn)((u8 *)obj + slot19->delta) != 1) {
                 continue;

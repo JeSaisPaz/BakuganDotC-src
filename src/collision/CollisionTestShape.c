@@ -35,11 +35,11 @@ s32 CollisionTestShape(void *query, void *block, float *hit, u32 flags)
                                                          blockShape, hit);
   case 3:
     entry = &queryShape->vtbl[3];
-    return ((bool (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
+    return ((s32 (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
                                                          blockShape, hit);
   case 4:
     entry = &queryShape->vtbl[4];
-    return ((bool (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
+    return ((s32 (*)(void *, void *, float *))entry->fn)((char *)queryShape + entry->delta,
                                                          blockShape, hit);
   case 6:
     entry = &queryShape->vtbl[5];

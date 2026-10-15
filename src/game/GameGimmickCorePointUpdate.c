@@ -18,7 +18,7 @@ void GameGimmickCorePointUpdate(GameGimmickCorePoint *obj)
 
   prevAlpha = obj->base.alpha;
   e = &((const VtblEntry *)obj->base.base.base.vtable)[5];
-  if (((int (*)(void *, float *, float *, float, float))e->fn)(
+  if (((bool (*)(void *, float *, float *, float, float))e->fn)(
           (u8 *)obj + e->delta, &obj->base.base.data->rootMatrix[12], &obj->base.alpha, 23.0f,
           480.0f) != 0) {
     return;

@@ -109,7 +109,7 @@ void BtlDemoFinish(CoreTask *demo)
                 for (unit = (BtlBakugan *)list->head; unit != NULL;
                      unit = (BtlBakugan *)unit->base.base.next) {
                     entry = &((const VtblEntry *)unit->base.base.vtable)[14];
-                    if (((s32 (*)(void *))entry->fn)((u8 *)unit + entry->delta) != 0) {
+                    if (((bool (*)(void *))entry->fn)((u8 *)unit + entry->delta) != 0) {
                         continue;
                     }
                     place[0] = (*placement)[0];

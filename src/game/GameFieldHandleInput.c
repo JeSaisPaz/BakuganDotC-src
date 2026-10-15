@@ -99,7 +99,7 @@ u32 GameFieldHandleInput(CoreTask *task)
   if ((e = &((const VtblEntry *)g->base.base.vtable)[10],
        ((int (*)(void *))e->fn)((char *)g + e->delta) != 0) ||
       (e = &((const VtblEntry *)g->base.base.vtable)[14],
-       ((int (*)(void *))e->fn)((char *)g + e->delta) != 0)) {
+       ((bool (*)(void *))e->fn)((char *)g + e->delta) != 0)) {
     GameFieldCharSetFreezeAll(field->charSet);
     ActorPlayerDropBall((ActorPlayer *)g_gameFieldCharSet->actors[0]);
     entry = (u16 *)GameFieldGetEventEntry(task, GameGimmickGetRecordParam(g));

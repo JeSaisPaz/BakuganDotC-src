@@ -32,5 +32,5 @@ s32 BtlAiFollowLayerCheck(BtlAi *self)
         }
     }
     entry = &self->follow.base.vtbl[2];
-    return ((s32 (*)(void *))entry->fn)((u8 *)&self->follow + entry->delta);
+    return ((u8 (*)(void *))entry->fn)((u8 *)&self->follow + entry->delta);
 }

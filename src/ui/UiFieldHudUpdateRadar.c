@@ -158,7 +158,7 @@ void UiFieldHudUpdateRadar(UiFieldHud *self)
       GfxSpriteSetStencilTest(HUD_SPRITE(slot), true, 8);
       if (g->active != 0) {
         vt = &((const VtblEntry *)g->base.base.vtable)[17];
-        if (((s32 (*)(void *))vt->fn)((u8 *)g + vt->delta) != 0) {
+        if (((bool (*)(void *))vt->fn)((u8 *)g + vt->delta) != 0) {
           HUD_SPRITE(slot)->flags &= ~1u;
         } else {
           HUD_SPRITE(slot)->flags |= 1;

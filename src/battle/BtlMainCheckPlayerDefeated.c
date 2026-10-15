@@ -18,7 +18,7 @@ int BtlMainCheckPlayerDefeated(BtlMain *self)
     if (player != NULL) {
         const VtblEntry *isTargetPoint = &((const VtblEntry *)player->base.base.vtable)[14];
 
-        if (((int (*)(void *))isTargetPoint->fn)((u8 *)player + isTargetPoint->delta) == 0 &&
+        if (((bool (*)(void *))isTargetPoint->fn)((u8 *)player + isTargetPoint->delta) == 0 &&
             player->combat.dead) {
             lost = 1;
             BtlStartFinishCinematic(self, player, 1, 0);

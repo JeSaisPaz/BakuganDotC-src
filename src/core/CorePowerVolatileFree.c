@@ -15,7 +15,7 @@ int CorePowerVolatileFree(CorePower *power, void *ptr)
     heap = g_corePowerMgr->volatileHeap;
     if (heap != NULL) {
         const VtblEntry *free_ = &heap->vtbl[2];
-        if (((int (*)(void *, void *))free_->fn)((u8 *)heap + free_->delta, ptr) != 0) {
+        if (((bool (*)(void *, void *))free_->fn)((u8 *)heap + free_->delta, ptr) != 0) {
             freed = 1;
         }
     }

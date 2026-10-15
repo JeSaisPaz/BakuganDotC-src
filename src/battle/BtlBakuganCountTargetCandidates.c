@@ -25,11 +25,11 @@ s32 BtlBakuganCountTargetCandidates(BtlBakugan *self, s32 mode)
         }
         if (self->isPlayer != 0) {
             vtbl = (const VtblEntry *)unit->base.base.vtable;
-            if (((int (*)(void *))vtbl[15].fn)((u8 *)unit + vtbl[15].delta) != 0) {
+            if (((bool (*)(void *))vtbl[15].fn)((u8 *)unit + vtbl[15].delta) != 0) {
                 continue;
             }
             vtbl = (const VtblEntry *)unit->base.base.vtable;
-            if (((int (*)(void *))vtbl[16].fn)((u8 *)unit + vtbl[16].delta) != 0) {
+            if (((bool (*)(void *))vtbl[16].fn)((u8 *)unit + vtbl[16].delta) != 0) {
                 continue;
             }
         }

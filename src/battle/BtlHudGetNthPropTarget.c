@@ -30,12 +30,12 @@ CoreObject *BtlHudGetNthPropTarget(BtlHud *self, s32 n)
     count = 0;
     for (; unit != NULL; unit = unit->next) {
         vtbl = (const VtblEntry *)unit->vtable;
-        if (((int (*)(void *))vtbl[14].fn)((u8 *)unit + vtbl[14].delta) == 0 ||
+        if (((bool (*)(void *))vtbl[14].fn)((u8 *)unit + vtbl[14].delta) == 0 ||
             (void *)unit == player) {
             continue;
         }
         vtbl = (const VtblEntry *)unit->vtable;
-        if (((int (*)(void *))vtbl[15].fn)((u8 *)unit + vtbl[15].delta) != 0) {
+        if (((bool (*)(void *))vtbl[15].fn)((u8 *)unit + vtbl[15].delta) != 0) {
             ids[count++] = unit->id;
         }
     }

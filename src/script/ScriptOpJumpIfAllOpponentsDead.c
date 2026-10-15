@@ -30,7 +30,7 @@ int ScriptOpJumpIfAllOpponentsDead(Script *script)
   while (unit != NULL) {
     if (unit != player) {
       vtbl = (const VtblEntry *)unit->base.base.vtable;
-      if (((s32 (*)(void *))vtbl[14].fn)((u8 *)unit + vtbl[14].delta) == 0) {
+      if (((bool (*)(void *))vtbl[14].fn)((u8 *)unit + vtbl[14].delta) == 0) {
         vtbl = (const VtblEntry *)unit->base.base.vtable;
         if (((s32 (*)(void *))vtbl[11].fn)((u8 *)unit + vtbl[11].delta) == 0) {
           if (unit->combat.dead != 0) {

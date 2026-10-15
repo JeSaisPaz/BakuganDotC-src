@@ -9,16 +9,16 @@ void GfxSpriteInsetUv(float inset, GfxSprite *sprite)
 
 {
   if (!(sprite->quadMode >= 0 && sprite->quadMode < 2)) {
-    float *tex = (float *)sprite->texture;
+    const GfxTexture *tex = (const GfxTexture *)sprite->texture;
     GfxSpriteVertex (*q)[4] = (GfxSpriteVertex (*)[4])sprite->vertices;
 
-    (*q)[2].u = (*q)[2].u + inset * tex[0xa4 / 4];
+    (*q)[2].u = (*q)[2].u + inset * tex->invWidth;
     (*q)[0].u = (*q)[2].u;
-    (*q)[3].u = (*q)[3].u - inset * tex[0xa4 / 4];
+    (*q)[3].u = (*q)[3].u - inset * tex->invWidth;
     (*q)[1].u = (*q)[3].u;
-    (*q)[1].v = (*q)[1].v + inset * tex[0xa8 / 4];
+    (*q)[1].v = (*q)[1].v + inset * tex->invHeight;
     (*q)[0].v = (*q)[1].v;
-    (*q)[3].v = (*q)[3].v - inset * tex[0xa8 / 4];
+    (*q)[3].v = (*q)[3].v - inset * tex->invHeight;
     (*q)[2].v = (*q)[3].v;
   }
 }

@@ -30,7 +30,7 @@ CoreObject *BtlHudGetNthCrystal(BtlHud *self, s32 n)
   }
   do {
     entry = &((const VtblEntry *)obj->vtable)[14];
-    if (((s32 (*)(void *))entry->fn)((u8 *)obj + entry->delta) == 0 && obj != player) {
+    if (((bool (*)(void *))entry->fn)((u8 *)obj + entry->delta) == 0 && obj != player) {
       entry = &((const VtblEntry *)obj->vtable)[11];
       if (((s32 (*)(void *))entry->fn)((u8 *)obj + entry->delta) != 0) {
         ids[count] = obj->id;

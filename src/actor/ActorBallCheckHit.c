@@ -104,7 +104,7 @@ s32 ActorBallCheckHit(float radius, ActorBall *ball, float *pos, float *vel, s32
       for (gimmick = ((GameFieldTask *)GameFieldFindTask())->gimmicks; gimmick != NULL;
            gimmick = (GameGimmick *)gimmick->base.base.next) {
         e = &((const VtblEntry *)gimmick->base.base.vtable)[17];
-        if (((int (*)(void *))e->fn)((char *)gimmick + e->delta) == 0) {
+        if (((u8 (*)(void *))e->fn)((char *)gimmick + e->delta) == 0) {
           continue;
         }
         if (gimmick->attached == NULL) {

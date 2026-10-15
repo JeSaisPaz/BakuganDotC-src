@@ -21,7 +21,7 @@ int BtlEnemySpawnerCountAlive(void *spawner)
         const VtblEntry *isCpuUnit;
         BtlCpuUnit *unit = (BtlCpuUnit *)obj;
 
-        if (((int (*)(void *))isTargetPoint->fn)((u8 *)obj + isTargetPoint->delta) != 0) {
+        if (((bool (*)(void *))isTargetPoint->fn)((u8 *)obj + isTargetPoint->delta) != 0) {
             continue;
         }
         isCpuUnit = &((const VtblEntry *)obj->vtable)[13];

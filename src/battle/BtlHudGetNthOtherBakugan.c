@@ -31,7 +31,7 @@ CoreObject *BtlHudGetNthOtherBakugan(BtlHud *self, s32 n)
         const VtblEntry *vtbl = obj->vtable;
         const VtblEntry *isTargetPoint = &vtbl[14];
 
-        if (((s32 (*)(void *))isTargetPoint->fn)((u8 *)obj + isTargetPoint->delta) == 0 &&
+        if (((bool (*)(void *))isTargetPoint->fn)((u8 *)obj + isTargetPoint->delta) == 0 &&
             obj != player) {
             const VtblEntry *isBakugan = &vtbl[10];
             const VtblEntry *isUnitAlt = &vtbl[12];

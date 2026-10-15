@@ -26,7 +26,7 @@ s32 UiNetLobbyHidePanels(UiNetLobby *self, u8 reset)
     for (i = 0; i < 2; i++) {
       panel = self->panels[i];
       entry = &((const VtblEntry *)panel->vtable)[4];
-      if (((s32 (*)(void *, u8))entry->fn)((u8 *)panel + entry->delta, 0) == 0) {
+      if (((bool (*)(void *, u8))entry->fn)((u8 *)panel + entry->delta, 0) == 0) {
         done = 0;
       }
       else {

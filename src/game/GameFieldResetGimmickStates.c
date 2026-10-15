@@ -16,7 +16,7 @@ void GameFieldResetGimmickStates(CoreTask *task, bool force)
       continue;
     }
     entry = &((const VtblEntry *)obj->base.base.vtable)[15];
-    if (((s32 (*)(void *))entry->fn)((u8 *)obj + entry->delta) != 0) {
+    if (((bool (*)(void *))entry->fn)((u8 *)obj + entry->delta) != 0) {
       GameGimmickResetState((GameGimmickIrSensor *)obj, force);
     }
   }

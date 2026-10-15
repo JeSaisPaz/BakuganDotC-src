@@ -27,7 +27,7 @@ s32 BtlAiPickNearestClass84InView(BtlAi *self)
             continue;
         }
         vtbl = (const VtblEntry *)unit->base.base.vtable;
-        if (((int (*)(void *))vtbl[16].fn)((u8 *)unit + vtbl[16].delta) == 0 ||
+        if (((bool (*)(void *))vtbl[16].fn)((u8 *)unit + vtbl[16].delta) == 0 ||
             BtlAiIsExcludedTarget(self, unit)) {
             continue;
         }

@@ -17,7 +17,7 @@ void BtlStopAllUnitLoopSounds(void *main, bool all)
     for (obj = list->head; obj != NULL; obj = obj->next) {
         const VtblEntry *isTargetPoint = &((const VtblEntry *)obj->vtable)[14];
 
-        if (((int (*)(void *))isTargetPoint->fn)((u8 *)obj + isTargetPoint->delta) == 0 &&
+        if (((bool (*)(void *))isTargetPoint->fn)((u8 *)obj + isTargetPoint->delta) == 0 &&
             ((BtlBakugan *)obj)->input != NULL) {
             BtlBakuganStopLoopSounds((BtlBakugan *)obj, all);
         }

@@ -11,7 +11,7 @@ s32 BtlAiWanderLayerCheck(BtlAi *self)
     const VtblEntry *entry;
 
     entry = &self->wander.base.vtbl[2];
-    if (((s32 (*)(void *))entry->fn)((u8 *)&self->wander + entry->delta) == 0) {
+    if (((u8 (*)(void *))entry->fn)((u8 *)&self->wander + entry->delta) == 0) {
         if (self->target == NULL) {
             u32 moveFlags = self->moveFlags;
             u8 idle = 1;
@@ -26,7 +26,7 @@ s32 BtlAiWanderLayerCheck(BtlAi *self)
                 idle = 0;
             }
             entry = &self->seekItem.base.vtbl[2];
-            if (((s32 (*)(void *))entry->fn)((u8 *)&self->seekItem + entry->delta) != 0) {
+            if (((u8 (*)(void *))entry->fn)((u8 *)&self->seekItem + entry->delta) != 0) {
                 idle = 0;
             }
             if (idle) {
@@ -38,5 +38,5 @@ s32 BtlAiWanderLayerCheck(BtlAi *self)
         }
     }
     entry = &self->wander.base.vtbl[2];
-    return ((s32 (*)(void *))entry->fn)((u8 *)&self->wander + entry->delta);
+    return ((u8 (*)(void *))entry->fn)((u8 *)&self->wander + entry->delta);
 }

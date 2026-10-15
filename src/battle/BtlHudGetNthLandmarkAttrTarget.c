@@ -32,11 +32,11 @@ CoreObject *BtlHudGetNthLandmarkAttrTarget(BtlHud *self, s32 n)
     do {
         const VtblEntry *isTargetPoint = &((const VtblEntry *)obj->vtable)[14];
 
-        if (((int (*)(void *))isTargetPoint->fn)((u8 *)obj + isTargetPoint->delta) != 0 &&
+        if (((bool (*)(void *))isTargetPoint->fn)((u8 *)obj + isTargetPoint->delta) != 0 &&
             obj != player) {
             const VtblEntry *isLandmarkAttr = &((const VtblEntry *)obj->vtable)[16];
 
-            if (((int (*)(void *))isLandmarkAttr->fn)((u8 *)obj + isLandmarkAttr->delta) != 0) {
+            if (((bool (*)(void *))isLandmarkAttr->fn)((u8 *)obj + isLandmarkAttr->delta) != 0) {
                 ids[count] = obj->id;
                 count++;
             }

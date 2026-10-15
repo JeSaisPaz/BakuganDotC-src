@@ -14,7 +14,7 @@ void ActorStageObjAttrLandmarkAura3AllUnits(ActorStageObjAttrLandmark *self)
     do {
       const VtblEntry *ent = &((const VtblEntry *)unit->vtable)[14];
 
-      if (((int (*)(void *))ent->fn)((char *)unit + ent->delta) == 0) {
+      if (((bool (*)(void *))ent->fn)((char *)unit + ent->delta) == 0) {
         ActorStageObjAttrLandmarkApplyAura(self, unit);
       }
       unit = unit->next;

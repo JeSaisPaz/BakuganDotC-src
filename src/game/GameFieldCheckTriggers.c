@@ -101,7 +101,7 @@ GameGimmick *GameFieldCheckTriggers(CoreTask *task)
       return g;
     }
     if ((e = &((const VtblEntry *)g->base.base.vtable)[14],
-         ((int (*)(void *))e->fn)((char *)g + e->delta) != 0)) {
+         ((bool (*)(void *))e->fn)((char *)g + e->delta) != 0)) {
       if ((g->contactFlags & 2) == 0) {
         continue;
       }

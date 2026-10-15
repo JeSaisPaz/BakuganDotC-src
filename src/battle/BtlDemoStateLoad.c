@@ -208,7 +208,7 @@ void BtlDemoStateLoad(BtlDemo *demo)
         i = 0;
         for (obj = list->head; obj != NULL; obj = obj->next) {
             entry = &((const VtblEntry *)obj->vtable)[14];
-            if (((int (*)(void *))entry->fn)((u8 *)obj + entry->delta) != 0) {
+            if (((bool (*)(void *))entry->fn)((u8 *)obj + entry->delta) != 0) {
                 continue;
             }
             bakugan = (BtlBakugan *)obj;

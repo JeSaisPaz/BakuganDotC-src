@@ -345,7 +345,7 @@ void BtlAppearDemoStateLoad(BtlAppearDemo *demo)
             for (unit = (BtlBakugan *)units->head; unit != NULL;
                  unit = (BtlBakugan *)unit->base.base.next) {
                 entry = &((const VtblEntry *)unit->base.base.vtable)[14];
-                if (((s32 (*)(void *))entry->fn)((u8 *)unit + entry->delta) != 0) {
+                if (((bool (*)(void *))entry->fn)((u8 *)unit + entry->delta) != 0) {
                     continue;
                 }
                 BtlAppearDemoCopyQuad(*placement, unit->base.pos);

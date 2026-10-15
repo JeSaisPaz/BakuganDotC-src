@@ -25,7 +25,7 @@ s32 BtlAiSeekItemCheck(BtlAi *self)
     }
 
     isActive = &layer->base.vtbl[2];
-    if (((s32 (*)(void *))isActive->fn)((u8 *)layer + isActive->delta) == 0) {
+    if (((u8 (*)(void *))isActive->fn)((u8 *)layer + isActive->delta) == 0) {
         if (!layer->base.timerExpired) {
             layer->base.timerElapsed = layer->base.timerElapsed + 0.0333333351f;
             if (!(layer->base.timerElapsed < layer->base.timerLimit)) {
@@ -118,5 +118,5 @@ s32 BtlAiSeekItemCheck(BtlAi *self)
     }
     /* vtbl pointer reloaded after the calls above */
     isActive = &layer->base.vtbl[2];
-    return ((s32 (*)(void *))isActive->fn)((u8 *)layer + isActive->delta);
+    return ((u8 (*)(void *))isActive->fn)((u8 *)layer + isActive->delta);
 }
