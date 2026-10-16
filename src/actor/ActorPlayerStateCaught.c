@@ -61,9 +61,9 @@ void ActorPlayerStateCaught(ActorPlayer *self)
       self->base.stateDelay = self->base.stateDelay - 1;
     } else if (GfxFaderIsFinished(GfxGetActiveFader())) {
       self->base.alerted = 1;
-      task = CoreTaskFind(500);
+      task = BDC_OR_ZERO(CoreTaskFind(500));
       if (task->catchActive != 0) {
-        task = CoreTaskFind(500);
+        task = BDC_OR_ZERO(CoreTaskFind(500));
         task->catchActive = 0;
       }
     }

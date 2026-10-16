@@ -39,13 +39,13 @@ void BtlAttackType5AUpdate(BtlAttack *self)
         vel[3] = 0.0f;
         self->effect = NULL;
         if (BtlCameraTaskExists() != 0) {
-            ((BtlMain *)BtlGetCameraTask())->flashTarget = 2.0f;
+            ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 2.0f;
         }
         return;
     }
     pos = self->pos;
     if (self->age == 8 && BtlCameraTaskExists() != 0) {
-        ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+        ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
     }
     if (BtlAttackSweepHit(self->radius, self, pos, vel, 0x7d, 3, 0, 0x31bf337e) != 0) {
         GfxEffectSpawn(g_btlAttackEffectMgr, 0x7f, &g_btlAttackHitQuery.contact.x);
@@ -53,7 +53,7 @@ void BtlAttackType5AUpdate(BtlAttack *self)
         GfxEffectStopAttached(g_btlAttackEffectMgr, 0x26b, pos);
         BtlAttackEnd(self);
         if (self->age < 9) {
-            ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+            ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
         }
         return;
     }

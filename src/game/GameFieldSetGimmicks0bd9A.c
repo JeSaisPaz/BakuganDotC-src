@@ -8,7 +8,7 @@ void GameFieldSetGimmicks0bd9A(void *blind, u8 value)
 {
   GameGimmick *obj;
 
-  for (obj = ((GameFieldTask *)GameFieldFindTask())->gimmicks; obj != NULL; obj = (GameGimmick *)obj->base.base.next) {
+  for (obj = ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->gimmicks; obj != NULL; obj = (GameGimmick *)obj->base.base.next) {
     if (obj->typeId == 0xbd9) {
       GameGimmickCameraSetConeVisible((GameGimmickCamera *)obj, value);
     }

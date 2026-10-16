@@ -135,7 +135,7 @@ void BtlFinishTaskUpdate(BtlFinishTask *task)
     case 3:
         task->timer++;
         if (task->timer == 1) {
-            battle = BtlGetCameraTask();
+            battle = BDC_OR_ZERO(BtlGetCameraTask());
             battle->flashTarget = 0.0f;
             GfxSetMotionTimeScale(0.0700000003f);
         } else if (task->timer > 50) {
@@ -163,7 +163,7 @@ void BtlFinishTaskUpdate(BtlFinishTask *task)
             task->step++;
         } else if (task->timer >= 36 && BtlCameraTaskExists() != 0 &&
                    BtlMainIsMatchUndecided(BtlGetCameraTask())) {
-            battle = BtlGetCameraTask();
+            battle = BDC_OR_ZERO(BtlGetCameraTask());
             battle->dimColor[3] = battle->dimColor[3] + 0.100000001f;
         }
         break;

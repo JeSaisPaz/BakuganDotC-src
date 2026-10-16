@@ -9,7 +9,7 @@ void GameFieldSetGuardConesVisible(void *blind, u8 visible)
 {
   ActorNpc *npc;
 
-  for (npc = ((GameFieldTask *)GameFieldFindTask())->npcs; npc != NULL;
+  for (npc = ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->npcs; npc != NULL;
        npc = (ActorNpc *)npc->base.base.base.next) {
     if (((ActorNpcPlacement *)npc->base.placement)->placed == 0) {
       continue;

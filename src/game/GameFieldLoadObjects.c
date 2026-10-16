@@ -340,7 +340,7 @@ void GameFieldLoadObjects(CoreTask *task, s32 area, s32 block)
         ActorStageObjCrystalCtor(stageObj, pos, variants[idx], (u16)rec->recordType);
         node = &stageObj->base.base.base;
       }
-      CoreObjectListAppend(node, &((GameFieldTask *)GameFieldFindTask())->stageObjs);
+      CoreObjectListAppend(node, &((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->stageObjs);
       break;
     }
 

@@ -137,7 +137,7 @@ void BtlMainDrawScene(BtlMain *self)
             if (UiTalkTaskExists() != 0) {
                 packet = GfxNewRenderPacket(110.0f);
                 GfxPacketCall2DState(packet);
-                talk = UiGetTalkTask();
+                talk = BDC_OR_ZERO(UiGetTalkTask());
                 GfxPacketDrawGradientBands(packet, g_btlTalkGradientYs, (const u32 *)talk->countdownGlow, 2, 1);
             }
         } else if (GameStageIs0Or13() == 0) {

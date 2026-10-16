@@ -51,7 +51,7 @@ void ActorPlayerStateOpenItemBox(ActorPlayer *self)
     self->base.waitTimer = 4;
     return;
   case 4:
-    ((GameFieldTask *)GameFieldFindTask())->itemBoxOpened = 1;
+    ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->itemBoxOpened = 1;
     self->base.waitTimer = 5;
     return;
   case 5:

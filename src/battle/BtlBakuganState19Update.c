@@ -41,7 +41,7 @@ void BtlBakuganState19Update(BtlBakugan *self)
         }
         if (self->isPlayer != 0) {
             GfxSetMotionTimeScale(1.0f);
-            ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+            ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
         }
         BtlBakuganPlayMotion(0.200000003f, self, 0x10e, 0, 0);
         setSpeed = &((const VtblEntry *)self->base.base.vtable)[6];

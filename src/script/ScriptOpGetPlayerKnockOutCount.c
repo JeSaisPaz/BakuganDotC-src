@@ -14,7 +14,7 @@ int ScriptOpGetPlayerKnockOutCount(Script *script) {
 
     if (sel < 1) {
         if (sel >= 0 && UiTalkTaskExists() != 0) {
-            *out = (s16)UiGetTalkTask()->talkUnitDelta;
+            *out = (s16)BDC_OR_ZERO(UiGetTalkTask())->talkUnitDelta;
         }
     } else if (sel < 2 && unit != NULL) {
         *out = unit->knockoutCount;

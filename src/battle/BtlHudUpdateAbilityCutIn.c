@@ -195,7 +195,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
         break;
 
     case 10:
-        ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+        ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
         portrait->flags |= 1;
         portrait->alpha = 0.0f;
         portrait->posX = self->cutInPortraitPos[0];
@@ -328,7 +328,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
                 self->cutInFadeFrame++;
                 t = CutInClamp(t, 0.0f, 1.5707964f);
                 s = __builtin_sinf(t);
-                scene = BtlGetCameraTask();
+                scene = BDC_OR_ZERO(BtlGetCameraTask());
                 scene->dimColor[0] = 1.0f;
                 scene->dimColor[1] = 1.0f;
                 scene->dimColor[2] = 1.0f;
@@ -345,7 +345,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
         if (portrait->alpha <= 0.0f) {
             done = true;
         } else if (portrait->alpha <= 0.3f) {
-            ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+            ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
         }
         if (!done) {
             break;
@@ -353,7 +353,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
         self->cutInState = 30;
         /* fall through */
     case 30:
-        ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+        ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
         if (self->cutInFlag != 0) {
             self->cutInState = 50;
             break;
@@ -384,7 +384,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
         self->cutInFadeFrame++;
         t = CutInClamp(t, 0.0f, 1.5707964f);
         s = __builtin_sinf(t);
-        scene = BtlGetCameraTask();
+        scene = BDC_OR_ZERO(BtlGetCameraTask());
         scene->dimColor[0] = 1.0f;
         scene->dimColor[1] = 1.0f;
         scene->dimColor[2] = 1.0f;
@@ -392,7 +392,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
         if (s < 0.9f) {
             break;
         }
-        scene = BtlGetCameraTask();
+        scene = BDC_OR_ZERO(BtlGetCameraTask());
         scene->dimColor[0] = 1.0f;
         scene->dimColor[1] = 1.0f;
         scene->dimColor[2] = 1.0f;

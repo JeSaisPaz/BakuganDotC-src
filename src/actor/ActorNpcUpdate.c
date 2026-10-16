@@ -54,7 +54,7 @@ void ActorNpcUpdate(ActorNpc *self)
   state = self->aiState;
   if (state != 8 && state != 6 && state != 4 && self->forceUpdate == 0 &&
       ActorNpcCanSeePlayer(self) == 2 &&
-      ((GameFieldTask *)CoreTaskFind(500))->catchActive == 0 &&
+      ((GameFieldTask *)BDC_OR_ZERO(CoreTaskFind(500)))->catchActive == 0 &&
       ((Actor *)ActorFindPlayer())->detected == 0) {
     if (self->aiState != 5) {
       self->returnPoint[0] = self->base.base.pos[0];
@@ -62,7 +62,7 @@ void ActorNpcUpdate(ActorNpc *self)
       self->returnPoint[2] = self->base.base.pos[2];
       self->returnPoint[3] = self->base.base.pos[3];
     }
-    ((GameFieldTask *)CoreTaskFind(500))->catchActive = 1;
+    ((GameFieldTask *)BDC_OR_ZERO(CoreTaskFind(500)))->catchActive = 1;
     self->aiState = 4;
     self->subStep = 0;
     ActorPlayVoice(self, self->voiceId);
@@ -95,7 +95,7 @@ void ActorNpcUpdate(ActorNpc *self)
     ActorSyncColliders(&self->base);
     if (moving != 0) {
       slot = (s32)self->base.placementSlot % 4;
-      field = (GameFieldTask *)GameFieldFindTask();
+      field = (GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask());
       if (slot != (s32)field->frameCount % 4) {
         ActorProbeGround(&self->base);
         self->base.noGroundProbe = 0;
@@ -131,7 +131,7 @@ void ActorNpcUpdate(ActorNpc *self)
     vt = &((const VtblEntry *)self->base.base.base.vtable)[10];
     ((void (*)(void *))vt->fn)((u8 *)self + vt->delta);
     slot = (s32)self->base.placementSlot % 4;
-    field = (GameFieldTask *)GameFieldFindTask();
+    field = (GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask());
     if (slot != (s32)field->frameCount % 4) {
       return;
     }

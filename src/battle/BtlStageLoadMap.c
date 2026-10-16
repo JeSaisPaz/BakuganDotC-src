@@ -131,7 +131,7 @@ void BtlStageLoadMap(s32 arena, CoreObjectList *list)
     }
     if (GameStageIs4To7() == 0 && GameStageIs20To27Or36To39() == 0 && GameStageIs0Or13() == 0) {
         flare = (GfxLensFlareTask *)CoreTaskCreate(0x1e2, 100);
-        mainTask = BtlGetCameraTask();
+        mainTask = BDC_OR_ZERO(BtlGetCameraTask());
         flare->layer = mainTask->spriteLayers[0];
     }
     BtlStageSetMapVisible(g_btlMapVisible);

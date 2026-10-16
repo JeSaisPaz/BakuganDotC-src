@@ -60,7 +60,7 @@ void BtlDemoStatePlay(BtlDemo *demo)
             return;
         }
         demo->fadeColour.w = 1.0f;
-        camera = (BtlMain *)BtlGetCameraTask();
+        camera = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
         tmp = demo->fadeColour;
         camera->dimColor[0] = tmp.x;
         camera->dimColor[1] = tmp.y;

@@ -115,7 +115,7 @@ void BtlHudUpdateTargetMarker(BtlHud *self)
 
     if (target == NULL) {
         playSound = true;
-        if (BtlCameraTaskExists() && ((BtlMain *)BtlGetCameraTask())->phase == 2) {
+        if (BtlCameraTaskExists() && ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->phase == 2) {
             playSound = false;
         }
         if (playSound && self->markerShownTarget != NULL && SndHasManager()) {

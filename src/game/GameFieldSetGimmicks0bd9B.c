@@ -11,7 +11,7 @@ void GameFieldSetGimmicks0bd9B(void *blind, u8 value)
   GameFieldTask *task;
   GameGimmickCamera *obj;
 
-  task = (GameFieldTask *)GameFieldFindTask();
+  task = (GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask());
   obj = (GameGimmickCamera *)task->gimmicks;
   if (obj != (GameGimmickCamera *)0x0) {
     typeId = (obj->base).typeId;

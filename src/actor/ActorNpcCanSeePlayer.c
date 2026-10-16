@@ -31,7 +31,7 @@ s32 ActorNpcCanSeePlayer(ActorNpc *self)
   float dir[4];
   s32 i;
 
-  field = (GameFieldTask *)GameFieldFindTask();
+  field = (GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask());
   if (field->subState == 5 || field->subState == 0x1e) {
     return 0;
   }

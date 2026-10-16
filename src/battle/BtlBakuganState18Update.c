@@ -24,7 +24,7 @@ void BtlBakuganState18Update(BtlBakugan *self)
   if (self->subTimer == 8) {
     if (self->isPlayer != 0) {
       GfxSetMotionTimeScale(1.0f);
-      battle = (BtlMain *)BtlGetCameraTask();
+      battle = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
       battle->flashTarget = 0.0f;
     }
   }

@@ -179,7 +179,7 @@ void UiTalkWindowStep(void *win)
       if (SndBgmPlayerExists(1) && SndBgmPlayerIsStopped(SndBgmPlayerGet(1)) == 0) {
         return;
       }
-      if (BtlCameraTaskExists() != 0 && ((BtlMain *)BtlGetCameraTask())->phase != 2 &&
+      if (BtlCameraTaskExists() != 0 && ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->phase != 2 &&
           hud->talkScriptSuspended != 0) {
         BtlStageResumeEventScript();
       }
@@ -274,7 +274,7 @@ void UiTalkWindowStep(void *win)
     GfxSpriteLayerClear(&printer->layer);
     printer->glyphs = NULL;
     hud->talkState = 0;
-    if (BtlCameraTaskExists() != 0 && ((BtlMain *)BtlGetCameraTask())->phase != 2 &&
+    if (BtlCameraTaskExists() != 0 && ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->phase != 2 &&
         hud->talkScriptSuspended != 0) {
       BtlStageResumeEventScript();
     }

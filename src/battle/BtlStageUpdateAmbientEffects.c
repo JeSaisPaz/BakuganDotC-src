@@ -101,7 +101,7 @@ void BtlStageUpdateAmbientEffects(void)
         period = 150;
       }
       if (BDC_MOD(g_btlMapFlashTimer, period) == 0) {
-        unit = BtlPickRandomOtherFighter(((BtlHud *)UiGetTalkTask())->gateCutInUnit);
+        unit = BtlPickRandomOtherFighter(((BtlHud *)BDC_OR_ZERO(UiGetTalkTask()))->gateCutInUnit);
         if (unit != NULL) {
           for (i = 0; i < 4; i++) {
             pos[i] = unit->base.pos[i];

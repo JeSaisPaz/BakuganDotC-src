@@ -7,7 +7,7 @@
 
 void GameFieldGuardBlindUpdate(s32 *blind)
 {
-  u32 mode = ((GameFieldTask *)GameFieldFindTask())->subState;
+  u32 mode = ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->subState;
 
   if (mode == 5 || mode == 0x1e) {
     return;

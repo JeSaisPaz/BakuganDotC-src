@@ -206,7 +206,7 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
     g_throwAimRangeSq = 22500.0f;
   }
   bestDist = 1000000.0f;
-  field = (GameFieldTask *)GameFieldFindTask();
+  field = (GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask());
   gimmick = field->gimmicks;
   lockPoint[2] = 0.0f;
   lockPoint[1] = 0.0f;

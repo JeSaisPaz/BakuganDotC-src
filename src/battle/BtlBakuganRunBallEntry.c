@@ -382,7 +382,7 @@ int BtlBakuganRunBallEntry(BtlBakugan *self)
             SndEmitterCreateAtPos(SndGetListener(), (s32)g_btlUnitRoarSound[self->base.base.unk08],
                                   self->base.pos, 0, 1);
         }
-        ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.8f;
+        ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.8f;
         motion = 0x10f;
         if ((s32)self->base.base.unk08 < 4) {
             if ((s32)self->base.base.unk08 >= 3) {
@@ -404,7 +404,7 @@ int BtlBakuganRunBallEntry(BtlBakugan *self)
         }
         entry = &((const VtblEntry *)self->base.base.vtable)[6];
         ((void (*)(void *, float))entry->fn)((u8 *)self + entry->delta, 1.0f);
-        ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+        ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
         unit->ballEntryTimer = 5;
         unit->ballEntryStep++;
         break;

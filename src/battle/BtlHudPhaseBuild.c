@@ -1112,7 +1112,7 @@ void BtlHudPhaseBuild(BtlHud *self)
         wins = 0;
         losses = 0;
         for (i = 0; i < 5; i++) {
-            battle = (BtlMain *)BtlGetCameraTask();
+            battle = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
             result = battle->roundResults[i < 0 ? 0 : (4 < i ? 4 : i)];
             if (NetPlayHasManager()) {
                 if (NetPlayGetLocalSlot(NetPlayGetManager()) != 0) {

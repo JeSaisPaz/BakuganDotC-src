@@ -11,7 +11,7 @@ void ActorStageObjPropPlaySound(ActorStageObjProp *self, s32 id)
   SndListener *listener;
 
   if (BtlCameraTaskExists() != 0) {
-    camera = BtlGetCameraTask();
+    camera = BDC_OR_ZERO(BtlGetCameraTask());
     if (((BtlMain *)camera)->battleStarted != 0 && SndHasListener()) {
       listener = SndGetListener();
       SndEmitterCreateAtPos(listener, id, ((self->base).base.data)->rootMatrix + 0xc, 0, 1);

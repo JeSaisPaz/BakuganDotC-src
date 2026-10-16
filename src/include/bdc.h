@@ -141,6 +141,27 @@ static inline unsigned long long BdcModU64(unsigned long long a, unsigned long l
                                unsigned long: BdcModU64, long long: BdcModS64, unsigned long long: BdcModU64)((a), (b))
 #endif
 
+/* Reads through a task lookup the PSP survives when it fails (port scan class k): CoreTaskFind and its
+   wrappers (BtlGetCameraTask, GameFieldFindTask, UiGetTalkTask, ...) return NULL while a task is being
+   replaced (CoreTaskExists already sees the new one, CoreTaskFind stops at the removed first one), and
+   callers dereference the result unchecked: the PSP reads NULL+offset as 0 (PPSSPP; writes are dropped), a
+   host faults. BDC_OR_ZERO(p) is p, or on a host a freshly zeroed block when p is NULL, so every field reads
+   0 as on the PSP and writes land nowhere that matters. Only for the dereferences, never in a NULL test.
+   The MIPS build keeps the plain pointer: same objects. */
+#ifdef __mips__
+#define BDC_OR_ZERO(p) (p)
+#else
+__attribute__((weak, aligned(16))) unsigned char bdc_zero_block[0x10000];
+static inline void *BdcOrZero(const void *p)
+{
+    if (p != 0)
+        return (void *)p;
+    __builtin_memset(bdc_zero_block, 0, sizeof bdc_zero_block);
+    return bdc_zero_block;
+}
+#define BDC_OR_ZERO(p) ((__typeof__(p))BdcOrZero(p))
+#endif
+
 #endif
 typedef unsigned char uchar; typedef unsigned short ushort; typedef unsigned int uint;
 typedef unsigned long ulong; typedef long long longlong; typedef unsigned long long ulonglong;

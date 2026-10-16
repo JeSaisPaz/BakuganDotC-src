@@ -101,7 +101,7 @@ s32 ActorBallCheckHit(float radius, ActorBall *ball, float *pos, float *vel, s32
   if (query->hitCollider != NULL) {
     player = (ActorPlayer *)ActorFindPlayer();
     if (player != NULL && player->scan == 0) {
-      for (gimmick = ((GameFieldTask *)GameFieldFindTask())->gimmicks; gimmick != NULL;
+      for (gimmick = ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->gimmicks; gimmick != NULL;
            gimmick = (GameGimmick *)gimmick->base.base.next) {
         e = &((const VtblEntry *)gimmick->base.base.vtable)[17];
         if (((u8 (*)(void *))e->fn)((char *)gimmick + e->delta) == 0) {

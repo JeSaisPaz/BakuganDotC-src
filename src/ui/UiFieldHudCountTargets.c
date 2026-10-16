@@ -17,11 +17,11 @@ void UiFieldHudCountTargets(UiFieldHud *self)
   u8 kind;
 
   /* the original tests the list-head address (task + 0x658) against NULL, not the task */
-  head = &((GameFieldTask *)GameFieldFindTask())->gimmicks;
+  head = &((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->gimmicks;
   if (head == NULL) {
     return;
   }
-  g = ((GameFieldTask *)GameFieldFindTask())->gimmicks;
+  g = ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->gimmicks;
   self->targetList = g;
   if (g == NULL) {
     return;

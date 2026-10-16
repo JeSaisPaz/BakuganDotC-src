@@ -14,7 +14,7 @@
 void *BtlFinishTaskStart(void *unit, int arg, int mode)
 {
     GfxModel *model = (GfxModel *)unit;
-    BtlMain *main = (BtlMain *)CoreTaskFind(100);
+    BtlMain *main = (BtlMain *)BDC_OR_ZERO(CoreTaskFind(100));
     BtlFinishTask *alloc;
     BtlFinishTask *task = NULL;
     BtlMain *camera;
@@ -47,7 +47,7 @@ void *BtlFinishTaskStart(void *unit, int arg, int mode)
     }
     BtlGetCameraTask();
     BtlEndCutIn();
-    camera = (BtlMain *)BtlGetCameraTask();
+    camera = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
     camera->flashTarget = 0.850000024f;
     GfxSetMotionTimeScale(0.25f);
     if (mode == 0) {

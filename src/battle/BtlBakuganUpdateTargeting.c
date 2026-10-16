@@ -51,7 +51,7 @@ void BtlBakuganUpdateTargeting(BtlBakugan *self)
             }
         }
         if (SaveGetProfileFlag0() == 0 && self->retargeted != 0 && BtlCameraTaskExists() != 0 &&
-            ((BtlMain *)BtlGetCameraTask())->phase == 1) {
+            ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->phase == 1) {
             BtlBakuganRetarget(self, 1);
         }
     }

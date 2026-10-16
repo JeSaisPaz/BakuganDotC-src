@@ -15,7 +15,7 @@ void BtlSlowMotionTaskDtor(CoreTask *task, u32 flags)
     }
     self->base.vtable = g_btlSlowMotionTaskVtbl;
     if (BtlCameraTaskExists() != 0) {
-        ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+        ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
     }
     GfxSetMotionTimeScale(1.0f);
     GfxCameraDtor(&self->camera.base, 2);

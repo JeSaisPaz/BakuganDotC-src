@@ -83,7 +83,7 @@ void GameFieldMovieTaskUpdate(CoreTask *task)
       CoreTaskSetFlags((CoreTask *)BtlGetCameraTask(), 3);
     }
     if (UiTalkTaskExists()) {
-      CoreTaskSetFlags(&UiGetTalkTask()->base, 3);
+      CoreTaskSetFlags(&BDC_OR_ZERO(UiGetTalkTask())->base, 3);
     }
     {
       float *dst = GfxGetActiveFader()->end;
@@ -152,7 +152,7 @@ void GameFieldMovieTaskUpdate(CoreTask *task)
         CoreTaskClearFlags((CoreTask *)BtlGetCameraTask(), 3);
       }
       if (UiTalkTaskExists()) {
-        CoreTaskClearFlags(&UiGetTalkTask()->base, 3);
+        CoreTaskClearFlags(&BDC_OR_ZERO(UiGetTalkTask())->base, 3);
       }
       BtlSetControlLockAll(0);
       self->step++;

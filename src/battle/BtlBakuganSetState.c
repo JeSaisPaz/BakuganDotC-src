@@ -202,7 +202,7 @@ void BtlBakuganSetState(BtlBakugan *self, s32 state, char keep)
         self->base.velocity[3] = 0.0f;
         break;
     case 0x11:
-        cam = (BtlMain *)BtlGetCameraTask();
+        cam = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
         cam->flashTarget = 0.0f;
         BtlMainStartTalk((BtlMain *)BtlGetCameraTask(), self);
         GfxSetMotionTimeScale(1.0f);
@@ -212,7 +212,7 @@ void BtlBakuganSetState(BtlBakugan *self, s32 state, char keep)
         BtlBakuganStartGuardEffect(self);
         if (self->isPlayer != 0) {
             GfxSetMotionTimeScale(0.75f);
-            cam = (BtlMain *)BtlGetCameraTask();
+            cam = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
             cam->flashTarget = 0.7f;
         }
         collider = self->collider0;
@@ -226,7 +226,7 @@ void BtlBakuganSetState(BtlBakugan *self, s32 state, char keep)
         GfxModelSwapMotionFrame(&self->base, (float)frame);
         BtlBakuganStartGuardEffect(self);
         if (self->isPlayer != 0) {
-            cam = (BtlMain *)BtlGetCameraTask();
+            cam = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
             cam->flashTarget = 0.7f;
             focus[0] = 0.0f;
             focus[1] = 0.0f;

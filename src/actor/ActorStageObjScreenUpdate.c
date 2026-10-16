@@ -26,12 +26,12 @@ void ActorStageObjScreenUpdate(ActorStageObjScreen *self)
   GfxModelApplyMotion(&self->base.base);
   self->base.base.ambient[3] = self->base.baseAlpha * self->base.fade;
   if (BtlCameraTaskExists() != 0) {
-    main = (BtlMain *)BtlGetCameraTask();
+    /* PC port (class k): the lookup is NULL while task 100 is being replaced (CoreTaskExists sees the new one,
+       CoreTaskFind stops at the removed first one); the PSP reads `phase` at NULL+0x440 as 0 (not 6, so the
+       screen is shown). BDC_OR_ZERO gives a host that zero read; the MIPS is the original's. */
+    main = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
     shown = self->shown;
-    /* PC port: `main` is NULL when task 100 is being replaced (CoreTaskExists sees the new one, CoreTaskFind
-       stops at the removed first one); the PSP reads `phase` at NULL+0x440 as 0 (not 6, so the screen is shown),
-       a 64-bit host faults. The `main != NULL` test (one extra branch in the MIPS) gives the PSP result. */
-    if (main != NULL && main->phase == 6) {
+    if (main->phase == 6) {
       self->base.base.visible = 0;
       if (shown == 1) {
         self->base.fade = 0.0f;

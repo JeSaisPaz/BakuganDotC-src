@@ -34,7 +34,7 @@ void BtlHudUpdateAdvice(BtlHud *self)
     if (UiGetWindowActive(0xb) == 0) {
         return;
     }
-    if (BtlCameraTaskExists() != 0 && ((BtlMain *)BtlGetCameraTask())->phase != 1) {
+    if (BtlCameraTaskExists() != 0 && ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->phase != 1) {
         return;
     }
     if (player->input->disabled != 0) {

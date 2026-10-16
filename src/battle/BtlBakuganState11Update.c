@@ -204,7 +204,7 @@ void BtlBakuganState11Update(BtlBakugan *self)
                 if ((steps[self->subTimer].flags & 7) != 0 &&
                     BtlBakuganTargetInvolvesPlayer(self) != 0) {
                     GfxSetMotionTimeScale(0.5f);
-                    ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.800000012f;
+                    ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.800000012f;
                 }
             }
         }
@@ -217,7 +217,7 @@ void BtlBakuganState11Update(BtlBakugan *self)
             }
             if (BtlBakuganTargetInvolvesPlayer(self) != 0) {
                 GfxSetMotionTimeScale(1.0f);
-                ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+                ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
             }
         }
         if (GfxModelGetMotionRemaining(&self->base) < 3.0f &&
@@ -241,7 +241,7 @@ void BtlBakuganState11Update(BtlBakugan *self)
             }
             if (BtlBakuganTargetInvolvesPlayer(self) != 0) {
                 GfxSetMotionTimeScale(1.0f);
-                ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+                ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
             }
             self->stateFlags &= ~0x2000u;
             if (hadTarget && target->lockedAttacker == self) {

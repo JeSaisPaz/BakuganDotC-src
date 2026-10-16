@@ -111,7 +111,7 @@ void BtlBakuganState17Update(BtlBakugan *self)
     ((void (*)(void *, float))entry->fn)((u8 *)self + entry->delta, 1.0f);
     if (self->isPlayer != 0) {
         GfxSetMotionTimeScale(1.0f);
-        ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+        ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
     }
     self->dashSpeed = 0.0f;
     self->base.velocity[0] = 0.0f;

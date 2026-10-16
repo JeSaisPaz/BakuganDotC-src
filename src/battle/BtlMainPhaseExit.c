@@ -120,7 +120,7 @@ void BtlMainPhaseExit(BtlMain *self)
     default:
         resume = true;
         if (UiTalkTaskExists() != 0) {
-            talk = UiGetTalkTask();
+            talk = BDC_OR_ZERO(UiGetTalkTask());
             if (talk->talkScriptSuspended != 0) {
                 resume = false;
             }

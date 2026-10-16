@@ -66,7 +66,7 @@ void ActorPlayerStateThrow(ActorPlayer *self)
       actor->aimPoint[i] = 0.0f;
     }
     if (GameFieldTaskExists() != 0 && self->aimSprite == NULL) {
-      aim = GfxSpriteLayerCreateBillboardByName(((GameFieldTask *)GameFieldFindTask())->layers[1],
+      aim = GfxSpriteLayerCreateBillboardByName(((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->layers[1],
                                                 "ret_aim");
       self->aimSprite = aim;
       /* aim->posX..posW = aimPoint */

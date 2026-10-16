@@ -48,7 +48,7 @@ void GameGimmickIrSensorBeamState(GameGimmickIrSensor *obj)
     }
   }
   if (beamOn != 0 && GameGimmickIrSensorHitsPlayer(obj) != 0) {
-    field = (GameFieldTask *)CoreTaskFind(500);
+    field = (GameFieldTask *)BDC_OR_ZERO(CoreTaskFind(500));
     if (field->catchActive == 0) {
       player = (ActorPlayer *)ActorFindPlayer();
       if (player != NULL && player->base.detected == 0) {

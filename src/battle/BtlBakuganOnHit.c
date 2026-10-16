@@ -383,7 +383,7 @@ void BtlBakuganOnHit(BtlBakugan *self)
     }
     if (self->isPlayer != 0) {
         GfxSetMotionTimeScale(1.0f);
-        ((BtlMain *)BtlGetCameraTask())->flashTarget = 0.0f;
+        ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->flashTarget = 0.0f;
     }
 
     /* counter window */

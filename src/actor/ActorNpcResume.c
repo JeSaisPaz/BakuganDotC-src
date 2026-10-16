@@ -12,7 +12,7 @@ void ActorNpcResume(ActorNpc *self)
   bool skip;
   int kind;
 
-  task = (GameFieldTask *)GameFieldFindTask();
+  task = (GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask());
   skip = false;
   if (task->subState == 5 || task->subState == 0x1e) {
     skip = true;

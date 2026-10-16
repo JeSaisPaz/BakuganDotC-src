@@ -114,7 +114,7 @@ void ActorCrystalBreak(ActorCrystal *self)
       ActorCrystalBreakPlaceModel(self, ActorCrystalBreakWrapAngle(1.5707964f - self->base.base.rot[1]));
     }
     if (debris != NULL) {
-      CoreObjectListAppend(&debris->base.base, &((BtlMain *)BtlGetCameraTask())->modelLists[1]);
+      CoreObjectListAppend(&debris->base.base, &((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->modelLists[1]);
       if (BtlCameraTaskExists() != 0) {
         if (BtlMainCheckWin((BtlMain *)BtlGetCameraTask()) != 0) {
           debris->lifetime = 15;

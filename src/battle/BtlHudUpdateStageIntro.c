@@ -32,7 +32,7 @@ void BtlHudUpdateStageIntro(BtlHud *self)
         return;
     }
     if (step == 0) {
-        if (BtlCameraTaskExists() != 0 && ((BtlMain *)BtlGetCameraTask())->busy != 0) {
+        if (BtlCameraTaskExists() != 0 && ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->busy != 0) {
             return;
         }
         if (!CoreBitsetTest(0x22, g_scriptGlobalBits)) {

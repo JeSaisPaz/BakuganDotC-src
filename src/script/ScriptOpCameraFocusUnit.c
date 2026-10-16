@@ -46,9 +46,9 @@ int ScriptOpCameraFocusUnit(Script *script)
       else if (!(scale <= 1.2f)) {
         scale = 1.2f;
       }
-      cameraTask = (BtlMain *)BtlGetCameraTask();
+      cameraTask = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
       BtlCameraFocusUnit(x * scale, y * scale, z, cameraTask, unit, flag != 0, 0, NULL);
-      cameraTask = (BtlMain *)BtlGetCameraTask();
+      cameraTask = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
       if (g_scriptGlobalVars[1] == 10) {
         cameraTask->camera.followOffset3f4 = 1.5707964f;
         cameraTask->camera.followDistanceOffset = -200.0f;

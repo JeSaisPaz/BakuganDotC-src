@@ -61,7 +61,7 @@ ActorNpc *ActorNpcCtor(ActorNpc *self, s32 modelId)
   self->headPos[3] = 0.0f;
   self->homeHeading = 0.0f;
   self->forceUpdate = 0;
-  fx = ((GameFieldTask *)GameFieldFindTask())->screenFx;
+  fx = ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->screenFx;
   cone = NULL;
   MemLock();
   fromLow = MemIsAllocFromLow();

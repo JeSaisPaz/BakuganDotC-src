@@ -28,7 +28,7 @@ void UiOptionNetMainPhase(UiOption *self)
   s8 v3;
   u32 msg[10];
 
-  map = (UiWorldMap *)CoreTaskFind(0x136);
+  map = (UiWorldMap *)BDC_OR_ZERO(CoreTaskFind(0x136));
   if (SaveGetProfileFlag0() != 0) {
     if (NetPlayHasManager()) {
       busy = 0;

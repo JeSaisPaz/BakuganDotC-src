@@ -62,7 +62,7 @@ void ActorNpcStateCatchPlayer(ActorNpc *self)
     }
     blend = g_npcCatchBlendMin;
     if (self->base.placement != NULL && ActorNpcIsChaseExempt(self) != 0) {
-      ((GameFieldTask *)GameFieldFindTask())->talkBlendForce = 1;
+      ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->talkBlendForce = 1;
       /* squared distance NPC-player (xyz) */
       d[0] = self->base.base.pos[0] - player->base.base.pos[0];
       d[1] = self->base.base.pos[1] - player->base.base.pos[1];
@@ -75,13 +75,13 @@ void ActorNpcStateCatchPlayer(ActorNpc *self)
         blend = g_npcCatchBlendMax;
       }
     }
-    ((GameFieldTask *)GameFieldFindTask())->talkBlendRate = blend;
+    ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->talkBlendRate = blend;
   } else if (step < 2) {
     player = ActorFindPlayer();
     if (player == NULL) {
       return;
     }
-    task = (GameFieldTask *)GameFieldFindTask();
+    task = (GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask());
     stop = 0;
     if ((s32)task->subState >= 0x13 && (s32)task->subState < 0x17) {
       stop = 1;
@@ -92,7 +92,7 @@ void ActorNpcStateCatchPlayer(ActorNpc *self)
       self->subStep = self->subStep + 1;
       return;
     }
-    if (((GameFieldTask *)GameFieldFindTask())->talkBlendForce != 0) {
+    if (((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->talkBlendForce != 0) {
       target[0] = player->base.base.pos[0];
       target[2] = player->base.base.pos[2];
       turn = atan2f(target[2] - self->base.base.pos[2], target[0] - self->base.base.pos[0]);

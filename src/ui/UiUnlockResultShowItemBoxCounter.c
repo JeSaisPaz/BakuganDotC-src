@@ -30,7 +30,7 @@ void UiUnlockResultShowItemBoxCounter(UiUnlockResult *self, bool show)
       /* digit sheet: 6 cells per row, digit d at column d / 6, row d % 6 */
       total = 0;
       broken = 0;
-      for (gimmick = ((GameFieldTask *)GameFieldFindTask())->gimmicks; gimmick != NULL;
+      for (gimmick = ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->gimmicks; gimmick != NULL;
            gimmick = (GameGimmick *)gimmick->base.base.next) {
         if (gimmick->typeId == 0xbdf) {
           if (gimmick->active == 0) {

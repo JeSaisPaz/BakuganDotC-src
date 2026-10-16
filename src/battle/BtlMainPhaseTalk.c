@@ -24,7 +24,7 @@ void BtlMainPhaseTalk(BtlMain *self)
         self->talkStep = self->talkStep + 1;
         /* fallthrough */
     case 2:
-        if (UiGetTalkTask()->cutInState != 0) {
+        if (BDC_OR_ZERO(UiGetTalkTask())->cutInState != 0) {
             return;
         }
         self->talkStep = 10;

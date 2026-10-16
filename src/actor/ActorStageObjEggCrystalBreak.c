@@ -72,7 +72,7 @@ void ActorStageObjEggCrystalBreak(ActorStageObjEggCrystal *self)
       SndEmitterCreateAtPos(SndGetListener(), 0x200259, &self->base.base.data->rootMatrix[12], 0, 1);
     }
     ActorStageObjDebrisLaunch(y, y, debris, self->base.base.data->rootMatrix, self->debrisVel);
-    camTask = (BtlMain *)BtlGetCameraTask();
+    camTask = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
     CoreObjectListAppend(&debris->base.base, &camTask->modelLists[1]);
     debris->lifetime = 30;
     GfxModelForEachMaterial(&debris->base, (void *)ActorStageObjEggCrystalMaterialSetTranslucent, NULL);

@@ -23,7 +23,7 @@ void BtlMainDrawTalk(BtlMain *self)
     } else {
         packet = GfxNewRenderPacket(110.0f);
         GfxPacketCall2DState(packet);
-        talk = UiGetTalkTask();
+        talk = BDC_OR_ZERO(UiGetTalkTask());
         GfxPacketDrawGradientBands(packet, g_btlTalkBackBandYs, (const u32 *)talk->cutInColor, 2, 1);
         BtlMainDrawScene(self);
     }

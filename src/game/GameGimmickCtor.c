@@ -44,7 +44,7 @@ CoreObject *GameGimmickCtor(GameGimmick *obj, s32 kind, void *record, u16 typeId
   obj->record = record;
   obj->base.base.unk08 = 0x87;
   obj->kind = kind;
-  field = (GameFieldTask *)GameFieldFindTask();
+  field = (GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask());
   CoreObjectListAppend(&obj->base.base, (CoreObjectList *)&field->gimmicks);
 
   /* The binary wraps all three angles the same way; x and z are the constant 0.0f, which no

@@ -234,7 +234,7 @@ void BtlDemoStateLoad(BtlDemo *demo)
     BtlDemoLoadMotions(demo);
 
     if (BtlCameraTaskExists()) {
-        demo->battleCamera = &((BtlMain *)BtlGetCameraTask())->camera.base;
+        demo->battleCamera = &((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->camera.base;
     }
     BtlDemoCamSetTarget(cam, demo->bakugan);
     BtlDemoCamResetKeysFar(cam);

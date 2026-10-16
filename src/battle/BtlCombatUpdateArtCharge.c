@@ -23,7 +23,7 @@ void BtlCombatUpdateArtCharge(BtlCombatState *combat)
     if (g_btlBattleOver != 0) continue;
     if (UiGetWindowActive(0xb) == 0) continue;
     if (BtlCameraTaskExists() == 0) continue;
-    if (((BtlMain *)BtlGetCameraTask())->phase != 1) continue;
+    if (((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->phase != 1) continue;
     if (combat->artCharge[slot] < 10000.0f) continue;
     combat->artReadyFrames = combat->artReadyFrames + 1;
     return;

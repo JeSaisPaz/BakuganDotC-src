@@ -395,7 +395,7 @@ void BtlAppearDemoStateLoad(BtlAppearDemo *demo)
         }
 
         if (BtlCameraTaskExists()) {
-            demo->base.battleCamera = &((BtlMain *)BtlGetCameraTask())->camera.base;
+            demo->base.battleCamera = &((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->camera.base;
         }
         demo->base.cam.shotId = demo->base.demoId;
         BtlDemoCamSetTarget(&demo->base.cam, demo->base.actor);

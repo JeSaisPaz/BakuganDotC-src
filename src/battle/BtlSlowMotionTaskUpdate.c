@@ -10,7 +10,7 @@ void BtlSlowMotionTaskUpdate(BtlSlowMotionTask *task)
   BtlMain *battle;
 
   if (task->started == 0) {
-    battle = (BtlMain *)BtlGetCameraTask();
+    battle = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
     battle->flashTarget = 0.850000024f; /* 0x3f59999a */
     GfxSetMotionTimeScale(0.550000012f); /* 0x3f0ccccd */
     task->started = 1;

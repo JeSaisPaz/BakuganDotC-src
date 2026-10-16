@@ -64,7 +64,7 @@ void ActorPlayerUpdatePowers(ActorPlayer *self)
       if (self->scan != 0) {
         ActorPlayerScanOff(self, 0);
       } else if (self->gaugeB != 0.0f && self->base.detected == 0) {
-        field = (GameFieldTask *)CoreTaskFind(500);
+        field = (GameFieldTask *)BDC_OR_ZERO(CoreTaskFind(500));
         if (field->catchActive == 0) {
           ActorPlayerScanOn(self);
         }
@@ -76,7 +76,7 @@ void ActorPlayerUpdatePowers(ActorPlayer *self)
       if (self->stealth != 0) {
         ActorPlayerStealthOff(self, 0);
       } else if (self->gaugeA != 0.0f && self->base.detected == 0) {
-        field = (GameFieldTask *)CoreTaskFind(500);
+        field = (GameFieldTask *)BDC_OR_ZERO(CoreTaskFind(500));
         if (field->catchActive == 0) {
           ActorPlayerStealthOn(self);
         }

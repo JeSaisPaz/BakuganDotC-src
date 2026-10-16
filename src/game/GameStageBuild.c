@@ -143,7 +143,7 @@ void GameStageBuild(s32 stage, void *list)
   g_btlArenaIndex = stage;
   if (GameStageIs0Or13() == 0 && GameStageIs4To7() == 0) {
     task = CoreTaskCreate(0x1e2, 100);
-    field = (GameFieldTask *)GameFieldFindTask();
+    field = (GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask());
     ((GfxLensFlareTask *)task)->layer = field->spriteLayer;
   }
   GameStageSetExtraModelFlag(g_gameStageExtraModelFlag);

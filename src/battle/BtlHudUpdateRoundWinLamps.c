@@ -65,7 +65,7 @@ static inline float LampPulseAlpha(float phase)
    player: on a NetPlay guest (local slot != 0) a win (1) and a loss (3) are swapped. */
 static s32 BtlHudLocalRoundResult(s32 round)
 {
-    BtlMain *battle = BtlGetCameraTask();
+    BtlMain *battle = BDC_OR_ZERO(BtlGetCameraTask());
     s32 result;
 
     if (round < 0) {

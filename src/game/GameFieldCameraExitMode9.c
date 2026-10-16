@@ -8,7 +8,7 @@
 void GameFieldCameraExitMode9(GameFieldCamera *cam)
 
 {
-  UiFieldHud *hud = (UiFieldHud *)CoreTaskFind(0xbb9);
+  UiFieldHud *hud = (UiFieldHud *)BDC_OR_ZERO(CoreTaskFind(0xbb9));
 
   UiFieldHudFaderFadeIn(&hud->fader);
   GameFieldCameraMode9Exit((void **)cam->mode9);

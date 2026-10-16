@@ -27,10 +27,10 @@ void BtlBakuganUpdate(BtlBakugan *self)
 
     self->motionDone = 0;
     if (g_btlControlLockAll != 0 && self->isPlayer != 0 && BtlCameraTaskExists() != 0 &&
-        ((BtlMain *)BtlGetCameraTask())->phase == 6) {
+        ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->phase == 6) {
         return;
     }
-    if (BtlCameraTaskExists() != 0 && ((BtlMain *)BtlGetCameraTask())->battleStarted != 0) {
+    if (BtlCameraTaskExists() != 0 && ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->battleStarted != 0) {
         self->commands = BtlInputReadActions(self->input);
     }
     if (CollisionColliderTickHit(&self->collider0->node)) {

@@ -23,7 +23,7 @@ int ScriptOpControlMovie(Script *script)
   if (CoreBitsetTest(0x20, g_scriptGlobalBits)) {
     return 0;
   }
-  if (BtlCameraTaskExists() != 0 && ((BtlMain *)BtlGetCameraTask())->rematch != 0) {
+  if (BtlCameraTaskExists() != 0 && ((BtlMain *)BDC_OR_ZERO(BtlGetCameraTask()))->rematch != 0) {
     return 0;
   }
   if (mode == 0) {

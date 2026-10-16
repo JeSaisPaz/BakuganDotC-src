@@ -173,7 +173,7 @@ void UiPauseSetupPhase(UiPause *self)
     case 10:
       strcpy(self->hintText[1], "");
       if (UiTalkTaskExists() != 0) {
-        strcpy(self->hintText[1], UiGetTalkTask()->msgText);
+        strcpy(self->hintText[1], BDC_OR_ZERO(UiGetTalkTask())->msgText);
       }
       if (strcmp(self->hintText[1], "") != 0) {
         SPR(21)->flags |= 1;

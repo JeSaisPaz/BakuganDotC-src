@@ -90,7 +90,7 @@ void UiFieldHudUpdateRadar(UiFieldHud *self)
       HUD_SPRITE(slot)->posY = HUD_SPRITE(slot - 1)->posY;
       GfxSpriteResetMatrix(HUD_SPRITE(slot));
       UiFieldHudRotateMatrix(HUD_SPRITE(slot)->matrix, npc->viewHeading + viewAngle);
-      if (((GameFieldTask *)GameFieldFindTask())->guardBlind.state == 2) {
+      if (((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->guardBlind.state == 2) {
         if (actor->base.base.unk08 == 0x4f) {
           if (ActorNpcCloakIsHidden((ActorNpcCloak *)actor)) {
             HUD_SPRITE(slot - 1)->flags &= ~1u;
@@ -140,7 +140,7 @@ void UiFieldHudUpdateRadar(UiFieldHud *self)
       GfxSpriteResetMatrix(HUD_SPRITE(slot));
       UiFieldHudRotateMatrix(HUD_SPRITE(slot)->matrix,
                              angle - (g->base.rot[1] + ((GameGimmickCamera *)g)->sweepAngle));
-      if (((GameFieldTask *)GameFieldFindTask())->guardBlind.state == 2) {
+      if (((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->guardBlind.state == 2) {
         HUD_SPRITE(slot)->flags |= 1;
       } else {
         HUD_SPRITE(slot)->flags &= ~1u;
@@ -174,5 +174,5 @@ void UiFieldHudUpdateRadar(UiFieldHud *self)
     HUD_SPRITE(slot)->flags &= ~1u;
     slot++;
   }
-  UiFieldHudPlaceRadarBlip(self, ((GameFieldTask *)GameFieldFindTask())->playerStart, 14);
+  UiFieldHudPlaceRadarBlip(self, ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->playerStart, 14);
 }
