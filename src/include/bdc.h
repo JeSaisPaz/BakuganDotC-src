@@ -147,17 +147,19 @@ static inline unsigned long long BdcModU64(unsigned long long a, unsigned long l
    callers dereference the result unchecked: the PSP reads NULL+offset as 0 (PPSSPP; writes are dropped), a
    host faults. BDC_OR_ZERO(p) is p, or on a host a freshly zeroed block when p is NULL, so every field reads
    0 as on the PSP and writes land nowhere that matters. Only for the dereferences, never in a NULL test.
-   The MIPS build keeps the plain pointer: same objects. */
+   The MIPS build keeps the plain pointer: same objects. The block lives in the inline function, so only
+   the objects that use the macro carry one (16 KiB: the largest record read through it is UiWorldMap,
+   0x2418 bytes on LP64). */
 #ifdef __mips__
 #define BDC_OR_ZERO(p) (p)
 #else
-__attribute__((weak, aligned(16))) unsigned char bdc_zero_block[0x10000];
 static inline void *BdcOrZero(const void *p)
 {
+    static unsigned char block[0x4000] __attribute__((aligned(16)));
     if (p != 0)
         return (void *)p;
-    __builtin_memset(bdc_zero_block, 0, sizeof bdc_zero_block);
-    return bdc_zero_block;
+    __builtin_memset(block, 0, sizeof block);
+    return block;
 }
 #define BDC_OR_ZERO(p) ((__typeof__(p))BdcOrZero(p))
 #endif
