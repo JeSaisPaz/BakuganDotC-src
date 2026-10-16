@@ -28,7 +28,10 @@ void ActorStageObjScreenUpdate(ActorStageObjScreen *self)
   if (BtlCameraTaskExists() != 0) {
     main = (BtlMain *)BtlGetCameraTask();
     shown = self->shown;
-    if (main->phase == 6) {
+    /* PC port: `main` is NULL when task 100 is being replaced (CoreTaskExists sees the new one, CoreTaskFind
+       stops at the removed first one); the PSP reads `phase` at NULL+0x440 as 0 (not 6, so the screen is shown),
+       a 64-bit host faults. The `main != NULL` test (one extra branch in the MIPS) gives the PSP result. */
+    if (main != NULL && main->phase == 6) {
       self->base.base.visible = 0;
       if (shown == 1) {
         self->base.fade = 0.0f;
