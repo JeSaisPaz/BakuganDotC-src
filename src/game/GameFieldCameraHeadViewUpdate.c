@@ -8,16 +8,10 @@
    (`GameFieldCameraProbeCollide`) that writes `outEye`/`outLook`; otherwise `outEye` is the sprung
    eye. `outLook` is then always overwritten with the sprung look-at. */
 
-typedef struct {
-  u8 spring[0x10];
-  float targetLook[4];
-  float targetEye[4];
-} GameFieldHeadView;
-
 void GameFieldCameraHeadViewUpdate(void *view, float *outEye, float *outLook)
 
 {
-  GameFieldHeadView *hv = (GameFieldHeadView *)view;
+  GameFieldCameraHeadView *hv = (GameFieldCameraHeadView *)view;
   float eye[4];
   float look[4];
   u8 probe[16];
