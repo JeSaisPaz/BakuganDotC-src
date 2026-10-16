@@ -20,7 +20,10 @@ void UiNameEntryConfirmPhase(UiNameEntry *self)
   int i;
   char utf8[25] = {0};
   char prev[25];
-  u8 encoded[27];
+  /* PC port: zeroed. The encoder stops at the name's terminator and SaveProfileSetPlayerName copies all 25
+     bytes, so the original wrote stack leftovers after the name into the save (fixed bytes on the PSP; on a
+     host they vary with ASLR). The initialiser (stores in the MIPS) makes the save the same every run. */
+  u8 encoded[27] = {0};
 
   switch (self->base.phaseStep) {
   case 0:
