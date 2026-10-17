@@ -298,7 +298,7 @@ typedef struct GmoNode {
     u32 color;                 /* +0x2c RGBA colour, -1 at construction; modulated with the model colour (GmoDlModulateNodeColor) */
     float *matrix;             /* +0x30 explicit 4x4 matrix, 0x40 bytes (GmoNodeSetMatrix) */
     void *block34;              /* +0x34 heap block */
-    void *block38;              /* +0x38 heap block */
+    float *block38;             /* +0x38 pivot (vec3 in a 16-byte heap block, GMO node command 0x46; flag42 0x80): rotation pivot of GmoModelComputeWorldMatrices, locator position in GameStageBuild */
     u16 lastChild;             /* +0x3c index of the last child node (0 = none), set by GmoModelFinalize */
     u8 _unk3e[0x2];
     s16 parentIndex;                /* +0x40 -1 at construction */
@@ -1627,14 +1627,14 @@ typedef struct ActorPlayer {
     };
     u8 behaviourMark;           /* +0x540 0xff after ActorPlayerResetBehaviour */
     u8 _unk541[0x3];           /* +0x541 */
-    void *caughtBy;            /* +0x544 object faced while caught (ActorPlayerStateCaught) */
+    const float *caughtBy;     /* +0x544 position (vec4) faced while caught (ActorPlayerStateCaught): the catching NPC's or camera gimmick's `pos`, NULL when cleared */
     u8 _unk548[0x8];           /* +0x548 */
 } ActorPlayer;
 
 typedef struct ActorStageObjBase {
     GfxModel base;             /* +0x000 */
     void *collider;            /* +0x140 mesh collider (ActorStageObjBaseInit) */
-    void *soundParams;         /* +0x144 ActorStageObjKindGetSoundParams(kind); s32 sound id at +4 */
+    const s32 *soundParams;    /* +0x144 ActorStageObjKindGetSoundParams(kind): row of g_stageObjKindSoundParams, three sound ids (hit [0], [1], [2]) */
     void *hitBy;               /* +0x148 last object that hit the collider (collider +0x160, ActorStageObjState00Update) */
     void *ptr14c;              /* +0x14c pointer-sized, cleared by ActorStageObjInitFields; no other use known */
     void *ptr150;              /* +0x150 pointer-sized, cleared by ActorStageObjInitFields; no other use known */
@@ -6213,7 +6213,7 @@ typedef struct GmoInstance {
     u32 *displayList;          /* +0x08 GE display list */
     u16 displayListWords;      /* +0x0c length of the display list in words */
     u16 id;                    /* +0x0e instance id (1 = shared) */
-    void *state;               /* +0x10 0x60-byte state block or NULL: the 8 bounding-box vertices (float x,y,z) of the mesh 0x16 tag, drawn by a BBOX/BJUMP prefix of the display list */
+    float *state;              /* +0x10 0x60-byte state block or NULL: the 8 bounding-box vertices (float x,y,z) of the mesh 0x16 tag, drawn by a BBOX/BJUMP prefix of the display list */
     void *vertices;            /* +0x14 vertex data */
     u32 extra;                 /* +0x18 cleared by the ctor; GmoModelBuild stores the vertex-type word here (array format & 0xffefff, the VTYPE operand) */
     u16 vertexSize;            /* +0x1c vertex data bytes = vertexSize * vertexCount */
@@ -8195,7 +8195,7 @@ typedef struct UiScreen {
     s32 pulseTimer;         /* 0x48 0..59 frame counter of the palette pulse (cos(3 deg * t)) */
     u8 closeRequested;      /* 0x4c set by the owner to make UiScreenUpdateCommon remove (and delete) the task */
     u8 pad4d[3];
-    void *bgData;           /* 0x50 non-NULL when the screen owns a background animation */
+    GfxFab **bgData;        /* 0x50 the screen's background animations, one GfxFab * per slot (zeroed MemAlloc of n * sizeof(GfxFab *): 4 UiTitleCtor, 2 UiTitleMenuCtor, 1 UiUpgradeCtor; filled by UiScreenAnimCreate), NULL when the screen has none */
     CoreObjectList bgAnimList; /* 0x54 background animation list (GfxFabCtorFromPack parent; GfxFabListUpdate/GfxFabListDraw) */
     u32 unk60;              /* 0x60 */
     u32 unk64;              /* 0x64 */
@@ -10425,6 +10425,11 @@ typedef struct UiWorldMap {
     u8 _unk2374[0xc];         /* +0x2374 */
 } UiWorldMap;
 
+typedef struct UiWorldMapTurnDelta {
+    u8 dir;     /* +0x0 1 = increase the angle, 0 = decrease */
+    float dist; /* +0x4 distance in radians (period 6.28) */
+} UiWorldMapTurnDelta;
+
 typedef struct UpgradeInfo {
     u8 iconCell;   /* +0x00 sprite-sheet row of the upgrade's icon (`UiUpgradeTweenSlotGrid`) */
     u8 _unk01;     /* +0x01 */
@@ -11003,7 +11008,7 @@ int ActorStageObjIsPushable(ActorStageObjBase *self);
 int ActorStageObjIsTarget(ActorStageObjBase *self);
 int ActorStageObjKindGetBreakPiece(int kind);
 int ActorStageObjKindGetRemainsPiece(int kind);
-void *ActorStageObjKindGetSoundParams(int kind);
+const s32 *ActorStageObjKindGetSoundParams(int kind);
 int ActorStageObjKindIsAttrLandmark(int kind);
 int ActorStageObjKindIsLandmark(int kind);
 int ActorStageObjKindStartsHidden(ActorStageObjBase *self, int kind);
@@ -12241,7 +12246,7 @@ void BtlCpuUnitDtor(BtlCpuUnit *unit, u32 flags);
 int BtlCpuUnitIsCpuUnit(void *unit);
 void BtlCpuUnitResolveAlly(BtlCpuUnit *unit);
 void BtlCpuUnitUpdate(BtlCpuUnit *unit);
-void *BtlCreateBakugan(int kind, int mode, void *spawn);
+void *BtlCreateBakugan(int kind, int mode, const float *spawn);
 CoreTask *BtlCutInTaskCtor(BtlCutInTask *self, BtlBakugan *unit);
 void BtlCutInTaskDraw(BtlCutInTask *task);
 void BtlCutInTaskDtor(BtlCutInTask *self, u32 flags);
@@ -12379,7 +12384,7 @@ void BtlDemoStaticInit(void);
 void BtlDemoUpdate(BtlDemo *demo);
 void BtlDemoUpdateObjects(BtlDemo *demo);
 void BtlDemoUpdateSecondUnit(BtlDemo *demo);
-void *BtlDrawModelList(void *main, void *packet, void **list);
+u32 *BtlDrawModelList(void *main, u32 *packet, void **list);
 void *BtlDrawModelListPass(void *packet, void **list, int pass);
 void BtlEndCutIn(void);
 int BtlEnemySpawnerCountAlive(void *spawner);
@@ -13681,7 +13686,7 @@ void GameFieldCameraExitMode9(GameFieldCamera *cam);
 void GameFieldCameraExitOrbit(GameFieldCamera *cam);
 void GameFieldCameraFadeNearPlayer(float *eye);
 void GameFieldCameraFollowStep(GameFieldCamera *cam);
-void GameFieldCameraHeadViewBegin(void *view, void *obj);
+void GameFieldCameraHeadViewBegin(void *view, float *obj);
 void *GameFieldCameraHeadViewCtor(void *view);
 void GameFieldCameraHeadViewDtor(void *view, u32 flags);
 void GameFieldCameraHeadViewExit(void *view);
@@ -13753,8 +13758,8 @@ GfxSprite *GameFieldCreateLayoutSprite(CoreTask *task, const UiLayoutEntry *reco
 CoreTask *GameFieldCtor(CoreTask *task);
 void GameFieldDraw(CoreTask *task);
 void GameFieldDrawLoading(CoreTask *task);
-void *GameFieldDrawModelListRelative(void *dl, void **list, s32 pass);
-void *GameFieldDrawModelListTwoPass(CoreTask *task, void *dl, void **list);
+u32 *GameFieldDrawModelListRelative(u32 *dl, void **list, s32 pass);
+u32 *GameFieldDrawModelListTwoPass(CoreTask *task, u32 *dl, void **list);
 u32 *GameFieldDrawParticles(void *owner, u32 *dl, void **set);
 void GameFieldDrawScene(CoreTask *task);
 void GameFieldDrawSettingsNop(CoreTask *task);
@@ -13766,7 +13771,7 @@ void GameFieldEndEventView(CoreTask *task);
 void GameFieldEnterArea(CoreTask *task, bool reload);
 CoreTask *GameFieldFindTask(void);
 void GameFieldForwardPlayerFlag(CoreTask *task, u8 flag);
-void *GameFieldGetEventEntry(CoreTask *task, u16 id);
+u16 *GameFieldGetEventEntry(CoreTask *task, u16 id);
 u32 GameFieldGetField(CoreTask *task, s32 field);
 void GameFieldGetStoryHint(CoreTask *task, s32 *outChapter, s16 *outHint);
 GameFieldGuardBlind *GameFieldGuardBlindCtor(GameFieldGuardBlind *blind);
@@ -14353,7 +14358,7 @@ ScePspFMatrix4 *GmoMat4Normalize3(ScePspFMatrix4 *dst, const ScePspFMatrix4 *m);
 void GmoMaterialApplyAttr(float weight, void *mat, s32 type, s32 index, const float *value, s32 blend);
 short *GmoMaterialArrayRelease(short *arr, int n);
 void *GmoMaterialCloneAttrs(void *mat, int type);
-void *GmoMaterialGetAttrData(GmoMaterial *mat, u32 index);
+float *GmoMaterialGetAttrData(GmoMaterial *mat, u32 index);
 u32 GmoMaterialGetDiffuse(GmoMaterial *mat);
 u32 GmoMaterialGetEmission(GmoMaterial *mat);
 float GmoMaterialGetReflection(void *mat);
@@ -14540,7 +14545,7 @@ void *GmoTextureFrameCopy(void *dst, const void *src, u32 flags, void *arena);
 void *GmoTextureFramesCopy(void *frames, s32 count, u32 flags, void *arena);
 s32 GmoTextureFramesMeasureCopy(void *frames, s32 count, u32 flags, void *arena);
 void *GmoTextureGetImageFrame(void *tex, int level, int frame);
-void *GmoTextureGetPaletteFrame(void *tex, int level, int frame);
+u8 *GmoTextureGetPaletteFrame(void *tex, int level, int frame);
 float *GmoTextureGetUvTransform(GmoTexture *tex);
 void *GmoTextureInit(void *tex);
 u32 GmoTextureIsDynamic(GmoTexture *tex);
@@ -15663,7 +15668,7 @@ void GfxTextureSetMipSlope(float slope, void *tex);
 bool GfxTextureSetSlotClut(void *tex, int slot, void *clut, bool fromLow);
 void GfxTextureSwapSlots(void *tex, int a, int b);
 void GfxTextureSystemReset(void);
-void GfxTextureUnswizzleRows(void *data, int format, int size);
+void GfxTextureUnswizzleRows(u32 *data, int format, int size);
 u32 *GfxTextureWriteCall(void *tex, u32 *dl, int slot);
 void *GfxTryFindTexture(const char *name);
 void GfxUnusedTextureStaticInit(void);
@@ -15713,7 +15718,7 @@ void SaveDeleteTaskDtor(CoreTask *task, u32 flags);
 void SaveDeleteTaskUpdate(CoreTask *task);
 void SaveFillArenaRecordSfo(char *title, char *sfo);
 void SaveFillLanguageSfo(char *title, char *sfo);
-void * SaveFindLocalizedBin(const char *base);
+u32 *SaveFindLocalizedBin(const char *base);
 void *SaveGetDataBlock(void);
 s32 SaveGetDataBlockSize(void);
 const char * SaveGetLanguageCode(void);
@@ -17923,7 +17928,7 @@ s32 UiTalkBalloonGetCursorState(UiTalkBalloon *self);
 GfxSprite *UiTalkBalloonGlyphCtor(GfxSprite *sprite, s32 code, float *pos, UiTalkBalloon *owner);
 s32 UiTalkBalloonGlyphUpdate(GfxSprite *sprite);
 GfxSprite *UiTalkBalloonIconCtor(GfxSprite *sprite, void *texture, s32 kind, UiTalkBalloon *owner);
-void UiTalkBalloonLayout(UiTalkBalloon *self, void *unused, const void *style);
+void UiTalkBalloonLayout(UiTalkBalloon *self, void *unused, const char *const *style);
 u8 UiTalkBalloonMeasureText(UiTalkBalloon *self, float *outSize);
 UiTalkBalloon *UiTalkBalloonOpen(void *owner, s16 speaker);
 void UiTalkBalloonRemoveGlyphs(UiTalkBalloon *self, bool all);
@@ -18180,7 +18185,7 @@ void UiWindowFrameStepClose(UiWindowFrame *self);
 void UiWindowFrameStepIdle(UiWindowFrame *self);
 void UiWindowFrameStepOpen(UiWindowFrame *self);
 void UiWindowFrameUpdate(UiWindowFrame *self);
-void UiWorldMapAngleDelta(float from, float to, void *out);
+void UiWorldMapAngleDelta(float from, float to, UiWorldMapTurnDelta *out);
 void UiWorldMapApplyGlobeRotation(UiScreen *screen);
 void UiWorldMapApplyNetCursor(UiScreen *screen, int slot, s16 *data);
 void UiWorldMapApplyNetSettings(UiScreen *screen, int slot, s8 *data);

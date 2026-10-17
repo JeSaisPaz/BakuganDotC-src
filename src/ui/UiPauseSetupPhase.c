@@ -19,7 +19,7 @@ void UiPauseSetupPhase(UiPause *self)
   GfxSprite *sprite;
   GameGimmick *gimmick;
   CoreTask *field;
-  void *mes;
+  u32 *mes;
   u32 mesCount;
   int i;
   int total;
@@ -182,7 +182,7 @@ void UiPauseSetupPhase(UiPause *self)
     case 2:
       mes = SaveFindLocalizedBin("DMPauseEnd");
       if ((s32)UiMesTableRelocate(mes) > 10) {
-        strcpy(self->hintText[1], (const char *)PspPtr(((u32 *)mes)[10]));
+        strcpy(self->hintText[1], (const char *)PspPtr(mes[10]));
       }
       if (strcmp(self->hintText[1], "") != 0) {
         SPR(34)->flags |= 1;
@@ -199,7 +199,7 @@ void UiPauseSetupPhase(UiPause *self)
         hint = 0;
         GameFieldGetStoryHint(field, &chapter, &hint);
         if ((s32)(u16)hint < (s32)mesCount) {
-          strcpy(self->hintText[1], (const char *)PspPtr(((u32 *)mes)[(u16)hint]));
+          strcpy(self->hintText[1], (const char *)PspPtr(mes[(u16)hint]));
         }
       }
       break;

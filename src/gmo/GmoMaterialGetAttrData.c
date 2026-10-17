@@ -6,7 +6,7 @@
    indexes `attrs` (NULL when `index & 0xffff` is not below `attrCount`; the record address uses
    the full `index`), otherwise it is the address of a `GmoAttr` record itself; a NULL record
    gives NULL. */
-void *GmoMaterialGetAttrData(GmoMaterial *mat, u32 index)
+float *GmoMaterialGetAttrData(GmoMaterial *mat, u32 index)
 {
     GmoAttr *attr;
 

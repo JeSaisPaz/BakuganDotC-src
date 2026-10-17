@@ -5,7 +5,7 @@
    (`CorePackChainFind`), where `<lang>` is the two-letter region code from
    `SaveGetLanguageCode` (`"eu"` without a profile). Returns the `CorePackChainFind` result. */
 
-void * SaveFindLocalizedBin(const char *base)
+u32 *SaveFindLocalizedBin(const char *base)
 {
   char name[64];
 

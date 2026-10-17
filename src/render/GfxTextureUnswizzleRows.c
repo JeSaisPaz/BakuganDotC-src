@@ -5,10 +5,10 @@
    blocks (`format` 1: `+0x10`/`+0x20` in 64-byte groups) or 32-byte blocks (`format` 3:
    `+0x20`/`+0x40` in 128-byte groups) over `size / 32` groups; other formats are untouched. */
 
-void GfxTextureUnswizzleRows(void *data, int format, int size)
+void GfxTextureUnswizzleRows(u32 *data, int format, int size)
 
 {
-  u32 *p = (u32 *)data;
+  u32 *p = data;
   int groups;
   int g;
   int i;

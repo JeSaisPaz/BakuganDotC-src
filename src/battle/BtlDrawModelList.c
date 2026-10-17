@@ -6,7 +6,7 @@
    pass to 0 (`GfxSetModelDrawPass`); returns the advanced packet pointer. Used by
    `BtlMainDrawScene`. */
 
-void *BtlDrawModelList(void *main, void *packet, void **list)
+u32 *BtlDrawModelList(void *main, u32 *packet, void **list)
 {
     (void)main;
     GmoSetDepthWriteOverride(true);

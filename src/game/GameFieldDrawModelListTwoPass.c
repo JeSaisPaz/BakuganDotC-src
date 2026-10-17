@@ -5,10 +5,10 @@
    1) with the `GmoSetDepthWriteOverride` toggle set, then resets the draw pass to 0. Returns the display-list
    cursor. */
 
-void *GameFieldDrawModelListTwoPass(CoreTask *task, void *dl, void **list)
+u32 *GameFieldDrawModelListTwoPass(CoreTask *task, u32 *dl, void **list)
 
 {
-  void *cursor;
+  u32 *cursor;
 
   GmoSetDepthWriteOverride(true);
   cursor = GameFieldDrawModelListRelative(dl,list,2);

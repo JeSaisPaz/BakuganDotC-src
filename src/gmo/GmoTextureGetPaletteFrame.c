@@ -6,7 +6,7 @@
    image list, `+0x10` palette list, `+0x14` animation tracks (0x30 bytes, count `+0x18` + 1),
    `+0x1d..+0x1f` frame selectors), or 0 when out of range. */
 
-void *GmoTextureGetPaletteFrame(void *tex, int level, int frame)
+u8 *GmoTextureGetPaletteFrame(void *tex, int level, int frame)
 
 {
   GmoImage *list;

@@ -12,8 +12,9 @@ void NetPlayDtor(NetPlay *self, u32 flags)
   if (self != (NetPlay *)0x0) {
     pad = self->remotePad;
     if (pad != (PadState *)0x0) {
-      const struct { u8 hdr[8]; s16 adj; s16 pad; void (*dtor)(void *, int); } *vt = pad->vtable;
-      vt->dtor((u8 *)pad + vt->adj, 3);
+      /* virtual deleting destructor: vtable entry 1, flags 3 */
+      const VtblEntry *dtor = &((const VtblEntry *)pad->vtable)[1];
+      ((void (*)(void *, s32))dtor->fn)((u8 *)pad + dtor->delta, 3);
       self->remotePad = (PadState *)0x0;
     }
     if (self->lock != (CoreLock *)0x0) {

@@ -24,11 +24,6 @@
    Angles are radians: the VFPU scales them by the bank's 2/π before its quarter-turn `vrot`, so
    the lifted rotations use `cosf`/`sinf` of the angle directly. */
 
-typedef struct UiWorldMapJetDelta {
-  u8 dir;
-  float dist;
-} UiWorldMapJetDelta;
-
 /* m = Rx(angle): rows (1,0,0,0), (0,c,s,0), (0,-s,c,0), (0,0,0,1). */
 static void JetRotX(float *m, float angle)
 {
@@ -117,10 +112,10 @@ static void JetPlaceAtPos(UiWorldMap *map)
 static inline void JetSetTurnTarget(UiWorldMap *map, u8 dir)
 {
   UiScreen *screen = &map->base;
-  UiWorldMapJetDelta r0;
-  UiWorldMapJetDelta r1;
-  UiWorldMapJetDelta r2;
-  UiWorldMapJetDelta d;
+  UiWorldMapTurnDelta r0;
+  UiWorldMapTurnDelta r1;
+  UiWorldMapTurnDelta r2;
+  UiWorldMapTurnDelta d;
 
   map->jetTurnTo[0] = UiWorldMapGetJetAngle(screen, dir, 0);
   map->jetTurnTo[1] = UiWorldMapGetJetAngle(screen, dir, 1);

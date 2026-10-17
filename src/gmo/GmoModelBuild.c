@@ -393,7 +393,7 @@ void GmoModelBuild(void **planCtx, const void *chunk, GmoModel *model)
           inst->vertexCount = vertexTotal;
           inst->displayList = dl;
           inst->vertices = verts;
-          inst->state = bbox;
+          inst->state = (float *)bbox; /* corner floats, copied below as raw words */
           inst->extra = format & 0xffefff;
           inst->vertexSize = vertexSize;
           cmd = dl;

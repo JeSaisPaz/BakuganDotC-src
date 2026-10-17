@@ -8,9 +8,9 @@
    (`GfxSetModelDrawPass` `pass`) and returns the advanced display-list pointer (camera state written
    by `GfxCameraDlWrite` before and after). An empty list returns `dl` untouched. */
 
-void *GameFieldDrawModelListRelative(void *dl, void **list, s32 pass)
+u32 *GameFieldDrawModelListRelative(u32 *dl, void **list, s32 pass)
 {
-  u32 *cursor = (u32 *)dl;
+  u32 *cursor = dl;
   GfxModel *m = (GfxModel *)*list;
   float savedEye[4] __attribute__((aligned(16)));
 

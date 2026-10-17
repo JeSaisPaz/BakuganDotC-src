@@ -9,20 +9,15 @@
    (`UiWorldMapAngleDelta` → `turnForward[]`, `turnDist[]`); the idle spin direction
    `spinForward` takes the yaw direction. */
 
-typedef struct UiWorldMapAngleDeltaResult {
-  u8 dir;
-  float dist;
-} UiWorldMapAngleDeltaResult;
-
 void UiWorldMapStartGlobeTurn(float duration, UiScreen *screen)
 
 {
   UiWorldMap *map = (UiWorldMap *)screen;
   float rotations[10][3];
-  UiWorldMapAngleDeltaResult r0;
-  UiWorldMapAngleDeltaResult r1;
-  UiWorldMapAngleDeltaResult r2;
-  UiWorldMapAngleDeltaResult d;
+  UiWorldMapTurnDelta r0;
+  UiWorldMapTurnDelta r1;
+  UiWorldMapTurnDelta r2;
+  UiWorldMapTurnDelta d;
   u32 group;
 
   memcpy(rotations, g_uiWorldMapAreaRotations, sizeof(rotations));

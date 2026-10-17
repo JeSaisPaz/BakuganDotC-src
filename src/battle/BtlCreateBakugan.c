@@ -15,7 +15,7 @@
    texture variant of the species copy. Returns the unit (NULL when allocation failed; the code
    after construction does not check). */
 
-void *BtlCreateBakugan(int kind, int mode, void *spawn)
+void *BtlCreateBakugan(int kind, int mode, const float *spawn)
 {
     const float *spawnPos = spawn;
     BtlBakugan *unit;

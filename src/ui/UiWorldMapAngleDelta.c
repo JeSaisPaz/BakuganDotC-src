@@ -2,16 +2,13 @@
 #include "bdc.h"
 
 /* Shortest turn from angle `from` to `to` (radians, period 6.28) for the
-   `UiWorldMap` globe: writes `{u8 dir, float distance}` to `out` (`dir` 1 =
-   increase, 0 = decrease). */
+   `UiWorldMap` globe: writes the `UiWorldMapTurnDelta` `{u8 dir, float dist}` to
+   `out` (`dir` 1 = increase, 0 = decrease). */
 
-void UiWorldMapAngleDelta(float from, float to, void *out)
+void UiWorldMapAngleDelta(float from, float to, UiWorldMapTurnDelta *out)
 
 {
-  struct {
-    u8 dir;
-    float dist;
-  } r;
+  UiWorldMapTurnDelta r;
   float a;
   float b;
 
@@ -41,5 +38,5 @@ void UiWorldMapAngleDelta(float from, float to, void *out)
     }
   }
   *(u32 *)out = *(u32 *)&r;
-  *((float *)out + 1) = r.dist;
+  out->dist = r.dist;
 }

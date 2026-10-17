@@ -7,10 +7,10 @@
    applied to (-0.6, 0, 0.4)) raised by 5; both `w` lanes are 0. Then resets the spring to the
    current eye/look-at `obj[0..7]` (`GameFieldCameraSpringReset`). */
 
-void GameFieldCameraHeadViewBegin(void *view, void *obj)
+void GameFieldCameraHeadViewBegin(void *view, float *obj)
 {
   GameFieldCameraHeadView *hv = (GameFieldCameraHeadView *)view;
-  float *v = (float *)obj;
+  float *v = obj;
   GfxModel *player;
   ScePspFVector4 head BDC_ALIGN16;
   float heading;
@@ -40,5 +40,5 @@ void GameFieldCameraHeadViewBegin(void *view, void *obj)
   hv->targetEye[2] = hv->targetLook[2] + offZ * 30.0f;
   hv->targetEye[3] = 0.0f;
   hv->targetEye[1] = hv->targetEye[1] + 5.0f;
-  GameFieldCameraSpringReset((void **)view, (float *)obj);
+  GameFieldCameraSpringReset((void **)view, obj);
 }

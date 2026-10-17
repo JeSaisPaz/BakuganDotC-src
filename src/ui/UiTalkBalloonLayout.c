@@ -10,7 +10,7 @@
    sprite (kind 2, `GfxFindTexture`) with `hasIcon` and its position. Without a style it clears
    `hasFrame` and `hasIcon`. */
 
-void UiTalkBalloonLayout(UiTalkBalloon *self, void *unused, const void *style)
+void UiTalkBalloonLayout(UiTalkBalloon *self, void *unused, const char *const *style)
 
 {
   char *const *names = (char *const *)style; /* [0] frame texture, [1] icon texture */
