@@ -10,14 +10,18 @@
    (`GfxEffectSpawnAttached`, effect textureSlot = vtable entry 20 of the unit's last melee attacker,
    0 without one), plays the unit's motion 0xee (`BtlBakuganPlayMotion`, forced), and when that
    attacker exists and its vtable entry 11 returns 0 holds it at its motion frame - 2 clamped to
-   [0, 1]. With mode 1 the focus is the unit position + 100 in y; other modes leave
-   the focus uninitialised as the binary does. Eye = focus + dir * distance, target = focus;
+   [0, 1]. With mode 1 the focus is the unit position + 100 in y; other modes (2) leave
+   the focus uninitialised in the binary (the port zeroes it). Eye = focus + dir * distance, target = focus;
    updates the camera (`GfxCameraUpdate` all flags), clears flag2f0 and makes the camera the
    active one, saving the previous `g_gfxActiveCamera`. Returns `self`. */
 
 BtlFinishTask *BtlFinishTaskCtor(BtlFinishTask *self, void *unit, s32 arg, s32 mode)
 {
-    float focus[4];
+    /* PC port (class l): zeroed. Mode 2 (BtlFinishTaskStart's far camera) sets no focus here, so the original
+       aims the first camera (used by BtlFinishTaskStart's scene update this frame) at stack leftovers; on the host
+       they vary with ASLR at -O0 and moved the effects' random draws (nightly o0, level 14). BtlFinishTaskUpdate
+       starts its own focus at 0 the same way. */
+    float focus[4] = {0.0f, 0.0f, 0.0f, 0.0f};
     ScePspFVector4 node;
     BtlBakugan *bakugan;
     BtlBakugan *attacker;
@@ -105,7 +109,7 @@ BtlFinishTask *BtlFinishTaskCtor(BtlFinishTask *self, void *unit, s32 arg, s32 m
         focus[3] = ((BtlBakugan *)self->unit)->base.pos[3];
         focus[1] = focus[1] + 100.0f;
     }
-    /* other modes leave focus uninitialised, as the binary does.
+    /* other modes: focus stays 0 (uninitialised in the binary).
        eye.xyz = focus + camDir * camDistance, eye.w = focus.w; target = focus */
     dist = self->camDistance;
     self->camera.eye[0] = focus[0] + self->camDir[0] * dist;
