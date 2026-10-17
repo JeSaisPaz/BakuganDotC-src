@@ -29,7 +29,8 @@ int BtlMainStartResultDemo(BtlMain *self, int outcome)
         demoId = BtlDemoIdVariant3(kind);
         if (g_scriptGlobalVars[8] == 1) {
             profile = (SaveProfile *)SaveGetProfile();
-            profile->data->stageStates[g_scriptGlobalVars[1]] = 2;
+            /* PC port (class n): indexed through a word pointer, as the MIPS does: stage numbers run past the 32 words (stage 0x25 lands in stageActorTags, +0x2e4, on the PSP too); the array index was out of bounds for UBSan. */
+            ((s32 *)profile->data->stageStates)[g_scriptGlobalVars[1]] = 2;
         }
     } else if (outcome >= 2 && outcome <= 4) {
         kind = 1;
@@ -39,7 +40,7 @@ int BtlMainStartResultDemo(BtlMain *self, int outcome)
         demoId = BtlDemoIdVariant1(kind);
         if (g_scriptGlobalVars[8] == 1) {
             profile = (SaveProfile *)SaveGetProfile();
-            profile->data->stageStates[g_scriptGlobalVars[1]] = 1;
+            ((s32 *)profile->data->stageStates)[g_scriptGlobalVars[1]] = 1;
         }
     }
     if (BtlMainIsMatchUndecided(self)) {

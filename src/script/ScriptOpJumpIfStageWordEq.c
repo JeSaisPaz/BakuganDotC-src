@@ -15,7 +15,8 @@ int ScriptOpJumpIfStageWordEq(Script *script)
   value = ScriptReadU32(script);
   target = ScriptReadU16(script);
   profile = SaveGetProfile();
-  if (profile->data->stageStates[g_scriptGlobalVars[1]] == value) {
+  /* PC port (class n): indexed through a word pointer, as the MIPS does: stage numbers run past the 32 words (stage 0x25 lands in stageActorTags, +0x2e4, on the PSP too); the array index was out of bounds for UBSan. */
+  if (((s32 *)profile->data->stageStates)[g_scriptGlobalVars[1]] == value) {
     script->curTrack->pc = (u16)target;
     return 3;
   }

@@ -68,7 +68,7 @@ void ActorNpcGuardStateChaseBall(ActorNpcGuard *self)
     break;
   case 3:
     entry = (const VtblEntry *)npc->base.base.base.vtable + 18;
-    if (((s32 (*)(void *, float *, s32, s32, float, float))entry->fn)(
+    if (((s32 (*)(void *, float *, s32, s8, float, float))entry->fn)(
             (char *)self + entry->delta, self->ballPos, 0, 0, 0.5f, 12.0f) != 0) {
       npc->subStep = 4;
     }
@@ -110,7 +110,7 @@ void ActorNpcGuardStateChaseBall(ActorNpcGuard *self)
     break;
   case 8:
     entry = (const VtblEntry *)npc->base.base.base.vtable + 18;
-    if (((s32 (*)(void *, float *, s32, s32, float, float))entry->fn)(
+    if (((s32 (*)(void *, float *, s32, s8, float, float))entry->fn)(
             (char *)self + entry->delta, npc->returnPoint, 0, 0, 0.5f, 0.0f) != 0) {
       npc->subStep = 9;
     }

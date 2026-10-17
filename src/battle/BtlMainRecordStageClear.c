@@ -12,7 +12,8 @@ void BtlMainRecordStageClear(BtlMain *self)
     SaveProfile *profile;
 
     profile = (SaveProfile *)SaveGetProfile();
-    if (profile->data->stageStates[g_scriptGlobalVars[1]] == 2 && BtlGetExitScene(self) == 1) {
+    /* PC port (class n): indexed through a word pointer, as the MIPS does: stage numbers run past the 32 words (stage 0x25 lands in stageActorTags, +0x2e4, on the PSP too); the array index was out of bounds for UBSan. */
+    if (((s32 *)profile->data->stageStates)[g_scriptGlobalVars[1]] == 2 && BtlGetExitScene(self) == 1) {
         SaveProfileMarkStageCleared();
     }
     BtlGetExitScene(self);
