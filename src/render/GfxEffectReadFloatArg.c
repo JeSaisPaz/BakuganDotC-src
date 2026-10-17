@@ -29,7 +29,7 @@ float GfxEffectReadFloatArg(GfxEffect *effect, float *args, s32 *cursor, u16 *cm
     lo = args[idx];
   } else {
     if (kind == 4) {
-      lo = effect->vec1d0[((s32 *)args)[idx]];
+      lo = effect->regs[((s32 *)args)[idx]];
       *cursor = idx + 1;
       return lo;
     }

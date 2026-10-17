@@ -147,7 +147,8 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
     quat[1] = self->toppleAxis[1] * s;
     quat[2] = self->toppleAxis[2] * s;
     quat[3] = c;
-    /* rotation matrix = A . B^T with the columns of A and B swizzled from the quaternion */
+    /* rows of A (qa) and B (qb) swizzled from the quaternion; vmmul.q E000,E200,E100: rotMtx = qb * qa
+       (row-major) */
     qa[0][0] = quat[3];  qa[0][1] = quat[2];  qa[0][2] = -quat[1]; qa[0][3] = -quat[0];
     qa[1][0] = -quat[2]; qa[1][1] = quat[3];  qa[1][2] = quat[0];  qa[1][3] = -quat[1];
     qa[2][0] = quat[1];  qa[2][1] = -quat[0]; qa[2][2] = quat[3];  qa[2][3] = -quat[2];
@@ -158,8 +159,8 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
     qb[3][0] = -quat[0]; qb[3][1] = -quat[1]; qb[3][2] = -quat[2]; qb[3][3] = quat[3];
     for (j = 0; j < 4; j++) {
       for (r = 0; r < 4; r++) {
-        rotMtx[j * 4 + r] = qa[0][r] * qb[0][j] + qa[1][r] * qb[1][j] + qa[2][r] * qb[2][j] +
-                            qa[3][r] * qb[3][j];
+        rotMtx[j * 4 + r] = qb[j][0] * qa[0][r] + qb[j][1] * qa[1][r] + qb[j][2] * qa[2][r] +
+                            qb[j][3] * qa[3][r];
       }
     }
     /* w lane of the axes cleared, translation (0, 0, 0, 1) */

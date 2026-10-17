@@ -9156,9 +9156,9 @@ typedef struct UiHelpLine {
     float appliedAlpha;       /* 0x08 alpha last applied to the glyph sprites */
     float glyphCount;         /* 0x0c number of glyph sprites (kept as a float) */
     u32 unk10;                /* 0x10 never read or written outside the clear */
-    float width;              /* 0x14 measured text width (UiTextMeasure) */
-    float height;             /* 0x18 measured text height */
-    int lines;                /* 0x1c measured line count */
+    float height;             /* 0x14 measured text height (UiTextMeasure outH) */
+    float width;              /* 0x18 measured widest line (UiTextMeasure outW) */
+    int textLen;              /* 0x1c measured byte length including the terminator (UiTextMeasure outLen) */
     GfxSprite *glyphHead;     /* 0x20 first glyph sprite (list through GfxSprite.next) */
     char text[64];            /* 0x24 text buffer, filled from DOMesHelp */
 } UiHelpLine;
@@ -14059,7 +14059,7 @@ void GameQuestCamFollowPath(GameQuestCamPathMode *self);
 void GameQuestCamIntegrate(float dt, GameQuestCamSpring *self, float *pos, float *vel, float *accel);
 void GameQuestCamLookAtBaseDtor(void *spring, u32 flags);
 float *GameQuestCamLookAtBaseGetLookAt(void *spring);
-void GameQuestCamLookFactoryBuild(void *factory, void **args);
+void GameQuestCamLookFactoryBuild(void *factory, GameQuestPathSegment **segSlot);
 GameQuestCamLookSpring *GameQuestCamLookSpringCtor(GameQuestCamLookSpring *self, void *desc);
 void GameQuestCamLookSpringDtor(GameQuestCamLookSpring *self, u32 flags);
 void GameQuestCamLookSpringSetLookAt(GameQuestCamLookSpring *self, const float *v);
