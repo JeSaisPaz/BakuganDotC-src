@@ -20,6 +20,12 @@ u32 GmoModelBuildDl(GmoModel *self, void **buf, u32 *size, u32 arg, s16 *nodes, 
     return GmoModelBuildCachedDl(self, (u32 **)buf, size);
   }
   GmoDlCtxInit(&ctx, buf, size, arg);
+  /* PC port (class l): the original never sets `ctx.texture` (+0x28; neither GmoDlCtxInit nor
+     GmoDlDrawModel store it), so GmoDlBindMesh's first `texture != tex` compares the stack's
+     leftovers: on the PSP usually the previous model's ctx at the same depth (its last texture,
+     still bound in the GE), so a skipped rebind draws the same. A value no texture has makes the
+     first mesh always bind its texture: the same image, defined on every host. */
+  ctx.texture = (void *)~(uintptr_t)0;
   GmoDlDrawModel(&ctx, self, 0xffffffff, nodes, count, stride);
   GmoDlWriteResetState(&ctx, self);
   return GmoDlCtxFinish(&ctx, buf, (s32 *)size);
