@@ -4,8 +4,9 @@
 /* Check method of behaviour layer 0 of `BtlAi` (guard/stagger reaction,
    `MemberFnPtr` at `0x08a802e0`): sets the guard layer's `active` byte when the owner has any
    of the state flags 0x30000000 or is in state 3..6 (the code also tests 3, 4 and 5 separately),
-   clears it otherwise, then calls the layer's virtual entry 2. */
-void BtlAiGuardLayerCheck(BtlAi *self)
+   clears it otherwise, then returns what the layer's virtual entry 2 (`BtlAiLayerIsActive`: that
+   `active` byte) returns: the MIPS tail-calls it and leaves its $v0, which `BtlAiRunLayers` reads. */
+s32 BtlAiGuardLayerCheck(BtlAi *self)
 {
     BtlBakugan *owner = self->owner;
     const VtblEntry *entry;
@@ -17,5 +18,5 @@ void BtlAiGuardLayerCheck(BtlAi *self)
     self->guard.base.active = flagged || inRange || owner->state == 3;
 
     entry = &self->guard.base.vtbl[2];
-    ((void (*)(void *))entry->fn)((u8 *)&self->guard + entry->delta);
+    return ((u8 (*)(void *))entry->fn)((u8 *)&self->guard + entry->delta);
 }

@@ -11554,7 +11554,7 @@ s32 BtlAiGetComboCount(BtlAi *self);
 s32 BtlAiGetComboGroup(BtlAi *self, s32 index);
 s32 BtlAiGetComboInput(BtlAi *self, s32 index, s32 step);
 s32 BtlAiGetComboLength(BtlAi *self, s32 index);
-void BtlAiGuardLayerCheck(BtlAi *self);
+s32 BtlAiGuardLayerCheck(BtlAi *self);
 void BtlAiGuardLayerReset(BtlAiGuardLayer *self);
 void BtlAiGuardLayerRun(BtlAi *self);
 s32 BtlAiHasEnemyWithin(float range, BtlAi *self);
