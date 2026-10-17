@@ -3,8 +3,8 @@
 
 /* Target-point override of the class predicate at vtable entry 14: always returns 1 (the base
    implementation returns 0). */
-int BtlTargetPointIsTargetPoint(void *unit)
+bool BtlTargetPointIsTargetPoint(void *unit)
 {
     (void)unit;
-    return 1;
+    return true;
 }

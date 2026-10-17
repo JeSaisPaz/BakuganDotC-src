@@ -4,9 +4,9 @@
 /* Base gimmick type test of vtable slot 15: returns 0 (not an IR sensor); the IR sensor gimmick
    overrides it to return 1. */
 
-s32 GameGimmickIsIrSensor(GameGimmick *gimmick)
+bool GameGimmickIsIrSensor(GameGimmick *gimmick)
 
 {
-  return 0;
+  return false;
 }
 

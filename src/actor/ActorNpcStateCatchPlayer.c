@@ -104,7 +104,7 @@ void ActorNpcStateCatchPlayer(ActorNpc *self)
       self->subStep = self->subStep + 1;
     } else {
       entry = (const VtblEntry *)self->base.base.base.vtable + 18;
-      if (((s32 (*)(void *, float *, s32, s32, float, float))entry->fn)(
+      if (((s32 (*)(void *, float *, s32, s8, float, float))entry->fn)(
               (char *)self + entry->delta, player->base.base.pos, 1, 0, self->speed * 2.0f,
               15.0f) != 0) {
         self->subStep = self->subStep + 1;

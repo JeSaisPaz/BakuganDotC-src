@@ -2,12 +2,21 @@
 #include "bdc.h"
 
 typedef s32 (*BtlUnitClassTest)(void *self);
+typedef bool (*BtlUnitClassTestBool)(void *self);
 
-/* Calls class predicate `slot` of a battle-list object through its vtable. */
+/* Calls class predicate `slot` of a battle-list object through its vtable (slots 10 and 12 return
+   int: BtlBakuganIsBakugan, BtlUnitAltIsUnitAlt). */
 static s32 BtlHudUnitIs(CoreObject *obj, s32 slot)
 {
     const VtblEntry *test = &((const VtblEntry *)obj->vtable)[slot];
     return ((BtlUnitClassTest)test->fn)((u8 *)obj + test->delta);
+}
+
+/* Same for the bool predicates (slot 14: BtlBakuganIsTargetPoint and its overrides). */
+static bool BtlHudUnitIsBool(CoreObject *obj, s32 slot)
+{
+    const VtblEntry *test = &((const VtblEntry *)obj->vtable)[slot];
+    return ((BtlUnitClassTestBool)test->fn)((u8 *)obj + test->delta);
 }
 
 /* Returns the `n`-th opponent unit of the battle list: objects other than the
@@ -35,7 +44,7 @@ void *BtlHudGetEnemyUnit(BtlHud *self, s32 n)
     }
     count = 0;
     do {
-        if (!BtlHudUnitIs(obj, 14) && obj != player
+        if (!BtlHudUnitIsBool(obj, 14) && obj != player
             && (BtlHudUnitIs(obj, 10) || BtlHudUnitIs(obj, 12))
             && !((BtlBakugan *)obj)->combat.dead) {
             ids[count++] = obj->id;

@@ -71,7 +71,7 @@ void ActorNpcGuardStateInvestigate(ActorNpcGuard *self)
     break;
   case 6:
     entry = (const VtblEntry *)npc->base.base.base.vtable + 18;
-    if (((s32 (*)(void *, float *, s32, s32, float, float))entry->fn)(
+    if (((s32 (*)(void *, float *, s32, s8, float, float))entry->fn)(
             (char *)self + entry->delta, npc->returnPoint, 0, 0, 1.0f, 3.0f) != 0) {
       npc->subStep = 7;
     }

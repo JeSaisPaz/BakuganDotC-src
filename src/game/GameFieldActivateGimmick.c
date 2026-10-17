@@ -22,7 +22,7 @@ void GameFieldActivateGimmick(CoreTask *task, s16 id)
     }
     if (GameGimmickGetRecordParam(gimmick) == id) {
       e = &((const VtblEntry *)gimmick->base.base.vtable)[16];
-      ((void (*)(void *, int))e->fn)((char *)gimmick + e->delta, 0);
+      ((void (*)(void *, u8))e->fn)((char *)gimmick + e->delta, 0);
       return;
     }
   }

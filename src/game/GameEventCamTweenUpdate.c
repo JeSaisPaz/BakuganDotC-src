@@ -22,7 +22,7 @@ static s32 CamTweenDiv(s32 a, s32 b)
   return BDC_DIV(a, b);
 }
 
-s32 GameEventCamTweenUpdate(GameEventCamTween *self)
+u8 GameEventCamTweenUpdate(GameEventCamTween *self)
 {
   float v[3];
   GameEventCamKeys *keys;

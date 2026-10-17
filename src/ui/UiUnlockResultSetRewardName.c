@@ -12,8 +12,8 @@
    list into `textGlyphs[0]` and the glyph count into `textReveal[0]`, and moves every glyph up by
    12. */
 
-typedef void (*UiTextPrintFn)(float x, float y, float z, void *printer, char *text, s32 a, s32 b,
-                              s32 c);
+typedef void (*UiTextPrintFn)(float x, float y, float z, void *printer, char *text, u8 a, s32 b,
+                              u8 c);
 
 void UiUnlockResultSetRewardName(UiUnlockResult *self)
 {

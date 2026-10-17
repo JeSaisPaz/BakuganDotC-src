@@ -5,7 +5,7 @@
    and then loops forever running `CoreModuleUpdate` on `CoreGetModuleMgr` once per vblank
    (`sceDisplayWaitVblankStartCB`). */
 
-void BootDevModuleThread(void)
+int BootDevModuleThread(SceSize args, void *argp)
 
 {
   CoreModuleMgr *mgr;

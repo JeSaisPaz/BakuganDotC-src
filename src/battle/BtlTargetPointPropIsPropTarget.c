@@ -2,8 +2,8 @@
 #include "bdc.h"
 
 /* Prop target-point override of the class predicate at vtable entry 15: always returns 1. */
-int BtlTargetPointPropIsPropTarget(void *unit)
+bool BtlTargetPointPropIsPropTarget(void *unit)
 {
     (void)unit;
-    return 1;
+    return true;
 }

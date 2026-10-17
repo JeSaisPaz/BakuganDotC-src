@@ -8,8 +8,8 @@
    y = base + 26·row, base 72 (71 on the symbol page, 73 on pages 0x50 and 0x78), adjusted by
    `UiNameEntryGetGlyphOffset`. */
 
-typedef void (*UiTextPrintFn)(float x, float y, float z, void *printer, u8 *text, s32 a, s32 b,
-                              s32 c);
+typedef void (*UiTextPrintFn)(float x, float y, float z, void *printer, u8 *text, u8 a, s32 b,
+                              u8 c);
 
 void UiNameEntryRedrawKeyGrid(UiNameEntry *self)
 {

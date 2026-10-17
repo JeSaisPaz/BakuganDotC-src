@@ -5,11 +5,11 @@
    (at `+0x50`, adjusted by the vtable's `+0x10` delta) so the overlay rectangle reacts.
    `ScriptOpFade` cmd 4. */
 
-void GfxFaderSetEnabled(GfxFader *self, u8 enabled)
+void GfxFaderSetEnabled(GfxFader *self, bool enabled)
 
 {
   self->active = enabled;
-  ((void (*)(void *, u8))self->vtbl[2].fn)((u8 *)self + self->vtbl[2].delta, enabled);
+  ((void (*)(void *, bool))self->vtbl[2].fn)((u8 *)self + self->vtbl[2].delta, enabled);
   return;
 }
 

@@ -73,7 +73,7 @@ void UiTalkLayoutText(void *win, s32 index, u32 *mes, s32 x, s32 y)
     fx = (float)x;
     fy = (float)y;
     print = &printer->layer.vtbl[2];
-    hud->talkPrintBusy = ((u8 (*)(float, float, float, void *, char *, u8, s32, u8))print->fn)(
+    hud->talkPrintBusy = ((bool (*)(float, float, float, void *, char *, u8, s32, u8))print->fn)(
         fx, fy, 48.0f, (u8 *)printer + print->delta, text, 0, 0, 0);
     hud->talkTextPos[0] = fx;
     hud->talkTextPos[1] = fy;

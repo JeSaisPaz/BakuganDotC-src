@@ -39,7 +39,7 @@ void GmoMotionReadTrack(const void *gmo, const void *trackChunk, GmoMotionTrack 
         n = dc->childOffset - dc->dataOffset;
     }
     alloc = &((const VtblEntry *)g_gmoMotionArena->vtable)[7];
-    dst = ((void *(*)(void *, size_t))alloc->fn)((u8 *)g_gmoMotionArena + alloc->delta, n);
+    dst = ((void *(*)(void *, s32))alloc->fn)((u8 *)g_gmoMotionArena + alloc->delta, (s32)n);
     memcpy(dst, src, n);
     kind = GmoMotionTrackKind(args[1], params[0]);
     track->data = PspAddr(dst);

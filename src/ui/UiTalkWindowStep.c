@@ -17,8 +17,8 @@
    and go back to 2; 100 hides everything, clears the printer (`GfxSpriteLayerClear`), returns
    to state 0 and sets `g_scriptGlobalVars[12]` = 1 (message finished). */
 
-typedef u8 (*UiTalkPrintFn)(float x, float y, float z, void *self, char *text, s32 flags,
-                            u32 resumePos, s32 extra);
+typedef bool (*UiTalkPrintFn)(float x, float y, float z, void *self, char *text, u8 flags,
+                              s32 resumePos, u8 extra);
 
 void UiTalkWindowStep(void *win)
 {

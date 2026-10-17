@@ -7,7 +7,7 @@
    offset from `UiUnlockCodeGetGlyphOffset`), y = 42 + glyph dy, through the printer's vtable
    slot 2. */
 
-typedef void (*UiTextPrinterPutFn)(void *self, const u8 *text, int a2, int a3, int t0, float x,
+typedef void (*UiTextPrinterPutFn)(void *self, const u8 *text, u8 a2, s32 a3, u8 t0, float x,
                                    float y, float z);
 
 void UiUnlockCodeLayoutDigits(UiUnlockCode *self)

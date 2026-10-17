@@ -14,7 +14,7 @@
 
 void UiFieldHudShowPromptA(UiFieldHud *self)
 {
-  typedef void (*PrintFn)(float, float, float, void *, char *, s32, s32, s32);
+  typedef void (*PrintFn)(float, float, float, void *, char *, u8, s32, u8);
   GfxSprite **sprites;
   UiTextPrinter *printer;
   const VtblEntry *entry;

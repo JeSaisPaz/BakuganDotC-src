@@ -15,7 +15,7 @@
      returns 0.
    No direct callers (method pointer). */
 
-s32 GameGimmickDistanceFade(float nearDist, float farDist, GfxModel *model, const float *pos, float *alpha)
+bool GameGimmickDistanceFade(float nearDist, float farDist, GfxModel *model, const float *pos, float *alpha)
 {
   float dist;
   float cap;

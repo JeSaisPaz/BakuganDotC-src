@@ -8,11 +8,11 @@
 void ActorNpcStateWalkRoute(ActorNpc *self)
 {
   const VtblEntry *entry;
-  s32 (*walk)(void *, float *, s32, s32, float, float);
+  s32 (*walk)(void *, float *, s32, s8, float, float);
 
   if (ActorNpcCheckInterrupt(self, 0) == 0) {
     entry = (const VtblEntry *)self->base.base.base.vtable + 18;
-    walk = (s32 (*)(void *, float *, s32, s32, float, float))entry->fn;
+    walk = (s32 (*)(void *, float *, s32, s8, float, float))entry->fn;
     if (walk((char *)self + entry->delta, self->base.routeTarget, 0, 0, self->speed, 2.0f) != 0) {
       self->aiState = 0;
       self->subStep = 0;

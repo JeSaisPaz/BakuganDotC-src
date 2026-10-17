@@ -9,7 +9,7 @@
 void ActorNpcStateReturnHome(ActorNpc *self)
 {
   const VtblEntry *entry;
-  s32 (*walk)(void *, float *, s32, s32, float, float);
+  s32 (*walk)(void *, float *, s32, s8, float, float);
   s32 stage;
   s32 slot;
   float turn;
@@ -22,7 +22,7 @@ void ActorNpcStateReturnHome(ActorNpc *self)
       g_gameFieldCharSet->paused = 0;
     }
     entry = (const VtblEntry *)self->base.base.base.vtable + 18;
-    walk = (s32 (*)(void *, float *, s32, s32, float, float))entry->fn;
+    walk = (s32 (*)(void *, float *, s32, s8, float, float))entry->fn;
     stage = g_scriptGlobalVars[1];
     if (stage == 0x14 || stage == 5) {
       if (walk((char *)self + entry->delta, self->returnPoint, 0, 1, self->speed * 1.5f, 6.0f) != 0) {

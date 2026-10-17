@@ -9,11 +9,11 @@ void GameGimmickUpdate(GameGimmick *gimmick)
 
 {
   const VtblEntry *e;
-  int r;
+  bool r;
 
   e = &((const VtblEntry *)gimmick->base.base.vtable)[5];
   gimmick->hidden = 0;
-  r = ((int (*)(void *, float *, float *, float, float))e->fn)(
+  r = ((bool (*)(void *, float *, float *, float, float))e->fn)(
       (u8 *)gimmick + e->delta, &gimmick->base.data->rootMatrix[12], &gimmick->base.ambient[3],
       23.0f, 480.0f);
   if (r != 0) {

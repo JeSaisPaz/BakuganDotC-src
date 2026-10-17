@@ -9,8 +9,8 @@
    advances by 0.04 per frame (0.08 when `g_gfxDisplay` skips frames).
    The cosine is the VFPU vcos of pulsePhase·π·(2/π) quarter turns, i.e. cos(pulsePhase·π). */
 
-typedef void (*ConfirmPrintFn)(float x, float y, float z, void *self, const char *text, s32 a,
-                               s32 b, s32 c);
+typedef void (*ConfirmPrintFn)(float x, float y, float z, void *self, const char *text, u8 a,
+                               s32 b, u8 c);
 typedef void (*ConfirmDrawFn)(void *self, void *packet);
 
 void UiConfirmDialogDraw(UiConfirmDialog *self)
