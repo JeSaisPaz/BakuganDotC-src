@@ -6,8 +6,8 @@
    (240, 160) in yellow at scale 1 and `detail` at (116, 204) in white at scale 0.75, both with the
    screen alpha `+0x2c0`, each printer drawn into a depth-550 render packet (vtable slot 5). */
 
-typedef void (*RepairPrintFn)(float x, float y, float z, void *self, char *text, s32 centre,
-                              s32 a2, s32 a3);
+typedef void (*RepairPrintFn)(float x, float y, float z, void *self, char *text, u8 centre,
+                              s32 start, u8 centreV);   /* UiTextPrinterPrint's parameter types */
 typedef void (*RepairDrawFn)(void *self, void *packet);
 
 void UiRepairDraw(UiScreen *screen)

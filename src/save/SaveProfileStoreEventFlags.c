@@ -2,11 +2,11 @@
 #include "bdc.h"
 
 /* Snapshots the live story event state into the player profile: copies the 0x108-byte live
-   event-flag block `g_gameEventFlags` into the save block at `data->eventFlags`, copies the 16
-   bytes of `g_gameUnlockFlags` to `data->unlockFlags`, sets the byte
-   `eventFlagsStored` to 1 and then calls `GameFieldSyncProgressFlags` to refresh the unlock bitmaps from
-   the flags. Called by `ScriptOpStartNextPlaythrough` after the flag reset and by three other
-   callers. */
+   event-flag block `g_gameEventState``.flags` into the save block at `data->eventFlags`, copies
+   the 16-byte player location `g_gameEventState.spawn` to `data->unlockFlags`, sets the byte
+   `eventFlagsStored` to 1 and then calls `GameFieldSyncProgressFlags` to refresh the unlock
+   bitmaps from the flags. Called by `ScriptOpStartNextPlaythrough` after the flag reset and by
+   three other callers. */
 
 void SaveProfileStoreEventFlags(void)
 {

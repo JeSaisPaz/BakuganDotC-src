@@ -1,12 +1,22 @@
 // bdc 0x088905e0 BtlAiEvalCondition
 #include "bdc.h"
 
-/* Calls unit virtual `slot` (a no-argument predicate) through the GCC 2.x vtable entry. */
+/* Calls unit virtual `slot` (a no-argument predicate returning int: slots 10, 11) through the GCC 2.x
+   vtable entry. */
 static int UnitVirtual(BtlBakugan *unit, int slot)
 {
     const VtblEntry *entry = &((const VtblEntry *)unit->base.base.vtable)[slot];
 
     return ((int (*)(void *))entry->fn)((u8 *)unit + entry->delta);
+}
+
+/* Same for the bool predicates (slot 15 BtlBakuganIsPropTarget, slot 16 BtlBakuganIsLandmarkAttrTarget
+   and their overrides): a 64-bit host defines only the low byte of a bool return. */
+static bool UnitVirtualBool(BtlBakugan *unit, int slot)
+{
+    const VtblEntry *entry = &((const VtblEntry *)unit->base.base.vtable)[slot];
+
+    return ((bool (*)(void *))entry->fn)((u8 *)unit + entry->delta);
 }
 
 /* Float comparison `x <op> y`. Ops 4..6 are the negated compares the binary uses
@@ -101,8 +111,8 @@ bool BtlAiEvalCondition(float value, BtlAi *self, u8 kind, s32 op)
             any |= UnitVirtual(self->target, 11);
         } else {
             any = UnitVirtual(self->target, 10);
-            any |= UnitVirtual(self->target, 15);
-            any |= UnitVirtual(self->target, 16);
+            any |= UnitVirtualBool(self->target, 15);
+            any |= UnitVirtualBool(self->target, 16);
         }
         if (any != 0) {
             threat = self->target;
@@ -219,7 +229,7 @@ bool BtlAiEvalCondition(float value, BtlAi *self, u8 kind, s32 op)
         return CompareFlag(self->owner->state == 0x13, op);
     case 0x22:
         unit = self->target;
-        if (unit != NULL && (UnitVirtual(unit, 15) != 0 || UnitVirtual(self->target, 16) != 0)) {
+        if (unit != NULL && (UnitVirtualBool(unit, 15) != 0 || UnitVirtualBool(self->target, 16) != 0)) {
             return true;
         }
         return false;

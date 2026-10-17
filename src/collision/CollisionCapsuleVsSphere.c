@@ -2,7 +2,7 @@
 #include "bdc.h"
 
 /* Capsule shape method for sphere queries (type-4 slot 2): closest axis point to the sphere centre;
-   on overlap `out` is the contact point between the two surfaces. Returns whether they overlap; `out` is left untouched otherwise.
+   on overlap `out` is the contact point between the two surfaces (w = 0). Returns whether they overlap; `out` is left untouched otherwise.
    A zero-length axis->centre direction scales by the VFPU bank's 0 (S713), so `out` is then the closest axis point. */
 
 bool CollisionCapsuleVsSphere(const void *capsuleArg, const void *sphereArg, ScePspFVector4 *out)
@@ -30,10 +30,11 @@ bool CollisionCapsuleVsSphere(const void *capsuleArg, const void *sphereArg, Sce
             inv = 0.0f;
         else
             inv = VfRsq(lenSq);
-        /* out.w (stale VFPU lane S731) is not modelled */
+        /* sv.q C710: lanes x..z scaled, lane w is the bank's S713 = 0 (vadd.t below keeps it) */
         out->x = VfSat1(dx * inv) * push;
         out->y = VfSat1(dy * inv) * push;
         out->z = VfSat1(dz * inv) * push;
+        out->w = 0.0f;
         out->x = out->x + g_collisionClosestPoints[0].x;
         out->y = out->y + g_collisionClosestPoints[0].y;
         out->z = out->z + g_collisionClosestPoints[0].z;

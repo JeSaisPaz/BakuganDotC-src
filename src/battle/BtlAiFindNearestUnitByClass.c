@@ -1,12 +1,22 @@
 // bdc 0x088932b8 BtlAiFindNearestUnitByClass
 #include "bdc.h"
 
-/* Calls unit virtual `slot` (a no-argument predicate) through the GCC 2.x vtable entry. */
+/* Calls unit virtual `slot` (a no-argument predicate returning int: slots 10, 11) through the GCC 2.x
+   vtable entry. */
 static int UnitVirtual(BtlBakugan *unit, int slot)
 {
     const VtblEntry *entry = &((const VtblEntry *)unit->base.base.vtable)[slot];
 
     return ((int (*)(void *))entry->fn)((u8 *)unit + entry->delta);
+}
+
+/* Same for the bool predicates (slot 15 BtlBakuganIsPropTarget, slot 16 BtlBakuganIsLandmarkAttrTarget
+   and their overrides): a 64-bit host defines only the low byte of a bool return. */
+static bool UnitVirtualBool(BtlBakugan *unit, int slot)
+{
+    const VtblEntry *entry = &((const VtblEntry *)unit->base.base.vtable)[slot];
+
+    return ((bool (*)(void *))entry->fn)((u8 *)unit + entry->delta);
 }
 
 /* Returns the nearest unit (3D distance from the owner) other than the AI's owner (CoreObject id compare)
@@ -40,11 +50,11 @@ void *BtlAiFindNearestUnitByClass(BtlAi *self, u32 *mask)
         }
         if (UnitVirtual(unit, 10) != 0 && unit->combat.status[9].active == 0) {
             cls = 1;
-        } else if (UnitVirtual(unit, 15) != 0) {
+        } else if (UnitVirtualBool(unit, 15) != 0) {
             cls = 2;
         } else if (UnitVirtual(unit, 11) != 0) {
             cls = 4;
-        } else if (UnitVirtual(unit, 16) != 0) {
+        } else if (UnitVirtualBool(unit, 16) != 0) {
             cls = 0x10;
         } else {
             cls = 0;

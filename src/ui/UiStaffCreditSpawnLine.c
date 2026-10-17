@@ -12,8 +12,8 @@
    visible at Y 289 with a white tint and `lineCursor` advances by `sizeAdvance[size]` + its height.
    Recurses while the next line's sprite is 0x18 (same row). */
 
-typedef void (*UiStaffCreditPrintFn)(float x, float y, float z, void *self, char *text, s32 a,
-                                     s32 b, s32 c);
+typedef void (*UiStaffCreditPrintFn)(float x, float y, float z, void *self, char *text, u8 a,
+                                     s32 b, u8 c);   /* UiTextPrinterPrint's parameter types */
 
 static void UiStaffCreditPrint(GfxSpriteLayer *layer, float x, float y, char *text)
 {

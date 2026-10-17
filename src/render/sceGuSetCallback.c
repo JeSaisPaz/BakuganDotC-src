@@ -2,8 +2,8 @@
 #include "bdc.h"
 
 /* libgu `sceGuSetCallback(signal, callback)`: stores the callback for signal 1 (GE SIGNAL,
-   g_guSettings) or 4 (GE FINISH, g_guFinishCallback) and returns the previous one;
-   other values return 0. */
+   g_guSettings.signalHandler) or 4 (GE FINISH, g_guSettings.finishHandler) and returns
+   the previous one; other values return 0. */
 
 void *sceGuSetCallback(s32 signal, void *callback)
 {

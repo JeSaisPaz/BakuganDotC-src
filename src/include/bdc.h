@@ -13445,7 +13445,7 @@ s32 GameEventIsSkipPressed(void);
 void GameEventOp01Wait(GameEvent *self, s16 flag, s16 arg);
 void GameEventOp02PlayBgm(GameEvent *self, u8 flag, s16 arg);
 void GameEventOp03StopBgm(GameEvent *self, u8 flag, s16 arg);
-void GameEventOp04PlaySe(GameEvent *self, u8 flag, s16 arg);
+void GameEventOp04PlaySe(GameEvent *self, u16 id, s16 unused);
 void GameEventOp05StopSe(GameEvent *self, u16 arg, s16 unused);
 void GameEventOp06PlayVoice(GameEvent *self, s16 value, s16 unused);
 void GameEventOp08Nop(void *ev, u8 flag, s16 arg);

@@ -31,11 +31,20 @@
 #define MARKER_SPRITE     0x1b          /* sprites[0x1b], byte offset 0x6c */
 #define MARKER_SUB_SPRITE 0xbc          /* sprites[0xbc..0xbe], byte offset 0x2f0 */
 
-/* Calls BtlBakugan vtable slot `slot` (entries {s16 this delta; fn}). */
+/* Calls BtlBakugan vtable slot `slot` (entries {s16 this delta; fn}) of an int predicate (slots 11, 19). */
 static inline s32 BtlBakuganVcall(BtlBakugan *unit, s32 slot)
 {
     const VtblEntry *vtbl = (const VtblEntry *)unit->base.base.vtable;
     return ((s32 (*)(void *))vtbl[slot].fn)((u8 *)unit + vtbl[slot].delta);
+}
+
+/* Same for the bool predicates (slots 14..16: BtlBakuganIsTargetPoint, BtlBakuganIsPropTarget,
+   BtlBakuganIsLandmarkAttrTarget and their overrides): a 64-bit host defines only the low byte of a
+   bool return. */
+static inline bool BtlBakuganVcallBool(BtlBakugan *unit, s32 slot)
+{
+    const VtblEntry *vtbl = (const VtblEntry *)unit->base.base.vtable;
+    return ((bool (*)(void *))vtbl[slot].fn)((u8 *)unit + vtbl[slot].delta);
 }
 
 /* One frame of marker animation: advances markerFade (wrapped by pi), markerPulse (wrapped by
@@ -142,12 +151,12 @@ void BtlHudUpdateTargetMarker(BtlHud *self)
     pos[3] = self->markerTarget->base.pos[3];
     if (BtlBakuganVcall(self->markerTarget, 11)) {
         pos[1] += 150.0f;
-    } else if (!BtlBakuganVcall(self->markerTarget, 14)) {
+    } else if (!BtlBakuganVcallBool(self->markerTarget, 14)) {
         pos[1] += self->markerTarget->combat.stats->height * 0.5f;
     } else if (!BtlBakuganVcall(self->markerTarget, 19)) {
-        if (BtlBakuganVcall(self->markerTarget, 16)) {
+        if (BtlBakuganVcallBool(self->markerTarget, 16)) {
             pos[1] += 100.0f;
-        } else if (BtlBakuganVcall(self->markerTarget, 15)) {
+        } else if (BtlBakuganVcallBool(self->markerTarget, 15)) {
             pos[1] += 100.0f;
         }
     }

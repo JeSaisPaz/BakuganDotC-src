@@ -2,8 +2,8 @@
 #include "bdc.h"
 
 /* Records the chosen candidate: sets the story event flag whose id (low 16 bits) is
-   `g_advSelectEventFlagIds[cursor]` in the bitset at `g_gameEventFlags + 8`, and sets bit 0 of the
-   word at `g_gameEventFlags + 0x7c`. */
+   `g_advSelectEventFlagIds[cursor]` in the bitset at `g_gameEventState.flags + 8`, and sets bit 0 of
+   the word at `g_gameEventState.flags + 0x7c`. */
 
 void UiAdvSelectMarkChosen(UiAdvSelect *self)
 {

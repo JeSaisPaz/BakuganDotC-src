@@ -1,12 +1,22 @@
 // bdc 0x0888e0c4 BtlAiIsExcludedTarget
 #include "bdc.h"
 
-/* Calls unit virtual `slot` (a no-argument predicate) through the GCC 2.x vtable entry. */
+/* Calls unit virtual `slot` (a no-argument predicate returning int: slots 10..13, 19) through the
+   GCC 2.x vtable entry. */
 static int UnitVirtual(BtlBakugan *unit, int slot)
 {
     const VtblEntry *entry = &((const VtblEntry *)unit->base.base.vtable)[slot];
 
     return ((int (*)(void *))entry->fn)((u8 *)unit + entry->delta);
+}
+
+/* Same for the bool predicates (slot 15 BtlBakuganIsPropTarget, slot 16 BtlBakuganIsLandmarkAttrTarget
+   and their overrides): a 64-bit host defines only the low byte of a bool return. */
+static bool UnitVirtualBool(BtlBakugan *unit, int slot)
+{
+    const VtblEntry *entry = &((const VtblEntry *)unit->base.base.vtable)[slot];
+
+    return ((bool (*)(void *))entry->fn)((u8 *)unit + entry->delta);
 }
 
 /* Returns true when `BtlAi` must not target `unit`. Always false unless the battle
@@ -33,8 +43,8 @@ bool BtlAiIsExcludedTarget(BtlAi *self, BtlBakugan *unit)
     if (any != 0) {
         return true;
     }
-    any = UnitVirtual(unit, 15);
-    any |= UnitVirtual(unit, 16);
+    any = UnitVirtualBool(unit, 15);
+    any |= UnitVirtualBool(unit, 16);
     (void)any;
     return false;
 }

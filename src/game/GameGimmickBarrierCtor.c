@@ -8,7 +8,7 @@
    `ambient[3] = 0.999`, root-matrix translation = `pos` with w = 1. Node 1 of the model gets the
    record extents (20.12) as the diagonal of its +0x30 matrix and of its `localMatrix`. The
    collision is field-specific: `<model base name>_col_f<area>_<block>_<record byte +0x28>.ctc`
-   (area/block = `g_gameEventFlags` [0]/[2]), loaded from `g_ioLzsPackages` into a 0x190-byte
+   (area/block = `g_gameEventState` `flags[0]`/`flags[2]`), loaded from `g_ioLzsPackages` into a 0x190-byte
    low-heap collider (`CollisionColliderCtor` type 2, NULL on failure) on layer 0x19; clears
    `byte104`/`hitField144`, sets `owner = obj` and attaches it to the root matrix. Then
    `GameGimmickBarrierBindNode`, `pulseTimer = 0`, `pulseDown = 0`; returns `obj`. */

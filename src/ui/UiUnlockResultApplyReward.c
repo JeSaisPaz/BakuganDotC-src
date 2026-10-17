@@ -9,7 +9,7 @@
    (capped at 99); 4: adds `index` to `points` (clamped to 0..9999999); 5: sets bit `index + 1` of
    `specialBits` (byte offset `g_rewardMaxusSet`) if not yet set; 6: sets the bit of the figure
    `UiUnlockResultMapFigureIndex``(self, 1, index)` in the bitmap at `upgradeOwned` if not yet
-   set; 7: adds 10 to `fieldCounter` (capped at 99), mirrors it into `g_gameEventFlags``[5]` and
+   set; 7: adds 10 to `fieldCounter` (capped at 99), mirrors it into `g_gameEventState``.flags[5]` and
    into byte 5 of the profile's `eventFlags` copy; 8: adds 10000 to `points` (clamped); 9: sets bit
    `index + 1` of `ownedBakugan`, `bakuganBitsA` and `bakuganBitsB`. Other kinds do nothing. */
 
