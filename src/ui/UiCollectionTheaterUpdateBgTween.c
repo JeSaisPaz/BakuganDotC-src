@@ -7,12 +7,13 @@
 
 bool UiCollectionTheaterUpdateBgTween(UiCollectionTheater *self, u8 out)
 {
-  GfxSprite **sprites = (GfxSprite **)self->base.data;
   u8 finished = 0;
   int i;
 
   for (i = 0; i < 5; i++) {
-    finished += UiTweenUpdate(1.0f, 1.0f, 16.0f, out, sprites[0x29 + i], &self->bgTweens[i], 1);
+    /* the sprite table pointer is re-read from self->base.data every iteration */
+    finished += UiTweenUpdate(1.0f, 1.0f, 16.0f, out, ((GfxSprite **)self->base.data)[0x29 + i],
+                              &self->bgTweens[i], 1);
   }
   return finished != 0;
 }

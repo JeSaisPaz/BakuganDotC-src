@@ -4,7 +4,7 @@
 /* Maps a stage number (< 0x26) to its map id through a switch (0 → 1, 1 → 2, 2 → 8, 4 → 3,
    5 → 4, 6 → 5, 8 → 13, …; 0x12 by default and for stages 3, 7, 11, 15, 19, 28-36).
    Stage 0x25 gives 0, but 0x11 when bit 0x1d of the global script flags
-   (`CoreBitsetTest` on `g_scriptGlobalBits`) is set. Returns the map id. */
+   (`CoreBitsetTest` on `g_scriptGlobalBits`) is set. Returns the map id; nothing is stored. */
 
 s32 GameStageToMapId(u32 stage)
 {

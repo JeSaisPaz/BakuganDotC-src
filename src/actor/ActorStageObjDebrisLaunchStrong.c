@@ -154,9 +154,10 @@ void ActorStageObjDebrisLaunchStrong(float floorY, float centerY, ActorStageObjD
             g_debrisRandCentre.w = 0.0f;
         }
         /* rnd = (random [1, 2) - 1.5) * spread (vrndf1.t); tmp = dir + rnd (xyz) */
-        rnd.x = PlatformRandFloat12();
-        rnd.y = PlatformRandFloat12();
+        /* vrndf1.t generates its lanes last to first (z, y, x) */
         rnd.z = PlatformRandFloat12();
+        rnd.y = PlatformRandFloat12();
+        rnd.x = PlatformRandFloat12();
         rnd.x = rnd.x - g_debrisRandCentre.x;
         rnd.y = rnd.y - g_debrisRandCentre.y;
         rnd.z = rnd.z - g_debrisRandCentre.z;

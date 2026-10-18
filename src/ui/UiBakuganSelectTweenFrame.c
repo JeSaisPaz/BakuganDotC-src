@@ -3,8 +3,8 @@
 
 /* Starts the frame tweens of the Bakugan select screen (`UiBakuganSelectCtor`, task 371), start
    scale 1.5, `fadeOut = hide`. Show (`hide == 0`): sprites 0x10..0x14 are made visible (flags bit0)
-   and fade in (`UiTweenBegin`, flags 3); sprite 0x15 (flags 0xb, X slide) and sprites 0x16..0x17
-   (flags 7, Y slide) are made visible, get `layerMask = 2` and slide in from 64 to 0
+   and fade in (`UiTweenBegin`, flags 3); sprite 0x15 (flags 0xb, bit 8: Y slide) and sprites
+   0x16..0x17 (flags 7, bit 4: X slide) are made visible, get `layerMask = 2` and slide in from 64 to 0
    (`UiTweenBeginSlide`). Hide: the same sprites run the reverse tweens (slide 0 to 64) without
    touching their flags or layer mask. Each sprite `i` uses `tweens[i]`. */
 

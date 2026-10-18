@@ -9,7 +9,7 @@ void UiCardEquipInitDecorations(UiCardEquip *self)
     GfxSprite **sprites;
     int i;
 
-    for (i = self->groups[7][0]; i < self->groups[7][0] + self->groups[7][1]; i++) {
+    for (i = self->groups[7][0]; i < self->groups[7][0] + (s8)self->groups[7][1]; i++) {
         sprites = (GfxSprite **)self->base.data;
         UiCardEquipShowSprite(self, sprites[i]);
         ((GfxSprite **)self->base.data)[i]->alpha = 0.8f;

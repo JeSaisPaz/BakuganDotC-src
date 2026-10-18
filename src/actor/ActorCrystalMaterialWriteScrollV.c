@@ -8,7 +8,7 @@
 void ActorCrystalMaterialWriteScrollV(u32 **dl, const float *scroll)
 
 {
-  **dl = (uint)*scroll >> 8 | 0x4b000000;
+  **dl = (*(const u32 *)scroll) >> 8 | 0x4b000000;
   *dl = *dl + 1;
   **dl = 0x57000000;
   *dl = *dl + 1;

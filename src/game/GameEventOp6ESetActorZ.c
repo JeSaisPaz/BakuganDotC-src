@@ -13,6 +13,6 @@ void GameEventOp6ESetActorZ(GameEvent470 *self, u8 flag, s16 arg)
   if (idx == 100) {
     idx = self->talkPartner;
   }
-  scaled = (s64)arg << 12;
+  scaled = (s64)((s32)arg << 12) << 12;
   self->actors[self->actorMap[idx]].endPos[2] = (s32)__divdi3(scaled, g_gameFixedScale);
 }

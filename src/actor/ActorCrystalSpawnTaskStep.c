@@ -6,8 +6,9 @@
    byte `0x08ab9f70` is set, counts the crystal points (`ActorStageObjRecordCountType4`), spawns
    one crystal at a random free point (`ActorCrystalPickFreeSpawnPoint` →
    `ActorCrystalSpawnAtPoint`) and one crystal stand per point
-   (`ActorCrystalStandSpawnAtPoint`), then goes to 10; state 10 jumps to 12 once
-   `BtlIsTimeRunningOut` reports true; state 11 advances to 12 unconditionally. */
+   (`ActorCrystalStandSpawnAtPoint`), then goes to 10; state 10 (also state 0 in the call that
+   reaches 10) jumps to 12 once `BtlIsTimeRunningOut` reports true; state 11 advances to 12
+   unconditionally. */
 
 void ActorCrystalSpawnTaskStep(CoreTask *task)
 {

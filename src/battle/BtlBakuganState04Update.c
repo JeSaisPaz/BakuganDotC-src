@@ -337,9 +337,10 @@ void BtlBakuganState04Update(BtlBakugan *self)
     buf[3] = 0.0f;
     /* off.xyz = buf.xyz * random[0, 1) (vrndf1 gives [1, 2), minus 1); the asm's w lane is an
        unused stale register, dropped */
-    off[0] = PlatformRandFloat12();
-    off[1] = PlatformRandFloat12();
+    /* vrndf1.t generates its lanes last to first (z, y, x) */
     off[2] = PlatformRandFloat12();
+    off[1] = PlatformRandFloat12();
+    off[0] = PlatformRandFloat12();
     off[0] = buf[0] * (off[0] - 1.0f);
     off[1] = buf[1] * (off[1] - 1.0f);
     off[2] = buf[2] * (off[2] - 1.0f);

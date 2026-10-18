@@ -158,9 +158,10 @@ void ActorStageObjDebrisLaunch(float floorY, float centerY, void *debris, float 
             g_debrisRandCentre.w = 0.0f;
         }
         /* rnd = (random [1,2) - g_debrisRandCentre) * g_debrisSpread; w from bank S713 = 0 */
-        rnd[0] = PlatformRandFloat12();
-        rnd[1] = PlatformRandFloat12();
+        /* vrndf1.t generates its lanes last to first (z, y, x) */
         rnd[2] = PlatformRandFloat12();
+        rnd[1] = PlatformRandFloat12();
+        rnd[0] = PlatformRandFloat12();
         rnd[0] = rnd[0] - g_debrisRandCentre.x;
         rnd[1] = rnd[1] - g_debrisRandCentre.y;
         rnd[2] = rnd[2] - g_debrisRandCentre.z;

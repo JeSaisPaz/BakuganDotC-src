@@ -12,6 +12,7 @@ void UiPauseDraw(UiPause *self)
   void *packet;
   UiTextPrinter *printer;
   const VtblEntry *entry;
+  void *thisPtr;
   int i;
   int y;
 
@@ -31,8 +32,9 @@ void UiPauseDraw(UiPause *self)
           230.0f, (float)y, 0.0f, (u8 *)printer + entry->delta, self->hintText[i], 1, 0, 0);
       printer = self->hintPrinters[i];
       entry = &printer->layer.vtbl[5];
+      thisPtr = (u8 *)printer + entry->delta; /* delta read before the packet call, fn after */
       packet = GfxNewRenderPacket(550.0f);
-      ((void (*)(void *, void *))entry->fn)((u8 *)printer + entry->delta, packet);
+      ((void (*)(void *, void *))entry->fn)(thisPtr, packet);
     }
     y += 17;
   }
