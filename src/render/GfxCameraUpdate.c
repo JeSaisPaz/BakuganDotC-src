@@ -21,7 +21,7 @@
 /* 1/sqrt(d), or 0 when d is zero (vcmp EZ + vrsq + vcmovt). */
 static float GfxCameraRsqOrZero(float d)
 {
-    return d == 0.0f ? 0.0f : VfRsq(d);
+    return VfIsZero(d) ? 0.0f : VfRsq(d);
 }
 
 /* Column `j` of `a * b` (column-major): the sum over k of b.j[k] * column k of `a`. */

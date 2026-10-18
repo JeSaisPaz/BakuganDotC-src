@@ -230,7 +230,7 @@ void BtlShadowUpdate(void *shadowObj)
             /* Normalise the axis (a zero length gives 0), clamped to [-1, 1]. */
             len2 = axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2];
             inv = VfRsq(len2);
-            if (len2 == 0.0f) {
+            if (VfIsZero(len2)) {
                 inv = 0.0f;
             }
             axis[0] = VfSat1(axis[0] * inv);

@@ -60,7 +60,7 @@ void ActorPlayerSteerBall(ActorPlayer *self)
 
     /* dir = normalize(head - tgtPos), clamped per lane; scale 0 (bank S713) for a zero vector */
     lenSq = diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
       scale = 0.0f;
     } else {
       scale = VfRsq(lenSq);

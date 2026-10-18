@@ -28,7 +28,7 @@ void UiFieldHudStage32Phase(UiFieldHud *self)
   dirZ = g_gfxActiveCamera->dir[2];
   lenSq = dirX * dirX + 0.0f * 0.0f + dirZ * dirZ;
   scale = VfRsq(lenSq);
-  if (lenSq == 0.0f) {
+  if (VfIsZero(lenSq)) {
     scale = 0.0f;
   }
   self->viewDir[0] = VfSat1(dirX * scale);

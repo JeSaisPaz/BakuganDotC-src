@@ -34,7 +34,7 @@ void BtlAttackUpdateArcShot(BtlAttack *self, s32 hitKind)
         offset[1] = 0.0f;
         offset[2] = self->vel[2];
         lenSq = offset[0] * offset[0] + offset[1] * offset[1] + offset[2] * offset[2];
-        scale = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+        scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
         scale = scale * 10.0f;
         offset[0] = offset[0] * scale;
         offset[1] = offset[1] * scale;

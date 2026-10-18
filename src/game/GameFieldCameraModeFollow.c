@@ -149,7 +149,7 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
     /* axis = normalize(axis), each lane clamped to [-1, 1]; zero length gives 0 */
     d = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
     k = VfRsq(d);
-    if (d == 0.0f) {
+    if (VfIsZero(d)) {
       k = 0.0f;
     }
     axis.x = VfSat1(axis.x * k);
@@ -275,7 +275,7 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
     /* axis = normalize(axis), each lane clamped to [-1, 1]; zero length gives 0 */
     d = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
     k = VfRsq(d);
-    if (d == 0.0f) {
+    if (VfIsZero(d)) {
       k = 0.0f;
     }
     axis.x = VfSat1(axis.x * k);

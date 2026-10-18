@@ -99,7 +99,7 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
             /* dir = normalise(dir), scale S713 (0) if zero length, saturated to [-1, 1] */
             lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
             scale = VfRsq(lenSq);
-            if (lenSq == 0.0f) {
+            if (VfIsZero(lenSq)) {
                 scale = 0.0f;
             }
             for (i = 0; i < 3; i++) {

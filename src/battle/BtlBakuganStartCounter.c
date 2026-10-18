@@ -31,7 +31,7 @@ void BtlBakuganStartCounter(BtlBakugan *self, char perfect)
     point[1] = self->base.velocity[1];
     point[2] = self->base.velocity[2];
     lenSq = point[0] * point[0] + point[1] * point[1] + point[2] * point[2];
-    k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     k = k * -1.0f;
     point[0] = point[0] * k;
     point[1] = point[1] * k;
@@ -56,7 +56,7 @@ void BtlBakuganStartCounter(BtlBakugan *self, char perfect)
     BtlBakuganSetHeading(self, atan2f(point[2], point[0]));
     /* point.xyz = normalize(point.xyz) * 100 + guardAnchor.xyz, w = 0 */
     lenSq = point[0] * point[0] + point[1] * point[1] + point[2] * point[2];
-    k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     k = k * 100.0f;
     point[0] = point[0] * k;
     point[1] = point[1] * k;
@@ -85,7 +85,7 @@ void BtlBakuganStartCounter(BtlBakugan *self, char perfect)
     }
     lenSq = self->base.velocity[0] * self->base.velocity[0] + self->base.velocity[1] * self->base.velocity[1] +
             self->base.velocity[2] * self->base.velocity[2];
-    k = ((lenSq == 0.0f) ? 0.0f : VfRsq(lenSq)) * k;
+    k = (VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq)) * k;
     self->base.velocity[0] = self->base.velocity[0] * k;
     self->base.velocity[1] = self->base.velocity[1] * k;
     self->base.velocity[2] = self->base.velocity[2] * k;

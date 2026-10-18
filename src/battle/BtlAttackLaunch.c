@@ -166,7 +166,7 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
             self->dir[2] = self->dir[2] - owner->base.pos[2];
             lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1]
                     + self->dir[2] * self->dir[2];
-            k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+            k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
             self->dir[0] = VfSat1(self->dir[0] * k);
             self->dir[1] = VfSat1(self->dir[1] * k);
             self->dir[2] = VfSat1(self->dir[2] * k);
@@ -188,7 +188,7 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
             self->dir[3] = aimTarget[3];
             lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1]
                     + self->dir[2] * self->dir[2];
-            k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+            k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
             self->dir[0] = VfSat1(self->dir[0] * k);
             self->dir[1] = VfSat1(self->dir[1] * k);
             self->dir[2] = VfSat1(self->dir[2] * k);
@@ -207,7 +207,7 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
                 axis[2] = self->dir[0];
                 axis[3] = self->dir[3];
                 lenSq = axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2];
-                k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+                k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
                 axis[0] = VfSat1(axis[0] * k);
                 axis[1] = VfSat1(axis[1] * k);
                 axis[2] = VfSat1(axis[2] * k);

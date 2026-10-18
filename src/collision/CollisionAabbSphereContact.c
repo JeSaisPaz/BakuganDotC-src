@@ -33,7 +33,7 @@ bool CollisionAabbSphereContact(const float *aabb, const void *sphere, ScePspFVe
         z = out->z;
         lenSq = x * x + y * y + z * z;
         inv = VfRsq(lenSq);
-        if (lenSq == 0.0f) {
+        if (VfIsZero(lenSq)) {
             inv = 0.0f; /* vcmovt.s from S713 */
         }
         scale = inv * radius;

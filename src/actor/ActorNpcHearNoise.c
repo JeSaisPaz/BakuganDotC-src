@@ -58,7 +58,7 @@ void ActorNpcHearNoise(ActorNpc *self, float *pos, s32 level)
       /* Normalise (a zero length gives factor 0, S713), clamp to [-1, 1], scale; w = S713 = 0. */
       distSq = delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
       k = VfRsq(distSq);
-      if (distSq == 0.0f) {
+      if (VfIsZero(distSq)) {
         k = 0.0f;
       }
       delta[0] = VfSat1(delta[0] * k);

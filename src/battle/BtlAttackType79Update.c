@@ -43,7 +43,7 @@ void BtlAttackType79Update(BtlAttack *self)
         /* effect->dir = normalize(effect->dir), clamped to [-1, 1], w = 0 */
         lenSq = effect->dir[0] * effect->dir[0] + effect->dir[1] * effect->dir[1] +
                 effect->dir[2] * effect->dir[2];
-        k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+        k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
         effect->dir[0] = VfSat1(effect->dir[0] * k);
         effect->dir[1] = VfSat1(effect->dir[1] * k);
         effect->dir[2] = VfSat1(effect->dir[2] * k);

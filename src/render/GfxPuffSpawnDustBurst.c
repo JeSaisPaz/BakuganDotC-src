@@ -53,7 +53,7 @@ void GfxPuffSpawnDustBurst(const float *pos, const float *extraVel, const float 
       /* axis = normalize(axis) (zero length: scale by 0), saturated to [-1,1] */
       len2 = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
       k = VfRsq(len2);
-      if (len2 == 0.0f) {
+      if (VfIsZero(len2)) {
         k = 0.0f;
       }
       axis.x = VfSat1(axis.x * k);

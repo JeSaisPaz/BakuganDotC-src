@@ -35,7 +35,7 @@ void GameFieldCameraMode9Begin(void **holder, float *view)
   } else {
     /* normalise, x/y/z clamped to [-1, 1]; factor 0 (bank S713) for a zero length */
     dot = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
-    if (dot == 0.0f) {
+    if (VfIsZero(dot)) {
       r = 0.0f;
     } else {
       r = VfRsq(dot);

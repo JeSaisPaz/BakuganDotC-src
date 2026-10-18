@@ -29,7 +29,7 @@ bool CollisionCapsuleVsRay(const void *capsuleArg, const void *ray, ScePspFVecto
     dz = p1.z - p0.z;
     lenSq = dx * dx + dy * dy + dz * dz;
     /* vcmp EZ + vcmovt: bank constant S713 (0.0f) replaces the inverse length of a zero vector. */
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         inv = 0.0f;
     } else {
         inv = VfRsq(lenSq);

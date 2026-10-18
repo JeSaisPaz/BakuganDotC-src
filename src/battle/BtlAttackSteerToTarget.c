@@ -41,7 +41,7 @@ int BtlAttackSteerToTarget(float speed, float heightOffset, BtlAttack *self, cha
     aim[1] = aim[1] - self->pos[1];
     aim[2] = aim[2] - self->pos[2];
     lenSq = aim[0] * aim[0] + aim[1] * aim[1] + aim[2] * aim[2];
-    k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     aim[0] = VfSat1(aim[0] * k);
     aim[1] = VfSat1(aim[1] * k);
     aim[2] = VfSat1(aim[2] * k);
@@ -57,7 +57,7 @@ int BtlAttackSteerToTarget(float speed, float heightOffset, BtlAttack *self, cha
     /* dir = normalize(dir) */
     lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] +
             self->dir[2] * self->dir[2];
-    k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     self->dir[0] = VfSat1(self->dir[0] * k);
     self->dir[1] = VfSat1(self->dir[1] * k);
     self->dir[2] = VfSat1(self->dir[2] * k);

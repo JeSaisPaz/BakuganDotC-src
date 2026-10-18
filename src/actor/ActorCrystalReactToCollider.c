@@ -34,7 +34,7 @@ void ActorCrystalReactToCollider(ActorCrystal *self)
            lane of C710, i.e. S713 = 0 */
         lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
         k = VfRsq(lenSq);
-        if (lenSq == 0.0f) {
+        if (VfIsZero(lenSq)) {
             k = 0.0f;
         }
         dir[0] = VfSat1(dir[0] * k);

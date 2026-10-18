@@ -110,7 +110,7 @@ void UiFieldHudMainPhase(UiFieldHud *self)
     /* normalise (x, 0, z); a zero length scales by 0; each lane saturated to [-1,1] */
     lenSq = dx * dx + 0.0f * 0.0f + dz * dz;
     scale = VfRsq(lenSq);
-    if (lenSq == 0.0f)
+    if (VfIsZero(lenSq))
       scale = 0.0f;
     self->viewDir[0] = VfSat1(dx * scale);
     self->viewDir[1] = VfSat1(dz * scale);

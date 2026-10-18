@@ -231,7 +231,7 @@ void BtlBakuganOnHit(BtlBakugan *self)
         /* normalise x/z (inverse length 0 for a zero vector), clamped to [-1, 1]; w is S713 (0) */
         lenSq = guardDir[0] * guardDir[0] + guardDir[1] * guardDir[1] + guardDir[2] * guardDir[2];
         invLen = VfRsq(lenSq);
-        if (lenSq == 0.0f) {
+        if (VfIsZero(lenSq)) {
             invLen = 0.0f;
         }
         guardDir[0] = VfSat1(guardDir[0] * invLen);

@@ -23,7 +23,7 @@ static float GfxEffectRunCommandsInvLen(const float *v)
 
   len2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
   k = VfRsq(len2);
-  if (len2 == 0.0f) {
+  if (VfIsZero(len2)) {
     k = 0.0f;
   }
   return k;

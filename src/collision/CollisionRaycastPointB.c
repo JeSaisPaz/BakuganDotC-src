@@ -18,11 +18,11 @@ s32 CollisionRaycastPointB(float *pos, float *out)
   g_collisionRayDesc.dir = g_vecDown;
   /* vrcp per lane, replaced by the bank zero S713 where the lane is 0; lane w is S713 too. */
   g_collisionRayDesc.invDir.x =
-      (g_collisionRayDesc.dir.x == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.x;
+      VfIsZero(g_collisionRayDesc.dir.x) ? 0.0f : 1.0f / g_collisionRayDesc.dir.x;
   g_collisionRayDesc.invDir.y =
-      (g_collisionRayDesc.dir.y == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.y;
+      VfIsZero(g_collisionRayDesc.dir.y) ? 0.0f : 1.0f / g_collisionRayDesc.dir.y;
   g_collisionRayDesc.invDir.z =
-      (g_collisionRayDesc.dir.z == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.z;
+      VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : 1.0f / g_collisionRayDesc.dir.z;
   g_collisionRayDesc.invDir.w = 0.0f;
   hit = CollisionRaycast(0x3fbf2700, &g_collisionRayBlock, 0);
   if (hit != (void *)0) {

@@ -26,7 +26,7 @@ bool CollisionCapsuleVsSphere(const void *capsuleArg, const void *sphereArg, Sce
         float inv;
 
         /* vcmp EZ + vcmovt: a zero length takes the bank's S713 = 0 */
-        if (lenSq == 0.0f)
+        if (VfIsZero(lenSq))
             inv = 0.0f;
         else
             inv = VfRsq(lenSq);

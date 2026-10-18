@@ -151,7 +151,7 @@ u32 BtlAttackUpdateGuided(float turn, float side, BtlAttack *self, s32 hitKind, 
         z = offset[0];
         /* offset = normalise(x, 0, z) x side (zero length: scale 0) */
         len2 = x * x + offset[1] * offset[1] + z * z;
-        if (len2 == 0.0f) {
+        if (VfIsZero(len2)) {
             inv = 0.0f;
         } else {
             inv = VfRsq(len2);
@@ -206,7 +206,7 @@ u32 BtlAttackUpdateGuided(float turn, float side, BtlAttack *self, s32 hitKind, 
     /* effect dir.xyz = normalise(dir.xyz) clamped to [-1, 1] (zero length: scale 0); w = 0 */
     effect = (GfxEffect *)self->effect;
     len2 = effect->dir[0] * effect->dir[0] + effect->dir[1] * effect->dir[1] + effect->dir[2] * effect->dir[2];
-    if (len2 == 0.0f) {
+    if (VfIsZero(len2)) {
         inv = 0.0f;
     } else {
         inv = VfRsq(len2);

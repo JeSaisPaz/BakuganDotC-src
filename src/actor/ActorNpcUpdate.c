@@ -112,7 +112,7 @@ void ActorNpcUpdate(ActorNpc *self)
       tilt[3] = tilt[3] + (g_vecUp.w - tilt[3]) * 0.2f;
       lenSq = tilt[0] * tilt[0] + tilt[1] * tilt[1] + tilt[2] * tilt[2];
       invLen = VfRsq(lenSq);
-      if (lenSq == 0.0f) {
+      if (VfIsZero(lenSq)) {
         invLen = 0.0f;
       }
       tilt[0] = VfSat1(tilt[0] * invLen);

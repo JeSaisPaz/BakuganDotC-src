@@ -51,7 +51,7 @@ void GfxEffectHitTest(float radius, float length, GfxEffect *effect, s32 param4,
       dir.y = effect->dir[1];
       dir.z = effect->dir[2];
       lenSq = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
-      scale = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+      scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
       scale = scale * length;
       sweep.x = dir.x * scale;
       sweep.y = dir.y * scale;

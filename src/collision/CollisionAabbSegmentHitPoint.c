@@ -34,7 +34,7 @@ bool CollisionAabbSegmentHitPoint(const float *aabb, const void *seg, ScePspFVec
     ray->origin.w = s->start[3];
 
     k = VfRsq(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         k = 0.0f;
     }
     ray->dir.x = VfSat1(s->dir[0] * k);
@@ -43,15 +43,15 @@ bool CollisionAabbSegmentHitPoint(const float *aabb, const void *seg, ScePspFVec
     ray->dir.w = 0.0f;
 
     x = VfRcp(ray->dir.x);
-    if (ray->dir.x == 0.0f) {
+    if (VfIsZero(ray->dir.x)) {
         x = 0.0f;
     }
     y = VfRcp(ray->dir.y);
-    if (ray->dir.y == 0.0f) {
+    if (VfIsZero(ray->dir.y)) {
         y = 0.0f;
     }
     z = VfRcp(ray->dir.z);
-    if (ray->dir.z == 0.0f) {
+    if (VfIsZero(ray->dir.z)) {
         z = 0.0f;
     }
     ray->invDir.x = x;

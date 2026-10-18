@@ -35,7 +35,7 @@ float *MathQuatFromUpToDir(float *out, const float *dir)
     axis[2] = -dir[0];
     /* Normalise the axis (rsqrt; a zero length uses S713 = 0 instead), clamped to [-1, 1]. */
     lenSq = axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2];
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         invLen = 0.0f;
     } else {
         invLen = VfRsq(lenSq);

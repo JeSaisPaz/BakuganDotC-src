@@ -34,7 +34,7 @@ bool CollisionAabbCapsuleContact(const float *aabb, const void *capsule, ScePspF
         lenSq = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
         /* vcmp EZ + vcmovt: a zero length takes the bank zero S713 instead of 1/sqrt. */
         scale = VfRsq(lenSq);
-        if (lenSq == 0.0f)
+        if (VfIsZero(lenSq))
             scale = 0.0f;
         scale = scale * c->radius;
         out->x = diff.x * scale + closest.x;

@@ -103,7 +103,7 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
     dir.w = 0.0f;
     d = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
     k = VfRsq(d);
-    if (d == 0.0f) {
+    if (VfIsZero(d)) {
       k = 0.0f;
     }
     dir.x = VfSat1(dir.x * k);
@@ -120,7 +120,7 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
   segDir.y = 0.0f;
   d = segDir.x * segDir.x + segDir.y * segDir.y + segDir.z * segDir.z;
   k = VfRsq(d);
-  if (d == 0.0f) {
+  if (VfIsZero(d)) {
     k = 0.0f;
   }
   segDir.x = VfSat1(segDir.x * k);

@@ -29,7 +29,7 @@ void BtlBakuganSpawnSkidEffect(BtlBakugan *self)
     lenSq = lenSq + vel[1] * vel[1];
     lenSq = lenSq + vel[2] * vel[2];
     k = VfRsq(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         k = 0.0f;
     }
     dir[0] = VfSat1(vel[0] * k);

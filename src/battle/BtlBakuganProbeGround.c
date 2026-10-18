@@ -82,11 +82,11 @@ void BtlBakuganProbeGround(BtlBakugan *self)
       g_collisionRayDesc.dir.w = g_vecDown.w;
       /* invDir.xyz = 1/dir.xyz, or 0 where dir.i == 0; invDir.w = 0. */
       g_collisionRayDesc.invDir.x =
-          (g_collisionRayDesc.dir.x == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.x;
+          VfIsZero(g_collisionRayDesc.dir.x) ? 0.0f : 1.0f / g_collisionRayDesc.dir.x;
       g_collisionRayDesc.invDir.y =
-          (g_collisionRayDesc.dir.y == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.y;
+          VfIsZero(g_collisionRayDesc.dir.y) ? 0.0f : 1.0f / g_collisionRayDesc.dir.y;
       g_collisionRayDesc.invDir.z =
-          (g_collisionRayDesc.dir.z == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.z;
+          VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : 1.0f / g_collisionRayDesc.dir.z;
       g_collisionRayDesc.invDir.w = 0.0f;
       hit = CollisionRaycast(0x3fbf2700, &g_collisionRayBlock, 0);
       if (hit != (void *)0) {
@@ -111,11 +111,11 @@ void BtlBakuganProbeGround(BtlBakugan *self)
     g_collisionRayDesc.dir.w = g_vecDown.w;
     /* invDir.xyz = 1/dir.xyz, or 0 where dir.i == 0; invDir.w = 0. */
     g_collisionRayDesc.invDir.x =
-        (g_collisionRayDesc.dir.x == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.x;
+        VfIsZero(g_collisionRayDesc.dir.x) ? 0.0f : 1.0f / g_collisionRayDesc.dir.x;
     g_collisionRayDesc.invDir.y =
-        (g_collisionRayDesc.dir.y == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.y;
+        VfIsZero(g_collisionRayDesc.dir.y) ? 0.0f : 1.0f / g_collisionRayDesc.dir.y;
     g_collisionRayDesc.invDir.z =
-        (g_collisionRayDesc.dir.z == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.z;
+        VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : 1.0f / g_collisionRayDesc.dir.z;
     g_collisionRayDesc.invDir.w = 0.0f;
     hit = CollisionRaycast(0x3fbf2700, &g_collisionRayBlock, 0);
     if (hit != (void *)0) {

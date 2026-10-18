@@ -35,7 +35,7 @@ void BtlBakuganState09Update(BtlBakugan *self)
         lenSq = self->base.velocity[0] * self->base.velocity[0]
               + self->base.velocity[1] * self->base.velocity[1]
               + self->base.velocity[2] * self->base.velocity[2];
-        k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+        k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
         dir[0] = VfSat1(self->base.velocity[0] * k);
         dir[1] = VfSat1(self->base.velocity[1] * k);
         dir[2] = VfSat1(self->base.velocity[2] * k);
@@ -50,7 +50,7 @@ void BtlBakuganState09Update(BtlBakugan *self)
         lenSq = self->base.velocity[0] * self->base.velocity[0]
               + self->base.velocity[1] * self->base.velocity[1]
               + self->base.velocity[2] * self->base.velocity[2];
-        k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+        k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
         norm[0] = VfSat1(self->base.velocity[0] * k);
         norm[1] = VfSat1(self->base.velocity[1] * k);
         norm[2] = VfSat1(self->base.velocity[2] * k);
@@ -71,7 +71,7 @@ void BtlBakuganState09Update(BtlBakugan *self)
         lenSq = self->orient[0] * self->orient[0]
               + self->orient[1] * self->orient[1]
               + self->orient[2] * self->orient[2];
-        k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+        k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
         self->orient[0] = VfSat1(self->orient[0] * k);
         self->orient[1] = VfSat1(self->orient[1] * k);
         self->orient[2] = VfSat1(self->orient[2] * k);

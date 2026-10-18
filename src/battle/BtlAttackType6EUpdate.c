@@ -40,7 +40,7 @@ void BtlAttackType6EUpdate(BtlAttack *self)
        w row (0, 0, 0, 1). */
     lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] + self->dir[2] * self->dir[2];
     scale = VfRsq(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         scale = 0.0f;
     }
     mtx[2][0] = VfSat1(self->dir[0] * scale);
@@ -51,7 +51,7 @@ void BtlAttackType6EUpdate(BtlAttack *self)
     mtx[0][2] = g_vecUp.x * mtx[2][1] - g_vecUp.y * mtx[2][0];
     lenSq = mtx[0][0] * mtx[0][0] + mtx[0][1] * mtx[0][1] + mtx[0][2] * mtx[0][2];
     scale = VfRsq(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         scale = 0.0f;
     }
     mtx[0][0] = VfSat1(mtx[0][0] * scale);

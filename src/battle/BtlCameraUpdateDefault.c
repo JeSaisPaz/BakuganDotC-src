@@ -164,7 +164,7 @@ void BtlCameraUpdateDefault(BtlCamera *camera)
     side[2] = -offset[0];
     len2 = side[0] * side[0] + side[1] * side[1] + side[2] * side[2];
     scale = VfRsq(len2);
-    if (len2 == 0.0f) {
+    if (VfIsZero(len2)) {
         scale = 0.0f;
     }
     side[0] = VfSat1(side[0] * scale);
@@ -219,7 +219,7 @@ void BtlCameraUpdateDefault(BtlCamera *camera)
     len2 = camera->base.up[0] * camera->base.up[0] + camera->base.up[1] * camera->base.up[1] +
            camera->base.up[2] * camera->base.up[2];
     scale = VfRsq(len2);
-    if (len2 == 0.0f) {
+    if (VfIsZero(len2)) {
         scale = 0.0f;
     }
     camera->base.up[0] = VfSat1(camera->base.up[0] * scale);

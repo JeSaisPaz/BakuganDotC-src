@@ -84,7 +84,7 @@ GameQuestCamPointMode *GameQuestCamPointModeCtor(GameQuestCamPointMode *self, vo
   if (!(len2 <= 0.0001f)) {
     len2 = self->viewDir.x * self->viewDir.x + self->viewDir.y * self->viewDir.y +
            self->viewDir.z * self->viewDir.z;
-    k = (len2 == 0.0f) ? 0.0f : VfRsq(len2);
+    k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
     self->viewDir.x = VfSat1(self->viewDir.x * k);
     self->viewDir.y = VfSat1(self->viewDir.y * k);
     self->viewDir.z = VfSat1(self->viewDir.z * k);

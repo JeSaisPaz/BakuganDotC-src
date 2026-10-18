@@ -173,7 +173,7 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
       child->attachMatrix = effect->attachMatrix;
       /* child->dir = normalize(vec) clamped to [-1, 1], scale 0 (S713) for a zero vector */
       len = vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2];
-      k = (len == 0.0f) ? 0.0f : VfRsq(len);
+      k = VfIsZero(len) ? 0.0f : VfRsq(len);
       for (i = 0; i < 3; i++) {
         child->dir[i] = VfSat1(vec[i] * k);
       }
@@ -239,7 +239,7 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
       child->offset[i] = child->pos[i];
     }
     len = vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2];
-    if (len == 0.0f) {
+    if (VfIsZero(len)) {
       /* bank C720 = (0, 0, 0, 0) */
       for (i = 0; i < 4; i++) {
         child->dir[i] = 0.0f;

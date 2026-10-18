@@ -135,7 +135,7 @@ void ActorPlayerUpdate(ActorPlayer *self)
     tilt[2] = tilt[2] + (g_vecUp.z - tilt[2]) * 0.2f;
     tilt[3] = tilt[3] + (g_vecUp.w - tilt[3]) * 0.2f;
     lenSq = tilt[0] * tilt[0] + tilt[1] * tilt[1] + tilt[2] * tilt[2];
-    k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     x = VfSat1(tilt[0] * k);
     y = VfSat1(tilt[1] * k);
     z = VfSat1(tilt[2] * k);

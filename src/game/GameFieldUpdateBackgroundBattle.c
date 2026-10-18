@@ -65,7 +65,7 @@ void GameFieldUpdateBackgroundBattle(CoreTask *task)
         dir[1] = pos[1] - wilda->base.pos[1];
         dir[2] = pos[2] - wilda->base.pos[2];
         scale = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
-        scale = (scale == 0.0f) ? 0.0f : VfRsq(scale);
+        scale = VfIsZero(scale) ? 0.0f : VfRsq(scale);
         dir[0] = VfSat1(dir[0] * scale);
         dir[1] = VfSat1(dir[1] * scale);
         dir[2] = VfSat1(dir[2] * scale);

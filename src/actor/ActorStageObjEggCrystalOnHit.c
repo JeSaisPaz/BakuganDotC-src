@@ -69,7 +69,7 @@ void ActorStageObjEggCrystalOnHit(ActorStageObjEggCrystal *self)
   flat[1] = 0.0f;
   flat[2] = pos[2] - self->base.base.pos[2];
   lenSq = flat[0] * flat[0] + flat[1] * flat[1] + flat[2] * flat[2];
-  invLen = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+  invLen = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
   dir[0] = VfSat1(flat[0] * invLen);
   dir[1] = VfSat1(flat[1] * invLen);
   dir[2] = VfSat1(flat[2] * invLen);

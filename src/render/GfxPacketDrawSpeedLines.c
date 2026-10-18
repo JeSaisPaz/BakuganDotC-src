@@ -64,7 +64,7 @@ void GfxPacketDrawSpeedLines(float x, float y, float w, float h, float amount, v
      The original also scales it by len(w, h) + 32 into two stack temps that are never read. */
   dot = w * w + h * h + 0.0f * 0.0f;
   inv = VfRsq(dot);
-  if (dot == 0.0f) {
+  if (VfIsZero(dot)) {
     inv = 0.0f;
   }
   outerX = VfSat1(w * inv) * 768.0f;

@@ -61,7 +61,7 @@ BtlFinishTask *BtlFinishTaskCtor(BtlFinishTask *self, void *unit, s32 arg, s32 m
     z = self->camDir[2];
     len2 = x * x + y * y + z * z;
     inv = VfRsq(len2);
-    if (len2 == 0.0f) {
+    if (VfIsZero(len2)) {
         inv = 0.0f;
     }
     self->camDir[0] = VfSat1(x * inv);

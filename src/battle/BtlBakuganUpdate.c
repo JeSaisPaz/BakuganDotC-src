@@ -147,7 +147,7 @@ void BtlBakuganUpdate(BtlBakugan *self)
         lenSq = self->orient[0] * self->orient[0] + self->orient[1] * self->orient[1] +
                 self->orient[2] * self->orient[2];
         inv = VfRsq(lenSq);
-        if (lenSq == 0.0f) {
+        if (VfIsZero(lenSq)) {
             inv = 0.0f;
         }
         self->orient[0] = VfSat1(self->orient[0] * inv);

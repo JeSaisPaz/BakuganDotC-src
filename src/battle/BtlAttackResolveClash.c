@@ -33,7 +33,7 @@ int BtlAttackResolveClash(BtlAttack *self, int impactEffect)
             self->pos[2] = self->pos[2] - self->auxVec[2];
             lenSq = self->pos[0] * self->pos[0] + self->pos[1] * self->pos[1] +
                     self->pos[2] * self->pos[2];
-            if (lenSq == 0.0f) {
+            if (VfIsZero(lenSq)) {
                 scale = 0.0f;
             } else {
                 scale = VfRsq(lenSq);

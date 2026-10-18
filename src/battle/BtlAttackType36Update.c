@@ -25,7 +25,7 @@ void BtlAttackType36Update(BtlAttack *self)
         {
             float lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] +
                           self->dir[2] * self->dir[2];
-            float k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+            float k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
             self->dir[0] = VfSat1(self->dir[0] * k);
             self->dir[1] = VfSat1(self->dir[1] * k);
             self->dir[2] = VfSat1(self->dir[2] * k);

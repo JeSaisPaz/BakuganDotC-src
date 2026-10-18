@@ -77,7 +77,7 @@ void GfxPuffKindLight(GfxPuff *puff)
     }
     /* toCam = normalize(toCam) * scale (a zero vector stays zero) */
     dot = toCam[0] * toCam[0] + toCam[1] * toCam[1] + toCam[2] * toCam[2];
-    if (dot == 0.0f) {
+    if (VfIsZero(dot)) {
         inv = 0.0f;
     } else {
         inv = VfRsq(dot);

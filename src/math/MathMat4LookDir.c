@@ -13,7 +13,7 @@ float *MathMat4LookDir(float *out, const float *dir, const float *up)
     float yx, yy, yz;
 
     s = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
-    if (s == 0.0f)
+    if (VfIsZero(s))
         s = 0.0f;
     else
         s = VfRsq(s);
@@ -25,7 +25,7 @@ float *MathMat4LookDir(float *out, const float *dir, const float *up)
     xy = up[2] * zx - up[0] * zz;
     xz = up[0] * zy - up[1] * zx;
     s = xx * xx + xy * xy + xz * xz;
-    if (s == 0.0f)
+    if (VfIsZero(s))
         s = 0.0f;
     else
         s = VfRsq(s);

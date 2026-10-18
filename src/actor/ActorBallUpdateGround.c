@@ -25,9 +25,9 @@ void ActorBallUpdateGround(CoreObject *obj)
   g_collisionRayDesc.origin = nodePos;
   g_collisionRayDesc.dir = g_vecDown;
   dir = g_collisionRayDesc.dir;
-  g_collisionRayDesc.invDir.x = dir.x == 0.0f ? 0.0f : VfRcp(dir.x);
-  g_collisionRayDesc.invDir.y = dir.y == 0.0f ? 0.0f : VfRcp(dir.y);
-  g_collisionRayDesc.invDir.z = dir.z == 0.0f ? 0.0f : VfRcp(dir.z);
+  g_collisionRayDesc.invDir.x = VfIsZero(dir.x) ? 0.0f : VfRcp(dir.x);
+  g_collisionRayDesc.invDir.y = VfIsZero(dir.y) ? 0.0f : VfRcp(dir.y);
+  g_collisionRayDesc.invDir.z = VfIsZero(dir.z) ? 0.0f : VfRcp(dir.z);
   g_collisionRayDesc.invDir.w = 0.0f;
   if (CollisionRaycast(0x3fbf2700, &g_collisionRayBlock, 0) != NULL) {
     ball->groundPoint[0] = g_collisionHitResult.point.x;
@@ -39,7 +39,7 @@ void ActorBallUpdateGround(CoreObject *obj)
     n[2] = ball->groundNormal[2] + (g_collisionHitResult.normal.z - ball->groundNormal[2]) * 0.5f;
     n[3] = ball->groundNormal[3] + (g_collisionHitResult.normal.w - ball->groundNormal[3]) * 0.5f;
     s = n[0] * n[0] + n[1] * n[1] + n[2] * n[2];
-    s = s == 0.0f ? 0.0f : VfRsq(s);
+    s = VfIsZero(s) ? 0.0f : VfRsq(s);
     for (i = 0; i < 3; i++) {
       ball->groundNormal[i] = VfSat1(n[i] * s);
     }

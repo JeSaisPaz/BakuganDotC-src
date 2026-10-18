@@ -29,7 +29,7 @@ void GameFieldCameraProbeCollideRadius(float radius, void *probe, float *outEye,
         dir.x = 1.0f;
     } else {
         len2 = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
-        k = (len2 == 0.0f) ? 0.0f : VfRsq(len2);
+        k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
         dir.x = VfSat1(dir.x * k);
         dir.y = VfSat1(dir.y * k);
         dir.z = VfSat1(dir.z * k);

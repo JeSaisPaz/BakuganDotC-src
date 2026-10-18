@@ -38,7 +38,7 @@ void BtlAttackReflect(BtlAttack *self)
         float dy = self->pos[1] - anchor[1];
         float dz = self->pos[2] - anchor[2];
         float lenSq = dx * dx + dy * dy + dz * dz;
-        float k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+        float k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
         bounce[0] = VfSat1(dx * k);
         bounce[1] = VfSat1(dy * k);
         bounce[2] = VfSat1(dz * k);

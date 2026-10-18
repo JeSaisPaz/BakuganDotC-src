@@ -152,7 +152,7 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
     /* inlined `MathMat4LookDir`(&ring->mtx, axis, &g_vecDown); a zero length scales by S713 (0) */
     lenSq = capsule->axis[0] * capsule->axis[0] + capsule->axis[1] * capsule->axis[1] +
             capsule->axis[2] * capsule->axis[2];
-    inv = lenSq == 0.0f ? 0.0f : VfRsq(lenSq);
+    inv = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     zAxis.x = VfSat1(capsule->axis[0] * inv);
     zAxis.y = VfSat1(capsule->axis[1] * inv);
     zAxis.z = VfSat1(capsule->axis[2] * inv);
@@ -160,7 +160,7 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
     xAxis.y = g_vecDown.z * zAxis.x - g_vecDown.x * zAxis.z;
     xAxis.z = g_vecDown.x * zAxis.y - g_vecDown.y * zAxis.x;
     lenSq = xAxis.x * xAxis.x + xAxis.y * xAxis.y + xAxis.z * xAxis.z;
-    inv = lenSq == 0.0f ? 0.0f : VfRsq(lenSq);
+    inv = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     xAxis.x = VfSat1(xAxis.x * inv);
     xAxis.y = VfSat1(xAxis.y * inv);
     xAxis.z = VfSat1(xAxis.z * inv);

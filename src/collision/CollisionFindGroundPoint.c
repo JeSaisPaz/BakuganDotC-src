@@ -24,9 +24,9 @@ void CollisionFindGroundPoint(float *out, const float *pos, u32 layerMask)
   g_collisionRayDesc.dir.z = g_vecDown.z;
   g_collisionRayDesc.dir.w = g_vecDown.w;
   /* invDir.xyz = 1/dir.xyz, 0 (bank S713) where dir.i == 0; invDir.w = bank S713 = 0. */
-  g_collisionRayDesc.invDir.x = (g_collisionRayDesc.dir.x == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.x;
-  g_collisionRayDesc.invDir.y = (g_collisionRayDesc.dir.y == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.y;
-  g_collisionRayDesc.invDir.z = (g_collisionRayDesc.dir.z == 0.0f) ? 0.0f : 1.0f / g_collisionRayDesc.dir.z;
+  g_collisionRayDesc.invDir.x = VfIsZero(g_collisionRayDesc.dir.x) ? 0.0f : 1.0f / g_collisionRayDesc.dir.x;
+  g_collisionRayDesc.invDir.y = VfIsZero(g_collisionRayDesc.dir.y) ? 0.0f : 1.0f / g_collisionRayDesc.dir.y;
+  g_collisionRayDesc.invDir.z = VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : 1.0f / g_collisionRayDesc.dir.z;
   g_collisionRayDesc.invDir.w = 0.0f;
   hit = CollisionRaycast(layerMask, &g_collisionRayBlock, 0);
   if (hit != (void *)0) {

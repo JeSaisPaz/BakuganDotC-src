@@ -29,7 +29,7 @@ static void ToppleNormalize3(float *v)
 
   lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
   k = VfRsq(lenSq);
-  if (lenSq == 0.0f) {
+  if (VfIsZero(lenSq)) {
     k = 0.0f;
   }
   v[0] = VfSat1(v[0] * k);

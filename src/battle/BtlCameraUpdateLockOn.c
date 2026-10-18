@@ -67,7 +67,7 @@ static inline void BtlLockOnNormalize(float *v)
     float scale;
 
     lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         scale = 0.0f;
     } else {
         scale = VfRsq(lenSq);

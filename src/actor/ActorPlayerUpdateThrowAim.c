@@ -41,7 +41,7 @@ static inline void ThrowAimNormalize(float *d, const float *v)
   float y = v[1];
   float z = v[2];
   float lenSq = x * x + y * y + z * z;
-  float k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+  float k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
 
   d[0] = VfSat1(x * k);
   d[1] = VfSat1(y * k);
@@ -151,11 +151,11 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
   g_collisionRayDesc.dir.z = dir[2];
   g_collisionRayDesc.dir.w = dir[3];
   g_collisionRayDesc.invDir.x =
-      (g_collisionRayDesc.dir.x == 0.0f) ? 0.0f : VfRcp(g_collisionRayDesc.dir.x);
+      VfIsZero(g_collisionRayDesc.dir.x) ? 0.0f : VfRcp(g_collisionRayDesc.dir.x);
   g_collisionRayDesc.invDir.y =
-      (g_collisionRayDesc.dir.y == 0.0f) ? 0.0f : VfRcp(g_collisionRayDesc.dir.y);
+      VfIsZero(g_collisionRayDesc.dir.y) ? 0.0f : VfRcp(g_collisionRayDesc.dir.y);
   g_collisionRayDesc.invDir.z =
-      (g_collisionRayDesc.dir.z == 0.0f) ? 0.0f : VfRcp(g_collisionRayDesc.dir.z);
+      VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : VfRcp(g_collisionRayDesc.dir.z);
   g_collisionRayDesc.invDir.w = 0.0f;
   /* aimPoint = eye + dir * 100 (w = eye.w) */
   self->base.aimPoint[0] = eye[0] + dir[0] * 100.0f;
@@ -254,7 +254,7 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
     reach = shape->radius * 1.5f;
     /* toCenter rescaled to length reach (no clamp); probe = centre - toCenter */
     lenSq = toCenter[0] * toCenter[0] + toCenter[1] * toCenter[1] + toCenter[2] * toCenter[2];
-    k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     k = k * reach;
     toCenter[0] = toCenter[0] * k;
     toCenter[1] = toCenter[1] * k;

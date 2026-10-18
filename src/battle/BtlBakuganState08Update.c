@@ -73,7 +73,7 @@ static inline void BtlBakuganScaleAim(float *aim, float len)
   float inv = VfRsq(sq);
   float k;
 
-  if (sq == 0.0f) {
+  if (VfIsZero(sq)) {
     inv = 0.0f;
   }
   k = inv * len;

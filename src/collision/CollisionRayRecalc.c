@@ -12,11 +12,11 @@ void CollisionRayRecalc(CollisionRayShape *ray)
   ScePspFVector4 inv;
 
   inv.x = VfRcp(dir.x);
-  if (dir.x == 0.0f) inv.x = 0.0f;
+  if (VfIsZero(dir.x)) inv.x = 0.0f;
   inv.y = VfRcp(dir.y);
-  if (dir.y == 0.0f) inv.y = 0.0f;
+  if (VfIsZero(dir.y)) inv.y = 0.0f;
   inv.z = VfRcp(dir.z);
-  if (dir.z == 0.0f) inv.z = 0.0f;
+  if (VfIsZero(dir.z)) inv.z = 0.0f;
   inv.w = 0.0f;
   ray->invDir = inv;
 }

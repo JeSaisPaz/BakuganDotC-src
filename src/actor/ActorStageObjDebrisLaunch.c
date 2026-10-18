@@ -144,7 +144,7 @@ void ActorStageObjDebrisLaunch(float floorY, float centerY, void *debris, float 
         dist = dist * 0.05f;
         /* push = normalize(push) * speed; bank S713 = 0 for a zero-length push */
         lenSq = push[0] * push[0] + push[1] * push[1] + push[2] * push[2];
-        scale = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+        scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
         scale = scale * dist;
         push[0] = push[0] * scale;
         push[1] = push[1] * scale;

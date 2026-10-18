@@ -32,7 +32,7 @@ void ActorNpcSwitchRobotCheckSwitchHit(ActorNpcSwitchRobot *self, const float *h
     toHit[1] = hitPos[1] - head[1];
     toHit[2] = hitPos[2] - head[2];
     lenSq = toHit[0] * toHit[0] + toHit[1] * toHit[1] + toHit[2] * toHit[2];
-    k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     toHit[0] = VfSat1(toHit[0] * k);
     toHit[1] = VfSat1(toHit[1] * k);
     toHit[2] = VfSat1(toHit[2] * k);
@@ -43,7 +43,7 @@ void ActorNpcSwitchRobotCheckSwitchHit(ActorNpcSwitchRobot *self, const float *h
     back[1] = m[1] * 0.0f + m[5] * 0.0f + m[9] * -1.0f;
     back[2] = m[2] * 0.0f + m[6] * 0.0f + m[10] * -1.0f;
     lenSq = back[0] * back[0] + back[1] * back[1] + back[2] * back[2];
-    k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     back[0] = VfSat1(back[0] * k);
     back[1] = VfSat1(back[1] * k);
     back[2] = VfSat1(back[2] * k);

@@ -34,7 +34,7 @@ void BtlBakuganTiltToVelocity(float step, float blend, BtlBakugan *self)
     /* g_btlBakuganTiltDir.xyz = saturate(normalise(velocity.xyz)); .w = 0 (bank S713) */
     len2 = self->base.velocity[0] * self->base.velocity[0] + self->base.velocity[1] * self->base.velocity[1] +
            self->base.velocity[2] * self->base.velocity[2];
-    if (len2 == 0.0f) {
+    if (VfIsZero(len2)) {
         k = 0.0f;
     } else {
         k = VfRsq(len2);
@@ -76,7 +76,7 @@ void BtlBakuganTiltToVelocity(float step, float blend, BtlBakugan *self)
 
     /* orient.xyz = saturate(normalise(orient.xyz)); .w = 0 (bank S713) */
     len2 = self->orient[0] * self->orient[0] + self->orient[1] * self->orient[1] + self->orient[2] * self->orient[2];
-    if (len2 == 0.0f) {
+    if (VfIsZero(len2)) {
         k = 0.0f;
     } else {
         k = VfRsq(len2);

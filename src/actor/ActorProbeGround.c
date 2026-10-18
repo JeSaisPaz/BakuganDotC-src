@@ -31,9 +31,9 @@ void ActorProbeGround(Actor *self)
   dx = g_collisionRayDesc.dir.x;
   dy = g_collisionRayDesc.dir.y;
   dz = g_collisionRayDesc.dir.z;
-  g_collisionRayDesc.invDir.x = (dx == 0.0f) ? 0.0f : VfRcp(dx);
-  g_collisionRayDesc.invDir.y = (dy == 0.0f) ? 0.0f : VfRcp(dy);
-  g_collisionRayDesc.invDir.z = (dz == 0.0f) ? 0.0f : VfRcp(dz);
+  g_collisionRayDesc.invDir.x = VfIsZero(dx) ? 0.0f : VfRcp(dx);
+  g_collisionRayDesc.invDir.y = VfIsZero(dy) ? 0.0f : VfRcp(dy);
+  g_collisionRayDesc.invDir.z = VfIsZero(dz) ? 0.0f : VfRcp(dz);
   g_collisionRayDesc.invDir.w = 0.0f;
   if (CollisionRaycast(0x3fbf2700, &g_collisionRayBlock, 0) != (void *)0) {
     self->groundPoint[0] = g_collisionHitResult.point.x;
@@ -54,7 +54,7 @@ void ActorProbeGround(Actor *self)
     self->groundNormal[3] = nw;
     len2 = nx * nx + ny * ny + nz * nz;
     k = VfRsq(len2);
-    if (len2 == 0.0f) {
+    if (VfIsZero(len2)) {
       k = 0.0f;
     }
     self->groundNormal[0] = VfSat1(nx * k);

@@ -39,7 +39,7 @@ void GameFieldCameraAimViewComputeTargets(void *aim)
   fz = s * -1.0f + c * 0.5f;
   len2 = fx * fx + fy * fy + fz * fz;
   k = VfRsq(len2);
-  if (len2 == 0.0f) {
+  if (VfIsZero(len2)) {
     k = 0.0f;
   }
   fx = VfSat1(fx * k);

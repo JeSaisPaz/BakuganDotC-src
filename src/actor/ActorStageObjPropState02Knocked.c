@@ -119,7 +119,7 @@ void ActorStageObjPropState02Knocked(ActorStageObjProp *self)
     /* dir = normalise(dir) * dirScale + contactVel * velScale; w = 0 (bank S713) */
     len2 = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
     inv = VfRsq(len2);
-    if (len2 == 0.0f) {
+    if (VfIsZero(len2)) {
       inv = 0.0f;
     }
     k = inv * dirScale;

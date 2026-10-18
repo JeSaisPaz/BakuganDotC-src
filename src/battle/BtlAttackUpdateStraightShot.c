@@ -38,7 +38,7 @@ void BtlAttackUpdateStraightShot(BtlAttack *self, s32 hitId)
         /* vel.xyz normalised and clamped to [-1, 1] (0 when the length is zero); w = bank S713 (0) */
         lenSq = self->vel[0] * self->vel[0] + self->vel[1] * self->vel[1] + self->vel[2] * self->vel[2];
         k = VfRsq(lenSq);
-        if (lenSq == 0.0f) {
+        if (VfIsZero(lenSq)) {
             k = 0.0f;
         }
         self->vel[0] = VfSat1(self->vel[0] * k);

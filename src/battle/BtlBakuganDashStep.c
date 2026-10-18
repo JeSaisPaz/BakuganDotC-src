@@ -30,7 +30,7 @@ static void DashNormalize(float *out, const float *v)
 
     lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
     k = VfRsq(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         k = 0.0f;
     }
     out[0] = VfSat1(v[0] * k);

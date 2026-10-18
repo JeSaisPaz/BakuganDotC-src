@@ -111,7 +111,7 @@ void ActorUpdate(Actor *self)
     q[3] = w;
     lenSq = x * x + y * y + z * z;
     inv = VfRsq(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
       inv = 0.0f;
     }
     q[0] = VfSat1(x * inv);

@@ -32,7 +32,7 @@ void BtlAttackType45Update(BtlAttack *self)
     y = dir[1];
     z = dir[2];
     inv = x * x + y * y + z * z;
-    if (inv == 0.0f) {
+    if (VfIsZero(inv)) {
         inv = 0.0f;
     } else {
         inv = VfRsq(inv);

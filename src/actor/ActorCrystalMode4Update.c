@@ -118,7 +118,7 @@ int ActorCrystalMode4Update(ActorCrystal *self)
   /* normalise (factor 0 for a zero vector, bank S713), clamp to [-1, 1]; w is S713 = 0 */
   lenSq = shotDir[0] * shotDir[0] + shotDir[1] * shotDir[1] + shotDir[2] * shotDir[2];
   k = VfRsq(lenSq);
-  if (lenSq == 0.0f) {
+  if (VfIsZero(lenSq)) {
     k = 0.0f;
   }
   shotDir[0] = VfSat1(shotDir[0] * k) * 2.5f;

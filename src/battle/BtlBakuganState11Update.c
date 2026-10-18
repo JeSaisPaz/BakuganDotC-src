@@ -135,7 +135,7 @@ void BtlBakuganState11Update(BtlBakugan *self)
             len2 = self->base.velocity[0] * self->base.velocity[0] +
                    self->base.velocity[1] * self->base.velocity[1] +
                    self->base.velocity[2] * self->base.velocity[2];
-            k = (len2 == 0.0f) ? 0.0f : VfRsq(len2);
+            k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
             for (i = 0; i < 3; i++) {
                 dir[i] = VfSat1(self->base.velocity[i] * k);
             }
@@ -260,7 +260,7 @@ void BtlBakuganState11Update(BtlBakugan *self)
         len2 = self->base.velocity[0] * self->base.velocity[0] +
                self->base.velocity[1] * self->base.velocity[1] +
                self->base.velocity[2] * self->base.velocity[2];
-        k = (len2 == 0.0f) ? 0.0f : VfRsq(len2);
+        k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
         for (i = 0; i < 3; i++) {
             norm[i] = VfSat1(self->base.velocity[i] * k);
         }
@@ -278,7 +278,7 @@ void BtlBakuganState11Update(BtlBakugan *self)
         self->orient[2] = ox * s + self->orient[1] * 0.0f + oz * c;
         len2 = self->orient[0] * self->orient[0] + self->orient[1] * self->orient[1] +
                self->orient[2] * self->orient[2];
-        k = (len2 == 0.0f) ? 0.0f : VfRsq(len2);
+        k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
         for (i = 0; i < 3; i++) {
             self->orient[i] = VfSat1(self->orient[i] * k);
         }
@@ -318,7 +318,7 @@ void BtlBakuganState11Update(BtlBakugan *self)
                 self->dashSpeed = speed;
                 /* velocity = normalise(delta.xyz) * speed, w 0 */
                 len2 = delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
-                k = (len2 == 0.0f) ? 0.0f : VfRsq(len2);
+                k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
                 k = k * speed;
                 for (i = 0; i < 3; i++) {
                     delta[i] = delta[i] * k;
@@ -339,7 +339,7 @@ void BtlBakuganState11Update(BtlBakugan *self)
                 }
                 /* delta = normalise(delta.xyz) * dist (w 0); velocity += (delta - velocity) * 0.3 */
                 len2 = delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
-                k = (len2 == 0.0f) ? 0.0f : VfRsq(len2);
+                k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
                 k = k * dist;
                 for (i = 0; i < 3; i++) {
                     delta[i] = delta[i] * k;

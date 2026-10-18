@@ -46,7 +46,7 @@ s32 CollisionTriangleTestSweptSphere(void *part, const u16 *face, void *query, f
     nz = -q->axis[2];
     lenSq = nx * nx + ny * ny + nz * nz;
     k = VfRsq(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         k = 0.0f;
     }
     nx = VfSat1(nx * k);

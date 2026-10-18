@@ -69,7 +69,7 @@ void GfxEffectPushBakugans(float radius, float angle, float height, GfxEffect *e
         }
         /* normalize (dx, 0, dz) and scale by push; a zero offset gives a zero vector */
         lenSq = dx * dx + dy * dy + dz * dz;
-        if (lenSq == 0.0f) {
+        if (VfIsZero(lenSq)) {
             scale = 0.0f;
         } else {
             scale = VfRsq(lenSq);

@@ -88,7 +88,7 @@ void BtlBakuganState05Update(BtlBakugan *self)
             lenSq = self->base.velocity[0] * self->base.velocity[0] +
                     self->base.velocity[1] * self->base.velocity[1] +
                     self->base.velocity[2] * self->base.velocity[2];
-            scale = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+            scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
             scale = scale * 40.0f;
             self->base.velocity[0] = self->base.velocity[0] * scale;
             self->base.velocity[1] = self->base.velocity[1] * scale;

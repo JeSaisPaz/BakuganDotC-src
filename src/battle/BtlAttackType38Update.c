@@ -138,7 +138,7 @@ void BtlAttackType38Update(BtlAttack *self)
     rocket = (GfxEffect *)self->effect2;
     up = &g_vecUp;
     len = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] + self->dir[2] * self->dir[2];
-    k = (len == 0.0f) ? 0.0f : VfRsq(len);
+    k = VfIsZero(len) ? 0.0f : VfRsq(len);
     az[0] = VfSat1(self->dir[0] * k);
     az[1] = VfSat1(self->dir[1] * k);
     az[2] = VfSat1(self->dir[2] * k);
@@ -146,7 +146,7 @@ void BtlAttackType38Update(BtlAttack *self)
     ax[1] = up->z * az[0] - up->x * az[2];
     ax[2] = up->x * az[1] - up->y * az[0];
     len = ax[0] * ax[0] + ax[1] * ax[1] + ax[2] * ax[2];
-    k = (len == 0.0f) ? 0.0f : VfRsq(len);
+    k = VfIsZero(len) ? 0.0f : VfRsq(len);
     ax[0] = VfSat1(ax[0] * k);
     ax[1] = VfSat1(ax[1] * k);
     ax[2] = VfSat1(ax[2] * k);

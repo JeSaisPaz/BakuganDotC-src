@@ -58,7 +58,7 @@ static inline void BtlHudRadarOffset(BtlHud *self, BtlBakugan *unit, float *tmp,
     if (!(lenSq <= 900.0f)) {
         /* clamp to radius 30: offset * 30 / |offset| (0 when the length is zero) */
         lenSq = tmp[0] * tmp[0] + tmp[1] * tmp[1] + tmp[2] * tmp[2];
-        k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+        k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
         k = k * 30.0f;
         tmp[0] = tmp[0] * k;
         tmp[1] = tmp[1] * k;

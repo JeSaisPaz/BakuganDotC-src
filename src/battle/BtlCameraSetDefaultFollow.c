@@ -65,7 +65,7 @@ void BtlCameraSetDefaultFollow(BtlCamera *camera, u8 snap)
     tmp[1] = yawRot[1];
     tmp[2] = -yawRot[0];
     lenSq = tmp[0] * tmp[0] + tmp[1] * tmp[1] + tmp[2] * tmp[2];
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         k = 0.0f;
     } else {
         k = VfRsq(lenSq);

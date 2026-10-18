@@ -92,7 +92,7 @@ void GameGimmickCollidableUpdate(GameGimmickCollidable *obj)
           diff.z = playerPos.z - hitPos.z;
           lenSq = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
           scale = VfRsq(lenSq);
-          if (lenSq == 0.0f) {
+          if (VfIsZero(lenSq)) {
             scale = 0.0f;
           }
           dir.x = VfSat1(diff.x * scale);

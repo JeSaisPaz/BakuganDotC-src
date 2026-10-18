@@ -31,7 +31,7 @@ void BtlDemoCamUpdateRoll(float roll, BtlDemoCam *self)
     }
 
     len = up[0] * up[0] + up[1] * up[1] + up[2] * up[2];
-    if (len == 0.0f) {
+    if (VfIsZero(len)) {
         len = 0.0f;
     } else {
         len = VfRsq(len);

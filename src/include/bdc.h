@@ -25,6 +25,10 @@ static inline float VfRsq(float x) { return 1.0f / __builtin_sqrtf(x); }
 static inline float VfRcp(float x) { return 1.0f / x; }
 static inline float VfExp2(float x) { return __builtin_exp2f(x); }
 static inline float VfLog2(float x) { return __builtin_log2f(x); }
+/* vcmp EZ (NZ: !VfIsZero): the PSP's zero test, true for +-0 and +-denormal operands, false for normal,
+   inf and NaN ones (pspautotests 40c8f4c tests/cpu/vfpu/specials.expected:2-13, PSP-3000 6.61). The
+   operand keeps its IEEE value: only the compare follows the hardware (guide VfpuLift, row vcmp). */
+static inline int VfIsZero(float x) { return __builtin_fabsf(x) < 0x1p-126f; }
 /* vsat0 clamps to [0, 1] (-0.0 becomes +0.0), vsat1 to [-1, 1]; NaN passes through. */
 static inline float VfSat0(float x) { return x <= 0.0f ? 0.0f : x > 1.0f ? 1.0f : x; }
 static inline float VfSat1(float x) { return x < -1.0f ? -1.0f : x > 1.0f ? 1.0f : x; }
@@ -9813,7 +9817,7 @@ typedef struct UiPause {
     float unk140;                       /* +0x140 cleared by the ctor, no other user seen */
     float unk144;                       /* +0x144 cleared by the ctor, no other user seen */
     float scaleX;                       /* +0x148 sprite layer scale (1.0; x1.1 per frame when opening a combo list) */
-    float scaleY;                       /* +0x14c */
+    float zoomAngle;                    /* +0x14c sprite layer zoom angle (GfxSpriteLayerSetZoom f13): 0.0 from the ctor, nothing else writes it */
     s32 kind;                           /* +0x150 menu kind (UiPauseSetMenuKind); action table row 0x08a9b724 + kind*0x1c */
     s32 leaving;                        /* +0x154 1: the pause closes into the selected entry's action (UiPauseMainPhase) or a forced exit (UiPauseUpdate); 0: resume */
     u32 unk158;                         /* +0x158 cleared by the ctor, no other user seen */

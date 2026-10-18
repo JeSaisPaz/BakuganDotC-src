@@ -121,7 +121,7 @@ void BtlCameraApplyCloseUp(BtlCamera *camera)
     /* up.xyz normalised (scale 0 when its length is zero) and saturated to [-1, 1]; up.w = 0 (bank S713) */
     lenSq = camera->base.up[0] * camera->base.up[0] + camera->base.up[1] * camera->base.up[1]
           + camera->base.up[2] * camera->base.up[2];
-    scale = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     camera->base.up[0] = VfSat1(camera->base.up[0] * scale);
     camera->base.up[1] = VfSat1(camera->base.up[1] * scale);
     camera->base.up[2] = VfSat1(camera->base.up[2] * scale);

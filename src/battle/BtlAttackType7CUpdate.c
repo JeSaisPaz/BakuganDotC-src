@@ -98,7 +98,7 @@ void BtlAttackType7CUpdate(BtlAttack *self)
         self->dir[3] = delta[3];
         lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] + self->dir[2] * self->dir[2];
         scale = VfRsq(lenSq);
-        if (lenSq == 0.0f) {
+        if (VfIsZero(lenSq)) {
             scale = 0.0f;
         }
         self->dir[0] = VfSat1(self->dir[0] * scale);

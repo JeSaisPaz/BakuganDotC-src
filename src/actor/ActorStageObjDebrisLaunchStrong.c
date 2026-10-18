@@ -136,7 +136,7 @@ void ActorStageObjDebrisLaunchStrong(float floorY, float centerY, ActorStageObjD
         }
         /* dir = normalise(dir) * dist; factor 0 (bank S713) when |dir| is zero; w = S713 = 0 */
         lenSq = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
-        if (lenSq == 0.0f) {
+        if (VfIsZero(lenSq)) {
             k = 0.0f;
         } else {
             k = VfRsq(lenSq);

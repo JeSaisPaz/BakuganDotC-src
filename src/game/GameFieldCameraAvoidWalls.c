@@ -71,7 +71,7 @@ void GameFieldCameraAvoidWalls(GameFieldCamera *cam)
         hit.z = desc->dir.z * t;
         hit.w = 0.0f;
         d2 = desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z;
-        r = (d2 == 0.0f) ? 0.0f : VfRsq(d2);
+        r = VfIsZero(d2) ? 0.0f : VfRsq(d2);
         r = r * 4.0f;
         desc->dir.x = desc->dir.x * r;
         desc->dir.y = desc->dir.y * r;
@@ -122,7 +122,7 @@ void GameFieldCameraAvoidWalls(GameFieldCamera *cam)
 
             /* dir = normalize(dir) * default distance */
             d2 = desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z;
-            r = (d2 == 0.0f) ? 0.0f : VfRsq(d2);
+            r = VfIsZero(d2) ? 0.0f : VfRsq(d2);
             r = r * g_gameFieldCameraDefaultDistance;
             desc->dir.x = desc->dir.x * r;
             desc->dir.y = desc->dir.y * r;
@@ -137,7 +137,7 @@ void GameFieldCameraAvoidWalls(GameFieldCamera *cam)
                 hit2.z = desc->dir.z * t;
                 hit2.w = 0.0f;
                 d2 = desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z;
-                r = (d2 == 0.0f) ? 0.0f : VfRsq(d2);
+                r = VfIsZero(d2) ? 0.0f : VfRsq(d2);
                 r = r * 4.0f;
                 desc->dir.x = desc->dir.x * r;
                 desc->dir.y = desc->dir.y * r;

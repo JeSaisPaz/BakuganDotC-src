@@ -148,7 +148,7 @@ void BtlAttackType07Update(BtlAttack *self)
     point[2] = point[2] - self->pos[2];
     lenSq = point[0] * point[0] + point[1] * point[1] + point[2] * point[2];
     length = __builtin_sqrtf(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         inv = 0.0f;
     } else {
         inv = VfRsq(lenSq);

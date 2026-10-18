@@ -88,7 +88,7 @@ void ActorStageObjCrystalOnHit(ActorStageObjCrystal *self)
   /* flat = normalize3(flat), clamped to [-1, 1]; inverse length 0 for a zero vector. */
   len2 = flat[0] * flat[0] + flat[1] * flat[1] + flat[2] * flat[2];
   inv = VfRsq(len2);
-  if (len2 == 0.0f) {
+  if (VfIsZero(len2)) {
     inv = 0.0f;
   }
   for (i = 0; i < 3; i++) {

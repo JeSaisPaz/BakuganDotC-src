@@ -37,7 +37,7 @@ static inline float PhysBoxInvLen(const ScePspFVector4 *v)
 {
     float len2 = PhysBoxDot3(v, v);
 
-    return len2 == 0.0f ? 0.0f : VfRsq(len2);
+    return VfIsZero(len2) ? 0.0f : VfRsq(len2);
 }
 
 /* vpfxd [-1:1,-1:1,-1:1,M] + vscl.t into C710: w is S713 (0) */
@@ -127,9 +127,9 @@ float CollisionPhysBoxStep(CollisionPhysBox *self)
             rayStart.y = rayStart.y + 5.0f;
             g_collisionRayDesc.origin = rayStart;
             g_collisionRayDesc.dir = g_vecDown;
-            g_collisionRayDesc.invDir.x = d->x == 0.0f ? 0.0f : VfRcp(d->x);
-            g_collisionRayDesc.invDir.y = d->y == 0.0f ? 0.0f : VfRcp(d->y);
-            g_collisionRayDesc.invDir.z = d->z == 0.0f ? 0.0f : VfRcp(d->z);
+            g_collisionRayDesc.invDir.x = VfIsZero(d->x) ? 0.0f : VfRcp(d->x);
+            g_collisionRayDesc.invDir.y = VfIsZero(d->y) ? 0.0f : VfRcp(d->y);
+            g_collisionRayDesc.invDir.z = VfIsZero(d->z) ? 0.0f : VfRcp(d->z);
             g_collisionRayDesc.invDir.w = 0.0f;
             if (CollisionRaycast(0x3fbf2700, &g_collisionRayBlock, 0) == NULL) {
                 float floorY = self->floorY;

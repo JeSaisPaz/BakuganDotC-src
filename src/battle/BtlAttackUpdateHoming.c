@@ -121,7 +121,7 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
             if (!(lenSq <= 400.0f)) {
                 /* clamp the step to 20 units */
                 lenSq = chase[0] * chase[0] + chase[1] * chase[1] + chase[2] * chase[2];
-                if (lenSq == 0.0f) {
+                if (VfIsZero(lenSq)) {
                     inv = 0.0f;
                 } else {
                     inv = VfRsq(lenSq);
@@ -149,7 +149,7 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
                 /* dir.xyz = normalise(vel.xyz), clamped to [-1, 1]; w = S713 */
                 lenSq = self->vel[0] * self->vel[0] + self->vel[1] * self->vel[1] +
                         self->vel[2] * self->vel[2];
-                if (lenSq == 0.0f) {
+                if (VfIsZero(lenSq)) {
                     inv = 0.0f;
                 } else {
                     inv = VfRsq(lenSq);
@@ -204,7 +204,7 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
             axis[1] = 0.0f;
             axis[2] = rel[0];
             lenSq = axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2];
-            if (lenSq == 0.0f) {
+            if (VfIsZero(lenSq)) {
                 inv = 0.0f;
             } else {
                 inv = VfRsq(lenSq);
@@ -241,7 +241,7 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
             rotated[3] = -tmp[0] * conj[0] - tmp[1] * conj[1] - tmp[2] * conj[2] + tmp[3] * conj[3];
             /* chase = rotated scaled to 450 units (w = 0) */
             lenSq = rotated[0] * rotated[0] + rotated[1] * rotated[1] + rotated[2] * rotated[2];
-            if (lenSq == 0.0f) {
+            if (VfIsZero(lenSq)) {
                 inv = 0.0f;
             } else {
                 inv = VfRsq(lenSq);
@@ -269,7 +269,7 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
             /* fwd = normalise(vel), clamped */
             lenSq = self->vel[0] * self->vel[0] + self->vel[1] * self->vel[1] +
                     self->vel[2] * self->vel[2];
-            if (lenSq == 0.0f) {
+            if (VfIsZero(lenSq)) {
                 inv = 0.0f;
             } else {
                 inv = VfRsq(lenSq);
@@ -282,7 +282,7 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
             right[1] = chase[2] * fwd[0] - chase[0] * fwd[2];
             right[2] = chase[0] * fwd[1] - chase[1] * fwd[0];
             lenSq = right[0] * right[0] + right[1] * right[1] + right[2] * right[2];
-            if (lenSq == 0.0f) {
+            if (VfIsZero(lenSq)) {
                 inv = 0.0f;
             } else {
                 inv = VfRsq(lenSq);

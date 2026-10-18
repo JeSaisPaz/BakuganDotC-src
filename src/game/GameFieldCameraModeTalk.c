@@ -119,7 +119,7 @@ void GameFieldCameraModeTalk(GameFieldCamera *cam)
   axis.y = offset.y;
   axis.z = -offset.x;
   len = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
-  len = (len == 0.0f) ? 0.0f : VfRsq(len);
+  len = VfIsZero(len) ? 0.0f : VfRsq(len);
   axis.x = VfSat1(axis.x * len);
   axis.y = VfSat1(axis.y * len);
   axis.z = VfSat1(axis.z * len);

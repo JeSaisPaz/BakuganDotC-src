@@ -4,8 +4,8 @@
 /* Constructor of the pause menu, task id 410 (0x19a) (base `UiScreenCtor`, vtable `g_uiPauseVtbl`).
    Sets `spriteCount` to 0x25 and allocates the 0x94-byte sprite table (`data`) from the low heap,
    selects frame mode 1, saves the pad's `stickEmulatesDpad` byte and forces it on, refreshes
-   `g_profileFlag0` (`SaveRefreshProfileFlag0`), clears the menu fields (scale 1.0/0.0, no
-   confirm message), creates the two hint-line printers (font 1, wrap width 460, empty text; the
+   `g_profileFlag0` (`SaveRefreshProfileFlag0`), clears the menu fields (zoom scale 1.0, zoom
+   angle 0, no confirm message), creates the two hint-line printers (font 1, wrap width 460, empty text; the
    first gets a red outline `g_colorRed`), sets 2 entries and kind 0 and creates the shared help
    line (`UiHelpLineCreate`). Returns `&self->base`. */
 
@@ -38,7 +38,7 @@ UiScreen *UiPauseCtor(UiPause *self)
     memset(self->unk80, 0, sizeof(self->unk80));
     self->leaving = 0;
     self->unk158 = 0;
-    self->scaleY = 0.0f;
+    self->zoomAngle = 0.0f;
     self->scaleX = 1.0f;
     self->cursorPulse = 0.0f;
     self->hintAlpha = 0.0f;

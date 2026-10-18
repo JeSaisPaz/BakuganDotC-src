@@ -103,7 +103,7 @@ static void TrailNormalize(float *out, const float *in)
   y = in[1];
   z = in[2];
   s = x * x + y * y + z * z;
-  if (s == 0.0f) {
+  if (VfIsZero(s)) {
     s = 0.0f;
   } else {
     s = VfRsq(s);

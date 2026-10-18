@@ -66,7 +66,7 @@ static float GfxEffectInvLength3(const float *v)
 {
   float lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
 
-  if (lenSq == 0.0f) {
+  if (VfIsZero(lenSq)) {
     return 0.0f;
   }
   return VfRsq(lenSq);

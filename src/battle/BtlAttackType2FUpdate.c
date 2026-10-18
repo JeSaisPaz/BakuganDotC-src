@@ -47,7 +47,7 @@ void BtlAttackType2FUpdate(BtlAttack *self)
         /* offset.xyz = normalize(offset.xyz) * length (0 when |offset| is 0), w = 0 */
         lenSq = offset[0] * offset[0] + offset[1] * offset[1] + offset[2] * offset[2];
         inv = VfRsq(lenSq);
-        if (lenSq == 0.0f) {
+        if (VfIsZero(lenSq)) {
             inv = 0.0f;
         }
         k = inv * length;

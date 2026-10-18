@@ -74,7 +74,7 @@ int BtlAttackSweepHitSound(float radius, BtlAttack *self, float *from, float *to
             len = len + 50.0f;
             /* dir.xyz = normalize(dir.xyz) * len (inverse length 0 for a zero dir); dir.w = 0 */
             lenSq = desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z;
-            scale = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+            scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
             scale = scale * len;
             desc->dir.x = desc->dir.x * scale;
             desc->dir.y = desc->dir.y * scale;
@@ -101,7 +101,7 @@ int BtlAttackSweepHitSound(float radius, BtlAttack *self, float *from, float *to
         len = len + 50.0f;
         /* dir.xyz = normalize(dir.xyz) * len (inverse length 0 for a zero dir); dir.w = 0 */
         lenSq = desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z;
-        scale = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+        scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
         scale = scale * len;
         desc->dir.x = desc->dir.x * scale;
         desc->dir.y = desc->dir.y * scale;

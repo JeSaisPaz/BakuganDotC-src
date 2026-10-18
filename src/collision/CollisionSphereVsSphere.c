@@ -31,7 +31,7 @@ s32 CollisionSphereVsSphere(const CollisionSphere *sphere, const CollisionSphere
     dz = other->center[2] - sphere->center[2];
     lenSq = dx * dx + dy * dy + dz * dz;
     inv = VfRsq(lenSq);
-    if (lenSq == 0.0f)
+    if (VfIsZero(lenSq))
       inv = 0.0f; /* vcmovt from bank S713 */
     nx = VfSat1(dx * inv);
     ny = VfSat1(dy * inv);

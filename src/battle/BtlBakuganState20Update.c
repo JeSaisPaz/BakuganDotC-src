@@ -95,7 +95,7 @@ void BtlBakuganState20Update(BtlBakugan *self)
             len2 = self->base.velocity[0] * self->base.velocity[0] +
                    self->base.velocity[1] * self->base.velocity[1] +
                    self->base.velocity[2] * self->base.velocity[2];
-            inv = len2 == 0.0f ? 0.0f : VfRsq(len2);
+            inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
             self->effectAnchor[0] = VfSat1(self->base.velocity[0] * inv);
             self->effectAnchor[1] = VfSat1(self->base.velocity[1] * inv);
             self->effectAnchor[2] = VfSat1(self->base.velocity[2] * inv);
@@ -134,7 +134,7 @@ void BtlBakuganState20Update(BtlBakugan *self)
             scale = (1.0f - c) * 0.5f * 0.01f * (dist - reach);
             /* diff = diff / |diff| * scale, flattened, added to the velocity */
             len2 = diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
-            inv = len2 == 0.0f ? 0.0f : VfRsq(len2);
+            inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
             inv = inv * scale;
             diff[0] = diff[0] * inv;
             diff[2] = diff[2] * inv;
@@ -180,7 +180,7 @@ void BtlBakuganState20Update(BtlBakugan *self)
             len2 = self->effectAnchor[0] * self->effectAnchor[0] +
                    self->effectAnchor[1] * self->effectAnchor[1] +
                    self->effectAnchor[2] * self->effectAnchor[2];
-            inv = len2 == 0.0f ? 0.0f : VfRsq(len2);
+            inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
             self->effectAnchor[0] = VfSat1(self->effectAnchor[0] * inv);
             self->effectAnchor[1] = VfSat1(self->effectAnchor[1] * inv);
             self->effectAnchor[2] = VfSat1(self->effectAnchor[2] * inv);
@@ -239,7 +239,7 @@ void BtlBakuganState20Update(BtlBakugan *self)
             len2 = self->effectAnchor[0] * self->effectAnchor[0] +
                    self->effectAnchor[1] * self->effectAnchor[1] +
                    self->effectAnchor[2] * self->effectAnchor[2];
-            inv = len2 == 0.0f ? 0.0f : VfRsq(len2);
+            inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
             dir[0] = VfSat1(self->effectAnchor[0] * inv);
             dir[1] = VfSat1(self->effectAnchor[1] * inv);
             dir[2] = VfSat1(self->effectAnchor[2] * inv);
@@ -250,7 +250,7 @@ void BtlBakuganState20Update(BtlBakugan *self)
             side[1] = up[2] * dir[0] - up[0] * dir[2];
             side[2] = up[0] * dir[1] - up[1] * dir[0];
             len2 = side[0] * side[0] + side[1] * side[1] + side[2] * side[2];
-            inv = len2 == 0.0f ? 0.0f : VfRsq(len2);
+            inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
             side[0] = VfSat1(side[0] * inv);
             side[1] = VfSat1(side[1] * inv);
             side[2] = VfSat1(side[2] * inv);
@@ -285,7 +285,7 @@ void BtlBakuganState20Update(BtlBakugan *self)
         len2 = self->base.velocity[0] * self->base.velocity[0] +
                self->base.velocity[1] * self->base.velocity[1] +
                self->base.velocity[2] * self->base.velocity[2];
-        inv = len2 == 0.0f ? 0.0f : VfRsq(len2);
+        inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
         inv = inv * 50.0f;
         self->base.velocity[0] = self->base.velocity[0] * inv;
         self->base.velocity[1] = self->base.velocity[1] * inv;
@@ -335,7 +335,7 @@ void BtlBakuganState20Update(BtlBakugan *self)
             len2 = self->effectAnchor[0] * self->effectAnchor[0] +
                    self->effectAnchor[1] * self->effectAnchor[1] +
                    self->effectAnchor[2] * self->effectAnchor[2];
-            inv = len2 == 0.0f ? 0.0f : VfRsq(len2);
+            inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
             self->effectAnchor[0] = VfSat1(self->effectAnchor[0] * inv);
             self->effectAnchor[1] = VfSat1(self->effectAnchor[1] * inv);
             self->effectAnchor[2] = VfSat1(self->effectAnchor[2] * inv);

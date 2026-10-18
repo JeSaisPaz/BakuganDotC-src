@@ -30,7 +30,7 @@ void CollisionPhysBoxRebuildShape(CollisionPhysBox *self, const ScePspFVector4 *
     a0.y = c[1].y + c[2].y + c[5].y + c[6].y - c[0].y - c[3].y - c[4].y - c[7].y;
     a0.z = c[1].z + c[2].z + c[5].z + c[6].z - c[0].z - c[3].z - c[4].z - c[7].z;
     d = a0.x * a0.x + a0.y * a0.y + a0.z * a0.z;
-    k = (d == 0.0f) ? 0.0f : VfRsq(d);
+    k = VfIsZero(d) ? 0.0f : VfRsq(d);
     a0.x = VfSat1(a0.x * k);
     a0.y = VfSat1(a0.y * k);
     a0.z = VfSat1(a0.z * k);
@@ -47,7 +47,7 @@ void CollisionPhysBoxRebuildShape(CollisionPhysBox *self, const ScePspFVector4 *
     a1.y = c[2].y + c[3].y + c[6].y + c[7].y - c[0].y - c[1].y - c[4].y - c[5].y;
     a1.z = c[2].z + c[3].z + c[6].z + c[7].z - c[0].z - c[1].z - c[4].z - c[5].z;
     d = a1.x * a1.x + a1.y * a1.y + a1.z * a1.z;
-    k = (d == 0.0f) ? 0.0f : VfRsq(d);
+    k = VfIsZero(d) ? 0.0f : VfRsq(d);
     a1.x = VfSat1(a1.x * k);
     a1.y = VfSat1(a1.y * k);
     a1.z = VfSat1(a1.z * k);
@@ -64,7 +64,7 @@ void CollisionPhysBoxRebuildShape(CollisionPhysBox *self, const ScePspFVector4 *
     a2.y = c[4].y + c[5].y + c[6].y + c[7].y - c[0].y - c[1].y - c[2].y - c[3].y;
     a2.z = c[4].z + c[5].z + c[6].z + c[7].z - c[0].z - c[1].z - c[2].z - c[3].z;
     d = a2.x * a2.x + a2.y * a2.y + a2.z * a2.z;
-    k = (d == 0.0f) ? 0.0f : VfRsq(d);
+    k = VfIsZero(d) ? 0.0f : VfRsq(d);
     a2.x = VfSat1(a2.x * k);
     a2.y = VfSat1(a2.y * k);
     a2.z = VfSat1(a2.z * k);

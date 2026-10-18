@@ -80,7 +80,7 @@ void BtlAttackUpdateProjectile(float speed, float maxSpeed, BtlAttack *self, s32
                 /* dir = normalize(dir), clamped to [-1, 1], w = 0 */
                 lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] +
                         self->dir[2] * self->dir[2];
-                k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+                k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
                 self->dir[0] = VfSat1(self->dir[0] * k);
                 self->dir[1] = VfSat1(self->dir[1] * k);
                 self->dir[2] = VfSat1(self->dir[2] * k);

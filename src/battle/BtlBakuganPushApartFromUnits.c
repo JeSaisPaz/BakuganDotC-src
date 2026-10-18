@@ -110,7 +110,7 @@ void BtlBakuganPushApartFromUnits(BtlBakugan *self, float *delta, u32 flags)
             }
             /* rel.xyz = normalise(rel.xyz) x amount (zero length: 0); w = S713 (0) */
             lenSq = rel[0] * rel[0] + rel[1] * rel[1] + rel[2] * rel[2];
-            k = (lenSq == 0.0f ? 0.0f : VfRsq(lenSq)) * amount;
+            k = (VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq)) * amount;
             rel[0] = rel[0] * k;
             rel[1] = rel[1] * k;
             rel[2] = rel[2] * k;
@@ -165,7 +165,7 @@ void BtlBakuganPushApartFromUnits(BtlBakugan *self, float *delta, u32 flags)
         selfReach = self->combat.stats->reachRadius;
         if (!(lenSq <= selfReach * selfReach)) {
             /* push.xyz = normalise(push.xyz) x reach (zero length: 0); w = S713 (0) */
-            k = (lenSq == 0.0f ? 0.0f : VfRsq(lenSq)) * selfReach;
+            k = (VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq)) * selfReach;
             push[0] = push[0] * k;
             push[1] = push[1] * k;
             push[2] = push[2] * k;

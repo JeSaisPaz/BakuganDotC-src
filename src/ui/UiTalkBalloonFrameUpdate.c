@@ -87,7 +87,7 @@ s32 UiTalkBalloonFrameUpdate(GfxSprite *sprite)
       t = sprite->scaleX * sprite->scaleX + sprite->scaleY * sprite->scaleY +
           sprite->scaleZ * sprite->scaleZ;
       k = VfRsq(t);
-      if (t == 0.0f) {
+      if (VfIsZero(t)) {
         k = 0.0f; /* bank S713; unreachable here: the offset is longer than 120 */
       }
       k = k * 120.0f;

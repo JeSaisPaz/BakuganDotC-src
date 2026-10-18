@@ -33,7 +33,7 @@ static inline void ActorCrystalOnHitNormalize(float *v)
   float k;
 
   len2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
-  k = (len2 == 0.0f) ? 0.0f : VfRsq(len2);
+  k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
   v[0] = VfSat1(v[0] * k);
   v[1] = VfSat1(v[1] * k);
   v[2] = VfSat1(v[2] * k);

@@ -4,7 +4,7 @@
 /* vcmp.s EZ + vrsq.s + vcmovt.s S713: 1/sqrt(d), or 0 (S713) for a zero length. */
 static float ActorMoveRsqOrZero(float d)
 {
-    return d == 0.0f ? 0.0f : VfRsq(d);
+    return VfIsZero(d) ? 0.0f : VfRsq(d);
 }
 
 /* vqmul.q d, a, b (w last). */

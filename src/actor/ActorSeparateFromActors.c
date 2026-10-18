@@ -99,7 +99,7 @@ void ActorSeparateFromActors(Actor *self, float *delta)
       weight = push * 0.7f * weight;
       /* diff = normalize(diff) * weight (w = S713 = 0); accum += diff (xyz) */
       lenSq = diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
-      inv = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+      inv = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
       scale = inv * weight;
       diff[0] = diff[0] * scale;
       diff[1] = diff[1] * scale;
@@ -158,7 +158,7 @@ void ActorSeparateFromActors(Actor *self, float *delta)
   if (!(lenSq <= self->bodyShape.radius * self->bodyShape.radius)) {
     /* accum = normalize(accum) * bodyShape.radius (w = S713 = 0) */
     len = accum[0] * accum[0] + accum[1] * accum[1] + accum[2] * accum[2];
-    inv = (len == 0.0f) ? 0.0f : VfRsq(len);
+    inv = VfIsZero(len) ? 0.0f : VfRsq(len);
     scale = inv * self->bodyShape.radius;
     accum[0] = accum[0] * scale;
     accum[1] = accum[1] * scale;
@@ -191,13 +191,13 @@ void ActorSeparateFromActors(Actor *self, float *delta)
   }
   /* dirXZ, accum = normalised and clamped to [-1, 1] per lane; w lane masked (register holds S713 = 0) */
   len = dirXZ[0] * dirXZ[0] + dirXZ[1] * dirXZ[1] + dirXZ[2] * dirXZ[2];
-  inv = (len == 0.0f) ? 0.0f : VfRsq(len);
+  inv = VfIsZero(len) ? 0.0f : VfRsq(len);
   dirXZ[0] = VfSat1(dirXZ[0] * inv);
   dirXZ[1] = VfSat1(dirXZ[1] * inv);
   dirXZ[2] = VfSat1(dirXZ[2] * inv);
   dirXZ[3] = 0.0f;
   len = accum[0] * accum[0] + accum[1] * accum[1] + accum[2] * accum[2];
-  inv = (len == 0.0f) ? 0.0f : VfRsq(len);
+  inv = VfIsZero(len) ? 0.0f : VfRsq(len);
   accum[0] = VfSat1(accum[0] * inv);
   accum[1] = VfSat1(accum[1] * inv);
   accum[2] = VfSat1(accum[2] * inv);

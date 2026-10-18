@@ -116,7 +116,7 @@ void BtlAttackType3AUpdate(BtlAttack *self)
     z = self->dir[2];
     len2 = x * x + y * y + z * z;
     k = VfRsq(len2);
-    if (len2 == 0.0f) {
+    if (VfIsZero(len2)) {
         k = 0.0f;
     }
     self->dir[0] = VfSat1(x * k);

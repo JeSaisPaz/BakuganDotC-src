@@ -54,7 +54,7 @@ void GameFieldCameraBeginTerminalView(GameFieldCamera *cam)
   axis.y = offset.y;
   axis.z = -offset.x;
   len2 = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
-  k = (len2 == 0.0f) ? 0.0f : VfRsq(len2);
+  k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
   axis.x = VfSat1(axis.x * k);
   axis.y = VfSat1(axis.y * k);
   axis.z = VfSat1(axis.z * k);

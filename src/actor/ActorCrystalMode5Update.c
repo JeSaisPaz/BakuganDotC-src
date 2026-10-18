@@ -87,7 +87,7 @@ int ActorCrystalMode5Update(ActorCrystal *self)
     lenSq = self->firePoint2[0] * self->firePoint2[0] + self->firePoint2[1] * self->firePoint2[1] +
             self->firePoint2[2] * self->firePoint2[2];
     k = VfRsq(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
       k = 0.0f;
     }
     self->firePoint2[0] = VfSat1(self->firePoint2[0] * k);

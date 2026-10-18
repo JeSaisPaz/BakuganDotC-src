@@ -24,7 +24,7 @@ void GfxCameraProjectPointFacing(GfxCamera *cam, float *out, const float *pos)
   dy = cam->eye[1] - pos[1];
   dz = cam->eye[2] - pos[2];
   len2 = dx * dx + dy * dy + dz * dz;
-  if (len2 == 0.0f) {
+  if (VfIsZero(len2)) {
     s = 0.0f;
   } else {
     s = VfRsq(len2);

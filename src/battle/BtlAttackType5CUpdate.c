@@ -61,7 +61,7 @@ void BtlAttackType5CUpdate(BtlAttack *self)
                 s = __builtin_sinf(angle);
                 len2 = c * c + 0.0f * 0.0f + s * s;
                 k = VfRsq(len2);
-                if (len2 == 0.0f) {
+                if (VfIsZero(len2)) {
                     k = 0.0f;
                 }
                 dir[0] = VfSat1(c * k);

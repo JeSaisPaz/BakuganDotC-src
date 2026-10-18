@@ -169,7 +169,7 @@ void GameFieldCameraFollowStep(GameFieldCamera *cam)
     blend = blend * blend;
     /* axis = normalize(axis), clamped to [-1, 1]; a zero-length axis scales by 0 (S713); w = S713 (0) */
     k = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
-    if (k == 0.0f) {
+    if (VfIsZero(k)) {
       k = 0.0f;
     }
     else {
@@ -346,7 +346,7 @@ void GameFieldCameraFollowStep(GameFieldCamera *cam)
   blend = blend * blend;
   /* axis = normalize(axis), clamped to [-1, 1]; a zero-length axis scales by 0 (S713); w = S713 (0) */
   k = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
-  if (k == 0.0f) {
+  if (VfIsZero(k)) {
     k = 0.0f;
   }
   else {

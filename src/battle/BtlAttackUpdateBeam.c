@@ -118,7 +118,7 @@ void BtlAttackUpdateBeam(float width, BtlAttack *self, s32 effectId, s32 unitHit
         /* axis.xyz = clamp(normalise(axis), -1, 1) (0 for a zero vector), axis.w = 0 (S713) */
         dist = axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2];
         inv = VfRsq(dist);
-        if (dist == 0.0f) {
+        if (VfIsZero(dist)) {
             inv = 0.0f;
         }
         axis[0] = VfSat1(axis[0] * inv);
@@ -322,7 +322,7 @@ track:
                         reach = unit->combat.stats->reachRadius;
                         dist = offset[0] * offset[0] + offset[1] * offset[1] + offset[2] * offset[2];
                         inv = VfRsq(dist);
-                        if (dist == 0.0f) {
+                        if (VfIsZero(dist)) {
                             inv = 0.0f;
                         }
                         scale = inv * reach;
@@ -340,7 +340,7 @@ track:
                         reach = unit->combat.stats->reachRadius;
                         dist = offset[0] * offset[0] + offset[1] * offset[1] + offset[2] * offset[2];
                         inv = VfRsq(dist);
-                        if (dist == 0.0f) {
+                        if (VfIsZero(dist)) {
                             inv = 0.0f;
                         }
                         scale = inv * reach;

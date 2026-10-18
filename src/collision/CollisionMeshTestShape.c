@@ -162,7 +162,7 @@ s32 CollisionMeshTestShape(void *meshBlock, void *query, float *hit, u32 surface
                 v.y = g_collisionHitResult.normal.y;
                 v.z = g_collisionHitResult.normal.z;
                 k = v.x * v.x + v.y * v.y + v.z * v.z;
-                k = k == 0.0f ? 0.0f : VfRsq(k);
+                k = VfIsZero(k) ? 0.0f : VfRsq(k);
                 g_collisionHitResult.normal.x = VfSat1(v.x * k);
                 g_collisionHitResult.normal.y = VfSat1(v.y * k);
                 g_collisionHitResult.normal.z = VfSat1(v.z * k);
@@ -188,7 +188,7 @@ s32 CollisionMeshTestShape(void *meshBlock, void *query, float *hit, u32 surface
             v.y = center->y - g_collisionHitResult.point.y;
             v.z = center->z - g_collisionHitResult.point.z;
             k = v.x * v.x + v.y * v.y + v.z * v.z;
-            k = k == 0.0f ? 0.0f : VfRsq(k);
+            k = VfIsZero(k) ? 0.0f : VfRsq(k);
             g_collisionHitResult.normal.x = VfSat1(v.x * k);
             g_collisionHitResult.normal.y = VfSat1(v.y * k);
             g_collisionHitResult.normal.z = VfSat1(v.z * k);

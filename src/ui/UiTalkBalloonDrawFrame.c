@@ -258,7 +258,7 @@ void UiTalkBalloonDrawFrame(UiTalkBalloon *self, void *packet)
   }
   /* dir = normalize(dir), each lane clamped to [-1, 1]; zero length scales by 0 */
   lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
-  k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+  k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
   dir[0] = VfSat1(dir[0] * k);
   dir[1] = VfSat1(dir[1] * k);
   dir[2] = VfSat1(dir[2] * k);
@@ -275,7 +275,7 @@ void UiTalkBalloonDrawFrame(UiTalkBalloon *self, void *packet)
   }
   /* dir = normalize(dir) */
   lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
-  k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+  k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
   dir[0] = VfSat1(dir[0] * k);
   dir[1] = VfSat1(dir[1] * k);
   dir[2] = VfSat1(dir[2] * k);

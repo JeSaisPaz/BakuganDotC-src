@@ -55,7 +55,7 @@ void GameQuestCamUpdateFollowOffset(GameQuestCamPointMode *self)
   } else {
     /* normalise, saturated to [-1, 1]; S713 (0) as scale for a zero vector */
     scale = VfRsq(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
       scale = 0.0f;
     }
     dir.x = VfSat1(dir.x * scale);

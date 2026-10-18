@@ -203,7 +203,7 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
       vz[1] = sprite->toCamera[1];
       vz[2] = sprite->toCamera[2];
       lenSq = vz[0] * vz[0] + vz[1] * vz[1] + vz[2] * vz[2];
-      inv = lenSq == 0.0f ? 0.0f : VfRsq(lenSq);
+      inv = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
       vz[0] = VfSat1(vz[0] * inv);
       vz[1] = VfSat1(vz[1] * inv);
       vz[2] = VfSat1(vz[2] * inv);
@@ -211,7 +211,7 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
       vx[1] = axis[2] * vz[0] - axis[0] * vz[2];
       vx[2] = axis[0] * vz[1] - axis[1] * vz[0];
       lenSq = vx[0] * vx[0] + vx[1] * vx[1] + vx[2] * vx[2];
-      inv = lenSq == 0.0f ? 0.0f : VfRsq(lenSq);
+      inv = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
       vx[0] = VfSat1(vx[0] * inv);
       vx[1] = VfSat1(vx[1] * inv);
       vx[2] = VfSat1(vx[2] * inv);

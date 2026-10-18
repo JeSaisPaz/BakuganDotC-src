@@ -27,7 +27,7 @@ void GameFieldCameraProbeCollide(void *probe, float *outEye, float *outLook, flo
         dir[2] = 0.0f;
         dir[0] = 1.0f;
     } else {
-        k = (len2 == 0.0f) ? 0.0f : VfRsq(len2);
+        k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
         dir[0] = VfSat1(dir[0] * k);
         dir[1] = VfSat1(dir[1] * k);
         dir[2] = VfSat1(dir[2] * k);

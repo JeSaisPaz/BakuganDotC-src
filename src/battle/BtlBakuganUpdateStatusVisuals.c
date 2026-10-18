@@ -91,7 +91,7 @@ static void UsvAim(GfxEffect *fx, const ScePspFVector4 *to, const ScePspFVector4
     lenSq = dx * dx + dy * dy + dz * dz;
     len = __builtin_sqrtf(lenSq);
     len = len * 0.100000001f;
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         inv = 0.0f;
     } else {
         inv = VfRsq(lenSq);

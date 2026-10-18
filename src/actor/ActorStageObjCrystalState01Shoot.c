@@ -99,7 +99,7 @@ void ActorStageObjCrystalState01Shoot(ActorStageObjCrystal *self)
     d[1] = self->shotDir[1];
     d[2] = self->shotDir[2];
     inv = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
-    if (inv == 0.0f) {
+    if (VfIsZero(inv)) {
       inv = 0.0f;
     } else {
       inv = VfRsq(inv);

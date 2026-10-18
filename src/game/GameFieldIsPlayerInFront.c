@@ -12,7 +12,7 @@ static void NormaliseClamped(float v[3])
   float len2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
   float scale = VfRsq(len2);
 
-  if (len2 == 0.0f) {
+  if (VfIsZero(len2)) {
     scale = 0.0f;
   }
   v[0] = VfSat1(v[0] * scale);

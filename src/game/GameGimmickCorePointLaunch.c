@@ -114,7 +114,7 @@ void GameGimmickCorePointLaunch(GameGimmickCorePoint *obj, int index, const floa
   rayDir.y = obj->hopEnd.y - obj->hopMid.y;
   rayDir.z = obj->hopEnd.z - obj->hopMid.z;
   lenSq = rayDir.x * rayDir.x + rayDir.y * rayDir.y + rayDir.z * rayDir.z;
-  if (lenSq == 0.0f) {
+  if (VfIsZero(lenSq)) {
     k = 0.0f;
   } else {
     k = VfRsq(lenSq);

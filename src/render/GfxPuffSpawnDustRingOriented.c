@@ -71,7 +71,7 @@ void GfxPuffSpawnDustRingOriented(float angle, float scaleX, float scaleZ, const
       axis.z = -normal[0];
       /* axis = normalize(axis) (zero length: scale by 0), saturated to [-1,1] */
       lenSq = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
-      if (lenSq == 0.0f) {
+      if (VfIsZero(lenSq)) {
         k = 0.0f;
       } else {
         k = VfRsq(lenSq);

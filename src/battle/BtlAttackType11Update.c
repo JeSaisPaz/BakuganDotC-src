@@ -98,7 +98,7 @@ void BtlAttackType11Update(BtlAttack *self)
     }
     lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
     scale = VfRsq(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         scale = 0.0f;
     }
     self->auxVec[0] = VfSat1(v[0] * scale);
@@ -114,7 +114,7 @@ void BtlAttackType11Update(BtlAttack *self)
         v[2] = target->base.pos[2] - self->owner->base.pos[2];
         lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
         scale = VfRsq(lenSq);
-        if (lenSq == 0.0f) {
+        if (VfIsZero(lenSq)) {
             scale = 0.0f;
         }
         self->auxVec[1] = VfSat1(v[1] * scale);

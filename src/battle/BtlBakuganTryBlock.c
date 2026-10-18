@@ -54,7 +54,7 @@ int BtlBakuganTryBlock(BtlBakugan *self)
     dir[1] = 0.0f;
     /* dir.xyz = clamp(normalise(dir.xyz), -1, 1), scale 0 for a zero length (bank S713); w = S713 = 0 */
     lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
-    k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     dir[0] = VfSat1(dir[0] * k);
     dir[1] = VfSat1(dir[1] * k);
     dir[2] = VfSat1(dir[2] * k);
@@ -75,7 +75,7 @@ int BtlBakuganTryBlock(BtlBakugan *self)
             lenSq = self->base.velocity[0] * self->base.velocity[0] +
                     self->base.velocity[1] * self->base.velocity[1] +
                     self->base.velocity[2] * self->base.velocity[2];
-            k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+            k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
             k = k * 5.0f;
             self->base.velocity[0] = self->base.velocity[0] * k;
             self->base.velocity[1] = self->base.velocity[1] * k;

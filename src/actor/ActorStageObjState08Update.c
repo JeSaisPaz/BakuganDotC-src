@@ -24,7 +24,7 @@ static void ActorStageObjNormalise(float *v)
     float k;
 
     d = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
-    if (d == 0.0f) {
+    if (VfIsZero(d)) {
         k = 0.0f;
     } else {
         k = VfRsq(d);

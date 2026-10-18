@@ -159,7 +159,7 @@ void BtlCameraUpdateLockAim(BtlCamera *camera, char snap)
     side[2] = -offset[0];
     lenSq = side[0] * side[0] + side[1] * side[1] + side[2] * side[2];
     rs = VfRsq(lenSq);
-    if (lenSq == 0.0f) {
+    if (VfIsZero(lenSq)) {
         rs = 0.0f;
     }
     side[0] = VfSat1(side[0] * rs);

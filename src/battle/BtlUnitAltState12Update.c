@@ -103,7 +103,7 @@ void BtlUnitAltState12Update(BtlBakugan *self)
             len = len + (cap - len) * 0.200000003f;
             /* flat = flat / |flat| * len (1/|flat| taken as 0 for a zero vector) */
             sq = flat[0] * flat[0] + flat[1] * flat[1] + flat[2] * flat[2];
-            k = (sq == 0.0f) ? 0.0f : VfRsq(sq);
+            k = VfIsZero(sq) ? 0.0f : VfRsq(sq);
             k = k * len;
             self->base.velocity[0] = flat[0] * k;
             self->base.velocity[2] = flat[2] * k;
@@ -136,7 +136,7 @@ void BtlUnitAltState12Update(BtlBakugan *self)
         sq = self->base.velocity[0] * self->base.velocity[0] +
              self->base.velocity[1] * self->base.velocity[1] +
              self->base.velocity[2] * self->base.velocity[2];
-        k = (sq == 0.0f) ? 0.0f : VfRsq(sq);
+        k = VfIsZero(sq) ? 0.0f : VfRsq(sq);
         k = k * len;
         self->base.velocity[0] = self->base.velocity[0] * k;
         self->base.velocity[2] = self->base.velocity[2] * k;

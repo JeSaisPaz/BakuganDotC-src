@@ -48,7 +48,7 @@ int BtlUnitAltTryBlockKind15(BtlBakugan *self)
         dir[2] = from[2] - self->guardAnchor[2];
         dir[3] = from[3];
         lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
-        k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+        k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
         dir[0] = VfSat1(dir[0] * k);
         dir[1] = VfSat1(dir[1] * k);
         dir[2] = VfSat1(dir[2] * k);

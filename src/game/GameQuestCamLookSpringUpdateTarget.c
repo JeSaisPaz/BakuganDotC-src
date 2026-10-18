@@ -55,7 +55,7 @@ void GameQuestCamLookSpringUpdateTarget(GameQuestCamLookSpring *self)
   /* normalise, saturated to [-1, 1] */
   lenSq = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
   scale = VfRsq(lenSq);
-  if (lenSq == 0.0f) {
+  if (VfIsZero(lenSq)) {
     scale = 0.0f;
   }
   dir.x = VfSat1(dir.x * scale);

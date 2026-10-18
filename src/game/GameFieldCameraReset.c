@@ -59,7 +59,7 @@ void GameFieldCameraReset(GameFieldCamera *cam, char snap, char keepMode)
   axis.y = offset.y;
   axis.z = -offset.x;
   lenSq = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
-  if (lenSq == 0.0f) {
+  if (VfIsZero(lenSq)) {
     invLen = 0.0f;
   }
   else {

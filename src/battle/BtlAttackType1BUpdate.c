@@ -13,7 +13,7 @@ static void BtlAttackType1BBasis(float *m, const float *dir)
     float k;
 
     lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
-    k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     f[0] = VfSat1(dir[0] * k);
     f[1] = VfSat1(dir[1] * k);
     f[2] = VfSat1(dir[2] * k);
@@ -21,7 +21,7 @@ static void BtlAttackType1BBasis(float *m, const float *dir)
     s[1] = g_vecUp.z * f[0] - g_vecUp.x * f[2];
     s[2] = g_vecUp.x * f[1] - g_vecUp.y * f[0];
     lenSq = s[0] * s[0] + s[1] * s[1] + s[2] * s[2];
-    k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+    k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
     s[0] = VfSat1(s[0] * k);
     s[1] = VfSat1(s[1] * k);
     s[2] = VfSat1(s[2] * k);
@@ -105,7 +105,7 @@ void BtlAttackType1BUpdate(BtlAttack *self)
         /* dir = d normalised (lanes clamped to [-1, 1], zero length scaled by S713 = 0); w is the
            basis' 0 lane, then S713 = 0 */
         lenSq = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
-        k = (lenSq == 0.0f) ? 0.0f : VfRsq(lenSq);
+        k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
         self->dir[0] = VfSat1(d[0] * k);
         self->dir[1] = VfSat1(d[1] * k);
         self->dir[2] = VfSat1(d[2] * k);
