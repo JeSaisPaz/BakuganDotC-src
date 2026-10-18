@@ -30,9 +30,9 @@ void CollisionRayTransform(const CollisionRayShape *ray, const ScePspFMatrix4 *m
 
   /* bank constant S713 = 0.0f: zero-component substitute and inv.w */
   d = out->dir;
-  inv.x = VfIsZero(d.x) ? 0.0f : 1.0f / d.x;
-  inv.y = VfIsZero(d.y) ? 0.0f : 1.0f / d.y;
-  inv.z = VfIsZero(d.z) ? 0.0f : 1.0f / d.z;
+  inv.x = VfIsZero(d.x) ? 0.0f : VfRcp(d.x);
+  inv.y = VfIsZero(d.y) ? 0.0f : VfRcp(d.y);
+  inv.z = VfIsZero(d.z) ? 0.0f : VfRcp(d.z);
   inv.w = 0.0f;
   out->invDir = inv;
 

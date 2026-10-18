@@ -155,7 +155,8 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
     if (dir == NULL) {
         target = (BtlBakugan *)BtlFindBakuganById(self->targetId);
         if (((g_btlAttackTypeInfo[self->type] >> 20) & 0xf) != 0) {
-            /* dir = target pos (w kept) minus owner pos (xyz), then normalized and clamped */
+            /* dir = target pos minus owner pos (xyz), then normalized and clamped; w = 0: the
+               masked lane of vscl.t C710 is the bank constant S713 (sv.q at 0x088773f4) */
             self->dir[0] = target->base.pos[0];
             self->dir[1] = target->base.pos[1];
             self->dir[2] = target->base.pos[2];
@@ -170,6 +171,7 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
             self->dir[0] = VfSat1(self->dir[0] * k);
             self->dir[1] = VfSat1(self->dir[1] * k);
             self->dir[2] = VfSat1(self->dir[2] * k);
+            self->dir[3] = 0.0f;
         } else {
             owner = self->owner;
             aimFrom[0] = owner->base.pos[0];
@@ -181,7 +183,7 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
             aimTarget[2] = target->base.pos[2];
             aimTarget[3] = target->base.pos[3];
             aimTarget[1] = aimTarget[1] + 80.0f;
-            /* dir = normalize(aimTarget - aimFrom) (xyz; w = aimTarget w) */
+            /* dir = normalize(aimTarget - aimFrom) (xyz; w = 0 as above, sv.q C710 at 0x08877488) */
             self->dir[0] = aimTarget[0] - aimFrom[0];
             self->dir[1] = aimTarget[1] - aimFrom[1];
             self->dir[2] = aimTarget[2] - aimFrom[2];
@@ -192,6 +194,7 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
             self->dir[0] = VfSat1(self->dir[0] * k);
             self->dir[1] = VfSat1(self->dir[1] * k);
             self->dir[2] = VfSat1(self->dir[2] * k);
+            self->dir[3] = 0.0f;
             pitch = atan2f(self->dir[1],
                            __builtin_sqrtf(self->dir[0] * self->dir[0]
                                            + self->dir[2] * self->dir[2]));

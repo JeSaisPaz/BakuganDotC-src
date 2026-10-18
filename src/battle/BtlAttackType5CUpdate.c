@@ -55,8 +55,8 @@ void BtlAttackType5CUpdate(BtlAttack *self)
                 }
                 angle = (float)i * 0.785398006f;
                 /* dir.xyz = (cos, 0, sin) of angle, normalised with a zero length giving scale 0
-                   and each lane clamped to [-1, 1] (vpfxd). The w lane is masked: dir[3] keeps a
-                   stale VFPU value and is left unset. */
+                   and each lane clamped to [-1, 1] (vpfxd). The w lane is masked, so the stored
+                   lane is C710's own w, the bank constant S713 = 0 (sv.q at 0x0888160c). */
                 c = __builtin_cosf(angle);
                 s = __builtin_sinf(angle);
                 len2 = c * c + 0.0f * 0.0f + s * s;
@@ -67,6 +67,7 @@ void BtlAttackType5CUpdate(BtlAttack *self)
                 dir[0] = VfSat1(c * k);
                 dir[1] = VfSat1(0.0f * k);
                 dir[2] = VfSat1(s * k);
+                dir[3] = 0.0f;
                 BtlAttackLaunchAuto(launched, self->pos, dir, NULL);
             }
             BtlAttackPlaySound(self, 0x200098, NULL, 0, 0);

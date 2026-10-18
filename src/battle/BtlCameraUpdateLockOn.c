@@ -5,8 +5,8 @@
    (`BtlBakuganGetTarget`). Does nothing without a unit; without a foe it falls back to
    `BtlCameraSetDefaultFollow` (no snap) and returns. Otherwise it steps the lock-on blends
    (lockOnHoldBlend while lockOnHoldFrames runs, re-armed to 16 by unit stateFlags 0x4400000;
-   lockOnPullBack from stateFlags 0x4000000; lockOnSide, 1 while the HUD is shown), all reset when
-   the foe changes. The foe position (100 lower for object kind 0x22, pulled down toward the unit
+   lockOnPullBack from stateFlags 0x4000000; lockOnSide, 1 while the HUD is shown); when the foe
+   changes lockOnHoldBlend and lockOnSide jump to 1 or 0, lockOnPullBack keeps easing. The foe position (100 lower for object kind 0x22, pulled down toward the unit
    beyond 800 units of horizontal distance) gives `near` = 1.2 - dist/1300 capped to 1, which
    eases kindParam3 toward kindParams->param[3] minus the height step. The unit is projected to
    the screen (`GfxCameraProjectPoint`): when it sits low (depth below 0.67) or moves fast,
