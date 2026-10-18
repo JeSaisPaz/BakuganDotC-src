@@ -2,16 +2,16 @@
 #include "bdc.h"
 
 /* Handler of event opcode 0x02 (`GameEventExecCommand`): cancels channel 0 and stops the BGM with
-   a 0.4 s fade; argument 0 selects track 3 and 0x20 track 0x22 (others: silence), which is queued
-   at once (`SndBgmQueuePlay`) or, in skip mode, remembered in `+0x271` for the end of the event.
-    */
+   a 0.4 s fade; the 16-bit command argument `value` (`(u16)arg`) 0 selects track 3 and 0x20 track
+   0x22 (others: silence), which is queued at once (`SndBgmQueuePlay`) or, in skip mode,
+   remembered in `+0x271` for the end of the event. */
 
-void GameEventOp02PlayBgm(GameEvent *self, u8 flag, s16 arg) {
+void GameEventOp02PlayBgm(GameEvent *self, u16 value, s16 unused) {
     u16 track = 0;
 
-    if (flag == 0) {
+    if (value == 0) {
         track = 3;
-    } else if (flag == 0x20) {
+    } else if (value == 0x20) {
         track = 0x22;
     }
     if ((self->flags & 1) != 0) {

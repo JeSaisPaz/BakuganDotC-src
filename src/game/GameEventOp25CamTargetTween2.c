@@ -4,10 +4,10 @@
 /* Handler of event opcode 0x25 (`GameEventExecCommand`): same as `GameEventOp21CamTargetTween`.
     */
 
-void GameEventOp25CamTargetTween2(GameEvent *self, u8 flag, s16 arg)
+void GameEventOp25CamTargetTween2(GameEvent *self, u16 frames, s16 unused)
 
 {
-  GameEventAddCamTween(self,flag,1);
+  GameEventAddCamTween(self,frames,1);
   return;
 }
 

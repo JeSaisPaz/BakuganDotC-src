@@ -2,9 +2,10 @@
 #include "bdc.h"
 
 /* Commits or reverts the point changes of the hologram gallery screen (`UiHologramGalleryCtor`,
-   task 391; menu cursor `+0x77`, panel `+0x74`): with `commit` subtracts the reserved points (profile
-   word 0x2d) from the profile points `+0x464` (clamped to 0..9999999); without,
-   calls `SaveProfileClearPlacedHolograms` (revert). */
+   task 391; menu cursor `+0x77`, panel `+0x74`): with `commit`, when profile word 0x2d (the
+   reserved points) is non-zero, subtracts it from the profile points `+0x464` (clamped to
+   0..9999999) and leaves the word as is; without, calls `SaveProfileClearPlacedHolograms`
+   (revert). */
 
 void UiHologramGallerySaveOrRevert(UiHologramGallery *self, bool commit)
 {

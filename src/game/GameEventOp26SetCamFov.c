@@ -2,12 +2,13 @@
 #include "bdc.h"
 
 /* Handler of event opcode 0x26 (`GameEventExecCommand`): sets the field-of-view end key
-   (`key+0x62`) to `arg`. */
+   (`key+0x62`) to `fov`, the
+   16-bit command argument (`(u16)arg`). */
 
-void GameEventOp26SetCamFov(GameEvent *self, u8 flag, s16 arg)
+void GameEventOp26SetCamFov(GameEvent *self, u16 fov, s16 unused)
 
 {
-  self->camKeys->fovEnd = flag;
+  self->camKeys->fovEnd = fov;
   return;
 }
 

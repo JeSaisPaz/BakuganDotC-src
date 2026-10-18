@@ -2,8 +2,9 @@
 #include "bdc.h"
 
 /* Returns 0 unless Cross was pressed in `UiCollectionMenu`; then 1 when the
-   selected entry is enabled in its page mask (`entryMask` on page 0, `subMasks[selMain]` on the
-   sub-page) and 2 when it is not. */
+   selected entry is enabled in its page mask (`entryMask` on page 0; otherwise the byte
+   `(&entryMask)[page * 5 + selMain]`, which is `subMasks[selMain]` on the sub-page 1) and 2 when
+   it is not. */
 
 int UiCollectionMenuCheckConfirm(UiCollectionMenu *self)
 
@@ -18,7 +19,7 @@ int UiCollectionMenuCheckConfirm(UiCollectionMenu *self)
   if (self->page == 0) {
     mask = self->entryMask;
   } else {
-    mask = self->subMasks[self->selMain];
+    mask = (&self->entryMask)[self->page * 5 + self->selMain];
   }
   if ((mask & bit) == 0) {
     return 2;

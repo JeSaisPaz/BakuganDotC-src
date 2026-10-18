@@ -3,8 +3,9 @@
 
 /* Returns 1 for the kinds that fall over as a whole when destroyed: signs and billboards
    (0x1a..0x1d, 0x56, 0x5a), `F1_BRIDGE01` 0x2d, street lights/signals 0x37/0x3b (via the table
-   `0x08a84aa0`), 0x6c, 0x6d, 0x72 and `F4_WALL01` 0x8b. Used by
-   `ActorStageObjState08Update`, `ActorStageObjPropState02Knocked`, `ActorStageObjPropState03Topple`. */
+   `0x08a84aa0`), 0x6c, 0x6d, 0x72 and `F4_WALL01` 0x8b (0x6e..0x71 return 0). Used by
+   `ActorStageObjState08Update`, `ActorStageObjPropState02Knocked`,
+   `ActorStageObjPropState03Topple`. */
 
 int ActorStageObjKindTopples(ActorStageObjBase *self)
 {

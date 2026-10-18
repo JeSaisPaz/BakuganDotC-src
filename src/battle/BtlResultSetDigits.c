@@ -4,8 +4,9 @@
 /* Writes number `value` into the digit sprites of result item `item`: copies the whole
    `g_btlResultDigitSprites` table (31 rows x 8) to the stack, reverses row `item` (up to its -1
    terminator) so the least significant digit comes first, and for each digit sprite sets its cell
-   to the decimal digit (column digit / 5, row digit % 5 of the font sheet), showing it (flag bit 0)
-   unless the remaining value is 0 past the first digit (leading zeros hidden). `hud` is unused. */
+   to the decimal digit (column digit / 5, row digit % 5: the font sheet holds the digits 5 per
+   column, 0-4 in column 0 and 5-9 in column 1), showing it (flag bit 0) unless the remaining
+   value is 0 past the first digit (leading zeros hidden). `hud` is unused. */
 
 void BtlResultSetDigits(void *hud, GfxSprite **sprites, int value, int item)
 {

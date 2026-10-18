@@ -7,12 +7,12 @@
 
 bool UiCollectionFigureUpdateBgTween(UiCollectionFigure *self, u8 out)
 {
-  GfxSprite **sprites = (GfxSprite **)self->base.data;
   u8 finished = 0;
   int i;
 
   for (i = 0x23; i < 0x28; i++) {
-    finished += UiTweenUpdate(1.0f, 1.0f, 16.0f, out, sprites[i], &self->tweens[i], 1);
+    finished += UiTweenUpdate(1.0f, 1.0f, 16.0f, out, ((GfxSprite **)self->base.data)[i],
+                              &self->tweens[i], 1);
   }
   return finished != 0;
 }

@@ -3,8 +3,9 @@
 
 /* Constructor of the field event task class for task id 470 (0x1d6), built by `CoreTaskNewById`
    (object size 0x2d8): runs the base `GameEventCtor`, installs vtable `0x08af425c`, clears the
-   derived fields (`+0x284..+0x28c`, flag bits at `+0x2d6`, a 0x40-byte block at `+0x292`) and
-   copies the 16-byte default block `0x08a99250` to `+0x274`. */
+   derived fields (`+0x284..+0x28f`, `+0x2d2..+0x2d4`, flag bits 0-2 at `+0x2d6`), copies the
+   16-byte default block `g_gameEvent470TurnDefaults` (`0x08a99250`) to `+0x274` and zeroes the
+   0x40-byte block at `+0x292`. */
 
 GameEvent470 *GameEvent470Ctor(GameEvent470 *self)
 
