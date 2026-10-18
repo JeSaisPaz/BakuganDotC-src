@@ -49,9 +49,7 @@ void ActorStageObjActivate(void *obj)
   self->capsule.radius = radius;
   self->capsule.radiusSq = radius * radius;
   /* Length of the axis xyz (vdot.t / vsqrt.s). */
-  axisLen = __builtin_sqrtf(self->capsule.axis[0] * self->capsule.axis[0] +
-                            self->capsule.axis[1] * self->capsule.axis[1] +
-                            self->capsule.axis[2] * self->capsule.axis[2]);
+  axisLen = VfSqrt(VfDot3(self->capsule.axis[0], self->capsule.axis[1], self->capsule.axis[2], self->capsule.axis[0], self->capsule.axis[1], self->capsule.axis[2]));
   self->capsule.axisLen = axisLen;
   CollisionColliderInit(&self->helper->node, (const u32 *)&self->capsule, 9, obj, 0);
   /* Matrix copy through C000..C030. */

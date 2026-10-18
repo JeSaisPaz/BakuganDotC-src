@@ -262,9 +262,9 @@ ActorStageObjAttrLandmark *ActorStageObjAttrLandmarkCtor(ActorStageObjAttrLandma
     ry = box->transform.y;
     rz = box->transform.z;
     t = box->transform.w;
-    dx = rx.x * t.x + rx.y * t.y + rx.z * t.z;
-    dy = ry.x * t.x + ry.y * t.y + ry.z * t.z;
-    dz = rz.x * t.x + rz.y * t.y + rz.z * t.z;
+    dx = VfDot3(rx.x, rx.y, rx.z, t.x, t.y, t.z);
+    dy = VfDot3(ry.x, ry.y, ry.z, t.x, t.y, t.z);
+    dz = VfDot3(rz.x, rz.y, rz.z, t.x, t.y, t.z);
     box->invTransform.x.x = rx.x;
     box->invTransform.x.y = ry.x;
     box->invTransform.x.z = rz.x;
@@ -286,10 +286,10 @@ ActorStageObjAttrLandmark *ActorStageObjAttrLandmarkCtor(ActorStageObjAttrLandma
 
   scale = self->base.base.scale[0] * 0.9f;
   box = self->collisionBox;
-  box->aabbMin.x = box->aabbMin.x * scale;
-  box->aabbMin.z = box->aabbMin.z * scale;
+  box->aabbMin.x = VfMul(box->aabbMin.x, scale);
+  box->aabbMin.z = VfMul(box->aabbMin.z, scale);
   box = self->collisionBox;
-  box->aabbMax.x = box->aabbMax.x * scale;
-  box->aabbMax.z = box->aabbMax.z * scale;
+  box->aabbMax.x = VfMul(box->aabbMax.x, scale);
+  box->aabbMax.z = VfMul(box->aabbMax.z, scale);
   return self;
 }

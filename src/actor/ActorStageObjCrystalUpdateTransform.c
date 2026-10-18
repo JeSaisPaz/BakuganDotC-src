@@ -21,22 +21,22 @@ void ActorStageObjCrystalUpdateTransform(ActorStageObjCrystal *self)
     heading = heading + 6.2831855f;
   }
   /* vrot of heading * S703 (2/pi, bank constant): cos/sin of the heading. */
-  c = __builtin_cosf(heading);
-  s = __builtin_sinf(heading);
+  c = VfCosQuarter(VfMul(heading, 0.636619747f));
+  s = VfSinQuarter(VfMul(heading, 0.636619747f));
   /* vmmul.q E200,E300,E000 is M200 = M000 · M300 = R · diag(scale) (as for vmmul_q_transp3): column j
      of R (C000 [C,0,-S,0], C010 [0,1,0,0], C020 [S,0,C,0], C030 [0,0,0,1]) times scale[j]. */
-  m[0] = c * self->base.base.scale[0];
-  m[1] = 0.0f;
-  m[2] = -s * self->base.base.scale[0];
-  m[3] = 0.0f;
-  m[4] = 0.0f;
-  m[5] = self->base.base.scale[1];
-  m[6] = 0.0f;
-  m[7] = 0.0f;
-  m[8] = s * self->base.base.scale[2];
-  m[9] = 0.0f;
-  m[10] = c * self->base.base.scale[2];
-  m[11] = 0.0f;
+  m[0] = VfDot2(c, s, self->base.base.scale[0], 0.0f);
+  m[1] = VfDot2(0.0f, 0.0f, self->base.base.scale[0], 0.0f);
+  m[2] = VfDot2(-s, c, self->base.base.scale[0], 0.0f);
+  m[3] = VfDot2(0.0f, 0.0f, self->base.base.scale[0], 0.0f);
+  m[4] = VfDot3(c, 0.0f, s, 0.0f, self->base.base.scale[1], 0.0f);
+  m[5] = VfDot2(1.0f, 0.0f, self->base.base.scale[1], 0.0f);
+  m[6] = VfDot3(-s, 0.0f, c, 0.0f, self->base.base.scale[1], 0.0f);
+  m[7] = VfDot2(0.0f, 0.0f, self->base.base.scale[1], 0.0f);
+  m[8] = VfDot2(c, s, 0.0f, self->base.base.scale[2]);
+  m[9] = VfDot2(0.0f, 0.0f, self->base.base.scale[2], 0.0f);
+  m[10] = VfDot2(-s, c, 0.0f, self->base.base.scale[2]);
+  m[11] = VfDot2(0.0f, 0.0f, self->base.base.scale[2], 0.0f);
   m[12] = 0.0f;
   m[13] = 0.0f;
   m[14] = 0.0f;

@@ -28,14 +28,14 @@ static void DashNormalize(float *out, const float *v)
     float lenSq;
     float k;
 
-    lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+    lenSq = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
     k = VfRsq(lenSq);
     if (VfIsZero(lenSq)) {
         k = 0.0f;
     }
-    out[0] = VfSat1(v[0] * k);
-    out[1] = VfSat1(v[1] * k);
-    out[2] = VfSat1(v[2] * k);
+    out[0] = VfSat1(VfMul(v[0], k));
+    out[1] = VfSat1(VfMul(v[1], k));
+    out[2] = VfSat1(VfMul(v[2], k));
     out[3] = 0.0f;
 }
 
@@ -46,11 +46,11 @@ static void DashRotateOrient(float *orient, float yaw)
     float s;
     float rot[4];
 
-    c = __builtin_cosf(yaw);
-    s = __builtin_sinf(yaw);
-    rot[0] = orient[0] * c + orient[1] * 0.0f + orient[2] * -s;
+    c = VfCosQuarter(VfMul(yaw, 0.636619747f));
+    s = VfSinQuarter(VfMul(yaw, 0.636619747f));
+    rot[0] = VfDot3(orient[0], orient[1], orient[2], c, 0.0f, -s);
     rot[1] = orient[1];
-    rot[2] = orient[0] * s + orient[1] * 0.0f + orient[2] * c;
+    rot[2] = VfDot3(orient[0], orient[1], orient[2], s, 0.0f, c);
     rot[3] = orient[3];
     orient[0] = rot[0];
     orient[1] = rot[1];
@@ -198,16 +198,16 @@ int BtlBakuganDashStep(BtlBakugan *self)
             dir = BtlBakuganClassifyTargetDirection(self->dashHeading, self);
             if (self->combat.stats->dashMode != 1) {
                 /* pitch toward the target: dot of the velocity and target directions */
-                toTarget[0] = target->base.pos[0] - self->base.pos[0];
-                toTarget[1] = target->base.pos[1] - self->base.pos[1];
-                toTarget[2] = target->base.pos[2] - self->base.pos[2];
+                toTarget[0] = VfSub(target->base.pos[0], self->base.pos[0]);
+                toTarget[1] = VfSub(target->base.pos[1], self->base.pos[1]);
+                toTarget[2] = VfSub(target->base.pos[2], self->base.pos[2]);
                 toTarget[3] = target->base.pos[3];
                 DashNormalize(toTarget, toTarget);
                 DashNormalize(velDir, vel);
-                dot = velDir[0] * toTarget[0] + velDir[1] * toTarget[1] + velDir[2] * toTarget[2];
+                dot = VfDot3(velDir[0], velDir[1], velDir[2], toTarget[0], toTarget[1], toTarget[2]);
                 align = (dot + 1.0f) * 0.600000024f;
                 /* vcos.s of |turn| x S703 (2/pi): the cosine of |turn| radians */
-                cosTurn = __builtin_cosf(__builtin_fabsf(turn));
+                cosTurn = VfCosQuarter(VfMul(__builtin_fabsf(turn), 0.636619747f));
                 vy = self->base.velocity[1] + cosTurn * toTarget[1] * self->dashSpeed * align;
                 self->base.velocity[1] = vy;
                 limit = self->combat.stats->jumpSpeed * 0.699999988f;
@@ -232,8 +232,8 @@ int BtlBakuganDashStep(BtlBakugan *self)
             break;
         }
         BtlBakuganTurnToward(self->dashHeading, 0.300000012f, 0.0f, self);
-        vel[0] = __builtin_cosf(self->dashHeading) * self->dashSpeed;
-        vel[2] = __builtin_sinf(self->dashHeading) * self->dashSpeed;
+        vel[0] = VfMul(VfCosQuarter(VfMul(self->dashHeading, 0.636619747f)), self->dashSpeed);
+        vel[2] = VfMul(VfSinQuarter(VfMul(self->dashHeading, 0.636619747f)), self->dashSpeed);
         self->stateFlags |= 1;
         DashNormalize(moveDir, vel);
         self->orient[0] = moveDir[1] * -0.899999976f;
@@ -247,8 +247,8 @@ int BtlBakuganDashStep(BtlBakugan *self)
         heading = self->input->heading;
         rate = BtlBakuganGetScaledStat50(self);
         turned = BtlBakuganTurnToward(heading, rate, 0.0f, self);
-        vel[0] = __builtin_cosf(self->base.rot[1]) * self->dashSpeed;
-        vel[2] = __builtin_sinf(self->base.rot[1]) * self->dashSpeed;
+        vel[0] = VfMul(VfCosQuarter(VfMul(self->base.rot[1], 0.636619747f)), self->dashSpeed);
+        vel[2] = VfMul(VfSinQuarter(VfMul(self->base.rot[1], 0.636619747f)), self->dashSpeed);
         if (self->combat.stats->moveStyle == 0) {
             bank = self->dashBank;
             self->stateFlags |= 1;

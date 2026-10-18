@@ -26,9 +26,9 @@ void ActorStageObjAttachLight(ActorStageObjBase *self, GfxSprite *sprite)
     self->lights[self->lightCount++] = sprite;
     if (self->kind == 0x1b) {
       /* vscl.t by 0.6f; lane 3 of the sv.q is the bank constant S713 = 0.0f. */
-      sprite->width = sprite->width * 0.6f;
-      sprite->height = sprite->height * 0.6f;
-      sprite->depth = sprite->depth * 0.6f;
+      sprite->width = VfMul(sprite->width, 0.6f);
+      sprite->height = VfMul(sprite->height, 0.6f);
+      sprite->depth = VfMul(sprite->depth, 0.6f);
       sprite->maybe_sizeW = 0.0f;
     }
   }

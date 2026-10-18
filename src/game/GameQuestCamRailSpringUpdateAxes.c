@@ -45,30 +45,30 @@ void GameQuestCamRailSpringUpdateAxes(void *spring)
     qb[k] = quatB[k];
   }
   /* Slerp of the two node quaternions; the result is never read again (as in the binary). */
-  d = VfSat1(quatA[0] * qb[0] + quatA[1] * qb[1] + quatA[2] * qb[2] + quatA[3] * qb[3]);
-  wa = 1.0f - t;
+  d = VfSat1(VfDot4(quatA[0], quatA[1], quatA[2], quatA[3], qb[0], qb[1], qb[2], qb[3]));
+  wa = VfSub(1.0f, t);
   wb = t;
-  if (!(d >= 0.998046875f)) {
+  if (!(VfDaz(d) >= 0.998046875f)) {
     /* theta = acos(|d|) in quarter turns */
-    if (__builtin_fabsf(d) < 0.707106769f) {
-      theta = 1.0f - VfAsinQuarter(__builtin_fabsf(d));
+    if (VfDaz(__builtin_fabsf(d)) < 0.707106769f) {
+      theta = VfSub(1.0f, VfAsinQuarter(__builtin_fabsf(d)));
     } else {
-      theta = VfAsinQuarter(__builtin_sqrtf(1.0f - d * d));
+      theta = VfAsinQuarter(VfSqrt(VfSub(1.0f, VfMul(d, d))));
     }
-    wa = wa * theta;
-    wb = wb * theta;
+    wa = VfMul(wa, theta);
+    wb = VfMul(wb, theta);
     wa = VfSinQuarter(wa);
     wb = VfSinQuarter(wb);
     sinTheta = VfSinQuarter(theta);
-    if (d < 0.0f) {
+    if (VfDaz(d) < 0.0f) {
       for (k = 0; k < 4; k++) {
         qb[k] = -qb[k];
       }
     }
     inv = VfRcp(sinTheta);
-    wa = wa * inv;
-    wb = wb * inv;
-    if (sinTheta < 5e-05f) {
+    wa = VfMul(wa, inv);
+    wb = VfMul(wb, inv);
+    if (VfDaz(sinTheta) < 5e-05f) {
       for (k = 0; k < 4; k++) {
         slerp[k] = quatA[k];
       }
@@ -76,7 +76,7 @@ void GameQuestCamRailSpringUpdateAxes(void *spring)
     }
   }
   for (k = 0; k < 4; k++) {
-    slerp[k] = quatA[k] * wa + qb[k] * wb;
+    slerp[k] = VfAdd(VfMul(quatA[k], wa), VfMul(qb[k], wb));
   }
 slerpDone:
   (void)slerp;
@@ -121,8 +121,7 @@ slerpDone:
   right[3][3] = w;
   for (c = 0; c < 4; c++) {
     for (r = 0; r < 4; r++) {
-      rot[c][r] = left[0][r] * right[c][0] + left[1][r] * right[c][1] +
-                  left[2][r] * right[c][2] + left[3][r] * right[c][3];
+      rot[c][r] = VfDot4(left[0][r], left[1][r], left[2][r], left[3][r], right[c][0], right[c][1], right[c][2], right[c][3]);
     }
   }
   /* vidt.q R003 / vidt.q C030 */
@@ -135,18 +134,18 @@ slerpDone:
   rot[3][2] = 0.0f;
   /* vtfm4.q C000, E100, C200: out = sum over columns of rot[c] * up[c] */
   for (r = 0; r < 4; r++) {
-    out[r] = rot[0][r] * up[0] + rot[1][r] * up[1] + rot[2][r] * up[2] + rot[3][r] * up[3];
+    out[r] = VfDot4(rot[0][r], rot[1][r], rot[2][r], rot[3][r], up[0], up[1], up[2], up[3]);
   }
   (self->base).goal.x = out[0];
   (self->base).goal.y = out[1];
   (self->base).goal.z = out[2];
   (self->base).goal.w = out[3];
   /* vscl.t with dist; the stored w lane is the bank zero S713 */
-  (self->base).goal.x = (self->base).goal.x * self->dist;
-  (self->base).goal.y = (self->base).goal.y * self->dist;
-  (self->base).goal.z = (self->base).goal.z * self->dist;
+  (self->base).goal.x = VfMul((self->base).goal.x, self->dist);
+  (self->base).goal.y = VfMul((self->base).goal.y, self->dist);
+  (self->base).goal.z = VfMul((self->base).goal.z, self->dist);
   (self->base).goal.w = 0.0f;
-  (self->base).goal.x = (self->base).goal.x + ((self->base).ctrl)->eye.x;
-  (self->base).goal.y = (self->base).goal.y + ((self->base).ctrl)->eye.y;
-  (self->base).goal.z = (self->base).goal.z + ((self->base).ctrl)->eye.z;
+  (self->base).goal.x = VfAdd((self->base).goal.x, ((self->base).ctrl)->eye.x);
+  (self->base).goal.y = VfAdd((self->base).goal.y, ((self->base).ctrl)->eye.y);
+  (self->base).goal.z = VfAdd((self->base).goal.z, ((self->base).ctrl)->eye.z);
 }

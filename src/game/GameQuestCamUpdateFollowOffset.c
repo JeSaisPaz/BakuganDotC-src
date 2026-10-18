@@ -38,18 +38,18 @@ void GameQuestCamUpdateFollowOffset(GameQuestCamPointMode *self)
   owner = (CamFollowOwner *)self->base.base.base.followed;
   e = &owner->vtbl[2];
   pos = ((const float *(*)(void *))e->fn)((char *)owner + e->delta);
-  eye.x = pos[0] + self->followOffset.x;
-  eye.y = pos[1] + self->followOffset.y;
-  eye.z = pos[2] + self->followOffset.z;
+  eye.x = VfAdd(pos[0], self->followOffset.x);
+  eye.y = VfAdd(pos[1], self->followOffset.y);
+  eye.z = VfAdd(pos[2], self->followOffset.z);
   eye.w = pos[3];
 
   obj = *(CamFollowEntryObj **)self->base.entry;
   e = &obj->vtbl[2];
   pos = ((const float *(*)(void *))e->fn)((char *)obj + e->delta);
-  dir.x = pos[0] - self->base.base.point.x;
-  dir.y = pos[1] - self->base.base.point.y;
-  dir.z = pos[2] - self->base.base.point.z;
-  lenSq = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
+  dir.x = VfSub(pos[0], self->base.base.point.x);
+  dir.y = VfSub(pos[1], self->base.base.point.y);
+  dir.z = VfSub(pos[2], self->base.base.point.z);
+  lenSq = VfDot3(dir.x, dir.y, dir.z, dir.x, dir.y, dir.z);
   if (lenSq <= 0.01f) {
     dir = g_gameQuestCamPointModeAxisConsts.zero;
   } else {
@@ -58,32 +58,32 @@ void GameQuestCamUpdateFollowOffset(GameQuestCamPointMode *self)
     if (VfIsZero(lenSq)) {
       scale = 0.0f;
     }
-    dir.x = VfSat1(dir.x * scale);
-    dir.y = VfSat1(dir.y * scale);
-    dir.z = VfSat1(dir.z * scale);
+    dir.x = VfSat1(VfMul(dir.x, scale));
+    dir.y = VfSat1(VfMul(dir.y, scale));
+    dir.z = VfSat1(VfMul(dir.z, scale));
   }
 
   if (self->base.base.base.ctrl->snap == 0) {
-    dot = dir.x * self->viewDir.x + dir.y * self->viewDir.y + dir.z * self->viewDir.z;
+    dot = VfDot3(dir.x, dir.y, dir.z, self->viewDir.x, self->viewDir.y, self->viewDir.z);
     if (dot < 0.3f) {
       axis = &g_gameQuestCamPointModeAxisConsts.axisY;
-      side.x = dir.y * axis->z - dir.z * axis->y;
-      side.y = dir.z * axis->x - dir.x * axis->z;
-      side.z = dir.x * axis->y - dir.y * axis->x;
-      dot = side.x * self->viewDir.x + side.y * self->viewDir.y + side.z * self->viewDir.z;
+      side.x = VfDot2(dir.y, dir.z, axis->z, -axis->y);
+      side.y = VfDot2(dir.z, dir.x, axis->x, -axis->z);
+      side.z = VfDot2(dir.x, dir.y, axis->y, -axis->x);
+      dot = VfDot3(side.x, side.y, side.z, self->viewDir.x, self->viewDir.y, self->viewDir.z);
       if (dot < 0.0f) {
         scale = self->entry->sideOffset * 1.5f;
       } else {
         scale = self->entry->sideOffset * -1.5f;
       }
-      side.x = side.x * scale;
-      side.y = side.y * scale;
-      side.z = side.z * scale;
+      side.x = VfMul(side.x, scale);
+      side.y = VfMul(side.y, scale);
+      side.z = VfMul(side.z, scale);
       obj = *(CamFollowEntryObj **)self->base.entry;
       e = &obj->vtbl[2];
       pos = ((const float *(*)(void *))e->fn)((char *)obj + e->delta);
-      eye.x = pos[0] + side.x;
-      eye.z = pos[2] + side.z;
+      eye.x = VfAdd(pos[0], side.x);
+      eye.z = VfAdd(pos[2], side.z);
     }
   }
   self->base.base.base.goal = eye;

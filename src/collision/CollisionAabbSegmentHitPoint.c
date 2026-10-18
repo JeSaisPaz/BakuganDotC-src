@@ -25,8 +25,8 @@ bool CollisionAabbSegmentHitPoint(const float *aabb, const void *seg, ScePspFVec
         ray->vtbl = g_collisionRayVtbl;
         ray->type = 1;
     }
-    lenSq = s->dir[0] * s->dir[0] + s->dir[1] * s->dir[1] + s->dir[2] * s->dir[2];
-    len = __builtin_sqrtf(lenSq);
+    lenSq = VfDot3(s->dir[0], s->dir[1], s->dir[2], s->dir[0], s->dir[1], s->dir[2]);
+    len = VfSqrt(lenSq);
 
     ray->origin.x = s->start[0];
     ray->origin.y = s->start[1];
@@ -37,9 +37,9 @@ bool CollisionAabbSegmentHitPoint(const float *aabb, const void *seg, ScePspFVec
     if (VfIsZero(lenSq)) {
         k = 0.0f;
     }
-    ray->dir.x = VfSat1(s->dir[0] * k);
-    ray->dir.y = VfSat1(s->dir[1] * k);
-    ray->dir.z = VfSat1(s->dir[2] * k);
+    ray->dir.x = VfSat1(VfMul(s->dir[0], k));
+    ray->dir.y = VfSat1(VfMul(s->dir[1], k));
+    ray->dir.z = VfSat1(VfMul(s->dir[2], k));
     ray->dir.w = 0.0f;
 
     x = VfRcp(ray->dir.x);
@@ -63,12 +63,12 @@ bool CollisionAabbSegmentHitPoint(const float *aabb, const void *seg, ScePspFVec
         return false;
     }
     t = g_collisionClosestParams[0];
-    x = ray->dir.x * t;
-    y = ray->dir.y * t;
-    z = ray->dir.z * t;
-    out->x = s->start[0] + x;
-    out->y = s->start[1] + y;
-    out->z = s->start[2] + z;
+    x = VfMul(ray->dir.x, t);
+    y = VfMul(ray->dir.y, t);
+    z = VfMul(ray->dir.z, t);
+    out->x = VfAdd(s->start[0], x);
+    out->y = VfAdd(s->start[1], y);
+    out->z = VfAdd(s->start[2], z);
     out->w = s->start[3];
     return true;
 }

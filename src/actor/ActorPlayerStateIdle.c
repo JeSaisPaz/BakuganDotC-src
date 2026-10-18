@@ -22,6 +22,6 @@ void ActorPlayerStateIdle(ActorPlayer *self)
     ActorSetState(&self->base, 0xb, 0);
   }
   vel = self->base.base.velocity;
-  vel[0] = vel[0] * 0.7f;
-  vel[2] = vel[2] * 0.7f;
+  vel[0] = VfMul(vel[0], 0.7f);
+  vel[2] = VfMul(vel[2], 0.7f);
 }

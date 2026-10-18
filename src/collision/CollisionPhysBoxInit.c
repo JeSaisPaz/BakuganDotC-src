@@ -34,9 +34,9 @@ void CollisionPhysBoxInit(CollisionPhysBox *self, void *mtx, const ScePspFVector
         self->prevPos = buf + 16;
     }
     ext = CollisionAabbExtent(&aabb->x, &self->halfExtents);
-    self->halfExtents.x = ext->x * 0.5f;
-    self->halfExtents.y = ext->y * 0.5f;
-    self->halfExtents.z = ext->z * 0.5f;
+    self->halfExtents.x = VfMul(ext->x, 0.5f);
+    self->halfExtents.y = VfMul(ext->y, 0.5f);
+    self->halfExtents.z = VfMul(ext->z, 0.5f);
     self->halfExtents.w = 0.0f;
     if (!(minExt <= self->halfExtents.x)) {
         minExt = self->halfExtents.x;
@@ -59,20 +59,20 @@ void CollisionPhysBoxInit(CollisionPhysBox *self, void *mtx, const ScePspFVector
     if (centred) {
         /* aabb is min (floats 0..3) followed by max (floats 4..7), as in CollisionAabbExtent */
         bounds = &aabb->x;
-        centre.x = (bounds[0] + bounds[4]) * 0.5f;
-        centre.y = (bounds[1] + bounds[5]) * 0.5f;
-        centre.z = (bounds[2] + bounds[6]) * 0.5f;
+        centre.x = VfMul(VfAdd(bounds[0], bounds[4]), 0.5f);
+        centre.y = VfMul(VfAdd(bounds[1], bounds[5]), 0.5f);
+        centre.z = VfMul(VfAdd(bounds[2], bounds[6]), 0.5f);
         centre.w = 0.0f;
     }
     for (i = 0; i < 8; i++) {
-        point.x = g_collisionUnitCorners[i].x * self->halfExtents.x;
-        point.y = g_collisionUnitCorners[i].y * self->halfExtents.y;
-        point.z = g_collisionUnitCorners[i].z * self->halfExtents.z;
+        point.x = VfMul(g_collisionUnitCorners[i].x, self->halfExtents.x);
+        point.y = VfMul(g_collisionUnitCorners[i].y, self->halfExtents.y);
+        point.z = VfMul(g_collisionUnitCorners[i].z, self->halfExtents.z);
         point.w = 0.0f;
         if (centred) {
-            point.x = point.x + centre.x;
-            point.y = point.y + centre.y;
-            point.z = point.z + centre.z;
+            point.x = VfAdd(point.x, centre.x);
+            point.y = VfAdd(point.y, centre.y);
+            point.z = VfAdd(point.z, centre.z);
         }
         MathMtx4TransformPoint(mtx, &out, &point);
         self->pos[i] = out;

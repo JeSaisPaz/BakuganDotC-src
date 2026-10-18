@@ -45,13 +45,13 @@ void BtlAttackType31Update(BtlAttack *self)
             angle = (variant < 2) ? 2.09439516f : 4.18879032f;
             /* dir x/z rotated by angle about y (vrot.q of angle * 2/pi): C000 = (c, 0, -s, 0),
                C010 = (s, 0, c, 0); x' = dot3(dir, C000), z' = dot3(dir, C010); y, w kept */
-            c = __builtin_cosf(angle);
-            s = __builtin_sinf(angle);
+            c = VfCosQuarter(VfMul(angle, 0.636619747f));
+            s = VfSinQuarter(VfMul(angle, 0.636619747f));
             x = self->dir[0];
             y = self->dir[1];
             z = self->dir[2];
-            self->dir[0] = x * c + y * 0.0f + z * -s;
-            self->dir[2] = x * s + y * 0.0f + z * c;
+            self->dir[0] = VfDot3(x, y, z, c, 0.0f, -s);
+            self->dir[2] = VfDot3(x, y, z, s, 0.0f, c);
         }
         self->mtx[0][0] = 30.0f;
         self->paramF2 = 8.0f;
@@ -78,9 +78,9 @@ void BtlAttackType31Update(BtlAttack *self)
     }
     self->mtx[0][0] = speed.f;
     /* pos.xyz += vel.xyz (w kept) */
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
     self->pos[1] = self->pos[1] + self->paramF2;
     self->paramF2 = self->paramF2 * 0.800000012f;
 }

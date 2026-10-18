@@ -28,10 +28,10 @@ CoreObject *GameGimmickSolidCtor(GameGimmick *obj, s32 kind, void *record, u16 t
   obj->base.fogFar = 0.0f;
   obj->base.fogNear = 0.0f;
   obj->base.lighting = 1;
-  obj->base.fogColor = (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.x) * 255.0f, 23)) |
-      (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.y) * 255.0f, 23)) << 8 |
-      (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.z) * 255.0f, 23)) << 16 |
-      (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.w) * 255.0f, 23)) << 24;
+  obj->base.fogColor = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.x), 255.0f), 23)) |
+      (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.y), 255.0f), 23)) << 8 |
+      (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.z), 255.0f), 23)) << 16 |
+      (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.w), 255.0f), 23)) << 24;
 
   specular[0] = 0.6f;
   specular[1] = 0.6f;

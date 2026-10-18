@@ -63,10 +63,10 @@ void *BtlAiFindNearestUnitByClass(BtlAi *self, u32 *mask)
             continue;
         }
         /* |owner->pos - unit->pos| over x, y, z */
-        dx = self->owner->base.pos[0] - unit->base.pos[0];
-        dy = self->owner->base.pos[1] - unit->base.pos[1];
-        dz = self->owner->base.pos[2] - unit->base.pos[2];
-        dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+        dx = VfSub(self->owner->base.pos[0], unit->base.pos[0]);
+        dy = VfSub(self->owner->base.pos[1], unit->base.pos[1]);
+        dz = VfSub(self->owner->base.pos[2], unit->base.pos[2]);
+        dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
         if (best == NULL || dist < bestDist) {
             best = unit;
             bestDist = dist;

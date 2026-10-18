@@ -28,17 +28,17 @@ CoreObject *GameStageCreateProp(char *gmoName, float *pos, void *list, bool flag
     obj = self;
   }
   m = obj->data->rootMatrix;
-  m[0] = __builtin_cosf(pos[3]);
+  m[0] = VfCosQuarter(VfMul(pos[3], 0.636619747f));
   m[1] = 0.0f;
-  m[2] = -__builtin_sinf(pos[3]);
+  m[2] = -VfSinQuarter(VfMul(pos[3], 0.636619747f));
   m[3] = 0.0f;
   m[4] = 0.0f;
   m[5] = 1.0f;
   m[6] = 0.0f;
   m[7] = 0.0f;
-  m[8] = __builtin_sinf(pos[3]);
+  m[8] = VfSinQuarter(VfMul(pos[3], 0.636619747f));
   m[9] = 0.0f;
-  m[10] = __builtin_cosf(pos[3]);
+  m[10] = VfCosQuarter(VfMul(pos[3], 0.636619747f));
   m[11] = 0.0f;
   m[12] = 0.0f;
   m[13] = 0.0f;

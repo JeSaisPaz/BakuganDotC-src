@@ -20,6 +20,6 @@ bool UiComboListBounceStep(float *amplitude, s32 *frame, float *scale)
   *amplitude = amp;
   angle = (float)*frame * 0.53f;
   /* vmul by S703 (2/pi) then vcos.s (quarter turns): cosine of the angle in radians */
-  *scale = 1.0f - __builtin_cosf(angle) * amp;
+  *scale = 1.0f - VfCosQuarter(VfMul(angle, 0.636619747f)) * amp;
   return false;
 }

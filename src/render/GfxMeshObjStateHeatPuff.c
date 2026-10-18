@@ -20,17 +20,17 @@
 /* velocity -= axis (xyz) */
 static inline void HeatPuffDecelerate(GfxMeshObj *self)
 {
-  self->velocity[0] = self->velocity[0] - self->axis[0];
-  self->velocity[1] = self->velocity[1] - self->axis[1];
-  self->velocity[2] = self->velocity[2] - self->axis[2];
+  self->velocity[0] = VfSub(self->velocity[0], self->axis[0]);
+  self->velocity[1] = VfSub(self->velocity[1], self->axis[1]);
+  self->velocity[2] = VfSub(self->velocity[2], self->axis[2]);
 }
 
 /* pos += velocity (xyz) */
 static inline void HeatPuffMove(GfxMeshObj *self)
 {
-  self->pos[0] = self->pos[0] + self->velocity[0];
-  self->pos[1] = self->pos[1] + self->velocity[1];
-  self->pos[2] = self->pos[2] + self->velocity[2];
+  self->pos[0] = VfAdd(self->pos[0], self->velocity[0]);
+  self->pos[1] = VfAdd(self->pos[1], self->velocity[1]);
+  self->pos[2] = VfAdd(self->pos[2], self->velocity[2]);
 }
 
 void GfxMeshObjStateHeatPuff(GfxMeshObj *self)
@@ -65,7 +65,7 @@ void GfxMeshObjStateHeatPuff(GfxMeshObj *self)
       self->color[1] = 1.0f;
       self->color[2] = 1.0f;
       self->color[3] = 0.5f;
-      self->radius = (PlatformRandFloat12() - 1.0f) * 10.0f + 22.0f;
+      self->radius = (VfSub(PlatformRandFloat12(), 1.0f)) * 10.0f + 22.0f;
       self->step = self->step + 1;
       heading = 1.57079637f - g_gfxActiveCamera->yaw;
       if (!(heading <= 3.14159274f)) {
@@ -73,19 +73,19 @@ void GfxMeshObjStateHeatPuff(GfxMeshObj *self)
       } else if (heading <= -3.14159274f) {
         heading = heading + 6.28318548f;
       }
-      side = (PlatformRandFloat12() - 1.0f) * 2.0f - 1.0f;
+      side = (VfSub(PlatformRandFloat12(), 1.0f)) * 2.0f - 1.0f;
       /* vrot.q [C,0,S,0] of heading × 2/π, scaled (xyz) by side; w lane 0 */
-      c = __builtin_cosf(heading);
-      s = __builtin_sinf(heading);
-      self->velocity[0] = c * side;
-      self->velocity[1] = 0.0f * side;
-      self->velocity[2] = s * side;
+      c = VfCosQuarter(VfMul(heading, 0.636619747f));
+      s = VfSinQuarter(VfMul(heading, 0.636619747f));
+      self->velocity[0] = VfMul(c, side);
+      self->velocity[1] = VfMul(0.0f, side);
+      self->velocity[2] = VfMul(s, side);
       self->velocity[3] = 0.0f;
       HeatPuffMove(self);
       /* axis = velocity × 0.03 (xyz); w is the bank's S713 (0) */
-      self->axis[0] = self->velocity[0] * 0.0299999993f;
-      self->axis[1] = self->velocity[1] * 0.0299999993f;
-      self->axis[2] = self->velocity[2] * 0.0299999993f;
+      self->axis[0] = VfMul(self->velocity[0], 0.0299999993f);
+      self->axis[1] = VfMul(self->velocity[1], 0.0299999993f);
+      self->axis[2] = VfMul(self->velocity[2], 0.0299999993f);
       self->axis[3] = 0.0f;
       return;
     }
@@ -102,12 +102,12 @@ void GfxMeshObjStateHeatPuff(GfxMeshObj *self)
     pull[2] = 0.200000003f;
     pull[3] = 0.0f;
     /* pos -= camera dir × pull (xyz) */
-    tmp[0] = g_gfxActiveCamera->dir[0] * pull[0];
-    tmp[1] = g_gfxActiveCamera->dir[1] * pull[1];
-    tmp[2] = g_gfxActiveCamera->dir[2] * pull[2];
-    self->pos[0] = self->pos[0] - tmp[0];
-    self->pos[1] = self->pos[1] - tmp[1];
-    self->pos[2] = self->pos[2] - tmp[2];
+    tmp[0] = VfMul(g_gfxActiveCamera->dir[0], pull[0]);
+    tmp[1] = VfMul(g_gfxActiveCamera->dir[1], pull[1]);
+    tmp[2] = VfMul(g_gfxActiveCamera->dir[2], pull[2]);
+    self->pos[0] = VfSub(self->pos[0], tmp[0]);
+    self->pos[1] = VfSub(self->pos[1], tmp[1]);
+    self->pos[2] = VfSub(self->pos[2], tmp[2]);
     alpha = self->color[3] + 0.0909999982f;
     self->color[3] = alpha;
     if (!(alpha < 0.839999974f)) {

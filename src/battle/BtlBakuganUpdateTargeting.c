@@ -101,23 +101,23 @@ void BtlBakuganUpdateTargeting(BtlBakugan *self)
             float reach;
             float reachSq;
 
-            dx = target->base.pos[0] - self->base.pos[0];
-            dy = target->base.pos[1] - self->base.pos[1];
-            dz = target->base.pos[2] - self->base.pos[2];
-            self->targetDistance = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+            dx = VfSub(target->base.pos[0], self->base.pos[0]);
+            dy = VfSub(target->base.pos[1], self->base.pos[1]);
+            dz = VfSub(target->base.pos[2], self->base.pos[2]);
+            self->targetDistance = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
 
             reach = self->combat.stats->reachRadius + target->combat.stats->reachRadius;
             if (!(reach <= 150.0f)) {
                 reach = 150.0f;
             }
             reachSq = reach * reach * 0.7f;
-            horizSq = dx * dx + dz * dz;
+            horizSq = VfDot2(dx, dz, dx, dz);
             horizSq = horizSq - reachSq;
             self->noTurn = horizSq < 0.0f;
             self->targetCloseness = 1.0f - horizSq / reachSq;
 
             dy = dy * 0.85f;
-            scaledSq = dx * dx + dy * dy + dz * dz;
+            scaledSq = VfDot3(dx, dy, dz, dx, dy, dz);
             self->targetNear = scaledSq < (reach + 150.0f) * (reach + 150.0f) * 0.75f;
         }
     }

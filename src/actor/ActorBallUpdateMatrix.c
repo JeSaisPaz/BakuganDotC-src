@@ -33,8 +33,7 @@ static void ActorBallMul(float *dst, const float *a, const float *rot)
 
   for (r = 0; r < 4; r++) {
     for (c = 0; c < 4; c++) {
-      tmp[r * 4 + c] = a[r * 4 + 0] * rot[0 * 4 + c] + a[r * 4 + 1] * rot[1 * 4 + c] +
-                       a[r * 4 + 2] * rot[2 * 4 + c] + a[r * 4 + 3] * rot[3 * 4 + c];
+      tmp[r * 4 + c] = VfDot4(a[r * 4 + 0], a[r * 4 + 1], a[r * 4 + 2], a[r * 4 + 3], rot[0 * 4 + c], rot[1 * 4 + c], rot[2 * 4 + c], rot[3 * 4 + c]);
     }
   }
   for (c = 0; c < 16; c++) {
@@ -71,8 +70,8 @@ void ActorBallUpdateMatrix(ActorBall *self)
   diag[5] = self->base.scale[1];
   diag[10] = self->base.scale[2];
   diag[15] = 1.0f;
-  c = __builtin_cosf(heading);
-  s = __builtin_sinf(heading);
+  c = VfCosQuarter(VfMul(heading, 0.636619747f));
+  s = VfSinQuarter(VfMul(heading, 0.636619747f));
   rot[0] = c;
   rot[1] = 0.0f;
   rot[2] = -s;
@@ -94,8 +93,8 @@ void ActorBallUpdateMatrix(ActorBall *self)
   /* X rotation by rot[2] */
   root = self->base.data->rootMatrix;
   angle = self->base.rot[2];
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   rot[0] = 1.0f;
   rot[1] = 0.0f;
   rot[2] = 0.0f;
@@ -117,8 +116,8 @@ void ActorBallUpdateMatrix(ActorBall *self)
   /* Z rotation by rot[0] */
   root = self->base.data->rootMatrix;
   angle = self->base.rot[0];
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   rot[0] = c;
   rot[1] = s;
   rot[2] = 0.0f;

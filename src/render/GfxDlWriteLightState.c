@@ -47,10 +47,10 @@ u32 *GfxDlWriteLightState(u32 *list, GfxCamera *camera, s32 shadowed)
   list[7] = (FloatBits(g_gfxLightDir1[0]) >> 8) | 0x66000000;
   list[8] = (FloatBits(g_gfxLightDir1[1]) >> 8) | 0x67000000;
   list[9] = (FloatBits(g_gfxLightDir1[2]) >> 8) | 0x68000000;
-  packed = (u32)VfI2uc(VfF2iz(VfSat0(g_gfxLightColor1[0]) * 255.0f, 23))
-         | ((u32)VfI2uc(VfF2iz(VfSat0(g_gfxLightColor1[1]) * 255.0f, 23)) << 8)
-         | ((u32)VfI2uc(VfF2iz(VfSat0(g_gfxLightColor1[2]) * 255.0f, 23)) << 16)
-         | ((u32)VfI2uc(VfF2iz(VfSat0(g_gfxLightColor1[3]) * 255.0f, 23)) << 24);
+  packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_gfxLightColor1[0]), 255.0f), 23))
+         | ((u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_gfxLightColor1[1]), 255.0f), 23)) << 8)
+         | ((u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_gfxLightColor1[2]), 255.0f), 23)) << 16)
+         | ((u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_gfxLightColor1[3]), 255.0f), 23)) << 24);
   list[10] = (packed & 0xffffff) | 0x93000000;
   list[11] = 0xc6000101;
   if (camera != NULL) {

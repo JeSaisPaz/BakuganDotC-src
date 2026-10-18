@@ -56,10 +56,10 @@ void GfxModelListDrawOpaque(u32 **list, void *first, bool sorted)
       if (!(model->ambient[3] < 1.0f)) {
         /* vsub.q + vdot.t: squared distance eye -> root translation */
         const float *t = &model->data->rootMatrix[12];
-        float dx = eye[0] - t[0];
-        float dy = eye[1] - t[1];
-        float dz = eye[2] - t[2];
-        pairs[count].depth = dx * dx + dy * dy + dz * dz;
+        float dx = VfSub(eye[0], t[0]);
+        float dy = VfSub(eye[1], t[1]);
+        float dz = VfSub(eye[2], t[2]);
+        pairs[count].depth = VfDot3(dx, dy, dz, dx, dy, dz);
         pairs[count].model = model;
         count++;
       }

@@ -56,9 +56,7 @@ void ActorUpdate(Actor *self)
   ((void (*)(void *))vt->fn)((u8 *)self + vt->delta);
 
   /* |velocity|^2 (xyz), read after the behaviour slot */
-  speedSq = self->base.velocity[0] * self->base.velocity[0] +
-            self->base.velocity[1] * self->base.velocity[1] +
-            self->base.velocity[2] * self->base.velocity[2];
+  speedSq = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
   moving = 0;
   if (!(speedSq <= 1e-05f)) {
     moving = 1;
@@ -101,22 +99,22 @@ void ActorUpdate(Actor *self)
     /* tiltQuat += (g_vecUp - tiltQuat) * 0.2; then xyz normalised and clamped to [-1, 1] (factor
        0 for a zero length); w is the bank S713 = 0 */
     q = self->tiltQuat;
-    x = q[0] + (g_vecUp.x - q[0]) * 0.2f;
-    y = q[1] + (g_vecUp.y - q[1]) * 0.2f;
-    z = q[2] + (g_vecUp.z - q[2]) * 0.2f;
-    w = q[3] + (g_vecUp.w - q[3]) * 0.2f;
+    x = VfAdd(q[0], VfMul(VfSub(g_vecUp.x, q[0]), 0.2f));
+    y = VfAdd(q[1], VfMul(VfSub(g_vecUp.y, q[1]), 0.2f));
+    z = VfAdd(q[2], VfMul(VfSub(g_vecUp.z, q[2]), 0.2f));
+    w = VfAdd(q[3], VfMul(VfSub(g_vecUp.w, q[3]), 0.2f));
     q[0] = x;
     q[1] = y;
     q[2] = z;
     q[3] = w;
-    lenSq = x * x + y * y + z * z;
+    lenSq = VfDot3(x, y, z, x, y, z);
     inv = VfRsq(lenSq);
     if (VfIsZero(lenSq)) {
       inv = 0.0f;
     }
-    q[0] = VfSat1(x * inv);
-    q[1] = VfSat1(y * inv);
-    q[2] = VfSat1(z * inv);
+    q[0] = VfSat1(VfMul(x, inv));
+    q[1] = VfSat1(VfMul(y, inv));
+    q[2] = VfSat1(VfMul(z, inv));
     q[3] = 0.0f;
   }
 }

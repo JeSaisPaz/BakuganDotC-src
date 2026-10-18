@@ -38,7 +38,7 @@ static inline void BtlHudFinishPairLerp(float *pos, const float *to, float t)
     int i;
 
     for (i = 0; i < 4; i++) {
-        pos[i] = pos[i] + (to[i] - pos[i]) * t;
+        pos[i] = VfAdd(pos[i], VfMul(VfSub(to[i], pos[i]), t));
     }
 }
 
@@ -87,7 +87,7 @@ void BtlHudAnimateFinishBannerPair(BtlHud *self)
         self->finishAngle = angle;
         angle = BtlHudFinishPairClamp(angle);
         self->finishAngle = angle;
-        t = __builtin_sinf(angle);
+        t = VfSinQuarter(VfMul(angle, 0.636619747f));
         top->alpha = t;
         BtlHudFinishPairLerp(&top->posX, self->finishTarget, t);
         bottom->alpha = t;

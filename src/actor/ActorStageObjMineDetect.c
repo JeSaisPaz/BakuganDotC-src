@@ -13,11 +13,11 @@
 
 static float MineDistSq(const float *other, const float *self)
 {
-  float dx = other[0] - self[0];
-  float dy = other[1] - self[1];
-  float dz = other[2] - self[2];
+  float dx = VfSub(other[0], self[0]);
+  float dy = VfSub(other[1], self[1]);
+  float dz = VfSub(other[2], self[2]);
 
-  return dx * dx + dy * dy + dz * dz;
+  return VfDot3(dx, dy, dz, dx, dy, dz);
 }
 
 int ActorStageObjMineDetect(ActorStageObjMine *self)

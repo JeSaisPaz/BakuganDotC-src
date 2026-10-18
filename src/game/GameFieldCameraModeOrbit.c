@@ -19,10 +19,10 @@
 /* d += (to - d) * k on all four lanes (vsub.q, vscl.q, vadd.q). */
 static void OrbitEase(ScePspFVector4 *d, const ScePspFVector4 *to, float k)
 {
-  d->x = d->x + (to->x - d->x) * k;
-  d->y = d->y + (to->y - d->y) * k;
-  d->z = d->z + (to->z - d->z) * k;
-  d->w = d->w + (to->w - d->w) * k;
+  d->x = VfAdd(d->x, VfMul(VfSub(to->x, d->x), k));
+  d->y = VfAdd(d->y, VfMul(VfSub(to->y, d->y), k));
+  d->z = VfAdd(d->z, VfMul(VfSub(to->z, d->z), k));
+  d->w = VfAdd(d->w, VfMul(VfSub(to->w, d->w), k));
 }
 
 /* out = q * (v.xyz, 0) * conj(q) (two vqmul.q; the 0 is the bank's S730). */
@@ -41,14 +41,14 @@ static void OrbitQuatRotate(ScePspFVector4 *out, const float *q, const ScePspFVe
   float tz;
   float tw;
 
-  tx = q[0] * pw + q[1] * pz - q[2] * py + q[3] * px;
-  ty = -q[0] * pz + q[1] * pw + q[2] * px + q[3] * py;
-  tz = q[0] * py - q[1] * px + q[2] * pw + q[3] * pz;
-  tw = -q[0] * px - q[1] * py - q[2] * pz + q[3] * pw;
-  out->x = tx * cw + ty * cz - tz * cy + tw * cx;
-  out->y = -tx * cz + ty * cw + tz * cx + tw * cy;
-  out->z = tx * cy - ty * cx + tz * cw + tw * cz;
-  out->w = -tx * cx - ty * cy - tz * cz + tw * cw;
+  tx = VfDot4(q[0], q[1], q[2], q[3], pw, pz, -py, px);
+  ty = VfDot4(-q[0], q[1], q[2], q[3], pz, pw, px, py);
+  tz = VfDot4(q[0], q[1], q[2], q[3], py, -px, pw, pz);
+  tw = VfDot4(-q[0], q[1], q[2], q[3], px, -py, -pz, pw);
+  out->x = VfDot4(tx, ty, tz, tw, cw, cz, -cy, cx);
+  out->y = VfDot4(-tx, ty, tz, tw, cz, cw, cx, cy);
+  out->z = VfDot4(tx, ty, tz, tw, cy, -cx, cw, cz);
+  out->w = VfDot4(-tx, ty, tz, tw, cx, -cy, -cz, cw);
 }
 
 void GameFieldCameraModeOrbit(GameFieldCamera *cam)
@@ -92,11 +92,11 @@ void GameFieldCameraModeOrbit(GameFieldCamera *cam)
   cam->followGoal = cam->followLookAt;
   OrbitEase(&cam->followLookAt, &look, 0.5f);
   /* offset = eye - followLookAt (xyz, w = eye.w); dist = |offset.xyz| */
-  offset.x = eye->x - cam->followLookAt.x;
-  offset.y = eye->y - cam->followLookAt.y;
-  offset.z = eye->z - cam->followLookAt.z;
+  offset.x = VfSub(eye->x, cam->followLookAt.x);
+  offset.y = VfSub(eye->y, cam->followLookAt.y);
+  offset.z = VfSub(eye->z, cam->followLookAt.z);
   offset.w = eye->w;
-  dist = __builtin_sqrtf(offset.x * offset.x + offset.y * offset.y + offset.z * offset.z);
+  dist = VfSqrt(VfDot3(offset.x, offset.y, offset.z, offset.x, offset.y, offset.z));
   radius = dist + (cam->distance - dist) * 0.4f;
   elev = -atan2f(offset.y, __builtin_sqrtf(offset.x * offset.x + offset.z * offset.z));
   angle = elev + ((cam->orbitPitch - cam->pitch) - elev) * 0.2f;
@@ -122,9 +122,9 @@ void GameFieldCameraModeOrbit(GameFieldCamera *cam)
   cam->talkSideOffset = cam->talkSideOffset + v;
   yaw = cam->talkSideOffset;
   /* vrot [C,0,S,0] of yaw * 2/pi, scaled by radius on xyz; w stays 0 */
-  offset.x = __builtin_cosf(yaw) * radius;
-  offset.y = 0.0f * radius;
-  offset.z = __builtin_sinf(yaw) * radius;
+  offset.x = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), radius);
+  offset.y = VfMul(0.0f, radius);
+  offset.z = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), radius);
   offset.w = 0.0f;
   /* axis = (offset.z, offset.y, -offset.x), w = 0 */
   axis.x = offset.z;
@@ -139,48 +139,48 @@ void GameFieldCameraModeOrbit(GameFieldCamera *cam)
   blend = blend * blend;
   cam->prevEye = *eye;
   /* axis = normalize(axis), clamped to [-1, 1]; a zero-length axis scales by 0 (S713) */
-  k = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
+  k = VfDot3(axis.x, axis.y, axis.z, axis.x, axis.y, axis.z);
   if (VfIsZero(k)) {
     k = 0.0f;
   }
   else {
     k = VfRsq(k);
   }
-  axis.x = VfSat1(axis.x * k);
-  axis.y = VfSat1(axis.y * k);
-  axis.z = VfSat1(axis.z * k);
+  axis.x = VfSat1(VfMul(axis.x, k));
+  axis.y = VfSat1(VfMul(axis.y, k));
+  axis.z = VfSat1(VfMul(axis.z, k));
   axis.w = 0.0f;
   quat = MathQuatFromAxisAngle(angle, (float *)&rot1, (const float *)&axis);
   OrbitQuatRotate(&turned, quat, &offset);
-  point.x = cam->followLookAt.x + turned.x;
-  point.y = cam->followLookAt.y + turned.y;
-  point.z = cam->followLookAt.z + turned.z;
+  point.x = VfAdd(cam->followLookAt.x, turned.x);
+  point.y = VfAdd(cam->followLookAt.y, turned.y);
+  point.z = VfAdd(cam->followLookAt.z, turned.z);
   point.w = cam->followLookAt.w;
   OrbitEase(eye, &point, blend);
   OrbitEase(target, &cam->followLookAt, blend);
   origin = cam->prevEye;
   quat = MathQuatFromAxisAngle(elev - cam->orbitPitch, (float *)&rot2, (const float *)&axis);
   OrbitQuatRotate(&turned, quat, &offset);
-  point.x = cam->followLookAt.x + turned.x;
-  point.y = cam->followLookAt.y + turned.y;
-  point.z = cam->followLookAt.z + turned.z;
+  point.x = VfAdd(cam->followLookAt.x, turned.x);
+  point.y = VfAdd(cam->followLookAt.y, turned.y);
+  point.z = VfAdd(cam->followLookAt.z, turned.z);
   point.w = cam->followLookAt.w;
   OrbitEase(&origin, &point, blend);
-  dir.x = target->x - origin.x;
-  dir.y = target->y - origin.y;
-  dir.z = target->z - origin.z;
+  dir.x = VfSub(target->x, origin.x);
+  dir.y = VfSub(target->y, origin.y);
+  dir.z = VfSub(target->z, origin.z);
   dir.w = target->w;
   if (CollisionRaycastRay(0x2f800700, (const float *)&origin, (const float *)&dir) != NULL) {
     /* d1 = |origin - followLookAt|^2; d2 = |origin - hit point|^2 */
-    dx = origin.x - cam->followLookAt.x;
-    dy = origin.y - cam->followLookAt.y;
-    dz = origin.z - cam->followLookAt.z;
-    d1 = dx * dx + dy * dy + dz * dz;
+    dx = VfSub(origin.x, cam->followLookAt.x);
+    dy = VfSub(origin.y, cam->followLookAt.y);
+    dz = VfSub(origin.z, cam->followLookAt.z);
+    d1 = VfDot3(dx, dy, dz, dx, dy, dz);
     hit = &g_collisionHitResult.point;
-    dx = origin.x - hit->x;
-    dy = origin.y - hit->y;
-    dz = origin.z - hit->z;
-    d2 = dx * dx + dy * dy + dz * dz;
+    dx = VfSub(origin.x, hit->x);
+    dy = VfSub(origin.y, hit->y);
+    dz = VfSub(origin.z, hit->z);
+    d2 = VfDot3(dx, dy, dz, dx, dy, dz);
     if (d1 <= d2) {
       return;
     }
@@ -201,14 +201,14 @@ void GameFieldCameraModeOrbit(GameFieldCamera *cam)
   origin = cam->prevEye;
   quat = MathQuatFromAxisAngle(angle, (float *)&rot3, (const float *)&axis);
   OrbitQuatRotate(&dir, quat, &offset);
-  point.x = cam->followLookAt.x + dir.x;
-  point.y = cam->followLookAt.y + dir.y;
-  point.z = cam->followLookAt.z + dir.z;
+  point.x = VfAdd(cam->followLookAt.x, dir.x);
+  point.y = VfAdd(cam->followLookAt.y, dir.y);
+  point.z = VfAdd(cam->followLookAt.z, dir.z);
   point.w = cam->followLookAt.w;
   OrbitEase(&origin, &point, blend);
-  dir.x = target->x - origin.x;
-  dir.y = target->y - origin.y;
-  dir.z = target->z - origin.z;
+  dir.x = VfSub(target->x, origin.x);
+  dir.y = VfSub(target->y, origin.y);
+  dir.z = VfSub(target->z, origin.z);
   dir.w = target->w;
   if (CollisionRaycastRay(0x2f800700, (const float *)&origin, (const float *)&dir) != NULL) {
     return;

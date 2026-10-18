@@ -27,29 +27,29 @@ void ActorCrystalReactToCollider(ActorCrystal *self)
     if (canHit) {
         collider = (CollisionCollider *)self->collider2;
         /* dir = anchor row 3 - hit point, y forced to 0 */
-        dir[0] = self->base.anchorMatrix[3][0] - collider->hitPos.x;
-        dir[2] = self->base.anchorMatrix[3][2] - collider->hitPos.z;
+        dir[0] = VfSub(self->base.anchorMatrix[3][0], collider->hitPos.x);
+        dir[2] = VfSub(self->base.anchorMatrix[3][2], collider->hitPos.z);
         dir[1] = 0.0f;
         /* normalised (zero length: scale by S713 = 0), saturated to [-1, 1]; lane 3 is the masked
            lane of C710, i.e. S713 = 0 */
-        lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+        lenSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
         k = VfRsq(lenSq);
         if (VfIsZero(lenSq)) {
             k = 0.0f;
         }
-        dir[0] = VfSat1(dir[0] * k);
-        dir[1] = VfSat1(dir[1] * k);
-        dir[2] = VfSat1(dir[2] * k);
+        dir[0] = VfSat1(VfMul(dir[0], k));
+        dir[1] = VfSat1(VfMul(dir[1], k));
+        dir[2] = VfSat1(VfMul(dir[2], k));
         dir[3] = 0.0f;
         /* heading * S703 fed to vrot [C,0,S,0], scaled by 0; lane 3 stays 0 */
-        pos[0] = __builtin_cosf(heading) * 0.0f;
+        pos[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), 0.0f);
         pos[1] = 0.0f * 0.0f;
-        pos[2] = __builtin_sinf(heading) * 0.0f;
+        pos[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), 0.0f);
         pos[3] = 0.0f;
         collider = (CollisionCollider *)self->collider2;
-        pos[0] = pos[0] + collider->hitPos.x;
-        pos[1] = pos[1] + collider->hitPos.y;
-        pos[2] = pos[2] + collider->hitPos.z;
+        pos[0] = VfAdd(pos[0], collider->hitPos.x);
+        pos[1] = VfAdd(pos[1], collider->hitPos.y);
+        pos[2] = VfAdd(pos[2], collider->hitPos.z);
         GfxEffectSpawnDirected(g_btlUnitEffectMgr, 0x37, pos, dir);
         BtlBakuganPlaySound(&self->base, 0x20006f, 0, 0);
         collider = (CollisionCollider *)self->collider2;

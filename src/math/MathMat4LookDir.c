@@ -12,30 +12,30 @@ float *MathMat4LookDir(float *out, const float *dir, const float *up)
     float xx, xy, xz;
     float yx, yy, yz;
 
-    s = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+    s = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
     if (VfIsZero(s))
         s = 0.0f;
     else
         s = VfRsq(s);
-    zx = VfSat1(dir[0] * s);
-    zy = VfSat1(dir[1] * s);
-    zz = VfSat1(dir[2] * s);
+    zx = VfSat1(VfMul(dir[0], s));
+    zy = VfSat1(VfMul(dir[1], s));
+    zz = VfSat1(VfMul(dir[2], s));
 
-    xx = up[1] * zz - up[2] * zy;
-    xy = up[2] * zx - up[0] * zz;
-    xz = up[0] * zy - up[1] * zx;
-    s = xx * xx + xy * xy + xz * xz;
+    xx = VfDot2(up[1], up[2], zz, -zy);
+    xy = VfDot2(up[2], up[0], zx, -zz);
+    xz = VfDot2(up[0], up[1], zy, -zx);
+    s = VfDot3(xx, xy, xz, xx, xy, xz);
     if (VfIsZero(s))
         s = 0.0f;
     else
         s = VfRsq(s);
-    xx = VfSat1(xx * s);
-    xy = VfSat1(xy * s);
-    xz = VfSat1(xz * s);
+    xx = VfSat1(VfMul(xx, s));
+    xy = VfSat1(VfMul(xy, s));
+    xz = VfSat1(VfMul(xz, s));
 
-    yx = zy * xz - zz * xy;
-    yy = zz * xx - zx * xz;
-    yz = zx * xy - zy * xx;
+    yx = VfDot2(zy, zz, xz, -xy);
+    yy = VfDot2(zz, zx, xx, -xz);
+    yz = VfDot2(zx, zy, xy, -xx);
 
     out[0] = xx;
     out[1] = xy;

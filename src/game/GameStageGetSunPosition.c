@@ -16,9 +16,9 @@ s32 GameStageGetSunPosition(float *out)
         out[1] = e[1];
         out[2] = e[2];
         /* vscl.t + sv.q: lane 3 (out[3]) gets a stale VFPU value, left out */
-        out[0] = out[0] * 0.7f;
-        out[1] = out[1] * 0.7f;
-        out[2] = out[2] * 0.7f;
+        out[0] = VfMul(out[0], 0.7f);
+        out[1] = VfMul(out[1], 0.7f);
+        out[2] = VfMul(out[2], 0.7f);
         out[1] = out[1] * 0.6f;
         return 1;
     }

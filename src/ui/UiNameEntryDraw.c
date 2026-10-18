@@ -35,8 +35,7 @@ static void UiNameEntryMatMul(float *out, const float *a, const float *b)
 
   for (row = 0; row < 4; row++) {
     for (col = 0; col < 4; col++) {
-      tmp[row * 4 + col] = a[row * 4 + 0] * b[0 * 4 + col] + a[row * 4 + 1] * b[1 * 4 + col] +
-                           a[row * 4 + 2] * b[2 * 4 + col] + a[row * 4 + 3] * b[3 * 4 + col];
+      tmp[row * 4 + col] = VfDot4(a[row * 4 + 0], a[row * 4 + 1], a[row * 4 + 2], a[row * 4 + 3], b[0 * 4 + col], b[1 * 4 + col], b[2 * 4 + col], b[3 * 4 + col]);
     }
   }
   for (row = 0; row < 16; row++) {
@@ -146,8 +145,7 @@ void UiNameEntryDraw(UiNameEntry *self)
     right[3][0] = -q[0]; right[3][1] = -q[1]; right[3][2] = -q[2]; right[3][3] = q[3];
     for (i = 0; i < 3; i++) {
       for (k = 0; k < 3; k++) {
-        tilt[i * 4 + k] = left[0][k] * right[i][0] + left[1][k] * right[i][1] +
-                          left[2][k] * right[i][2] + left[3][k] * right[i][3];
+        tilt[i * 4 + k] = VfDot4(left[0][k], left[1][k], left[2][k], left[3][k], right[i][0], right[i][1], right[i][2], right[i][3]);
       }
       tilt[i * 4 + 3] = 0.0f;
     }
@@ -160,20 +158,20 @@ void UiNameEntryDraw(UiNameEntry *self)
     model = (GfxModel *)self->avatar;
     root = model->data->rootMatrix;
     angle = UiNameEntryWrapAngle(1.57079637f - model->rot[1]);
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
-    root[0] = c * model->scale[0];
-    root[1] = 0.0f;
-    root[2] = -s * model->scale[0];
-    root[3] = 0.0f;
-    root[4] = 0.0f;
-    root[5] = model->scale[1];
-    root[6] = 0.0f;
-    root[7] = 0.0f;
-    root[8] = s * model->scale[2];
-    root[9] = 0.0f;
-    root[10] = c * model->scale[2];
-    root[11] = 0.0f;
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
+    root[0] = VfDot2(model->scale[0], 0.0f, c, s);
+    root[1] = VfDot2(model->scale[0], 0.0f, 0.0f, 0.0f);
+    root[2] = VfDot2(model->scale[0], 0.0f, -s, c);
+    root[3] = VfDot2(model->scale[0], 0.0f, 0.0f, 0.0f);
+    root[4] = VfDot3(0.0f, model->scale[1], 0.0f, c, 0.0f, s);
+    root[5] = VfDot2(model->scale[1], 0.0f, 1.0f, 0.0f);
+    root[6] = VfDot3(0.0f, model->scale[1], 0.0f, -s, 0.0f, c);
+    root[7] = VfDot2(model->scale[1], 0.0f, 0.0f, 0.0f);
+    root[8] = VfDot2(0.0f, model->scale[2], c, s);
+    root[9] = VfDot2(model->scale[2], 0.0f, 0.0f, 0.0f);
+    root[10] = VfDot2(0.0f, model->scale[2], -s, c);
+    root[11] = VfDot2(model->scale[2], 0.0f, 0.0f, 0.0f);
     root[12] = 0.0f;
     root[13] = 0.0f;
     root[14] = 0.0f;
@@ -183,8 +181,8 @@ void UiNameEntryDraw(UiNameEntry *self)
     model = (GfxModel *)self->avatar;
     root = model->data->rootMatrix;
     angle = UiNameEntryWrapAngle(1.57079637f - model->rot[0]);
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
     for (i = 0; i < 16; i++) {
       rot[i] = 0.0f;
     }
@@ -200,8 +198,8 @@ void UiNameEntryDraw(UiNameEntry *self)
     model = (GfxModel *)self->avatar;
     root = model->data->rootMatrix;
     angle = UiNameEntryWrapAngle(1.57079637f - model->rot[2]);
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
     for (i = 0; i < 16; i++) {
       rot[i] = 0.0f;
     }

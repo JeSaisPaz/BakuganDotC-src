@@ -24,8 +24,8 @@ ActorStageObjBase *ActorStageObjBaseCtorByName(ActorStageObjBase *self, const ch
   self->removeRequest = 0;
   m = self->base.data->rootMatrix;
   angle = pos[3] * 0.017453292f;
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   m[0] = c;
   m[1] = 0.0f;
   m[2] = -s;

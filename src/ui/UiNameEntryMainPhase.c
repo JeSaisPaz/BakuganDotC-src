@@ -341,10 +341,10 @@ void UiNameEntryMainPhase(UiNameEntry *self)
 
   /* cosine pulse of the cursor colours */
   angle = self->cursorAngle;
-  pulseName = (1.0f - __builtin_cosf((float)angle * 0.0055555557f * 3.14159274f)) * 0.5f * 0.5f;
+  pulseName = (1.0f - VfCosQuarter(VfMul((float)angle * 0.0055555557f * 3.14159274f, 0.636619747f))) * 0.5f * 0.5f;
   t = (float)(angle + 60) * 0.0055555557f;
-  pulseCursor = (1.0f - __builtin_cosf(t * 3.14159274f)) * 0.5f * 0.8f;
-  pulseFrame = (1.0f - __builtin_cosf(t * 3.14159274f)) * 0.5f * 0.1f;
+  pulseCursor = (1.0f - VfCosQuarter(VfMul(t * 3.14159274f, 0.636619747f))) * 0.5f * 0.8f;
+  pulseFrame = (1.0f - VfCosQuarter(VfMul(t * 3.14159274f, 0.636619747f))) * 0.5f * 0.1f;
   sprites = (GfxSprite **)self->base.data;
   sprites[25]->addColor[0] = pulseName;
   sprites[25]->addColor[1] = pulseName;
@@ -376,7 +376,7 @@ void UiNameEntryMainPhase(UiNameEntry *self)
   sprites[17]->addColor[3] = 1.0f;
 
   /* cosine pulse of the cursor frame scale (1.0 .. 1.05) */
-  scale = (1.0f - __builtin_cosf((float)(self->cursorAngle + 60) * 0.0055555557f * 3.14159274f)) *
+  scale = (1.0f - VfCosQuarter(VfMul((float)(self->cursorAngle + 60) * 0.0055555557f * 3.14159274f, 0.636619747f))) *
           0.5f * 0.05f + 1.0f;
   w = GfxSpriteGetWidth(((GfxSprite **)self->base.data)[10]) * scale;
   sprite = ((GfxSprite **)self->base.data)[10];

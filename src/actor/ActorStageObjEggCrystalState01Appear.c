@@ -41,7 +41,7 @@ void ActorStageObjEggCrystalState01Appear(ActorStageObjEggCrystal *self)
                                 NULL);
         t = self->timer;
         self->timer = t + 1;
-        alpha = __builtin_sinf((float)t * 3.1415927f * 0.03f) * 0.35f + 0.65f;
+        alpha = VfSinQuarter(VfMul((float)t * 3.1415927f * 0.03f, 0.636619747f)) * 0.35f + 0.65f;
         self->base.fade = alpha;
         if (!(alpha < 0.95f)) {
             self->step = self->step + 1;

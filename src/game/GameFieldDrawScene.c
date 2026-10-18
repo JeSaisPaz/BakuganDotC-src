@@ -48,10 +48,10 @@ void GameFieldDrawScene(CoreTask *task)
   g_gfxSpriteFogEnable = 1;
   /* distance from the eye to the target */
   cam = g_gfxActiveCamera;
-  diff[0] = cam->target[0] - cam->eye[0];
-  diff[1] = cam->target[1] - cam->eye[1];
-  diff[2] = cam->target[2] - cam->eye[2];
-  dist = __builtin_sqrtf(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
+  diff[0] = VfSub(cam->target[0], cam->eye[0]);
+  diff[1] = VfSub(cam->target[1], cam->eye[1]);
+  diff[2] = VfSub(cam->target[2], cam->eye[2]);
+  dist = VfSqrt(VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]));
   fogBase = 4000.0f / dist;
   if (!(fogBase <= 100.0f)) {
     fogBase = 100.0f;

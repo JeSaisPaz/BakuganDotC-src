@@ -11,12 +11,12 @@ void CollisionPhysBoxCentroid(CollisionPhysBox *self, ScePspFVector4 *out)
     s32 i;
 
     for (i = 1; i < 8; i++) {
-        x = x + pos[i].x;
-        y = y + pos[i].y;
-        z = z + pos[i].z;
+        x = VfAdd(x, pos[i].x);
+        y = VfAdd(y, pos[i].y);
+        z = VfAdd(z, pos[i].z);
     }
-    out->x = x * 0.125f;
-    out->y = y * 0.125f;
-    out->z = z * 0.125f;
+    out->x = VfMul(x, 0.125f);
+    out->y = VfMul(y, 0.125f);
+    out->z = VfMul(z, 0.125f);
     out->w = 0.0f;
 }

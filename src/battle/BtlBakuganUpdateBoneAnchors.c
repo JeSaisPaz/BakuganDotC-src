@@ -28,10 +28,7 @@ void BtlBakuganUpdateBoneAnchors(BtlBakugan *self)
        pelvis[j][k] * root row k (column-major root * pelvis) */
     for (j = 0; j < 4; j++) {
         for (r = 0; r < 4; r++) {
-            self->anchorMatrix[j][r] = pelvis[j * 4 + 0] * root[0 * 4 + r] +
-                                       pelvis[j * 4 + 1] * root[1 * 4 + r] +
-                                       pelvis[j * 4 + 2] * root[2 * 4 + r] +
-                                       pelvis[j * 4 + 3] * root[3 * 4 + r];
+            self->anchorMatrix[j][r] = VfDot4(pelvis[j * 4 + 0], pelvis[j * 4 + 1], pelvis[j * 4 + 2], pelvis[j * 4 + 3], root[0 * 4 + r], root[1 * 4 + r], root[2 * 4 + r], root[3 * 4 + r]);
         }
     }
     if (self->base.base.unk08 == 10) {
@@ -65,13 +62,12 @@ void BtlBakuganUpdateBoneAnchors(BtlBakugan *self)
     if (offset != NULL) {
         /* vtfm4.q C000, E100, C200: moved = anchor matrix (column-major) x offset */
         for (r = 0; r < 4; r++) {
-            moved[r] = self->anchorMatrix[0][r] * offset->x + self->anchorMatrix[1][r] * offset->y +
-                       self->anchorMatrix[2][r] * offset->z + self->anchorMatrix[3][r] * offset->w;
+            moved[r] = VfDot4(self->anchorMatrix[0][r], self->anchorMatrix[1][r], self->anchorMatrix[2][r], self->anchorMatrix[3][r], offset->x, offset->y, offset->z, offset->w);
         }
         /* vadd.t: anchor position xyz += moved xyz; its w is stored back unchanged */
-        self->anchorMatrix[3][0] = self->anchorMatrix[3][0] + moved[0];
-        self->anchorMatrix[3][1] = self->anchorMatrix[3][1] + moved[1];
-        self->anchorMatrix[3][2] = self->anchorMatrix[3][2] + moved[2];
+        self->anchorMatrix[3][0] = VfAdd(self->anchorMatrix[3][0], moved[0]);
+        self->anchorMatrix[3][1] = VfAdd(self->anchorMatrix[3][1], moved[1]);
+        self->anchorMatrix[3][2] = VfAdd(self->anchorMatrix[3][2], moved[2]);
     }
     body = self->collider0;
     body->shapeBlock.dirty = 1;

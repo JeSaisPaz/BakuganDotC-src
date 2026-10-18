@@ -94,8 +94,8 @@ void UiCollectionSphereResetCursor(UiCollectionSphere *self)
 
     /* rootMatrix = rotation about Y by 3.14 (vrot rows [C,0,-S,0] / identity / [S,0,C,0] / identity) */
     matrix = self->models[i]->data->rootMatrix;
-    c = __builtin_cosf(3.14f);
-    sn = __builtin_sinf(3.14f);
+    c = VfCosQuarter(3.14f * 0.636619747f);
+    sn = VfSinQuarter(3.14f * 0.636619747f);
     matrix[0] = c;
     matrix[1] = 0.0f;
     matrix[2] = -sn;
@@ -118,8 +118,8 @@ void UiCollectionSphereResetCursor(UiCollectionSphere *self)
        (pointer read before the call) */
     matrix = self->models[i]->data->rootMatrix;
     tilt = UiCollectionSphereGetModelTilt(self, (u8)i);
-    c = __builtin_cosf(tilt);
-    sn = __builtin_sinf(tilt);
+    c = VfCosQuarter(VfMul(tilt, 0.636619747f));
+    sn = VfSinQuarter(VfMul(tilt, 0.636619747f));
     rot[0] = 1.0f;
     rot[1] = 0.0f;
     rot[2] = 0.0f;
@@ -138,8 +138,7 @@ void UiCollectionSphereResetCursor(UiCollectionSphere *self)
     rot[15] = 1.0f;
     for (j = 0; j < 4; j++) {
       for (k = 0; k < 4; k++) {
-        prod[j * 4 + k] = matrix[j * 4 + 0] * rot[0 * 4 + k] + matrix[j * 4 + 1] * rot[1 * 4 + k] +
-                          matrix[j * 4 + 2] * rot[2 * 4 + k] + matrix[j * 4 + 3] * rot[3 * 4 + k];
+        prod[j * 4 + k] = VfDot4(matrix[j * 4 + 0], matrix[j * 4 + 1], matrix[j * 4 + 2], matrix[j * 4 + 3], rot[0 * 4 + k], rot[1 * 4 + k], rot[2 * 4 + k], rot[3 * 4 + k]);
       }
     }
     for (j = 0; j < 16; j++) {
@@ -153,13 +152,13 @@ void UiCollectionSphereResetCursor(UiCollectionSphere *self)
       self->modelScale[i] = s;
       matrix = self->models[i]->data->rootMatrix;
       for (j = 0; j < 12; j++) {
-        matrix[j] = matrix[j] * s;
+        matrix[j] = VfMul(matrix[j], s);
       }
     }
 
     /* bob height: bobBaseY + (1 - cos(bobT * pi)) * 0.5 * 0.2 */
     baseY = self->bobBaseY;
-    cosine = __builtin_cosf(self->bobT * 3.1415927f);
+    cosine = VfCosQuarter(VfMul(self->bobT * 3.1415927f, 0.636619747f));
     self->models[i]->pos[1] = baseY + (1.0f - cosine) * 0.5f * 0.2f;
 
     /* translation row = pos (all four words), then w = 1 */

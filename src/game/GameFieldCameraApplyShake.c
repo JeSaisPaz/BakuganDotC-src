@@ -13,10 +13,10 @@
 static void GameFieldCameraMulColumn(ScePspFVector4 *d, const ScePspFMatrix4 *a,
                                      const ScePspFVector4 *col)
 {
-  d->x = col->x * a->x.x + col->y * a->y.x + col->z * a->z.x + col->w * a->w.x;
-  d->y = col->x * a->x.y + col->y * a->y.y + col->z * a->z.y + col->w * a->w.y;
-  d->z = col->x * a->x.z + col->y * a->y.z + col->z * a->z.z + col->w * a->w.z;
-  d->w = col->x * a->x.w + col->y * a->y.w + col->z * a->z.w + col->w * a->w.w;
+  d->x = VfDot4(col->x, col->y, col->z, col->w, a->x.x, a->y.x, a->z.x, a->w.x);
+  d->y = VfDot4(col->x, col->y, col->z, col->w, a->x.y, a->y.y, a->z.y, a->w.y);
+  d->z = VfDot4(col->x, col->y, col->z, col->w, a->x.z, a->y.z, a->z.z, a->w.z);
+  d->w = VfDot4(col->x, col->y, col->z, col->w, a->x.w, a->y.w, a->z.w, a->w.w);
 }
 
 void GameFieldCameraApplyShake(GameFieldCamera *cam)
@@ -41,17 +41,17 @@ void GameFieldCameraApplyShake(GameFieldCamera *cam)
     cam->shakeAngle = angle;
     /* vcos/vsin of angle * S703 (2/π): cos/sin of the angle in radians */
     amp = cam->shakeAmplitude;
-    cam->shakeRight = amp * __builtin_cosf(angle);
-    cam->shakeUp = amp * __builtin_sinf(angle);
+    cam->shakeRight = amp * VfCosQuarter(VfMul(angle, 0.636619747f));
+    cam->shakeUp = amp * VfSinQuarter(VfMul(angle, 0.636619747f));
     cam->shakeTimer = cam->shakeTimer - 1;
   }
   /* eye += shakeOffset, look-at += shakeOffset (xyz; w kept) */
-  cam->base.eye[0] = cam->base.eye[0] + cam->shakeOffset.x;
-  cam->base.eye[1] = cam->base.eye[1] + cam->shakeOffset.y;
-  cam->base.eye[2] = cam->base.eye[2] + cam->shakeOffset.z;
-  cam->base.target[0] = cam->base.target[0] + cam->shakeOffset.x;
-  cam->base.target[1] = cam->base.target[1] + cam->shakeOffset.y;
-  cam->base.target[2] = cam->base.target[2] + cam->shakeOffset.z;
+  cam->base.eye[0] = VfAdd(cam->base.eye[0], cam->shakeOffset.x);
+  cam->base.eye[1] = VfAdd(cam->base.eye[1], cam->shakeOffset.y);
+  cam->base.eye[2] = VfAdd(cam->base.eye[2], cam->shakeOffset.z);
+  cam->base.target[0] = VfAdd(cam->base.target[0], cam->shakeOffset.x);
+  cam->base.target[1] = VfAdd(cam->base.target[1], cam->shakeOffset.y);
+  cam->base.target[2] = VfAdd(cam->base.target[2], cam->shakeOffset.z);
   /* viewMatrix[0] = view; viewMatrix[1] = viewMatrix[2] = proj * view */
   cam->viewMatrix[0] = cam->base.view;
   GameFieldCameraMulColumn(&viewProj.x, &cam->base.proj, &cam->base.view.x);
@@ -64,9 +64,9 @@ void GameFieldCameraApplyShake(GameFieldCamera *cam)
      translation w kept */
   inv = &cam->viewMatrix[2];
   viewProj = *inv;
-  tx = viewProj.x.x * viewProj.w.x + viewProj.x.y * viewProj.w.y + viewProj.x.z * viewProj.w.z;
-  ty = viewProj.y.x * viewProj.w.x + viewProj.y.y * viewProj.w.y + viewProj.y.z * viewProj.w.z;
-  tz = viewProj.z.x * viewProj.w.x + viewProj.z.y * viewProj.w.y + viewProj.z.z * viewProj.w.z;
+  tx = VfDot3(viewProj.x.x, viewProj.x.y, viewProj.x.z, viewProj.w.x, viewProj.w.y, viewProj.w.z);
+  ty = VfDot3(viewProj.y.x, viewProj.y.y, viewProj.y.z, viewProj.w.x, viewProj.w.y, viewProj.w.z);
+  tz = VfDot3(viewProj.z.x, viewProj.z.y, viewProj.z.z, viewProj.w.x, viewProj.w.y, viewProj.w.z);
   inv->x.x = viewProj.x.x;
   inv->x.y = viewProj.y.x;
   inv->x.z = viewProj.z.x;
@@ -91,13 +91,13 @@ void GameFieldCameraApplyShake(GameFieldCamera *cam)
   up[2] = inv->z.y;
   /* shakeOffset = right * shakeRight + up * shakeUp; w = 0 (the bank's S713 through vscl.t C710) */
   for (i = 0; i < 3; i++) {
-    right[i] = right[i] * cam->shakeRight;
+    right[i] = VfMul(right[i], cam->shakeRight);
   }
   for (i = 0; i < 3; i++) {
-    up[i] = up[i] * cam->shakeUp;
+    up[i] = VfMul(up[i], cam->shakeUp);
   }
-  cam->shakeOffset.x = right[0] + up[0];
-  cam->shakeOffset.y = right[1] + up[1];
-  cam->shakeOffset.z = right[2] + up[2];
+  cam->shakeOffset.x = VfAdd(right[0], up[0]);
+  cam->shakeOffset.y = VfAdd(right[1], up[1]);
+  cam->shakeOffset.z = VfAdd(right[2], up[2]);
   cam->shakeOffset.w = 0.0f;
 }

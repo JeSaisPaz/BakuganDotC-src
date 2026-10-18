@@ -62,12 +62,12 @@ void BtlDemoUpdateObjects(BtlDemo *demo)
         }
         demo->flashBlend = blend;
     }
-    c = __builtin_cosf(demo->flashBlend * 3.14159274f);
+    c = VfCosQuarter(VfMul(demo->flashBlend * 3.14159274f, 0.636619747f));
     s = (1.0f - c) * 0.5f;
     /* flashColour += (focusPos - flashColour) * s, all four lanes */
     for (i = 0; i < 4; i++) {
-        demo->flashColour[i] = demo->flashColour[i] + (demo->focusPos[i] - demo->flashColour[i]) * s;
+        demo->flashColour[i] = VfAdd(demo->flashColour[i], VfMul(VfSub(demo->focusPos[i], demo->flashColour[i]), s));
     }
-    c = __builtin_cosf(demo->flashBlend * 3.14159274f);
+    c = VfCosQuarter(VfMul(demo->flashBlend * 3.14159274f, 0.636619747f));
     demo->flashColour[3] = (1.0f - c) * 0.5f * demo->focusPos[3];
 }

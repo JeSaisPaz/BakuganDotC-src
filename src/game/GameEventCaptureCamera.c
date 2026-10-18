@@ -19,9 +19,9 @@ void GameEventCaptureCamera(GameEvent *self)
   cam = g_gfxActiveCamera;
 
   /* v = cam->eye * 0.05f (vscl.t: xyz only) */
-  v[0] = cam->eye[0] * 0.05f;
-  v[1] = cam->eye[1] * 0.05f;
-  v[2] = cam->eye[2] * 0.05f;
+  v[0] = VfMul(cam->eye[0], 0.05f);
+  v[1] = VfMul(cam->eye[1], 0.05f);
+  v[2] = VfMul(cam->eye[2], 0.05f);
   for (k = 0; k < 3; k++) {
     if (v[k] <= 0.0f) {
       fx[k] = (s32)(v[k] * 4096.0f - 0.5f);
@@ -44,9 +44,9 @@ void GameEventCaptureCamera(GameEvent *self)
   keys->eye[2] = fx[2];
 
   /* v = cam->target * 0.05f (vscl.t: xyz only) */
-  v[0] = cam->target[0] * 0.05f;
-  v[1] = cam->target[1] * 0.05f;
-  v[2] = cam->target[2] * 0.05f;
+  v[0] = VfMul(cam->target[0], 0.05f);
+  v[1] = VfMul(cam->target[1], 0.05f);
+  v[2] = VfMul(cam->target[2], 0.05f);
   for (k = 0; k < 3; k++) {
     if (v[k] <= 0.0f) {
       fx[k] = (s32)(v[k] * 4096.0f - 0.5f);

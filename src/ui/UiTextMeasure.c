@@ -12,7 +12,7 @@
    advances and line widths, far inside the int range and never NaN. */
 static inline float UiTextMeasureFloor(float x)
 {
-  return (float)(int)floorf(x);
+  return (float)VfF2id(x, 0);
 }
 
 int UiTextMeasure(float margin, void *printer, char *text, float *outH, float *outW, int *outLen)

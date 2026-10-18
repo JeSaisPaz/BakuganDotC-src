@@ -30,11 +30,11 @@ bool GameGimmickDistanceFade(float nearDist, float farDist, GfxModel *model, con
   /* |eye - pos| over x, y, z */
   {
     const float *eye = g_gfxActiveCamera->eye;
-    float dx = eye[0] - pos[0];
-    float dy = eye[1] - pos[1];
-    float dz = eye[2] - pos[2];
+    float dx = VfSub(eye[0], pos[0]);
+    float dy = VfSub(eye[1], pos[1]);
+    float dz = VfSub(eye[2], pos[2]);
 
-    dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+    dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
   }
 
   if (dist < nearDist) {

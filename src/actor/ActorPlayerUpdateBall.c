@@ -25,17 +25,15 @@ u8 ActorPlayerUpdateBall(ActorPlayer *self)
   ball->base.velocity[1] = ball->base.velocity[1] + -0.08f;
   ball = (ActorBall *)self->ball;
   /* pos.xyz += velocity.xyz */
-  pos[0] = pos[0] + ball->base.velocity[0];
-  pos[1] = pos[1] + ball->base.velocity[1];
-  pos[2] = pos[2] + ball->base.velocity[2];
+  pos[0] = VfAdd(pos[0], ball->base.velocity[0]);
+  pos[1] = VfAdd(pos[1], ball->base.velocity[1]);
+  pos[2] = VfAdd(pos[2], ball->base.velocity[2]);
   done = ((ActorBall *)self->ball)->flag1d2;
   if (pos[1] < -150.0f) {
     done = 1;
   }
   ball = (ActorBall *)self->ball;
-  speed = __builtin_sqrtf(ball->base.velocity[0] * ball->base.velocity[0] +
-                          ball->base.velocity[1] * ball->base.velocity[1] +
-                          ball->base.velocity[2] * ball->base.velocity[2]);
+  speed = VfSqrt(VfDot3(ball->base.velocity[0], ball->base.velocity[1], ball->base.velocity[2], ball->base.velocity[0], ball->base.velocity[1], ball->base.velocity[2]));
   if (speed < 0.1f) {
     done = 1;
   }

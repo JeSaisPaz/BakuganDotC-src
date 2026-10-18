@@ -21,13 +21,13 @@ void NetStatusTaskAnimateText(NetStatusTask *self)
     phase = self->frame / 2;
     amp = 0.0f;
     if (phase < 30 || phase >= 90) {
-        c = __builtin_cosf((float)phase * 0.0523598790f);
+        c = VfCosQuarter(VfMul((float)phase * 0.0523598790f, 0.636619747f));
         amp = c * 3.0f;
         amp = amp * amp * amp * amp * amp;
     }
     if (glyph != NULL) {
         for (i = 0; i < self->glyphCount; i++, phase += 8, glyph++) {
-            c = __builtin_cosf((float)phase * 0.104719758f);
+            c = VfCosQuarter(VfMul((float)phase * 0.104719758f, 0.636619747f));
             glyph->posY = c * amp + 136.0f;
             if (glyph->alpha != self->alpha) {
                 if (self->alpha == 0.0f) {

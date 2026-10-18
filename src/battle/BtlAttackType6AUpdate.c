@@ -43,17 +43,17 @@ void BtlAttackType6AUpdate(BtlAttack *self)
             step = -0.100000001f;
         }
         /* side.x/z rotated about Y by angle (vrot of angle x 2/pi in quarter turns), y/w kept */
-        c = __builtin_cosf(angle);
-        sn = __builtin_sinf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
+        sn = VfSinQuarter(VfMul(angle, 0.636619747f));
         x = side[0];
         z = side[2];
-        side[0] = x * c - z * sn;
-        side[2] = x * sn + z * c;
+        side[0] = VfDot3(x, side[1], z, c, 0.0f, -sn);
+        side[2] = VfDot3(x, side[1], z, sn, 0.0f, c);
         self->paramF1 = step;
         /* pos.xyz += side.xyz * 80 */
-        self->pos[0] = self->pos[0] + side[0] * 80.0f;
-        self->pos[1] = self->pos[1] + side[1] * 80.0f;
-        self->pos[2] = self->pos[2] + side[2] * 80.0f;
+        self->pos[0] = VfAdd(self->pos[0], VfMul(side[0], 80.0f));
+        self->pos[1] = VfAdd(self->pos[1], VfMul(side[1], 80.0f));
+        self->pos[2] = VfAdd(self->pos[2], VfMul(side[2], 80.0f));
         self->pos[1] = self->pos[1] + 25.0f;
         return;
     }
@@ -80,21 +80,21 @@ void BtlAttackType6AUpdate(BtlAttack *self)
     }
     self->paramF0 = self->paramF0 + self->paramF1;
     /* vsin of phase x 2/pi (quarter turns) = sin(phase) */
-    turn = __builtin_sinf(self->paramF0) * 0.0299999993f;
+    turn = VfSinQuarter(VfMul(self->paramF0, 0.636619747f)) * 0.0299999993f;
     /* dir.x/z rotated about Y by turn, y/w kept */
-    c = __builtin_cosf(turn);
-    sn = __builtin_sinf(turn);
+    c = VfCosQuarter(VfMul(turn, 0.636619747f));
+    sn = VfSinQuarter(VfMul(turn, 0.636619747f));
     x = self->dir[0];
     z = self->dir[2];
-    self->dir[0] = x * c - z * sn;
-    self->dir[2] = x * sn + z * c;
+    self->dir[0] = VfDot3(x, self->dir[1], z, c, 0.0f, -sn);
+    self->dir[2] = VfDot3(x, self->dir[1], z, sn, 0.0f, c);
     /* effect dir = -dir (xyz), w = dir.w */
     effect = (GfxEffect *)self->effect;
     effect->dir[0] = -self->dir[0];
     effect->dir[1] = -self->dir[1];
     effect->dir[2] = -self->dir[2];
     effect->dir[3] = self->dir[3];
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

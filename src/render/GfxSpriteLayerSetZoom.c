@@ -31,30 +31,30 @@ void GfxSpriteLayerSetZoom(float scale, float angle, GfxSpriteLayer *self, const
     }
 
     /* identity translated by -(pivot * scale) */
-    tx = 0.0f - pivot[0] * scale;
-    ty = 0.0f - pivot[1] * scale;
-    tz = 0.0f - pivot[2] * scale;
+    tx = VfSub(0.0f, VfMul(pivot[0], scale));
+    ty = VfSub(0.0f, VfMul(pivot[1], scale));
+    tz = VfSub(0.0f, VfMul(pivot[2], scale));
 
     /* rotZ (S703 = 2/pi: quarter turns) times that matrix */
-    t = angle * 0.636619747f;
+    t = VfMul(angle, 0.636619747f);
     c = VfCosQuarter(t);
     s = VfSinQuarter(t);
 
     /* columns x/y/z scaled by `scale`, then pivot added back to w.xyz */
-    m->x.x = c * scale;
-    m->x.y = s * scale;
-    m->x.z = 0.0f * scale;
-    m->x.w = 0.0f * scale;
-    m->y.x = -s * scale;
-    m->y.y = c * scale;
-    m->y.z = 0.0f * scale;
-    m->y.w = 0.0f * scale;
-    m->z.x = 0.0f * scale;
-    m->z.y = 0.0f * scale;
-    m->z.z = 1.0f * scale;
-    m->z.w = 0.0f * scale;
-    m->w.x = (c * tx + -s * ty) + pivot[0];
-    m->w.y = (s * tx + c * ty) + pivot[1];
-    m->w.z = tz + pivot[2];
-    m->w.w = 1.0f;
+    m->x.x = VfMul(VfDot2(1.0f, 0.0f, c, -s), scale);
+    m->x.y = VfMul(VfDot2(1.0f, 0.0f, s, c), scale);
+    m->x.z = VfMul(0.0f, scale);
+    m->x.w = VfMul(0.0f, scale);
+    m->y.x = VfMul(VfDot2(0.0f, 1.0f, c, -s), scale);
+    m->y.y = VfMul(VfDot2(0.0f, 1.0f, s, c), scale);
+    m->y.z = VfMul(0.0f, scale);
+    m->y.w = VfMul(0.0f, scale);
+    m->z.x = VfMul(VfDot2(0.0f, 0.0f, c, -s), scale);
+    m->z.y = VfMul(VfDot2(0.0f, 0.0f, s, c), scale);
+    m->z.z = VfMul(1.0f, scale);
+    m->z.w = VfMul(0.0f, scale);
+    m->w.x = VfAdd(VfDot3(tx, ty, tz, c, -s, 0.0f), pivot[0]);
+    m->w.y = VfAdd(VfDot3(tx, ty, tz, s, c, 0.0f), pivot[1]);
+    m->w.z = VfAdd(VfDot3(tx, ty, tz, 0.0f, 0.0f, 1.0f), pivot[2]);
+    m->w.w = VfDot4(tx, ty, tz, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 }

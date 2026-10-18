@@ -19,9 +19,9 @@ int BtlAttackSteerToTarget(float speed, float heightOffset, BtlAttack *self, cha
 
     target = (BtlBakugan *)BtlFindBakuganById(self->targetId);
     if (target == NULL) {
-        self->vel[0] = self->dir[0] * speed;
-        self->vel[1] = self->dir[1] * speed;
-        self->vel[2] = self->dir[2] * speed;
+        self->vel[0] = VfMul(self->dir[0], speed);
+        self->vel[1] = VfMul(self->dir[1], speed);
+        self->vel[2] = VfMul(self->dir[2], speed);
         self->vel[3] = 0.0f;
         return 0;
     }
@@ -30,43 +30,42 @@ int BtlAttackSteerToTarget(float speed, float heightOffset, BtlAttack *self, cha
     aim[2] = target->base.pos[2];
     aim[3] = target->base.pos[3];
     if (offset != NULL) {
-        aim[0] = aim[0] + offset[0];
-        aim[1] = aim[1] + offset[1];
-        aim[2] = aim[2] + offset[2];
+        aim[0] = VfAdd(aim[0], offset[0]);
+        aim[1] = VfAdd(aim[1], offset[1]);
+        aim[2] = VfAdd(aim[2], offset[2]);
     }
     aim[1] = aim[1] + heightOffset;
 
     /* aim = normalize(aim - pos) */
-    aim[0] = aim[0] - self->pos[0];
-    aim[1] = aim[1] - self->pos[1];
-    aim[2] = aim[2] - self->pos[2];
-    lenSq = aim[0] * aim[0] + aim[1] * aim[1] + aim[2] * aim[2];
+    aim[0] = VfSub(aim[0], self->pos[0]);
+    aim[1] = VfSub(aim[1], self->pos[1]);
+    aim[2] = VfSub(aim[2], self->pos[2]);
+    lenSq = VfDot3(aim[0], aim[1], aim[2], aim[0], aim[1], aim[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    aim[0] = VfSat1(aim[0] * k);
-    aim[1] = VfSat1(aim[1] * k);
-    aim[2] = VfSat1(aim[2] * k);
+    aim[0] = VfSat1(VfMul(aim[0], k));
+    aim[1] = VfSat1(VfMul(aim[1], k));
+    aim[2] = VfSat1(VfMul(aim[2], k));
     aim[3] = 0.0f;
 
     /* dir += (aim - dir) * turnRate */
     rate = self->turnRate;
-    self->dir[0] = self->dir[0] + (aim[0] - self->dir[0]) * rate;
-    self->dir[1] = self->dir[1] + (aim[1] - self->dir[1]) * rate;
-    self->dir[2] = self->dir[2] + (aim[2] - self->dir[2]) * rate;
-    self->dir[3] = self->dir[3] + (aim[3] - self->dir[3]) * rate;
+    self->dir[0] = VfAdd(self->dir[0], VfMul(VfSub(aim[0], self->dir[0]), rate));
+    self->dir[1] = VfAdd(self->dir[1], VfMul(VfSub(aim[1], self->dir[1]), rate));
+    self->dir[2] = VfAdd(self->dir[2], VfMul(VfSub(aim[2], self->dir[2]), rate));
+    self->dir[3] = VfAdd(self->dir[3], VfMul(VfSub(aim[3], self->dir[3]), rate));
 
     /* dir = normalize(dir) */
-    lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] +
-            self->dir[2] * self->dir[2];
+    lenSq = VfDot3(self->dir[0], self->dir[1], self->dir[2], self->dir[0], self->dir[1], self->dir[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    self->dir[0] = VfSat1(self->dir[0] * k);
-    self->dir[1] = VfSat1(self->dir[1] * k);
-    self->dir[2] = VfSat1(self->dir[2] * k);
+    self->dir[0] = VfSat1(VfMul(self->dir[0], k));
+    self->dir[1] = VfSat1(VfMul(self->dir[1], k));
+    self->dir[2] = VfSat1(VfMul(self->dir[2], k));
     self->dir[3] = 0.0f;
 
     /* vel = dir * speed */
-    self->vel[0] = self->dir[0] * speed;
-    self->vel[1] = self->dir[1] * speed;
-    self->vel[2] = self->dir[2] * speed;
+    self->vel[0] = VfMul(self->dir[0], speed);
+    self->vel[1] = VfMul(self->dir[1], speed);
+    self->vel[2] = VfMul(self->dir[2], speed);
     self->vel[3] = 0.0f;
 
     if (decayTurn != 0 && self->age > 45) {

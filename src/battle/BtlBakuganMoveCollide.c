@@ -41,7 +41,7 @@
 /* 1 / |v.xyz|, 0 for a zero-length v (vcmp EZ + vcmovt from the bank zero S713). */
 static float MoveCollideInvLength(const float *v)
 {
-    float lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+    float lenSq = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
     float inv = VfRsq(lenSq);
 
     if (VfIsZero(lenSq)) {
@@ -52,12 +52,12 @@ static float MoveCollideInvLength(const float *v)
 
 static float MoveCollideLength(const float *v)
 {
-    return __builtin_sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+    return VfSqrt(VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]));
 }
 
 static float MoveCollideDot(const float *a, const float *b)
 {
-    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    return VfDot3(a[0], a[1], a[2], b[0], b[1], b[2]);
 }
 
 static void MoveCollideCopy(float *dst, const float *src)
@@ -71,27 +71,27 @@ static void MoveCollideCopy(float *dst, const float *src)
 /* dst.xyz = a.xyz + b.xyz, dst.w = a.w (vadd.t on a loaded quad). */
 static void MoveCollideAdd(float *dst, const float *a, const float *b)
 {
-    dst[0] = a[0] + b[0];
-    dst[1] = a[1] + b[1];
-    dst[2] = a[2] + b[2];
+    dst[0] = VfAdd(a[0], b[0]);
+    dst[1] = VfAdd(a[1], b[1]);
+    dst[2] = VfAdd(a[2], b[2]);
     dst[3] = a[3];
 }
 
 /* dst.xyz = a.xyz - b.xyz, dst.w = a.w (vsub.t on a loaded quad). */
 static void MoveCollideSub(float *dst, const float *a, const float *b)
 {
-    dst[0] = a[0] - b[0];
-    dst[1] = a[1] - b[1];
-    dst[2] = a[2] - b[2];
+    dst[0] = VfSub(a[0], b[0]);
+    dst[1] = VfSub(a[1], b[1]);
+    dst[2] = VfSub(a[2], b[2]);
     dst[3] = a[3];
 }
 
 /* dst.xyz = v.xyz * k, dst.w = 0 (C710 result, w = bank S713). */
 static void MoveCollideScale(float *dst, const float *v, float k)
 {
-    dst[0] = v[0] * k;
-    dst[1] = v[1] * k;
-    dst[2] = v[2] * k;
+    dst[0] = VfMul(v[0], k);
+    dst[1] = VfMul(v[1], k);
+    dst[2] = VfMul(v[2], k);
     dst[3] = 0.0f;
 }
 
@@ -100,25 +100,25 @@ static void MoveCollideNormalise(float *dst, const float *v)
 {
     float inv = MoveCollideInvLength(v);
 
-    dst[0] = VfSat1(v[0] * inv);
-    dst[1] = VfSat1(v[1] * inv);
-    dst[2] = VfSat1(v[2] * inv);
+    dst[0] = VfSat1(VfMul(v[0], inv));
+    dst[1] = VfSat1(VfMul(v[1], inv));
+    dst[2] = VfSat1(VfMul(v[2], inv));
     dst[3] = 0.0f;
 }
 
 /* dst.xyz = v.xyz * (len / |v|) (no clamp), dst.w = 0. */
 static void MoveCollideResize(float *dst, const float *v, float len)
 {
-    MoveCollideScale(dst, v, MoveCollideInvLength(v) * len);
+    MoveCollideScale(dst, v, VfMul(MoveCollideInvLength(v), len));
 }
 
 /* d = s * t (vqmul.q, w last). */
 static void MoveCollideQuatMul(float *d, const float *s, const float *t)
 {
-    float x = s[0] * t[3] + s[1] * t[2] - s[2] * t[1] + s[3] * t[0];
-    float y = -s[0] * t[2] + s[1] * t[3] + s[2] * t[0] + s[3] * t[1];
-    float z = s[0] * t[1] - s[1] * t[0] + s[2] * t[3] + s[3] * t[2];
-    float w = -s[0] * t[0] - s[1] * t[1] - s[2] * t[2] + s[3] * t[3];
+    float x = VfDot4(s[0], s[1], s[2], s[3], t[3], t[2], -t[1], t[0]);
+    float y = VfDot4(-s[0], s[1], s[2], s[3], t[2], t[3], t[0], t[1]);
+    float z = VfDot4(s[0], s[1], s[2], s[3], t[1], -t[0], t[3], t[2]);
+    float w = VfDot4(-s[0], s[1], s[2], s[3], t[0], -t[1], -t[2], t[3]);
 
     d[0] = x;
     d[1] = y;
@@ -148,13 +148,13 @@ static void MoveCollideQuatRotate(float *dst, const float *q, const float *v)
 /* quat = (axis.xyz * sin(angle / 2), cos(angle / 2)): vcst 1/PI times the angle, in quarter turns. */
 static void MoveCollideAxisAngleQuat(float *quat, const float *axis, float angle)
 {
-    float a = 0.318309873f * angle;
+    float a = VfMul(0.318309873f, angle);
     float c = VfCosQuarter(a);
     float s = VfSinQuarter(a);
 
-    quat[0] = axis[0] * s;
-    quat[1] = axis[1] * s;
-    quat[2] = axis[2] * s;
+    quat[0] = VfMul(axis[0], s);
+    quat[1] = VfMul(axis[1], s);
+    quat[2] = VfMul(axis[2], s);
     quat[3] = c;
 }
 
@@ -168,7 +168,7 @@ static void MoveCollideNoteWallHit(BtlBakugan *self)
     if (g_collisionHitInfo.surface == 0xb) {
         /* vrot.q [C,0,S,0] of rot.y * S703 */
         yaw = self->base.rot[1];
-        facing = __builtin_cosf(yaw) * normal[0] + 0.0f * normal[1] + __builtin_sinf(yaw) * normal[2];
+        facing = VfDot3(VfCosQuarter(VfMul(yaw, 0.636619747f)), 0.0f, VfSinQuarter(VfMul(yaw, 0.636619747f)), normal[0], normal[1], normal[2]);
         if (facing < -0.699999988f) {
             MoveCollideCopy(self->wallHitPoint, (const float *)&g_collisionHitResult.point);
             MoveCollideCopy(self->wallHitNormal, normal);
@@ -394,9 +394,9 @@ char BtlBakuganMoveCollide(BtlBakugan *self, float *delta, u32 flags)
                     MoveCollideAdd(probeEnd, hitPoint, push);
                     MoveCollideCopy(segment->start, probeEnd);
                     segment->start[1] = segment->start[1] - 3.0f;
-                    segment->dir[0] = g_vecUp.x * 8.0f;
-                    segment->dir[1] = g_vecUp.y * 8.0f;
-                    segment->dir[2] = g_vecUp.z * 8.0f;
+                    segment->dir[0] = VfMul(g_vecUp.x, 8.0f);
+                    segment->dir[1] = VfMul(g_vecUp.y, 8.0f);
+                    segment->dir[2] = VfMul(g_vecUp.z, 8.0f);
                     segment->dir[3] = 0.0f;
                     if (CollisionRaycast(self->collisionMask, &g_collisionSegmentBlock, 0) !=
                         NULL) {
@@ -516,8 +516,8 @@ char BtlBakuganMoveCollide(BtlBakugan *self, float *delta, u32 flags)
 
     if (hitWall != 0 && falling != 0) {
         /* vcmp.q EQ over all four lanes */
-        if (!(pos[0] == startPos[0] && pos[1] == startPos[1] && pos[2] == startPos[2] &&
-              pos[3] == startPos[3]) &&
+        if (!(VfDaz(pos[0]) == VfDaz(startPos[0]) && VfDaz(pos[1]) == VfDaz(startPos[1]) && VfDaz(pos[2]) == VfDaz(startPos[2]) &&
+              VfDaz(pos[3]) == VfDaz(startPos[3])) &&
             (self->isPlayer != 0 || (self->stateFlags & 0x4040010) != 0)) {
             /* Sweep a half-radius sphere along the whole move. */
             MoveCollideCopy(sweptStart, startPos);

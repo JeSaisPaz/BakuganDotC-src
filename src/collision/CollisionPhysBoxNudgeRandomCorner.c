@@ -9,7 +9,7 @@ void CollisionPhysBoxNudgeRandomCorner(CollisionPhysBox *self, const float *delt
     u32 rnd = PlatformRandU32();
     ScePspFVector4 *corner = vel + (rnd >> 29);
 
-    corner->x = corner->x + delta[0];
-    corner->y = corner->y + delta[1];
-    corner->z = corner->z + delta[2];
+    corner->x = VfAdd(corner->x, delta[0]);
+    corner->y = VfAdd(corner->y, delta[1]);
+    corner->z = VfAdd(corner->z, delta[2]);
 }

@@ -28,19 +28,18 @@ int BtlAttackResolveClash(BtlAttack *self, int impactEffect)
         if (self->noSpark == 0) {
             /* pos.xyz -= auxVec.xyz, then pos = clamp(normalize(pos.xyz), -1, 1) with w 0
                (the w lane comes from the bank's S713 = 0; a zero-length vector scales by 0). */
-            self->pos[0] = self->pos[0] - self->auxVec[0];
-            self->pos[1] = self->pos[1] - self->auxVec[1];
-            self->pos[2] = self->pos[2] - self->auxVec[2];
-            lenSq = self->pos[0] * self->pos[0] + self->pos[1] * self->pos[1] +
-                    self->pos[2] * self->pos[2];
+            self->pos[0] = VfSub(self->pos[0], self->auxVec[0]);
+            self->pos[1] = VfSub(self->pos[1], self->auxVec[1]);
+            self->pos[2] = VfSub(self->pos[2], self->auxVec[2]);
+            lenSq = VfDot3(self->pos[0], self->pos[1], self->pos[2], self->pos[0], self->pos[1], self->pos[2]);
             if (VfIsZero(lenSq)) {
                 scale = 0.0f;
             } else {
                 scale = VfRsq(lenSq);
             }
-            self->pos[0] = VfSat1(self->pos[0] * scale);
-            self->pos[1] = VfSat1(self->pos[1] * scale);
-            self->pos[2] = VfSat1(self->pos[2] * scale);
+            self->pos[0] = VfSat1(VfMul(self->pos[0], scale));
+            self->pos[1] = VfSat1(VfMul(self->pos[1], scale));
+            self->pos[2] = VfSat1(VfMul(self->pos[2], scale));
             self->pos[3] = 0.0f;
             GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0x38, self->auxVec, self->pos);
         }

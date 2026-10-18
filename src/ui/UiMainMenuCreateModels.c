@@ -53,8 +53,8 @@ static inline GfxModel *UiMainMenuNewModel(const char *gmoName)
    x = (c, 0, -s, 0), y = (0, 1, 0, 0), z = (s, 0, c, 0), w = (0, 0, 0, 1). */
 static void UiMainMenuRotY(float *rot, float angle)
 {
-  float c = __builtin_cosf(angle);
-  float s = __builtin_sinf(angle);
+  float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  float s = VfSinQuarter(VfMul(angle, 0.636619747f));
 
   rot[0] = c;    rot[1] = 0.0f;  rot[2] = -s;   rot[3] = 0.0f;
   rot[4] = 0.0f; rot[5] = 1.0f;  rot[6] = 0.0f; rot[7] = 0.0f;
@@ -66,8 +66,8 @@ static void UiMainMenuRotY(float *rot, float angle)
    w = (0, 0, 0, 1). */
 static void UiMainMenuRotX(float *rot, float angle)
 {
-  float c = __builtin_cosf(angle);
-  float s = __builtin_sinf(angle);
+  float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  float s = VfSinQuarter(VfMul(angle, 0.636619747f));
 
   rot[0] = 1.0f;  rot[1] = 0.0f;  rot[2] = 0.0f;  rot[3] = 0.0f;
   rot[4] = 0.0f;  rot[5] = c;     rot[6] = s;     rot[7] = 0.0f;
@@ -85,8 +85,7 @@ static void UiMainMenuMulRot(float *m, const float *rot)
 
   for (j = 0; j < 4; j++) {
     for (row = 0; row < 4; row++) {
-      r[4 * j + row] = m[4 * j + 0] * rot[0 + row] + m[4 * j + 1] * rot[4 + row]
-                       + m[4 * j + 2] * rot[8 + row] + m[4 * j + 3] * rot[12 + row];
+      r[4 * j + row] = VfDot4(m[4 * j + 0], m[4 * j + 1], m[4 * j + 2], m[4 * j + 3], rot[0 + row], rot[4 + row], rot[8 + row], rot[12 + row]);
     }
   }
   for (j = 0; j < 16; j++) {

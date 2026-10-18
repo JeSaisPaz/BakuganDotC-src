@@ -50,15 +50,15 @@ void BtlAttackType7CUpdate(BtlAttack *self)
         spawnPos[3] = self->dir[3];
         angle = CoreRandFloat(6.28000021f);
         dist = __builtin_sqrtf(CoreRandFloat(160000.0f));
-        spawnPos[0] = spawnPos[0] + __builtin_sinf(angle) * dist;
-        spawnPos[2] = spawnPos[2] + __builtin_cosf(angle) * dist;
+        spawnPos[0] = spawnPos[0] + VfSinQuarter(VfMul(angle, 0.636619747f)) * dist;
+        spawnPos[2] = spawnPos[2] + VfCosQuarter(VfMul(angle, 0.636619747f)) * dist;
         if (self->age % 4 == 0) {
             target = (BtlBakugan *)BtlFindBakuganById(self->targetId);
             if (target != NULL) {
                 /* squared xz distance between the drop point and the target (y lane zeroed) */
-                dx = self->dir[0] - target->base.pos[0];
-                dz = self->dir[2] - target->base.pos[2];
-                distSq = dx * dx + dz * dz;
+                dx = VfSub(self->dir[0], target->base.pos[0]);
+                dz = VfSub(self->dir[2], target->base.pos[2]);
+                distSq = VfDot2(dx, dz, dx, dz);
                 if (distSq < 160000.0f) {
                     spawnPos[0] = target->base.pos[0];
                     spawnPos[2] = target->base.pos[2];
@@ -88,27 +88,27 @@ void BtlAttackType7CUpdate(BtlAttack *self)
     if (self->age == 0) {
         BtlAttackGetTargetAimPoint(self, aim);
         /* dir = aim - pos (w = aim.w), then normalised and clamped to [-1, 1] with w = 0 */
-        delta[0] = aim[0] - pos[0];
-        delta[1] = aim[1] - pos[1];
-        delta[2] = aim[2] - pos[2];
+        delta[0] = VfSub(aim[0], pos[0]);
+        delta[1] = VfSub(aim[1], pos[1]);
+        delta[2] = VfSub(aim[2], pos[2]);
         delta[3] = aim[3];
         self->dir[0] = delta[0];
         self->dir[1] = delta[1];
         self->dir[2] = delta[2];
         self->dir[3] = delta[3];
-        lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] + self->dir[2] * self->dir[2];
+        lenSq = VfDot3(self->dir[0], self->dir[1], self->dir[2], self->dir[0], self->dir[1], self->dir[2]);
         scale = VfRsq(lenSq);
         if (VfIsZero(lenSq)) {
             scale = 0.0f;
         }
-        self->dir[0] = VfSat1(self->dir[0] * scale);
-        self->dir[1] = VfSat1(self->dir[1] * scale);
-        self->dir[2] = VfSat1(self->dir[2] * scale);
+        self->dir[0] = VfSat1(VfMul(self->dir[0], scale));
+        self->dir[1] = VfSat1(VfMul(self->dir[1], scale));
+        self->dir[2] = VfSat1(VfMul(self->dir[2], scale));
         self->dir[3] = 0.0f;
         /* vel = 100 x dir (w = 0), staged through aim */
-        aim[0] = self->dir[0] * 100.0f;
-        aim[1] = self->dir[1] * 100.0f;
-        aim[2] = self->dir[2] * 100.0f;
+        aim[0] = VfMul(self->dir[0], 100.0f);
+        aim[1] = VfMul(self->dir[1], 100.0f);
+        aim[2] = VfMul(self->dir[2], 100.0f);
         aim[3] = 0.0f;
         self->vel[0] = aim[0];
         self->vel[1] = aim[1];
@@ -146,19 +146,19 @@ void BtlAttackType7CUpdate(BtlAttack *self)
     }
     if (self->age >= 9) {
         /* dir += (up - dir) x paramF0 (all four lanes); effectDir = -dir (w kept) */
-        self->dir[0] = self->dir[0] + (g_vecUp.x - self->dir[0]) * self->paramF0;
-        self->dir[1] = self->dir[1] + (g_vecUp.y - self->dir[1]) * self->paramF0;
-        self->dir[2] = self->dir[2] + (g_vecUp.z - self->dir[2]) * self->paramF0;
-        self->dir[3] = self->dir[3] + (g_vecUp.w - self->dir[3]) * self->paramF0;
+        self->dir[0] = VfAdd(self->dir[0], VfMul(VfSub(g_vecUp.x, self->dir[0]), self->paramF0));
+        self->dir[1] = VfAdd(self->dir[1], VfMul(VfSub(g_vecUp.y, self->dir[1]), self->paramF0));
+        self->dir[2] = VfAdd(self->dir[2], VfMul(VfSub(g_vecUp.z, self->dir[2]), self->paramF0));
+        self->dir[3] = VfAdd(self->dir[3], VfMul(VfSub(g_vecUp.w, self->dir[3]), self->paramF0));
         effectDir[0] = -self->dir[0];
         effectDir[1] = -self->dir[1];
         effectDir[2] = -self->dir[2];
         effectDir[3] = self->dir[3];
         GfxEffectSetDirAttached(g_btlAttackEffectMgr, -1, effectDir, pos);
         /* vel = 100 x dir (w = 0), staged through effectDir */
-        effectDir[0] = self->dir[0] * 100.0f;
-        effectDir[1] = self->dir[1] * 100.0f;
-        effectDir[2] = self->dir[2] * 100.0f;
+        effectDir[0] = VfMul(self->dir[0], 100.0f);
+        effectDir[1] = VfMul(self->dir[1], 100.0f);
+        effectDir[2] = VfMul(self->dir[2], 100.0f);
         effectDir[3] = 0.0f;
         self->vel[0] = effectDir[0];
         self->vel[1] = effectDir[1];
@@ -171,18 +171,18 @@ void BtlAttackType7CUpdate(BtlAttack *self)
     trail[1] = pos[1];
     trail[2] = pos[2];
     trail[3] = pos[3];
-    step[0] = self->vel[0] * 0.100000001f;
-    step[1] = self->vel[1] * 0.100000001f;
-    step[2] = self->vel[2] * 0.100000001f;
+    step[0] = VfMul(self->vel[0], 0.100000001f);
+    step[1] = VfMul(self->vel[1], 0.100000001f);
+    step[2] = VfMul(self->vel[2], 0.100000001f);
     step[3] = 0.0f;
     for (i = 0; i < 5; i++) {
         GfxEffectSpawn(g_btlAttackEffectMgr, 0x97, trail);
-        trail[0] = trail[0] + step[0];
-        trail[1] = trail[1] + step[1];
-        trail[2] = trail[2] + step[2];
+        trail[0] = VfAdd(trail[0], step[0]);
+        trail[1] = VfAdd(trail[1], step[1]);
+        trail[2] = VfAdd(trail[2], step[2]);
     }
     /* pos.xyz += vel.xyz (w kept) */
-    pos[0] = pos[0] + self->vel[0];
-    pos[1] = pos[1] + self->vel[1];
-    pos[2] = pos[2] + self->vel[2];
+    pos[0] = VfAdd(pos[0], self->vel[0]);
+    pos[1] = VfAdd(pos[1], self->vel[1]);
+    pos[2] = VfAdd(pos[2], self->vel[2]);
 }

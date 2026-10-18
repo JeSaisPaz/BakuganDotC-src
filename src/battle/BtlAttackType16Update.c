@@ -65,21 +65,21 @@ void BtlAttackType16Update(BtlAttack *self)
         return;
     }
     self->paramF0 = self->paramF0 + self->paramF1;
-    turn = __builtin_sinf(self->paramF0) * 0.0299999993f;
+    turn = VfSinQuarter(VfMul(self->paramF0, 0.636619747f)) * 0.0299999993f;
     /* dir rotated about y by turn (vrot [C,0,-S,0] / [S,0,C,0] dotted with dir.xyz); y, w kept */
-    c = __builtin_cosf(turn);
-    sn = __builtin_sinf(turn);
+    c = VfCosQuarter(VfMul(turn, 0.636619747f));
+    sn = VfSinQuarter(VfMul(turn, 0.636619747f));
     x = self->dir[0];
     z = self->dir[2];
-    self->dir[0] = x * c - z * sn;
-    self->dir[2] = x * sn + z * c;
+    self->dir[0] = VfDot3(x, self->dir[1], z, c, 0.0f, -sn);
+    self->dir[2] = VfDot3(x, self->dir[1], z, sn, 0.0f, c);
     /* the attached effect's direction = (-dir.xyz, dir.w); pos.xyz += vel.xyz (w kept) */
     edir = ((GfxEffect *)self->effect)->dir;
     edir[0] = -self->dir[0];
     edir[1] = -self->dir[1];
     edir[2] = -self->dir[2];
     edir[3] = self->dir[3];
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

@@ -140,19 +140,18 @@ void BtlBakuganUpdate(BtlBakugan *self)
         float lenSq;
         float inv;
 
-        self->orient[0] = self->orient[0] + (g_vecUp.x - self->orient[0]) * 0.2f;
-        self->orient[1] = self->orient[1] + (g_vecUp.y - self->orient[1]) * 0.2f;
-        self->orient[2] = self->orient[2] + (g_vecUp.z - self->orient[2]) * 0.2f;
-        self->orient[3] = self->orient[3] + (g_vecUp.w - self->orient[3]) * 0.2f;
-        lenSq = self->orient[0] * self->orient[0] + self->orient[1] * self->orient[1] +
-                self->orient[2] * self->orient[2];
+        self->orient[0] = VfAdd(self->orient[0], VfMul(VfSub(g_vecUp.x, self->orient[0]), 0.2f));
+        self->orient[1] = VfAdd(self->orient[1], VfMul(VfSub(g_vecUp.y, self->orient[1]), 0.2f));
+        self->orient[2] = VfAdd(self->orient[2], VfMul(VfSub(g_vecUp.z, self->orient[2]), 0.2f));
+        self->orient[3] = VfAdd(self->orient[3], VfMul(VfSub(g_vecUp.w, self->orient[3]), 0.2f));
+        lenSq = VfDot3(self->orient[0], self->orient[1], self->orient[2], self->orient[0], self->orient[1], self->orient[2]);
         inv = VfRsq(lenSq);
         if (VfIsZero(lenSq)) {
             inv = 0.0f;
         }
-        self->orient[0] = VfSat1(self->orient[0] * inv);
-        self->orient[1] = VfSat1(self->orient[1] * inv);
-        self->orient[2] = VfSat1(self->orient[2] * inv);
+        self->orient[0] = VfSat1(VfMul(self->orient[0], inv));
+        self->orient[1] = VfSat1(VfMul(self->orient[1], inv));
+        self->orient[2] = VfSat1(VfMul(self->orient[2], inv));
         self->orient[3] = 0.0f;
     }
 

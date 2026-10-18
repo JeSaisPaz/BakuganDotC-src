@@ -29,8 +29,8 @@ void UiCollectionSphereResetDetailPose(UiCollectionSphere *self, bool withOffset
   matrix = self->models[self->detailCell]->data->rootMatrix;
   /* Y rotation: fields (c,0,-s,0), (0,1,0,0), (s,0,c,0), (0,0,0,1). */
   angle = 3.14f;
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   matrix[0] = c;
   matrix[1] = 0.0f;
   matrix[2] = -s;
@@ -50,8 +50,8 @@ void UiCollectionSphereResetDetailPose(UiCollectionSphere *self, bool withOffset
   matrix = self->models[self->detailCell]->data->rootMatrix;
   /* X rotation: fields (1,0,0,0), (0,c,s,0), (0,-s,c,0), (0,0,0,1). */
   angle = 0.0f;
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   rot[0] = 1.0f;
   rot[1] = 0.0f;
   rot[2] = 0.0f;
@@ -72,8 +72,7 @@ void UiCollectionSphereResetDetailPose(UiCollectionSphere *self, bool withOffset
      tmp[j][i] = sum_k matrix[j][k] * rot[k][i]. */
   for (j = 0; j < 4; j++) {
     for (i = 0; i < 4; i++) {
-      tmp[j * 4 + i] = matrix[j * 4 + 0] * rot[0 * 4 + i] + matrix[j * 4 + 1] * rot[1 * 4 + i] +
-                       matrix[j * 4 + 2] * rot[2 * 4 + i] + matrix[j * 4 + 3] * rot[3 * 4 + i];
+      tmp[j * 4 + i] = VfDot4(matrix[j * 4 + 0], matrix[j * 4 + 1], matrix[j * 4 + 2], matrix[j * 4 + 3], rot[0 * 4 + i], rot[1 * 4 + i], rot[2 * 4 + i], rot[3 * 4 + i]);
     }
   }
   for (i = 0; i < 16; i++) {
@@ -89,6 +88,6 @@ void UiCollectionSphereResetDetailPose(UiCollectionSphere *self, bool withOffset
   matrix = self->models[self->detailCell]->data->rootMatrix;
   /* vscl.q of fields 0-2 by (scale, scale, scale). */
   for (i = 0; i < 12; i++) {
-    matrix[i] = matrix[i] * scale;
+    matrix[i] = VfMul(matrix[i], scale);
   }
 }

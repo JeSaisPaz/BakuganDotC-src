@@ -37,16 +37,14 @@ void BtlBakuganProbeGround(BtlBakugan *self)
     g_collisionSweptSphereDesc.start.y = pos[1];
     g_collisionSweptSphereDesc.start.z = pos[2];
     g_collisionSweptSphereDesc.start.w = pos[3];
-    g_collisionSweptSphereDesc.dir.x = g_vecDown.x * 3000.0f;
-    g_collisionSweptSphereDesc.dir.y = g_vecDown.y * 3000.0f;
-    g_collisionSweptSphereDesc.dir.z = g_vecDown.z * 3000.0f;
+    g_collisionSweptSphereDesc.dir.x = VfMul(g_vecDown.x, 3000.0f);
+    g_collisionSweptSphereDesc.dir.y = VfMul(g_vecDown.y, 3000.0f);
+    g_collisionSweptSphereDesc.dir.z = VfMul(g_vecDown.z, 3000.0f);
     g_collisionSweptSphereDesc.dir.w = 0.0f;
     g_collisionSweptSphereDesc.start.w =
         g_collisionSweptSphereDesc.radius * g_collisionSweptSphereDesc.radius;
-    g_collisionSweptSphereDesc.dir.w = __builtin_sqrtf(
-        g_collisionSweptSphereDesc.dir.x * g_collisionSweptSphereDesc.dir.x +
-        g_collisionSweptSphereDesc.dir.y * g_collisionSweptSphereDesc.dir.y +
-        g_collisionSweptSphereDesc.dir.z * g_collisionSweptSphereDesc.dir.z);
+    g_collisionSweptSphereDesc.dir.w = VfSqrt(
+        VfDot3(g_collisionSweptSphereDesc.dir.x, g_collisionSweptSphereDesc.dir.y, g_collisionSweptSphereDesc.dir.z, g_collisionSweptSphereDesc.dir.x, g_collisionSweptSphereDesc.dir.y, g_collisionSweptSphereDesc.dir.z));
     hit = CollisionRaycast(0x3fbf2700, &g_collisionSweptSphereDesc.shapeBlock, 0);
     if (hit != (void *)0) {
       self->groundPoint[0] = pos[0];
@@ -59,13 +57,13 @@ void BtlBakuganProbeGround(BtlBakugan *self)
         /* groundNormal += (hit normal - groundNormal) * 0.7f */
         k = 0.7f;
         self->groundNormal[0] =
-            self->groundNormal[0] + (g_collisionHitResult.normal.x - self->groundNormal[0]) * k;
+            VfAdd(self->groundNormal[0], VfMul(VfSub(g_collisionHitResult.normal.x, self->groundNormal[0]), k));
         self->groundNormal[1] =
-            self->groundNormal[1] + (g_collisionHitResult.normal.y - self->groundNormal[1]) * k;
+            VfAdd(self->groundNormal[1], VfMul(VfSub(g_collisionHitResult.normal.y, self->groundNormal[1]), k));
         self->groundNormal[2] =
-            self->groundNormal[2] + (g_collisionHitResult.normal.z - self->groundNormal[2]) * k;
+            VfAdd(self->groundNormal[2], VfMul(VfSub(g_collisionHitResult.normal.z, self->groundNormal[2]), k));
         self->groundNormal[3] =
-            self->groundNormal[3] + (g_collisionHitResult.normal.w - self->groundNormal[3]) * k;
+            VfAdd(self->groundNormal[3], VfMul(VfSub(g_collisionHitResult.normal.w, self->groundNormal[3]), k));
       }
       self->floorMaterial = g_collisionHitInfo.surface;
       self->stateFlags &= ~8u;
@@ -82,11 +80,11 @@ void BtlBakuganProbeGround(BtlBakugan *self)
       g_collisionRayDesc.dir.w = g_vecDown.w;
       /* invDir.xyz = 1/dir.xyz, or 0 where dir.i == 0; invDir.w = 0. */
       g_collisionRayDesc.invDir.x =
-          VfIsZero(g_collisionRayDesc.dir.x) ? 0.0f : 1.0f / g_collisionRayDesc.dir.x;
+          VfIsZero(g_collisionRayDesc.dir.x) ? 0.0f : VfRcp(g_collisionRayDesc.dir.x);
       g_collisionRayDesc.invDir.y =
-          VfIsZero(g_collisionRayDesc.dir.y) ? 0.0f : 1.0f / g_collisionRayDesc.dir.y;
+          VfIsZero(g_collisionRayDesc.dir.y) ? 0.0f : VfRcp(g_collisionRayDesc.dir.y);
       g_collisionRayDesc.invDir.z =
-          VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : 1.0f / g_collisionRayDesc.dir.z;
+          VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : VfRcp(g_collisionRayDesc.dir.z);
       g_collisionRayDesc.invDir.w = 0.0f;
       hit = CollisionRaycast(0x3fbf2700, &g_collisionRayBlock, 0);
       if (hit != (void *)0) {
@@ -111,11 +109,11 @@ void BtlBakuganProbeGround(BtlBakugan *self)
     g_collisionRayDesc.dir.w = g_vecDown.w;
     /* invDir.xyz = 1/dir.xyz, or 0 where dir.i == 0; invDir.w = 0. */
     g_collisionRayDesc.invDir.x =
-        VfIsZero(g_collisionRayDesc.dir.x) ? 0.0f : 1.0f / g_collisionRayDesc.dir.x;
+        VfIsZero(g_collisionRayDesc.dir.x) ? 0.0f : VfRcp(g_collisionRayDesc.dir.x);
     g_collisionRayDesc.invDir.y =
-        VfIsZero(g_collisionRayDesc.dir.y) ? 0.0f : 1.0f / g_collisionRayDesc.dir.y;
+        VfIsZero(g_collisionRayDesc.dir.y) ? 0.0f : VfRcp(g_collisionRayDesc.dir.y);
     g_collisionRayDesc.invDir.z =
-        VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : 1.0f / g_collisionRayDesc.dir.z;
+        VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : VfRcp(g_collisionRayDesc.dir.z);
     g_collisionRayDesc.invDir.w = 0.0f;
     hit = CollisionRaycast(0x3fbf2700, &g_collisionRayBlock, 0);
     if (hit != (void *)0) {

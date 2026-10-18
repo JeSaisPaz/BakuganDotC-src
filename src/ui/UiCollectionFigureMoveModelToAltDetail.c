@@ -23,8 +23,8 @@
    {0,0,0,1}). */
 static void SetHalfTurnY(float *m)
 {
-  float c = __builtin_cosf(3.14f);
-  float s = __builtin_sinf(3.14f);
+  float c = VfCosQuarter(3.14f * 0.636619747f);
+  float s = VfSinQuarter(3.14f * 0.636619747f);
 
   m[0] = c;
   m[1] = 0.0f;
@@ -50,7 +50,7 @@ static void ScaleRows3(float *m, float scale)
   int i;
 
   for (i = 0; i < 12; i++) {
-    m[i] = m[i] * scale;
+    m[i] = VfMul(m[i], scale);
   }
 }
 

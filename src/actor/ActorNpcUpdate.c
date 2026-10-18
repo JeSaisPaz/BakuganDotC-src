@@ -76,9 +76,7 @@ void ActorNpcUpdate(ActorNpc *self)
     self->culled = 1;
   }
 
-  speedSq = self->base.base.velocity[0] * self->base.base.velocity[0] +
-            self->base.base.velocity[1] * self->base.base.velocity[1] +
-            self->base.base.velocity[2] * self->base.base.velocity[2];
+  speedSq = VfDot3(self->base.base.velocity[0], self->base.base.velocity[1], self->base.base.velocity[2], self->base.base.velocity[0], self->base.base.velocity[1], self->base.base.velocity[2]);
   moving = 0;
   if (!(speedSq <= 1e-05f)) {
     moving = 1;
@@ -106,18 +104,18 @@ void ActorNpcUpdate(ActorNpc *self)
       /* tiltQuat += (g_vecUp - tiltQuat) * 0.2, then xyz normalised and clamped to [-1, 1]; w is
          the bank constant S713 (0), and a zero length scales by S713 (0) too */
       tilt = self->base.tiltQuat;
-      tilt[0] = tilt[0] + (g_vecUp.x - tilt[0]) * 0.2f;
-      tilt[1] = tilt[1] + (g_vecUp.y - tilt[1]) * 0.2f;
-      tilt[2] = tilt[2] + (g_vecUp.z - tilt[2]) * 0.2f;
-      tilt[3] = tilt[3] + (g_vecUp.w - tilt[3]) * 0.2f;
-      lenSq = tilt[0] * tilt[0] + tilt[1] * tilt[1] + tilt[2] * tilt[2];
+      tilt[0] = VfAdd(tilt[0], VfMul(VfSub(g_vecUp.x, tilt[0]), 0.2f));
+      tilt[1] = VfAdd(tilt[1], VfMul(VfSub(g_vecUp.y, tilt[1]), 0.2f));
+      tilt[2] = VfAdd(tilt[2], VfMul(VfSub(g_vecUp.z, tilt[2]), 0.2f));
+      tilt[3] = VfAdd(tilt[3], VfMul(VfSub(g_vecUp.w, tilt[3]), 0.2f));
+      lenSq = VfDot3(tilt[0], tilt[1], tilt[2], tilt[0], tilt[1], tilt[2]);
       invLen = VfRsq(lenSq);
       if (VfIsZero(lenSq)) {
         invLen = 0.0f;
       }
-      tilt[0] = VfSat1(tilt[0] * invLen);
-      tilt[1] = VfSat1(tilt[1] * invLen);
-      tilt[2] = VfSat1(tilt[2] * invLen);
+      tilt[0] = VfSat1(VfMul(tilt[0], invLen));
+      tilt[1] = VfSat1(VfMul(tilt[1], invLen));
+      tilt[2] = VfSat1(VfMul(tilt[2], invLen));
       tilt[3] = 0.0f;
     }
   } else {

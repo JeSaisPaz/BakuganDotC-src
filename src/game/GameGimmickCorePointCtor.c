@@ -151,11 +151,11 @@ CoreObject *GameGimmickCorePointCtor(GameGimmickCorePoint *obj, s32 kind, void *
 
   /* pickupRadius = |0.8 * extent| over x/z (the y lane is zeroed before the dot) */
   CollisionAabbExtent(obj->base.base.data->bbox, &extent);
-  extent.x = extent.x * 0.8f;
-  extent.y = extent.y * 0.8f;
-  extent.z = extent.z * 0.8f;
+  extent.x = VfMul(extent.x, 0.8f);
+  extent.y = VfMul(extent.y, 0.8f);
+  extent.z = VfMul(extent.z, 0.8f);
   extent.w = 0.0f; /* S713 bank constant */
-  obj->pickupRadius = __builtin_sqrtf(extent.x * extent.x + 0.0f * 0.0f + extent.z * extent.z);
+  obj->pickupRadius = VfSqrt(VfDot3(extent.x, 0.0f, extent.z, extent.x, 0.0f, extent.z));
 
   GfxModelForEachMaterial(&obj->base.base, GameGimmickCorePointMaterialSetBlendMode1, NULL);
   obj->translucent = 0;

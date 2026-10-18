@@ -33,7 +33,7 @@ void GfxModelScaleAmbientColor(float scale, GfxModel *self, const char *nameFilt
                     u32 b = (packed >> (k * 8)) & 0xff;
                     f = (float)(int)(b * 0x01010101u >> 1) / 2147483648.0f;
                 }
-                result |= (u32)VfI2uc(VfF2iz(VfSat0(f) * 255.0f, 23)) << (k * 8);
+                result |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(f), 255.0f), 23)) << (k * 8);
             }
             attr->emission = result;
         }

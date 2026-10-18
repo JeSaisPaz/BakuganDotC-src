@@ -20,38 +20,38 @@ void GameFieldCameraProbeCollideRadius(float radius, void *probe, float *outEye,
     float negRadius;
 
     (void)probe;
-    dir.x = to[0] - from[0];
+    dir.x = VfSub(to[0], from[0]);
     dir.y = 0.0f;
-    dir.z = to[2] - from[2];
-    len2 = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
+    dir.z = VfSub(to[2], from[2]);
+    len2 = VfDot3(dir.x, dir.y, dir.z, dir.x, dir.y, dir.z);
     if (len2 < 1e-05f) {
         dir.z = 0.0f;
         dir.x = 1.0f;
     } else {
-        len2 = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
+        len2 = VfDot3(dir.x, dir.y, dir.z, dir.x, dir.y, dir.z);
         k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-        dir.x = VfSat1(dir.x * k);
-        dir.y = VfSat1(dir.y * k);
-        dir.z = VfSat1(dir.z * k);
+        dir.x = VfSat1(VfMul(dir.x, k));
+        dir.y = VfSat1(VfMul(dir.y, k));
+        dir.z = VfSat1(VfMul(dir.z, k));
     }
     start.x = to[0];
     start.y = from[1];
     start.z = to[2];
     start.w = to[3];
     negRadius = -radius;
-    seg.x = (from[0] - start.x) + dir.x * negRadius;
-    seg.y = (from[1] - start.y) + dir.y * negRadius;
-    seg.z = (from[2] - start.z) + dir.z * negRadius;
+    seg.x = VfAdd(VfSub(from[0], start.x), VfMul(dir.x, negRadius));
+    seg.y = VfAdd(VfSub(from[1], start.y), VfMul(dir.y, negRadius));
+    seg.z = VfAdd(VfSub(from[2], start.z), VfMul(dir.z, negRadius));
     seg.w = from[3];
     g_collisionSweptSphereDesc.start = start;
     g_collisionSweptSphereDesc.dir = seg;
     g_collisionSweptSphereDesc.radius = radius;
     g_collisionSweptSphereDesc.start.w = radius * radius;
-    g_collisionSweptSphereDesc.dir.w = __builtin_sqrtf(seg.x * seg.x + seg.y * seg.y + seg.z * seg.z);
+    g_collisionSweptSphereDesc.dir.w = VfSqrt(VfDot3(seg.x, seg.y, seg.z, seg.x, seg.y, seg.z));
     if (CollisionRaycast(0x1bf0740, &g_collisionSweptSphereBlock2, 0) != NULL) {
-        outEye[0] = g_collisionHitResult.point.x + g_collisionHitResult.normal.x * radius;
-        outEye[1] = g_collisionHitResult.point.y + g_collisionHitResult.normal.y * radius;
-        outEye[2] = g_collisionHitResult.point.z + g_collisionHitResult.normal.z * radius;
+        outEye[0] = VfAdd(g_collisionHitResult.point.x, VfMul(g_collisionHitResult.normal.x, radius));
+        outEye[1] = VfAdd(g_collisionHitResult.point.y, VfMul(g_collisionHitResult.normal.y, radius));
+        outEye[2] = VfAdd(g_collisionHitResult.point.z, VfMul(g_collisionHitResult.normal.z, radius));
         outEye[3] = g_collisionHitResult.point.w;
     } else {
         outEye[0] = from[0];

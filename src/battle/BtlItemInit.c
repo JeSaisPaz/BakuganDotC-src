@@ -71,7 +71,7 @@ void BtlItemInit(BtlItem *self, s32 type)
     if (GameStageIs0Or13() == 0) {
         ambient = self->model->ambient;
         for (i = 0; i < 4; i++) {
-            ambient[i] = ambient[i] * 0.7f;
+            ambient[i] = VfMul(ambient[i], 0.7f);
         }
         self->model->ambient[3] = 1.0f;
     }

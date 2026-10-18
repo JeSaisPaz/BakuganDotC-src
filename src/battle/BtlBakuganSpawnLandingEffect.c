@@ -13,9 +13,9 @@ void BtlBakuganSpawnLandingEffect(BtlBakugan *self, char splash)
     float pos[4];
     int id;
 
-    pos[0] = self->base.velocity[0] * 3.0f + self->groundPoint[0];
-    pos[1] = 0.0f * 3.0f + self->groundPoint[1];
-    pos[2] = self->base.velocity[2] * 3.0f + self->groundPoint[2];
+    pos[0] = VfAdd(VfMul(self->base.velocity[0], 3.0f), self->groundPoint[0]);
+    pos[1] = VfAdd(0.0f * 3.0f, self->groundPoint[1]);
+    pos[2] = VfAdd(VfMul(self->base.velocity[2], 3.0f), self->groundPoint[2]);
     pos[3] = 0.0f; /* w lane of C710: bank S713 */
 
     if (BtlBakuganIsOnWaterFloor(self) == 0) {

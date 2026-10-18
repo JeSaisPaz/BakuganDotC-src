@@ -20,7 +20,6 @@ void GameQuestCamEyeSpringUpdateAxes(GameQuestCamEyeSpring *self)
   GameQuestCamSpring *mode;
   int i;
   int j;
-  int k;
 
   x = pathSet->vec10[0];
   y = pathSet->vec10[1];
@@ -40,10 +39,7 @@ void GameQuestCamEyeSpringUpdateAxes(GameQuestCamEyeSpring *self)
      column 3 are the identity's */
   for (j = 0; j < 3; j++) {
     for (i = 0; i < 3; i++) {
-      m[j][i] = r[j][0] * l[0][i];
-      for (k = 1; k < 4; k++) {
-        m[j][i] = m[j][i] + r[j][k] * l[k][i];
-      }
+      m[j][i] = VfDot4(r[j][0], r[j][1], r[j][2], r[j][3], l[0][i], l[1][i], l[2][i], l[3][i]);
     }
     m[j][3] = 0.0f;
   }
@@ -55,17 +51,17 @@ void GameQuestCamEyeSpringUpdateAxes(GameQuestCamEyeSpring *self)
   up[1] = g_gameQuestCamEyeSpringAxisConsts.up.y;
   up[2] = g_gameQuestCamEyeSpringAxisConsts.up.z;
   up[3] = g_gameQuestCamEyeSpringAxisConsts.up.w;
-  self->base.goal.x = m[0][0] * up[0] + m[1][0] * up[1] + m[2][0] * up[2] + m[3][0] * up[3];
-  self->base.goal.y = m[0][1] * up[0] + m[1][1] * up[1] + m[2][1] * up[2] + m[3][1] * up[3];
-  self->base.goal.z = m[0][2] * up[0] + m[1][2] * up[1] + m[2][2] * up[2] + m[3][2] * up[3];
-  self->base.goal.w = m[0][3] * up[0] + m[1][3] * up[1] + m[2][3] * up[2] + m[3][3] * up[3];
+  self->base.goal.x = VfDot4(m[0][0], m[1][0], m[2][0], m[3][0], up[0], up[1], up[2], up[3]);
+  self->base.goal.y = VfDot4(m[0][1], m[1][1], m[2][1], m[3][1], up[0], up[1], up[2], up[3]);
+  self->base.goal.z = VfDot4(m[0][2], m[1][2], m[2][2], m[3][2], up[0], up[1], up[2], up[3]);
+  self->base.goal.w = VfDot4(m[0][3], m[1][3], m[2][3], m[3][3], up[0], up[1], up[2], up[3]);
   dist = self->dist;
-  self->base.goal.x = self->base.goal.x * dist;
-  self->base.goal.y = self->base.goal.y * dist;
-  self->base.goal.z = self->base.goal.z * dist;
+  self->base.goal.x = VfMul(self->base.goal.x, dist);
+  self->base.goal.y = VfMul(self->base.goal.y, dist);
+  self->base.goal.z = VfMul(self->base.goal.z, dist);
   self->base.goal.w = 0.0f; /* lane S713 of the vscl.t result: the bank zero */
   mode = self->base.ctrl->mode;
-  self->base.goal.x = self->base.goal.x + mode->goal.x;
-  self->base.goal.y = self->base.goal.y + mode->goal.y;
-  self->base.goal.z = self->base.goal.z + mode->goal.z;
+  self->base.goal.x = VfAdd(self->base.goal.x, mode->goal.x);
+  self->base.goal.y = VfAdd(self->base.goal.y, mode->goal.y);
+  self->base.goal.z = VfAdd(self->base.goal.z, mode->goal.z);
 }

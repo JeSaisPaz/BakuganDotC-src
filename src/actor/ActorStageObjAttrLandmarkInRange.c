@@ -11,10 +11,10 @@ int ActorStageObjAttrLandmarkInRange(ActorStageObjAttrLandmark *self, GfxModel *
   float dz;
   float dist;
 
-  dx = unit->pos[0] - self->base.base.pos[0];
+  dx = VfSub(unit->pos[0], self->base.base.pos[0]);
   dy = 0.0f;
-  dz = unit->pos[2] - self->base.base.pos[2];
-  dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+  dz = VfSub(unit->pos[2], self->base.base.pos[2]);
+  dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
   if (!(dist <= self->auraRadius)) {
     return 0;
   }

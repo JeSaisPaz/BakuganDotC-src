@@ -18,9 +18,9 @@ void ActorNpcPhase00ApplyPlacement(ActorNpc *self)
     v[2] = (float)rec->pos[2] * 0.00024414062f;
     v[3] = 0.0f;
     /* vscl.t into C710; lane 3 stored by sv.q is the bank zero S713 */
-    self->base.base.pos[0] = v[0] * 20.0f;
-    self->base.base.pos[1] = v[1] * 20.0f;
-    self->base.base.pos[2] = v[2] * 20.0f;
+    self->base.base.pos[0] = VfMul(v[0], 20.0f);
+    self->base.base.pos[1] = VfMul(v[1], 20.0f);
+    self->base.base.pos[2] = VfMul(v[2], 20.0f);
     self->base.base.pos[3] = 0.0f;
     ActorNpcPlacementAnglesToRadians(v, rec->angles);
     self->base.base.rot[0] = v[0];

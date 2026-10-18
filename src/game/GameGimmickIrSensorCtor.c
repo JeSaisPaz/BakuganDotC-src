@@ -51,15 +51,15 @@ CoreObject *GameGimmickIrSensorCtor(GameGimmickIrSensor *obj, s32 kind, void *re
   endRaw[1] = (float)rec->beamEnd[1] * (1.0f / 4096.0f);
   endRaw[2] = (float)rec->beamEnd[2] * (1.0f / 4096.0f);
   /* end = endRaw * 20 (w from the bank's S713 = 0), diff = end - start (w = end.w) */
-  end[0] = endRaw[0] * 20.0f;
-  end[1] = endRaw[1] * 20.0f;
-  end[2] = endRaw[2] * 20.0f;
+  end[0] = VfMul(endRaw[0], 20.0f);
+  end[1] = VfMul(endRaw[1], 20.0f);
+  end[2] = VfMul(endRaw[2], 20.0f);
   end[3] = 0.0f;
-  diff[0] = end[0] - start[0];
-  diff[1] = end[1] - start[1];
-  diff[2] = end[2] - start[2];
+  diff[0] = VfSub(end[0], start[0]);
+  diff[1] = VfSub(end[1], start[1]);
+  diff[2] = VfSub(end[2], start[2]);
   diff[3] = end[3];
-  len = __builtin_sqrtf(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
+  len = VfSqrt(VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]));
   model = obj->base.base.data;
   model->rootMatrix[0] = len * 0.03846154f;
   model->rootMatrix[5] = 1.0f;
@@ -67,28 +67,28 @@ CoreObject *GameGimmickIrSensorCtor(GameGimmickIrSensor *obj, s32 kind, void *re
   yaw = -atan2f(diff[2], diff[0]);
 
   /* diff = half of it (w = S713 = 0), pos.xyz += diff.xyz */
-  diff[0] = diff[0] * 0.5f;
-  diff[1] = diff[1] * 0.5f;
-  diff[2] = diff[2] * 0.5f;
+  diff[0] = VfMul(diff[0], 0.5f);
+  diff[1] = VfMul(diff[1], 0.5f);
+  diff[2] = VfMul(diff[2], 0.5f);
   diff[3] = 0.0f;
-  obj->base.base.pos[0] = obj->base.base.pos[0] + diff[0];
-  obj->base.base.pos[1] = obj->base.base.pos[1] + diff[1];
-  obj->base.base.pos[2] = obj->base.base.pos[2] + diff[2];
+  obj->base.base.pos[0] = VfAdd(obj->base.base.pos[0], diff[0]);
+  obj->base.base.pos[1] = VfAdd(obj->base.base.pos[1], diff[1]);
+  obj->base.base.pos[2] = VfAdd(obj->base.base.pos[2], diff[2]);
 
   /* vmmul.q E200, E100, E000 with M100 = rootMatrix (memory row i = column i) and M000 = R with
      rows (c, 0, -s, 0), (0, 1, 0, 0), (s, 0, c, 0), (0, 0, 0, 1): the result is the row-major
      product M * R, new[4i + r] = Σ_k old[4i + k] * R[k][r]. */
   model = obj->base.base.data;
-  c = __builtin_cosf(yaw);
-  s = __builtin_sinf(yaw);
+  c = VfCosQuarter(VfMul(yaw, 0.636619747f));
+  s = VfSinQuarter(VfMul(yaw, 0.636619747f));
   for (i = 0; i < 16; i++) {
     m[i] = model->rootMatrix[i];
   }
   for (i = 0; i < 4; i++) {
-    model->rootMatrix[4 * i + 0] = m[4 * i + 0] * c + m[4 * i + 2] * s;
-    model->rootMatrix[4 * i + 1] = m[4 * i + 1];
-    model->rootMatrix[4 * i + 2] = m[4 * i + 0] * -s + m[4 * i + 2] * c;
-    model->rootMatrix[4 * i + 3] = m[4 * i + 3];
+    model->rootMatrix[4 * i + 0] = VfDot4(m[4 * i + 0], m[4 * i + 1], m[4 * i + 2], m[4 * i + 3], c, 0.0f, s, 0.0f);
+    model->rootMatrix[4 * i + 1] = VfDot4(m[4 * i + 0], m[4 * i + 1], m[4 * i + 2], m[4 * i + 3], 0.0f, 1.0f, 0.0f, 0.0f);
+    model->rootMatrix[4 * i + 2] = VfDot4(m[4 * i + 0], m[4 * i + 1], m[4 * i + 2], m[4 * i + 3], -s, 0.0f, c, 0.0f);
+    model->rootMatrix[4 * i + 3] = VfDot4(m[4 * i + 0], m[4 * i + 1], m[4 * i + 2], m[4 * i + 3], 0.0f, 0.0f, 0.0f, 1.0f);
   }
 
   model = obj->base.base.data;
@@ -112,9 +112,9 @@ CoreObject *GameGimmickIrSensorCtor(GameGimmickIrSensor *obj, s32 kind, void *re
   obj->beamStart.y = p[1];
   obj->beamStart.z = p[2];
   obj->beamStart.w = p[3];
-  obj->beamDir.x = end[0] - p[0];
-  obj->beamDir.y = end[1] - p[1];
-  obj->beamDir.z = end[2] - p[2];
+  obj->beamDir.x = VfSub(end[0], p[0]);
+  obj->beamDir.y = VfSub(end[1], p[1]);
+  obj->beamDir.z = VfSub(end[2], p[2]);
   obj->beamDir.w = end[3];
   e = &obj->shapeVtbl[9];
   ((void (*)(void *))e->fn)((u8 *)&obj->shapeType + e->delta);

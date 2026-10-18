@@ -27,9 +27,9 @@ void GameQuestCamLookSpringUpdateTarget(GameQuestCamLookSpring *self)
   self->base.goal.z = ownerPos[2];
   self->base.goal.w = ownerPos[3];
   dir = self->base.ctrl->lookAt;
-  dir.x = dir.x - self->base.ctrl->eye.x;
-  dir.y = dir.y - self->base.ctrl->eye.y;
-  dir.z = dir.z - self->base.ctrl->eye.z;
+  dir.x = VfSub(dir.x, self->base.ctrl->eye.x);
+  dir.y = VfSub(dir.y, self->base.ctrl->eye.y);
+  dir.z = VfSub(dir.z, self->base.ctrl->eye.z);
   dir.y = 0.0f;
   if (g_staticZeroFGuard == 0) {
     g_staticZeroFGuard = 1;
@@ -53,31 +53,31 @@ void GameQuestCamLookSpringUpdateTarget(GameQuestCamLookSpring *self)
     }
   }
   /* normalise, saturated to [-1, 1] */
-  lenSq = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
+  lenSq = VfDot3(dir.x, dir.y, dir.z, dir.x, dir.y, dir.z);
   scale = VfRsq(lenSq);
   if (VfIsZero(lenSq)) {
     scale = 0.0f;
   }
-  dir.x = VfSat1(dir.x * scale);
-  dir.y = VfSat1(dir.y * scale);
-  dir.z = VfSat1(dir.z * scale);
+  dir.x = VfSat1(VfMul(dir.x, scale));
+  dir.y = VfSat1(VfMul(dir.y, scale));
+  dir.z = VfSat1(VfMul(dir.z, scale));
   /* forward part */
-  offset.x = dir.x * self->lookParams.z;
-  offset.y = dir.y * self->lookParams.z;
-  offset.z = dir.z * self->lookParams.z;
+  offset.x = VfMul(dir.x, self->lookParams.z);
+  offset.y = VfMul(dir.y, self->lookParams.z);
+  offset.z = VfMul(dir.z, self->lookParams.z);
   /* lateral part: cross(dir, up) */
   up = &g_gameQuestCamLookSpringAxisConsts.up;
-  side.x = dir.y * up->z - dir.z * up->y;
-  side.y = dir.z * up->x - dir.x * up->z;
-  side.z = dir.x * up->y - dir.y * up->x;
-  side.x = side.x * self->lookParams.x;
-  side.y = side.y * self->lookParams.x;
-  side.z = side.z * self->lookParams.x;
-  offset.x = offset.x + side.x;
-  offset.y = offset.y + side.y;
-  offset.z = offset.z + side.z;
+  side.x = VfDot2(dir.y, dir.z, up->z, -up->y);
+  side.y = VfDot2(dir.z, dir.x, up->x, -up->z);
+  side.z = VfDot2(dir.x, dir.y, up->y, -up->x);
+  side.x = VfMul(side.x, self->lookParams.x);
+  side.y = VfMul(side.y, self->lookParams.x);
+  side.z = VfMul(side.z, self->lookParams.x);
+  offset.x = VfAdd(offset.x, side.x);
+  offset.y = VfAdd(offset.y, side.y);
+  offset.z = VfAdd(offset.z, side.z);
   offset.y = offset.y + self->lookParams.y;
-  self->base.goal.x = self->base.goal.x + offset.x;
-  self->base.goal.y = self->base.goal.y + offset.y;
-  self->base.goal.z = self->base.goal.z + offset.z;
+  self->base.goal.x = VfAdd(self->base.goal.x, offset.x);
+  self->base.goal.y = VfAdd(self->base.goal.y, offset.y);
+  self->base.goal.z = VfAdd(self->base.goal.z, offset.z);
 }

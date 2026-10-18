@@ -32,20 +32,20 @@ static inline void ActorCrystalOnHitNormalize(float *v)
   float len2;
   float k;
 
-  len2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+  len2 = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
   k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-  v[0] = VfSat1(v[0] * k);
-  v[1] = VfSat1(v[1] * k);
-  v[2] = VfSat1(v[2] * k);
+  v[0] = VfSat1(VfMul(v[0], k));
+  v[1] = VfSat1(VfMul(v[1], k));
+  v[2] = VfSat1(VfMul(v[2], k));
   v[3] = 0.0f;
 }
 
 /* out = {cos(heading) * radius + base.x, 0 + base.y, sin(heading) * radius + base.z, 0} */
 static inline void ActorCrystalOnHitPolar(float *out, float heading, float radius, const float *base)
 {
-  out[0] = __builtin_cosf(heading) * radius + base[0];
-  out[1] = 0.0f * radius + base[1];
-  out[2] = __builtin_sinf(heading) * radius + base[2];
+  out[0] = VfAdd(VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), radius), base[0]);
+  out[1] = VfAdd(VfMul(0.0f, radius), base[1]);
+  out[2] = VfAdd(VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), radius), base[2]);
   out[3] = 0.0f;
 }
 
@@ -106,24 +106,24 @@ void ActorCrystalOnHit(ActorCrystal *self)
     }
     anchor[1] = anchor[1] + 200.0f;
     /* dir = {anchor.xyz - hit.xyz, anchor.w} */
-    tmp[0] = anchor[0] - hit[0];
-    tmp[1] = anchor[1] - hit[1];
-    tmp[2] = anchor[2] - hit[2];
+    tmp[0] = VfSub(anchor[0], hit[0]);
+    tmp[1] = VfSub(anchor[1], hit[1]);
+    tmp[2] = VfSub(anchor[2], hit[2]);
     tmp[3] = anchor[3];
     for (i = 0; i < 4; i++) {
       dir[i] = tmp[i];
     }
-    dx = self->base.base.pos[0] - hit[0];
-    dy = self->base.base.pos[1] - hit[1];
-    dz = self->base.base.pos[2] - hit[2];
-    dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+    dx = VfSub(self->base.base.pos[0], hit[0]);
+    dy = VfSub(self->base.base.pos[1], hit[1]);
+    dz = VfSub(self->base.base.pos[2], hit[2]);
+    dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
     if (dist <= 800.0f) {
       dir[1] = 0.0f;
       ActorCrystalOnHitNormalize(dir);
       /* dir += (camera dir - dir) * 0.15f, all four components */
       cam = g_gfxActiveCamera->dir;
       for (i = 0; i < 4; i++) {
-        dir[i] = dir[i] + (cam[i] - dir[i]) * 0.150000006f;
+        dir[i] = VfAdd(dir[i], VfMul(VfSub(cam[i], dir[i]), 0.150000006f));
       }
       ActorCrystalOnHitPolar(spawn, heading, 150.0f, &self->base.collider0->hitPos.x);
       spawn[1] = spawn[1] + 100.0f;
@@ -156,13 +156,13 @@ void ActorCrystalOnHit(ActorCrystal *self)
      dir = {spawn.xyz - pos.xyz, spawn.w} */
   collider = self->base.collider0;
   cam = g_gfxActiveCamera->dir;
-  spawn[0] = collider->hitPos.x - cam[0] * 4.0f;
-  spawn[1] = collider->hitPos.y - cam[1] * 4.0f;
-  spawn[2] = collider->hitPos.z - cam[2] * 4.0f;
+  spawn[0] = VfSub(collider->hitPos.x, VfMul(cam[0], 4.0f));
+  spawn[1] = VfSub(collider->hitPos.y, VfMul(cam[1], 4.0f));
+  spawn[2] = VfSub(collider->hitPos.z, VfMul(cam[2], 4.0f));
   spawn[3] = collider->hitPos.w;
-  dir[0] = spawn[0] - self->base.base.pos[0];
+  dir[0] = VfSub(spawn[0], self->base.base.pos[0]);
   dir[1] = 0.0f;
-  dir[2] = spawn[2] - self->base.base.pos[2];
+  dir[2] = VfSub(spawn[2], self->base.base.pos[2]);
   dir[3] = spawn[3];
   ActorCrystalOnHitNormalize(dir);
   ActorCrystalSpawnHitEffect(self, spawn, dir);

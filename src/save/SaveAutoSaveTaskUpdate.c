@@ -336,7 +336,7 @@ void SaveAutoSaveTaskUpdate(CoreTask *task)
     phase = self->textFrame * 2;
     for (i = 0; i < count; i++) {
       angle = (float)phase * 3.1415927f * 0.06666667f;
-      c = __builtin_cosf(angle);
+      c = VfCosQuarter(VfMul(angle, 0.636619747f));
       glyph->posY = c * 3.0f + 240.0f;
       phase += 8;
       glyph++;

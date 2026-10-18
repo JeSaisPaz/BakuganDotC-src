@@ -27,7 +27,7 @@ static inline float EvtCosWrap(float a)
 s32 GameEventCosFixed(s32 angle)
 {
     float a = (float)angle * EVT_TWO_PI * EVT_INV_65535;
-    float c = __builtin_cosf(EvtCosWrap(a));
+    float c = VfCosQuarter(VfMul(EvtCosWrap(a), 0.636619747f));
 
     if (!(c <= 0.0f)) {
         return (s32)(s16)(s32)(c * 4096.0f + 0.5f);

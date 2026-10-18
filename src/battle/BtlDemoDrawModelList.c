@@ -27,9 +27,9 @@ u32 *BtlDemoDrawModelList(u32 *dl, void **list, s32 pass)
             const VtblEntry *draw;
             float *trans = &model->data->rootMatrix[12];
 
-            trans[0] = trans[0] - saved[0];
-            trans[1] = trans[1] - saved[1];
-            trans[2] = trans[2] - saved[2];
+            trans[0] = VfSub(trans[0], saved[0]);
+            trans[1] = VfSub(trans[1], saved[1]);
+            trans[2] = VfSub(trans[2], saved[2]);
             draw = &((const VtblEntry *)model->base.vtable)[8];
             ((void (*)(void *, u32 **))draw->fn)((u8 *)model + draw->delta, &cursor);
             trans = &model->data->rootMatrix[12];

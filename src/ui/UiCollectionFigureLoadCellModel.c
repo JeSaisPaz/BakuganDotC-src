@@ -46,8 +46,8 @@ void UiCollectionFigureLoadCellModel(UiCollectionFigure *self, u8 category, u8 i
 
   /* rootMatrix = rotation about Y by 3.14 (vmul.s by S703 then vrot in quarter turns) */
   m = model->data->rootMatrix;
-  c = __builtin_cosf(3.14f);
-  sn = __builtin_sinf(3.14f);
+  c = VfCosQuarter(3.14f * 0.636619747f);
+  sn = VfSinQuarter(3.14f * 0.636619747f);
   m[0] = c;
   m[1] = 0.0f;
   m[2] = -sn;
@@ -67,8 +67,8 @@ void UiCollectionFigureLoadCellModel(UiCollectionFigure *self, u8 category, u8 i
 
   /* X rotation by -0: fields (1,0,0,0), (0,c,s,0), (0,-s,c,0), (0,0,0,1). */
   m = self->models[cell]->data->rootMatrix;
-  c = __builtin_cosf(-0.0f);
-  sn = __builtin_sinf(-0.0f);
+  c = VfCosQuarter(-0.0f * 0.636619747f);
+  sn = VfSinQuarter(-0.0f * 0.636619747f);
   rot[0] = 1.0f;
   rot[1] = 0.0f;
   rot[2] = 0.0f;
@@ -92,8 +92,7 @@ void UiCollectionFigureLoadCellModel(UiCollectionFigure *self, u8 category, u8 i
      itself, so rotY(3.14) is kept untransposed. */
   for (j = 0; j < 4; j++) {
     for (i = 0; i < 4; i++) {
-      tmp[j * 4 + i] = m[j * 4 + 0] * rot[0 * 4 + i] + m[j * 4 + 1] * rot[1 * 4 + i] +
-                       m[j * 4 + 2] * rot[2 * 4 + i] + m[j * 4 + 3] * rot[3 * 4 + i];
+      tmp[j * 4 + i] = VfDot4(m[j * 4 + 0], m[j * 4 + 1], m[j * 4 + 2], m[j * 4 + 3], rot[0 * 4 + i], rot[1 * 4 + i], rot[2 * 4 + i], rot[3 * 4 + i]);
     }
   }
   for (i = 0; i < 16; i++) {
@@ -104,10 +103,10 @@ void UiCollectionFigureLoadCellModel(UiCollectionFigure *self, u8 category, u8 i
   self->cellScale[cell] = s;
   m = self->models[cell]->data->rootMatrix;
   for (i = 0; i < 3; i++) {
-    m[i * 4 + 0] = m[i * 4 + 0] * s;
-    m[i * 4 + 1] = m[i * 4 + 1] * s;
-    m[i * 4 + 2] = m[i * 4 + 2] * s;
-    m[i * 4 + 3] = m[i * 4 + 3] * s;
+    m[i * 4 + 0] = VfMul(m[i * 4 + 0], s);
+    m[i * 4 + 1] = VfMul(m[i * 4 + 1], s);
+    m[i * 4 + 2] = VfMul(m[i * 4 + 2], s);
+    m[i * 4 + 3] = VfMul(m[i * 4 + 3], s);
   }
 
   self->models[cell]->pos[0] = 0.0f;

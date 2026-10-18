@@ -41,17 +41,16 @@ u32 BtlBakuganApplyVelocity(BtlBakugan *self, float *velocity)
     wasMoving = (self->stateFlags & 0x40000000) != 0;
     self->stateFlags |= 0x40000000;
 
-    len = __builtin_sqrtf(velocity[0] * velocity[0] + velocity[1] * velocity[1] +
-                          velocity[2] * velocity[2]);
+    len = VfSqrt(VfDot3(velocity[0], velocity[1], velocity[2], velocity[0], velocity[1], velocity[2]));
 
     if (self->radius * 0.800000012f < len) {
         stepCount = (float)(s32)floorf(len / (self->radius * 0.800000012f)) + 1.0f;
         count = (s32)stepCount;
         invCount = 1.0f / stepCount;
         /* step.xyz = velocity.xyz / count; step.w comes from the bank constant S713 (0.0f). */
-        step[0] = velocity[0] * invCount;
-        step[1] = velocity[1] * invCount;
-        step[2] = velocity[2] * invCount;
+        step[0] = VfMul(velocity[0], invCount);
+        step[1] = VfMul(velocity[1], invCount);
+        step[2] = VfMul(velocity[2], invCount);
         step[3] = 0.0f;
         for (i = 0; i < count; i++) {
             moveDelta[0] = step[0];

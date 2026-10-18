@@ -38,9 +38,9 @@ int ActorCrystalTestOccludes(ActorCrystal *self, BtlBakugan *unit, float *alpha,
   centre[3] = unit->base.pos[3];
   centre[1] = centre[1] + unit->combat.stats->height * 0.5f;
   /* vsub.t: lane 3 keeps centre's w */
-  dir[0] = centre[0] - eye[0];
-  dir[1] = centre[1] - eye[1];
-  dir[2] = centre[2] - eye[2];
+  dir[0] = VfSub(centre[0], eye[0]);
+  dir[1] = VfSub(centre[1], eye[1]);
+  dir[2] = VfSub(centre[2], eye[2]);
   dir[3] = centre[3];
   if (self->collisionBox != NULL) {
     g_collisionSegmentDesc.start[0] = eye[0];

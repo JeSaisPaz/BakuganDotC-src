@@ -43,30 +43,30 @@ void ActorNpcHearNoise(ActorNpc *self, float *pos, s32 level)
       return;
     }
     /* vsub.t keeps lane 3 of the `pos` load. */
-    delta[0] = pos[0] - selfPos[0];
-    delta[1] = pos[1] - selfPos[1];
-    delta[2] = pos[2] - selfPos[2];
+    delta[0] = VfSub(pos[0], selfPos[0]);
+    delta[1] = VfSub(pos[1], selfPos[1]);
+    delta[2] = VfSub(pos[2], selfPos[2]);
     delta[3] = pos[3];
-    distSq = delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
+    distSq = VfDot3(delta[0], delta[1], delta[2], delta[0], delta[1], delta[2]);
     if (distSq < self->hearRadius * self->hearRadius) {
       segment = &g_collisionSegmentDesc;
       for (i = 0; i < 4; i++) {
         segment->start[i] = selfPos[i];
       }
-      len = __builtin_sqrtf(delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2]);
+      len = VfSqrt(VfDot3(delta[0], delta[1], delta[2], delta[0], delta[1], delta[2]));
       scale = len - 1.0f;
       /* Normalise (a zero length gives factor 0, S713), clamp to [-1, 1], scale; w = S713 = 0. */
-      distSq = delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
+      distSq = VfDot3(delta[0], delta[1], delta[2], delta[0], delta[1], delta[2]);
       k = VfRsq(distSq);
       if (VfIsZero(distSq)) {
         k = 0.0f;
       }
-      delta[0] = VfSat1(delta[0] * k);
-      delta[1] = VfSat1(delta[1] * k);
-      delta[2] = VfSat1(delta[2] * k);
-      segment->dir[0] = delta[0] * scale;
-      segment->dir[1] = delta[1] * scale;
-      segment->dir[2] = delta[2] * scale;
+      delta[0] = VfSat1(VfMul(delta[0], k));
+      delta[1] = VfSat1(VfMul(delta[1], k));
+      delta[2] = VfSat1(VfMul(delta[2], k));
+      segment->dir[0] = VfMul(delta[0], scale);
+      segment->dir[1] = VfMul(delta[1], scale);
+      segment->dir[2] = VfMul(delta[2], scale);
       segment->dir[3] = 0.0f;
       /* Slot 9 (`+0x48`) of the segment query's shape vtable. */
       vt = &((const VtblEntry *)segment->info)[9];
@@ -93,19 +93,19 @@ void ActorNpcHearNoise(ActorNpc *self, float *pos, s32 level)
     if (isGuard == 0 || self->aiState == 6 || self->aiState == 0xb || self->aiState == 4) {
       return;
     }
-    delta[0] = pos[0] - selfPos[0];
-    delta[1] = pos[1] - selfPos[1];
-    delta[2] = pos[2] - selfPos[2];
+    delta[0] = VfSub(pos[0], selfPos[0]);
+    delta[1] = VfSub(pos[1], selfPos[1]);
+    delta[2] = VfSub(pos[2], selfPos[2]);
     delta[3] = pos[3];
-    distSq = delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
+    distSq = VfDot3(delta[0], delta[1], delta[2], delta[0], delta[1], delta[2]);
     if (!(distSq < self->hearRadius * self->hearRadius)) {
       return;
     }
     segment = &g_collisionSegmentDesc;
     /* vadd.t with (10, 10, 10, 0): lane 3 keeps the position's w. */
-    start[0] = selfPos[0] + 10.0f;
-    start[1] = selfPos[1] + 10.0f;
-    start[2] = selfPos[2] + 10.0f;
+    start[0] = VfAdd(selfPos[0], 10.0f);
+    start[1] = VfAdd(selfPos[1], 10.0f);
+    start[2] = VfAdd(selfPos[2], 10.0f);
     start[3] = selfPos[3];
     for (i = 0; i < 4; i++) {
       segment->start[i] = start[i];

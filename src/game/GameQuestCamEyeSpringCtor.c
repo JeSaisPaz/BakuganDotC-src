@@ -28,9 +28,9 @@ GameQuestCamEyeSpring *GameQuestCamEyeSpringCtor(GameQuestCamEyeSpring *self, vo
   self->base.vtbl = g_gameQuestCamEyeSpringVtbl;
   self->pathSet = d->pathSet;
   ctrl = self->base.ctrl;
-  dx = ctrl->eye.x - ctrl->lookAt.x;
-  dy = ctrl->eye.y - ctrl->lookAt.y;
-  dz = ctrl->eye.z - ctrl->lookAt.z;
-  self->dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+  dx = VfSub(ctrl->eye.x, ctrl->lookAt.x);
+  dy = VfSub(ctrl->eye.y, ctrl->lookAt.y);
+  dz = VfSub(ctrl->eye.z, ctrl->lookAt.z);
+  self->dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
   return self;
 }

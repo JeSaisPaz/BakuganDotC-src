@@ -114,7 +114,7 @@ s32 UiTalkBalloonGlyphUpdate(GfxSprite *sprite)
       GfxSpriteSetSize(sprite, 16.0f, 16.0f);
     }
     else {
-      size = __builtin_sinf(self->phase) * 8.0f + 16.0f;
+      size = VfSinQuarter(VfMul(self->phase, 0.636619747f)) * 8.0f + 16.0f;
       GfxSpriteSetSize(sprite, size, size);
     }
   }

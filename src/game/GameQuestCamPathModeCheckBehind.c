@@ -23,19 +23,19 @@ void GameQuestCamPathModeCheckBehind(GameQuestCamPathMode *self)
   owner = (GameQuestPathCursor *)self->base.base.base.followed;
   e = &owner->vtbl[2];
   pos = ((const float *(*)(void *))e->fn)((char *)owner + e->delta);
-  dx = pos[0] - self->base.targetPos.x;
-  dy = pos[1] - self->base.targetPos.y;
-  dz = pos[2] - self->base.targetPos.z;
+  dx = VfSub(pos[0], self->base.targetPos.x);
+  dy = VfSub(pos[1], self->base.targetPos.y);
+  dz = VfSub(pos[2], self->base.targetPos.z);
   look = *(GameQuestCamSpring **)self->base.entry;
   dir[0] = look->step.x;
   dir[1] = look->step.y;
   dir[2] = look->step.z;
   seg = (const GameQuestPathSegment *)self->segment;
-  if (!(dir[0] * seg->dir.x + dir[1] * seg->dir.y + dir[2] * seg->dir.z < 0.0f)) {
+  if (!(VfDot3(dir[0], dir[1], dir[2], seg->dir.x, seg->dir.y, seg->dir.z) < 0.0f)) {
     return;
   }
   seg = (const GameQuestPathSegment *)self->segment;
-  if (dx * seg->dir.x + dy * seg->dir.y + dz * seg->dir.z < 0.0f) {
+  if (VfDot3(dx, dy, dz, seg->dir.x, seg->dir.y, seg->dir.z) < 0.0f) {
     self->base.behind = 1;
   }
 }

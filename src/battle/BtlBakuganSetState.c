@@ -104,9 +104,9 @@ void BtlBakuganSetState(BtlBakugan *self, s32 state, char keep)
             yaw = self->base.rot[1];
         }
         /* dir = (cos, 0, sin, 0) of yaw */
-        dir[0] = __builtin_cosf(yaw);
+        dir[0] = VfCosQuarter(VfMul(yaw, 0.636619747f));
         dir[1] = 0.0f;
-        dir[2] = __builtin_sinf(yaw);
+        dir[2] = VfSinQuarter(VfMul(yaw, 0.636619747f));
         dir[3] = 0.0f;
         BtlBakuganPlayMotion(0.2f, self, 5, 1, 0);
         self->dashSpeed = BtlBakuganGetScaledStat48(self);

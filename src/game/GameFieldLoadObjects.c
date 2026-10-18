@@ -37,9 +37,9 @@
 /* The record's 20.12 fixed-point position scaled by 20 (`vscl.t` by 20.0f), `w` = 0. */
 #define FIELD_POS(dst, rec)                                          \
   do {                                                               \
-    (dst)[0] = (float)(rec)->pos[0] * 0.000244140625f * 20.0f;       \
-    (dst)[1] = (float)(rec)->pos[1] * 0.000244140625f * 20.0f;       \
-    (dst)[2] = (float)(rec)->pos[2] * 0.000244140625f * 20.0f;       \
+    (dst)[0] = VfMul((float)(rec)->pos[0] * 0.000244140625f, 20.0f); \
+    (dst)[1] = VfMul((float)(rec)->pos[1] * 0.000244140625f, 20.0f); \
+    (dst)[2] = VfMul((float)(rec)->pos[2] * 0.000244140625f, 20.0f); \
     (dst)[3] = 0.0f;                                                 \
   } while (0)
 

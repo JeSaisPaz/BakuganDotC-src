@@ -12,9 +12,9 @@ void MathMtx4TransformPoint(const ScePspFMatrix4 *m, ScePspFVector4 *out, const 
     float w = 1.0f;
     ScePspFVector4 r;
 
-    r.x = m->x.x * x + m->y.x * y + m->z.x * z + m->w.x * w;
-    r.y = m->x.y * x + m->y.y * y + m->z.y * z + m->w.y * w;
-    r.z = m->x.z * x + m->y.z * y + m->z.z * z + m->w.z * w;
-    r.w = m->x.w * x + m->y.w * y + m->z.w * z + m->w.w * w;
+    r.x = VfDot4(m->x.x, m->y.x, m->z.x, m->w.x, x, y, z, w);
+    r.y = VfDot4(m->x.y, m->y.y, m->z.y, m->w.y, x, y, z, w);
+    r.z = VfDot4(m->x.z, m->y.z, m->z.z, m->w.z, x, y, z, w);
+    r.w = VfDot4(m->x.w, m->y.w, m->z.w, m->w.w, x, y, z, w);
     *out = r;
 }

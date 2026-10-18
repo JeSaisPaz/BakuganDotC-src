@@ -104,8 +104,8 @@ UiNetLobby *UiNetLobbyCtor(UiNetLobby *self)
   if (GfxFaderIsReady()) {
     fader = GfxGetActiveFader();
     /* vcmp.q EQ + bvtl CC[5]: all four lanes of the end colour equal opaque black {0, 0, 0, 1} */
-    if (fader->end[0] == 0.0f && fader->end[1] == 0.0f && fader->end[2] == 0.0f &&
-        fader->end[3] == 1.0f) {
+    if (VfDaz(fader->end[0]) == 0.0f && VfDaz(fader->end[1]) == 0.0f && VfDaz(fader->end[2]) == 0.0f &&
+        VfDaz(fader->end[3]) == 1.0f) {
       fader = GfxGetActiveFader();
       for (i = 0; i < 4; i++) {
         fader->end[i] = 0.0f;

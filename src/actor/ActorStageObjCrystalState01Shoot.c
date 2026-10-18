@@ -52,10 +52,10 @@ void ActorStageObjCrystalState01Shoot(ActorStageObjCrystal *self)
     }
     if (step <= 0) {
       /* dist = |self pos - player pos| (xyz). */
-      d[0] = self->base.base.pos[0] - player->base.pos[0];
-      d[1] = self->base.base.pos[1] - player->base.pos[1];
-      d[2] = self->base.base.pos[2] - player->base.pos[2];
-      dist = __builtin_sqrtf(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+      d[0] = VfSub(self->base.base.pos[0], player->base.pos[0]);
+      d[1] = VfSub(self->base.base.pos[1], player->base.pos[1]);
+      d[2] = VfSub(self->base.base.pos[2], player->base.pos[2]);
+      dist = VfSqrt(VfDot3(d[0], d[1], d[2], d[0], d[1], d[2]));
       if (!(dist < 2000.0f)) {
         self->step = 999;
         return;
@@ -67,15 +67,15 @@ void ActorStageObjCrystalState01Shoot(ActorStageObjCrystal *self)
     heading = atan2f(tmp[2] - self->base.base.pos[2], tmp[0] - self->base.base.pos[0]);
     self->heading = heading;
     /* offs = (cos, 0, sin)(heading) * 50 (vrot of heading * 2/pi); muzzle = offs + self pos. */
-    c = __builtin_cosf(heading);
-    s = __builtin_sinf(heading);
-    offs[0] = c * 50.0f;
+    c = VfCosQuarter(VfMul(heading, 0.636619747f));
+    s = VfSinQuarter(VfMul(heading, 0.636619747f));
+    offs[0] = VfMul(c, 50.0f);
     offs[1] = 0.0f * 50.0f;
-    offs[2] = s * 50.0f;
+    offs[2] = VfMul(s, 50.0f);
     offs[3] = 0.0f;
-    self->muzzle[0] = offs[0] + self->base.base.pos[0];
-    self->muzzle[1] = offs[1] + self->base.base.pos[1];
-    self->muzzle[2] = offs[2] + self->base.base.pos[2];
+    self->muzzle[0] = VfAdd(offs[0], self->base.base.pos[0]);
+    self->muzzle[1] = VfAdd(offs[1], self->base.base.pos[1]);
+    self->muzzle[2] = VfAdd(offs[2], self->base.base.pos[2]);
     self->muzzle[3] = offs[3];
     self->muzzle[1] = self->muzzle[1] + 80.0f;
     if (SndHasListener()) {
@@ -91,26 +91,26 @@ void ActorStageObjCrystalState01Shoot(ActorStageObjCrystal *self)
     target[1] = target[1] + player->combat.stats->height;
     /* shotDir = target - muzzle (w = target w), then normalised with each lane clamped to
        [-1, 1] (0 instead of 1/sqrt(0)) and w = 0, then times 1.5. */
-    self->shotDir[0] = target[0] - self->muzzle[0];
-    self->shotDir[1] = target[1] - self->muzzle[1];
-    self->shotDir[2] = target[2] - self->muzzle[2];
+    self->shotDir[0] = VfSub(target[0], self->muzzle[0]);
+    self->shotDir[1] = VfSub(target[1], self->muzzle[1]);
+    self->shotDir[2] = VfSub(target[2], self->muzzle[2]);
     self->shotDir[3] = target[3];
     d[0] = self->shotDir[0];
     d[1] = self->shotDir[1];
     d[2] = self->shotDir[2];
-    inv = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
+    inv = VfDot3(d[0], d[1], d[2], d[0], d[1], d[2]);
     if (VfIsZero(inv)) {
       inv = 0.0f;
     } else {
       inv = VfRsq(inv);
     }
-    self->shotDir[0] = VfSat1(d[0] * inv);
-    self->shotDir[1] = VfSat1(d[1] * inv);
-    self->shotDir[2] = VfSat1(d[2] * inv);
+    self->shotDir[0] = VfSat1(VfMul(d[0], inv));
+    self->shotDir[1] = VfSat1(VfMul(d[1], inv));
+    self->shotDir[2] = VfSat1(VfMul(d[2], inv));
     self->shotDir[3] = 0.0f;
-    self->shotDir[0] = self->shotDir[0] * 1.5f;
-    self->shotDir[1] = self->shotDir[1] * 1.5f;
-    self->shotDir[2] = self->shotDir[2] * 1.5f;
+    self->shotDir[0] = VfMul(self->shotDir[0], 1.5f);
+    self->shotDir[1] = VfMul(self->shotDir[1], 1.5f);
+    self->shotDir[2] = VfMul(self->shotDir[2], 1.5f);
     self->shotDir[3] = 0.0f;
     self->shotTimer = 0;
     self->step = self->step + 1;

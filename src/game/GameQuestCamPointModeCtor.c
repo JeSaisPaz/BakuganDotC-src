@@ -63,31 +63,29 @@ GameQuestCamPointMode *GameQuestCamPointModeCtor(GameQuestCamPointMode *self, vo
   b[2][0] = q[1];  b[2][1] = -q[0]; b[2][2] = q[3];  b[2][3] = q[2];
   for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++) {
-      m[i][j] = a[i][0] * b[j][0] + a[i][1] * b[j][1] + a[i][2] * b[j][2] + a[i][3] * b[j][3];
+      m[i][j] = VfDot4(a[i][0], a[i][1], a[i][2], a[i][3], b[j][0], b[j][1], b[j][2], b[j][3]);
     }
   }
   /* viewDir = m * up (w = 0, row 3 of the matrix was reset to identity). */
   up = &g_gameQuestCamPointModeAxisConsts.up;
-  self->viewDir.x = m[0][0] * up->x + m[0][1] * up->y + m[0][2] * up->z;
-  self->viewDir.y = m[1][0] * up->x + m[1][1] * up->y + m[1][2] * up->z;
-  self->viewDir.z = m[2][0] * up->x + m[2][1] * up->y + m[2][2] * up->z;
+  self->viewDir.x = VfDot3(m[0][0], m[0][1], m[0][2], up->x, up->y, up->z);
+  self->viewDir.y = VfDot3(m[1][0], m[1][1], m[1][2], up->x, up->y, up->z);
+  self->viewDir.z = VfDot3(m[2][0], m[2][1], m[2][2], up->x, up->y, up->z);
   self->viewDir.w = 0.0f;
 
   self->followOffset = self->viewDir;
   scale = -self->entry->sideOffset;
-  self->followOffset.x = self->followOffset.x * scale;
-  self->followOffset.y = self->followOffset.y * scale;
-  self->followOffset.z = self->followOffset.z * scale;
+  self->followOffset.x = VfMul(self->followOffset.x, scale);
+  self->followOffset.y = VfMul(self->followOffset.y, scale);
+  self->followOffset.z = VfMul(self->followOffset.z, scale);
   self->followOffset.w = 0.0f; /* lane 3 of C710 = bank constant S713 */
-  len2 = self->viewDir.x * self->viewDir.x + self->viewDir.y * self->viewDir.y +
-         self->viewDir.z * self->viewDir.z;
+  len2 = VfDot3(self->viewDir.x, self->viewDir.y, self->viewDir.z, self->viewDir.x, self->viewDir.y, self->viewDir.z);
   if (!(len2 <= 0.0001f)) {
-    len2 = self->viewDir.x * self->viewDir.x + self->viewDir.y * self->viewDir.y +
-           self->viewDir.z * self->viewDir.z;
+    len2 = VfDot3(self->viewDir.x, self->viewDir.y, self->viewDir.z, self->viewDir.x, self->viewDir.y, self->viewDir.z);
     k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-    self->viewDir.x = VfSat1(self->viewDir.x * k);
-    self->viewDir.y = VfSat1(self->viewDir.y * k);
-    self->viewDir.z = VfSat1(self->viewDir.z * k);
+    self->viewDir.x = VfSat1(VfMul(self->viewDir.x, k));
+    self->viewDir.y = VfSat1(VfMul(self->viewDir.y, k));
+    self->viewDir.z = VfSat1(VfMul(self->viewDir.z, k));
     self->viewDir.w = 0.0f; /* masked lane of C710 = bank constant S713 */
   } else {
     self->viewDir = g_gameQuestCamPointModeAxisConsts.up;

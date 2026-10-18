@@ -3,7 +3,7 @@
 
 static inline float Dot3(const float *a, const float *b)
 {
-    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; /* vdot.t */
+    return VfDot3(a[0], a[1], a[2], b[0], b[1], b[2]); /* vdot.t */
 }
 
 /* Squared distance from point `p` to a `SegmentShape`. With v = p - start and d = dir:
@@ -16,12 +16,12 @@ float SegmentDistSqToPoint(SegmentShape *segment, const float *p)
     float proj;
     float dirLenSq;
 
-    v[0] = p[0] - segment->start[0];
-    v[1] = p[1] - segment->start[1];
-    v[2] = p[2] - segment->start[2];
-    vMinusDir[0] = v[0] - segment->dir[0];
-    vMinusDir[1] = v[1] - segment->dir[1];
-    vMinusDir[2] = v[2] - segment->dir[2];
+    v[0] = VfSub(p[0], segment->start[0]);
+    v[1] = VfSub(p[1], segment->start[1]);
+    v[2] = VfSub(p[2], segment->start[2]);
+    vMinusDir[0] = VfSub(v[0], segment->dir[0]);
+    vMinusDir[1] = VfSub(v[1], segment->dir[1]);
+    vMinusDir[2] = VfSub(v[2], segment->dir[2]);
 
     proj = Dot3(v, segment->dir);
     if (proj <= 0.0f) {

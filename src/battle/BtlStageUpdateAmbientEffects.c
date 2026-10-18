@@ -130,16 +130,16 @@ void BtlStageUpdateAmbientEffects(void)
         spot[1] = spot[1] + 800.0f;
         /* offset = camera dir * 200 (lanes x..z; the stored w lane is never read) */
         for (i = 0; i < 3; i++) {
-          offset[i] = g_gfxActiveCamera->dir[i] * 200.0f;
+          offset[i] = VfMul(g_gfxActiveCamera->dir[i], 200.0f);
         }
         for (i = 0; i < 3; i++) {
-          spot[i] = spot[i] + offset[i];
+          spot[i] = VfAdd(spot[i], offset[i]);
         }
         x = spot[0];
-        r = PlatformRandFloat12() - 1.0f;
+        r = VfSub(PlatformRandFloat12(), 1.0f);
         spot[0] = x + (r * 400.0f - 200.0f);
         z = spot[2];
-        r = PlatformRandFloat12() - 1.0f;
+        r = VfSub(PlatformRandFloat12(), 1.0f);
         spot[2] = z + (r * 400.0f - 200.0f);
         if (CollisionRaycastPoint(spot, spot) != 0) {
           GfxEffectSpawn(g_worldEffectMgr, 0x61, spot);
@@ -171,7 +171,7 @@ void BtlStageUpdateAmbientEffects(void)
   }
   if (fading) {
     /* vcos.s of (level * pi) * 2/pi quarter turns = cos(level * pi) */
-    c = __builtin_cosf(g_btlMapFlashLevel * 3.14159274f);
+    c = VfCosQuarter(VfMul(g_btlMapFlashLevel * 3.14159274f, 0.636619747f));
     BtlStageLerpFog((1.0f - c) * 0.5f, &g_btlMapFlashFog, g_gfxFogColor,
                     &g_btlArenaFogParams[g_btlArenaIndex],
                     &g_btlMapFlashFogParams[g_btlMapFlashKind]);

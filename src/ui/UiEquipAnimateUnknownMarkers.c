@@ -103,9 +103,9 @@ void UiEquipAnimateUnknownMarkers(UiEquip *self)
       UiEquipSpinMarker(self, idx);
       ((GfxSprite **)self->base.data)[idx]->flags |= 1;
       tween->t = tween->t + 0.025f;
-      c = __builtin_cosf(tween->t * 3.1415927f);
+      c = VfCosQuarter(VfMul(tween->t * 3.1415927f, 0.636619747f));
       ((GfxSprite **)self->base.data)[idx]->alpha = tween->startAlpha - (1.0f - c) * 0.5f;
-      c = __builtin_cosf(tween->t * 3.1415927f);
+      c = VfCosQuarter(VfMul(tween->t * 3.1415927f, 0.636619747f));
       ((GfxSprite **)self->base.data)[idx]->posY =
           (float)tween->slideEnd - (1.0f - c) * 0.5f * 80.0f;
       if (tween->t < 1.0f) {

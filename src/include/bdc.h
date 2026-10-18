@@ -7,31 +7,127 @@
 #define NAN __builtin_nanf("")
 #define ABS(x) __builtin_fabsf(x)
 /* VFPU helpers: portable C for the VFPU (and other Allegrex) operations C has no operator for.
-   The comment on each helper gives its semantics. IEEE results, not the VFPU's approximation
-   bits; build with -ffp-contract=off. */
+   The comment on each helper gives its semantics. IEEE results only where the PSP's FPU computed
+   them (add.s, mul.s, div.s, sqrt.s stay plain C operators): VFPU arithmetic gives the PSP's bits, the dot
+   family and the interpolated functions through bdc_vfpu.c (PPSSPP f672916c77's models, checked against
+   pspautotests' PSP recordings), the per-op flush through the inline helpers below. Always
+   build with -ffp-contract=off. */
 #ifndef BDC_VFPU_H
 #define BDC_VFPU_H
 
 #define BDC_ALIGN16 __attribute__((aligned(16)))
 #define VF_PI_2 1.57079637f /* 0x3fc90fdb */
+/* The VFPU's NaN, bits 0x7F800001 (positive, signaling, payload 1): what every VFPU op makes, and what a
+   NaN operand of vadd, vsub, vdot and friends becomes (pspautotests nan_gen.expected:2-3, 7-17, 34-35).
+   A host keeps the bits through loads, stores and returns (x86-64 SSE, AArch64), not through x87. */
+#define VF_NAN __builtin_nansf("1")
 
-/* vsin.s / vcos.s: the argument is in quarter turns (x * pi/2 radians). */
-static inline float VfSinQuarter(float x) { return __builtin_sinf(x * VF_PI_2); }
-static inline float VfCosQuarter(float x) { return __builtin_cosf(x * VF_PI_2); }
-/* vasin.s: the result is in quarter turns. */
-static inline float VfAsinQuarter(float x) { return __builtin_asinf(x) / VF_PI_2; }
-/* vrsq.s, vrcp.s, vexp2.s, vlog2.s */
-static inline float VfRsq(float x) { return 1.0f / __builtin_sqrtf(x); }
-static inline float VfRcp(float x) { return 1.0f / x; }
-static inline float VfExp2(float x) { return __builtin_exp2f(x); }
-static inline float VfLog2(float x) { return __builtin_log2f(x); }
+/* Float <-> bits, and the VFPU's input flush (DAZ): a denormal operand is a zero of its sign. */
+static inline unsigned VfBits(float x)
+{
+    union { float f; unsigned u; } v;
+    v.f = x;
+    return v.u;
+}
+static inline float VfFromBits(unsigned u)
+{
+    union { unsigned u; float f; } v;
+    v.u = u;
+    return v.f;
+}
+static inline float VfDaz(float x)
+{
+    unsigned u = VfBits(x);
+    return (u & 0x7f800000u) == 0 ? VfFromBits(u & 0x80000000u) : x;
+}
+
+/* Dot family (vdot, vmmul, vtfmN, vhtfmN, vcrsp, vqmul): each result lane is one call, all s lanes first,
+   then all t lanes (vdot d, s, t); missing lanes are 0. Products exact to 2 extra bits, aligned to the
+   largest by truncation, summed exactly, one rounding; denormal inputs count as 0; a result below 2^-126
+   is a zero with the sum's sign, an exact zero sum +0; NaN in, inf * 0 or inf - inf give VF_NAN. */
+float VfDot2(float s0, float s1, float t0, float t1);
+float VfDot3(float s0, float s1, float s2, float t0, float t1, float t2);
+float VfDot4(float s0, float s1, float s2, float s3, float t0, float t1, float t2, float t3);
+/* The interpolated functions: 22-bit results of the VFPU's quadratic interpolator. vsin.s / vcos.s take
+   quarter turns (x * pi/2 radians), reduced exactly (vsin(2) = -0, vcos(1) = -0); vasin.s returns quarter
+   turns. vrot lanes: VfCosQuarter(a), VfSinQuarter(a), -VfSinQuarter(a). */
+float VfSinQuarter(float x);  /* vsin.s */
+float VfCosQuarter(float x);  /* vcos.s */
+float VfAsinQuarter(float x); /* vasin.s */
+float VfRsq(float x);         /* vrsq.s: +-0 or a denormal gives +-inf */
+float VfRcp(float x);         /* vrcp.s: +-0 or a denormal gives +-inf */
+float VfSqrt(float x);        /* vsqrt.s: a denormal gives +0 */
+float VfExp2(float x);        /* vexp2.s */
+float VfLog2(float x);        /* vlog2.s */
+
+/* Per-op flush (vadd, vsub, vmul, vscl, vcrs, vdiv, vbfy1, vocp): denormal inputs count as zeros of their
+   sign, the IEEE op rounds to nearest even, a result below 2^-126 becomes a zero of its sign (VFPU docs,
+   "Floating point format"; pspautotests fcr31.expected:12, specials.expected:44, 69). NaN: vadd/vsub give
+   VF_NAN (nan_gen.expected:2-3, 34-35), vmul/vdiv 0x7F800001 with the xor of the operands' signs
+   (nan_gen.expected:4-5, 36-37). vocp.s x is VfSub(1.0f, x) (specials.expected:23, 47). */
+float VfMulEdge(float a, float b); /* bdc_vfpu.c: VfMul's tiny and NaN results */
+float VfDivEdge(float a, float b); /* bdc_vfpu.c: VfDiv's tiny and NaN results */
+static inline float VfAddResult(float r)
+{
+    unsigned u = VfBits(r);
+    if ((u & 0x7f800000u) == 0) /* a sum below 2^-126 is exact: no rounding to undo */
+        return VfFromBits(u & 0x80000000u);
+    return (u & 0x7fffffffu) > 0x7f800000u ? VF_NAN : r;
+}
+static inline float VfAdd(float a, float b) { return VfAddResult(VfDaz(a) + VfDaz(b)); }
+static inline float VfSub(float a, float b) { return VfAddResult(VfDaz(a) - VfDaz(b)); }
+static inline float VfMul(float a, float b)
+{
+    float x = VfDaz(a), y = VfDaz(b), r = x * y;
+    unsigned m = VfBits(r) & 0x7fffffffu;
+    if (__builtin_expect(m - 0x00800001u >= 0x7f000000u && m != 0, 0)) /* tiny (<= FLT_MIN) or NaN */
+        return VfMulEdge(x, y);
+    return r;
+}
+static inline float VfDiv(float a, float b)
+{
+    float x = VfDaz(a), y = VfDaz(b), r = x / y;
+    unsigned m = VfBits(r) & 0x7fffffffu;
+    if (__builtin_expect(m - 0x00800001u >= 0x7f000000u && m != 0, 0))
+        return VfDivEdge(x, y);
+    return r;
+}
+/* vmin / vmax: the PSP's order -NaN < -inf < negative < (zeros and denormals, all equal) < positive < inf
+   < NaN, larger mantissas farther from zero; a tie returns the second operand; the result keeps its bits,
+   denormals and NaN payloads included (minmax_zero.expected, minmax_tie.expected, fcr31.expected:14-17). */
+static inline int VfOrderKey(float x)
+{
+    unsigned u = VfBits(x);
+    return (u & 0x7f800000u) == 0 ? 0 : (int)(u ^ ((unsigned)-(int)(u >> 31) >> 1));
+}
+static inline float VfMin(float a, float b) { return VfOrderKey(a) < VfOrderKey(b) ? a : b; }
+static inline float VfMax(float a, float b) { return VfOrderKey(a) > VfOrderKey(b) ? a : b; }
+/* vsge / vslt: 1.0f or 0.0f; NaN gives 0.0f; denormals compare as zeros (as vcmp's conditions do,
+   specials.expected:6-8). */
+static inline float VfSge(float s, float t) { return VfDaz(s) >= VfDaz(t) ? 1.0f : 0.0f; }
+static inline float VfSlt(float s, float t) { return VfDaz(s) < VfDaz(t) ? 1.0f : 0.0f; }
+
 /* vcmp EZ (NZ: !VfIsZero): the PSP's zero test, true for +-0 and +-denormal operands, false for normal,
    inf and NaN ones (pspautotests 40c8f4c tests/cpu/vfpu/specials.expected:2-13, PSP-3000 6.61). The
    operand keeps its IEEE value: only the compare follows the hardware (guide VfpuLift, row vcmp). */
 static inline int VfIsZero(float x) { return __builtin_fabsf(x) < 0x1p-126f; }
-/* vsat0 clamps to [0, 1] (-0.0 becomes +0.0), vsat1 to [-1, 1]; NaN passes through. */
+/* vsat0 clamps to [0, 1] (-0.0 becomes +0.0), vsat1 to [-1, 1]; NaN passes through with its bits, a
+   denormal stays (no flush: prefix_sat.expected:10-13). */
 static inline float VfSat0(float x) { return x <= 0.0f ? 0.0f : x > 1.0f ? 1.0f : x; }
 static inline float VfSat1(float x) { return x < -1.0f ? -1.0f : x > 1.0f ? 1.0f : x; }
+/* vf2id: floor(x * 2^scale), saturated to the int range; NaN gives INT_MAX; a denormal x counts as zero
+   (fcr31.expected:183: -denormal gives 0, not -1). */
+static inline int VfF2id(float x, int scale)
+{
+    float v = VfDaz(x) * (float)(1u << scale);
+    int i;
+    if (v != v || v >= 2147483648.0f)
+        return 2147483647;
+    if (v <= -2147483648.0f)
+        return (int)0x80000000u;
+    i = (int)v;
+    return (float)i > v ? i - 1 : i;
+}
 /* vf2iz: x * 2^scale truncated toward zero, saturated to the int range; NaN gives INT_MAX. */
 static inline int VfF2iz(float x, int scale)
 {

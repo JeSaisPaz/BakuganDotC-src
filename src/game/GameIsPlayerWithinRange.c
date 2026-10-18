@@ -7,10 +7,10 @@ bool GameIsPlayerWithinRange(float radius, void *unused, const float *pos)
 {
   Actor *player = (Actor *)ActorFindPlayer();
   const float *ppos = player->base.pos;
-  float dx = ppos[0] - pos[0];
-  float dy = ppos[1] - pos[1];
-  float dz = ppos[2] - pos[2];
-  float dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+  float dx = VfSub(ppos[0], pos[0]);
+  float dy = VfSub(ppos[1], pos[1]);
+  float dz = VfSub(ppos[2], pos[2]);
+  float dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
 
   return dist <= radius;
 }

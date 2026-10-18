@@ -38,28 +38,28 @@ void BtlAttackType6EUpdate(BtlAttack *self)
     /* Look-along matrix: z = normalise(dir), x = normalise(up x z), y = z x x (each normalise
        scales by 1/sqrt(len^2), or 0 for a zero length, clamped to [-1, 1]); w lanes 0,
        w row (0, 0, 0, 1). */
-    lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] + self->dir[2] * self->dir[2];
+    lenSq = VfDot3(self->dir[0], self->dir[1], self->dir[2], self->dir[0], self->dir[1], self->dir[2]);
     scale = VfRsq(lenSq);
     if (VfIsZero(lenSq)) {
         scale = 0.0f;
     }
-    mtx[2][0] = VfSat1(self->dir[0] * scale);
-    mtx[2][1] = VfSat1(self->dir[1] * scale);
-    mtx[2][2] = VfSat1(self->dir[2] * scale);
-    mtx[0][0] = g_vecUp.y * mtx[2][2] - g_vecUp.z * mtx[2][1];
-    mtx[0][1] = g_vecUp.z * mtx[2][0] - g_vecUp.x * mtx[2][2];
-    mtx[0][2] = g_vecUp.x * mtx[2][1] - g_vecUp.y * mtx[2][0];
-    lenSq = mtx[0][0] * mtx[0][0] + mtx[0][1] * mtx[0][1] + mtx[0][2] * mtx[0][2];
+    mtx[2][0] = VfSat1(VfMul(self->dir[0], scale));
+    mtx[2][1] = VfSat1(VfMul(self->dir[1], scale));
+    mtx[2][2] = VfSat1(VfMul(self->dir[2], scale));
+    mtx[0][0] = VfDot2(g_vecUp.y, g_vecUp.z, mtx[2][2], -mtx[2][1]);
+    mtx[0][1] = VfDot2(g_vecUp.z, g_vecUp.x, mtx[2][0], -mtx[2][2]);
+    mtx[0][2] = VfDot2(g_vecUp.x, g_vecUp.y, mtx[2][1], -mtx[2][0]);
+    lenSq = VfDot3(mtx[0][0], mtx[0][1], mtx[0][2], mtx[0][0], mtx[0][1], mtx[0][2]);
     scale = VfRsq(lenSq);
     if (VfIsZero(lenSq)) {
         scale = 0.0f;
     }
-    mtx[0][0] = VfSat1(mtx[0][0] * scale);
-    mtx[0][1] = VfSat1(mtx[0][1] * scale);
-    mtx[0][2] = VfSat1(mtx[0][2] * scale);
-    mtx[1][0] = mtx[2][1] * mtx[0][2] - mtx[2][2] * mtx[0][1];
-    mtx[1][1] = mtx[2][2] * mtx[0][0] - mtx[2][0] * mtx[0][2];
-    mtx[1][2] = mtx[2][0] * mtx[0][1] - mtx[2][1] * mtx[0][0];
+    mtx[0][0] = VfSat1(VfMul(mtx[0][0], scale));
+    mtx[0][1] = VfSat1(VfMul(mtx[0][1], scale));
+    mtx[0][2] = VfSat1(VfMul(mtx[0][2], scale));
+    mtx[1][0] = VfDot2(mtx[2][1], mtx[2][2], mtx[0][2], -mtx[0][1]);
+    mtx[1][1] = VfDot2(mtx[2][2], mtx[2][0], mtx[0][0], -mtx[0][2]);
+    mtx[1][2] = VfDot2(mtx[2][0], mtx[2][1], mtx[0][1], -mtx[0][0]);
     mtx[0][3] = 0.0f;
     mtx[1][3] = 0.0f;
     mtx[2][3] = 0.0f;
@@ -69,7 +69,7 @@ void BtlAttackType6EUpdate(BtlAttack *self)
     mtx[3][3] = 1.0f;
     GfxEffectSetMatrixAttached(g_btlAttackEffectMgr, 0x278, &mtx[0][0], self->pos);
     GfxEffectSetDirAttached(g_btlAttackEffectMgr, 0x278, self->dir, self->pos);
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

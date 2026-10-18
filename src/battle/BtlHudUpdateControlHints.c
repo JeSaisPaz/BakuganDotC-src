@@ -161,7 +161,7 @@ void BtlHudUpdateControlHints(BtlHud *self)
             fade = 1.57079637f;
         }
         self->hintFade = fade;
-        value = __builtin_sinf(fade);
+        value = VfSinQuarter(VfMul(fade, 0.636619747f));
         memcpy(panel, g_btlHudHintFadeInSprites, sizeof(panel));
         for (i = 0; i < 12; i++) {
             self->sprites[panel[i]]->alpha = value;
@@ -256,7 +256,7 @@ void BtlHudUpdateControlHints(BtlHud *self)
             fade = 1.57079637f;
         }
         self->hintFade = fade;
-        value = __builtin_sinf(fade);
+        value = VfSinQuarter(VfMul(fade, 0.636619747f));
         memcpy(panel, g_btlHudHintFadeOutSprites, sizeof(panel));
         for (i = 0; i < 12; i++) {
             self->sprites[panel[i]]->alpha = value;

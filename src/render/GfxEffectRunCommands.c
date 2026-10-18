@@ -21,7 +21,7 @@ static float GfxEffectRunCommandsInvLen(const float *v)
   float len2;
   float k;
 
-  len2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+  len2 = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
   k = VfRsq(len2);
   if (VfIsZero(len2)) {
     k = 0.0f;
@@ -35,17 +35,17 @@ static void GfxEffectRunCommandsNormalize(float *v)
   float k;
 
   k = GfxEffectRunCommandsInvLen(v);
-  v[0] = VfSat1(v[0] * k);
-  v[1] = VfSat1(v[1] * k);
-  v[2] = VfSat1(v[2] * k);
+  v[0] = VfSat1(VfMul(v[0], k));
+  v[1] = VfSat1(VfMul(v[1], k));
+  v[2] = VfSat1(VfMul(v[2], k));
 }
 
 /* d.xyz = a.xyz - b.xyz with d.w = a.w (vsub.t keeps the first operand's w, sv.q stores it). */
 static void GfxEffectRunCommandsSub3(float *d, const float *a, const float *b)
 {
-  d[0] = a[0] - b[0];
-  d[1] = a[1] - b[1];
-  d[2] = a[2] - b[2];
+  d[0] = VfSub(a[0], b[0]);
+  d[1] = VfSub(a[1], b[1]);
+  d[2] = VfSub(a[2], b[2]);
   d[3] = a[3];
 }
 
@@ -55,10 +55,10 @@ static void GfxEffectRunCommandsSetLength(float *v, float len)
 {
   float s;
 
-  s = GfxEffectRunCommandsInvLen(v) * len;
-  v[0] = v[0] * s;
-  v[1] = v[1] * s;
-  v[2] = v[2] * s;
+  s = VfMul(GfxEffectRunCommandsInvLen(v), len);
+  v[0] = VfMul(v[0], s);
+  v[1] = VfMul(v[1], s);
+  v[2] = VfMul(v[2], s);
   v[3] = 0.0f;
 }
 
@@ -69,9 +69,9 @@ static void GfxEffectRunCommandsCross(float *d, const float *s, const float *t)
   float y;
   float z;
 
-  x = s[1] * t[2] - s[2] * t[1];
-  y = s[2] * t[0] - s[0] * t[2];
-  z = s[0] * t[1] - s[1] * t[0];
+  x = VfDot2(s[1], s[2], t[2], -t[1]);
+  y = VfDot2(s[2], s[0], t[0], -t[2]);
+  z = VfDot2(s[0], s[1], t[1], -t[0]);
   d[0] = x;
   d[1] = y;
   d[2] = z;
@@ -85,10 +85,10 @@ static void GfxEffectRunCommandsTurnY(float *v, float angle)
   float x;
   float z;
 
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
-  x = v[0] * c + v[1] * 0.0f + v[2] * -s;
-  z = v[0] * s + v[1] * 0.0f + v[2] * c;
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
+  x = VfDot3(v[0], v[1], v[2], c, 0.0f, -s);
+  z = VfDot3(v[0], v[1], v[2], s, 0.0f, c);
   v[0] = x;
   v[2] = z;
 }
@@ -104,25 +104,25 @@ static void GfxEffectRunCommandsQuatRotate(float *v, const float *axis, float an
   ScePspFVector4 u;
   ScePspFVector4 t;
 
-  half = 0.318309873f * angle;
+  half = VfMul(0.318309873f, angle);
   c = VfCosQuarter(half);
   s = VfSinQuarter(half);
-  q.x = axis[0] * s;
-  q.y = axis[1] * s;
-  q.z = axis[2] * s;
+  q.x = VfMul(axis[0], s);
+  q.y = VfMul(axis[1], s);
+  q.z = VfMul(axis[2], s);
   q.w = c;
   u.x = v[0];
   u.y = v[1];
   u.z = v[2];
   u.w = 0.0f;
-  t.x = q.x * u.w + q.y * u.z - q.z * u.y + q.w * u.x;
-  t.y = -q.x * u.z + q.y * u.w + q.z * u.x + q.w * u.y;
-  t.z = q.x * u.y - q.y * u.x + q.z * u.w + q.w * u.z;
-  t.w = -q.x * u.x - q.y * u.y - q.z * u.z + q.w * u.w;
-  v[0] = t.x * q.w + t.y * -q.z - t.z * -q.y + t.w * -q.x;
-  v[1] = -t.x * -q.z + t.y * q.w + t.z * -q.x + t.w * -q.y;
-  v[2] = t.x * -q.y - t.y * -q.x + t.z * q.w + t.w * -q.z;
-  v[3] = -t.x * -q.x - t.y * -q.y - t.z * -q.z + t.w * q.w;
+  t.x = VfDot4(q.x, q.y, q.z, q.w, u.w, u.z, -u.y, u.x);
+  t.y = VfDot4(-q.x, q.y, q.z, q.w, u.z, u.w, u.x, u.y);
+  t.z = VfDot4(q.x, q.y, q.z, q.w, u.y, -u.x, u.w, u.z);
+  t.w = VfDot4(-q.x, q.y, q.z, q.w, u.x, -u.y, -u.z, u.w);
+  v[0] = VfDot4(t.x, t.y, t.z, t.w, q.w, -q.z, q.y, -q.x);
+  v[1] = VfDot4(-t.x, t.y, t.z, t.w, -q.z, q.w, -q.x, -q.y);
+  v[2] = VfDot4(t.x, t.y, t.z, t.w, -q.y, q.x, q.w, -q.z);
+  v[3] = VfDot4(-t.x, t.y, t.z, t.w, -q.x, q.y, q.z, q.w);
 }
 
 /* Rotation matrix about X (axis 0), Y (1) or Z (2) by `angle` radians as built by vidt.q/vrot.q,
@@ -133,8 +133,8 @@ static void GfxEffectRunCommandsRotation(float *m, s32 axis, float angle)
   float s;
   s32 k;
 
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   for (k = 0; k < 16; k++) {
     m[k] = (k % 5 == 0) ? 1.0f : 0.0f;
   }
@@ -165,8 +165,7 @@ static void GfxEffectRunCommandsMatMul(float *d, const float *a, const float *b)
 
   for (j = 0; j < 4; j++) {
     for (r = 0; r < 4; r++) {
-      d[j * 4 + r] = a[r] * b[j * 4] + a[4 + r] * b[j * 4 + 1] + a[8 + r] * b[j * 4 + 2] +
-                     a[12 + r] * b[j * 4 + 3];
+      d[j * 4 + r] = VfDot4(a[r], a[4 + r], a[8 + r], a[12 + r], b[j * 4], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3]);
     }
   }
 }
@@ -602,9 +601,9 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
         }
         /* horizontal distance: vsub.q then vzero.s S011 clears the y lane before vdot.t */
         pp = player->base.base.pos;
-        dx = pp[0] - effect->pos[0];
-        dz = pp[2] - effect->pos[2];
-        k = __builtin_sqrtf(dx * dx + dz * dz);
+        dx = VfSub(pp[0], effect->pos[0]);
+        dz = VfSub(pp[2], effect->pos[2]);
+        k = VfSqrt(VfDot2(dx, dz, dx, dz));
         if (k <= a) {
           player->inChargeZone = 1;
           effect->size[1] = effect->size[1] + (b - 0.5f) / c;
@@ -1169,9 +1168,9 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
       }
       break;
     case 102: /* position += direction */
-      target[0] = target[0] + effect->dir[0];
-      target[1] = target[1] + effect->dir[1];
-      target[2] = target[2] + effect->dir[2];
+      target[0] = VfAdd(target[0], effect->dir[0]);
+      target[1] = VfAdd(target[1], effect->dir[1]);
+      target[2] = VfAdd(target[2], effect->dir[2]);
       break;
     case 111:
     case 112:
@@ -1199,9 +1198,9 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
       i = READ_I();
       p = effect->vecRegs[i];
       v = READ_F();
-      p[0] = p[0] * v;
-      p[1] = p[1] * v;
-      p[2] = p[2] * v;
+      p[0] = VfMul(p[0], v);
+      p[1] = VfMul(p[1], v);
+      p[2] = VfMul(p[2], v);
       p[3] = 0.0f; /* sv.q C710: lane w is the bank's S713 */
       break;
     case 106:
@@ -1209,9 +1208,9 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
       j = READ_I();
       p = effect->vecRegs[i];
       pp = effect->vecRegs[j];
-      p[0] = p[0] + pp[0];
-      p[1] = p[1] + pp[1];
-      p[2] = p[2] + pp[2];
+      p[0] = VfAdd(p[0], pp[0]);
+      p[1] = VfAdd(p[1], pp[1]);
+      p[2] = VfAdd(p[2], pp[2]);
       break;
     case 107:
       i = READ_I();
@@ -1226,9 +1225,9 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
     case 108:
       i = READ_I();
       p = effect->vecRegs[i];
-      effect->dir[0] = effect->dir[0] + p[0];
-      effect->dir[1] = effect->dir[1] + p[1];
-      effect->dir[2] = effect->dir[2] + p[2];
+      effect->dir[0] = VfAdd(effect->dir[0], p[0]);
+      effect->dir[1] = VfAdd(effect->dir[1], p[1]);
+      effect->dir[2] = VfAdd(effect->dir[2], p[2]);
       break;
     case 109:
       i = READ_I();
@@ -1241,9 +1240,9 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
     case 110:
       i = READ_I();
       p = effect->vecRegs[i];
-      target[0] = target[0] + p[0];
-      target[1] = target[1] + p[1];
-      target[2] = target[2] + p[2];
+      target[0] = VfAdd(target[0], p[0]);
+      target[1] = VfAdd(target[1], p[1]);
+      target[2] = VfAdd(target[2], p[2]);
       break;
     case 129:
       i = READ_I();
@@ -1279,14 +1278,14 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
       horiz = __builtin_sqrtf(tmp[0] * tmp[0] + tmp[2] * tmp[2]);
       b = atan2f(tmp[2], tmp[0]) + b;
       c = atan2f(tmp[1], horiz) + c;
-      cp = __builtin_cosf(c);
-      tmp[0] = __builtin_cosf(b) * cp;
-      tmp[1] = __builtin_sinf(c);
-      tmp[2] = __builtin_sinf(b) * cp;
+      cp = VfCosQuarter(VfMul(c, 0.636619747f));
+      tmp[0] = VfCosQuarter(VfMul(b, 0.636619747f)) * cp;
+      tmp[1] = VfSinQuarter(VfMul(c, 0.636619747f));
+      tmp[2] = VfSinQuarter(VfMul(b, 0.636619747f)) * cp;
       p = cmds[3] == 115 ? effect->vecRegs[i] : effect->dir;
-      p[0] = tmp[0] * a;
-      p[1] = tmp[1] * a;
-      p[2] = tmp[2] * a;
+      p[0] = VfMul(tmp[0], a);
+      p[1] = VfMul(tmp[1], a);
+      p[2] = VfMul(tmp[2], a);
       p[3] = 0.0f;
       break;
     case 116: /* rotate dir about the axis (x, y, z) by an angle */
@@ -1412,7 +1411,7 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
         GfxEffectRunCommandsSub3(tmp, &effect->matrix[12], target);
       }
       i = READ_I();
-      effect->regs[i] = __builtin_sqrtf(tmp[0] * tmp[0] + tmp[1] * tmp[1] + tmp[2] * tmp[2]);
+      effect->regs[i] = VfSqrt(VfDot3(tmp[0], tmp[1], tmp[2], tmp[0], tmp[1], tmp[2]));
       break;
     case 142:
       i = READ_I();
@@ -1474,20 +1473,19 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
       break;
     case 151: /* register i = |dir| * arg */
       i = READ_I();
-      d = __builtin_sqrtf(effect->dir[0] * effect->dir[0] + effect->dir[1] * effect->dir[1] +
-                          effect->dir[2] * effect->dir[2]);
+      d = VfSqrt(VfDot3(effect->dir[0], effect->dir[1], effect->dir[2], effect->dir[0], effect->dir[1], effect->dir[2]));
       v = READ_F();
       effect->regs[i] = d * v;
       break;
     case 152:
       i = READ_I();
       v = READ_F();
-      effect->regs[i] = __builtin_sinf(v);
+      effect->regs[i] = VfSinQuarter(VfMul(v, 0.636619747f));
       break;
     case 153:
       i = READ_I();
       v = READ_F();
-      effect->regs[i] = __builtin_cosf(v);
+      effect->regs[i] = VfCosQuarter(VfMul(v, 0.636619747f));
       break;
     case 154:
       i = READ_I();
@@ -1578,9 +1576,9 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
       v = READ_F();
       GfxEffectRunCommandsSub3(tmp, target, g_gfxActiveCamera->eye);
       GfxEffectRunCommandsNormalize(tmp);
-      target[0] = target[0] + tmp[0] * v;
-      target[1] = target[1] + tmp[1] * v;
-      target[2] = target[2] + tmp[2] * v;
+      target[0] = VfAdd(target[0], VfMul(tmp[0], v));
+      target[1] = VfAdd(target[1], VfMul(tmp[1], v));
+      target[2] = VfAdd(target[2], VfMul(tmp[2], v));
       break;
     case 241: /* camera-relative position, scaled to a length */
       if (effect->attachMatrix != NULL) {
@@ -1695,7 +1693,7 @@ int GfxEffectRunCommands(GfxEffect *effect, u8 *cmds, u32 isDefault, int pass)
       GfxEffectRunCommandsSub3(tmp2, effect->pos, g_gfxActiveCamera->eye);
       GfxEffectRunCommandsNormalize(tmp2);
       GfxEffectRunCommandsNormalize(tmp);
-      d = tmp[0] * tmp2[0] + tmp[1] * tmp2[1] + tmp[2] * tmp2[2];
+      d = VfDot3(tmp[0], tmp[1], tmp[2], tmp2[0], tmp2[1], tmp2[2]);
       *reg = a * (1.0f - __builtin_fabsf(d)) + b;
       break;
     default: /* 0, 9 and unused opcodes */

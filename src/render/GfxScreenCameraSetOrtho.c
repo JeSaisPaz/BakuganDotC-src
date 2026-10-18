@@ -9,24 +9,24 @@
 void GfxScreenCameraSetOrtho(const float *rect)
 {
   ScePspFMatrix4 *m = &g_gfxScreenCamera->proj;
-  float rx = 1.0f / (rect[0] - rect[1]);
-  float ry = 1.0f / (rect[2] - rect[3]);
-  float rz = 1.0f / (rect[4] - rect[5]);
+  float rx = VfRcp(VfSub(rect[0], rect[1]));
+  float ry = VfRcp(VfSub(rect[2], rect[3]));
+  float rz = VfRcp(VfSub(rect[4], rect[5]));
 
-  m->x.x = -2.0f * rx;
+  m->x.x = VfMul(-2.0f, rx);
   m->x.y = 0.0f;
   m->x.z = 0.0f;
   m->x.w = 0.0f;
   m->y.x = 0.0f;
-  m->y.y = -2.0f * ry;
+  m->y.y = VfMul(-2.0f, ry);
   m->y.z = 0.0f;
   m->y.w = 0.0f;
   m->z.x = 0.0f;
   m->z.y = 0.0f;
-  m->z.z = 2.0f * rz;
+  m->z.z = VfMul(2.0f, rz);
   m->z.w = 0.0f;
-  m->w.x = (rect[0] + rect[1]) * rx;
-  m->w.y = (rect[2] + rect[3]) * ry;
-  m->w.z = (rect[4] + rect[5]) * rz;
+  m->w.x = VfMul(VfAdd(rect[0], rect[1]), rx);
+  m->w.y = VfMul(VfAdd(rect[2], rect[3]), ry);
+  m->w.z = VfMul(VfAdd(rect[4], rect[5]), rz);
   m->w.w = 1.0f;
 }

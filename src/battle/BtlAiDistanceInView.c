@@ -21,10 +21,10 @@ float BtlAiDistanceInView(float maxDist, float fovDeg, BtlAi *self, float *pos)
         return 0.0f;
     }
     /* |owner->pos - pos| over x, y, z */
-    dx = owner->base.pos[0] - pos[0];
-    dy = owner->base.pos[1] - pos[1];
-    dz = owner->base.pos[2] - pos[2];
-    dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+    dx = VfSub(owner->base.pos[0], pos[0]);
+    dy = VfSub(owner->base.pos[1], pos[1]);
+    dz = VfSub(owner->base.pos[2], pos[2]);
+    dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
     if (!(dist < maxDist * maxDist)) {
         return 0.0f;
     }

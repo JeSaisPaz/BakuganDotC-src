@@ -34,24 +34,24 @@ float *MathQuatFromUpToDir(float *out, const float *dir)
     axis[1] = 0.0f;
     axis[2] = -dir[0];
     /* Normalise the axis (rsqrt; a zero length uses S713 = 0 instead), clamped to [-1, 1]. */
-    lenSq = axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2];
+    lenSq = VfDot3(axis[0], axis[1], axis[2], axis[0], axis[1], axis[2]);
     if (VfIsZero(lenSq)) {
         invLen = 0.0f;
     } else {
         invLen = VfRsq(lenSq);
     }
-    axis[0] = VfSat1(axis[0] * invLen);
-    axis[1] = VfSat1(axis[1] * invLen);
-    axis[2] = VfSat1(axis[2] * invLen);
+    axis[0] = VfSat1(VfMul(axis[0], invLen));
+    axis[1] = VfSat1(VfMul(axis[1], invLen));
+    axis[2] = VfSat1(VfMul(axis[2], invLen));
 
     angle = acosf(dir[1]);
 
     /* angle / π quarter turns = angle / 2 radians: out = (axis * sin(angle / 2), cos(angle / 2)). */
-    halfTurns = 0.318309873f * angle;
+    halfTurns = VfMul(0.318309873f, angle);
     out[3] = VfCosQuarter(halfTurns);
     s = VfSinQuarter(halfTurns);
-    out[0] = axis[0] * s;
-    out[1] = axis[1] * s;
-    out[2] = axis[2] * s;
+    out[0] = VfMul(axis[0], s);
+    out[1] = VfMul(axis[1], s);
+    out[2] = VfMul(axis[2], s);
     return out;
 }

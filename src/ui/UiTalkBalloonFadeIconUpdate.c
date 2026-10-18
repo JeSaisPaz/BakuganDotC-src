@@ -78,7 +78,7 @@ s32 UiTalkBalloonFadeIconUpdate(GfxSprite *sprite)
   phase = self->phase + 0.1f;
   self->phase = phase;
   angle = (float)(-self->frame & 0x1f) * 0.19635f - phase;
-  self->base.posX = self->base.posX + __builtin_cosf(angle) * 6.0f;
-  self->base.posY = self->base.posY + __builtin_sinf(angle) * 6.0f;
+  self->base.posX = self->base.posX + VfCosQuarter(VfMul(angle, 0.636619747f)) * 6.0f;
+  self->base.posY = self->base.posY + VfSinQuarter(VfMul(angle, 0.636619747f)) * 6.0f;
   return 0;
 }

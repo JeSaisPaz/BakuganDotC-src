@@ -34,21 +34,21 @@ int BtlAttackSweepHitSound(float radius, BtlAttack *self, float *from, float *to
         /* offset = from - owner->pos (xyz, w from `from`), then y cleared */
         ownerPos = self->owner->base.pos;
         offset = *(ScePspFVector4 *)from;
-        offset.x = offset.x - ownerPos[0];
-        offset.y = offset.y - ownerPos[1];
-        offset.z = offset.z - ownerPos[2];
+        offset.x = VfSub(offset.x, ownerPos[0]);
+        offset.y = VfSub(offset.y, ownerPos[1]);
+        offset.z = VfSub(offset.z, ownerPos[2]);
         offset.y = 0.0f;
         /* dir.xyz += offset; start.xyz -= offset */
-        desc->dir.x = desc->dir.x + offset.x;
-        desc->dir.y = desc->dir.y + offset.y;
-        desc->dir.z = desc->dir.z + offset.z;
-        desc->start.x = desc->start.x - offset.x;
-        desc->start.y = desc->start.y - offset.y;
-        desc->start.z = desc->start.z - offset.z;
+        desc->dir.x = VfAdd(desc->dir.x, offset.x);
+        desc->dir.y = VfAdd(desc->dir.y, offset.y);
+        desc->dir.z = VfAdd(desc->dir.z, offset.z);
+        desc->start.x = VfSub(desc->start.x, offset.x);
+        desc->start.y = VfSub(desc->start.y, offset.y);
+        desc->start.z = VfSub(desc->start.z, offset.z);
     }
     desc->start.w = desc->radius * desc->radius;
     /* dir.w = |dir.xyz| */
-    desc->dir.w = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z);
+    desc->dir.w = VfSqrt(VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z));
     g_btlAttackHitQuery.shape = &desc->shapeBlock;
     g_btlAttackHitQuery.owner = self->owner;
     g_btlAttackHitQuery.heading = atan2f(to[2], to[0]);
@@ -65,23 +65,23 @@ int BtlAttackSweepHitSound(float radius, BtlAttack *self, float *from, float *to
             g_btlAttackHitQuery.hitCollider = NULL;
             /* len = |contact.xyz - from.xyz| + 50 */
             {
-                float dx = g_collisionHitResult.point.x - from[0];
-                float dy = g_collisionHitResult.point.y - from[1];
-                float dz = g_collisionHitResult.point.z - from[2];
+                float dx = VfSub(g_collisionHitResult.point.x, from[0]);
+                float dy = VfSub(g_collisionHitResult.point.y, from[1]);
+                float dz = VfSub(g_collisionHitResult.point.z, from[2]);
 
-                len = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+                len = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
             }
             len = len + 50.0f;
             /* dir.xyz = normalize(dir.xyz) * len (inverse length 0 for a zero dir); dir.w = 0 */
-            lenSq = desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z;
+            lenSq = VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z);
             scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-            scale = scale * len;
-            desc->dir.x = desc->dir.x * scale;
-            desc->dir.y = desc->dir.y * scale;
-            desc->dir.z = desc->dir.z * scale;
+            scale = VfMul(scale, len);
+            desc->dir.x = VfMul(desc->dir.x, scale);
+            desc->dir.y = VfMul(desc->dir.y, scale);
+            desc->dir.z = VfMul(desc->dir.z, scale);
             desc->dir.w = 0.0f;
             desc->start.w = desc->radius * desc->radius;
-            desc->dir.w = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z);
+            desc->dir.w = VfSqrt(VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z));
         }
     }
 
@@ -92,26 +92,26 @@ int BtlAttackSweepHitSound(float radius, BtlAttack *self, float *from, float *to
         g_btlAttackHitQuery.hitCollider = NULL;
         /* len = |contact.xyz - from.xyz| + 50 */
         {
-            float dx = g_collisionHitResult.point.x - from[0];
-            float dy = g_collisionHitResult.point.y - from[1];
-            float dz = g_collisionHitResult.point.z - from[2];
+            float dx = VfSub(g_collisionHitResult.point.x, from[0]);
+            float dy = VfSub(g_collisionHitResult.point.y, from[1]);
+            float dz = VfSub(g_collisionHitResult.point.z, from[2]);
 
-            len = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+            len = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
         }
         len = len + 50.0f;
         /* dir.xyz = normalize(dir.xyz) * len (inverse length 0 for a zero dir); dir.w = 0 */
-        lenSq = desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z;
+        lenSq = VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z);
         scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        scale = scale * len;
-        desc->dir.x = desc->dir.x * scale;
-        desc->dir.y = desc->dir.y * scale;
-        desc->dir.z = desc->dir.z * scale;
+        scale = VfMul(scale, len);
+        desc->dir.x = VfMul(desc->dir.x, scale);
+        desc->dir.y = VfMul(desc->dir.y, scale);
+        desc->dir.z = VfMul(desc->dir.z, scale);
         desc->dir.w = 0.0f;
     }
     desc->radius = radius;
     desc->start.w = radius * radius;
     /* dir.w = |dir.xyz| */
-    desc->dir.w = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z);
+    desc->dir.w = VfSqrt(VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z));
 
     saved = g_btlAttackHitQuery.contact;
     if (CollisionHitQuery(layerMask & 0x3e, (float *)&g_btlAttackHitQuery, 1, NULL) != 0) {

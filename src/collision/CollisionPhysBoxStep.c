@@ -29,7 +29,7 @@ static u8 PhysBoxNeighbourByte(s32 n)
 
 static inline float PhysBoxDot3(const ScePspFVector4 *a, const ScePspFVector4 *b)
 {
-    return a->x * b->x + a->y * b->y + a->z * b->z;
+    return VfDot3(a->x, a->y, a->z, b->x, b->y, b->z);
 }
 
 /* vrsq of |v|^2, 0 for a zero-length vector (vcmp EZ + vcmovt S713) */
@@ -43,27 +43,27 @@ static inline float PhysBoxInvLen(const ScePspFVector4 *v)
 /* vpfxd [-1:1,-1:1,-1:1,M] + vscl.t into C710: w is S713 (0) */
 static inline void PhysBoxScaleSat(ScePspFVector4 *out, const ScePspFVector4 *v, float k)
 {
-    out->x = VfSat1(v->x * k);
-    out->y = VfSat1(v->y * k);
-    out->z = VfSat1(v->z * k);
+    out->x = VfSat1(VfMul(v->x, k));
+    out->y = VfSat1(VfMul(v->y, k));
+    out->z = VfSat1(VfMul(v->z, k));
     out->w = 0.0f;
 }
 
 /* vscl.t into C710: w is S713 (0) */
 static inline void PhysBoxScale(ScePspFVector4 *out, const ScePspFVector4 *v, float k)
 {
-    out->x = v->x * k;
-    out->y = v->y * k;
-    out->z = v->z * k;
+    out->x = VfMul(v->x, k);
+    out->y = VfMul(v->y, k);
+    out->z = VfMul(v->z, k);
     out->w = 0.0f;
 }
 
 /* vadd.t: w kept */
 static inline void PhysBoxAddTo(ScePspFVector4 *acc, const ScePspFVector4 *add)
 {
-    acc->x = acc->x + add->x;
-    acc->y = acc->y + add->y;
-    acc->z = acc->z + add->z;
+    acc->x = VfAdd(acc->x, add->x);
+    acc->y = VfAdd(acc->y, add->y);
+    acc->z = VfAdd(acc->z, add->z);
 }
 
 /* out = normalise(v - 2 * dot(v, n) * n), zero length -> 0, clamped, w = 0 */
@@ -72,10 +72,10 @@ static inline void PhysBoxReflect(ScePspFVector4 *out, const ScePspFVector4 *v, 
     ScePspFVector4 r;
     float k;
 
-    k = -2.0f * PhysBoxDot3(v, n);
-    r.x = v->x + n->x * k;
-    r.y = v->y + n->y * k;
-    r.z = v->z + n->z * k;
+    k = VfMul(-2.0f, PhysBoxDot3(v, n));
+    r.x = VfAdd(v->x, VfMul(n->x, k));
+    r.y = VfAdd(v->y, VfMul(n->y, k));
+    r.z = VfAdd(v->z, VfMul(n->z, k));
     PhysBoxScaleSat(out, &r, PhysBoxInvLen(&r));
 }
 
@@ -175,9 +175,9 @@ float CollisionPhysBoxStep(CollisionPhysBox *self)
 
         /* bounce: -1.2 * dot(dir from centre, velocity dir) */
         offsets[i] = self->vel[i];
-        tmp.x = self->pos[i].x - self->centre.x;
-        tmp.y = self->pos[i].y - self->centre.y;
-        tmp.z = self->pos[i].z - self->centre.z;
+        tmp.x = VfSub(self->pos[i].x, self->centre.x);
+        tmp.y = VfSub(self->pos[i].y, self->centre.y);
+        tmp.z = VfSub(self->pos[i].z, self->centre.z);
         PhysBoxScaleSat(&impulse, &tmp, PhysBoxInvLen(&tmp));
         PhysBoxScaleSat(&velDir, &self->vel[i], PhysBoxInvLen(&self->vel[i]));
         scale = PhysBoxDot3(&impulse, &velDir) * -1.2f;
@@ -194,7 +194,7 @@ float CollisionPhysBoxStep(CollisionPhysBox *self)
             n->x = -n->x;
             n->y = -n->y;
             n->z = -n->z;
-            speed = __builtin_sqrtf(PhysBoxDot3(&self->vel[i], &self->vel[i]));
+            speed = VfSqrt(PhysBoxDot3(&self->vel[i], &self->vel[i]));
             PhysBoxReflect(&offsets[i], &self->vel[i], n);
             scale = scale * speed;
             scale = scale * 0.6f;
@@ -220,11 +220,11 @@ float CollisionPhysBoxStep(CollisionPhysBox *self)
         float dist;
 
         delta = centroid;
-        delta.x = centroid.x - self->centre.x;
-        delta.y = centroid.y - self->centre.y;
-        delta.z = centroid.z - self->centre.z;
+        delta.x = VfSub(centroid.x, self->centre.x);
+        delta.y = VfSub(centroid.y, self->centre.y);
+        delta.z = VfSub(centroid.z, self->centre.z);
         movePos = self->centre;
-        dist = __builtin_sqrtf(PhysBoxDot3(&delta, &delta));
+        dist = VfSqrt(PhysBoxDot3(&delta, &delta));
         if (!(dist < 0.001f)) {
             g_collisionSweptSphereDesc.radius = self->radius;
             g_collisionSweptSphereDesc.start = movePos;
@@ -263,9 +263,9 @@ float CollisionPhysBoxStep(CollisionPhysBox *self)
                     PhysBoxAddTo(&movePos, &tmp);
                 }
                 delta = movePos;
-                delta.x = movePos.x - centroid.x;
-                delta.y = movePos.y - centroid.y;
-                delta.z = movePos.z - centroid.z;
+                delta.x = VfSub(movePos.x, centroid.x);
+                delta.y = VfSub(movePos.y, centroid.y);
+                delta.z = VfSub(movePos.z, centroid.z);
                 for (j = 0; j < 8; j++) {
                     PhysBoxAddTo(&offsets[j], &delta);
                     PhysBoxAddTo(&self->pos[j], &delta);
@@ -285,13 +285,13 @@ float CollisionPhysBoxStep(CollisionPhysBox *self)
         const ScePspFVector4 *up = &self->axes[1];
 
         PhysBoxScaleSat(&az, &self->axes[2], PhysBoxInvLen(&self->axes[2]));
-        ax.x = up->y * az.z - up->z * az.y;
-        ax.y = up->z * az.x - up->x * az.z;
-        ax.z = up->x * az.y - up->y * az.x;
+        ax.x = VfDot2(up->y, up->z, az.z, -az.y);
+        ax.y = VfDot2(up->z, up->x, az.x, -az.z);
+        ax.z = VfDot2(up->x, up->y, az.y, -az.x);
         PhysBoxScaleSat(&ax, &ax, PhysBoxInvLen(&ax));
-        ay.x = az.y * ax.z - az.z * ax.y;
-        ay.y = az.z * ax.x - az.x * ax.z;
-        ay.z = az.x * ax.y - az.y * ax.x;
+        ay.x = VfDot2(az.y, az.z, ax.z, -ax.y);
+        ay.y = VfDot2(az.z, az.x, ax.x, -ax.z);
+        ay.z = VfDot2(az.x, az.y, ax.y, -ax.x);
         ay.w = 0.0f;
         az.w = 0.0f; /* vidt.q R003 */
         self->mtx->x = ax;
@@ -304,9 +304,9 @@ float CollisionPhysBoxStep(CollisionPhysBox *self)
     }
 
     contact = centroid;
-    contact.x = centroid.x - self->centre.x;
-    contact.y = centroid.y - self->centre.y;
-    contact.z = centroid.z - self->centre.z;
+    contact.x = VfSub(centroid.x, self->centre.x);
+    contact.y = VfSub(centroid.y, self->centre.y);
+    contact.z = VfSub(centroid.z, self->centre.z);
     self->contactVec = contact;
     self->prevCentre = self->centre;
     self->centre = centroid;

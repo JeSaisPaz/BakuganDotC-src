@@ -64,8 +64,7 @@ void BtlAttackType0EUpdate(BtlAttack *self)
     local = self->bone->localMatrix;
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            self->mtx[j][i] = local[j * 4 + 0] * root[0 * 4 + i] + local[j * 4 + 1] * root[1 * 4 + i] +
-                              local[j * 4 + 2] * root[2 * 4 + i] + local[j * 4 + 3] * root[3 * 4 + i];
+            self->mtx[j][i] = VfDot4(local[j * 4 + 0], local[j * 4 + 1], local[j * 4 + 2], local[j * 4 + 3], root[0 * 4 + i], root[1 * 4 + i], root[2 * 4 + i], root[3 * 4 + i]);
         }
     }
     self->pos[0] = self->mtx[3][0];
@@ -73,13 +72,13 @@ void BtlAttackType0EUpdate(BtlAttack *self)
     self->pos[2] = self->mtx[3][2];
     self->pos[3] = self->mtx[3][3];
     scale = self->paramF0 * 10.0f;
-    self->segment[0] = self->vel[0] * scale;
-    self->segment[1] = self->vel[1] * scale;
-    self->segment[2] = self->vel[2] * scale;
+    self->segment[0] = VfMul(self->vel[0], scale);
+    self->segment[1] = VfMul(self->vel[1], scale);
+    self->segment[2] = VfMul(self->vel[2], scale);
     self->segment[3] = 0.0f;
-    self->auxVec[0] = self->pos[0] + self->segment[0];
-    self->auxVec[1] = self->pos[1] + self->segment[1];
-    self->auxVec[2] = self->pos[2] + self->segment[2];
+    self->auxVec[0] = VfAdd(self->pos[0], self->segment[0]);
+    self->auxVec[1] = VfAdd(self->pos[1], self->segment[1]);
+    self->auxVec[2] = VfAdd(self->pos[2], self->segment[2]);
     self->auxVec[3] = self->pos[3];
 
     if (self->age < 0x2d &&
@@ -92,9 +91,9 @@ void BtlAttackType0EUpdate(BtlAttack *self)
             self->param1++;
         } else if ((self->param0 & 1) != 0) {
             /* spawnPos = hit point + contact normal x 3 (xyz, w from the hit point) */
-            spawnPos[0] = g_btlAttackHitQuery.contact.x + g_collisionHitResult.normal.x * 3.0f;
-            spawnPos[1] = g_btlAttackHitQuery.contact.y + g_collisionHitResult.normal.y * 3.0f;
-            spawnPos[2] = g_btlAttackHitQuery.contact.z + g_collisionHitResult.normal.z * 3.0f;
+            spawnPos[0] = VfAdd(g_btlAttackHitQuery.contact.x, VfMul(g_collisionHitResult.normal.x, 3.0f));
+            spawnPos[1] = VfAdd(g_btlAttackHitQuery.contact.y, VfMul(g_collisionHitResult.normal.y, 3.0f));
+            spawnPos[2] = VfAdd(g_btlAttackHitQuery.contact.z, VfMul(g_collisionHitResult.normal.z, 3.0f));
             spawnPos[3] = g_btlAttackHitQuery.contact.w;
             GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0xa1, spawnPos, &g_collisionHitResult.normal.x);
             BtlAttackPlaySound(self, 0x200099, NULL, 0, 0);

@@ -63,9 +63,9 @@ void BtlDemoSceneObjPlaceKey(BtlDemoSceneMotionEvent *ev, s32 frame)
     }
 
     BtlGetStageAmbientColor(amb);
-    pos[0] += amb[0];
-    pos[1] += amb[1];
-    pos[2] += amb[2];
+    pos[0] = VfAdd(pos[0], amb[0]);
+    pos[1] = VfAdd(pos[1], amb[1]);
+    pos[2] = VfAdd(pos[2], amb[2]);
     ev->target->pos[0] = pos[0];
     ev->target->pos[1] = pos[1];
     ev->target->pos[2] = pos[2];

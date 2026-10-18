@@ -40,16 +40,16 @@ void BtlAttackType22Update(BtlAttack *self)
     trail[2] = pos[2];
     trail[3] = pos[3];
     /* step.w (stale S713 in the original) is never read: left out. */
-    step[0] = vel[0] * 0.334f;
-    step[1] = vel[1] * 0.334f;
-    step[2] = vel[2] * 0.334f;
+    step[0] = VfMul(vel[0], 0.334f);
+    step[1] = VfMul(vel[1], 0.334f);
+    step[2] = VfMul(vel[2], 0.334f);
     for (i = 0; i < 3; i++) {
         GfxEffectSpawn(g_btlAttackEffectMgr, 0xc4, trail);
-        trail[0] = trail[0] + step[0];
-        trail[1] = trail[1] + step[1];
-        trail[2] = trail[2] + step[2];
+        trail[0] = VfAdd(trail[0], step[0]);
+        trail[1] = VfAdd(trail[1], step[1]);
+        trail[2] = VfAdd(trail[2], step[2]);
     }
-    pos[0] = pos[0] + vel[0];
-    pos[1] = pos[1] + vel[1];
-    pos[2] = pos[2] + vel[2];
+    pos[0] = VfAdd(pos[0], vel[0]);
+    pos[1] = VfAdd(pos[1], vel[1]);
+    pos[2] = VfAdd(pos[2], vel[2]);
 }

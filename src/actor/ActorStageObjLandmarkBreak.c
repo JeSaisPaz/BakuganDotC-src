@@ -58,9 +58,9 @@ void ActorStageObjLandmarkBreak(ActorStageObjLandmark *self)
     tmp[1] = d;
     tmp[2] = d;
     tmp[3] = 0.0f;
-    row[0] = row[0] + tmp[0];
-    row[1] = row[1] + tmp[1];
-    row[2] = row[2] + tmp[2];
+    row[0] = VfAdd(row[0], tmp[0]);
+    row[1] = VfAdd(row[1], tmp[1]);
+    row[2] = VfAdd(row[2], tmp[2]);
     camTask = (BtlMain *)BDC_OR_ZERO(BtlGetCameraTask());
     CoreObjectListAppend(&debris->base.base, &camTask->modelLists[1]);
     debris->lifetime = 60;

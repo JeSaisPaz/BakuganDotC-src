@@ -10,9 +10,9 @@ static void CollisionPartRigidInverse(ScePspFMatrix4 *inv, const ScePspFMatrix4 
     ScePspFVector4 y = src->y;
     ScePspFVector4 z = src->z;
     ScePspFVector4 t = src->w;
-    float dx = x.x * t.x + x.y * t.y + x.z * t.z;
-    float dy = y.x * t.x + y.y * t.y + y.z * t.z;
-    float dz = z.x * t.x + z.y * t.y + z.z * t.z;
+    float dx = VfDot3(x.x, x.y, x.z, t.x, t.y, t.z);
+    float dy = VfDot3(y.x, y.y, y.z, t.x, t.y, t.z);
+    float dz = VfDot3(z.x, z.y, z.z, t.x, t.y, t.z);
 
     inv->x.x = x.x;
     inv->x.y = y.x;
@@ -73,8 +73,7 @@ void *CollisionShapeBlockPrepare(void *block)
                 for (j = 0; j < 4; j++) {
                     const float *b = &(&local->x)[j].x;
                     for (k = 0; k < 4; k++) {
-                        prod[j][k] = b[0] * self->matrix[0][k] + b[1] * self->matrix[1][k] +
-                                     b[2] * self->matrix[2][k] + b[3] * self->matrix[3][k];
+                        prod[j][k] = VfDot4(b[0], b[1], b[2], b[3], self->matrix[0][k], self->matrix[1][k], self->matrix[2][k], self->matrix[3][k]);
                     }
                 }
                 part->worldMatrix.x.x = prod[0][0];

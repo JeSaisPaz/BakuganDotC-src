@@ -10,10 +10,10 @@ static float ActorMoveRsqOrZero(float d)
 /* vqmul.q d, a, b (w last). */
 static void ActorMoveQuatMul(ScePspFVector4 *d, const ScePspFVector4 *a, const ScePspFVector4 *b)
 {
-    d->x = a->x * b->w + a->y * b->z - a->z * b->y + a->w * b->x;
-    d->y = -a->x * b->z + a->y * b->w + a->z * b->x + a->w * b->y;
-    d->z = a->x * b->y - a->y * b->x + a->z * b->w + a->w * b->z;
-    d->w = -a->x * b->x - a->y * b->y - a->z * b->z + a->w * b->w;
+    d->x = VfDot4(a->x, a->y, a->z, a->w, b->w, b->z, -b->y, b->x);
+    d->y = VfDot4(-a->x, a->y, a->z, a->w, b->z, b->w, b->x, b->y);
+    d->z = VfDot4(a->x, a->y, a->z, a->w, b->y, -b->x, b->w, b->z);
+    d->w = VfDot4(-a->x, a->y, a->z, a->w, b->x, -b->y, -b->z, b->w);
 }
 
 /* q * (v.xyz, 0) * conj(q) (S730 = 0 as the w lane of v). */
@@ -41,12 +41,12 @@ static void ActorMoveAxisAngleQuat(ScePspFVector4 *d, const ScePspFVector4 *axis
     float q;
     float s;
 
-    q = 0.318309873f * angle;
+    q = VfMul(0.318309873f, angle);
     d->w = VfCosQuarter(q);
     s = VfSinQuarter(q);
-    d->x = axis->x * s;
-    d->y = axis->y * s;
-    d->z = axis->z * s;
+    d->x = VfMul(axis->x, s);
+    d->y = VfMul(axis->y, s);
+    d->z = VfMul(axis->z, s);
 }
 
 /* xyz normalised and clamped to [-1, 1] (vpfxd [-1:1,-1:1,-1:1,M]), w = S713 (0). */
@@ -54,10 +54,10 @@ static void ActorMoveNormalizeSat(ScePspFVector4 *d, const float *v)
 {
     float k;
 
-    k = ActorMoveRsqOrZero(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-    d->x = VfSat1(v[0] * k);
-    d->y = VfSat1(v[1] * k);
-    d->z = VfSat1(v[2] * k);
+    k = ActorMoveRsqOrZero(VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]));
+    d->x = VfSat1(VfMul(v[0], k));
+    d->y = VfSat1(VfMul(v[1], k));
+    d->z = VfSat1(VfMul(v[2], k));
     d->w = 0.0f;
 }
 
@@ -120,9 +120,9 @@ int ActorMoveWithCollision(Actor *self, float *delta)
     startPos[1] = self->base.pos[1];
     startPos[2] = self->base.pos[2];
     startPos[3] = self->base.pos[3];
-    move[0] = move[0] + self->extraMove[0];
-    move[1] = move[1] + self->extraMove[1];
-    move[2] = move[2] + self->extraMove[2];
+    move[0] = VfAdd(move[0], self->extraMove[0]);
+    move[1] = VfAdd(move[1], self->extraMove[1]);
+    move[2] = VfAdd(move[2], self->extraMove[2]);
     delta[1] = delta[1] + self->extraMove[1];
     move[1] = 0.0f;
 
@@ -160,11 +160,11 @@ int ActorMoveWithCollision(Actor *self, float *delta)
     self->extraMove[1] = 0.0f;
     self->extraMove[2] = 0.0f;
     self->extraMove[3] = 0.0f;
-    len = __builtin_sqrtf(move[0] * move[0] + move[1] * move[1] + move[2] * move[2]);
+    len = VfSqrt(VfDot3(move[0], move[1], move[2], move[0], move[1], move[2]));
     if (self->radius < len * 1.05f) {
-        move[0] = move[0] * 0.5f;
-        move[1] = move[1] * 0.5f;
-        move[2] = move[2] * 0.5f;
+        move[0] = VfMul(move[0], 0.5f);
+        move[1] = VfMul(move[1], 0.5f);
+        move[2] = VfMul(move[2], 0.5f);
         move[3] = 0.0f;
         half1[0] = move[0];
         half1[1] = move[1];
@@ -173,9 +173,9 @@ int ActorMoveWithCollision(Actor *self, float *delta)
         ActorMoveWithCollision(self, half1);
         len2 = len * 0.5f;
         if (self->radius < len2 * 1.05f) {
-            move[0] = move[0] * 0.5f;
-            move[1] = move[1] * 0.5f;
-            move[2] = move[2] * 0.5f;
+            move[0] = VfMul(move[0], 0.5f);
+            move[1] = VfMul(move[1], 0.5f);
+            move[2] = VfMul(move[2], 0.5f);
             move[3] = 0.0f;
             half2[0] = move[0];
             half2[1] = move[1];
@@ -183,9 +183,9 @@ int ActorMoveWithCollision(Actor *self, float *delta)
             half2[3] = move[3];
             ActorMoveWithCollision(self, half2);
             if (self->radius < len2 * 0.5f * 1.05f) {
-                move[0] = move[0] * 0.5f;
-                move[1] = move[1] * 0.5f;
-                move[2] = move[2] * 0.5f;
+                move[0] = VfMul(move[0], 0.5f);
+                move[1] = VfMul(move[1], 0.5f);
+                move[2] = VfMul(move[2], 0.5f);
                 move[3] = 0.0f;
                 half3[0] = move[0];
                 half3[1] = move[1];
@@ -196,9 +196,9 @@ int ActorMoveWithCollision(Actor *self, float *delta)
         }
     }
     swept = &g_collisionSweptSphereDesc;
-    self->base.pos[0] = self->base.pos[0] + move[0];
-    self->base.pos[1] = self->base.pos[1] + move[1];
-    self->base.pos[2] = self->base.pos[2] + move[2];
+    self->base.pos[0] = VfAdd(self->base.pos[0], move[0]);
+    self->base.pos[1] = VfAdd(self->base.pos[1], move[1]);
+    self->base.pos[2] = VfAdd(self->base.pos[2], move[2]);
     swept->dir.x = move[0];
     swept->dir.y = move[1];
     swept->dir.z = move[2];
@@ -278,9 +278,9 @@ int ActorMoveWithCollision(Actor *self, float *delta)
                 }
             }
         }
-        self->sweepBack[0] = self->sweepBack[0] - self->base.pos[0];
-        self->sweepBack[1] = self->sweepBack[1] - self->base.pos[1];
-        self->sweepBack[2] = self->sweepBack[2] - self->base.pos[2];
+        self->sweepBack[0] = VfSub(self->sweepBack[0], self->base.pos[0]);
+        self->sweepBack[1] = VfSub(self->sweepBack[1], self->base.pos[1]);
+        self->sweepBack[2] = VfSub(self->sweepBack[2], self->base.pos[2]);
     }
     if (blocked == 0) {
         if (self->radius < 6.0f) {
@@ -317,10 +317,10 @@ int ActorMoveWithCollision(Actor *self, float *delta)
         hit = CollisionRaycast(self->collisionMask, &swept->shapeBlock, 4);
         if (hit != NULL && self->base.pos[1] + 1.0f < g_collisionHitResult.point.y) {
             /* off = (start + dir) - hit point, horizontal */
-            off[0] = (swept->start.x + swept->dir.x) - g_collisionHitResult.point.x;
+            off[0] = VfSub(VfAdd(swept->start.x, swept->dir.x), g_collisionHitResult.point.x);
             off[1] = 0.0f;
-            off[2] = (swept->start.z + swept->dir.z) - g_collisionHitResult.point.z;
-            dist = __builtin_sqrtf(off[0] * off[0] + off[1] * off[1] + off[2] * off[2]);
+            off[2] = VfSub(VfAdd(swept->start.z, swept->dir.z), g_collisionHitResult.point.z);
+            dist = VfSqrt(VfDot3(off[0], off[1], off[2], off[0], off[1], off[2]));
             if (dist < (self->radius - 13.0f) * 0.5f) {
                 delta[1] = ((swept->start.y + g_collisionHitInfo.bestDist) -
                             ((self->radius - 13.0f) + self->stepHeight)) -
@@ -328,10 +328,10 @@ int ActorMoveWithCollision(Actor *self, float *delta)
                 blocked = 1;
                 GfxModelGetNodeWorldPos(&self->base, &head, "Bip01_Head");
                 /* off = pos - hit point, horizontal */
-                off[0] = self->base.pos[0] - g_collisionHitResult.point.x;
+                off[0] = VfSub(self->base.pos[0], g_collisionHitResult.point.x);
                 off[1] = 0.0f;
-                off[2] = self->base.pos[2] - g_collisionHitResult.point.z;
-                dist = __builtin_sqrtf(off[0] * off[0] + off[1] * off[1] + off[2] * off[2]);
+                off[2] = VfSub(self->base.pos[2], g_collisionHitResult.point.z);
+                dist = VfSqrt(VfDot3(off[0], off[1], off[2], off[0], off[1], off[2]));
                 /* Both "head close" branches below also compute a camera-facing head offset and
                    its distance to the hit point; nothing reads them (blocked becomes 0), so they
                    are left out. */
@@ -340,20 +340,20 @@ int ActorMoveWithCollision(Actor *self, float *delta)
                     self->base.velocity[1] = 0.0f;
                 } else {
                     /* off = normalize(off) * 0.5f (no clamp, w = S713) */
-                    k = ActorMoveRsqOrZero(off[0] * off[0] + off[1] * off[1] + off[2] * off[2]);
-                    k = k * 0.5f;
-                    off[0] = off[0] * k;
-                    off[1] = off[1] * k;
-                    off[2] = off[2] * k;
+                    k = ActorMoveRsqOrZero(VfDot3(off[0], off[1], off[2], off[0], off[1], off[2]));
+                    k = VfMul(k, 0.5f);
+                    off[0] = VfMul(off[0], k);
+                    off[1] = VfMul(off[1], k);
+                    off[2] = VfMul(off[2], k);
                     off[3] = 0.0f;
-                    g_collisionSegmentDesc.start[0] = g_collisionHitResult.point.x + off[0];
-                    g_collisionSegmentDesc.start[1] = g_collisionHitResult.point.y + off[1];
-                    g_collisionSegmentDesc.start[2] = g_collisionHitResult.point.z + off[2];
+                    g_collisionSegmentDesc.start[0] = VfAdd(g_collisionHitResult.point.x, off[0]);
+                    g_collisionSegmentDesc.start[1] = VfAdd(g_collisionHitResult.point.y, off[1]);
+                    g_collisionSegmentDesc.start[2] = VfAdd(g_collisionHitResult.point.z, off[2]);
                     g_collisionSegmentDesc.start[3] = g_collisionHitResult.point.w;
                     g_collisionSegmentDesc.start[1] = g_collisionSegmentDesc.start[1] - 3.0f;
-                    g_collisionSegmentDesc.dir[0] = g_vecUp.x * 8.0f;
-                    g_collisionSegmentDesc.dir[1] = g_vecUp.y * 8.0f;
-                    g_collisionSegmentDesc.dir[2] = g_vecUp.z * 8.0f;
+                    g_collisionSegmentDesc.dir[0] = VfMul(g_vecUp.x, 8.0f);
+                    g_collisionSegmentDesc.dir[1] = VfMul(g_vecUp.y, 8.0f);
+                    g_collisionSegmentDesc.dir[2] = VfMul(g_vecUp.z, 8.0f);
                     g_collisionSegmentDesc.dir[3] = 0.0f;
                     if (CollisionRaycast(self->collisionMask, &g_collisionSegmentBlock, 0) !=
                         NULL) {
@@ -363,14 +363,14 @@ int ActorMoveWithCollision(Actor *self, float *delta)
                 }
                 if (blocked != 0 && (off[0] != 0.0f || off[1] != 0.0f || off[2] != 0.0f)) {
                     /* off = normalize(off) * 0.2f; extraMove.xyz += off */
-                    k = ActorMoveRsqOrZero(off[0] * off[0] + off[1] * off[1] + off[2] * off[2]);
-                    k = k * 0.2f;
-                    off[0] = off[0] * k;
-                    off[1] = off[1] * k;
-                    off[2] = off[2] * k;
-                    self->extraMove[0] = self->extraMove[0] + off[0];
-                    self->extraMove[1] = self->extraMove[1] + off[1];
-                    self->extraMove[2] = self->extraMove[2] + off[2];
+                    k = ActorMoveRsqOrZero(VfDot3(off[0], off[1], off[2], off[0], off[1], off[2]));
+                    k = VfMul(k, 0.2f);
+                    off[0] = VfMul(off[0], k);
+                    off[1] = VfMul(off[1], k);
+                    off[2] = VfMul(off[2], k);
+                    self->extraMove[0] = VfAdd(self->extraMove[0], off[0]);
+                    self->extraMove[1] = VfAdd(self->extraMove[1], off[1]);
+                    self->extraMove[2] = VfAdd(self->extraMove[2], off[2]);
                 }
             }
         }
@@ -428,26 +428,26 @@ int ActorMoveWithCollision(Actor *self, float *delta)
                         ActorMoveAxisAngleQuat(&quat, &axis, -1.57079637f);
                         ActorMoveQuatRotate(&tangent, &quat, &g_collisionHitResult.normal.x);
                         ActorMoveNormalizeSat(&dirN, delta);
-                        dot = dirN.x * tangent.x + dirN.y * tangent.y + dirN.z * tangent.z;
+                        dot = VfDot3(dirN.x, dirN.y, dirN.z, tangent.x, tangent.y, tangent.z);
                         scale = dot - 0.2f;
                         if (scale < 0.0f) {
                             scale = 0.0f;
                         }
-                        tangent.x = tangent.x * scale;
-                        tangent.y = tangent.y * scale;
-                        tangent.z = tangent.z * scale;
-                        self->extraMove[0] = self->extraMove[0] + tangent.x;
-                        self->extraMove[1] = self->extraMove[1] + tangent.y;
-                        self->extraMove[2] = self->extraMove[2] + tangent.z;
+                        tangent.x = VfMul(tangent.x, scale);
+                        tangent.y = VfMul(tangent.y, scale);
+                        tangent.z = VfMul(tangent.z, scale);
+                        self->extraMove[0] = VfAdd(self->extraMove[0], tangent.x);
+                        self->extraMove[1] = VfAdd(self->extraMove[1], tangent.y);
+                        self->extraMove[2] = VfAdd(self->extraMove[2], tangent.z);
                         if (wasAirborne != 0) {
                             ActorMoveNormalizeSat(&pushN, self->extraMove);
                             ActorMoveNormalizeSat(&velN, self->base.velocity);
-                            dot = pushN.x * velN.x + pushN.y * velN.y + pushN.z * velN.z;
+                            dot = VfDot3(pushN.x, pushN.y, pushN.z, velN.x, velN.y, velN.z);
                             if (!(dot < 0.0f)) {
                                 /* extraMove.xyz -= (velocity.x, 0, velocity.z) */
-                                self->extraMove[0] = self->extraMove[0] - self->base.velocity[0];
-                                self->extraMove[1] = self->extraMove[1] - 0.0f;
-                                self->extraMove[2] = self->extraMove[2] - self->base.velocity[2];
+                                self->extraMove[0] = VfSub(self->extraMove[0], self->base.velocity[0]);
+                                self->extraMove[1] = VfSub(self->extraMove[1], 0.0f);
+                                self->extraMove[2] = VfSub(self->extraMove[2], self->base.velocity[2]);
                                 self->base.velocity[0] = self->base.velocity[0] * 0.9f;
                                 self->base.velocity[2] = self->base.velocity[2] * 0.9f;
                             }

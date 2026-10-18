@@ -8,9 +8,9 @@ ScePspFVector4 *CollisionAabbExtent(const float *aabb, ScePspFVector4 *out)
   const float *max = aabb + 4;
   ScePspFVector4 r;
 
-  r.x = max[0] - aabb[0];
-  r.y = max[1] - aabb[1];
-  r.z = max[2] - aabb[2];
+  r.x = VfSub(max[0], aabb[0]);
+  r.y = VfSub(max[1], aabb[1]);
+  r.z = VfSub(max[2], aabb[2]);
   r.w = max[3];
   *out = r;
   return out;

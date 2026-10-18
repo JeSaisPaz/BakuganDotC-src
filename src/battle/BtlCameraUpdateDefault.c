@@ -32,10 +32,10 @@ static inline float BtlCameraNegWrapAngle(float a)
 /* Quaternion product d = s * t, w last (vqmul.q). */
 static inline void BtlCameraQuatMul(float *d, const float *s, const float *t)
 {
-    d[0] = s[0] * t[3] + s[1] * t[2] - s[2] * t[1] + s[3] * t[0];
-    d[1] = -s[0] * t[2] + s[1] * t[3] + s[2] * t[0] + s[3] * t[1];
-    d[2] = s[0] * t[1] - s[1] * t[0] + s[2] * t[3] + s[3] * t[2];
-    d[3] = -s[0] * t[0] - s[1] * t[1] - s[2] * t[2] + s[3] * t[3];
+    d[0] = VfDot4(s[0], s[1], s[2], s[3], t[3], t[2], -t[1], t[0]);
+    d[1] = VfDot4(-s[0], s[1], s[2], s[3], t[2], t[3], t[0], t[1]);
+    d[2] = VfDot4(s[0], s[1], s[2], s[3], t[1], -t[0], t[3], t[2]);
+    d[3] = VfDot4(-s[0], s[1], s[2], s[3], t[0], -t[1], -t[2], t[3]);
 }
 
 void BtlCameraUpdateDefault(BtlCamera *camera)
@@ -91,7 +91,7 @@ void BtlCameraUpdateDefault(BtlCamera *camera)
         camera->lookTarget[i] = camera->lookPoint[i];
     }
     for (i = 0; i < 4; i++) {
-        camera->lookPoint[i] = camera->lookPoint[i] + (pos[i] - camera->lookPoint[i]) * 0.35f;
+        camera->lookPoint[i] = VfAdd(camera->lookPoint[i], VfMul(VfSub(pos[i], camera->lookPoint[i]), 0.35f));
     }
 
     heading = unit->base.rot[1] + 3.1415927f;
@@ -108,10 +108,10 @@ void BtlCameraUpdateDefault(BtlCamera *camera)
     }
 
     /* moved = |lookTarget - lookPoint|^2 (xyz) */
-    tmp[0] = camera->lookTarget[0] - camera->lookPoint[0];
-    tmp[1] = camera->lookTarget[1] - camera->lookPoint[1];
-    tmp[2] = camera->lookTarget[2] - camera->lookPoint[2];
-    moved = tmp[0] * tmp[0] + tmp[1] * tmp[1] + tmp[2] * tmp[2];
+    tmp[0] = VfSub(camera->lookTarget[0], camera->lookPoint[0]);
+    tmp[1] = VfSub(camera->lookTarget[1], camera->lookPoint[1]);
+    tmp[2] = VfSub(camera->lookTarget[2], camera->lookPoint[2]);
+    moved = VfDot3(tmp[0], tmp[1], tmp[2], tmp[0], tmp[1], tmp[2]);
     if (moved < 1.0f) {
         if ((((BtlBakugan *)camera->target)->commands & 0x1000) != 0) {
             camera->turnFrames = camera->turnFrames + 2;
@@ -125,11 +125,11 @@ void BtlCameraUpdateDefault(BtlCamera *camera)
                                       camera->basePitch);
 
     /* offset.xyz = eye.xyz - lookPoint.xyz, offset.w = eye.w; dist = |offset.xyz| */
-    offset[0] = camera->base.eye[0] - camera->lookPoint[0];
-    offset[1] = camera->base.eye[1] - camera->lookPoint[1];
-    offset[2] = camera->base.eye[2] - camera->lookPoint[2];
+    offset[0] = VfSub(camera->base.eye[0], camera->lookPoint[0]);
+    offset[1] = VfSub(camera->base.eye[1], camera->lookPoint[1]);
+    offset[2] = VfSub(camera->base.eye[2], camera->lookPoint[2]);
     offset[3] = camera->base.eye[3];
-    dist = __builtin_sqrtf(offset[0] * offset[0] + offset[1] * offset[1] + offset[2] * offset[2]);
+    dist = VfSqrt(VfDot3(offset[0], offset[1], offset[2], offset[0], offset[1], offset[2]));
     distance = dist + (camera->kindParams->param[0] - dist) * 0.4f;
     elevation = atan2f(offset[1], __builtin_sqrtf(offset[0] * offset[0] + offset[2] * offset[2]));
     tilt = -elevation + (-pitch - -elevation) * 0.2f;
@@ -142,7 +142,7 @@ void BtlCameraUpdateDefault(BtlCamera *camera)
         }
         delta = BtlCameraNegWrapAngle(eyeHeading - camera->yaw);
         /* vcos.s of (angle * 2/pi) quarter turns = cos(angle) */
-        cosine = __builtin_cosf(ramp * ramp * 3.1415927f);
+        cosine = VfCosQuarter(VfMul(ramp * ramp * 3.1415927f, 0.636619747f));
         step = delta * ((1.0f - cosine) * 0.5f) * 0.2f;
         camera->yawOffset = camera->yawOffset +
                             BtlCameraNegWrapAngle(camera->yawOffset - step) * 0.2f;
@@ -152,9 +152,9 @@ void BtlCameraUpdateDefault(BtlCamera *camera)
 
     /* offset = (cos a, 0, sin a) * distance, w 0, with a = eyeHeading + yawOffset */
     angle = eyeHeading + camera->yawOffset;
-    offset[0] = __builtin_cosf(angle) * distance;
-    offset[1] = 0.0f * distance;
-    offset[2] = __builtin_sinf(angle) * distance;
+    offset[0] = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), distance);
+    offset[1] = VfMul(0.0f, distance);
+    offset[2] = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), distance);
     offset[3] = 0.0f;
 
     /* side = (offset.z, offset.y, -offset.x) normalised (0 for zero length) and saturated to
@@ -162,23 +162,23 @@ void BtlCameraUpdateDefault(BtlCamera *camera)
     side[0] = offset[2];
     side[1] = offset[1];
     side[2] = -offset[0];
-    len2 = side[0] * side[0] + side[1] * side[1] + side[2] * side[2];
+    len2 = VfDot3(side[0], side[1], side[2], side[0], side[1], side[2]);
     scale = VfRsq(len2);
     if (VfIsZero(len2)) {
         scale = 0.0f;
     }
-    side[0] = VfSat1(side[0] * scale);
-    side[1] = VfSat1(side[1] * scale);
-    side[2] = VfSat1(side[2] * scale);
+    side[0] = VfSat1(VfMul(side[0], scale));
+    side[1] = VfSat1(VfMul(side[1], scale));
+    side[2] = VfSat1(VfMul(side[2], scale));
     side[3] = 0.0f;
 
     /* quat = (side * sin(tilt / 2), cos(tilt / 2)): tilt / pi quarter turns */
-    angle = 0.318309873f * tilt;
+    angle = VfMul(0.318309873f, tilt);
     cosine = VfCosQuarter(angle);
     sine = VfSinQuarter(angle);
-    quat[0] = side[0] * sine;
-    quat[1] = side[1] * sine;
-    quat[2] = side[2] * sine;
+    quat[0] = VfMul(side[0], sine);
+    quat[1] = VfMul(side[1], sine);
+    quat[2] = VfMul(side[2], sine);
     quat[3] = cosine;
 
     snap = camera->eyeSnap + 0.1f;
@@ -199,32 +199,31 @@ void BtlCameraUpdateDefault(BtlCamera *camera)
 
     /* tmp = (lookPoint.xyz + rotated.xyz, lookPoint.w); eye += (tmp - eye) * snap;
        target += (lookPoint - target) * snap; up += (g_vecUp - up) * 0.2 */
-    tmp[0] = camera->lookPoint[0] + rotated[0];
-    tmp[1] = camera->lookPoint[1] + rotated[1];
-    tmp[2] = camera->lookPoint[2] + rotated[2];
+    tmp[0] = VfAdd(camera->lookPoint[0], rotated[0]);
+    tmp[1] = VfAdd(camera->lookPoint[1], rotated[1]);
+    tmp[2] = VfAdd(camera->lookPoint[2], rotated[2]);
     tmp[3] = camera->lookPoint[3];
     for (i = 0; i < 4; i++) {
-        camera->base.eye[i] = camera->base.eye[i] + (tmp[i] - camera->base.eye[i]) * snap;
+        camera->base.eye[i] = VfAdd(camera->base.eye[i], VfMul(VfSub(tmp[i], camera->base.eye[i]), snap));
     }
     for (i = 0; i < 4; i++) {
         camera->base.target[i] =
-            camera->base.target[i] + (camera->lookPoint[i] - camera->base.target[i]) * snap;
+            VfAdd(camera->base.target[i], VfMul(VfSub(camera->lookPoint[i], camera->base.target[i]), snap));
     }
-    camera->base.up[0] = camera->base.up[0] + (g_vecUp.x - camera->base.up[0]) * 0.2f;
-    camera->base.up[1] = camera->base.up[1] + (g_vecUp.y - camera->base.up[1]) * 0.2f;
-    camera->base.up[2] = camera->base.up[2] + (g_vecUp.z - camera->base.up[2]) * 0.2f;
-    camera->base.up[3] = camera->base.up[3] + (g_vecUp.w - camera->base.up[3]) * 0.2f;
+    camera->base.up[0] = VfAdd(camera->base.up[0], VfMul(VfSub(g_vecUp.x, camera->base.up[0]), 0.2f));
+    camera->base.up[1] = VfAdd(camera->base.up[1], VfMul(VfSub(g_vecUp.y, camera->base.up[1]), 0.2f));
+    camera->base.up[2] = VfAdd(camera->base.up[2], VfMul(VfSub(g_vecUp.z, camera->base.up[2]), 0.2f));
+    camera->base.up[3] = VfAdd(camera->base.up[3], VfMul(VfSub(g_vecUp.w, camera->base.up[3]), 0.2f));
 
     /* up.xyz normalised (0 for zero length) and saturated to [-1, 1]; up.w = 0 */
-    len2 = camera->base.up[0] * camera->base.up[0] + camera->base.up[1] * camera->base.up[1] +
-           camera->base.up[2] * camera->base.up[2];
+    len2 = VfDot3(camera->base.up[0], camera->base.up[1], camera->base.up[2], camera->base.up[0], camera->base.up[1], camera->base.up[2]);
     scale = VfRsq(len2);
     if (VfIsZero(len2)) {
         scale = 0.0f;
     }
-    camera->base.up[0] = VfSat1(camera->base.up[0] * scale);
-    camera->base.up[1] = VfSat1(camera->base.up[1] * scale);
-    camera->base.up[2] = VfSat1(camera->base.up[2] * scale);
+    camera->base.up[0] = VfSat1(VfMul(camera->base.up[0], scale));
+    camera->base.up[1] = VfSat1(VfMul(camera->base.up[1], scale));
+    camera->base.up[2] = VfSat1(VfMul(camera->base.up[2], scale));
     camera->base.up[3] = 0.0f;
 
     if (BtlBakuganGetTarget((BtlBakugan *)camera->target) != NULL) {

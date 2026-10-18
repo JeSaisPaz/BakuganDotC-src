@@ -152,11 +152,11 @@ void BtlAiUpdate(BtlAi *self)
     /* |lastPos - pos| over x/y/z. */
     {
         const float *pos = self->owner->base.pos;
-        float dx = self->lastPos[0] - pos[0];
-        float dy = self->lastPos[1] - pos[1];
-        float dz = self->lastPos[2] - pos[2];
+        float dx = VfSub(self->lastPos[0], pos[0]);
+        float dy = VfSub(self->lastPos[1], pos[1]);
+        float dz = VfSub(self->lastPos[2], pos[2]);
 
-        moved = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+        moved = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
     }
     self->odometer = self->odometer + moved;
     BtlAiUpdateTargetHeight(self);

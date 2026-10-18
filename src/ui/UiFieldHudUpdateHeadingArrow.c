@@ -16,6 +16,8 @@ void UiFieldHudUpdateHeadingArrow(UiFieldHud *self)
   float s;
   float x;
   float y;
+  float z;
+  float w;
   float *m;
   s32 i;
   GfxSprite *sprite;
@@ -41,15 +43,19 @@ void UiFieldHudUpdateHeadingArrow(UiFieldHud *self)
   sprite = ((GfxSprite **)self->base.data)[0xd];
   /* every matrix row (x, y, z, w) rotated about Z: (c*x - s*y, s*x + c*y, z, w); vrot takes quarter
      turns, so the angle is scaled by S703 = 2/pi */
-  t = angle * 0.636619747f;
+  t = VfMul(angle, 0.636619747f);
   c = VfCosQuarter(t);
   s = VfSinQuarter(t);
   m = sprite->matrix;
   for (i = 0; i < 4; i++) {
     x = m[i * 4 + 0];
     y = m[i * 4 + 1];
-    m[i * 4 + 0] = c * x + -s * y;
-    m[i * 4 + 1] = s * x + c * y;
+    z = m[i * 4 + 2];
+    w = m[i * 4 + 3];
+    m[i * 4 + 0] = VfDot4(x, y, z, w, c, -s, 0.0f, 0.0f);
+    m[i * 4 + 1] = VfDot4(x, y, z, w, s, c, 0.0f, 0.0f);
+    m[i * 4 + 2] = VfDot4(x, y, z, w, 0.0f, 0.0f, 1.0f, 0.0f);
+    m[i * 4 + 3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
   }
   sprite = ((GfxSprite **)self->base.data)[0xd];
   sprite->flags |= 0x20;

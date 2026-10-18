@@ -16,22 +16,22 @@ void CollisionPhysBoxSolveEdges(CollisionPhysBox *self, s32 iterations)
             u8 ib = g_collisionPhysBoxEdges[i * 2 + 1];
             ScePspFVector4 a = self->pos[ia];
             ScePspFVector4 b = self->pos[ib];
-            float dx = a.x - b.x;
-            float dy = a.y - b.y;
-            float dz = a.z - b.z;
-            float len = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
-            float half = (self->restLen[i] - len) * 0.5f;
-            float k = (1.0f / len) * half;
+            float dx = VfSub(a.x, b.x);
+            float dy = VfSub(a.y, b.y);
+            float dz = VfSub(a.z, b.z);
+            float len = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
+            float half = VfMul(VfSub(self->restLen[i], len), 0.5f);
+            float k = VfMul((VfRcp(len)), half);
 
-            dx = dx * k;
-            dy = dy * k;
-            dz = dz * k;
-            a.x = a.x + dx;
-            a.y = a.y + dy;
-            a.z = a.z + dz;
-            b.x = b.x - dx;
-            b.y = b.y - dy;
-            b.z = b.z - dz;
+            dx = VfMul(dx, k);
+            dy = VfMul(dy, k);
+            dz = VfMul(dz, k);
+            a.x = VfAdd(a.x, dx);
+            a.y = VfAdd(a.y, dy);
+            a.z = VfAdd(a.z, dz);
+            b.x = VfSub(b.x, dx);
+            b.y = VfSub(b.y, dy);
+            b.z = VfSub(b.z, dz);
             self->pos[ia] = a;
             self->pos[ib] = b;
         }

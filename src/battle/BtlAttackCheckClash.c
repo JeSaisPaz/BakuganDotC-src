@@ -76,10 +76,8 @@ int BtlAttackCheckClash(BtlAttack *self)
         radius = self->radius * 1.5f;
         g_btlClashSelfCapsule.radius = radius;
         g_btlClashSelfCapsule.radiusSq = radius * radius;
-        g_btlClashSelfCapsule.axisLen = __builtin_sqrtf(
-            g_btlClashSelfCapsule.axis[0] * g_btlClashSelfCapsule.axis[0] +
-            g_btlClashSelfCapsule.axis[1] * g_btlClashSelfCapsule.axis[1] +
-            g_btlClashSelfCapsule.axis[2] * g_btlClashSelfCapsule.axis[2]);
+        g_btlClashSelfCapsule.axisLen = VfSqrt(
+            VfDot3(g_btlClashSelfCapsule.axis[0], g_btlClashSelfCapsule.axis[1], g_btlClashSelfCapsule.axis[2], g_btlClashSelfCapsule.axis[0], g_btlClashSelfCapsule.axis[1], g_btlClashSelfCapsule.axis[2]));
     }
     selfCancelled = 0;
     for (other = (BtlAttack *)g_btlAttackList.head; other != NULL; other = next) {
@@ -117,10 +115,8 @@ int BtlAttackCheckClash(BtlAttack *self)
             radius = other->radius * 1.5f;
             g_btlClashOtherCapsule.radius = radius;
             g_btlClashOtherCapsule.radiusSq = radius * radius;
-            g_btlClashOtherCapsule.axisLen = __builtin_sqrtf(
-                g_btlClashOtherCapsule.axis[0] * g_btlClashOtherCapsule.axis[0] +
-                g_btlClashOtherCapsule.axis[1] * g_btlClashOtherCapsule.axis[1] +
-                g_btlClashOtherCapsule.axis[2] * g_btlClashOtherCapsule.axis[2]);
+            g_btlClashOtherCapsule.axisLen = VfSqrt(
+                VfDot3(g_btlClashOtherCapsule.axis[0], g_btlClashOtherCapsule.axis[1], g_btlClashOtherCapsule.axis[2], g_btlClashOtherCapsule.axis[0], g_btlClashOtherCapsule.axis[1], g_btlClashOtherCapsule.axis[2]));
             if (selfIsSphere) {
                 hit = CollisionCapsuleOverlapSphere(&g_btlClashOtherCapsule, &g_btlClashSelfSphere);
             } else {

@@ -28,7 +28,7 @@ int BtlInputReadRemoteStick(float x, float y, float cameraYaw, BtlInput *self)
     self->stick[1] = raw[1];
     self->stick[2] = raw[2];
     self->stick[3] = raw[3];
-    mag = ((raw[0] * raw[0] + raw[1] * raw[1] + raw[2] * raw[2]) - 0.300000012f) * 1.42857146f; /* 0x3e99999a, 0x3fb6db6e */
+    mag = (VfDot3(raw[0], raw[1], raw[2], raw[0], raw[1], raw[2]) - 0.300000012f) * 1.42857146f; /* 0x3e99999a, 0x3fb6db6e */
     self->stickMagnitude = mag;
     if (mag <= 0.5f) {
         self->stickMagnitude = 0.0f;
@@ -45,10 +45,10 @@ int BtlInputReadRemoteStick(float x, float y, float cameraYaw, BtlInput *self)
     angle = heading + BtlInputYawToOffset(cameraYaw);
     self->stickHeading = angle;
     /* vrot.q [C, 0, S, 0] of angle * S703 (2/pi) quarter turns */
-    self->dir[0] = __builtin_cosf(angle);
+    self->dir[0] = VfCosQuarter(VfMul(angle, 0.636619747f));
     self->dir[1] = 0.0f;
-    self->dir[2] = __builtin_sinf(angle);
+    self->dir[2] = VfSinQuarter(VfMul(angle, 0.636619747f));
     self->dir[3] = 0.0f;
-    self->headingDot = self->dir[0] * prevDir[0] + self->dir[1] * prevDir[1] + self->dir[2] * prevDir[2];
+    self->headingDot = VfDot3(self->dir[0], self->dir[1], self->dir[2], prevDir[0], prevDir[1], prevDir[2]);
     return 1;
 }

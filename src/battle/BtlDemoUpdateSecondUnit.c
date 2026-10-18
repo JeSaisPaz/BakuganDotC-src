@@ -197,7 +197,7 @@ void BtlDemoUpdateSecondUnit(BtlDemo *demo)
             swing = 1.57079637f;
         }
         demo->swingAngle = swing;
-        demo->cam.fov = __builtin_sinf(swing) * -25.0f + 70.0f;
+        demo->cam.fov = VfSinQuarter(VfMul(swing, 0.636619747f)) * -25.0f + 70.0f;
         return;
 
     default:

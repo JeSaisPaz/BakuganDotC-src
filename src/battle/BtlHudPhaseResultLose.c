@@ -38,7 +38,7 @@ void BtlHudPhaseResultLose(BtlHud *self)
         self->resultTimer++;
         t = (float)self->resultTimer * 0.0416666679f - 1.0f;
         /* vcos.s of angle * S703 (2/pi): the cosine of the angle in radians */
-        c = __builtin_cosf((1.0f - t * t) * 3.14159274f);
+        c = VfCosQuarter(VfMul((1.0f - t * t) * 3.14159274f, 0.636619747f));
         banner->posX = self->resultBannerX +
                        (float)self->resultSlideX * (1.0f - (1.0f - c) * 0.5f);
         banner->alpha = banner->alpha + 0.05f;

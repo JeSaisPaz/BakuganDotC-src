@@ -30,9 +30,9 @@ void BtlDemoCameraToOrigin(float *savedEye)
     e[0] = savedEye[0];
     e[1] = savedEye[1];
     e[2] = savedEye[2];
-    target[0] = target[0] - e[0];
-    target[1] = target[1] - e[1];
-    target[2] = target[2] - e[2];
+    target[0] = VfSub(target[0], e[0]);
+    target[1] = VfSub(target[1], e[1]);
+    target[2] = VfSub(target[2], e[2]);
 
     GfxCameraUpdate(g_gfxActiveCamera, 1);
 }

@@ -14,9 +14,9 @@ void GameFieldCameraFadeNearPlayer(float *eye)
 
   player = (Actor *)ActorFindPlayer();
   /* eye - player pos with the height lane zeroed, then its length */
-  dx = eye[0] - player->base.pos[0];
-  dz = eye[2] - player->base.pos[2];
-  dist = __builtin_sqrtf(dx * dx + dz * dz);
+  dx = VfSub(eye[0], player->base.pos[0]);
+  dz = VfSub(eye[2], player->base.pos[2]);
+  dist = VfSqrt(VfDot2(dx, dz, dx, dz));
 
   if (dist < 6.7200003f) {
     if (player->base.ambient[3] <= 0.0f) {

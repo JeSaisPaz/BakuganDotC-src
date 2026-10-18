@@ -59,7 +59,7 @@ void GameQuestCamCtrlSwitchMode(GameQuestCamCtrl *self, s16 camId)
        m = b * a; lane 3 and column 3 become identity */
     for (j = 0; j < 3; j++) {
       for (i = 0; i < 3; i++) {
-        m[j][i] = b[j][0] * a[0][i] + b[j][1] * a[1][i] + b[j][2] * a[2][i] + b[j][3] * a[3][i];
+        m[j][i] = VfDot4(b[j][0], b[j][1], b[j][2], b[j][3], a[0][i], a[1][i], a[2][i], a[3][i]);
       }
     }
     rot.x.x = m[0][0]; rot.x.y = m[0][1]; rot.x.z = m[0][2]; rot.x.w = 0.0f;
@@ -68,9 +68,9 @@ void GameQuestCamCtrlSwitchMode(GameQuestCamCtrl *self, s16 camId)
     rot.w.x = 0.0f;    rot.w.y = 0.0f;    rot.w.z = 0.0f;    rot.w.w = 1.0f;
     /* rotated = rot (3x3) * up; lane w keeps rot.x.w (0) */
     up = &g_gameQuestCamCtrlAxisConsts.up;
-    rotated.x = rot.x.x * up->x + rot.y.x * up->y + rot.z.x * up->z;
-    rotated.y = rot.x.y * up->x + rot.y.y * up->y + rot.z.y * up->z;
-    rotated.z = rot.x.z * up->x + rot.y.z * up->y + rot.z.z * up->z;
+    rotated.x = VfDot3(rot.x.x, rot.y.x, rot.z.x, up->x, up->y, up->z);
+    rotated.y = VfDot3(rot.x.y, rot.y.y, rot.z.y, up->x, up->y, up->z);
+    rotated.z = VfDot3(rot.x.z, rot.y.z, rot.z.z, up->x, up->y, up->z);
     rotated.w = rot.x.w;
     point.x = rotated.x;
     point.y = rotated.y;

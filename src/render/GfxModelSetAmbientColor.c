@@ -14,10 +14,10 @@ void GfxModelSetAmbientColor(GfxModel *self, const float *colour, const char *ex
     GmoMaterial *mat;
 
     /* vsat0.q, vscl.q by S701 (255), vf2iz.q 23, vi2uc.q */
-    packed = (u32)VfI2uc(VfF2iz(VfSat0(colour[0]) * 255.0f, 23)) |
-             (u32)VfI2uc(VfF2iz(VfSat0(colour[1]) * 255.0f, 23)) << 8 |
-             (u32)VfI2uc(VfF2iz(VfSat0(colour[2]) * 255.0f, 23)) << 16 |
-             (u32)VfI2uc(VfF2iz(VfSat0(colour[3]) * 255.0f, 23)) << 24;
+    packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour[0]), 255.0f), 23)) |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour[1]), 255.0f), 23)) << 8 |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour[2]), 255.0f), 23)) << 16 |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour[3]), 255.0f), 23)) << 24;
 
     for (index = 0; index < self->data->materialCount; index++) {
         if (excludeName != NULL &&

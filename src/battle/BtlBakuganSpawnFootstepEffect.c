@@ -31,23 +31,23 @@ void BtlBakuganSpawnFootstepEffect(float back, float ahead, BtlBakugan *self, in
     if (back != 0.0f) {
         /* point.xyz -= camera dir * back */
         src = g_gfxActiveCamera->dir;
-        step[0] = src[0] * back;
-        step[1] = src[1] * back;
-        step[2] = src[2] * back;
-        point[0] = point[0] - step[0];
-        point[1] = point[1] - step[1];
-        point[2] = point[2] - step[2];
+        step[0] = VfMul(src[0], back);
+        step[1] = VfMul(src[1], back);
+        step[2] = VfMul(src[2], back);
+        point[0] = VfSub(point[0], step[0]);
+        point[1] = VfSub(point[1], step[1]);
+        point[2] = VfSub(point[2], step[2]);
     }
     effect = 3;
     if (ahead != 0.0f) {
         /* point.xyz += velocity * ahead */
         src = self->base.velocity;
-        step[0] = src[0] * ahead;
-        step[1] = src[1] * ahead;
-        step[2] = src[2] * ahead;
-        point[0] = point[0] + step[0];
-        point[1] = point[1] + step[1];
-        point[2] = point[2] + step[2];
+        step[0] = VfMul(src[0], ahead);
+        step[1] = VfMul(src[1], ahead);
+        step[2] = VfMul(src[2], ahead);
+        point[0] = VfAdd(point[0], step[0]);
+        point[1] = VfAdd(point[1], step[1]);
+        point[2] = VfAdd(point[2], step[2]);
     }
     if (BtlBakuganIsOnWaterFloor(self) == 0) {
         if (g_btlArenaIndex == 0xc || g_btlArenaIndex == 0xe || g_btlArenaIndex == 0xf) {

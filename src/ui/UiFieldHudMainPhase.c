@@ -108,12 +108,12 @@ void UiFieldHudMainPhase(UiFieldHud *self)
     dx = g_gfxActiveCamera->dir[0];
     dz = g_gfxActiveCamera->dir[2];
     /* normalise (x, 0, z); a zero length scales by 0; each lane saturated to [-1,1] */
-    lenSq = dx * dx + 0.0f * 0.0f + dz * dz;
+    lenSq = VfDot3(dx, 0.0f, dz, dx, 0.0f, dz);
     scale = VfRsq(lenSq);
     if (VfIsZero(lenSq))
       scale = 0.0f;
-    self->viewDir[0] = VfSat1(dx * scale);
-    self->viewDir[1] = VfSat1(dz * scale);
+    self->viewDir[0] = VfSat1(VfMul(dx, scale));
+    self->viewDir[1] = VfSat1(VfMul(dz, scale));
 
     UiFieldHudUpdatePlayerMarker(self);
     UiFieldHudUpdateHeadingArrow(self);

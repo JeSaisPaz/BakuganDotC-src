@@ -26,7 +26,7 @@ void GfxMeshObjFitScreenBillboard(float scale, GfxMeshObj *self)
     self->basis[i] = bb[i];
   /* rows 0 and 1 (all four lanes) *= -scale; row 2 *= 1 is unchanged */
   for (i = 0; i < 8; i++)
-    self->basis[i] = self->basis[i] * -scale;
+    self->basis[i] = VfMul(self->basis[i], -scale);
   GfxCameraProjectPointFacing(g_gfxActiveCamera, screen, self->pos);
   size = scale * ((70.0f - g_gfxActiveCamera->fov) * 0.162f * 0.0333333f + 0.178f);
   scaleU = screen[3] * size * 0.56666666f;

@@ -74,8 +74,7 @@ void GfxMeshObjStateStencilSmoke(GfxMeshObj *self)
         m = child0->basis;
         for (j = 0; j < 3; j++) {
             for (i = 0; i < 3; i++) {
-                m[j * 4 + i] = lq[i][0] * rq[j][0] + lq[i][1] * rq[j][1] + lq[i][2] * rq[j][2] +
-                               lq[i][3] * rq[j][3];
+                m[j * 4 + i] = VfDot4(lq[i][0], lq[i][1], lq[i][2], lq[i][3], rq[j][0], rq[j][1], rq[j][2], rq[j][3]);
             }
             m[j * 4 + 3] = 0.0f;
         }
@@ -90,18 +89,18 @@ void GfxMeshObjStateStencilSmoke(GfxMeshObj *self)
         /* child0 basis columns 0..2 *= s */
         m = self->child0->basis;
         for (i = 0; i < 4; i++) {
-            m[i] = m[i] * s;
-            m[4 + i] = m[4 + i] * s;
-            m[8 + i] = m[8 + i] * s;
+            m[i] = VfMul(m[i], s);
+            m[4 + i] = VfMul(m[4 + i], s);
+            m[8 + i] = VfMul(m[8 + i], s);
         }
         /* child1 basis columns 0..2 *= (-s, -6s, -s) */
         m = self->u158.child1->basis;
         ns = -s;
         s6 = s * -6.0f;
         for (i = 0; i < 4; i++) {
-            m[i] = m[i] * ns;
-            m[4 + i] = m[4 + i] * s6;
-            m[8 + i] = m[8 + i] * ns;
+            m[i] = VfMul(m[i], ns);
+            m[4 + i] = VfMul(m[4 + i], s6);
+            m[8 + i] = VfMul(m[8 + i], ns);
         }
     } else if (step >= 3) {
         if (step < 4 && self != NULL) {

@@ -64,10 +64,10 @@ void ActorNpcStateCatchPlayer(ActorNpc *self)
     if (self->base.placement != NULL && ActorNpcIsChaseExempt(self) != 0) {
       ((GameFieldTask *)BDC_OR_ZERO(GameFieldFindTask()))->talkBlendForce = 1;
       /* squared distance NPC-player (xyz) */
-      d[0] = self->base.base.pos[0] - player->base.base.pos[0];
-      d[1] = self->base.base.pos[1] - player->base.base.pos[1];
-      d[2] = self->base.base.pos[2] - player->base.base.pos[2];
-      distSq = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
+      d[0] = VfSub(self->base.base.pos[0], player->base.base.pos[0]);
+      d[1] = VfSub(self->base.base.pos[1], player->base.base.pos[1]);
+      d[2] = VfSub(self->base.base.pos[2], player->base.base.pos[2]);
+      distSq = VfDot3(d[0], d[1], d[2], d[0], d[1], d[2]);
       blend = (distSq / (self->viewDist * self->viewDist)) *
                   (g_npcCatchBlendMax - g_npcCatchBlendMin) +
               g_npcCatchBlendMin;

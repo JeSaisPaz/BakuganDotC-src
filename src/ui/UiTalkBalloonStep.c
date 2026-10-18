@@ -107,7 +107,7 @@ s32 UiTalkBalloonStep(UiTalkBalloon *self, PadState *pad)
         wordGlyphs = 0;
         /* from pen.x + floor(glyphWidth * 0.5) (vf2id.s rounds towards -inf) */
         wordEndX = self->pen[0];
-        half = (float)(s32)__builtin_floorf(self->glyphWidth * 0.5f);
+        half = (float)VfF2id(self->glyphWidth * 0.5f, 0);
         wordEndX = wordEndX + half;
         for (;;) {
           glyph = UiFontNextGlyph(self->textCursor, &scanPos);
@@ -123,7 +123,7 @@ s32 UiTalkBalloonStep(UiTalkBalloon *self, PadState *pad)
           }
           wordGlyphs = wordGlyphs + 1;
           if (glyph == -5) {
-            half = (float)(s32)__builtin_floorf(self->glyphWidth * 0.5f);
+            half = (float)VfF2id(self->glyphWidth * 0.5f, 0);
             wordEndX = wordEndX + half;
           }
           else {

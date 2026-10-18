@@ -35,6 +35,7 @@ CoreObject *GameGimmickItemBoxCtor(GameGimmickItemBox *obj, s32 kind, void *reco
   float x;
   float y;
   float z;
+  float w;
   int i;
 
   GameGimmickCtor(&obj->base, kind, record, typeId, flag);
@@ -47,9 +48,9 @@ CoreObject *GameGimmickItemBoxCtor(GameGimmickItemBox *obj, s32 kind, void *reco
   scaled[2] = (float)rec->jetDoorVec[2] * 0.000244140625f;
   scaled[3] = 0.0f;
   /* dead stack temporary: xyz * 20, w = bank S713 (0) */
-  tmp[0] = scaled[0] * 20.0f;
-  tmp[1] = scaled[1] * 20.0f;
-  tmp[2] = scaled[2] * 20.0f;
+  tmp[0] = VfMul(scaled[0], 20.0f);
+  tmp[1] = VfMul(scaled[1], 20.0f);
+  tmp[2] = VfMul(scaled[2], 20.0f);
   tmp[3] = 0.0f;
   (void)tmp;
 
@@ -90,23 +91,31 @@ CoreObject *GameGimmickItemBoxCtor(GameGimmickItemBox *obj, s32 kind, void *reco
 
   /* root = Rx(angX) * root (`vrot` of angX * 2/pi quarter turns, `vmmul.q E200, E100, E000`):
      each column (x, y, z, w) becomes (x, c*y - s*z, s*y + c*z, w). */
-  c = __builtin_cosf(angX);
-  sn = __builtin_sinf(angX);
-  for (i = 0; i < 4; i++) {
-    y = m[i * 4 + 1];
-    z = m[i * 4 + 2];
-    m[i * 4 + 1] = c * y - sn * z;
-    m[i * 4 + 2] = sn * y + c * z;
-  }
-
-  /* root = Rz(angZ) * root: each column becomes (c*x - s*y, s*x + c*y, z, w). */
-  c = __builtin_cosf(angZ);
-  sn = __builtin_sinf(angZ);
+  c = VfCosQuarter(VfMul(angX, 0.636619747f));
+  sn = VfSinQuarter(VfMul(angX, 0.636619747f));
   for (i = 0; i < 4; i++) {
     x = m[i * 4 + 0];
     y = m[i * 4 + 1];
-    m[i * 4 + 0] = c * x - sn * y;
-    m[i * 4 + 1] = sn * x + c * y;
+    z = m[i * 4 + 2];
+    w = m[i * 4 + 3];
+    m[i * 4 + 0] = VfDot4(x, y, z, w, 1.0f, 0.0f, 0.0f, 0.0f);
+    m[i * 4 + 1] = VfDot4(x, y, z, w, 0.0f, c, -sn, 0.0f);
+    m[i * 4 + 2] = VfDot4(x, y, z, w, 0.0f, sn, c, 0.0f);
+    m[i * 4 + 3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
+  }
+
+  /* root = Rz(angZ) * root: each column becomes (c*x - s*y, s*x + c*y, z, w). */
+  c = VfCosQuarter(VfMul(angZ, 0.636619747f));
+  sn = VfSinQuarter(VfMul(angZ, 0.636619747f));
+  for (i = 0; i < 4; i++) {
+    x = m[i * 4 + 0];
+    y = m[i * 4 + 1];
+    z = m[i * 4 + 2];
+    w = m[i * 4 + 3];
+    m[i * 4 + 0] = VfDot4(x, y, z, w, c, -sn, 0.0f, 0.0f);
+    m[i * 4 + 1] = VfDot4(x, y, z, w, sn, c, 0.0f, 0.0f);
+    m[i * 4 + 2] = VfDot4(x, y, z, w, 0.0f, 0.0f, 1.0f, 0.0f);
+    m[i * 4 + 3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
   }
 
   entry = &((const VtblEntry *)obj->base.base.base.vtable)[6];

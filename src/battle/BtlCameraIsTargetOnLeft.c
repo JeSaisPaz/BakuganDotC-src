@@ -16,12 +16,12 @@ bool BtlCameraIsTargetOnLeft(BtlCamera *camera)
     float wrapped;
 
     /* vsub.t: lane-wise differences (lane 1 is unused). */
-    lookToFocus[0] = camera->focusPoint[0] - camera->lookPoint[0];
-    lookToFocus[1] = camera->focusPoint[1] - camera->lookPoint[1];
-    lookToFocus[2] = camera->focusPoint[2] - camera->lookPoint[2];
-    eyeToLook[0] = camera->lookPoint[0] - camera->base.eye[0];
-    eyeToLook[1] = camera->lookPoint[1] - camera->base.eye[1];
-    eyeToLook[2] = camera->lookPoint[2] - camera->base.eye[2];
+    lookToFocus[0] = VfSub(camera->focusPoint[0], camera->lookPoint[0]);
+    lookToFocus[1] = VfSub(camera->focusPoint[1], camera->lookPoint[1]);
+    lookToFocus[2] = VfSub(camera->focusPoint[2], camera->lookPoint[2]);
+    eyeToLook[0] = VfSub(camera->lookPoint[0], camera->base.eye[0]);
+    eyeToLook[1] = VfSub(camera->lookPoint[1], camera->base.eye[1]);
+    eyeToLook[2] = VfSub(camera->lookPoint[2], camera->base.eye[2]);
 
     eyeHeading = atan2f(eyeToLook[2], eyeToLook[0]);
     diff = eyeHeading - atan2f(lookToFocus[2], lookToFocus[0]);

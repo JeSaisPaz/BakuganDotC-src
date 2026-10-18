@@ -24,10 +24,10 @@
 /* Horizontal (XZ) distance between two positions (VFPU vsub.q, y zeroed, vdot.t, vsqrt.s). */
 static float HorizontalDistance(const float *a, const float *b)
 {
-    float dx = a[0] - b[0];
-    float dz = a[2] - b[2];
+    float dx = VfSub(a[0], b[0]);
+    float dz = VfSub(a[2], b[2]);
 
-    return __builtin_sqrtf(dx * dx + dz * dz);
+    return VfSqrt(VfDot2(dx, dz, dx, dz));
 }
 
 /* Elevation shift of a ranged attack (commands 0x800 / 0x20000): +10 for class 4; +20 for class

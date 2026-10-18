@@ -27,8 +27,8 @@ void GfxCameraUpdateShake(GfxCamera *cam)
     if (frames == 0) {
       cam->shakeAmp = 0.0f;
     }
-    s1 = __builtin_sinf(phase * 3.0f);
-    s2 = __builtin_sinf(phase - 1.57079637f);
+    s1 = VfSinQuarter(VfMul(phase * 3.0f, 0.636619747f));
+    s2 = VfSinQuarter(VfMul((phase - 1.57079637f), 0.636619747f));
     GfxCameraSetScreenOffset(x, (s1 + s2 + 1.0f) * cam->shakeAmp, cam);
   } else if (frames > 0) {
     frames = frames - 1;
@@ -39,7 +39,7 @@ void GfxCameraUpdateShake(GfxCamera *cam)
     if (frames == 0) {
       cam->shakeAmp = 0.0f;
     }
-    s1 = __builtin_sinf(phase);
+    s1 = VfSinQuarter(VfMul(phase, 0.636619747f));
     GfxCameraSetScreenOffset(x, s1 * cam->shakeAmp, cam);
   } else {
     return;

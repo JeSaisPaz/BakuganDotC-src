@@ -77,13 +77,13 @@ void BtlStageCreateStopWalls(void)
 
     /* pose = cur + (next - cur) * 0.5 (vsub.q / vscl.q / vadd.q, all four lanes). */
     for (k = 0; k < 4; k++) {
-      pose[k] = cur[k] + (next[k] - cur[k]) * 0.5f;
+      pose[k] = VfAdd(cur[k], VfMul(VfSub(next[k], cur[k]), 0.5f));
     }
 
     /* length = |(cur - next).xz| (vdot.t with lane y zeroed, vsqrt.s). */
-    dx = cur[0] - next[0];
-    dz = cur[2] - next[2];
-    length = __builtin_sqrtf(dx * dx + 0.0f * 0.0f + dz * dz);
+    dx = VfSub(cur[0], next[0]);
+    dz = VfSub(cur[2], next[2]);
+    length = VfSqrt(VfDot3(dx, 0.0f, dz, dx, 0.0f, dz));
 
     pose[3] = -atan2f(cur[2] - next[2], cur[0] - next[0]);
 

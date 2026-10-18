@@ -27,8 +27,8 @@ void BtlFinishTaskUpdateCamera(BtlFinishTask *task)
         task->flashT = t;
     }
     /* vcos/vsin of radians * S703 (2/pi): plain cos/sin of the angle */
-    c = __builtin_cosf((1.0f - t) * 3.14159274f);
-    s = __builtin_sinf(t * 9.42477798f);
+    c = VfCosQuarter(VfMul((1.0f - t) * 3.14159274f, 0.636619747f));
+    s = VfSinQuarter(VfMul(t * 9.42477798f, 0.636619747f));
     swing = (1.0f - c) * 0.5f * s * 500.0f;
     if (task->farCamera != 0) {
         target = swing + 700.0f;

@@ -42,10 +42,10 @@ void *ActorCrystalPickTarget(ActorCrystal *self)
                 continue;
             }
             /* dist = |self->pos - unit->pos| (xyz) */
-            dx = self->base.base.pos[0] - unit->base.pos[0];
-            dy = self->base.base.pos[1] - unit->base.pos[1];
-            dz = self->base.base.pos[2] - unit->base.pos[2];
-            dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+            dx = VfSub(self->base.base.pos[0], unit->base.pos[0]);
+            dy = VfSub(self->base.base.pos[1], unit->base.pos[1]);
+            dz = VfSub(self->base.base.pos[2], unit->base.pos[2]);
+            dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
             if (dist < best) {
                 best = dist;
                 target = unit;

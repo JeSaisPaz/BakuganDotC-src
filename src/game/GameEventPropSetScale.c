@@ -20,8 +20,8 @@ void GameEventPropSetScale(GameEventProp *prop, s32 scale)
     x = (float)prop->scaleX * 0.00024414062f;
     y = (float)prop->scaleY * 0.00024414062f;
     z = (float)prop->scaleZ * 0.00024414062f;
-    model->scale[0] = x * 0.1f;
-    model->scale[1] = y * 0.1f;
-    model->scale[2] = z * 0.1f;
+    model->scale[0] = VfMul(x, 0.1f);
+    model->scale[1] = VfMul(y, 0.1f);
+    model->scale[2] = VfMul(z, 0.1f);
   }
 }

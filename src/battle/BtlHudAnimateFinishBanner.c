@@ -21,10 +21,10 @@ static inline void BtlHudFinishBannerLerp(GfxSprite *sprite, const float *to, fl
     float z = sprite->posZ;
     float w = sprite->posW;
 
-    sprite->posX = x + (to[0] - x) * t;
-    sprite->posY = y + (to[1] - y) * t;
-    sprite->posZ = z + (to[2] - z) * t;
-    sprite->posW = w + (to[3] - w) * t;
+    sprite->posX = VfAdd(x, VfMul(VfSub(to[0], x), t));
+    sprite->posY = VfAdd(y, VfMul(VfSub(to[1], y), t));
+    sprite->posZ = VfAdd(z, VfMul(VfSub(to[2], z), t));
+    sprite->posW = VfAdd(w, VfMul(VfSub(to[3], w), t));
 }
 
 /* Quad copy of `src` into the sprite's position (posX..posW). */

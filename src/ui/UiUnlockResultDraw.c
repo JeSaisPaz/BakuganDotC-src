@@ -35,8 +35,7 @@ static void UiUnlockResultMatMul(float *out, const float *a, const float *b)
 
   for (j = 0; j < 4; j++) {
     for (r = 0; r < 4; r++) {
-      tmp[j * 4 + r] = b[j * 4 + 0] * a[0 * 4 + r] + b[j * 4 + 1] * a[1 * 4 + r] +
-                       b[j * 4 + 2] * a[2 * 4 + r] + b[j * 4 + 3] * a[3 * 4 + r];
+      tmp[j * 4 + r] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], a[0 * 4 + r], a[1 * 4 + r], a[2 * 4 + r], a[3 * 4 + r]);
     }
   }
   for (r = 0; r < 16; r++) {
@@ -47,7 +46,7 @@ static void UiUnlockResultMatMul(float *out, const float *a, const float *b)
 /* One byte of the fog colour: vsat0, scale by 255, vf2iz 23, vi2uc. */
 static u32 UiUnlockResultColorByte(float x)
 {
-  return VfI2uc(VfF2iz(VfSat0(x) * 255.0f, 23));
+  return VfI2uc(VfF2iz(VfMul(VfSat0(x), 255.0f), 23));
 }
 
 void UiUnlockResultDraw(UiUnlockResult *self)
@@ -171,31 +170,31 @@ void UiUnlockResultDraw(UiUnlockResult *self)
   model = (GfxModel *)self->model;
   root = model->data->rootMatrix;
   angle = UiUnlockResultWrapAngle(1.57079637f - model->rot[1]);
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
-  root[0] = c * model->scale[0];
-  root[1] = 0.0f;
-  root[2] = -s * model->scale[0];
-  root[3] = 0.0f;
-  root[4] = 0.0f;
-  root[5] = model->scale[1];
-  root[6] = 0.0f;
-  root[7] = 0.0f;
-  root[8] = s * model->scale[2];
-  root[9] = 0.0f;
-  root[10] = c * model->scale[2];
-  root[11] = 0.0f;
-  root[12] = 0.0f;
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
+  root[0] = VfDot2(model->scale[0], 0.0f, c, s);
+  root[1] = VfDot2(model->scale[0], 0.0f, 0.0f, 0.0f);
+  root[2] = VfDot2(model->scale[0], 0.0f, -s, c);
+  root[3] = VfDot2(model->scale[0], 0.0f, 0.0f, 0.0f);
+  root[4] = VfDot3(0.0f, model->scale[1], 0.0f, c, 0.0f, s);
+  root[5] = VfDot2(model->scale[1], 0.0f, 1.0f, 0.0f);
+  root[6] = VfDot3(0.0f, model->scale[1], 0.0f, -s, 0.0f, c);
+  root[7] = VfDot2(model->scale[1], 0.0f, 0.0f, 0.0f);
+  root[8] = VfDot2(0.0f, model->scale[2], c, s);
+  root[9] = VfDot2(model->scale[2], 0.0f, 0.0f, 0.0f);
+  root[10] = VfDot2(0.0f, model->scale[2], -s, c);
+  root[11] = VfDot2(model->scale[2], 0.0f, 0.0f, 0.0f);
+  root[12] = VfDot2(0.0f, 0.0f, c, s);
   root[13] = 0.0f;
-  root[14] = 0.0f;
+  root[14] = VfDot2(0.0f, 0.0f, -s, c);
   root[15] = 1.0f;
 
   /* rootMatrix = rotX(pi/2 - rot.x) * rootMatrix */
   model = (GfxModel *)self->model;
   root = model->data->rootMatrix;
   angle = UiUnlockResultWrapAngle(1.57079637f - model->rot[0]);
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   for (i = 0; i < 16; i++) {
     rot[i] = 0.0f;
   }
@@ -211,8 +210,8 @@ void UiUnlockResultDraw(UiUnlockResult *self)
   model = (GfxModel *)self->model;
   root = model->data->rootMatrix;
   angle = UiUnlockResultWrapAngle(1.57079637f - model->rot[2]);
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   for (i = 0; i < 16; i++) {
     rot[i] = 0.0f;
   }

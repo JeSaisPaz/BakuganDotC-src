@@ -51,10 +51,10 @@ void GfxPacketDrawScreenTint(void *packet, const float *rgba, s32 mode, void *te
     dl[11] = 0xe1000000;
   }
   /* vsat0 + vscl 255 + vf2iz 23 + vi2uc: each channel clamp(floor(sat(c) * 255), 0, 255), red in the low byte */
-  packed = (u32)VfI2uc(VfF2iz(VfSat0(col.x) * 255.0f, 23))
-         | (u32)VfI2uc(VfF2iz(VfSat0(col.y) * 255.0f, 23)) << 8
-         | (u32)VfI2uc(VfF2iz(VfSat0(col.z) * 255.0f, 23)) << 16
-         | (u32)VfI2uc(VfF2iz(VfSat0(col.w) * 255.0f, 23)) << 24;
+  packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(col.x), 255.0f), 23))
+         | (u32)VfI2uc(VfF2iz(VfMul(VfSat0(col.y), 255.0f), 23)) << 8
+         | (u32)VfI2uc(VfF2iz(VfMul(VfSat0(col.z), 255.0f), 23)) << 16
+         | (u32)VfI2uc(VfF2iz(VfMul(VfSat0(col.w), 255.0f), 23)) << 24;
   dl[12] = (packed & 0xffffff) | 0x55000000;
   dl[13] = (packed >> 24) | 0x58000000;
   if (texture == NULL) {

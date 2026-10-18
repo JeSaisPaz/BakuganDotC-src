@@ -19,11 +19,11 @@ void GfxModelSetFog(GfxModel *self, const ScePspFVector4 *colour)
   if (t != t)
     t = __builtin_signbit(t) ? 0.0f : 1.0f;
   else
-    t = t <= 0.0f ? 0.0f : t > 1.0f ? 1.0f : t;
+    t = VfMax(VfMin(t, 1.0f), 0.0f);
   self->fogFar = t * 0.005f + -0.005f;
   /* vsat0.q, vscl.q by S701 (255), vf2iz.q 23, vi2uc.q */
-  self->fogColor = (u32)VfI2uc(VfF2iz(VfSat0(colour->x) * 255.0f, 23)) |
-                   (u32)VfI2uc(VfF2iz(VfSat0(colour->y) * 255.0f, 23)) << 8 |
-                   (u32)VfI2uc(VfF2iz(VfSat0(colour->z) * 255.0f, 23)) << 16 |
-                   (u32)VfI2uc(VfF2iz(VfSat0(colour->w) * 255.0f, 23)) << 24;
+  self->fogColor = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->x), 255.0f), 23)) |
+                   (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->y), 255.0f), 23)) << 8 |
+                   (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->z), 255.0f), 23)) << 16 |
+                   (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->w), 255.0f), 23)) << 24;
 }

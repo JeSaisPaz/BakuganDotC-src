@@ -49,15 +49,15 @@ int BtlBakuganTryBlock(BtlBakugan *self)
         from = &self->collider0->hitPos.x;
     }
     /* dir = from - anchor (xyz), flattened (y = 0) */
-    dir[0] = from[0] - anchor[0];
-    dir[2] = from[2] - anchor[2];
+    dir[0] = VfSub(from[0], anchor[0]);
+    dir[2] = VfSub(from[2], anchor[2]);
     dir[1] = 0.0f;
     /* dir.xyz = clamp(normalise(dir.xyz), -1, 1), scale 0 for a zero length (bank S713); w = S713 = 0 */
-    lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+    lenSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    dir[0] = VfSat1(dir[0] * k);
-    dir[1] = VfSat1(dir[1] * k);
-    dir[2] = VfSat1(dir[2] * k);
+    dir[0] = VfSat1(VfMul(dir[0], k));
+    dir[1] = VfSat1(VfMul(dir[1], k));
+    dir[2] = VfSat1(VfMul(dir[2], k));
     dir[3] = 0.0f;
     if (self->guardAge < 5) {
         self->stateFlags |= 0x80;
@@ -72,14 +72,12 @@ int BtlBakuganTryBlock(BtlBakugan *self)
             body = self->collider0;
             body->hitDuration = body->hitDuration / 2;
             /* velocity.xyz = normalise(velocity.xyz) * 5 (zero length: 0), w = 0 */
-            lenSq = self->base.velocity[0] * self->base.velocity[0] +
-                    self->base.velocity[1] * self->base.velocity[1] +
-                    self->base.velocity[2] * self->base.velocity[2];
+            lenSq = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
             k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-            k = k * 5.0f;
-            self->base.velocity[0] = self->base.velocity[0] * k;
-            self->base.velocity[1] = self->base.velocity[1] * k;
-            self->base.velocity[2] = self->base.velocity[2] * k;
+            k = VfMul(k, 5.0f);
+            self->base.velocity[0] = VfMul(self->base.velocity[0], k);
+            self->base.velocity[1] = VfMul(self->base.velocity[1], k);
+            self->base.velocity[2] = VfMul(self->base.velocity[2], k);
             self->base.velocity[3] = 0.0f;
         } else if (self->collider0->hitParam164 == 2) {
             attack = BtlAttackFindPendingByOwner(owner);

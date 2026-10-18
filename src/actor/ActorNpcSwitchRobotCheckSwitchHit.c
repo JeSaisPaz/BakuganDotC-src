@@ -28,28 +28,28 @@ void ActorNpcSwitchRobotCheckSwitchHit(ActorNpcSwitchRobot *self, const float *h
     head[2] = self->base.base.mtx[14];
 
     /* toHit = normalize(hitPos - head), lanes saturated to [-1, 1] */
-    toHit[0] = hitPos[0] - head[0];
-    toHit[1] = hitPos[1] - head[1];
-    toHit[2] = hitPos[2] - head[2];
-    lenSq = toHit[0] * toHit[0] + toHit[1] * toHit[1] + toHit[2] * toHit[2];
+    toHit[0] = VfSub(hitPos[0], head[0]);
+    toHit[1] = VfSub(hitPos[1], head[1]);
+    toHit[2] = VfSub(hitPos[2], head[2]);
+    lenSq = VfDot3(toHit[0], toHit[1], toHit[2], toHit[0], toHit[1], toHit[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    toHit[0] = VfSat1(toHit[0] * k);
-    toHit[1] = VfSat1(toHit[1] * k);
-    toHit[2] = VfSat1(toHit[2] * k);
+    toHit[0] = VfSat1(VfMul(toHit[0], k));
+    toHit[1] = VfSat1(VfMul(toHit[1], k));
+    toHit[2] = VfSat1(VfMul(toHit[2], k));
 
     /* back = rootMatrix rows 0..2 applied to (0, 0, -1) (vtfm3.t, E form), normalised as above */
     m = self->base.base.base.data->rootMatrix;
-    back[0] = m[0] * 0.0f + m[4] * 0.0f + m[8] * -1.0f;
-    back[1] = m[1] * 0.0f + m[5] * 0.0f + m[9] * -1.0f;
-    back[2] = m[2] * 0.0f + m[6] * 0.0f + m[10] * -1.0f;
-    lenSq = back[0] * back[0] + back[1] * back[1] + back[2] * back[2];
+    back[0] = VfDot3(m[0], m[4], m[8], 0.0f, 0.0f, -1.0f);
+    back[1] = VfDot3(m[1], m[5], m[9], 0.0f, 0.0f, -1.0f);
+    back[2] = VfDot3(m[2], m[6], m[10], 0.0f, 0.0f, -1.0f);
+    lenSq = VfDot3(back[0], back[1], back[2], back[0], back[1], back[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    back[0] = VfSat1(back[0] * k);
-    back[1] = VfSat1(back[1] * k);
-    back[2] = VfSat1(back[2] * k);
+    back[0] = VfSat1(VfMul(back[0], k));
+    back[1] = VfSat1(VfMul(back[1], k));
+    back[2] = VfSat1(VfMul(back[2], k));
 
-    dot = toHit[0] * back[0] + toHit[1] * back[1] + toHit[2] * back[2];
-    cosLimit = __builtin_cosf(1.04719758f /* pi/3 */);
+    dot = VfDot3(toHit[0], toHit[1], toHit[2], back[0], back[1], back[2]);
+    cosLimit = VfCosQuarter(1.04719758f /* pi/3 */ * 0.636619747f);
     if (dot <= cosLimit) {
         return;
     }

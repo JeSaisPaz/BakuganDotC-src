@@ -256,8 +256,8 @@ void UiNameEntrySetupPhase(UiNameEntry *self)
     savedRow[i] = m[12 + i];
   }
   angle = -1.5707964f;
-  c = __builtin_cosf(angle);
-  sn = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  sn = VfSinQuarter(VfMul(angle, 0.636619747f));
   m[0] = 1.0f;
   m[1] = 0.0f;
   m[2] = 0.0f;

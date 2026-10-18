@@ -11,14 +11,14 @@ ScePspFVector4 GfxProjectToScreen(float *out, ScePspFMatrix4 *mtx, float *pos)
     ScePspFVector4 clip;
     float rw;
 
-    clip.x = mtx->x.x * pos[0] + mtx->y.x * pos[1] + mtx->z.x * pos[2] + mtx->w.x * 1.0f;
-    clip.y = mtx->x.y * pos[0] + mtx->y.y * pos[1] + mtx->z.y * pos[2] + mtx->w.y * 1.0f;
-    clip.z = mtx->x.z * pos[0] + mtx->y.z * pos[1] + mtx->z.z * pos[2] + mtx->w.z * 1.0f;
-    clip.w = mtx->x.w * pos[0] + mtx->y.w * pos[1] + mtx->z.w * pos[2] + mtx->w.w * 1.0f;
-    rw = 1.0f / clip.w;
-    out[0] = clip.x * rw;
-    out[1] = clip.y * rw;
-    out[2] = clip.z * rw;
+    clip.x = VfDot4(mtx->x.x, mtx->y.x, mtx->z.x, mtx->w.x, pos[0], pos[1], pos[2], 1.0f);
+    clip.y = VfDot4(mtx->x.y, mtx->y.y, mtx->z.y, mtx->w.y, pos[0], pos[1], pos[2], 1.0f);
+    clip.z = VfDot4(mtx->x.z, mtx->y.z, mtx->z.z, mtx->w.z, pos[0], pos[1], pos[2], 1.0f);
+    clip.w = VfDot4(mtx->x.w, mtx->y.w, mtx->z.w, mtx->w.w, pos[0], pos[1], pos[2], 1.0f);
+    rw = VfRcp(clip.w);
+    out[0] = VfMul(clip.x, rw);
+    out[1] = VfMul(clip.y, rw);
+    out[2] = VfMul(clip.z, rw);
     out[3] = rw;
     out[0] = (out[0] * 480.0f + 480.0f) * 0.5f;
     out[1] = (out[1] * -272.0f + 272.0f) * 0.5f;

@@ -40,7 +40,7 @@ void CollisionMeshTreeQueryType4(const CollisionFacePart *part, const CollisionB
         }
         plane = &((const ScePspFVector4 *)PspPtr(part->normals))[face[3]];
         /* vdot.t of the plane normal and the sweep start */
-        if ((plane->x * query->start[0] + plane->y * query->start[1] + plane->z * query->start[2]) - plane->w < 0.0f) {
+        if (VfDot3(plane->x, plane->y, plane->z, query->start[0], query->start[1], query->start[2]) - plane->w < 0.0f) {
             continue;
         }
         if (!CollisionTriangleTestSweptSphere((void *)part, face, (void *)query, &dist)) {
@@ -63,9 +63,9 @@ void CollisionMeshTreeQueryType4(const CollisionFacePart *part, const CollisionB
         planeT = g_collisionMeshQuery.planeT;
         g_collisionHitInfo.bestT = planeT;
         /* sweepCenter = start + axis * planeT (vmul.t/vadd.t); w keeps start's w lane (radiusSq) */
-        g_collisionMeshQuery.sweepCenter.x = query->start[0] + query->axis[0] * planeT;
-        g_collisionMeshQuery.sweepCenter.y = query->start[1] + query->axis[1] * planeT;
-        g_collisionMeshQuery.sweepCenter.z = query->start[2] + query->axis[2] * planeT;
+        g_collisionMeshQuery.sweepCenter.x = VfAdd(query->start[0], VfMul(query->axis[0], planeT));
+        g_collisionMeshQuery.sweepCenter.y = VfAdd(query->start[1], VfMul(query->axis[1], planeT));
+        g_collisionMeshQuery.sweepCenter.z = VfAdd(query->start[2], VfMul(query->axis[2], planeT));
         g_collisionMeshQuery.sweepCenter.w = query->radiusSq;
         g_collisionMeshHit = 1;
     }

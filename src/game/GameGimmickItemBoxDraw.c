@@ -38,9 +38,9 @@ void GameGimmickItemBoxDraw(GameGimmickItemBox *obj, u32 **dl)
       dst = g_itemBoxBreakEffect1->data->rootMatrix;
       scale = obj->breakAlpha;
       for (i = 0; i < 4; i++) {
-        dst[i] = dst[i] * 1.0f;
-        dst[4 + i] = dst[4 + i] * scale;
-        dst[8 + i] = dst[8 + i] * 1.0f;
+        dst[i] = VfMul(dst[i], 1.0f);
+        dst[4 + i] = VfMul(dst[4 + i], scale);
+        dst[8 + i] = VfMul(dst[8 + i], 1.0f);
       }
       /* translation row again */
       dst = g_itemBoxBreakEffect1->data->rootMatrix;

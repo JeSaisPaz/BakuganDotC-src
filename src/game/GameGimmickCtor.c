@@ -21,13 +21,11 @@ CoreObject *GameGimmickCtor(GameGimmick *obj, s32 kind, void *record, u16 typeId
   float heading;
   float c;
   float s;
-  float sum;
   float rotY[4][4];
   float result[16];
   float scaled[3];
   int j;
   int r;
-  int k;
 
   GfxModelCtor(&obj->base, g_gameGimmickKindTable[kind][0], 0);
   obj->vtbl2 = g_gameGimmickSubBaseVtbl;
@@ -65,8 +63,8 @@ CoreObject *GameGimmickCtor(GameGimmick *obj, s32 kind, void *record, u16 typeId
      matrix whose columns the `vrot`/`vidt` build. */
   model = obj->base.data;
   heading = obj->base.rot[1];
-  c = __builtin_cosf(heading);
-  s = __builtin_sinf(heading);
+  c = VfCosQuarter(VfMul(heading, 0.636619747f));
+  s = VfSinQuarter(VfMul(heading, 0.636619747f));
   rotY[0][0] = c;     rotY[0][1] = 0.0f; rotY[0][2] = s;    rotY[0][3] = 0.0f;
   rotY[1][0] = 0.0f;  rotY[1][1] = 1.0f; rotY[1][2] = 0.0f; rotY[1][3] = 0.0f;
   rotY[2][0] = -s;    rotY[2][1] = 0.0f; rotY[2][2] = c;    rotY[2][3] = 0.0f;
@@ -75,11 +73,9 @@ CoreObject *GameGimmickCtor(GameGimmick *obj, s32 kind, void *record, u16 typeId
      so new root[j][r] = sum_k rotY[r][k] * old root[j][k] (root stored column per 16 bytes). */
   for (j = 0; j < 4; j++) {
     for (r = 0; r < 4; r++) {
-      sum = rotY[r][0] * model->rootMatrix[j * 4 + 0];
-      for (k = 1; k < 4; k++) {
-        sum = sum + rotY[r][k] * model->rootMatrix[j * 4 + k];
-      }
-      result[j * 4 + r] = sum;
+      result[j * 4 + r] = VfDot4(rotY[r][0], rotY[r][1], rotY[r][2], rotY[r][3],
+                                 model->rootMatrix[j * 4 + 0], model->rootMatrix[j * 4 + 1],
+                                 model->rootMatrix[j * 4 + 2], model->rootMatrix[j * 4 + 3]);
     }
   }
   for (j = 0; j < 16; j++) {
@@ -91,9 +87,9 @@ CoreObject *GameGimmickCtor(GameGimmick *obj, s32 kind, void *record, u16 typeId
   scaled[0] = (float)rec->pos[0] * 0.000244140625f;
   scaled[1] = (float)rec->pos[1] * 0.000244140625f;
   scaled[2] = (float)rec->pos[2] * 0.000244140625f;
-  obj->base.pos[0] = scaled[0] * 20.0f;
-  obj->base.pos[1] = scaled[1] * 20.0f;
-  obj->base.pos[2] = scaled[2] * 20.0f;
+  obj->base.pos[0] = VfMul(scaled[0], 20.0f);
+  obj->base.pos[1] = VfMul(scaled[1], 20.0f);
+  obj->base.pos[2] = VfMul(scaled[2], 20.0f);
   obj->base.pos[3] = 0.0f;
   obj->alpha = 1.0f;
   obj->hidden = 0;

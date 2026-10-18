@@ -16,8 +16,10 @@ void UiCollectionMenuStartItemBoxZoom(UiCollectionMenu *self, u8 out)
   float *pos;
   float c;
   float s;
+  float x;
   float y;
   float z;
+  float w;
   int i;
 
   /* itemBoxTween .. spinAngle (0x524..0x54b) */
@@ -49,18 +51,22 @@ void UiCollectionMenuStartItemBoxZoom(UiCollectionMenu *self, u8 out)
     /* Each row *= X rotation of 0.5 rad (0.5 * S703 quarter turns): R0 = (1, 0, 0, 0),
        R1 = (0, c, s, 0), R2 = (0, -s, c, 0), R3 = (0, 0, 0, 1) (vmmul.q E200, E100, E000). */
     m = self->itemBox->data->rootMatrix;
-    c = __builtin_cosf(0.5f);
-    s = __builtin_sinf(0.5f);
-    for (i = 0; i < 4; i++) {
+    c = VfCosQuarter(0.5f * 0.636619747f);
+    s = VfSinQuarter(0.5f * 0.636619747f);
+    for (i = 0; i < 3; i++) { /* row 3 of the product is overwritten by pos below */
+      x = m[i * 4 + 0];
       y = m[i * 4 + 1];
       z = m[i * 4 + 2];
-      m[i * 4 + 1] = y * c - z * s;
-      m[i * 4 + 2] = y * s + z * c;
+      w = m[i * 4 + 3];
+      m[i * 4 + 0] = VfDot4(1.0f, 0.0f, 0.0f, 0.0f, x, y, z, w);
+      m[i * 4 + 1] = VfDot4(0.0f, c, -s, 0.0f, x, y, z, w);
+      m[i * 4 + 2] = VfDot4(0.0f, s, c, 0.0f, x, y, z, w);
+      m[i * 4 + 3] = VfDot4(0.0f, 0.0f, 0.0f, 1.0f, x, y, z, w);
     }
     /* rows 0-2 (all four lanes) *= 1.2 */
     m = self->itemBox->data->rootMatrix;
     for (i = 0; i < 12; i++) {
-      m[i] = m[i] * 1.20000005f;
+      m[i] = VfMul(m[i], 1.20000005f);
     }
     /* row 3 = pos */
     pos = self->itemBox->pos;

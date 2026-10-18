@@ -22,9 +22,9 @@ void BtlAttackUpdateStraightShot(BtlAttack *self, s32 hitId)
     }
     if (self->age == 0) {
         /* vel.xyz *= 45; lane w gets bank S713 (0) */
-        self->vel[0] = self->vel[0] * 45.0f;
-        self->vel[1] = self->vel[1] * 45.0f;
-        self->vel[2] = self->vel[2] * 45.0f;
+        self->vel[0] = VfMul(self->vel[0], 45.0f);
+        self->vel[1] = VfMul(self->vel[1], 45.0f);
+        self->vel[2] = VfMul(self->vel[2], 45.0f);
         self->vel[3] = 0.0f;
         return;
     }
@@ -36,14 +36,14 @@ void BtlAttackUpdateStraightShot(BtlAttack *self, s32 hitId)
     }
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, hitId, 3, 0, 0x31bf337e) != 0) {
         /* vel.xyz normalised and clamped to [-1, 1] (0 when the length is zero); w = bank S713 (0) */
-        lenSq = self->vel[0] * self->vel[0] + self->vel[1] * self->vel[1] + self->vel[2] * self->vel[2];
+        lenSq = VfDot3(self->vel[0], self->vel[1], self->vel[2], self->vel[0], self->vel[1], self->vel[2]);
         k = VfRsq(lenSq);
         if (VfIsZero(lenSq)) {
             k = 0.0f;
         }
-        self->vel[0] = VfSat1(self->vel[0] * k);
-        self->vel[1] = VfSat1(self->vel[1] * k);
-        self->vel[2] = VfSat1(self->vel[2] * k);
+        self->vel[0] = VfSat1(VfMul(self->vel[0], k));
+        self->vel[1] = VfSat1(VfMul(self->vel[1], k));
+        self->vel[2] = VfSat1(VfMul(self->vel[2], k));
         self->vel[3] = 0.0f;
         impact = GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0x9f, &g_btlAttackHitQuery.contact.x, self->vel);
         impact->ownerBakugan = self->owner;
@@ -55,7 +55,7 @@ void BtlAttackUpdateStraightShot(BtlAttack *self, s32 hitId)
         return;
     }
     /* pos.xyz += vel.xyz (w kept) */
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

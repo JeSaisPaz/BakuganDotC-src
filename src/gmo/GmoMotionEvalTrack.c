@@ -87,7 +87,7 @@ static inline void GmoTrackLerp4(float *dst, const float *a, const float *b, flo
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        dst[i] = a[i] + (b[i] - a[i]) * t;
+        dst[i] = VfAdd(a[i], VfMul(VfSub(b[i], a[i]), t));
     }
 }
 
@@ -96,20 +96,20 @@ static inline void GmoTrackLerp4(float *dst, const float *a, const float *b, flo
 static inline void GmoTrackHermite4(float *dst, const float *p0, const float *p1, const float *c0,
                                     const float *c1, float t)
 {
-    float u = 1.0f - t;
-    float uu = u * u;
-    float tt = t * t;
-    float w0 = u * uu;
-    float w1 = t * tt;
-    float w2 = t * uu;
-    float w3 = u * tt;
+    float u = VfSub(1.0f, t);
+    float uu = VfMul(u, u);
+    float tt = VfMul(t, t);
+    float w0 = VfMul(u, uu);
+    float w1 = VfMul(t, tt);
+    float w2 = VfMul(t, uu);
+    float w3 = VfMul(u, tt);
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        float h0 = (c0[i] + p0[i]) * 3.0f;
-        float h1 = (c1[i] + p1[i]) * 3.0f;
+        float h0 = VfMul(VfAdd(c0[i], p0[i]), 3.0f);
+        float h1 = VfMul(VfAdd(c1[i], p1[i]), 3.0f);
 
-        dst[i] = p0[i] * w0 + p1[i] * w1 + h0 * w2 + h1 * w3;
+        dst[i] = VfDot4(p0[i], p1[i], h0, h1, w0, w1, w2, w3);
     }
 }
 
@@ -132,36 +132,36 @@ static inline void GmoTrackSlerp4(float *dst, const float *a, const float *key1,
     for (i = 0; i < 4; i++) {
         b[i] = key1[i];
     }
-    d = VfSat1(a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]);
+    d = VfSat1(VfDot4(a[0], a[1], a[2], a[3], b[0], b[1], b[2], b[3]));
     for (i = 0; i < 4; i++) {
-        diff[i] = (b[i] - a[i]) * t;
-        sum[i] = (b[i] + a[i]) * t;
+        diff[i] = VfMul(VfSub(b[i], a[i]), t);
+        sum[i] = VfMul(VfAdd(b[i], a[i]), t);
     }
-    s = 1.0f - d * d;
-    if (d < 0.0f) {
+    s = VfSub(1.0f, VfMul(d, d));
+    if (VfDaz(d) < 0.0f) {
         for (i = 0; i < 4; i++) {
             b[i] = -b[i];
         }
     }
-    if (!(d < 0.998046875f)) {
+    if (!(VfDaz(d) < 0.998046875f)) {
         for (i = 0; i < 4; i++) {
-            dst[i] = a[i] + diff[i];
+            dst[i] = VfAdd(a[i], diff[i]);
         }
-    } else if (d < -0.998046875f) {
+    } else if (VfDaz(d) < -0.998046875f) {
         for (i = 0; i < 4; i++) {
-            dst[i] = a[i] - sum[i];
+            dst[i] = VfSub(a[i], sum[i]);
         }
     } else {
-        if (__builtin_fabsf(d) < 0.707106769f) {
-            theta = 1.0f - __builtin_fabsf(VfAsinQuarter(d));
+        if (__builtin_fabsf(VfDaz(d)) < 0.707106769f) {
+            theta = VfSub(1.0f, __builtin_fabsf(VfAsinQuarter(d)));
         } else {
-            theta = VfAsinQuarter(__builtin_sqrtf(s));
+            theta = VfAsinQuarter(VfSqrt(s));
         }
-        w0 = VfSinQuarter((1.0f - t) * theta);
-        w1 = VfSinQuarter(t * theta);
+        w0 = VfSinQuarter(VfMul(VfSub(1.0f, t), theta));
+        w1 = VfSinQuarter(VfMul(t, theta));
         inv = VfRcp(VfSinQuarter(theta));
         for (i = 0; i < 4; i++) {
-            dst[i] = (a[i] * w0 + b[i] * w1) * inv;
+            dst[i] = VfMul(VfDot2(a[i], b[i], w0, w1), inv);
         }
     }
 }

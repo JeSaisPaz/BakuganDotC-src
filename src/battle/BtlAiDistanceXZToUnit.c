@@ -19,7 +19,7 @@ float BtlAiDistanceXZToUnit(BtlAi *self, void *unit)
     /* |owner->pos - target->pos| over x and z (the y difference is zeroed before the dot) */
     a = self->owner->base.pos;
     b = target->base.pos;
-    dx = a[0] - b[0];
-    dz = a[2] - b[2];
-    return __builtin_sqrtf(dx * dx + dz * dz);
+    dx = VfSub(a[0], b[0]);
+    dz = VfSub(a[2], b[2]);
+    return VfSqrt(VfDot2(dx, dz, dx, dz));
 }

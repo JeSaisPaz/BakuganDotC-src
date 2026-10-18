@@ -35,10 +35,10 @@ void GameGimmickTriggerZoneCheckPlayer(GameGimmickTriggerZone *gimmick)
     goal.w = 1.0f;
     rate = 0.1f;
     /* color += (goal - color) * rate */
-    gimmick->color.x = gimmick->color.x + (goal.x - gimmick->color.x) * rate;
-    gimmick->color.y = gimmick->color.y + (goal.y - gimmick->color.y) * rate;
-    gimmick->color.z = gimmick->color.z + (goal.z - gimmick->color.z) * rate;
-    gimmick->color.w = gimmick->color.w + (goal.w - gimmick->color.w) * rate;
+    gimmick->color.x = VfAdd(gimmick->color.x, VfMul(VfSub(goal.x, gimmick->color.x), rate));
+    gimmick->color.y = VfAdd(gimmick->color.y, VfMul(VfSub(goal.y, gimmick->color.y), rate));
+    gimmick->color.z = VfAdd(gimmick->color.z, VfMul(VfSub(goal.z, gimmick->color.z), rate));
+    gimmick->color.w = VfAdd(gimmick->color.w, VfMul(VfSub(goal.w, gimmick->color.w), rate));
   } else {
     goal.x = 0.0f;
     goal.y = 0.0f;
@@ -46,10 +46,10 @@ void GameGimmickTriggerZoneCheckPlayer(GameGimmickTriggerZone *gimmick)
     goal.w = 0.0f;
     rate = 0.1f;
     /* color += (goal - color) * rate */
-    gimmick->color.x = gimmick->color.x + (goal.x - gimmick->color.x) * rate;
-    gimmick->color.y = gimmick->color.y + (goal.y - gimmick->color.y) * rate;
-    gimmick->color.z = gimmick->color.z + (goal.z - gimmick->color.z) * rate;
-    gimmick->color.w = gimmick->color.w + (goal.w - gimmick->color.w) * rate;
+    gimmick->color.x = VfAdd(gimmick->color.x, VfMul(VfSub(goal.x, gimmick->color.x), rate));
+    gimmick->color.y = VfAdd(gimmick->color.y, VfMul(VfSub(goal.y, gimmick->color.y), rate));
+    gimmick->color.z = VfAdd(gimmick->color.z, VfMul(VfSub(goal.z, gimmick->color.z), rate));
+    gimmick->color.w = VfAdd(gimmick->color.w, VfMul(VfSub(goal.w, gimmick->color.w), rate));
     gimmick->inside = 0;
   }
   if (gimmick->effect != NULL && gimmick->base.typeId == 0x324) {

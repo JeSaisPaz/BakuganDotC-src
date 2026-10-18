@@ -31,14 +31,14 @@ void BtlAttackType45Update(BtlAttack *self)
     x = dir[0];
     y = dir[1];
     z = dir[2];
-    inv = x * x + y * y + z * z;
+    inv = VfDot3(x, y, z, x, y, z);
     if (VfIsZero(inv)) {
         inv = 0.0f;
     } else {
         inv = VfRsq(inv);
     }
-    dir[0] = VfSat1(x * inv);
-    dir[1] = VfSat1(y * inv);
-    dir[2] = VfSat1(z * inv);
+    dir[0] = VfSat1(VfMul(x, inv));
+    dir[1] = VfSat1(VfMul(y, inv));
+    dir[2] = VfSat1(VfMul(z, inv));
     dir[3] = 0.0f;
 }

@@ -75,10 +75,10 @@ s32 ActorNpcCanSeePlayer(ActorNpc *self)
 
   if (!hidden) {
     /* |self - player| (xyz) */
-    d[0] = self->base.base.pos[0] - player->base.base.pos[0];
-    d[1] = self->base.base.pos[1] - player->base.base.pos[1];
-    d[2] = self->base.base.pos[2] - player->base.base.pos[2];
-    dist = __builtin_sqrtf(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+    d[0] = VfSub(self->base.base.pos[0], player->base.base.pos[0]);
+    d[1] = VfSub(self->base.base.pos[1], player->base.base.pos[1]);
+    d[2] = VfSub(self->base.base.pos[2], player->base.base.pos[2]);
+    dist = VfSqrt(VfDot3(d[0], d[1], d[2], d[0], d[1], d[2]));
     if (dist < self->viewDist) {
       /* stack copy of the player position */
       for (i = 0; i < 4; i++) {
@@ -108,9 +108,9 @@ s32 ActorNpcCanSeePlayer(ActorNpc *self)
         for (i = 0; i < 4; i++) {
           origin[i] = self->base.base.pos[i];
         }
-        dir[0] = player->base.base.pos[0] - self->base.base.pos[0];
-        dir[1] = player->base.base.pos[1] - self->base.base.pos[1];
-        dir[2] = player->base.base.pos[2] - self->base.base.pos[2];
+        dir[0] = VfSub(player->base.base.pos[0], self->base.base.pos[0]);
+        dir[1] = VfSub(player->base.base.pos[1], self->base.base.pos[1]);
+        dir[2] = VfSub(player->base.base.pos[2], self->base.base.pos[2]);
         dir[3] = player->base.base.pos[3];
         if (g_scriptGlobalVars[1] == 0xc || g_scriptGlobalVars[1] == 0xe) {
           origin[1] = origin[1] + 14.5f;

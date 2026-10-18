@@ -4,11 +4,11 @@
 /* |a - b| over x, y, z (vsub.q, vdot.t, vsqrt.s). */
 static inline float BtlAiDetourDist(const float *a, const float *b)
 {
-    float dx = a[0] - b[0];
-    float dy = a[1] - b[1];
-    float dz = a[2] - b[2];
+    float dx = VfSub(a[0], b[0]);
+    float dy = VfSub(a[1], b[1]);
+    float dz = VfSub(a[2], b[2]);
 
-    return __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+    return VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
 }
 
 /* In-place normalise of `v` (x, y, z), each component saturated to [-1, 1]; a zero vector takes the
@@ -16,15 +16,15 @@ static inline float BtlAiDetourDist(const float *a, const float *b)
    S713 (bank 0.0f) there. */
 static inline void BtlAiDetourNormalize(float *v)
 {
-    float lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+    float lenSq = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
     float inv = VfRsq(lenSq);
 
     if (VfIsZero(lenSq)) {
         inv = 0.0f;
     }
-    v[0] = VfSat1(v[0] * inv);
-    v[1] = VfSat1(v[1] * inv);
-    v[2] = VfSat1(v[2] * inv);
+    v[0] = VfSat1(VfMul(v[0], inv));
+    v[1] = VfSat1(VfMul(v[1], inv));
+    v[2] = VfSat1(VfMul(v[2], inv));
     v[3] = 0.0f;
 }
 
@@ -145,9 +145,9 @@ void BtlAiExecDetourMove(BtlAi *self, BtlAiCommand *cmd)
                lanes: vrot.q [C,0,S,0] of angle × S703 (2/π), scaled by range over x, y, z (w stays
                0), plus the owner position over x, y, z. */
             pos = self->owner->base.pos;
-            self->detourPoint[0] = __builtin_cosf(angle) * range + pos[0];
-            self->detourPoint[1] = 0.0f * range + pos[1];
-            self->detourPoint[2] = __builtin_sinf(angle) * range + pos[2];
+            self->detourPoint[0] = VfAdd(VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), range), pos[0]);
+            self->detourPoint[1] = VfAdd(VfMul(0.0f, range), pos[1]);
+            self->detourPoint[2] = VfAdd(VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), range), pos[2]);
             self->detourPoint[3] = 0.0f;
         }
         cmd->arg = (s32)range;
@@ -166,9 +166,9 @@ void BtlAiExecDetourMove(BtlAi *self, BtlAiCommand *cmd)
         dir = BtlAiAngleToDir8(angle);
         /* toPoint = unit XZ vector from the owner to the detour point */
         pos = self->owner->base.pos;
-        toPoint[0] = self->detourPoint[0] - pos[0];
+        toPoint[0] = VfSub(self->detourPoint[0], pos[0]);
         toPoint[1] = 0.0f;
-        toPoint[2] = self->detourPoint[2] - pos[2];
+        toPoint[2] = VfSub(self->detourPoint[2], pos[2]);
         toPoint[3] = self->detourPoint[3];
         BtlAiDetourNormalize(toPoint);
         /* facing = unit XZ vector of the owner's velocity */
@@ -177,19 +177,19 @@ void BtlAiExecDetourMove(BtlAi *self, BtlAiCommand *cmd)
         facing[2] = self->owner->base.velocity[2];
         facing[3] = self->owner->base.velocity[3];
         BtlAiDetourNormalize(facing);
-        dot = toPoint[0] * facing[0] + toPoint[1] * facing[1] + toPoint[2] * facing[2];
+        dot = VfDot3(toPoint[0], toPoint[1], toPoint[2], facing[0], facing[1], facing[2]);
         if (!(dot < 0.85f)) {
             /* facing = facing / |facing| × rayLength (S713 again the zero-length fallback; lane w
                keeps S713 = 0) */
-            lenSq = facing[0] * facing[0] + facing[1] * facing[1] + facing[2] * facing[2];
+            lenSq = VfDot3(facing[0], facing[1], facing[2], facing[0], facing[1], facing[2]);
             k = VfRsq(lenSq);
             if (VfIsZero(lenSq)) {
                 k = 0.0f;
             }
-            k = k * self->rayLength;
-            facing[0] = facing[0] * k;
-            facing[1] = facing[1] * k;
-            facing[2] = facing[2] * k;
+            k = VfMul(k, self->rayLength);
+            facing[0] = VfMul(facing[0], k);
+            facing[1] = VfMul(facing[1], k);
+            facing[2] = VfMul(facing[2], k);
             facing[3] = 0.0f;
             pos = self->owner->base.pos;
             from[0] = pos[0];

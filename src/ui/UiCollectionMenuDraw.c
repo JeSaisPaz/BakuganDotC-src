@@ -55,9 +55,9 @@ void UiCollectionMenuDraw(UiCollectionMenu *self)
         fog2.f = 0.0f;
       }
       /* vsat0 / vscl by 255 / vf2iz 23 / vi2uc; lane 3 is masked off below. */
-      packed = (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.x) * 255.0f, 23)) |
-               (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.y) * 255.0f, 23)) << 8 |
-               (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.z) * 255.0f, 23)) << 16;
+      packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.x), 255.0f), 23)) |
+               (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.y), 255.0f), 23)) << 8 |
+               (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.z), 255.0f), 23)) << 16;
       color = (packed & 0xffffff) | 0xcf000000; /* FOGCOLOR */
     }
     dl[0] = color;

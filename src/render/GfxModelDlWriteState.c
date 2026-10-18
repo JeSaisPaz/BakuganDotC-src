@@ -40,7 +40,7 @@ void GfxModelDlWriteState(GfxModel *self, u32 **list)
   }
   packed = 0;
   for (i = 0; i < 4; i++) {
-    packed |= (u32)VfI2uc(VfF2iz(VfSat0(self->ambient[i]) * 255.0f, 23)) << (i * 8);
+    packed |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(self->ambient[i]), 255.0f), 23)) << (i * 8);
   }
   g_gfxModelAmbient = packed;
   g_gfxMaterialAlpha = packed >> 24;
@@ -54,7 +54,7 @@ void GfxModelDlWriteState(GfxModel *self, u32 **list)
   *list = *list + 1;
   packed = 0;
   for (i = 0; i < 4; i++) {
-    packed |= (u32)VfI2uc(VfF2iz(VfSat0(self->color[i]) * 255.0f, 23)) << (i * 8);
+    packed |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(self->color[i]), 255.0f), 23)) << (i * 8);
   }
   g_gfxModelEmissive = packed;
   **list = (packed & 0xffffff) | 0x90000000;

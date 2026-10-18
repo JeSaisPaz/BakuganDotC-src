@@ -19,9 +19,9 @@ int ActorStageObjHasGroundBelow(float *pos)
   g_collisionRayDesc.dir.z = g_vecDown.z;
   g_collisionRayDesc.dir.w = g_vecDown.w;
   /* invDir.xyz = 1/dir.xyz, or the bank zero S713 where dir.i == 0 (vcmp EZ + vcmovt); w = S713. */
-  g_collisionRayDesc.invDir.x = VfIsZero(g_collisionRayDesc.dir.x) ? 0.0f : 1.0f / g_collisionRayDesc.dir.x;
-  g_collisionRayDesc.invDir.y = VfIsZero(g_collisionRayDesc.dir.y) ? 0.0f : 1.0f / g_collisionRayDesc.dir.y;
-  g_collisionRayDesc.invDir.z = VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : 1.0f / g_collisionRayDesc.dir.z;
+  g_collisionRayDesc.invDir.x = VfIsZero(g_collisionRayDesc.dir.x) ? 0.0f : VfRcp(g_collisionRayDesc.dir.x);
+  g_collisionRayDesc.invDir.y = VfIsZero(g_collisionRayDesc.dir.y) ? 0.0f : VfRcp(g_collisionRayDesc.dir.y);
+  g_collisionRayDesc.invDir.z = VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : VfRcp(g_collisionRayDesc.dir.z);
   g_collisionRayDesc.invDir.w = 0.0f;
   if (BtlCameraTaskExists() != 0 &&
       CollisionRaycast(0x3fbf2100, &g_collisionRayBlock, 0) != (void *)0) {

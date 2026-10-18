@@ -15,8 +15,8 @@ void GameGimmickCorePointUpdateLaunchScale(GameGimmickCorePoint *obj)
     t = (float)obj->hopFrame / (float)obj->hopFrames;
     f = g_gimmickLaunchScaleWeight * 2.0f * t * (1.0f - t) + t * t;
     /* vscl.t + sv.q: lane w gets a stale VFPU value on the PSP; left untouched here */
-    obj->scale.x = obj->scale.x * f;
-    obj->scale.y = obj->scale.y * f;
-    obj->scale.z = obj->scale.z * f;
+    obj->scale.x = VfMul(obj->scale.x, f);
+    obj->scale.y = VfMul(obj->scale.y, f);
+    obj->scale.z = VfMul(obj->scale.z, f);
   }
 }

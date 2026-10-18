@@ -31,7 +31,7 @@ void UiCollectionMenuUpdateLightBlink(UiCollectionMenu *self)
     t = self->lightTime + 0.016666668f;
     self->lightTime = t;
     arg = t * 3.1415927f;
-    self->lightLevel = (1.0f - __builtin_cosf(arg)) * 0.5f;
+    self->lightLevel = (1.0f - VfCosQuarter(VfMul(arg, 0.636619747f))) * 0.5f;
     switch (sel) {
     case 0:
         GfxModelScaleAmbientColorByName(self->lightLevel, self->itemBox, "Sphere_light");

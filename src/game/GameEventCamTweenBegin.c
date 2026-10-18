@@ -12,9 +12,9 @@ static inline __attribute__((always_inline)) void GameEventCamTweenBeginFix(s32 
   float v[3];
   s32 k;
 
-  v[0] = src[0] * 0.05f;
-  v[1] = src[1] * 0.05f;
-  v[2] = src[2] * 0.05f;
+  v[0] = VfMul(src[0], 0.05f);
+  v[1] = VfMul(src[1], 0.05f);
+  v[2] = VfMul(src[2], 0.05f);
   for (k = 0; k < 3; k++) {
     if (v[k] <= 0.0f) {
       fx[k] = (s32)(v[k] * 4096.0f - 0.5f);

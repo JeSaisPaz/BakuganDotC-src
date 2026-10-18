@@ -18,9 +18,9 @@ int ActorStageObjPropApplyMotion(ActorStageObjProp *self, float *delta)
   *spring = *spring - (2.3f - *spring) * 0.2f;
   delta[1] = delta[1] + *spring;
   /* vadd.t: xyz only, w stored back unchanged. */
-  pos[0] = pos[0] + delta[0];
-  pos[1] = pos[1] + delta[1];
-  pos[2] = pos[2] + delta[2];
+  pos[0] = VfAdd(pos[0], delta[0]);
+  pos[1] = VfAdd(pos[1], delta[1]);
+  pos[2] = VfAdd(pos[2], delta[2]);
   if (*(float *)self->base.spin != 0.0f) {
     m = self->base.base.data->rootMatrix;
     /* vmmul.q M000, M100 (rot), M200 (model): column j = sum over k of model[j][k] * rot column k. */
@@ -31,10 +31,10 @@ int ActorStageObjPropApplyMotion(ActorStageObjProp *self, float *delta)
       b[j][3] = m[j * 4 + 3];
     }
     for (j = 0; j < 4; j++) {
-      m[j * 4 + 0] = b[j][0] * rot[0][0] + b[j][1] * rot[1][0] + b[j][2] * rot[2][0] + b[j][3] * rot[3][0];
-      m[j * 4 + 1] = b[j][0] * rot[0][1] + b[j][1] * rot[1][1] + b[j][2] * rot[2][1] + b[j][3] * rot[3][1];
-      m[j * 4 + 2] = b[j][0] * rot[0][2] + b[j][1] * rot[1][2] + b[j][2] * rot[2][2] + b[j][3] * rot[3][2];
-      m[j * 4 + 3] = b[j][0] * rot[0][3] + b[j][1] * rot[1][3] + b[j][2] * rot[2][3] + b[j][3] * rot[3][3];
+      m[j * 4 + 0] = VfDot4(b[j][0], b[j][1], b[j][2], b[j][3], rot[0][0], rot[1][0], rot[2][0], rot[3][0]);
+      m[j * 4 + 1] = VfDot4(b[j][0], b[j][1], b[j][2], b[j][3], rot[0][1], rot[1][1], rot[2][1], rot[3][1]);
+      m[j * 4 + 2] = VfDot4(b[j][0], b[j][1], b[j][2], b[j][3], rot[0][2], rot[1][2], rot[2][2], rot[3][2]);
+      m[j * 4 + 3] = VfDot4(b[j][0], b[j][1], b[j][2], b[j][3], rot[0][3], rot[1][3], rot[2][3], rot[3][3]);
     }
   }
   m = self->base.base.data->rootMatrix;

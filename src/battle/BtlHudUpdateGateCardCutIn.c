@@ -166,8 +166,8 @@ void BtlHudUpdateGateCardCutIn(BtlHud *self, BtlBakugan *unit)
                     (float)span;
             }
             /* vmin with 1 then vmax with 0 (t is finite; a -0 tie gives +0) */
-            t = t < 1.0f ? t : 1.0f;
-            t = t > 0.0f ? t : 0.0f;
+            t = VfMin(t, 1.0f);
+            t = VfMax(t, 0.0f);
             if (t == 1.0f) {
                 for (i = 0; i < 4; i++) {
                     pos[i] = self->gateCutInKeyPos[i];
@@ -178,9 +178,9 @@ void BtlHudUpdateGateCardCutIn(BtlHud *self, BtlBakugan *unit)
                 }
                 t = t - 1.0f;
                 t = (1.0f - t * t) * 3.14159274f;
-                k = (1.0f - __builtin_cosf(t)) * 0.5f;
+                k = (1.0f - VfCosQuarter(VfMul(t, 0.636619747f))) * 0.5f;
                 for (i = 0; i < 4; i++) {
-                    pos[i] = pos[i] + (self->gateCutInKeyPos[i] - pos[i]) * k;
+                    pos[i] = VfAdd(pos[i], VfMul(VfSub(self->gateCutInKeyPos[i], pos[i]), k));
                 }
             }
             card->posX = pos[0];
@@ -217,12 +217,12 @@ void BtlHudUpdateGateCardCutIn(BtlHud *self, BtlBakugan *unit)
                 zoom = 1.57079637f;
             }
             self->gateCutInPhaseB = zoom;
-            sinFade = __builtin_sinf(self->gateCutInPhaseA);
-            sinZoom = __builtin_sinf(zoom);
+            sinFade = VfSinQuarter(VfMul(self->gateCutInPhaseA, 0.636619747f));
+            sinZoom = VfSinQuarter(VfMul(zoom, 0.636619747f));
             card->alpha = sinFade;
             scale = sinZoom + 1.0f;
             GfxSpriteSetScaleRotation(card, scale, scale, 0.0f, false);
-            sinFade = __builtin_sinf(self->gateCutInPhaseA);
+            sinFade = VfSinQuarter(VfMul(self->gateCutInPhaseA, 0.636619747f));
             glow->alpha = sinFade * 0.300000012f;
             grow = self->gateCutInGrow + 0.0299999993f;
             self->gateCutInGrow = grow;

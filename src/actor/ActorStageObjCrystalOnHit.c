@@ -69,15 +69,15 @@ void ActorStageObjCrystalOnHit(ActorStageObjCrystal *self)
     pos[i] = hitPos[i];
   }
   for (i = 0; i < 3; i++) {
-    camOff[i] = g_gfxActiveCamera->dir[i] * 4.0f;
+    camOff[i] = VfMul(g_gfxActiveCamera->dir[i], 4.0f);
   }
   camOff[3] = 0.0f; /* lane 3 of C710 is the bank S713 */
   for (i = 0; i < 3; i++) {
-    pos[i] = pos[i] - camOff[i];
+    pos[i] = VfSub(pos[i], camOff[i]);
   }
   /* rel = pos - crystal position (xyz, w = pos.w); flat = rel with y = 0. */
   for (i = 0; i < 3; i++) {
-    rel[i] = pos[i] - self->base.base.pos[i];
+    rel[i] = VfSub(pos[i], self->base.base.pos[i]);
   }
   rel[3] = pos[3];
   for (i = 0; i < 4; i++) {
@@ -86,13 +86,13 @@ void ActorStageObjCrystalOnHit(ActorStageObjCrystal *self)
   flat[1] = 0.0f;
 
   /* flat = normalize3(flat), clamped to [-1, 1]; inverse length 0 for a zero vector. */
-  len2 = flat[0] * flat[0] + flat[1] * flat[1] + flat[2] * flat[2];
+  len2 = VfDot3(flat[0], flat[1], flat[2], flat[0], flat[1], flat[2]);
   inv = VfRsq(len2);
   if (VfIsZero(len2)) {
     inv = 0.0f;
   }
   for (i = 0; i < 3; i++) {
-    flat[i] = VfSat1(flat[i] * inv);
+    flat[i] = VfSat1(VfMul(flat[i], inv));
   }
   flat[3] = 0.0f; /* masked lane of C710: the bank S713 */
 
@@ -128,9 +128,9 @@ void ActorStageObjCrystalOnHit(ActorStageObjCrystal *self)
       heading = atan2f(selfPos[2] - hitCopy[2], selfPos[0] - hitCopy[0]);
     }
     /* knockDir = (cos, 0, sin) of heading * 10, w = 0 (vrot of heading * S703). */
-    self->knockDir[0] = __builtin_cosf(heading) * 10.0f;
+    self->knockDir[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), 10.0f);
     self->knockDir[1] = 0.0f * 10.0f;
-    self->knockDir[2] = __builtin_sinf(heading) * 10.0f;
+    self->knockDir[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), 10.0f);
     self->knockDir[3] = 0.0f;
     self->base.shakePhase = 0;
     self->base.dead = 1;

@@ -7,10 +7,10 @@ static ScePspFVector4 MulColumn(const ScePspFMatrix4 *a, float b0, float b1, flo
 {
     ScePspFVector4 r;
 
-    r.x = b0 * a->x.x + b1 * a->y.x + b2 * a->z.x + b3 * a->w.x;
-    r.y = b0 * a->x.y + b1 * a->y.y + b2 * a->z.y + b3 * a->w.y;
-    r.z = b0 * a->x.z + b1 * a->y.z + b2 * a->z.z + b3 * a->w.z;
-    r.w = b0 * a->x.w + b1 * a->y.w + b2 * a->z.w + b3 * a->w.w;
+    r.x = VfDot4(b0, b1, b2, b3, a->x.x, a->y.x, a->z.x, a->w.x);
+    r.y = VfDot4(b0, b1, b2, b3, a->x.y, a->y.y, a->z.y, a->w.y);
+    r.z = VfDot4(b0, b1, b2, b3, a->x.z, a->y.z, a->z.z, a->w.z);
+    r.w = VfDot4(b0, b1, b2, b3, a->x.w, a->y.w, a->z.w, a->w.w);
     return r;
 }
 

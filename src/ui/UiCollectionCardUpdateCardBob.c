@@ -16,7 +16,7 @@ void UiCollectionCardUpdateCardBob(UiCollectionCard *self)
         for (i = 0; i < 4; i++) {
             if (self->slots[i + self->page * 4] != 0xff) {
                                 sprites[13 + i]->posY =
-                    self->bobPos[i][1] - (1.0f - __builtin_cosf(self->bobT * 3.1415927f)) * 0.5f * 8.0f;
+                    self->bobPos[i][1] - (1.0f - VfCosQuarter(VfMul(self->bobT * 3.1415927f, 0.636619747f))) * 0.5f * 8.0f;
             }
         }
     }

@@ -39,8 +39,8 @@ void GfxPuffKindRisingSmoke(GfxPuff *puff)
         }
     }
     /* xyz of width/height/depth += g_puffStaticVec; w (maybe_sizeW) kept */
-    puff->base.width = puff->base.width + g_puffStaticVec[0];
-    puff->base.height = puff->base.height + g_puffStaticVec[1];
-    puff->base.depth = puff->base.depth + g_puffStaticVec[2];
+    puff->base.width = VfAdd(puff->base.width, g_puffStaticVec[0]);
+    puff->base.height = VfAdd(puff->base.height, g_puffStaticVec[1]);
+    puff->base.depth = VfAdd(puff->base.depth, g_puffStaticVec[2]);
     puff->base.posY = puff->base.posY + 0.1f;
 }

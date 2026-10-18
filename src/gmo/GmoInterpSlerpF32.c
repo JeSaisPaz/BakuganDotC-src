@@ -29,36 +29,36 @@ ScePspFVector4 GmoInterpSlerpF32(float t, const GmoMotionKeyQuatF *key0, const G
         a[i] = key0->q[i];
         b[i] = key1->q[i];
     }
-    d = VfSat1(a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]);
+    d = VfSat1(VfDot4(a[0], a[1], a[2], a[3], b[0], b[1], b[2], b[3]));
     for (i = 0; i < 4; i++) {
-        diff[i] = (b[i] - a[i]) * t;
-        sum[i] = (b[i] + a[i]) * t;
+        diff[i] = VfMul(VfSub(b[i], a[i]), t);
+        sum[i] = VfMul(VfAdd(b[i], a[i]), t);
     }
-    s = 1.0f - d * d;
-    if (d < 0.0f) {
+    s = VfSub(1.0f, VfMul(d, d));
+    if (VfDaz(d) < 0.0f) {
         for (i = 0; i < 4; i++) {
             b[i] = -b[i];
         }
     }
-    if (!(d < 0.998046875f)) {
+    if (!(VfDaz(d) < 0.998046875f)) {
         for (i = 0; i < 4; i++) {
-            r[i] = a[i] + diff[i];
+            r[i] = VfAdd(a[i], diff[i]);
         }
-    } else if (d < -0.998046875f) {
+    } else if (VfDaz(d) < -0.998046875f) {
         for (i = 0; i < 4; i++) {
-            r[i] = a[i] - sum[i];
+            r[i] = VfSub(a[i], sum[i]);
         }
     } else {
-        if (__builtin_fabsf(d) < 0.707106769f) {
-            theta = 1.0f - __builtin_fabsf(VfAsinQuarter(d));
+        if (__builtin_fabsf(VfDaz(d)) < 0.707106769f) {
+            theta = VfSub(1.0f, __builtin_fabsf(VfAsinQuarter(d)));
         } else {
-            theta = VfAsinQuarter(__builtin_sqrtf(s));
+            theta = VfAsinQuarter(VfSqrt(s));
         }
-        w0 = VfSinQuarter((1.0f - t) * theta);
-        w1 = VfSinQuarter(t * theta);
+        w0 = VfSinQuarter(VfMul(VfSub(1.0f, t), theta));
+        w1 = VfSinQuarter(VfMul(t, theta));
         inv = VfRcp(VfSinQuarter(theta));
         for (i = 0; i < 4; i++) {
-            r[i] = (a[i] * w0 + b[i] * w1) * inv;
+            r[i] = VfMul(VfDot2(a[i], b[i], w0, w1), inv);
         }
     }
     out.x = r[0];

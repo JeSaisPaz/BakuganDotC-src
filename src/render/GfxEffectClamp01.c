@@ -10,5 +10,5 @@ float GfxEffectClamp01(float v)
      vmin/vmax). A tie on -0.0f vs S713's +0.0f gives the second operand, +0.0f. */
   if (v != v)
     return __builtin_signbit(v) ? 0.0f : 1.0f;
-  return v <= 0.0f ? 0.0f : v > 1.0f ? 1.0f : v;
+  return VfMax(VfMin(v, 1.0f), 0.0f);
 }

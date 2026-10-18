@@ -39,10 +39,7 @@ void BtlUnitAltUpdateBoneAnchors(BtlUnitAlt *self)
        local[j][k] * root row k (column-major root * local) */
     for (j = 0; j < 4; j++) {
         for (r = 0; r < 4; r++) {
-            unit->anchorMatrix[j][r] = local[j * 4 + 0] * root[0 * 4 + r] +
-                                       local[j * 4 + 1] * root[1 * 4 + r] +
-                                       local[j * 4 + 2] * root[2 * 4 + r] +
-                                       local[j * 4 + 3] * root[3 * 4 + r];
+            unit->anchorMatrix[j][r] = VfDot4(local[j * 4 + 0], local[j * 4 + 1], local[j * 4 + 2], local[j * 4 + 3], root[0 * 4 + r], root[1 * 4 + r], root[2 * 4 + r], root[3 * 4 + r]);
         }
     }
     /* sv.q C720: the offset starts as the bank zero vector */
@@ -74,13 +71,12 @@ void BtlUnitAltUpdateBoneAnchors(BtlUnitAlt *self)
     }
     /* vtfm4.q C000, E100, C200: moved = anchor matrix (column-major) x offset */
     for (r = 0; r < 4; r++) {
-        moved[r] = unit->anchorMatrix[0][r] * offset[0] + unit->anchorMatrix[1][r] * offset[1] +
-                   unit->anchorMatrix[2][r] * offset[2] + unit->anchorMatrix[3][r] * offset[3];
+        moved[r] = VfDot4(unit->anchorMatrix[0][r], unit->anchorMatrix[1][r], unit->anchorMatrix[2][r], unit->anchorMatrix[3][r], offset[0], offset[1], offset[2], offset[3]);
     }
     /* vadd.t: anchor position xyz += moved xyz; its w is stored back unchanged */
-    unit->anchorMatrix[3][0] = unit->anchorMatrix[3][0] + moved[0];
-    unit->anchorMatrix[3][1] = unit->anchorMatrix[3][1] + moved[1];
-    unit->anchorMatrix[3][2] = unit->anchorMatrix[3][2] + moved[2];
+    unit->anchorMatrix[3][0] = VfAdd(unit->anchorMatrix[3][0], moved[0]);
+    unit->anchorMatrix[3][1] = VfAdd(unit->anchorMatrix[3][1], moved[1]);
+    unit->anchorMatrix[3][2] = VfAdd(unit->anchorMatrix[3][2], moved[2]);
     body = unit->collider0;
     body->shapeBlock.dirty = 1;
     sphere = unit->collider1->shapeBlock.desc;

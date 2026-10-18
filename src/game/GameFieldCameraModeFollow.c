@@ -78,10 +78,10 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
     look.y = look.y + g_gameFieldCameraLookAtHeight;
     cam->followGoal = cam->followLookAt;
     /* followLookAt += (look - followLookAt) * 0.5 */
-    cam->followLookAt.x = cam->followLookAt.x + (look.x - cam->followLookAt.x) * 0.5f;
-    cam->followLookAt.y = cam->followLookAt.y + (look.y - cam->followLookAt.y) * 0.5f;
-    cam->followLookAt.z = cam->followLookAt.z + (look.z - cam->followLookAt.z) * 0.5f;
-    cam->followLookAt.w = cam->followLookAt.w + (look.w - cam->followLookAt.w) * 0.5f;
+    cam->followLookAt.x = VfAdd(cam->followLookAt.x, VfMul(VfSub(look.x, cam->followLookAt.x), 0.5f));
+    cam->followLookAt.y = VfAdd(cam->followLookAt.y, VfMul(VfSub(look.y, cam->followLookAt.y), 0.5f));
+    cam->followLookAt.z = VfAdd(cam->followLookAt.z, VfMul(VfSub(look.z, cam->followLookAt.z), 0.5f));
+    cam->followLookAt.w = VfAdd(cam->followLookAt.w, VfMul(VfSub(look.w, cam->followLookAt.w), 0.5f));
     d = cam->yaw - (((Actor *)cam->target)->base.rot[1] + 3.1415927f);
     d = d - (float)(s32)(d * 0.31830987f) * 6.2831855f;
     if (d < 0.0f) {
@@ -101,11 +101,11 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
       cam->yaw = cam->yaw + 6.2831855f;
     }
     /* offset = eye - followLookAt (xyz, w = eye.w); dist = |offset.xyz| */
-    offset.x = cam->base.eye[0] - cam->followLookAt.x;
-    offset.y = cam->base.eye[1] - cam->followLookAt.y;
-    offset.z = cam->base.eye[2] - cam->followLookAt.z;
+    offset.x = VfSub(cam->base.eye[0], cam->followLookAt.x);
+    offset.y = VfSub(cam->base.eye[1], cam->followLookAt.y);
+    offset.z = VfSub(cam->base.eye[2], cam->followLookAt.z);
     offset.w = cam->base.eye[3];
-    dist = __builtin_sqrtf(offset.x * offset.x + offset.y * offset.y + offset.z * offset.z);
+    dist = VfSqrt(VfDot3(offset.x, offset.y, offset.z, offset.x, offset.y, offset.z));
     radius = dist + (cam->distance - dist) * 0.4f;
     elev = -atan2f(offset.y, __builtin_sqrtf(offset.x * offset.x + offset.z * offset.z));
     angle = elev + (-cam->pitch - elev) * 0.2f;
@@ -131,9 +131,9 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
     }
     yaw = azimuth + v;
     /* offset = (cos yaw, 0, sin yaw, 0) * radius (w unscaled); axis = (offset.z, offset.y, -offset.x, 0) */
-    offset.x = __builtin_cosf(yaw) * radius;
-    offset.y = 0.0f * radius;
-    offset.z = __builtin_sinf(yaw) * radius;
+    offset.x = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), radius);
+    offset.y = VfMul(0.0f, radius);
+    offset.z = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), radius);
     offset.w = 0.0f;
     axis.x = offset.z;
     axis.y = offset.y;
@@ -147,14 +147,14 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
     blend = blend * blend;
     cam->prevEye = *(ScePspFVector4 *)cam->base.eye;
     /* axis = normalize(axis), each lane clamped to [-1, 1]; zero length gives 0 */
-    d = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
+    d = VfDot3(axis.x, axis.y, axis.z, axis.x, axis.y, axis.z);
     k = VfRsq(d);
     if (VfIsZero(d)) {
       k = 0.0f;
     }
-    axis.x = VfSat1(axis.x * k);
-    axis.y = VfSat1(axis.y * k);
-    axis.z = VfSat1(axis.z * k);
+    axis.x = VfSat1(VfMul(axis.x, k));
+    axis.y = VfSat1(VfMul(axis.y, k));
+    axis.z = VfSat1(VfMul(axis.z, k));
     axis.w = 0.0f;
     quat = MathQuatFromAxisAngle(angle, (float *)&quatBuf, (const float *)&axis);
   }
@@ -163,10 +163,10 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
     look.y = look.y + g_gameFieldCameraLookAtHeight;
     cam->followGoal = cam->followLookAt;
     /* followLookAt += (look - followLookAt) * 0.35 */
-    cam->followLookAt.x = cam->followLookAt.x + (look.x - cam->followLookAt.x) * 0.35f;
-    cam->followLookAt.y = cam->followLookAt.y + (look.y - cam->followLookAt.y) * 0.35f;
-    cam->followLookAt.z = cam->followLookAt.z + (look.z - cam->followLookAt.z) * 0.35f;
-    cam->followLookAt.w = cam->followLookAt.w + (look.w - cam->followLookAt.w) * 0.35f;
+    cam->followLookAt.x = VfAdd(cam->followLookAt.x, VfMul(VfSub(look.x, cam->followLookAt.x), 0.35f));
+    cam->followLookAt.y = VfAdd(cam->followLookAt.y, VfMul(VfSub(look.y, cam->followLookAt.y), 0.35f));
+    cam->followLookAt.z = VfAdd(cam->followLookAt.z, VfMul(VfSub(look.z, cam->followLookAt.z), 0.35f));
+    cam->followLookAt.w = VfAdd(cam->followLookAt.w, VfMul(VfSub(look.w, cam->followLookAt.w), 0.35f));
     d = cam->yaw - (((Actor *)cam->target)->base.rot[1] + 3.1415927f);
     d = d - (float)(s32)(d * 0.31830987f) * 6.2831855f;
     if (d < 0.0f) {
@@ -187,11 +187,11 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
     }
     cam->pitch = cam->pitch + (0.12217305f - cam->pitch) * 0.2f;
     /* offset = eye - followLookAt (xyz, w = eye.w); dist = |offset.xyz| */
-    offset.x = cam->base.eye[0] - cam->followLookAt.x;
-    offset.y = cam->base.eye[1] - cam->followLookAt.y;
-    offset.z = cam->base.eye[2] - cam->followLookAt.z;
+    offset.x = VfSub(cam->base.eye[0], cam->followLookAt.x);
+    offset.y = VfSub(cam->base.eye[1], cam->followLookAt.y);
+    offset.z = VfSub(cam->base.eye[2], cam->followLookAt.z);
     offset.w = cam->base.eye[3];
-    dist = __builtin_sqrtf(offset.x * offset.x + offset.y * offset.y + offset.z * offset.z);
+    dist = VfSqrt(VfDot3(offset.x, offset.y, offset.z, offset.x, offset.y, offset.z));
     radius = dist + (cam->distance - dist) * 0.4f;
     elev = -atan2f(offset.y, __builtin_sqrtf(offset.x * offset.x + offset.z * offset.z));
     angle = elev + (-cam->pitch - elev) * 0.2f;
@@ -207,7 +207,7 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
     else {
       d = 6.2831855f - d;
     }
-    step = (1.0f - __builtin_cosf(3.14159274f)) * 0.5f * d * 0.3f;
+    step = (1.0f - VfCosQuarter(3.14159274f * 0.636619747f)) * 0.5f * d * 0.3f;
     if (__builtin_fabsf(step) < 0.01f) {
       cam->yawVel = 0.0f;
       cam->stepState = cam->stepState + 1;
@@ -258,9 +258,9 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
     }
     yaw = azimuth + cam->yawVel;
     /* offset = (cos yaw, 0, sin yaw, 0) * radius (w unscaled); axis = (offset.z, offset.y, -offset.x, 0) */
-    offset.x = __builtin_cosf(yaw) * radius;
-    offset.y = 0.0f * radius;
-    offset.z = __builtin_sinf(yaw) * radius;
+    offset.x = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), radius);
+    offset.y = VfMul(0.0f, radius);
+    offset.z = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), radius);
     offset.w = 0.0f;
     axis.x = offset.z;
     axis.y = offset.y;
@@ -273,22 +273,22 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
     cam->pitchVel = blend;
     blend = blend * blend;
     /* axis = normalize(axis), each lane clamped to [-1, 1]; zero length gives 0 */
-    d = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
+    d = VfDot3(axis.x, axis.y, axis.z, axis.x, axis.y, axis.z);
     k = VfRsq(d);
     if (VfIsZero(d)) {
       k = 0.0f;
     }
-    axis.x = VfSat1(axis.x * k);
-    axis.y = VfSat1(axis.y * k);
-    axis.z = VfSat1(axis.z * k);
+    axis.x = VfSat1(VfMul(axis.x, k));
+    axis.y = VfSat1(VfMul(axis.y, k));
+    axis.z = VfSat1(VfMul(axis.z, k));
     axis.w = 0.0f;
     /* quatBuf = (axis * sin(angle / 2), cos(angle / 2)) */
-    half = 0.318309873f * angle;
+    half = VfMul(0.318309873f, angle);
     quatBuf.w = VfCosQuarter(half);
     v = VfSinQuarter(half);
-    quatBuf.x = axis.x * v;
-    quatBuf.y = axis.y * v;
-    quatBuf.z = axis.z * v;
+    quatBuf.x = VfMul(axis.x, v);
+    quatBuf.y = VfMul(axis.y, v);
+    quatBuf.z = VfMul(axis.z, v);
     quat = (float *)&quatBuf;
   }
   /* rot = quat * (offset.xyz, 0) * conj(quat) */
@@ -296,27 +296,27 @@ void GameFieldCameraModeFollow(GameFieldCamera *cam)
   qy = quat[1];
   qz = quat[2];
   qw = quat[3];
-  r.x = qx * 0.0f + qy * offset.z - qz * offset.y + qw * offset.x;
-  r.y = -qx * offset.z + qy * 0.0f + qz * offset.x + qw * offset.y;
-  r.z = qx * offset.y - qy * offset.x + qz * 0.0f + qw * offset.z;
-  r.w = -qx * offset.x - qy * offset.y - qz * offset.z + qw * 0.0f;
-  rot.x = r.x * qw + r.y * -qz - r.z * -qy + r.w * -qx;
-  rot.y = -r.x * -qz + r.y * qw + r.z * -qx + r.w * -qy;
-  rot.z = r.x * -qy - r.y * -qx + r.z * qw + r.w * -qz;
-  rot.w = -r.x * -qx - r.y * -qy - r.z * -qz + r.w * qw;
+  r.x = VfDot4(qx, qy, qz, qw, 0.0f, offset.z, -offset.y, offset.x);
+  r.y = VfDot4(-qx, qy, qz, qw, offset.z, 0.0f, offset.x, offset.y);
+  r.z = VfDot4(qx, qy, qz, qw, offset.y, -offset.x, 0.0f, offset.z);
+  r.w = VfDot4(-qx, qy, qz, qw, offset.x, -offset.y, -offset.z, 0.0f);
+  rot.x = VfDot4(r.x, r.y, r.z, r.w, qw, -qz, qy, -qx);
+  rot.y = VfDot4(-r.x, r.y, r.z, r.w, -qz, qw, -qx, -qy);
+  rot.z = VfDot4(r.x, r.y, r.z, r.w, -qy, qx, qw, -qz);
+  rot.w = VfDot4(-r.x, r.y, r.z, r.w, -qx, qy, qz, qw);
   /* tmp = followLookAt + rot (xyz, w = followLookAt.w) */
-  tmp.x = cam->followLookAt.x + rot.x;
-  tmp.y = cam->followLookAt.y + rot.y;
-  tmp.z = cam->followLookAt.z + rot.z;
+  tmp.x = VfAdd(cam->followLookAt.x, rot.x);
+  tmp.y = VfAdd(cam->followLookAt.y, rot.y);
+  tmp.z = VfAdd(cam->followLookAt.z, rot.z);
   tmp.w = cam->followLookAt.w;
   /* eye += (tmp - eye) * blend; target += (followLookAt - target) * blend */
-  cam->base.eye[0] = cam->base.eye[0] + (tmp.x - cam->base.eye[0]) * blend;
-  cam->base.eye[1] = cam->base.eye[1] + (tmp.y - cam->base.eye[1]) * blend;
-  cam->base.eye[2] = cam->base.eye[2] + (tmp.z - cam->base.eye[2]) * blend;
-  cam->base.eye[3] = cam->base.eye[3] + (tmp.w - cam->base.eye[3]) * blend;
-  cam->base.target[0] = cam->base.target[0] + (cam->followLookAt.x - cam->base.target[0]) * blend;
-  cam->base.target[1] = cam->base.target[1] + (cam->followLookAt.y - cam->base.target[1]) * blend;
-  cam->base.target[2] = cam->base.target[2] + (cam->followLookAt.z - cam->base.target[2]) * blend;
-  cam->base.target[3] = cam->base.target[3] + (cam->followLookAt.w - cam->base.target[3]) * blend;
+  cam->base.eye[0] = VfAdd(cam->base.eye[0], VfMul(VfSub(tmp.x, cam->base.eye[0]), blend));
+  cam->base.eye[1] = VfAdd(cam->base.eye[1], VfMul(VfSub(tmp.y, cam->base.eye[1]), blend));
+  cam->base.eye[2] = VfAdd(cam->base.eye[2], VfMul(VfSub(tmp.z, cam->base.eye[2]), blend));
+  cam->base.eye[3] = VfAdd(cam->base.eye[3], VfMul(VfSub(tmp.w, cam->base.eye[3]), blend));
+  cam->base.target[0] = VfAdd(cam->base.target[0], VfMul(VfSub(cam->followLookAt.x, cam->base.target[0]), blend));
+  cam->base.target[1] = VfAdd(cam->base.target[1], VfMul(VfSub(cam->followLookAt.y, cam->base.target[1]), blend));
+  cam->base.target[2] = VfAdd(cam->base.target[2], VfMul(VfSub(cam->followLookAt.z, cam->base.target[2]), blend));
+  cam->base.target[3] = VfAdd(cam->base.target[3], VfMul(VfSub(cam->followLookAt.w, cam->base.target[3]), blend));
   GameFieldCameraAvoidWalls(cam);
 }

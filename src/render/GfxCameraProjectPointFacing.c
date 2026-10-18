@@ -20,17 +20,17 @@ void GfxCameraProjectPointFacing(GfxCamera *cam, float *out, const float *pos)
 
   GfxCameraUpdateViewProj(cam);
   GfxProjectToScreen(out, &cam->viewProj, (float *)pos);
-  dx = cam->eye[0] - pos[0];
-  dy = cam->eye[1] - pos[1];
-  dz = cam->eye[2] - pos[2];
-  len2 = dx * dx + dy * dy + dz * dz;
+  dx = VfSub(cam->eye[0], pos[0]);
+  dy = VfSub(cam->eye[1], pos[1]);
+  dz = VfSub(cam->eye[2], pos[2]);
+  len2 = VfDot3(dx, dy, dz, dx, dy, dz);
   if (VfIsZero(len2)) {
     s = 0.0f;
   } else {
     s = VfRsq(len2);
   }
-  nx = VfSat1(dx * s);
-  ny = VfSat1(dy * s);
-  nz = VfSat1(dz * s);
-  out[2] = cam->dir[0] * nx + cam->dir[1] * ny + cam->dir[2] * nz;
+  nx = VfSat1(VfMul(dx, s));
+  ny = VfSat1(VfMul(dy, s));
+  nz = VfSat1(VfMul(dz, s));
+  out[2] = VfDot3(cam->dir[0], cam->dir[1], cam->dir[2], nx, ny, nz);
 }

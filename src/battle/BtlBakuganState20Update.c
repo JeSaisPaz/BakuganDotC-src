@@ -92,13 +92,11 @@ void BtlBakuganState20Update(BtlBakugan *self)
             self->statePos[2] = self->anchorMatrix[3][2];
             self->statePos[3] = self->anchorMatrix[3][3];
             /* effectAnchor = unit velocity (0 for a zero velocity), lanes clamped to [-1, 1], w 0 */
-            len2 = self->base.velocity[0] * self->base.velocity[0] +
-                   self->base.velocity[1] * self->base.velocity[1] +
-                   self->base.velocity[2] * self->base.velocity[2];
+            len2 = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
             inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-            self->effectAnchor[0] = VfSat1(self->base.velocity[0] * inv);
-            self->effectAnchor[1] = VfSat1(self->base.velocity[1] * inv);
-            self->effectAnchor[2] = VfSat1(self->base.velocity[2] * inv);
+            self->effectAnchor[0] = VfSat1(VfMul(self->base.velocity[0], inv));
+            self->effectAnchor[1] = VfSat1(VfMul(self->base.velocity[1], inv));
+            self->effectAnchor[2] = VfSat1(VfMul(self->base.velocity[2], inv));
             self->effectAnchor[3] = 0.0f;
             self->base.velocity[0] = 0.0f;
             self->base.velocity[1] = 0.0f;
@@ -120,28 +118,28 @@ void BtlBakuganState20Update(BtlBakugan *self)
             t = 1.0f;
         }
         self->dashHeading = t;
-        c = __builtin_cosf(t * 3.14159274f);
+        c = VfCosQuarter(VfMul(t * 3.14159274f, 0.636619747f));
         self->base.velocity[1] =
             ((other->base.pos[1] + 40.0f) - self->base.pos[1]) * 0.2f * ((1.0f - c) * 0.5f);
         /* diff = target anchor - own anchor; dist = |diff| */
-        diff[0] = other->anchorMatrix[3][0] - self->anchorMatrix[3][0];
-        diff[1] = other->anchorMatrix[3][1] - self->anchorMatrix[3][1];
-        diff[2] = other->anchorMatrix[3][2] - self->anchorMatrix[3][2];
-        dist = __builtin_sqrtf(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
+        diff[0] = VfSub(other->anchorMatrix[3][0], self->anchorMatrix[3][0]);
+        diff[1] = VfSub(other->anchorMatrix[3][1], self->anchorMatrix[3][1]);
+        diff[2] = VfSub(other->anchorMatrix[3][2], self->anchorMatrix[3][2]);
+        dist = VfSqrt(VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]));
         reach = other->combat.stats->reachRadius + self->combat.stats->reachRadius;
         if (!(dist <= reach)) {
-            c = __builtin_cosf(self->dashHeading * 3.14159274f);
+            c = VfCosQuarter(VfMul(self->dashHeading * 3.14159274f, 0.636619747f));
             scale = (1.0f - c) * 0.5f * 0.01f * (dist - reach);
             /* diff = diff / |diff| * scale, flattened, added to the velocity */
-            len2 = diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
+            len2 = VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]);
             inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-            inv = inv * scale;
-            diff[0] = diff[0] * inv;
-            diff[2] = diff[2] * inv;
+            inv = VfMul(inv, scale);
+            diff[0] = VfMul(diff[0], inv);
+            diff[2] = VfMul(diff[2], inv);
             diff[1] = 0.0f;
-            self->base.velocity[0] = self->base.velocity[0] + diff[0];
-            self->base.velocity[1] = self->base.velocity[1] + diff[1];
-            self->base.velocity[2] = self->base.velocity[2] + diff[2];
+            self->base.velocity[0] = VfAdd(self->base.velocity[0], diff[0]);
+            self->base.velocity[1] = VfAdd(self->base.velocity[1], diff[1]);
+            self->base.velocity[2] = VfAdd(self->base.velocity[2], diff[2]);
         }
         self->gravityHold = 10;
         /* vmin.s with 1, then vmax.s with 0: +NaN gives 1, -NaN gives 0, -0 gives +0 */
@@ -149,13 +147,13 @@ void BtlBakuganState20Update(BtlBakugan *self)
         if (alpha != alpha) {
             alpha = __builtin_signbit(alpha) ? 0.0f : 1.0f;
         } else {
-            alpha = alpha <= 0.0f ? 0.0f : alpha > 1.0f ? 1.0f : alpha;
+            alpha = VfMax(VfMin(alpha, 1.0f), 0.0f);
         }
         self->base.ambient[3] = alpha;
         scale = self->dashSpeed;
-        self->statePos[0] = self->statePos[0] + self->effectAnchor[0] * scale;
-        self->statePos[1] = self->statePos[1] + self->effectAnchor[1] * scale;
-        self->statePos[2] = self->statePos[2] + self->effectAnchor[2] * scale;
+        self->statePos[0] = VfAdd(self->statePos[0], VfMul(self->effectAnchor[0], scale));
+        self->statePos[1] = VfAdd(self->statePos[1], VfMul(self->effectAnchor[1], scale));
+        self->statePos[2] = VfAdd(self->statePos[2], VfMul(self->effectAnchor[2], scale));
         self->stateCounter = self->stateCounter + 1;
         if (!(self->subWait < self->stateCounter)) {
             if (self->stateCounter == 1) {
@@ -171,19 +169,17 @@ void BtlBakuganState20Update(BtlBakugan *self)
         if (self->stateTicks < 5) {
             self->stateCounter = 0;
             /* effectAnchor = target anchor - statePos (w = target anchor w), flattened */
-            self->effectAnchor[0] = other->anchorMatrix[3][0] - self->statePos[0];
-            self->effectAnchor[1] = other->anchorMatrix[3][1] - self->statePos[1];
-            self->effectAnchor[2] = other->anchorMatrix[3][2] - self->statePos[2];
+            self->effectAnchor[0] = VfSub(other->anchorMatrix[3][0], self->statePos[0]);
+            self->effectAnchor[1] = VfSub(other->anchorMatrix[3][1], self->statePos[1]);
+            self->effectAnchor[2] = VfSub(other->anchorMatrix[3][2], self->statePos[2]);
             self->effectAnchor[3] = other->anchorMatrix[3][3];
             self->effectAnchor[1] = 0.0f;
             /* normalise (lanes clamped to [-1, 1], w 0) */
-            len2 = self->effectAnchor[0] * self->effectAnchor[0] +
-                   self->effectAnchor[1] * self->effectAnchor[1] +
-                   self->effectAnchor[2] * self->effectAnchor[2];
+            len2 = VfDot3(self->effectAnchor[0], self->effectAnchor[1], self->effectAnchor[2], self->effectAnchor[0], self->effectAnchor[1], self->effectAnchor[2]);
             inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-            self->effectAnchor[0] = VfSat1(self->effectAnchor[0] * inv);
-            self->effectAnchor[1] = VfSat1(self->effectAnchor[1] * inv);
-            self->effectAnchor[2] = VfSat1(self->effectAnchor[2] * inv);
+            self->effectAnchor[0] = VfSat1(VfMul(self->effectAnchor[0], inv));
+            self->effectAnchor[1] = VfSat1(VfMul(self->effectAnchor[1], inv));
+            self->effectAnchor[2] = VfSat1(VfMul(self->effectAnchor[2], inv));
             self->effectAnchor[3] = 0.0f;
             /* axis = (z, y, -x, w): the horizontal normal of the direction */
             axis[0] = self->effectAnchor[2];
@@ -192,12 +188,12 @@ void BtlBakuganState20Update(BtlBakugan *self)
             axis[3] = self->effectAnchor[3];
             angle = CoreRandFloat(0.52359879f) + 0.17453292f;
             /* quat = (axis * sin(angle / 2), cos(angle / 2)); vcst 1/pi times angle in quarter turns */
-            t = 0.318309873f * angle;
+            t = VfMul(0.318309873f, angle);
             c = VfCosQuarter(t);
             s = VfSinQuarter(t);
-            quat[0] = axis[0] * s;
-            quat[1] = axis[1] * s;
-            quat[2] = axis[2] * s;
+            quat[0] = VfMul(axis[0], s);
+            quat[1] = VfMul(axis[1], s);
+            quat[2] = VfMul(axis[2], s);
             quat[3] = c;
             /* effectAnchor = (quat * (effectAnchor.xyz, 0)) * conj(quat) */
             conj[0] = -quat[0];
@@ -208,55 +204,53 @@ void BtlBakuganState20Update(BtlBakugan *self)
             vec[1] = self->effectAnchor[1];
             vec[2] = self->effectAnchor[2];
             vec[3] = 0.0f;
-            rot[0] = quat[0] * vec[3] + quat[1] * vec[2] - quat[2] * vec[1] + quat[3] * vec[0];
-            rot[1] = -quat[0] * vec[2] + quat[1] * vec[3] + quat[2] * vec[0] + quat[3] * vec[1];
-            rot[2] = quat[0] * vec[1] - quat[1] * vec[0] + quat[2] * vec[3] + quat[3] * vec[2];
-            rot[3] = -quat[0] * vec[0] - quat[1] * vec[1] - quat[2] * vec[2] + quat[3] * vec[3];
+            rot[0] = VfDot4(quat[0], quat[1], quat[2], quat[3], vec[3], vec[2], -vec[1], vec[0]);
+            rot[1] = VfDot4(-quat[0], quat[1], quat[2], quat[3], vec[2], vec[3], vec[0], vec[1]);
+            rot[2] = VfDot4(quat[0], quat[1], quat[2], quat[3], vec[1], -vec[0], vec[3], vec[2]);
+            rot[3] = VfDot4(-quat[0], quat[1], quat[2], quat[3], vec[0], -vec[1], -vec[2], vec[3]);
             self->effectAnchor[0] =
-                rot[0] * conj[3] + rot[1] * conj[2] - rot[2] * conj[1] + rot[3] * conj[0];
+                VfDot4(rot[0], rot[1], rot[2], rot[3], conj[3], conj[2], -conj[1], conj[0]);
             self->effectAnchor[1] =
-                -rot[0] * conj[2] + rot[1] * conj[3] + rot[2] * conj[0] + rot[3] * conj[1];
+                VfDot4(-rot[0], rot[1], rot[2], rot[3], conj[2], conj[3], conj[0], conj[1]);
             self->effectAnchor[2] =
-                rot[0] * conj[1] - rot[1] * conj[0] + rot[2] * conj[3] + rot[3] * conj[2];
+                VfDot4(rot[0], rot[1], rot[2], rot[3], conj[1], -conj[0], conj[3], conj[2]);
             self->effectAnchor[3] =
-                -rot[0] * conj[0] - rot[1] * conj[1] - rot[2] * conj[2] + rot[3] * conj[3];
+                VfDot4(-rot[0], rot[1], rot[2], rot[3], conj[0], -conj[1], -conj[2], conj[3]);
             /* rotate about y by 10 degrees (vrot rows (c, 0, -s) and (s, 0, c)) */
-            c = __builtin_cosf(0.17453292f);
-            s = __builtin_sinf(0.17453292f);
+            c = VfCosQuarter(0.17453292f * 0.636619747f);
+            s = VfSinQuarter(0.17453292f * 0.636619747f);
             vec[0] = self->effectAnchor[0];
             vec[1] = self->effectAnchor[1];
             vec[2] = self->effectAnchor[2];
-            self->effectAnchor[0] = vec[0] * c + vec[1] * 0.0f + vec[2] * -s;
-            self->effectAnchor[2] = vec[0] * s + vec[1] * 0.0f + vec[2] * c;
+            self->effectAnchor[0] = VfDot3(vec[0], vec[1], vec[2], c, 0.0f, -s);
+            self->effectAnchor[2] = VfDot3(vec[0], vec[1], vec[2], s, 0.0f, c);
             /* statePos = target anchor - effectAnchor * 500 (w = target anchor w) */
-            self->statePos[0] = other->anchorMatrix[3][0] - self->effectAnchor[0] * 500.0f;
-            self->statePos[1] = other->anchorMatrix[3][1] - self->effectAnchor[1] * 500.0f;
-            self->statePos[2] = other->anchorMatrix[3][2] - self->effectAnchor[2] * 500.0f;
+            self->statePos[0] = VfSub(other->anchorMatrix[3][0], VfMul(self->effectAnchor[0], 500.0f));
+            self->statePos[1] = VfSub(other->anchorMatrix[3][1], VfMul(self->effectAnchor[1], 500.0f));
+            self->statePos[2] = VfSub(other->anchorMatrix[3][2], VfMul(self->effectAnchor[2], 500.0f));
             self->statePos[3] = other->anchorMatrix[3][3];
             fx = GfxEffectSpawnDirected(g_worldEffectMgr, 0xf3, self->statePos, self->effectAnchor);
             /* fx->matrix rows: side = unit(up x dir), up' = dir x side, dir = unit(effectAnchor)
                (lanes clamped to [-1, 1]), w column 0, translation row (0, 0, 0, 1) */
-            len2 = self->effectAnchor[0] * self->effectAnchor[0] +
-                   self->effectAnchor[1] * self->effectAnchor[1] +
-                   self->effectAnchor[2] * self->effectAnchor[2];
+            len2 = VfDot3(self->effectAnchor[0], self->effectAnchor[1], self->effectAnchor[2], self->effectAnchor[0], self->effectAnchor[1], self->effectAnchor[2]);
             inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-            dir[0] = VfSat1(self->effectAnchor[0] * inv);
-            dir[1] = VfSat1(self->effectAnchor[1] * inv);
-            dir[2] = VfSat1(self->effectAnchor[2] * inv);
+            dir[0] = VfSat1(VfMul(self->effectAnchor[0], inv));
+            dir[1] = VfSat1(VfMul(self->effectAnchor[1], inv));
+            dir[2] = VfSat1(VfMul(self->effectAnchor[2], inv));
             up[0] = g_vecUp.x;
             up[1] = g_vecUp.y;
             up[2] = g_vecUp.z;
-            side[0] = up[1] * dir[2] - up[2] * dir[1];
-            side[1] = up[2] * dir[0] - up[0] * dir[2];
-            side[2] = up[0] * dir[1] - up[1] * dir[0];
-            len2 = side[0] * side[0] + side[1] * side[1] + side[2] * side[2];
+            side[0] = VfDot2(up[1], up[2], dir[2], -dir[1]);
+            side[1] = VfDot2(up[2], up[0], dir[0], -dir[2]);
+            side[2] = VfDot2(up[0], up[1], dir[1], -dir[0]);
+            len2 = VfDot3(side[0], side[1], side[2], side[0], side[1], side[2]);
             inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-            side[0] = VfSat1(side[0] * inv);
-            side[1] = VfSat1(side[1] * inv);
-            side[2] = VfSat1(side[2] * inv);
-            up[0] = dir[1] * side[2] - dir[2] * side[1];
-            up[1] = dir[2] * side[0] - dir[0] * side[2];
-            up[2] = dir[0] * side[1] - dir[1] * side[0];
+            side[0] = VfSat1(VfMul(side[0], inv));
+            side[1] = VfSat1(VfMul(side[1], inv));
+            side[2] = VfSat1(VfMul(side[2], inv));
+            up[0] = VfDot2(dir[1], dir[2], side[2], -side[1]);
+            up[1] = VfDot2(dir[2], dir[0], side[0], -side[2]);
+            up[2] = VfDot2(dir[0], dir[1], side[1], -side[0]);
             m = fx->matrix;
             m[0] = side[0];
             m[1] = side[1];
@@ -277,19 +271,17 @@ void BtlBakuganState20Update(BtlBakugan *self)
             goto hit_test;
         }
         /* velocity = own pos - target pos, flattened, scaled to 50 (w 0) */
-        self->base.velocity[0] = self->base.pos[0] - other->base.pos[0];
-        self->base.velocity[1] = self->base.pos[1] - other->base.pos[1];
-        self->base.velocity[2] = self->base.pos[2] - other->base.pos[2];
+        self->base.velocity[0] = VfSub(self->base.pos[0], other->base.pos[0]);
+        self->base.velocity[1] = VfSub(self->base.pos[1], other->base.pos[1]);
+        self->base.velocity[2] = VfSub(self->base.pos[2], other->base.pos[2]);
         self->base.velocity[3] = self->base.pos[3];
         self->base.velocity[1] = 0.0f;
-        len2 = self->base.velocity[0] * self->base.velocity[0] +
-               self->base.velocity[1] * self->base.velocity[1] +
-               self->base.velocity[2] * self->base.velocity[2];
+        len2 = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
         inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-        inv = inv * 50.0f;
-        self->base.velocity[0] = self->base.velocity[0] * inv;
-        self->base.velocity[1] = self->base.velocity[1] * inv;
-        self->base.velocity[2] = self->base.velocity[2] * inv;
+        inv = VfMul(inv, 50.0f);
+        self->base.velocity[0] = VfMul(self->base.velocity[0], inv);
+        self->base.velocity[1] = VfMul(self->base.velocity[1], inv);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], inv);
         self->base.velocity[3] = 0.0f;
         self->subTimer = self->subTimer + 1;
         BtlBakuganSetHeading(self, atan2f(self->base.velocity[2], self->base.velocity[0]));
@@ -300,14 +292,12 @@ void BtlBakuganState20Update(BtlBakugan *self)
 
     if (self->subTimer < 3) {
         self->base.ambient[3] = self->base.ambient[3] + (1.0f - self->base.ambient[3]) * 0.1f;
-        self->base.velocity[0] = self->base.velocity[0] * 0.9f;
-        self->base.velocity[1] = self->base.velocity[1] * 0.9f;
-        self->base.velocity[2] = self->base.velocity[2] * 0.9f;
+        self->base.velocity[0] = VfMul(self->base.velocity[0], 0.9f);
+        self->base.velocity[1] = VfMul(self->base.velocity[1], 0.9f);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], 0.9f);
         self->base.velocity[3] = 0.0f;
         self->gravityHold = 10;
-        t = self->base.velocity[0] * self->base.velocity[0] +
-            self->base.velocity[1] * self->base.velocity[1] +
-            self->base.velocity[2] * self->base.velocity[2];
+        t = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
         if (t < 25.0f) {
             self->base.ambient[3] = 1.0f;
             self->dashSpeed = 0.0f;
@@ -320,25 +310,23 @@ void BtlBakuganState20Update(BtlBakugan *self)
     }
 
     if (self->subTimer < 4) {
-        self->base.velocity[0] = self->base.velocity[0] * 0.9f;
-        self->base.velocity[1] = self->base.velocity[1] * 0.9f;
-        self->base.velocity[2] = self->base.velocity[2] * 0.9f;
+        self->base.velocity[0] = VfMul(self->base.velocity[0], 0.9f);
+        self->base.velocity[1] = VfMul(self->base.velocity[1], 0.9f);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], 0.9f);
         self->base.velocity[3] = 0.0f;
         self->gravityHold = 10;
         self->stateCounter = self->stateCounter + 1;
         if (self->stateCounter == 18) {
             GfxEffectSpawn(g_worldEffectMgr, 0xa4, other->base.pos);
             /* effectAnchor = unit(target pos - own pos), lanes clamped to [-1, 1], w 0 */
-            self->effectAnchor[0] = other->base.pos[0] - self->base.pos[0];
-            self->effectAnchor[1] = other->base.pos[1] - self->base.pos[1];
-            self->effectAnchor[2] = other->base.pos[2] - self->base.pos[2];
-            len2 = self->effectAnchor[0] * self->effectAnchor[0] +
-                   self->effectAnchor[1] * self->effectAnchor[1] +
-                   self->effectAnchor[2] * self->effectAnchor[2];
+            self->effectAnchor[0] = VfSub(other->base.pos[0], self->base.pos[0]);
+            self->effectAnchor[1] = VfSub(other->base.pos[1], self->base.pos[1]);
+            self->effectAnchor[2] = VfSub(other->base.pos[2], self->base.pos[2]);
+            len2 = VfDot3(self->effectAnchor[0], self->effectAnchor[1], self->effectAnchor[2], self->effectAnchor[0], self->effectAnchor[1], self->effectAnchor[2]);
             inv = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-            self->effectAnchor[0] = VfSat1(self->effectAnchor[0] * inv);
-            self->effectAnchor[1] = VfSat1(self->effectAnchor[1] * inv);
-            self->effectAnchor[2] = VfSat1(self->effectAnchor[2] * inv);
+            self->effectAnchor[0] = VfSat1(VfMul(self->effectAnchor[0], inv));
+            self->effectAnchor[1] = VfSat1(VfMul(self->effectAnchor[1], inv));
+            self->effectAnchor[2] = VfSat1(VfMul(self->effectAnchor[2], inv));
             self->effectAnchor[3] = 0.0f;
             hit = 1;
             self->comboTimer = 60;
@@ -389,9 +377,9 @@ hit_test:
     saved[1] = self->anchorMatrix[3][1];
     saved[2] = self->anchorMatrix[3][2];
     saved[3] = self->anchorMatrix[3][3];
-    g_btlBakuganSphereQuery.center.x = other->anchorMatrix[3][0] - self->effectAnchor[0] * 100.0f;
-    g_btlBakuganSphereQuery.center.y = other->anchorMatrix[3][1] - self->effectAnchor[1] * 100.0f;
-    g_btlBakuganSphereQuery.center.z = other->anchorMatrix[3][2] - self->effectAnchor[2] * 100.0f;
+    g_btlBakuganSphereQuery.center.x = VfSub(other->anchorMatrix[3][0], VfMul(self->effectAnchor[0], 100.0f));
+    g_btlBakuganSphereQuery.center.y = VfSub(other->anchorMatrix[3][1], VfMul(self->effectAnchor[1], 100.0f));
+    g_btlBakuganSphereQuery.center.z = VfSub(other->anchorMatrix[3][2], VfMul(self->effectAnchor[2], 100.0f));
     g_btlBakuganSphereQuery.center.w = other->anchorMatrix[3][3];
     self->anchorMatrix[3][0] = g_btlBakuganSphereQuery.center.x;
     self->anchorMatrix[3][1] = g_btlBakuganSphereQuery.center.y;

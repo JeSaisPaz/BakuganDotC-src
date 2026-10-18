@@ -9,15 +9,15 @@
 
 static void NormaliseClamped(float v[3])
 {
-  float len2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+  float len2 = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
   float scale = VfRsq(len2);
 
   if (VfIsZero(len2)) {
     scale = 0.0f;
   }
-  v[0] = VfSat1(v[0] * scale);
-  v[1] = VfSat1(v[1] * scale);
-  v[2] = VfSat1(v[2] * scale);
+  v[0] = VfSat1(VfMul(v[0], scale));
+  v[1] = VfSat1(VfMul(v[1], scale));
+  v[2] = VfSat1(VfMul(v[2], scale));
 }
 
 s32 GameFieldIsPlayerInFront(CoreTask *task, GameGimmick *obj, bool back)
@@ -40,19 +40,19 @@ s32 GameFieldIsPlayerInFront(CoreTask *task, GameGimmick *obj, bool back)
   }
   /* Root matrix rows 0..2 times the local axis (vtfm3, E form). */
   m = model->data->rootMatrix;
-  axis[0] = m[0] * local[0] + m[4] * local[1] + m[8] * local[2];
-  axis[1] = m[1] * local[0] + m[5] * local[1] + m[9] * local[2];
-  axis[2] = m[2] * local[0] + m[6] * local[1] + m[10] * local[2];
+  axis[0] = VfDot3(m[0], m[4], m[8], local[0], local[1], local[2]);
+  axis[1] = VfDot3(m[1], m[5], m[9], local[0], local[1], local[2]);
+  axis[2] = VfDot3(m[2], m[6], m[10], local[0], local[1], local[2]);
   NormaliseClamped(axis);
 
   player = (GfxModel *)ActorFindPlayer();
-  dir[0] = player->pos[0] - model->pos[0];
-  dir[1] = player->pos[1] - model->pos[1];
-  dir[2] = player->pos[2] - model->pos[2];
+  dir[0] = VfSub(player->pos[0], model->pos[0]);
+  dir[1] = VfSub(player->pos[1], model->pos[1]);
+  dir[2] = VfSub(player->pos[2], model->pos[2]);
   NormaliseClamped(dir);
 
-  dot = axis[0] * dir[0] + axis[1] * dir[1] + axis[2] * dir[2];
-  limit = __builtin_cosf(1.04719758f); /* pi/3 */
+  dot = VfDot3(axis[0], axis[1], axis[2], dir[0], dir[1], dir[2]);
+  limit = VfCosQuarter(1.04719758f * 0.636619747f); /* pi/3 */
   if (dot < limit) {
     return 0;
   }

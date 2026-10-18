@@ -25,9 +25,9 @@ void BtlMotionDataOffsetTrackKeys(GmoMotionInfo *motion, u32 target, float *offs
             GmoMotionKeyH *key = (GmoMotionKeyH *)keys;
 
             for (k = 0; k < track->paramA; k++, key++) {
-                float x = VfH2f(key->value[0]) + offset[0];
-                float y = VfH2f(key->value[1]) + offset[1];
-                float z = VfH2f(key->value[2]) + offset[2];
+                float x = VfAdd(VfH2f(key->value[0]), offset[0]);
+                float y = VfAdd(VfH2f(key->value[1]), offset[1]);
+                float z = VfAdd(VfH2f(key->value[2]), offset[2]);
 
                 key->value[0] = BtlFloatToHalf(x);
                 key->value[1] = BtlFloatToHalf(y);
@@ -37,9 +37,9 @@ void BtlMotionDataOffsetTrackKeys(GmoMotionInfo *motion, u32 target, float *offs
             GmoMotionKeyF *key = (GmoMotionKeyF *)keys;
 
             for (k = 0; k < track->paramA; k++, key++) {
-                float x = key->value[0] + offset[0];
-                float y = key->value[1] + offset[1];
-                float z = key->value[2] + offset[2];
+                float x = VfAdd(key->value[0], offset[0]);
+                float y = VfAdd(key->value[1], offset[1]);
+                float z = VfAdd(key->value[2], offset[2]);
 
                 key->value[0] = x;
                 key->value[1] = y;

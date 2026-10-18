@@ -18,7 +18,7 @@ void UiCollectionTheaterUpdateThumbBob(UiScreen *screen)
         for (i = 0; i < 6; i++) {
             if (self->sceneId[i + self->page * 6] != 0xff) {
                 /* vcos.s of (t·π)·S703 (2/π): cos in radians */
-                c = __builtin_cosf(self->thumbBobT * 3.1415927f);
+                c = VfCosQuarter(VfMul(self->thumbBobT * 3.1415927f, 0.636619747f));
                 sprites[13 + i]->posY =
                     self->thumbPos[i][1] - (1.0f - c) * 0.5f * 4.0f;
             }

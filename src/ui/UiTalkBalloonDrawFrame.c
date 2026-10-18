@@ -243,10 +243,10 @@ void UiTalkBalloonDrawFrame(UiTalkBalloon *self, void *packet)
   }
 
   /* dir = tail - base, len = |dir| */
-  dir[0] = tail[0] - base[0];
-  dir[1] = tail[1] - base[1];
-  dir[2] = tail[2] - base[2];
-  len = __builtin_sqrtf(dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2]);
+  dir[0] = VfSub(tail[0], base[0]);
+  dir[1] = VfSub(tail[1], base[1]);
+  dir[2] = VfSub(tail[2], base[2]);
+  len = VfSqrt(VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]));
   if (len <= 0.1f) {
     return;
   }
@@ -257,11 +257,11 @@ void UiTalkBalloonDrawFrame(UiTalkBalloon *self, void *packet)
     reach = 30.0f;
   }
   /* dir = normalize(dir), each lane clamped to [-1, 1]; zero length scales by 0 */
-  lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+  lenSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
   k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-  dir[0] = VfSat1(dir[0] * k);
-  dir[1] = VfSat1(dir[1] * k);
-  dir[2] = VfSat1(dir[2] * k);
+  dir[0] = VfSat1(VfMul(dir[0], k));
+  dir[1] = VfSat1(VfMul(dir[1], k));
+  dir[2] = VfSat1(VfMul(dir[2], k));
   if (!(dir[0] <= 0.5f)) {
     dir[0] = 0.5f;
   } else if (dir[0] < -0.5f) {
@@ -274,11 +274,11 @@ void UiTalkBalloonDrawFrame(UiTalkBalloon *self, void *packet)
     dir[1] = 0.4f;
   }
   /* dir = normalize(dir) */
-  lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+  lenSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
   k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-  dir[0] = VfSat1(dir[0] * k);
-  dir[1] = VfSat1(dir[1] * k);
-  dir[2] = VfSat1(dir[2] * k);
+  dir[0] = VfSat1(VfMul(dir[0], k));
+  dir[1] = VfSat1(VfMul(dir[1], k));
+  dir[2] = VfSat1(VfMul(dir[2], k));
   fill[4][0] = base[0] + dir[0] * reach;
   fill[4][1] = base[1] + dir[1] * reach;
   fill[3][0] = fill[3][0] - dir[0] * reach * 0.5f;

@@ -67,9 +67,7 @@ void BtlBakuganInitColliders(BtlBakugan *self)
     self->bodyShape.radius = r;
     self->bodyShape.radiusSq = r * r;
     /* vdot.t + vsqrt.s: |axis.xyz| */
-    self->bodyShape.axisLen = __builtin_sqrtf(self->bodyShape.axis[0] * self->bodyShape.axis[0] +
-                                              self->bodyShape.axis[1] * self->bodyShape.axis[1] +
-                                              self->bodyShape.axis[2] * self->bodyShape.axis[2]);
+    self->bodyShape.axisLen = VfSqrt(VfDot3(self->bodyShape.axis[0], self->bodyShape.axis[1], self->bodyShape.axis[2], self->bodyShape.axis[0], self->bodyShape.axis[1], self->bodyShape.axis[2]));
     CollisionColliderInit(&self->collider0->node, (const u32 *)&self->bodyShape, 0, self, 0);
     self->collider0->shapeBlock.installed = 0;
     collider = self->collider0;

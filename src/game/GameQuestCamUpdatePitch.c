@@ -83,32 +83,32 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
   owner = (const GameQuestPathCursor *)(self->base).base.base.followed;
   e = &owner->vtbl[2];
   pos = ((const ScePspFVector4 *(*)(void *))e->fn)((char *)owner + e->delta);
-  dir.x = pos->x - (self->base).base.base.goal.x;
-  dir.y = pos->y - (self->base).base.base.goal.y;
-  dir.z = pos->z - (self->base).base.base.goal.z;
+  dir.x = VfSub(pos->x, (self->base).base.base.goal.x);
+  dir.y = VfSub(pos->y, (self->base).base.base.goal.y);
+  dir.z = VfSub(pos->z, (self->base).base.base.goal.z);
   dir.w = pos->w;
   if (g_staticZeroFGuard == 0) {
     g_staticZeroFGuard = 1;
     g_staticZeroF = 0.0f;
   }
   dir.y = 0.0f;
-  len = __builtin_sqrtf(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
+  len = VfSqrt(VfDot3(dir.x, dir.y, dir.z, dir.x, dir.y, dir.z));
   if (len <= 1e-06f) {
     dir = g_gameQuestCamPathModeAxisConsts.posZ;
   } else {
     inv = 1.0f / len;
-    dir.x = dir.x * inv;
-    dir.y = dir.y * inv;
-    dir.z = dir.z * inv;
+    dir.x = VfMul(dir.x, inv);
+    dir.y = VfMul(dir.y, inv);
+    dir.z = VfMul(dir.z, inv);
     dir.w = 0.0f;
-    d = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
+    d = VfDot3(dir.x, dir.y, dir.z, dir.x, dir.y, dir.z);
     k = VfRsq(d);
     if (VfIsZero(d)) {
       k = 0.0f;
     }
-    dir.x = VfSat1(dir.x * k);
-    dir.y = VfSat1(dir.y * k);
-    dir.z = VfSat1(dir.z * k);
+    dir.x = VfSat1(VfMul(dir.x, k));
+    dir.y = VfSat1(VfMul(dir.y, k));
+    dir.z = VfSat1(VfMul(dir.z, k));
   }
 
   /* segDir = horizontal segment direction, normalised; dot with dir */
@@ -118,16 +118,16 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
     g_staticZeroF = 0.0f;
   }
   segDir.y = 0.0f;
-  d = segDir.x * segDir.x + segDir.y * segDir.y + segDir.z * segDir.z;
+  d = VfDot3(segDir.x, segDir.y, segDir.z, segDir.x, segDir.y, segDir.z);
   k = VfRsq(d);
   if (VfIsZero(d)) {
     k = 0.0f;
   }
-  segDir.x = VfSat1(segDir.x * k);
-  segDir.y = VfSat1(segDir.y * k);
-  segDir.z = VfSat1(segDir.z * k);
+  segDir.x = VfSat1(VfMul(segDir.x, k));
+  segDir.y = VfSat1(VfMul(segDir.y, k));
+  segDir.z = VfSat1(VfMul(segDir.z, k));
   segDir.w = 0.0f;
-  dot = dir.x * segDir.x + dir.y * segDir.y + dir.z * segDir.z;
+  dot = VfDot3(dir.x, dir.y, dir.z, segDir.x, segDir.y, segDir.z);
   ang = (float)acos((double)dot);
   if (!(ang <= 1.5707964f)) {
     ang = 3.1415927f - ang;
@@ -150,7 +150,7 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
     }
     lookY = (self->base).base.base.ctrl->lookAt.y;
     /* y of cross(dir, segDir) */
-    crossY = dir.z * segDir.x - dir.x * segDir.z;
+    crossY = VfDot2(dir.z, dir.x, segDir.x, -segDir.z);
     if (g_staticZeroFGuard == 0) {
       g_staticZeroFGuard = 1;
       g_staticZeroF = 0.0f;
@@ -163,29 +163,29 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
     /* offs = -(segment dir * cos(pitch) * pitchDist) */
     offs = ((GameQuestPathSegment *)self->segment)->dir;
     scl = -scl;
-    offs.x = offs.x * scl;
-    offs.y = offs.y * scl;
-    offs.z = offs.z * scl;
+    offs.x = VfMul(offs.x, scl);
+    offs.y = VfMul(offs.y, scl);
+    offs.z = VfMul(offs.z, scl);
     offs.w = 0.0f;
 
     /* goal = lerp(from->pos, to->pos, t) + offs, old goal y kept */
     pA = ((GameQuestPathSegment *)self->segment)->from->pos;
     scl = 1.0f - ((GameQuestPathSegment *)self->segment)->t;
-    pA.x = pA.x * scl;
-    pA.y = pA.y * scl;
-    pA.z = pA.z * scl;
+    pA.x = VfMul(pA.x, scl);
+    pA.y = VfMul(pA.y, scl);
+    pA.z = VfMul(pA.z, scl);
     pA.w = 0.0f;
     pB = ((GameQuestPathSegment *)self->segment)->to->pos;
     scl = ((GameQuestPathSegment *)self->segment)->t;
-    pB.x = pB.x * scl;
-    pB.y = pB.y * scl;
-    pB.z = pB.z * scl;
-    pA.x = pA.x + pB.x;
-    pA.y = pA.y + pB.y;
-    pA.z = pA.z + pB.z;
-    (self->base).base.base.goal.x = pA.x + offs.x;
-    (self->base).base.base.goal.y = pA.y + offs.y;
-    (self->base).base.base.goal.z = pA.z + offs.z;
+    pB.x = VfMul(pB.x, scl);
+    pB.y = VfMul(pB.y, scl);
+    pB.z = VfMul(pB.z, scl);
+    pA.x = VfAdd(pA.x, pB.x);
+    pA.y = VfAdd(pA.y, pB.y);
+    pA.z = VfAdd(pA.z, pB.z);
+    (self->base).base.base.goal.x = VfAdd(pA.x, offs.x);
+    (self->base).base.base.goal.y = VfAdd(pA.y, offs.y);
+    (self->base).base.base.goal.z = VfAdd(pA.z, offs.z);
     (self->base).base.base.goal.w = pA.w;
     if (g_staticZeroFGuard == 0) {
       g_staticZeroFGuard = 1;
@@ -199,11 +199,11 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
        (fields as columns) by R * M (vmmul.q E200, E200, E000: column c of the result is the sum
        over k of M[c][k] * column k of R). */
     offs = ((GameQuestPathSegment *)self->segment)->dir;
-    ax = 0.0f * pitch;
+    ax = VfMul(0.0f, pitch);
     ay = mtx[0][1];
     az = mtx[0][2];
-    cx = __builtin_cosf(ax);
-    sx = __builtin_sinf(ax);
+    cx = VfCosQuarter(VfMul(ax, 0.636619747f));
+    sx = VfSinQuarter(VfMul(ax, 0.636619747f));
     cy = VfCosQuarter(ay);
     sy = VfSinQuarter(ay);
     cz = VfCosQuarter(az);
@@ -233,8 +233,7 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
     for (step = 0; step < 3; step++) {
       for (c = 0; c < 4; c++) {
         for (r = 0; r < 4; r++) {
-          nm[c][r] = mtx[c][0] * rot[step][0][r] + mtx[c][1] * rot[step][1][r] +
-                     mtx[c][2] * rot[step][2][r] + mtx[c][3] * rot[step][3][r];
+          nm[c][r] = VfDot4(mtx[c][0], mtx[c][1], mtx[c][2], mtx[c][3], rot[step][0][r], rot[step][1][r], rot[step][2][r], rot[step][3][r]);
         }
       }
       for (c = 0; c < 4; c++) {
@@ -244,16 +243,16 @@ void GameQuestCamUpdatePitch(GameQuestCamPathMode *self)
       }
     }
     /* vtfm3.t (E form): rotated = sum of column k * dir[k]; w lane left 0 by the last vrot */
-    pA.x = mtx[0][0] * offs.x + mtx[1][0] * offs.y + mtx[2][0] * offs.z;
-    pA.y = mtx[0][1] * offs.x + mtx[1][1] * offs.y + mtx[2][1] * offs.z;
-    pA.z = mtx[0][2] * offs.x + mtx[1][2] * offs.y + mtx[2][2] * offs.z;
+    pA.x = VfDot3(mtx[0][0], mtx[1][0], mtx[2][0], offs.x, offs.y, offs.z);
+    pA.y = VfDot3(mtx[0][1], mtx[1][1], mtx[2][1], offs.x, offs.y, offs.z);
+    pA.z = VfDot3(mtx[0][2], mtx[1][2], mtx[2][2], offs.x, offs.y, offs.z);
     scl = self->pitchDist;
-    offs.x = pA.x * scl;
-    offs.y = pA.y * scl;
-    offs.z = pA.z * scl;
-    eye.x = (self->base).base.base.goal.x + offs.x;
-    eye.y = (self->base).base.base.goal.y + offs.y;
-    eye.z = (self->base).base.base.goal.z + offs.z;
+    offs.x = VfMul(pA.x, scl);
+    offs.y = VfMul(pA.y, scl);
+    offs.z = VfMul(pA.z, scl);
+    eye.x = VfAdd((self->base).base.base.goal.x, offs.x);
+    eye.y = VfAdd((self->base).base.base.goal.y, offs.y);
+    eye.z = VfAdd((self->base).base.base.goal.z, offs.z);
     eye.w = (self->base).base.base.goal.w;
     if (g_staticZeroFGuard == 0) {
       g_staticZeroFGuard = 1;

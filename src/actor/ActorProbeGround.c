@@ -44,22 +44,22 @@ void ActorProbeGround(Actor *self)
     ny = self->groundNormal[1];
     nz = self->groundNormal[2];
     nw = self->groundNormal[3];
-    nx = nx + (g_collisionHitResult.normal.x - nx) * 0.5f;
-    ny = ny + (g_collisionHitResult.normal.y - ny) * 0.5f;
-    nz = nz + (g_collisionHitResult.normal.z - nz) * 0.5f;
-    nw = nw + (g_collisionHitResult.normal.w - nw) * 0.5f;
+    nx = VfAdd(nx, VfMul(VfSub(g_collisionHitResult.normal.x, nx), 0.5f));
+    ny = VfAdd(ny, VfMul(VfSub(g_collisionHitResult.normal.y, ny), 0.5f));
+    nz = VfAdd(nz, VfMul(VfSub(g_collisionHitResult.normal.z, nz), 0.5f));
+    nw = VfAdd(nw, VfMul(VfSub(g_collisionHitResult.normal.w, nw), 0.5f));
     self->groundNormal[0] = nx;
     self->groundNormal[1] = ny;
     self->groundNormal[2] = nz;
     self->groundNormal[3] = nw;
-    len2 = nx * nx + ny * ny + nz * nz;
+    len2 = VfDot3(nx, ny, nz, nx, ny, nz);
     k = VfRsq(len2);
     if (VfIsZero(len2)) {
       k = 0.0f;
     }
-    self->groundNormal[0] = VfSat1(nx * k);
-    self->groundNormal[1] = VfSat1(ny * k);
-    self->groundNormal[2] = VfSat1(nz * k);
+    self->groundNormal[0] = VfSat1(VfMul(nx, k));
+    self->groundNormal[1] = VfSat1(VfMul(ny, k));
+    self->groundNormal[2] = VfSat1(VfMul(nz, k));
     self->groundNormal[3] = 0.0f;
     self->surfaceType = g_collisionHitInfo.surface;
   } else {

@@ -43,9 +43,9 @@ void ActorNpcViewConeUpdate(ActorNpcViewCone *cone, s32 mode, float length, floa
       scale[3] = 0.0f;
       /* Rows 0..2 (all four lanes) scaled by scale[0..2]. */
       for (j = 0; j < 4; j++) {
-        m[0 + j] = m[0 + j] * scale[0];
-        m[4 + j] = m[4 + j] * scale[1];
-        m[8 + j] = m[8 + j] * scale[2];
+        m[0 + j] = VfMul(m[0 + j], scale[0]);
+        m[4 + j] = VfMul(m[4 + j], scale[1]);
+        m[8 + j] = VfMul(m[8 + j], scale[2]);
       }
       GfxEffectUpdateNow(effect);
     }
@@ -82,9 +82,9 @@ void ActorNpcViewConeUpdate(ActorNpcViewCone *cone, s32 mode, float length, floa
         scale[2] = scale[2] * widthScale;
       }
       for (j = 0; j < 4; j++) {
-        m[0 + j] = m[0 + j] * scale[0];
-        m[4 + j] = m[4 + j] * scale[1];
-        m[8 + j] = m[8 + j] * scale[2];
+        m[0 + j] = VfMul(m[0 + j], scale[0]);
+        m[4 + j] = VfMul(m[4 + j], scale[1]);
+        m[8 + j] = VfMul(m[8 + j], scale[2]);
       }
       GfxEffectUpdateNow(effect);
     }
@@ -98,15 +98,15 @@ void ActorNpcViewConeUpdate(ActorNpcViewCone *cone, s32 mode, float length, floa
   }
   else {
     for (j = 0; j < 3; j++) {
-      d[j] = g_gfxActiveCamera->eye[j] - vc->anchor[j];
+      d[j] = VfSub(g_gfxActiveCamera->eye[j], vc->anchor[j]);
     }
-    dist = __builtin_sqrtf(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+    dist = VfSqrt(VfDot3(d[0], d[1], d[2], d[0], d[1], d[2]));
     player = ActorFindPlayer();
     if (player != NULL) {
       for (j = 0; j < 3; j++) {
-        d[j] = player->base.pos[j] - vc->anchor[j];
+        d[j] = VfSub(player->base.pos[j], vc->anchor[j]);
       }
-      playerDist = __builtin_sqrtf(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+      playerDist = VfSqrt(VfDot3(d[0], d[1], d[2], d[0], d[1], d[2]));
       if (!(dist <= playerDist)) {
         dist = playerDist;
       }
@@ -117,9 +117,9 @@ void ActorNpcViewConeUpdate(ActorNpcViewCone *cone, s32 mode, float length, floa
   }
   if (show && vc->visible != 0) {
     /* vrot [C,0,S,0] of heading * 2/pi (S703): a quarter-turn cos/sin of the angle. */
-    dir[0] = __builtin_cosf(heading);
+    dir[0] = VfCosQuarter(VfMul(heading, 0.636619747f));
     dir[1] = 0.0f;
-    dir[2] = __builtin_sinf(heading);
+    dir[2] = VfSinQuarter(VfMul(heading, 0.636619747f));
     dir[3] = 0.0f;
     for (i = 0; i < 6; i++) {
       for (j = 0; j < 4; j++) {

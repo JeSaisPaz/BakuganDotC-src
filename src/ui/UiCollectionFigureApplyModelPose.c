@@ -11,10 +11,10 @@ static void UiCollectionFigureRotXField(float *d, const float *r, float c, float
   float z = r[2];
   float w = r[3];
 
-  d[0] = x * 1.0f + y * 0.0f + z * 0.0f + w * 0.0f;
-  d[1] = x * 0.0f + y * c + z * -s + w * 0.0f;
-  d[2] = x * 0.0f + y * s + z * c + w * 0.0f;
-  d[3] = x * 0.0f + y * 0.0f + z * 0.0f + w * 1.0f;
+  d[0] = VfDot4(x, y, z, w, 1.0f, 0.0f, 0.0f, 0.0f);
+  d[1] = VfDot4(x, y, z, w, 0.0f, c, -s, 0.0f);
+  d[2] = VfDot4(x, y, z, w, 0.0f, s, c, 0.0f);
+  d[3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 /* Rebuilds the root matrix of the model shown in the second detail view of
@@ -33,8 +33,8 @@ void UiCollectionFigureApplyModelPose(UiCollectionFigure *self)
 
   /* vmul.s by S703 (2/π) then vrot in quarter turns: cos/sin of the angle in radians */
   m = self->models[self->detailCell]->data->rootMatrix;
-  c = __builtin_cosf(self->yaw);
-  s = __builtin_sinf(self->yaw);
+  c = VfCosQuarter(VfMul(self->yaw, 0.636619747f));
+  s = VfSinQuarter(VfMul(self->yaw, 0.636619747f));
   m[0] = c;
   m[1] = 0.0f;
   m[2] = -s;
@@ -53,8 +53,8 @@ void UiCollectionFigureApplyModelPose(UiCollectionFigure *self)
   m[15] = 1.0f;
 
   m = self->models[self->detailCell]->data->rootMatrix;
-  c = __builtin_cosf(self->pitch);
-  s = __builtin_sinf(self->pitch);
+  c = VfCosQuarter(VfMul(self->pitch, 0.636619747f));
+  s = VfSinQuarter(VfMul(self->pitch, 0.636619747f));
   for (i = 0; i < 4; i++) {
     float r[4];
 
@@ -70,9 +70,9 @@ void UiCollectionFigureApplyModelPose(UiCollectionFigure *self)
   self->cellScale[self->detailCell] = scale;
   m = self->models[self->detailCell]->data->rootMatrix;
   for (i = 0; i < 3; i++) {
-    m[i * 4 + 0] = m[i * 4 + 0] * scale;
-    m[i * 4 + 1] = m[i * 4 + 1] * scale;
-    m[i * 4 + 2] = m[i * 4 + 2] * scale;
-    m[i * 4 + 3] = m[i * 4 + 3] * scale;
+    m[i * 4 + 0] = VfMul(m[i * 4 + 0], scale);
+    m[i * 4 + 1] = VfMul(m[i * 4 + 1], scale);
+    m[i * 4 + 2] = VfMul(m[i * 4 + 2], scale);
+    m[i * 4 + 3] = VfMul(m[i * 4 + 3], scale);
   }
 }

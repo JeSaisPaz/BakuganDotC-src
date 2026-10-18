@@ -31,7 +31,7 @@ void BtlAttackUpdateRisingHomingShot(BtlAttack *self, s32 hitId)
         BtlAttackSetPendingHit(self, 0xc5, &g_btlAttackHitQuery.contact.x);
         return;
     }
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

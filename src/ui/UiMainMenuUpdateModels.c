@@ -67,45 +67,45 @@ void UiMainMenuUpdateModels(UiMainMenu *self)
       savedPos[2] = m[14];
       savedPos[3] = m[15];
       /* rotate every row about Y by 0.02 rad (vmmul.q E200,E100,E000); row 3 is restored below */
-      c = __builtin_cosf(0.02f); /* 0x3ca3d70a */
-      sn = __builtin_sinf(0.02f);
+      c = VfCosQuarter(0.02f * 0.636619747f); /* 0x3ca3d70a */
+      sn = VfSinQuarter(0.02f * 0.636619747f);
       for (r = 0; r < 4; r++) {
         x = m[r * 4 + 0];
         y = m[r * 4 + 1];
         z = m[r * 4 + 2];
         w = m[r * 4 + 3];
-        m[r * 4 + 0] = x * c + y * 0.0f + z * sn + w * 0.0f;
-        m[r * 4 + 1] = x * 0.0f + y * 1.0f + z * 0.0f + w * 0.0f;
-        m[r * 4 + 2] = x * -sn + y * 0.0f + z * c + w * 0.0f;
-        m[r * 4 + 3] = x * 0.0f + y * 0.0f + z * 0.0f + w * 1.0f;
+        m[r * 4 + 0] = VfDot4(x, y, z, w, c, 0.0f, sn, 0.0f);
+        m[r * 4 + 1] = VfDot4(x, y, z, w, 0.0f, 1.0f, 0.0f, 0.0f);
+        m[r * 4 + 2] = VfDot4(x, y, z, w, -sn, 0.0f, c, 0.0f);
+        m[r * 4 + 3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
       }
       /* re-orthonormalise: z = row0 x row1, x = row1 x z, y = row1 */
       ay[0] = m[4];
       ay[1] = m[5];
       ay[2] = m[6];
-      az[0] = m[1] * ay[2] - m[2] * ay[1];
-      az[1] = m[2] * ay[0] - m[0] * ay[2];
-      az[2] = m[0] * ay[1] - m[1] * ay[0];
-      ax[0] = ay[1] * az[2] - ay[2] * az[1];
-      ax[1] = ay[2] * az[0] - ay[0] * az[2];
-      ax[2] = ay[0] * az[1] - ay[1] * az[0];
-      k = VfRsq(ax[0] * ax[0] + ax[1] * ax[1] + ax[2] * ax[2]);
-      m[0] = ax[0] * k;
-      m[1] = ax[1] * k;
-      m[2] = ax[2] * k;
+      az[0] = VfDot2(m[1], m[2], ay[2], -ay[1]);
+      az[1] = VfDot2(m[2], m[0], ay[0], -ay[2]);
+      az[2] = VfDot2(m[0], m[1], ay[1], -ay[0]);
+      ax[0] = VfDot2(ay[1], ay[2], az[2], -az[1]);
+      ax[1] = VfDot2(ay[2], ay[0], az[0], -az[2]);
+      ax[2] = VfDot2(ay[0], ay[1], az[1], -az[0]);
+      k = VfRsq(VfDot3(ax[0], ax[1], ax[2], ax[0], ax[1], ax[2]));
+      m[0] = VfMul(ax[0], k);
+      m[1] = VfMul(ax[1], k);
+      m[2] = VfMul(ax[2], k);
       m[3] = 0.0f;
-      k = VfRsq(ay[0] * ay[0] + ay[1] * ay[1] + ay[2] * ay[2]);
-      m[4] = ay[0] * k;
-      m[5] = ay[1] * k;
-      m[6] = ay[2] * k;
-      k = VfRsq(az[0] * az[0] + az[1] * az[1] + az[2] * az[2]);
-      m[8] = az[0] * k;
-      m[9] = az[1] * k;
-      m[10] = az[2] * k;
+      k = VfRsq(VfDot3(ay[0], ay[1], ay[2], ay[0], ay[1], ay[2]));
+      m[4] = VfMul(ay[0], k);
+      m[5] = VfMul(ay[1], k);
+      m[6] = VfMul(ay[2], k);
+      k = VfRsq(VfDot3(az[0], az[1], az[2], az[0], az[1], az[2]));
+      m[8] = VfMul(az[0], k);
+      m[9] = VfMul(az[1], k);
+      m[10] = VfMul(az[2], k);
       m[11] = 0.0f;
       /* scale the three axis rows (all four lanes) by 0.5 */
       for (r = 0; r < 12; r++) {
-        m[r] = m[r] * 0.5f;
+        m[r] = VfMul(m[r], 0.5f);
       }
       /* restore the translation row */
       m[12] = savedPos[0];

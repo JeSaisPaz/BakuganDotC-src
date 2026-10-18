@@ -103,9 +103,9 @@ void ActorStageObjAttrLandmarkUpdate(ActorStageObjAttrLandmark *self)
     data = self->base.base.data;
     /* rows 0..2 of the root matrix scaled by 0.87, 1.0 and 0.87 */
     for (i = 0; i < 4; i++) {
-      data->rootMatrix[i] = data->rootMatrix[i] * 0.87f;
-      data->rootMatrix[4 + i] = data->rootMatrix[4 + i] * 1.0f;
-      data->rootMatrix[8 + i] = data->rootMatrix[8 + i] * 0.87f;
+      data->rootMatrix[i] = VfMul(data->rootMatrix[i], 0.87f);
+      data->rootMatrix[4 + i] = VfMul(data->rootMatrix[4 + i], 1.0f);
+      data->rootMatrix[8 + i] = VfMul(data->rootMatrix[8 + i], 0.87f);
     }
     if (self->alpha < 0.0f) {
       GfxEffectStopAttached(g_worldEffectMgr, -1, &self->base.base.data->rootMatrix[12]);

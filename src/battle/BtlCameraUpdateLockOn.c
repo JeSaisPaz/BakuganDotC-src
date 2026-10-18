@@ -31,7 +31,7 @@ static inline float BtlLockOnSat(float x)
     if (x != x) {
         return __builtin_signbit(x) ? 0.0f : 1.0f;
     }
-    return VfSat0(x);
+    return VfMax(VfMin(x, 1.0f), 0.0f); /* vmin.s S733 (1), vmax.s S713 (0): a denormal ties 0 and gives +0 */
 }
 
 /* Raw bits of `f` as a signed word (the binary tests `mfc1` + `bgtz`: positive and non-zero). */
@@ -66,34 +66,34 @@ static inline void BtlLockOnNormalize(float *v)
     float lenSq;
     float scale;
 
-    lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+    lenSq = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
     if (VfIsZero(lenSq)) {
         scale = 0.0f;
     } else {
         scale = VfRsq(lenSq);
     }
-    v[0] = VfSat1(v[0] * scale);
-    v[1] = VfSat1(v[1] * scale);
-    v[2] = VfSat1(v[2] * scale);
+    v[0] = VfSat1(VfMul(v[0], scale));
+    v[1] = VfSat1(VfMul(v[1], scale));
+    v[2] = VfSat1(VfMul(v[2], scale));
     v[3] = 0.0f;
 }
 
 /* v += (to - v) * k on all four lanes. */
 static inline void BtlLockOnLerp4(float *v, const float *to, float k)
 {
-    v[0] = v[0] + (to[0] - v[0]) * k;
-    v[1] = v[1] + (to[1] - v[1]) * k;
-    v[2] = v[2] + (to[2] - v[2]) * k;
-    v[3] = v[3] + (to[3] - v[3]) * k;
+    v[0] = VfAdd(v[0], VfMul(VfSub(to[0], v[0]), k));
+    v[1] = VfAdd(v[1], VfMul(VfSub(to[1], v[1]), k));
+    v[2] = VfAdd(v[2], VfMul(VfSub(to[2], v[2]), k));
+    v[3] = VfAdd(v[3], VfMul(VfSub(to[3], v[3]), k));
 }
 
 /* d = s (x) t, quaternions with w last (vqmul.q). */
 static inline void BtlLockOnQuatMul(float *d, const float *s, const float *t)
 {
-    d[0] = s[0] * t[3] + s[1] * t[2] - s[2] * t[1] + s[3] * t[0];
-    d[1] = -s[0] * t[2] + s[1] * t[3] + s[2] * t[0] + s[3] * t[1];
-    d[2] = s[0] * t[1] - s[1] * t[0] + s[2] * t[3] + s[3] * t[2];
-    d[3] = -s[0] * t[0] - s[1] * t[1] - s[2] * t[2] + s[3] * t[3];
+    d[0] = VfDot4(s[0], s[1], s[2], s[3], t[3], t[2], -t[1], t[0]);
+    d[1] = VfDot4(-s[0], s[1], s[2], s[3], t[2], t[3], t[0], t[1]);
+    d[2] = VfDot4(s[0], s[1], s[2], s[3], t[1], -t[0], t[3], t[2]);
+    d[3] = VfDot4(-s[0], s[1], s[2], s[3], t[0], -t[1], -t[2], t[3]);
 }
 
 void BtlCameraUpdateLockOn(BtlCamera *camera)
@@ -235,9 +235,9 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
 
     /* dist = horizontal distance unit -> foe (y lane zeroed before the dot product) */
     unit = (BtlBakugan *)camera->target;
-    dx = foePos[0] - unit->base.pos[0];
-    dz = foePos[2] - unit->base.pos[2];
-    dist = __builtin_sqrtf(dx * dx + dz * dz);
+    dx = VfSub(foePos[0], unit->base.pos[0]);
+    dz = VfSub(foePos[2], unit->base.pos[2]);
+    dist = VfSqrt(VfDot2(dx, dz, dx, dz));
     scaled = dist * 0.00076923077f;
     if (!(scaled <= 1.2f)) {
         scaled = 1.2f;
@@ -278,8 +278,7 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
     unitPos[3] = unit->base.pos[3];
     unitPos[1] = unitPos[1] + camera->kindParam3;
     unit = (BtlBakugan *)camera->target;
-    speedSq = unit->base.velocity[0] * unit->base.velocity[0] +
-              unit->base.velocity[2] * unit->base.velocity[2];
+    speedSq = VfDot2(unit->base.velocity[0], unit->base.velocity[2], unit->base.velocity[0], unit->base.velocity[2]);
     fast = 0;
     if (!(speedSq <= 841.0f)) {
         fast = 1;
@@ -330,7 +329,7 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
     }
     camera->lockOnMidBlend =
         camera->lockOnMidBlend +
-        (1.0f - __builtin_cosf(camera->lockOnRelax * 3.1415927f)) * 0.5f * 0.2f;
+        (1.0f - VfCosQuarter(VfMul(camera->lockOnRelax * 3.1415927f, 0.636619747f))) * 0.5f * 0.2f;
     camera->lockOnMidBlend = BtlLockOnSat(camera->lockOnMidBlend);
 
     if (fast != 0) {
@@ -396,12 +395,12 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
         sideBlend = -1.0f;
     }
     camera->lockOnSide = sideBlend;
-    sideCurve = (1.0f - __builtin_cosf(sideBlend * sideBlend * 3.1415927f)) * 0.5f;
+    sideCurve = (1.0f - VfCosQuarter(VfMul(sideBlend * sideBlend * 3.1415927f, 0.636619747f))) * 0.5f;
     if (sideBlend < 0.0f) {
         sideCurve = -sideCurve;
     }
     midBlend =
-        (1.0f - __builtin_cosf(camera->lockOnMidBlend * 3.1415927f)) * 0.5f * 0.2f + 0.05f;
+        (1.0f - VfCosQuarter(VfMul(camera->lockOnMidBlend * 3.1415927f, 0.636619747f))) * 0.5f * 0.2f + 0.05f;
     midBlend = midBlend + sideCurve * 0.25f;
     if ((((BtlBakugan *)camera->target)->flags & 8) != 0) {
         midBlend = 1.0f;
@@ -427,9 +426,9 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
     }
     /* focusPoint eases toward mid; focusOffset.xyz = focusPoint - lookPoint (w = focusPoint.w) */
     BtlLockOnLerp4(camera->focusPoint, mid, focusRate);
-    focusOffset[0] = camera->focusPoint[0] - camera->lookPoint[0];
-    focusOffset[1] = camera->focusPoint[1] - camera->lookPoint[1];
-    focusOffset[2] = camera->focusPoint[2] - camera->lookPoint[2];
+    focusOffset[0] = VfSub(camera->focusPoint[0], camera->lookPoint[0]);
+    focusOffset[1] = VfSub(camera->focusPoint[1], camera->lookPoint[1]);
+    focusOffset[2] = VfSub(camera->focusPoint[2], camera->lookPoint[2]);
     focusOffset[3] = camera->focusPoint[3];
 
     spread = 1.2217305f;
@@ -437,9 +436,9 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
         spread = spread + g_btlLockOnAngle;
     }
     /* eyeOffset.xyz = lookPoint - eye (w = lookPoint.w) */
-    eyeOffset[0] = camera->lookPoint[0] - camera->base.eye[0];
-    eyeOffset[1] = camera->lookPoint[1] - camera->base.eye[1];
-    eyeOffset[2] = camera->lookPoint[2] - camera->base.eye[2];
+    eyeOffset[0] = VfSub(camera->lookPoint[0], camera->base.eye[0]);
+    eyeOffset[1] = VfSub(camera->lookPoint[1], camera->base.eye[1]);
+    eyeOffset[2] = VfSub(camera->lookPoint[2], camera->base.eye[2]);
     eyeOffset[3] = camera->lookPoint[3];
     eyeAngle = atan2f(eyeOffset[2], eyeOffset[0]);
     diff = BtlLockOnNegWrapAngle(eyeAngle - atan2f(focusOffset[2], focusOffset[0]));
@@ -450,7 +449,7 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
     outer = 1.3962634f - 1.3962634f * farness * 0.7f;
     inner = spread - spread * farness * 0.7f;
     scale =
-        1.0f - (1.0f - __builtin_cosf(camera->lockOnHoldBlend * 3.1415927f)) * 0.5f * 0.3f;
+        1.0f - (1.0f - VfCosQuarter(VfMul(camera->lockOnHoldBlend * 3.1415927f, 0.636619747f))) * 0.5f * 0.3f;
     outer = outer * scale;
     inner = inner * scale;
     turnRate = BtlLockOnSat(rate + scale * 0.5f);
@@ -461,7 +460,7 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
             eyeAngle = eyeAngle + (diff + outer) * turnRate * BtlLockOnSat(outer - diff);
         } else if (!(diff <= -inner) && hudVisible == 0 && camera->lockOnFlag != 0) {
             excess = BtlLockOnSat(diff + inner) * 3.0f;
-            value = (1.0f - __builtin_cosf(camera->lockOnHoldBlend * 3.1415927f)) * 0.5f;
+            value = (1.0f - VfCosQuarter(VfMul(camera->lockOnHoldBlend * 3.1415927f, 0.636619747f))) * 0.5f;
             eyeAngle = eyeAngle - (-diff - inner) * turnRate * excess * value;
         }
     } else {
@@ -473,7 +472,7 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
             excess = inner - diff;
             value = BtlLockOnSat(excess) * 3.0f;
             eyeAngle = eyeAngle - excess * turnRate * value *
-                                  ((1.0f - __builtin_cosf(camera->lockOnHoldBlend * 3.1415927f)) *
+                                  ((1.0f - VfCosQuarter(VfMul(camera->lockOnHoldBlend * 3.1415927f, 0.636619747f))) *
                                    0.5f);
         }
     }
@@ -488,17 +487,17 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
         roll = 0.0f;
     }
     roll = roll * (1.0f - sideCurve);
-    rollDir[0] = __builtin_sinf(roll);
-    rollDir[1] = __builtin_cosf(roll);
+    rollDir[0] = VfSinQuarter(VfMul(roll, 0.636619747f));
+    rollDir[1] = VfCosQuarter(VfMul(roll, 0.636619747f));
     rollDir[2] = 0.0f;
     rollDir[3] = 0.0f;
 
     /* rollDir rotated about y by yaw + pi/2 (vrot [C,0,-S,0] / [S,0,C,0] dotted with it) */
     rollYaw = yaw + 1.5707964f;
-    rollCos = __builtin_cosf(rollYaw);
-    rollSin = __builtin_sinf(rollYaw);
-    tmp[0] = rollDir[0] * rollCos + rollDir[1] * 0.0f + rollDir[2] * -rollSin;
-    tmp[2] = rollDir[0] * rollSin + rollDir[1] * 0.0f + rollDir[2] * rollCos;
+    rollCos = VfCosQuarter(VfMul(rollYaw, 0.636619747f));
+    rollSin = VfSinQuarter(VfMul(rollYaw, 0.636619747f));
+    tmp[0] = VfDot3(rollDir[0], rollDir[1], rollDir[2], rollCos, 0.0f, -rollSin);
+    tmp[2] = VfDot3(rollDir[0], rollDir[1], rollDir[2], rollSin, 0.0f, rollCos);
     rollDir[0] = tmp[0];
     rollDir[2] = tmp[2];
 
@@ -517,14 +516,14 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
         reach = 220.0f;
     }
     pull = camera->lockOnPullBack - 1.0f;
-    pull = (1.0f - __builtin_cosf((1.0f - pull * pull) * 3.1415927f)) * 0.5f * 60.0f + screenLow;
+    pull = (1.0f - VfCosQuarter(VfMul((1.0f - pull * pull) * 3.1415927f, 0.636619747f))) * 0.5f * 60.0f + screenLow;
     camera->yaw = yaw;
     radius = -camera->kindParams->param[2] - sideCurve * (reach - 180.0f) * 1.3f - pull;
 
     /* eyeOffset = (cos yaw, 0, sin yaw) * radius, w = 0 (vrot [C,0,S,0] + vscl.t) */
-    eyeOffset[0] = __builtin_cosf(yaw) * radius;
-    eyeOffset[1] = 0.0f * radius;
-    eyeOffset[2] = __builtin_sinf(yaw) * radius;
+    eyeOffset[0] = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), radius);
+    eyeOffset[1] = VfMul(0.0f, radius);
+    eyeOffset[2] = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), radius);
     eyeOffset[3] = 0.0f;
 
     pitch = BtlCameraCalcLockOnPitch(camera->focusPoint[1], camera->lookPoint[1],
@@ -539,12 +538,12 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
     side[2] = -eyeOffset[0];
     side[3] = eyeOffset[3];
     BtlLockOnNormalize(side);
-    halfAngle = 0.318309873f * -camera->lockOnElevation;
+    halfAngle = VfMul(0.318309873f, -camera->lockOnElevation);
     quat[3] = VfCosQuarter(halfAngle);
     halfSin = VfSinQuarter(halfAngle);
-    quat[0] = side[0] * halfSin;
-    quat[1] = side[1] * halfSin;
-    quat[2] = side[2] * halfSin;
+    quat[0] = VfMul(side[0], halfSin);
+    quat[1] = VfMul(side[1], halfSin);
+    quat[2] = VfMul(side[2], halfSin);
 
     snap = camera->eyeSnap + 0.1f;
     if (!(snap <= 1.0f)) {
@@ -565,9 +564,9 @@ void BtlCameraUpdateLockOn(BtlCamera *camera)
     offsetQuat[3] = 0.0f;
     BtlLockOnQuatMul(half, quat, offsetQuat);
     BtlLockOnQuatMul(rotated, half, conj);
-    tmp[0] = camera->lookPoint[0] + rotated[0];
-    tmp[1] = camera->lookPoint[1] + rotated[1];
-    tmp[2] = camera->lookPoint[2] + rotated[2];
+    tmp[0] = VfAdd(camera->lookPoint[0], rotated[0]);
+    tmp[1] = VfAdd(camera->lookPoint[1], rotated[1]);
+    tmp[2] = VfAdd(camera->lookPoint[2], rotated[2]);
     tmp[3] = camera->lookPoint[3];
     snapSq = camera->eyeSnap * camera->eyeSnap;
     BtlLockOnLerp4(camera->base.eye, tmp, snapSq);

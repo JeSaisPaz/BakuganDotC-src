@@ -42,30 +42,30 @@ CoreObject *GameGimmickTriggerZoneCtor(GameGimmickTriggerZone *obj, s32 kind, vo
   ex = (float)rec->extent[0] * 0.000244140625f;
   ey = (float)rec->extent[1] * 0.000244140625f;
   ez = (float)rec->extent[2] * 0.000244140625f;
-  lo[0] = -5.0f * ex;
-  lo[1] = -5.0f * ey;
-  lo[2] = -5.0f * ez;
+  lo[0] = VfMul(-5.0f, ex);
+  lo[1] = VfMul(-5.0f, ey);
+  lo[2] = VfMul(-5.0f, ez);
 
   rec = (GameGimmickRecord *)obj->base.record;
   ex = (float)rec->extent[0] * 0.000244140625f;
   ey = (float)rec->extent[1] * 0.000244140625f;
   ez = (float)rec->extent[2] * 0.000244140625f;
-  hi[0] = 5.0f * ex;
-  hi[1] = 5.0f * ey;
-  hi[2] = 5.0f * ez;
+  hi[0] = VfMul(5.0f, ex);
+  hi[1] = VfMul(5.0f, ey);
+  hi[2] = VfMul(5.0f, ez);
 
   /* Y rotation (vrot of rot[1] times 2/pi). */
-  c = __builtin_cosf(obj->base.base.rot[1]);
-  s = __builtin_sinf(obj->base.base.rot[1]);
+  c = VfCosQuarter(VfMul(obj->base.base.rot[1], 0.636619747f));
+  s = VfSinQuarter(VfMul(obj->base.base.rot[1], 0.636619747f));
 
   rec = (GameGimmickRecord *)obj->base.record;
   if (rec->recordType == 0x322) {
-    lo[0] = lo[0] * 1.3f;
-    lo[1] = lo[1] * 1.3f;
-    lo[2] = lo[2] * 1.3f;
-    hi[0] = hi[0] * 1.3f;
-    hi[1] = hi[1] * 1.3f;
-    hi[2] = hi[2] * 1.3f;
+    lo[0] = VfMul(lo[0], 1.3f);
+    lo[1] = VfMul(lo[1], 1.3f);
+    lo[2] = VfMul(lo[2], 1.3f);
+    hi[0] = VfMul(hi[0], 1.3f);
+    hi[1] = VfMul(hi[1], 1.3f);
+    hi[2] = VfMul(hi[2], 1.3f);
   }
 
   obj->box.aabbMin.x = lo[0];
@@ -96,9 +96,9 @@ CoreObject *GameGimmickTriggerZoneCtor(GameGimmickTriggerZone *obj, s32 kind, vo
 
   if (obj->box.invValid == 0) {
     inv = &obj->box.invTransform;
-    d0 = t->x.x * t->w.x + t->x.y * t->w.y + t->x.z * t->w.z;
-    d1 = t->y.x * t->w.x + t->y.y * t->w.y + t->y.z * t->w.z;
-    d2 = t->z.x * t->w.x + t->z.y * t->w.y + t->z.z * t->w.z;
+    d0 = VfDot3(t->x.x, t->x.y, t->x.z, t->w.x, t->w.y, t->w.z);
+    d1 = VfDot3(t->y.x, t->y.y, t->y.z, t->w.x, t->w.y, t->w.z);
+    d2 = VfDot3(t->z.x, t->z.y, t->z.z, t->w.x, t->w.y, t->w.z);
     inv->x.x = t->x.x;
     inv->x.y = t->y.x;
     inv->x.z = t->z.x;

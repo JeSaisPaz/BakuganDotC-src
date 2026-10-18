@@ -20,9 +20,9 @@ void *ActorSpawnFromPlacement(u8 slot, s32 *record)
   pos[3] = 0.0f;
   /* vscl.t + sv.q: xyz scaled by 20; the stored w lane is a stale VFPU value (ActorSpawn reads
      only xyz), left out. */
-  pos[0] = pos[0] * 20.0f;
-  pos[1] = pos[1] * 20.0f;
-  pos[2] = pos[2] * 20.0f;
+  pos[0] = VfMul(pos[0], 20.0f);
+  pos[1] = VfMul(pos[1], 20.0f);
+  pos[2] = VfMul(pos[2], 20.0f);
   modelId = ActorModelIdFromCode(placed->modelCode);
   /* a3 = record is also passed in both calls; ActorSpawn never reads it. */
   if (modelId == 0x2f) {

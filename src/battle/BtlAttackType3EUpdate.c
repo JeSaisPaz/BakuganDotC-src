@@ -11,13 +11,13 @@ static void BtlAttackType3ETurnDir(float *dir, float angle)
     float y;
     float z;
 
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
     x = dir[0];
     y = dir[1];
     z = dir[2];
-    dir[0] = x * c + y * 0.0f + z * -s;
-    dir[2] = x * s + y * 0.0f + z * c;
+    dir[0] = VfDot3(x, y, z, c, 0.0f, -s);
+    dir[2] = VfDot3(x, y, z, s, 0.0f, c);
 }
 
 /* Orientation basis of `dir` with `g_vecUp` written into the 4x4 matrix `m` (fields as columns):
@@ -31,26 +31,26 @@ static void BtlAttackType3EBasis(float *m, const float *dir)
     float lenSq;
     float k;
 
-    lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+    lenSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    f[0] = VfSat1(dir[0] * k);
-    f[1] = VfSat1(dir[1] * k);
-    f[2] = VfSat1(dir[2] * k);
-    s[0] = g_vecUp.y * f[2] - g_vecUp.z * f[1];
-    s[1] = g_vecUp.z * f[0] - g_vecUp.x * f[2];
-    s[2] = g_vecUp.x * f[1] - g_vecUp.y * f[0];
-    lenSq = s[0] * s[0] + s[1] * s[1] + s[2] * s[2];
+    f[0] = VfSat1(VfMul(dir[0], k));
+    f[1] = VfSat1(VfMul(dir[1], k));
+    f[2] = VfSat1(VfMul(dir[2], k));
+    s[0] = VfDot2(g_vecUp.y, g_vecUp.z, f[2], -f[1]);
+    s[1] = VfDot2(g_vecUp.z, g_vecUp.x, f[0], -f[2]);
+    s[2] = VfDot2(g_vecUp.x, g_vecUp.y, f[1], -f[0]);
+    lenSq = VfDot3(s[0], s[1], s[2], s[0], s[1], s[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    s[0] = VfSat1(s[0] * k);
-    s[1] = VfSat1(s[1] * k);
-    s[2] = VfSat1(s[2] * k);
+    s[0] = VfSat1(VfMul(s[0], k));
+    s[1] = VfSat1(VfMul(s[1], k));
+    s[2] = VfSat1(VfMul(s[2], k));
     m[0] = s[0];
     m[1] = s[1];
     m[2] = s[2];
     m[3] = 0.0f;
-    m[4] = f[1] * s[2] - f[2] * s[1];
-    m[5] = f[2] * s[0] - f[0] * s[2];
-    m[6] = f[0] * s[1] - f[1] * s[0];
+    m[4] = VfDot2(f[1], f[2], s[2], -s[1]);
+    m[5] = VfDot2(f[2], f[0], s[0], -s[2]);
+    m[6] = VfDot2(f[0], f[1], s[1], -s[0]);
     m[7] = 0.0f;
     m[8] = f[0];
     m[9] = f[1];
@@ -73,8 +73,7 @@ static void BtlAttackType3EMulSwapYZ(float *m)
 
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            r[j * 4 + i] = b[j * 4 + 0] * m[0 * 4 + i] + b[j * 4 + 1] * m[1 * 4 + i] +
-                           b[j * 4 + 2] * m[2 * 4 + i] + b[j * 4 + 3] * m[3 * 4 + i];
+            r[j * 4 + i] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], m[0 * 4 + i], m[1 * 4 + i], m[2 * 4 + i], m[3 * 4 + i]);
         }
     }
     for (i = 0; i < 16; i++) {
@@ -147,17 +146,17 @@ void BtlAttackType3EUpdate(BtlAttack *self)
             self->mtx[0][0] = 40.0f;
             self->dir[1] = self->dir[1] + 0.300000012f;
             /* pos.xyz += 20 * vel.xyz (staged through a local step vector), pos.w kept */
-            self->pos[0] = self->pos[0] + self->vel[0] * 20.0f;
-            self->pos[1] = self->pos[1] + self->vel[1] * 20.0f;
-            self->pos[2] = self->pos[2] + self->vel[2] * 20.0f;
+            self->pos[0] = VfAdd(self->pos[0], VfMul(self->vel[0], 20.0f));
+            self->pos[1] = VfAdd(self->pos[1], VfMul(self->vel[1], 20.0f));
+            self->pos[2] = VfAdd(self->pos[2], VfMul(self->vel[2], 20.0f));
             self->turnRate = 0.0f;
         }
         /* dir = normalize(dir), lanes clamped to [-1, 1]; the stored w lane is S713 (0) */
-        lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] + self->dir[2] * self->dir[2];
+        lenSq = VfDot3(self->dir[0], self->dir[1], self->dir[2], self->dir[0], self->dir[1], self->dir[2]);
         k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        self->dir[0] = VfSat1(self->dir[0] * k);
-        self->dir[1] = VfSat1(self->dir[1] * k);
-        self->dir[2] = VfSat1(self->dir[2] * k);
+        self->dir[0] = VfSat1(VfMul(self->dir[0], k));
+        self->dir[1] = VfSat1(VfMul(self->dir[1], k));
+        self->dir[2] = VfSat1(VfMul(self->dir[2], k));
         self->dir[3] = 0.0f;
         self->paramF0 = CoreRandAngle2Pi();
     } else {
@@ -177,9 +176,9 @@ void BtlAttackType3EUpdate(BtlAttack *self)
         }
         spread = (0.200000003f - self->turnRate) * 1500.0f + 100.0f;
         /* offset = (cos, 0, sin, 0)(paramF0) * spread on x/y/z (vrot of paramF0 * S703) */
-        offset[0] = __builtin_cosf(self->paramF0) * spread;
-        offset[1] = 0.0f * spread;
-        offset[2] = __builtin_sinf(self->paramF0) * spread;
+        offset[0] = VfMul(VfCosQuarter(VfMul(self->paramF0, 0.636619747f)), spread);
+        offset[1] = VfMul(0.0f, spread);
+        offset[2] = VfMul(VfSinQuarter(VfMul(self->paramF0, 0.636619747f)), spread);
         offset[3] = 0.0f;
         self->paramF0 = CoreRandFloat(0.0599999987f) + 0.0199999996f + self->paramF0;
         if (self->type == 0x3f) {
@@ -202,9 +201,9 @@ void BtlAttackType3EUpdate(BtlAttack *self)
             BtlAttackSetPendingHit(self, impact, &g_btlAttackHitQuery.contact.x);
             return;
         }
-        self->pos[0] = self->pos[0] + self->vel[0];
-        self->pos[1] = self->pos[1] + self->vel[1];
-        self->pos[2] = self->pos[2] + self->vel[2];
+        self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+        self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+        self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
     }
 
     BtlAttackType3EBasis(((GfxEffect *)self->effect)->matrix, self->dir);

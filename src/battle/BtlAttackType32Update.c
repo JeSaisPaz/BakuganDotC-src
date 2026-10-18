@@ -44,7 +44,7 @@ void BtlAttackType32Update(BtlAttack *self)
     effect->dir[1] = self->dir[1];
     effect->dir[2] = self->dir[2];
     effect->dir[3] = self->dir[3];
-    pos[0] = pos[0] + vel[0];
-    pos[1] = pos[1] + vel[1];
-    pos[2] = pos[2] + vel[2];
+    pos[0] = VfAdd(pos[0], vel[0]);
+    pos[1] = VfAdd(pos[1], vel[1]);
+    pos[2] = VfAdd(pos[2], vel[2]);
 }

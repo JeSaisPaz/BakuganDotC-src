@@ -39,11 +39,11 @@ void BtlAttackType6DUpdate(BtlAttack *self)
     if (!(pitch <= 0.523598790f)) {
         delta = 0.523598790f - pitch;
         /* VFPU sin/cos take quarter turns: delta * 1/pi gives the half angle */
-        half = 0.318309873f * delta;
+        half = VfMul(0.318309873f, delta);
         s = VfSinQuarter(half);
-        q[0] = -self->dir[2] * s;
-        q[1] = self->dir[1] * s;
-        q[2] = self->dir[0] * s;
+        q[0] = VfMul(-self->dir[2], s);
+        q[1] = VfMul(self->dir[1], s);
+        q[2] = VfMul(self->dir[0], s);
         q[3] = VfCosQuarter(half);
         /* v = dir with w = 0 (bank S730) */
         v[0] = self->dir[0];
@@ -51,18 +51,18 @@ void BtlAttackType6DUpdate(BtlAttack *self)
         v[2] = self->dir[2];
         v[3] = 0.0f;
         /* t = q * v */
-        t[0] = q[0] * v[3] + q[1] * v[2] - q[2] * v[1] + q[3] * v[0];
-        t[1] = -q[0] * v[2] + q[1] * v[3] + q[2] * v[0] + q[3] * v[1];
-        t[2] = q[0] * v[1] - q[1] * v[0] + q[2] * v[3] + q[3] * v[2];
-        t[3] = -q[0] * v[0] - q[1] * v[1] - q[2] * v[2] + q[3] * v[3];
+        t[0] = VfDot4(q[0], q[1], q[2], q[3], v[3], v[2], -v[1], v[0]);
+        t[1] = VfDot4(-q[0], q[1], q[2], q[3], v[2], v[3], v[0], v[1]);
+        t[2] = VfDot4(q[0], q[1], q[2], q[3], v[1], -v[0], v[3], v[2]);
+        t[3] = VfDot4(-q[0], q[1], q[2], q[3], v[0], -v[1], -v[2], v[3]);
         /* dir = t * conj(q), conj(q) = (-q.xyz, q.w) */
         q[0] = -q[0];
         q[1] = -q[1];
         q[2] = -q[2];
-        self->dir[0] = t[0] * q[3] + t[1] * q[2] - t[2] * q[1] + t[3] * q[0];
-        self->dir[1] = -t[0] * q[2] + t[1] * q[3] + t[2] * q[0] + t[3] * q[1];
-        self->dir[2] = t[0] * q[1] - t[1] * q[0] + t[2] * q[3] + t[3] * q[2];
-        self->dir[3] = -t[0] * q[0] - t[1] * q[1] - t[2] * q[2] + t[3] * q[3];
+        self->dir[0] = VfDot4(t[0], t[1], t[2], t[3], q[3], q[2], -q[1], q[0]);
+        self->dir[1] = VfDot4(-t[0], t[1], t[2], t[3], q[2], q[3], q[0], q[1]);
+        self->dir[2] = VfDot4(t[0], t[1], t[2], t[3], q[1], -q[0], q[3], q[2]);
+        self->dir[3] = VfDot4(-t[0], t[1], t[2], t[3], q[0], -q[1], -q[2], q[3]);
     }
     BtlAttackSteerToTarget(45.0f, 80.0f, self, 1, NULL);
     if (self->cancelled != 0 || BtlAttackCheckClash(self) != 0) {
@@ -82,9 +82,9 @@ void BtlAttackType6DUpdate(BtlAttack *self)
     edir[1] = self->dir[1];
     edir[2] = self->dir[2];
     edir[3] = self->dir[3];
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
     if (CollisionRaycastPoint(pos, ground) != 0 && self->pos[1] - 200.0f < ground[1]) {
         GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0xfd, ground, self->dir);
     }

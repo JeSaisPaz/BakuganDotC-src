@@ -77,7 +77,7 @@ s32 UiPasscodeShowJudgement(UiScreen *screen)
         t = tween->t + 0.125f;
         tween->t = t;
         start = tween->startScale;
-        c = __builtin_cosf(t * 3.1415927f);
+        c = VfCosQuarter(VfMul(t * 3.1415927f, 0.636619747f));
         ((GfxSprite **)screen->data)[PASSCODE_SPR_STAMP + pc->judgement]->scaleX =
             start + (1.0f - c) * 0.5f * 0.2f;
         sprite = ((GfxSprite **)screen->data)[PASSCODE_SPR_STAMP + pc->judgement];

@@ -20,8 +20,8 @@ float BtlAiDistanceToUnit(BtlAi *self, void *unit)
   /* |owner->pos - target->pos| over x, y, z */
   a = self->owner->base.pos;
   b = target->base.pos;
-  dx = a[0] - b[0];
-  dy = a[1] - b[1];
-  dz = a[2] - b[2];
-  return __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+  dx = VfSub(a[0], b[0]);
+  dy = VfSub(a[1], b[1]);
+  dz = VfSub(a[2], b[2]);
+  return VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
 }

@@ -20,17 +20,17 @@ void CollisionCapsuleTransform(void *capsule, const ScePspFMatrix4 *mtx, void *o
   float az;
 
   /* vtfm4.q C000, E100, C200 with S203 = 1.0 (vfim 0x3c00) */
-  dst->start[0] = mtx->x.x * px + mtx->y.x * py + mtx->z.x * pz + mtx->w.x * 1.0f;
-  dst->start[1] = mtx->x.y * px + mtx->y.y * py + mtx->z.y * pz + mtx->w.y * 1.0f;
-  dst->start[2] = mtx->x.z * px + mtx->y.z * py + mtx->z.z * pz + mtx->w.z * 1.0f;
+  dst->start[0] = VfDot4(mtx->x.x, mtx->y.x, mtx->z.x, mtx->w.x, px, py, pz, 1.0f);
+  dst->start[1] = VfDot4(mtx->x.y, mtx->y.y, mtx->z.y, mtx->w.y, px, py, pz, 1.0f);
+  dst->start[2] = VfDot4(mtx->x.z, mtx->y.z, mtx->z.z, mtx->w.z, px, py, pz, 1.0f);
 
   /* vtfm3.t C000, E100, C200 */
   ax = src->axis[0];
   ay = src->axis[1];
   az = src->axis[2];
-  dst->axis[0] = mtx->x.x * ax + mtx->y.x * ay + mtx->z.x * az;
-  dst->axis[1] = mtx->x.y * ax + mtx->y.y * ay + mtx->z.y * az;
-  dst->axis[2] = mtx->x.z * ax + mtx->y.z * ay + mtx->z.z * az;
+  dst->axis[0] = VfDot3(mtx->x.x, mtx->y.x, mtx->z.x, ax, ay, az);
+  dst->axis[1] = VfDot3(mtx->x.y, mtx->y.y, mtx->z.y, ax, ay, az);
+  dst->axis[2] = VfDot3(mtx->x.z, mtx->y.z, mtx->z.z, ax, ay, az);
 
   dst->radius = src->radius;
   dst->radiusSq = src->radiusSq;

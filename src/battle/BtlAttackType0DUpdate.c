@@ -44,13 +44,13 @@ void BtlAttackType0DUpdate(BtlAttack *self)
     ((GfxEffect *)self->effect)->size[1] = self->paramF0;
     if (self->age == 0) {
         /* vscl.t writes C710 and sv.q stores its w lane: bank S713 = 0 */
-        self->auxVec[0] = self->vel[0] * -200.0f;
-        self->auxVec[1] = self->vel[1] * -200.0f;
-        self->auxVec[2] = self->vel[2] * -200.0f;
+        self->auxVec[0] = VfMul(self->vel[0], -200.0f);
+        self->auxVec[1] = VfMul(self->vel[1], -200.0f);
+        self->auxVec[2] = VfMul(self->vel[2], -200.0f);
         self->auxVec[3] = 0.0f;
-        self->vel[0] = self->vel[0] * 50.0f;
-        self->vel[1] = self->vel[1] * 50.0f;
-        self->vel[2] = self->vel[2] * 50.0f;
+        self->vel[0] = VfMul(self->vel[0], 50.0f);
+        self->vel[1] = VfMul(self->vel[1], 50.0f);
+        self->vel[2] = VfMul(self->vel[2], 50.0f);
         self->vel[3] = 0.0f;
         return;
     }
@@ -59,13 +59,13 @@ void BtlAttackType0DUpdate(BtlAttack *self)
         return;
     }
     /* to = -auxVec + vel (xyz; w = auxVec.w), from = pos + auxVec (xyz; w = pos.w) */
-    to[0] = -self->auxVec[0] + self->vel[0];
-    to[1] = -self->auxVec[1] + self->vel[1];
-    to[2] = -self->auxVec[2] + self->vel[2];
+    to[0] = VfAdd(-self->auxVec[0], self->vel[0]);
+    to[1] = VfAdd(-self->auxVec[1], self->vel[1]);
+    to[2] = VfAdd(-self->auxVec[2], self->vel[2]);
     to[3] = self->auxVec[3];
-    from[0] = self->pos[0] + self->auxVec[0];
-    from[1] = self->pos[1] + self->auxVec[1];
-    from[2] = self->pos[2] + self->auxVec[2];
+    from[0] = VfAdd(self->pos[0], self->auxVec[0]);
+    from[1] = VfAdd(self->pos[1], self->auxVec[1]);
+    from[2] = VfAdd(self->pos[2], self->auxVec[2]);
     from[3] = self->pos[3];
     if (BtlAttackSweepHit(self->radius, self, from, to, 0x30, 1, 0, 0x31bf337e) != 0) {
         if (g_btlAttackHitQuery.hitCollider == NULL) {
@@ -81,8 +81,8 @@ void BtlAttackType0DUpdate(BtlAttack *self)
         }
     }
     if (self->phase != 0) {
-        self->pos[0] = self->pos[0] + self->vel[0];
-        self->pos[1] = self->pos[1] + self->vel[1];
-        self->pos[2] = self->pos[2] + self->vel[2];
+        self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+        self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+        self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
     }
 }

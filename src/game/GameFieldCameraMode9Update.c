@@ -33,11 +33,11 @@ void GameFieldCameraMode9Update(void **holder, float *outEye, float *outLook)
   k = k * k;
   omega = g_gameFieldCameraMode9Omega;
   for (i = 0; i < 3; i++) {
-    accel[i] = (s->lookTarget[i] - s->look[i]) * k - s->lookVel[i] * omega;
-    s->lookVel[i] = s->lookVel[i] + accel[i] * 0.0333333351f;
+    accel[i] = VfSub(VfMul(VfSub(s->lookTarget[i], s->look[i]), k), VfMul(s->lookVel[i], omega));
+    s->lookVel[i] = VfAdd(s->lookVel[i], VfMul(accel[i], 0.0333333351f));
   }
   for (i = 0; i < 3; i++) {
-    s->look[i] = s->look[i] + s->lookVel[i] * 0.0333333351f;
+    s->look[i] = VfAdd(s->look[i], VfMul(s->lookVel[i], 0.0333333351f));
   }
   if (g_gameFieldCameraMode9DampingInit == 0) {
     g_gameFieldCameraMode9DampingInit = 1;
@@ -52,11 +52,11 @@ void GameFieldCameraMode9Update(void **holder, float *outEye, float *outLook)
   k = k * k;
   omega = g_gameFieldCameraMode9Omega;
   for (i = 0; i < 3; i++) {
-    accel[i] = (s->eyeTarget[i] - s->eye[i]) * k - s->eyeVel[i] * omega;
-    s->eyeVel[i] = s->eyeVel[i] + accel[i] * 0.0333333351f;
+    accel[i] = VfSub(VfMul(VfSub(s->eyeTarget[i], s->eye[i]), k), VfMul(s->eyeVel[i], omega));
+    s->eyeVel[i] = VfAdd(s->eyeVel[i], VfMul(accel[i], 0.0333333351f));
   }
   for (i = 0; i < 3; i++) {
-    s->eye[i] = s->eye[i] + s->eyeVel[i] * 0.0333333351f;
+    s->eye[i] = VfAdd(s->eye[i], VfMul(s->eyeVel[i], 0.0333333351f));
   }
   player = (Actor *)ActorFindPlayer();
   for (i = 0; i < 4; i++) {

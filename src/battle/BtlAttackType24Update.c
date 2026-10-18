@@ -68,9 +68,9 @@ void BtlAttackType24Update(BtlAttack *self)
     self->segment[1] = self->vel[1];
     self->segment[2] = self->vel[2];
     length = self->paramF0 * 12.0f;
-    self->segment[0] = self->segment[0] * length;
-    self->segment[1] = self->segment[1] * length;
-    self->segment[2] = self->segment[2] * length;
+    self->segment[0] = VfMul(self->segment[0], length);
+    self->segment[1] = VfMul(self->segment[1], length);
+    self->segment[2] = VfMul(self->segment[2], length);
     self->segment[3] = 0.0f;
     if (self->age < 0x34 && self->age >= 0xb &&
         BtlAttackSweepHit(self->radius, self, self->pos, self->segment, 0x47, 0, 1, 0x31bf337e) != 0) {
@@ -84,9 +84,9 @@ void BtlAttackType24Update(BtlAttack *self)
         } else {
             if (self->param1 % 3 == 0) {
                 /* spawnPos = hit point + normal * 3 (xyz; w of the hit point) */
-                spawnPos[0] = g_btlAttackHitQuery.contact.x + g_collisionHitResult.normal.x * 3.0f;
-                spawnPos[1] = g_btlAttackHitQuery.contact.y + g_collisionHitResult.normal.y * 3.0f;
-                spawnPos[2] = g_btlAttackHitQuery.contact.z + g_collisionHitResult.normal.z * 3.0f;
+                spawnPos[0] = VfAdd(g_btlAttackHitQuery.contact.x, VfMul(g_collisionHitResult.normal.x, 3.0f));
+                spawnPos[1] = VfAdd(g_btlAttackHitQuery.contact.y, VfMul(g_collisionHitResult.normal.y, 3.0f));
+                spawnPos[2] = VfAdd(g_btlAttackHitQuery.contact.z, VfMul(g_collisionHitResult.normal.z, 3.0f));
                 spawnPos[3] = g_btlAttackHitQuery.contact.w;
                 GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0xc5, spawnPos,
                                        &g_collisionHitResult.normal.x);

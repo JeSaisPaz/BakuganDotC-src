@@ -15,13 +15,13 @@ void BtlAttackType3BUpdate(BtlAttack *self)
         if (self->paramF2 == 1.0f || self->paramF2 == 2.0f) {
             angle = self->paramF2 == 1.0f ? -0.523598790f : 0.523598790f;
             /* vmul.s by the bank's 2/pi then vrot: cos/sin of the angle in radians */
-            c = __builtin_cosf(angle);
-            s = __builtin_sinf(angle);
+            c = VfCosQuarter(VfMul(angle, 0.636619747f));
+            s = VfSinQuarter(VfMul(angle, 0.636619747f));
             x = self->vel[0];
             y = self->vel[1];
             z = self->vel[2];
-            self->vel[0] = x * c + y * 0.0f + z * -s;
-            self->vel[2] = x * s + y * 0.0f + z * c;
+            self->vel[0] = VfDot3(x, y, z, c, 0.0f, -s);
+            self->vel[2] = VfDot3(x, y, z, s, 0.0f, c);
         }
         dir = ((GfxEffect *)self->effect)->dir;
         dir[0] = self->vel[0];

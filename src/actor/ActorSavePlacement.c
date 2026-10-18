@@ -27,9 +27,9 @@ void ActorSavePlacement(Actor *self)
   if (self->placement != (void *)0x0) {
     rec = (s32 *)self->placement;
     /* vscl.t: pos * 0.05f (lane 3 of the stored quad is stale and never read) */
-    v[0] = self->base.pos[0] * 0.05f;
-    v[1] = self->base.pos[1] * 0.05f;
-    v[2] = self->base.pos[2] * 0.05f;
+    v[0] = VfMul(self->base.pos[0], 0.05f);
+    v[1] = VfMul(self->base.pos[1], 0.05f);
+    v[2] = VfMul(self->base.pos[2], 0.05f);
     x = ActorSavePlacementRound(v[0]);
     y = ActorSavePlacementRound(v[1]);
     z = ActorSavePlacementRound(v[2]);

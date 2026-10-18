@@ -35,9 +35,9 @@ CoreObject *GameGimmickJetDoorCtor(GameGimmickJetDoor *obj, s32 kind, void *reco
   scaled[2] = (float)rec->jetDoorVec[2] * 0.000244140625f;
   scaled[3] = 0.0f;
   /* dead stack temporary: xyz * 20, w = bank S713 (0) */
-  tmp[0] = scaled[0] * 20.0f;
-  tmp[1] = scaled[1] * 20.0f;
-  tmp[2] = scaled[2] * 20.0f;
+  tmp[0] = VfMul(scaled[0], 20.0f);
+  tmp[1] = VfMul(scaled[1], 20.0f);
+  tmp[2] = VfMul(scaled[2], 20.0f);
   tmp[3] = 0.0f;
   (void)tmp;
 
@@ -59,8 +59,8 @@ CoreObject *GameGimmickJetDoorCtor(GameGimmickJetDoor *obj, s32 kind, void *reco
   /* Y rotation by rot[1] (vrot of rot[1] * S703 quarter turns) */
   m = obj->base.base.data->rootMatrix;
   angle = obj->base.base.rot[1];
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   m[0] = c;
   m[1] = 0.0f;
   m[2] = -s;
@@ -85,9 +85,9 @@ CoreObject *GameGimmickJetDoorCtor(GameGimmickJetDoor *obj, s32 kind, void *reco
   scale[0] = 1.0f;
   scale[3] = 0.0f;
   for (i = 0; i < 4; i++) {
-    m[i] = m[i] * scale[0];
-    m[4 + i] = m[4 + i] * scale[1];
-    m[8 + i] = m[8 + i] * scale[2];
+    m[i] = VfMul(m[i], scale[0]);
+    m[4 + i] = VfMul(m[4 + i], scale[1]);
+    m[8 + i] = VfMul(m[8 + i], scale[2]);
   }
 
   m = obj->base.base.data->rootMatrix;

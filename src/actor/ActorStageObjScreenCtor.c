@@ -30,10 +30,10 @@ void *ActorStageObjScreenCtor(ActorStageObjScreen *self, int kind, float *pos)
 
   max = ActorStageObjGetBounds(&self->base) + 4;
   min = ActorStageObjGetBounds(&self->base);
-  dx = max[0] - min[0];
-  dy = max[1] - min[1];
-  dz = max[2] - min[2];
-  diag = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+  dx = VfSub(max[0], min[0]);
+  dy = VfSub(max[1], min[1]);
+  dz = VfSub(max[2], min[2]);
+  diag = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
   self->radius = diag * 0.7f;
 
   top = ActorStageObjGetBounds(&self->base)[5];

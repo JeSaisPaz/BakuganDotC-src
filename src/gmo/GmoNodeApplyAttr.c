@@ -104,33 +104,33 @@ void GmoNodeApplyAttr(float weight, GmoNode *self, s32 type, s32 unused, const f
 
   if ((u32)(type - 0x49) < 2) {
     /* Euler angles (radians) -> quaternion: angle * (1/pi) quarter turns is the half angle */
-    q.x = q.x * 0.318309873f;
-    q.y = q.y * 0.318309873f;
-    q.z = q.z * 0.318309873f;
+    q.x = VfMul(q.x, 0.318309873f);
+    q.y = VfMul(q.y, 0.318309873f);
+    q.z = VfMul(q.z, 0.318309873f);
     cx = VfCosQuarter(q.x);
     sx = VfSinQuarter(q.x);
     cy = VfCosQuarter(q.y);
     sy = VfSinQuarter(q.y);
     cz = VfCosQuarter(q.z);
     sz = VfSinQuarter(q.z);
-    cxy = cx * cy;
-    sxy = sx * sy;
-    cyz = cy * cz;
-    czx = cz * cx;
-    syz = sy * sz;
-    szx = sz * sx;
-    cxyz = cxy * cz;
-    sxyz = sxy * sz;
+    cxy = VfMul(cx, cy);
+    sxy = VfMul(sx, sy);
+    cyz = VfMul(cy, cz);
+    czx = VfMul(cz, cx);
+    syz = VfMul(sy, sz);
+    szx = VfMul(sz, sx);
+    cxyz = VfMul(cxy, cz);
+    sxyz = VfMul(sxy, sz);
     if (type == 0x49) {
-      q.x = cyz * sx - syz * cx;
-      q.y = czx * sy + szx * cy;
-      q.z = cxy * sz - sxy * cz;
-      q.w = cxyz + sxyz;
+      q.x = VfSub(VfMul(cyz, sx), VfMul(syz, cx));
+      q.y = VfAdd(VfMul(czx, sy), VfMul(szx, cy));
+      q.z = VfSub(VfMul(cxy, sz), VfMul(sxy, cz));
+      q.w = VfAdd(cxyz, sxyz);
     } else {
-      q.x = cyz * sx + syz * cx;
-      q.y = czx * sy - szx * cy;
-      q.z = cxy * sz - sxy * cz;
-      q.w = cxyz + sxyz;
+      q.x = VfAdd(VfMul(cyz, sx), VfMul(syz, cx));
+      q.y = VfSub(VfMul(czx, sy), VfMul(szx, cy));
+      q.z = VfSub(VfMul(cxy, sz), VfMul(sxy, cz));
+      q.w = VfAdd(cxyz, sxyz);
     }
   }
 
@@ -141,51 +141,51 @@ void GmoNodeApplyAttr(float weight, GmoNode *self, s32 type, s32 unused, const f
 
   if ((u32)(type - 0x49) < 3) {
     /* slerp from p toward q by weight */
-    d = VfSat1(p.x * q.x + p.y * q.y + p.z * q.z + p.w * q.w);
-    diff.x = (q.x - p.x) * weight;
-    diff.y = (q.y - p.y) * weight;
-    diff.z = (q.z - p.z) * weight;
-    diff.w = (q.w - p.w) * weight;
-    sum.x = (q.x + p.x) * weight;
-    sum.y = (q.y + p.y) * weight;
-    sum.z = (q.z + p.z) * weight;
-    sum.w = (q.w + p.w) * weight;
-    if (d < 0.0f) {
+    d = VfSat1(VfDot4(p.x, p.y, p.z, p.w, q.x, q.y, q.z, q.w));
+    diff.x = VfMul(VfSub(q.x, p.x), weight);
+    diff.y = VfMul(VfSub(q.y, p.y), weight);
+    diff.z = VfMul(VfSub(q.z, p.z), weight);
+    diff.w = VfMul(VfSub(q.w, p.w), weight);
+    sum.x = VfMul(VfAdd(q.x, p.x), weight);
+    sum.y = VfMul(VfAdd(q.y, p.y), weight);
+    sum.z = VfMul(VfAdd(q.z, p.z), weight);
+    sum.w = VfMul(VfAdd(q.w, p.w), weight);
+    if (VfDaz(d) < 0.0f) {
       q.x = -q.x;
       q.y = -q.y;
       q.z = -q.z;
       q.w = -q.w;
     }
-    if (!(d < 0.998046875f)) {
-      r.x = p.x + diff.x;
-      r.y = p.y + diff.y;
-      r.z = p.z + diff.z;
-      r.w = p.w + diff.w;
-    } else if (d < -0.998046875f) {
-      r.x = p.x - sum.x;
-      r.y = p.y - sum.y;
-      r.z = p.z - sum.z;
-      r.w = p.w - sum.w;
+    if (!(VfDaz(d) < 0.998046875f)) {
+      r.x = VfAdd(p.x, diff.x);
+      r.y = VfAdd(p.y, diff.y);
+      r.z = VfAdd(p.z, diff.z);
+      r.w = VfAdd(p.w, diff.w);
+    } else if (VfDaz(d) < -0.998046875f) {
+      r.x = VfSub(p.x, sum.x);
+      r.y = VfSub(p.y, sum.y);
+      r.z = VfSub(p.z, sum.z);
+      r.w = VfSub(p.w, sum.w);
     } else {
-      sq = __builtin_sqrtf(1.0f - d * d);
-      th = 1.0f - __builtin_fabsf(VfAsinQuarter(d));
-      if (!(__builtin_fabsf(d) < 0.707106769f)) {
+      sq = VfSqrt(VfSub(1.0f, VfMul(d, d)));
+      th = VfSub(1.0f, __builtin_fabsf(VfAsinQuarter(d)));
+      if (!(__builtin_fabsf(VfDaz(d)) < 0.707106769f)) {
         th = VfAsinQuarter(sq);
       }
-      wp = VfSinQuarter((1.0f - weight) * th);
-      wq = VfSinQuarter(weight * th);
+      wp = VfSinQuarter(VfMul(VfSub(1.0f, weight), th));
+      wq = VfSinQuarter(VfMul(weight, th));
       inv = VfRcp(VfSinQuarter(th));
-      r.x = (p.x * wp + q.x * wq) * inv;
-      r.y = (p.y * wp + q.y * wq) * inv;
-      r.z = (p.z * wp + q.z * wq) * inv;
-      r.w = (p.w * wp + q.w * wq) * inv;
+      r.x = VfMul(VfDot2(p.x, q.x, wp, wq), inv);
+      r.y = VfMul(VfDot2(p.y, q.y, wp, wq), inv);
+      r.z = VfMul(VfDot2(p.z, q.z, wp, wq), inv);
+      r.w = VfMul(VfDot2(p.w, q.w, wp, wq), inv);
     }
   } else {
     /* lerp: p + (q - p) * weight */
-    r.x = p.x + (q.x - p.x) * weight;
-    r.y = p.y + (q.y - p.y) * weight;
-    r.z = p.z + (q.z - p.z) * weight;
-    r.w = p.w + (q.w - p.w) * weight;
+    r.x = VfAdd(p.x, VfMul(VfSub(q.x, p.x), weight));
+    r.y = VfAdd(p.y, VfMul(VfSub(q.y, p.y), weight));
+    r.z = VfAdd(p.z, VfMul(VfSub(q.z, p.z), weight));
+    r.w = VfAdd(p.w, VfMul(VfSub(q.w, p.w), weight));
   }
 
   vec[0] = r.x;

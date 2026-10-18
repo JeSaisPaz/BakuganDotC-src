@@ -41,9 +41,9 @@ void UiWindowFrameApplyColors(UiWindowFrame *self)
   i = 0;
   do {
     bright = self->brightness;
-    sprite->tint[0] = self->borderColor[0] * bright;
-    sprite->tint[1] = self->borderColor[1] * bright;
-    sprite->tint[2] = self->borderColor[2] * bright;
+    sprite->tint[0] = VfMul(self->borderColor[0], bright);
+    sprite->tint[1] = VfMul(self->borderColor[1], bright);
+    sprite->tint[2] = VfMul(self->borderColor[2], bright);
     sprite->alpha = borderAlpha;
     i = i + 1;
     sprite = sprite->next;
@@ -51,8 +51,8 @@ void UiWindowFrameApplyColors(UiWindowFrame *self)
   fillAlpha = self->alpha * self->fillColor[3];
   fill = self->fill;
   bright = self->brightness;
-  fill->tint[0] = self->fillColor[0] * bright;
-  fill->tint[1] = self->fillColor[1] * bright;
-  fill->tint[2] = self->fillColor[2] * bright;
+  fill->tint[0] = VfMul(self->fillColor[0], bright);
+  fill->tint[1] = VfMul(self->fillColor[1], bright);
+  fill->tint[2] = VfMul(self->fillColor[2], bright);
   self->fill->alpha = fillAlpha;
 }

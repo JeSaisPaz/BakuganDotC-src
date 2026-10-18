@@ -50,12 +50,12 @@ void GfxEffectHitTest(float radius, float length, GfxEffect *effect, s32 param4,
       dir.x = effect->dir[0];
       dir.y = effect->dir[1];
       dir.z = effect->dir[2];
-      lenSq = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
+      lenSq = VfDot3(dir.x, dir.y, dir.z, dir.x, dir.y, dir.z);
       scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-      scale = scale * length;
-      sweep.x = dir.x * scale;
-      sweep.y = dir.y * scale;
-      sweep.z = dir.z * scale;
+      scale = VfMul(scale, length);
+      sweep.x = VfMul(dir.x, scale);
+      sweep.y = VfMul(dir.y, scale);
+      sweep.z = VfMul(dir.z, scale);
       sweep.w = 0.0f;
     }
   }
@@ -81,8 +81,7 @@ void GfxEffectHitTest(float radius, float length, GfxEffect *effect, s32 param4,
     desc->dir = sweep;
     desc->start.w = desc->radius * desc->radius;
     /* dir.w = |dir.xyz| */
-    desc->dir.w = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y +
-                                  desc->dir.z * desc->dir.z);
+    desc->dir.w = VfSqrt(VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z));
     block = &desc->shapeBlock;
     query->shape = block;
     desc = (CollisionSweptSphereDesc *)block->shape;

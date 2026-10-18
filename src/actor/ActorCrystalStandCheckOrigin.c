@@ -20,10 +20,10 @@ int ActorCrystalStandCheckOrigin(ActorCrystalStand *stand)
         g_actorCrystalStandOrigin[2] = 2150.0f;
         g_actorCrystalStandOrigin[3] = 0.0f;
     }
-    dx = g_actorCrystalStandOrigin[0] - stand->base.pos[0];
-    dy = g_actorCrystalStandOrigin[1] - stand->base.pos[1];
-    dz = g_actorCrystalStandOrigin[2] - stand->base.pos[2];
-    dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+    dx = VfSub(g_actorCrystalStandOrigin[0], stand->base.pos[0]);
+    dy = VfSub(g_actorCrystalStandOrigin[1], stand->base.pos[1]);
+    dz = VfSub(g_actorCrystalStandOrigin[2], stand->base.pos[2]);
+    dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
     if (!(dist < 1.0f))
         return 0;
     ActorCrystalStandSetCollidable(stand, 0);

@@ -78,7 +78,7 @@ void ActorCrystalMode2Update(ActorCrystal *self)
             angle = 1.5707964f;
         }
         /* vsin of angle * 2/pi (bank S703) */
-        fade = __builtin_sinf(angle);
+        fade = VfSinQuarter(VfMul(angle, 0.636619747f));
         self->base.base.ambient[3] = fade;
         GfxModelScaleAmbientColor(fade, &self->base.base, NULL);
         GfxModelScaleAmbientColorByName(fade * 0.5f, &self->base.base, "mat_spel");
@@ -120,13 +120,13 @@ void ActorCrystalMode2Update(ActorCrystal *self)
                        player->base.pos[0] - self->base.base.pos[0]);
         self->fireParam = angle;
         /* vrot [C,0,S,0] of angle * 2/pi (bank S703), scaled by 250 on x, y, z */
-        dir[0] = __builtin_cosf(angle) * 250.0f;
+        dir[0] = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), 250.0f);
         dir[1] = 0.0f;
-        dir[2] = __builtin_sinf(angle) * 250.0f;
+        dir[2] = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), 250.0f);
         dir[3] = 0.0f;
-        self->firePoint[0] = dir[0] + self->base.base.pos[0];
-        self->firePoint[1] = dir[1] + self->base.base.pos[1];
-        self->firePoint[2] = dir[2] + self->base.base.pos[2];
+        self->firePoint[0] = VfAdd(dir[0], self->base.base.pos[0]);
+        self->firePoint[1] = VfAdd(dir[1], self->base.base.pos[1]);
+        self->firePoint[2] = VfAdd(dir[2], self->base.base.pos[2]);
         self->firePoint[3] = dir[3];
         self->firePoint[1] = self->firePoint[1] + 250.0f;
         if (SndHasManager()) {
@@ -134,36 +134,34 @@ void ActorCrystalMode2Update(ActorCrystal *self)
         }
         effect = GfxEffectSpawnDirected(g_btlUnitEffectMgr, 0x30, self->firePoint, dir);
         effect->attachPos = self->firePoint;
-        self->firePoint2[0] = player->base.pos[0] - self->firePoint[0];
-        self->firePoint2[1] = player->base.pos[1] - self->firePoint[1];
-        self->firePoint2[2] = player->base.pos[2] - self->firePoint[2];
+        self->firePoint2[0] = VfSub(player->base.pos[0], self->firePoint[0]);
+        self->firePoint2[1] = VfSub(player->base.pos[1], self->firePoint[1]);
+        self->firePoint2[2] = VfSub(player->base.pos[2], self->firePoint[2]);
         self->firePoint2[3] = player->base.pos[3];
         self->firePoint2[1] = 0.0f;
         /* normalise (factor 0 for a zero vector, bank S713), clamp to [-1, 1]; w is S713 = 0 */
-        lenSq = self->firePoint2[0] * self->firePoint2[0] +
-                self->firePoint2[1] * self->firePoint2[1] +
-                self->firePoint2[2] * self->firePoint2[2];
+        lenSq = VfDot3(self->firePoint2[0], self->firePoint2[1], self->firePoint2[2], self->firePoint2[0], self->firePoint2[1], self->firePoint2[2]);
         k = VfRsq(lenSq);
         if (VfIsZero(lenSq)) {
             k = 0.0f;
         }
-        self->firePoint2[0] = VfSat1(self->firePoint2[0] * k);
-        self->firePoint2[1] = VfSat1(self->firePoint2[1] * k);
-        self->firePoint2[2] = VfSat1(self->firePoint2[2] * k);
+        self->firePoint2[0] = VfSat1(VfMul(self->firePoint2[0], k));
+        self->firePoint2[1] = VfSat1(VfMul(self->firePoint2[1], k));
+        self->firePoint2[2] = VfSat1(VfMul(self->firePoint2[2], k));
         self->firePoint2[3] = 0.0f;
         /* blend 30% toward the active camera's dir (all four lanes) */
-        self->firePoint2[0] = self->firePoint2[0] +
-                              (g_gfxActiveCamera->dir[0] - self->firePoint2[0]) * 0.3f;
-        self->firePoint2[1] = self->firePoint2[1] +
-                              (g_gfxActiveCamera->dir[1] - self->firePoint2[1]) * 0.3f;
-        self->firePoint2[2] = self->firePoint2[2] +
-                              (g_gfxActiveCamera->dir[2] - self->firePoint2[2]) * 0.3f;
-        self->firePoint2[3] = self->firePoint2[3] +
-                              (g_gfxActiveCamera->dir[3] - self->firePoint2[3]) * 0.3f;
+        self->firePoint2[0] = VfAdd(self->firePoint2[0],
+                              VfMul(VfSub(g_gfxActiveCamera->dir[0], self->firePoint2[0]), 0.3f));
+        self->firePoint2[1] = VfAdd(self->firePoint2[1],
+                              VfMul(VfSub(g_gfxActiveCamera->dir[1], self->firePoint2[1]), 0.3f));
+        self->firePoint2[2] = VfAdd(self->firePoint2[2],
+                              VfMul(VfSub(g_gfxActiveCamera->dir[2], self->firePoint2[2]), 0.3f));
+        self->firePoint2[3] = VfAdd(self->firePoint2[3],
+                              VfMul(VfSub(g_gfxActiveCamera->dir[3], self->firePoint2[3]), 0.3f));
         /* scale x, y, z by 2.5; w is the masked lane S713 = 0 */
-        self->firePoint2[0] = self->firePoint2[0] * 2.5f;
-        self->firePoint2[1] = self->firePoint2[1] * 2.5f;
-        self->firePoint2[2] = self->firePoint2[2] * 2.5f;
+        self->firePoint2[0] = VfMul(self->firePoint2[0], 2.5f);
+        self->firePoint2[1] = VfMul(self->firePoint2[1], 2.5f);
+        self->firePoint2[2] = VfMul(self->firePoint2[2], 2.5f);
         self->firePoint2[3] = 0.0f;
         self->timer = 0;
         self->step = self->step + 1;

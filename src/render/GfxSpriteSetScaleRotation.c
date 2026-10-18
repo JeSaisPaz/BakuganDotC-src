@@ -29,29 +29,29 @@ void GfxSpriteSetScaleRotation(GfxSprite *sprite, float scaleX, float scaleY, fl
   /* vrot takes quarter turns: angle * (2/pi). The VFPU reduces the quarter turns modulo 4 exactly
      before its sin/cos, so reduce here too: VfCosQuarter of a large t would round t * pi/2 first.
      t - 4*trunc(t/4) is exact; from |t/4| >= 2^23 on every float t is a multiple of 4. */
-  t = angle * 0.636619772f;
-  q = t * 0.25f;
+  t = VfMul(angle, 0.636619772f);
+  q = VfMul(t, 0.25f);
   if (__builtin_fabsf(q) < 8388608.0f) {
-    t = t - 4.0f * (float)(int)q;
+    t = t - VfMul(4.0f, (float)(int)q);
   } else if (q - q == 0.0f) {
     t = 0.0f;
   }
   c = VfCosQuarter(t);
   s = VfSinQuarter(t);
-  m[0] = sx * c;
-  m[1] = sx * s;
-  m[2] = 0.0f;
-  m[3] = 0.0f;
-  m[4] = sy * -s;
-  m[5] = sy * c;
-  m[6] = 0.0f;
-  m[7] = 0.0f;
-  m[8] = 0.0f;
-  m[9] = 0.0f;
+  m[0] = VfDot2(sx, 0.0f, c, -s);
+  m[1] = VfDot2(sx, 0.0f, s, c);
+  m[2] = VfDot2(sx, 0.0f, 0.0f, 0.0f);
+  m[3] = VfDot2(sx, 0.0f, 0.0f, 0.0f);
+  m[4] = VfDot2(0.0f, sy, c, -s);
+  m[5] = VfDot2(0.0f, sy, s, c);
+  m[6] = VfDot2(sy, 0.0f, 0.0f, 0.0f);
+  m[7] = VfDot2(sy, 0.0f, 0.0f, 0.0f);
+  m[8] = VfDot2(0.0f, 0.0f, c, -s);
+  m[9] = VfDot2(0.0f, 0.0f, s, c);
   m[10] = 0.0f;
   m[11] = 0.0f;
-  m[12] = 0.0f;
-  m[13] = 0.0f;
+  m[12] = VfDot2(0.0f, 0.0f, c, -s);
+  m[13] = VfDot2(0.0f, 0.0f, s, c);
   m[14] = 0.0f;
   m[15] = 1.0f;
 }

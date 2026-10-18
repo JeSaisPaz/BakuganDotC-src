@@ -42,15 +42,15 @@ void ActorPlayerLaunchBall(ActorPlayer *self)
   ball->base.pos[2] = hand[2];
   ball->base.pos[3] = hand[3];
   /* vsub.t keeps lane 3 of the aim vector. */
-  vel[0] = aim[0] - ball->base.pos[0];
-  vel[1] = aim[1] - ball->base.pos[1];
-  vel[2] = aim[2] - ball->base.pos[2];
+  vel[0] = VfSub(aim[0], ball->base.pos[0]);
+  vel[1] = VfSub(aim[1], ball->base.pos[1]);
+  vel[2] = VfSub(aim[2], ball->base.pos[2]);
   vel[3] = aim[3];
   fframes = (float)frames;
-  k = 1.0f / fframes;
-  vel[0] = vel[0] * k;
-  vel[1] = vel[1] * k;
-  vel[2] = vel[2] * k;
+  k = VfRcp(fframes);
+  vel[0] = VfMul(vel[0], k);
+  vel[1] = VfMul(vel[1], k);
+  vel[2] = VfMul(vel[2], k);
   self->ballStart[0] = ball->base.pos[0];
   self->ballStart[1] = ball->base.pos[1];
   self->ballStart[2] = ball->base.pos[2];

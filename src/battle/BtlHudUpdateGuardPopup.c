@@ -22,15 +22,15 @@ static inline void BtlHudGuardLerpPos(GfxSprite *sprite, const float *target, fl
     float y = sprite->posY;
     float z = sprite->posZ;
     float w = sprite->posW;
-    float dx = (target[0] - x) * k;
-    float dy = (target[1] - y) * k;
-    float dz = (target[2] - z) * k;
-    float dw = (target[3] - w) * k;
+    float dx = VfMul(VfSub(target[0], x), k);
+    float dy = VfMul(VfSub(target[1], y), k);
+    float dz = VfMul(VfSub(target[2], z), k);
+    float dw = VfMul(VfSub(target[3], w), k);
 
-    sprite->posX = x + dx;
-    sprite->posY = y + dy;
-    sprite->posZ = z + dz;
-    sprite->posW = w + dw;
+    sprite->posX = VfAdd(x, dx);
+    sprite->posY = VfAdd(y, dy);
+    sprite->posZ = VfAdd(z, dz);
+    sprite->posW = VfAdd(w, dw);
 }
 
 /* Animates the guard popup sprite (`sprites[0x75]`) of the battle HUD (`BtlHudUpdate`) for the

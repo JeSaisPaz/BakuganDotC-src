@@ -21,11 +21,11 @@ static float BtlMainIntroBoxSpan(const float *bbox, float *diff)
 {
     const float *max = bbox + 4;
 
-    diff[0] = max[0] - bbox[0];
-    diff[1] = max[1] - bbox[1];
-    diff[2] = max[2] - bbox[2];
+    diff[0] = VfSub(max[0], bbox[0]);
+    diff[1] = VfSub(max[1], bbox[1]);
+    diff[2] = VfSub(max[2], bbox[2]);
     diff[3] = max[3];
-    return __builtin_sqrtf(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
+    return VfSqrt(VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]));
 }
 
 void BtlMainPhaseIntro(BtlMain *self)

@@ -45,10 +45,10 @@ int ActorCrystalMode4Update(ActorCrystal *self)
       return 1;
     }
     if (step <= 0) {
-      dx = self->base.base.pos[0] - target->base.pos[0];
-      dy = self->base.base.pos[1] - target->base.pos[1];
-      dz = self->base.base.pos[2] - target->base.pos[2];
-      dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+      dx = VfSub(self->base.base.pos[0], target->base.pos[0]);
+      dy = VfSub(self->base.base.pos[1], target->base.pos[1]);
+      dz = VfSub(self->base.base.pos[2], target->base.pos[2]);
+      dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
       if (!(dist < self->attackRange)) {
         return result;
       }
@@ -63,15 +63,15 @@ int ActorCrystalMode4Update(ActorCrystal *self)
                    target->base.pos[0] - self->base.base.pos[0]);
     self->fireParam = angle;
     /* vrot [C,0,S,0] of angle * 2/pi (bank S703) */
-    dir[0] = __builtin_cosf(angle);
+    dir[0] = VfCosQuarter(VfMul(angle, 0.636619747f));
     dir[1] = 0.0f;
-    dir[2] = __builtin_sinf(angle);
+    dir[2] = VfSinQuarter(VfMul(angle, 0.636619747f));
     dir[3] = 0.0f;
     /* same rotation of the reloaded fireParam, scaled by 250 on x, y, z, plus the position */
     angle = self->fireParam;
-    pos[0] = __builtin_cosf(angle) * 250.0f + self->base.base.pos[0];
-    pos[1] = 0.0f * 250.0f + self->base.base.pos[1];
-    pos[2] = __builtin_sinf(angle) * 250.0f + self->base.base.pos[2];
+    pos[0] = VfAdd(VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), 250.0f), self->base.base.pos[0]);
+    pos[1] = VfAdd(0.0f * 250.0f, self->base.base.pos[1]);
+    pos[2] = VfAdd(VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), 250.0f), self->base.base.pos[2]);
     pos[3] = 0.0f;
     pos[1] = pos[1] + 125.0f;
     GfxEffectSpawnDirected(g_btlUnitEffectMgr, 0x1c, pos, dir);
@@ -107,23 +107,23 @@ int ActorCrystalMode4Update(ActorCrystal *self)
   aim[3] = target->base.pos[3];
   aim[1] = aim[1] + target->combat.stats->height;
   angle = self->fireParam;
-  from[0] = __builtin_cosf(angle) * 250.0f + self->base.base.pos[0];
-  from[1] = 0.0f * 250.0f + self->base.base.pos[1];
-  from[2] = __builtin_sinf(angle) * 250.0f + self->base.base.pos[2];
+  from[0] = VfAdd(VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), 250.0f), self->base.base.pos[0]);
+  from[1] = VfAdd(0.0f * 250.0f, self->base.base.pos[1]);
+  from[2] = VfAdd(VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), 250.0f), self->base.base.pos[2]);
   from[3] = 0.0f;
   from[1] = from[1] + 125.0f;
-  shotDir[0] = aim[0] - from[0];
-  shotDir[1] = aim[1] - from[1];
-  shotDir[2] = aim[2] - from[2];
+  shotDir[0] = VfSub(aim[0], from[0]);
+  shotDir[1] = VfSub(aim[1], from[1]);
+  shotDir[2] = VfSub(aim[2], from[2]);
   /* normalise (factor 0 for a zero vector, bank S713), clamp to [-1, 1]; w is S713 = 0 */
-  lenSq = shotDir[0] * shotDir[0] + shotDir[1] * shotDir[1] + shotDir[2] * shotDir[2];
+  lenSq = VfDot3(shotDir[0], shotDir[1], shotDir[2], shotDir[0], shotDir[1], shotDir[2]);
   k = VfRsq(lenSq);
   if (VfIsZero(lenSq)) {
     k = 0.0f;
   }
-  shotDir[0] = VfSat1(shotDir[0] * k) * 2.5f;
-  shotDir[1] = VfSat1(shotDir[1] * k) * 2.5f;
-  shotDir[2] = VfSat1(shotDir[2] * k) * 2.5f;
+  shotDir[0] = VfMul(VfSat1(VfMul(shotDir[0], k)), 2.5f);
+  shotDir[1] = VfMul(VfSat1(VfMul(shotDir[1], k)), 2.5f);
+  shotDir[2] = VfMul(VfSat1(VfMul(shotDir[2], k)), 2.5f);
   shotDir[3] = 0.0f;
   attack->param0 = self->attackParam0;
   attack->param1 = self->attackParam1;

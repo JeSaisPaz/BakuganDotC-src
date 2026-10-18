@@ -23,10 +23,10 @@ static void GameFieldRotateFieldY(float *d, const float *r, float c, float s)
   float z = r[2];
   float w = r[3];
 
-  d[0] = x * c + y * 0.0f + z * s + w * 0.0f;
-  d[1] = x * 0.0f + y * 1.0f + z * 0.0f + w * 0.0f;
-  d[2] = x * -s + y * 0.0f + z * c + w * 0.0f;
-  d[3] = x * 0.0f + y * 0.0f + z * 0.0f + w * 1.0f;
+  d[0] = VfDot4(x, y, z, w, c, 0.0f, s, 0.0f);
+  d[1] = VfDot4(x, y, z, w, 0.0f, 1.0f, 0.0f, 0.0f);
+  d[2] = VfDot4(x, y, z, w, -s, 0.0f, c, 0.0f);
+  d[3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void GameFieldUpdateWorld(CoreTask *task)
@@ -52,8 +52,8 @@ void GameFieldUpdateWorld(CoreTask *task)
     GfxModel *extra;
     float *m = model->data->rootMatrix;
     /* vmul.s by S703 (bank 2/pi) then vrot in quarter turns: cos/sin of 0.01 rad */
-    float c = __builtin_cosf(0.01f);
-    float s = __builtin_sinf(0.01f);
+    float c = VfCosQuarter(0.01f * 0.636619747f);
+    float s = VfSinQuarter(0.01f * 0.636619747f);
     int i;
 
     for (i = 0; i < 4; i++) {

@@ -39,7 +39,7 @@ void GfxPuffKindLight(GfxPuff *puff)
             puff->base.texture = GfxFindTexture("corelight");
             puff->param174 = 0.01f;
             puff->maybe_variant16d = 4;
-            rot = (PlatformRandFloat12() - 1.0f) * PUFF_TWO_PI - PUFF_PI;
+            rot = VfSub(VfMul(VfSub(PlatformRandFloat12(), 1.0f), PUFF_TWO_PI), PUFF_PI);
             puff->base.maybe_billboardParams80[2] = rot;
         } else {
             puff->base.texture = GfxFindTexture("eyelight");
@@ -64,32 +64,31 @@ void GfxPuffKindLight(GfxPuff *puff)
     }
 
     /* toCam = camera eye - target position */
-    toCam[0] = g_gfxActiveCamera->eye[0] - puff->unk160[0];
-    toCam[1] = g_gfxActiveCamera->eye[1] - puff->unk160[1];
-    toCam[2] = g_gfxActiveCamera->eye[2] - puff->unk160[2];
+    toCam[0] = VfSub(g_gfxActiveCamera->eye[0], puff->unk160[0]);
+    toCam[1] = VfSub(g_gfxActiveCamera->eye[1], puff->unk160[1]);
+    toCam[2] = VfSub(g_gfxActiveCamera->eye[2], puff->unk160[2]);
     /* facing = target direction . camera view direction */
-    facing = puff->unk160[8] * g_gfxActiveCamera->dir[0] + puff->unk160[9] * g_gfxActiveCamera->dir[1]
-           + puff->unk160[10] * g_gfxActiveCamera->dir[2];
+    facing = VfDot3(puff->unk160[8], puff->unk160[9], puff->unk160[10], g_gfxActiveCamera->dir[0], g_gfxActiveCamera->dir[1], g_gfxActiveCamera->dir[2]);
     if (facing < -0.1f) {
         scale = 3.0f;
     } else {
         scale = -3.0f;
     }
     /* toCam = normalize(toCam) * scale (a zero vector stays zero) */
-    dot = toCam[0] * toCam[0] + toCam[1] * toCam[1] + toCam[2] * toCam[2];
+    dot = VfDot3(toCam[0], toCam[1], toCam[2], toCam[0], toCam[1], toCam[2]);
     if (VfIsZero(dot)) {
         inv = 0.0f;
     } else {
         inv = VfRsq(dot);
     }
-    inv = inv * scale;
-    toCam[0] = toCam[0] * inv;
-    toCam[1] = toCam[1] * inv;
-    toCam[2] = toCam[2] * inv;
+    inv = VfMul(inv, scale);
+    toCam[0] = VfMul(toCam[0], inv);
+    toCam[1] = VfMul(toCam[1], inv);
+    toCam[2] = VfMul(toCam[2], inv);
     /* posXYZ = target position + toCam; posW = target w */
-    puff->base.posX = puff->unk160[0] + toCam[0];
-    puff->base.posY = puff->unk160[1] + toCam[1];
-    puff->base.posZ = puff->unk160[2] + toCam[2];
+    puff->base.posX = VfAdd(puff->unk160[0], toCam[0]);
+    puff->base.posY = VfAdd(puff->unk160[1], toCam[1]);
+    puff->base.posZ = VfAdd(puff->unk160[2], toCam[2]);
     puff->base.posW = puff->unk160[3];
 
     if (!(puff->param174 <= 0.0f)) {
@@ -101,14 +100,14 @@ void GfxPuffKindLight(GfxPuff *puff)
         } else if (puff->base.maybe_billboardParams80[2] <= -PUFF_PI) {
             puff->base.maybe_billboardParams80[2] = puff->base.maybe_billboardParams80[2] + PUFF_TWO_PI;
         }
-        rot = (PlatformRandFloat12() - 1.0f) * 0.6f + 0.2f + puff->pulsePhase;
+        rot = (VfSub(PlatformRandFloat12(), 1.0f)) * 0.6f + 0.2f + puff->pulsePhase;
         puff->pulsePhase = rot;
         if (!(rot <= PUFF_PI)) {
             puff->pulsePhase = puff->pulsePhase - PUFF_TWO_PI;
         } else if (puff->pulsePhase <= -PUFF_PI) {
             puff->pulsePhase = puff->pulsePhase + PUFF_TWO_PI;
         }
-        size = puff->unk160[3] * 0.3f * (__builtin_sinf(puff->pulsePhase) * 3.0f + 16.0f);
+        size = puff->unk160[3] * 0.3f * (VfSinQuarter(VfMul(puff->pulsePhase, 0.636619747f)) * 3.0f + 16.0f);
         puff->base.width = size;
         puff->base.height = size;
         puff->base.depth = size;
@@ -125,7 +124,7 @@ void GfxPuffKindLight(GfxPuff *puff)
     puff->step2 = puff->step2 + 1;
     if (puff->step == 1) {
         /* alpha flicker */
-        rot = (PlatformRandFloat12() - 1.0f) * 2.0f + 0.5f + puff->param170;
+        rot = (VfSub(PlatformRandFloat12(), 1.0f)) * 2.0f + 0.5f + puff->param170;
         puff->param170 = rot;
         if (!(rot <= PUFF_PI)) {
             puff->param170 = puff->param170 - PUFF_TWO_PI;
@@ -133,9 +132,9 @@ void GfxPuffKindLight(GfxPuff *puff)
             puff->param170 = puff->param170 + PUFF_TWO_PI;
         }
         if (!(puff->param174 <= 0.0f)) {
-            alpha = __builtin_sinf(puff->param170) * 0.4f + 0.2f;
+            alpha = VfSinQuarter(VfMul(puff->param170, 0.636619747f)) * 0.4f + 0.2f;
         } else {
-            alpha = __builtin_sinf(puff->param170) * 0.4f + 0.6f;
+            alpha = VfSinQuarter(VfMul(puff->param170, 0.636619747f)) * 0.4f + 0.6f;
         }
         puff->base.alpha = alpha;
     } else {

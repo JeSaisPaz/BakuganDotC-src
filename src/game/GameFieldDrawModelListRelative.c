@@ -26,9 +26,9 @@ u32 *GameFieldDrawModelListRelative(u32 *dl, void **list, s32 pass)
       float *t = &m->data->rootMatrix[12];
 
       /* translation.xyz -= savedEye.xyz (w kept) */
-      t[0] = t[0] - savedEye[0];
-      t[1] = t[1] - savedEye[1];
-      t[2] = t[2] - savedEye[2];
+      t[0] = VfSub(t[0], savedEye[0]);
+      t[1] = VfSub(t[1], savedEye[1]);
+      t[2] = VfSub(t[2], savedEye[2]);
       ve = &((const VtblEntry *)m->base.vtable)[8];
       ((void (*)(void *, u32 **))ve->fn)((u8 *)m + ve->delta, &cursor);
       /* translation = pos (all four lanes) */

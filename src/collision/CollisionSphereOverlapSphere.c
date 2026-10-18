@@ -6,10 +6,10 @@
 
 bool CollisionSphereOverlapSphere(const CollisionSphere *a, const CollisionSphere *b)
 {
-  float dx = a->center[0] - b->center[0];
-  float dy = a->center[1] - b->center[1];
-  float dz = a->center[2] - b->center[2];
-  float distSq = dx * dx + dy * dy + dz * dz;
+  float dx = VfSub(a->center[0], b->center[0]);
+  float dy = VfSub(a->center[1], b->center[1]);
+  float dz = VfSub(a->center[2], b->center[2]);
+  float distSq = VfDot3(dx, dy, dz, dx, dy, dz);
   float r = a->radius + b->radius;
 
   return distSq <= r * r;

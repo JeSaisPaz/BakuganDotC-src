@@ -77,7 +77,7 @@ void UiHpGaugeDraw(void *packet)
     }
     for (row = 0; row < 3; row++) {
       for (col = 0; col < 4; col++) {
-        world[row][col] = world[row][col] * g_uiHpGaugeDrawScale[row];
+        world[row][col] = VfMul(world[row][col], g_uiHpGaugeDrawScale[row]);
       }
     }
   }

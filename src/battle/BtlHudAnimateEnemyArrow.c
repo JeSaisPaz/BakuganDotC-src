@@ -72,8 +72,8 @@ void BtlHudAnimateEnemyArrow(BtlHud *self, s32 dir)
             self->arrowFade[dir] = self->arrowFade[dir] - PI;
         }
 
-        wide = __builtin_sinf(self->arrowPulse[dir]) * 0.5f + 0.7f;
-        narrow = __builtin_sinf(self->arrowPulse[dir]) * 0.2f + 0.4f;
+        wide = VfSinQuarter(VfMul(self->arrowPulse[dir], 0.636619747f)) * 0.5f + 0.7f;
+        narrow = VfSinQuarter(VfMul(self->arrowPulse[dir], 0.636619747f)) * 0.2f + 0.4f;
         if (dir < 2) {
             if (dir >= 0) {
                 scaleX = narrow;
@@ -96,16 +96,16 @@ void BtlHudAnimateEnemyArrow(BtlHud *self, s32 dir)
         for (k = 0; k < 4; k++) {
             pos[i][k] = hidden[k];
         }
-        t = __builtin_sinf(self->arrowAngle[dir]);
+        t = VfSinQuarter(VfMul(self->arrowAngle[dir], 0.636619747f));
         for (k = 0; k < 4; k++) {
-            pos[i][k] = pos[i][k] + (shown[k] - pos[i][k]) * t;
+            pos[i][k] = VfAdd(pos[i][k], VfMul(VfSub(shown[k], pos[i][k]), t));
         }
         sprite = self->sprites[15 + 3 * dir + i];
         sprite->posX = pos[i][0];
         sprite->posY = pos[i][1];
         sprite->posZ = pos[i][2];
         sprite->posW = pos[i][3];
-        sprite->alpha = __builtin_sinf(self->arrowFade[dir]) * 0.3f + 0.8f;
+        sprite->alpha = VfSinQuarter(VfMul(self->arrowFade[dir], 0.636619747f)) * 0.3f + 0.8f;
         if (i != 2) {
             GfxSpriteSetScaleRotation(sprite, scaleX, scaleY, 0.0f, false);
         }

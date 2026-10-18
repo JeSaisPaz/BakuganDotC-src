@@ -19,18 +19,18 @@ void CollisionSegmentTransform(void *segment, const ScePspFMatrix4 *mtx, void *o
   vx = src->start[0];
   vy = src->start[1];
   vz = src->start[2];
-  w = mtx->x.w * vx + mtx->y.w * vy + mtx->z.w * vz + mtx->w.w;
-  dst->start[0] = mtx->x.x * vx + mtx->y.x * vy + mtx->z.x * vz + mtx->w.x;
-  dst->start[1] = mtx->x.y * vx + mtx->y.y * vy + mtx->z.y * vz + mtx->w.y;
-  dst->start[2] = mtx->x.z * vx + mtx->y.z * vy + mtx->z.z * vz + mtx->w.z;
+  w = VfDot4(mtx->x.w, mtx->y.w, mtx->z.w, mtx->w.w, vx, vy, vz, 1.0f);
+  dst->start[0] = VfDot4(mtx->x.x, mtx->y.x, mtx->z.x, mtx->w.x, vx, vy, vz, 1.0f);
+  dst->start[1] = VfDot4(mtx->x.y, mtx->y.y, mtx->z.y, mtx->w.y, vx, vy, vz, 1.0f);
+  dst->start[2] = VfDot4(mtx->x.z, mtx->y.z, mtx->z.z, mtx->w.z, vx, vy, vz, 1.0f);
   dst->start[3] = w;
   /* vtfm3.t writes lanes 0-2 of C000; the sv.q stores lane 3 still holding the transformed w */
   vx = src->dir[0];
   vy = src->dir[1];
   vz = src->dir[2];
-  dst->dir[0] = mtx->x.x * vx + mtx->y.x * vy + mtx->z.x * vz;
-  dst->dir[1] = mtx->x.y * vx + mtx->y.y * vy + mtx->z.y * vz;
-  dst->dir[2] = mtx->x.z * vx + mtx->y.z * vy + mtx->z.z * vz;
+  dst->dir[0] = VfDot3(mtx->x.x, mtx->y.x, mtx->z.x, vx, vy, vz);
+  dst->dir[1] = VfDot3(mtx->x.y, mtx->y.y, mtx->z.y, vx, vy, vz);
+  dst->dir[2] = VfDot3(mtx->x.z, mtx->y.z, mtx->z.z, vx, vy, vz);
   dst->dir[3] = w;
   dst->type = src->type;
 }

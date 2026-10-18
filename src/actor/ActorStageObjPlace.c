@@ -38,20 +38,20 @@ void ActorStageObjPlace(ActorStageObjBase *self, float *pos)
   /* Rotation about Y (vrot of heading * 2/π in quarter turns) times diag(scale.x, scale.y,
      scale.z, 1), fields as columns. */
   m = self->base.data->rootMatrix;
-  c = __builtin_cosf(heading);
-  s = __builtin_sinf(heading);
-  m[0] = c * self->base.scale[0];
-  m[1] = 0.0f;
-  m[2] = -s * self->base.scale[0];
-  m[3] = 0.0f;
-  m[4] = 0.0f;
-  m[5] = self->base.scale[1];
-  m[6] = 0.0f;
-  m[7] = 0.0f;
-  m[8] = s * self->base.scale[2];
-  m[9] = 0.0f;
-  m[10] = c * self->base.scale[2];
-  m[11] = 0.0f;
+  c = VfCosQuarter(VfMul(heading, 0.636619747f));
+  s = VfSinQuarter(VfMul(heading, 0.636619747f));
+  m[0] = VfDot2(c, s, self->base.scale[0], 0.0f);
+  m[1] = VfDot2(0.0f, 0.0f, self->base.scale[0], 0.0f);
+  m[2] = VfDot2(-s, c, self->base.scale[0], 0.0f);
+  m[3] = VfDot2(0.0f, 0.0f, self->base.scale[0], 0.0f);
+  m[4] = VfDot3(c, 0.0f, s, 0.0f, self->base.scale[1], 0.0f);
+  m[5] = VfDot2(1.0f, 0.0f, self->base.scale[1], 0.0f);
+  m[6] = VfDot3(-s, 0.0f, c, 0.0f, self->base.scale[1], 0.0f);
+  m[7] = VfDot2(0.0f, 0.0f, self->base.scale[1], 0.0f);
+  m[8] = VfDot2(c, s, 0.0f, self->base.scale[2]);
+  m[9] = VfDot2(0.0f, 0.0f, self->base.scale[2], 0.0f);
+  m[10] = VfDot2(-s, c, 0.0f, self->base.scale[2]);
+  m[11] = VfDot2(0.0f, 0.0f, self->base.scale[2], 0.0f);
   m[12] = 0.0f;
   m[13] = 0.0f;
   m[14] = 0.0f;

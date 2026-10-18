@@ -28,7 +28,7 @@ void GameQuestCamDirWatchFwdUpdate(void *state, const float *move, float dt)
     return;
   }
   dir = (*(GameQuestCamSpring **)self->mode->entry)->step;
-  dot = dir.x * move[0] + dir.y * move[1] + dir.z * move[2];
+  dot = VfDot3(dir.x, dir.y, dir.z, move[0], move[1], move[2]);
   if (dot <= 0.0f) {
     t = 0.0f;
   } else {

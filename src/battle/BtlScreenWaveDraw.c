@@ -58,10 +58,10 @@ void BtlScreenWaveDraw(BtlScreenWave *wave, void *packet)
     list = GfxTextureWriteCall(GfxGetFeedbackTexture(), list + 17, 0);
 
     /* colour -> packed RGBA bytes: saturate to 0..1, scale by 255, truncate to bytes */
-    rgba = (u32)VfI2uc(VfF2iz(VfSat0(wave->color[0]) * 255.0f, 23)) |
-           (u32)VfI2uc(VfF2iz(VfSat0(wave->color[1]) * 255.0f, 23)) << 8 |
-           (u32)VfI2uc(VfF2iz(VfSat0(wave->color[2]) * 255.0f, 23)) << 16 |
-           (u32)VfI2uc(VfF2iz(VfSat0(wave->color[3]) * 255.0f, 23)) << 24;
+    rgba = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(wave->color[0]), 255.0f), 23)) |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(wave->color[1]), 255.0f), 23)) << 8 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(wave->color[2]), 255.0f), 23)) << 16 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(wave->color[3]), 255.0f), 23)) << 24;
     list[0] = (rgba & 0xffffff) | 0x55000000;
     list[1] = (rgba >> 24) | 0x58000000;
     list += 2;

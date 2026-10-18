@@ -91,21 +91,21 @@ void BtlBakuganState06Update(BtlBakugan *self)
         colour[3] = srcColour[3];
         t = (float)(0x23 - self->subWait) * 0.0299999993f;
         /* vmin.s with S733 (1), then vmax.s with S713 (0); t is never NaN */
-        t = t < 1.0f ? t : 1.0f;
-        t = t > 0.0f ? t : 0.0f;
+        t = VfMin(t, 1.0f);
+        t = VfMax(t, 0.0f);
         angle = t * 3.14159274f;
         /* vcos.s of angle * S703 (2/pi): cos in radians */
-        c = __builtin_cosf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
         colour[3] = (1.0f - c) * 0.5f;
         entry = &((const VtblEntry *)self->base.base.vtable)[4];
         ((void (*)(void *, const float *))entry->fn)((u8 *)self + entry->delta, colour);
-        c = __builtin_cosf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
         scale = 1.0f - (1.0f - c) * 0.5f * 0.300000012f;
         node = (GmoNode *)GfxModelFindNode(&self->base, "Bip01_Pelvis");
         /* vscl.t into C710, stored with sv.q: lane 3 is the bank S713 (0) */
-        node->scale[0] = node->scale[0] * scale;
-        node->scale[1] = node->scale[1] * scale;
-        node->scale[2] = node->scale[2] * scale;
+        node->scale[0] = VfMul(node->scale[0], scale);
+        node->scale[1] = VfMul(node->scale[1], scale);
+        node->scale[2] = VfMul(node->scale[2], scale);
         node->scaleW = 0.0f;
         self->base.ambient[3] = self->base.ambient[3] - 0.0500000007f;
         wait = self->subWait;

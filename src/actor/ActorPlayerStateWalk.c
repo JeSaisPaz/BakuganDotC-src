@@ -43,7 +43,7 @@ void ActorPlayerStateWalk(ActorPlayer *self)
   target = 2.4f;
   slot = 1;
   stick = ((BtlInput *)actor->input)->stick;
-  mag = __builtin_sqrtf(stick[0] * stick[0] + stick[1] * stick[1] + stick[2] * stick[2]);
+  mag = VfSqrt(VfDot3(stick[0], stick[1], stick[2], stick[0], stick[1], stick[2]));
   if (mag < 0.97f) {
     target = target * 0.2f;
     slot = 0x2e;
@@ -72,8 +72,8 @@ void ActorPlayerStateWalk(ActorPlayer *self)
   heading = input->heading;
   speed = actor->walkSpeed * turn;
   /* vrot of heading * 2/pi (bank S703) quarter turns: (cos, 0, sin) scaled by speed */
-  vel[0] = __builtin_cosf(heading) * speed;
-  vel[2] = __builtin_sinf(heading) * speed;
+  vel[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), speed);
+  vel[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), speed);
   step = actor->stepCounter - 1;
   actor->stepCounter = step;
   if (step != 0) {

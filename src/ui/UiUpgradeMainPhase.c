@@ -130,7 +130,7 @@ void UiUpgradeMainPhase(UiUpgrade *self)
         doneD = UiUpgradeHeaderPanelsDone(self, 1);
         /* textColor += (black - textColor) * 0.2 (VFPU vsub/vscl/vadd per lane) */
         for (i = 0; i < 4; i++) {
-            self->textColor[i] = self->textColor[i] + (0.0f - self->textColor[i]) * 0.2f;
+            self->textColor[i] = VfAdd(self->textColor[i], VfMul(VfSub(0.0f, self->textColor[i]), 0.2f));
         }
         if ((u8)(doneA + doneB + doneC + doneD) == 4) {
             self->base.phaseStep = self->base.phaseStep + 1;

@@ -26,10 +26,10 @@ int BtlItemFindPicker(BtlItem *item)
         if (((int (*)(void *))canPickUp->fn)((u8 *)obj + canPickUp->delta) == 0) {
             continue;
         }
-        dx = unit->base.pos[0] - item->pos[0];
-        dy = unit->base.pos[1] - item->pos[1];
-        dz = unit->base.pos[2] - item->pos[2];
-        distSq = dx * dx + dy * dy + dz * dz;
+        dx = VfSub(unit->base.pos[0], item->pos[0]);
+        dy = VfSub(unit->base.pos[1], item->pos[1]);
+        dz = VfSub(unit->base.pos[2], item->pos[2]);
+        distSq = VfDot3(dx, dy, dz, dx, dy, dz);
         if (distSq <= 57600.0f) {
             item->picker = unit;
             return 1;

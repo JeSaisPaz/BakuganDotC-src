@@ -43,9 +43,9 @@ void BtlMotionDataScaleTrackKeysGraded(GmoMotionInfo *motion, u32 target, float 
             continue;
         }
         weight = remaining / count;
-        sx = vec[0] * weight;
-        sy = vec[1] * weight;
-        sz = vec[2] * weight;
+        sx = VfMul(vec[0], weight);
+        sy = VfMul(vec[1], weight);
+        sz = VfMul(vec[2], weight);
         remaining = remaining - 1.0f;
 
         keys = (u8 *)PspPtr(track->data) + *keyOffset;
@@ -53,9 +53,9 @@ void BtlMotionDataScaleTrackKeysGraded(GmoMotionInfo *motion, u32 target, float 
             GmoMotionKeyH *key = (GmoMotionKeyH *)keys;
 
             for (k = 0; k < track->paramA; k++, key++) {
-                float x = VfH2f(key->value[0]) + sx;
-                float y = VfH2f(key->value[1]) + sy;
-                float z = VfH2f(key->value[2]) + sz;
+                float x = VfAdd(VfH2f(key->value[0]), sx);
+                float y = VfAdd(VfH2f(key->value[1]), sy);
+                float z = VfAdd(VfH2f(key->value[2]), sz);
 
                 key->value[0] = BtlFloatToHalf(x);
                 key->value[1] = BtlFloatToHalf(y);
@@ -65,9 +65,9 @@ void BtlMotionDataScaleTrackKeysGraded(GmoMotionInfo *motion, u32 target, float 
             GmoMotionKeyF *key = (GmoMotionKeyF *)keys;
 
             for (k = 0; k < track->paramA; k++, key++) {
-                float x = key->value[0] + sx;
-                float y = key->value[1] + sy;
-                float z = key->value[2] + sz;
+                float x = VfAdd(key->value[0], sx);
+                float y = VfAdd(key->value[1], sy);
+                float z = VfAdd(key->value[2], sz);
 
                 key->value[0] = x;
                 key->value[1] = y;

@@ -16,10 +16,10 @@
 /* lv.q/vsat0.q/vscl.q S701 (255)/vf2iz.q 23/vi2uc.q: RGBA floats to ABGR8888 bytes */
 static inline u32 UiHpGaugePackColor(const ScePspFVector4 *c)
 {
-  return (u32)VfI2uc(VfF2iz(VfSat0(c->x) * 255.0f, 23)) |
-         (u32)VfI2uc(VfF2iz(VfSat0(c->y) * 255.0f, 23)) << 8 |
-         (u32)VfI2uc(VfF2iz(VfSat0(c->z) * 255.0f, 23)) << 16 |
-         (u32)VfI2uc(VfF2iz(VfSat0(c->w) * 255.0f, 23)) << 24;
+  return (u32)VfI2uc(VfF2iz(VfMul(VfSat0(c->x), 255.0f), 23)) |
+         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(c->y), 255.0f), 23)) << 8 |
+         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(c->z), 255.0f), 23)) << 16 |
+         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(c->w), 255.0f), 23)) << 24;
 }
 
 u32 *UiHpGaugeEmitBars(float scale, UiHpGauge *self, u32 *dl)

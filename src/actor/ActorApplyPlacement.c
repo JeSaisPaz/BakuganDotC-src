@@ -17,9 +17,9 @@ void ActorApplyPlacement(Actor *self)
     v[2] = (float)rec[2] * 0.00024414062f;
     v[3] = 0.0f;
     /* vscl.t: only x/y/z are scaled; pos.w receives a stale VFPU lane (left unchanged here) */
-    self->base.pos[0] = v[0] * 20.0f;
-    self->base.pos[1] = v[1] * 20.0f;
-    self->base.pos[2] = v[2] * 20.0f;
+    self->base.pos[0] = VfMul(v[0], 20.0f);
+    self->base.pos[1] = VfMul(v[1], 20.0f);
+    self->base.pos[2] = VfMul(v[2], 20.0f);
     ActorPlacementAnglesToRadians(v, (const s16 *)(rec + 3));
     self->base.rot[0] = v[0];
     self->base.rot[1] = v[1];

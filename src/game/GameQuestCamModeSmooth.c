@@ -73,10 +73,10 @@ void GameQuestCamModeSmooth(float dt, GameQuestCamModeBase *self, float *dir, fl
     vt = obj->vtbl;
     p = ((const ScePspFVector4 *(*)(void *))vt[2].fn)((u8 *)obj + vt[2].delta);
     /* movement since the capture, projected onto dir */
-    dx = p->x - self->targetPos.x;
-    dy = p->y - self->targetPos.y;
-    dz = p->z - self->targetPos.z;
-    proj = dx * dir[0] + dy * dir[1] + dz * dir[2];
+    dx = VfSub(p->x, self->targetPos.x);
+    dy = VfSub(p->y, self->targetPos.y);
+    dz = VfSub(p->z, self->targetPos.z);
+    proj = VfDot3(dx, dy, dz, dir[0], dir[1], dir[2]);
     proj = proj * leadScale;
     mag = proj;
     if (proj < 0.0f) {
@@ -86,27 +86,27 @@ void GameQuestCamModeSmooth(float dt, GameQuestCamModeBase *self, float *dir, fl
       self->leadFilter = proj * 0.2f + self->leadFilter * 0.8f;
     }
     k = self->leadFilter;
-    self->lead.x = dir[0] * k;
-    self->lead.y = dir[1] * k;
-    self->lead.z = dir[2] * k;
+    self->lead.x = VfMul(dir[0], k);
+    self->lead.y = VfMul(dir[1], k);
+    self->lead.z = VfMul(dir[2], k);
     self->lead.w = 0.0f;
   }
   k = (self->base).base.stiffness * 0.33333334f;
   k = k * k;
   (self->base).base.springFactor = k;
   /* spring pull (lead - smoothPos) * k */
-  ax = (self->lead.x - self->smoothPos.x) * k;
-  ay = (self->lead.y - self->smoothPos.y) * k;
-  az = (self->lead.z - self->smoothPos.z) * k;
+  ax = VfMul(VfSub(self->lead.x, self->smoothPos.x), k);
+  ay = VfMul(VfSub(self->lead.y, self->smoothPos.y), k);
+  az = VfMul(VfSub(self->lead.z, self->smoothPos.z), k);
   /* damping smoothVel * stiffness */
   stiff = (self->base).base.stiffness;
-  ax = (ax - self->smoothVel.x * stiff) * dt;
-  ay = (ay - self->smoothVel.y * stiff) * dt;
-  az = (az - self->smoothVel.z * stiff) * dt;
-  self->smoothVel.x = self->smoothVel.x + ax;
-  self->smoothVel.y = self->smoothVel.y + ay;
-  self->smoothVel.z = self->smoothVel.z + az;
-  (self->base).base.vel.x = (self->base).base.vel.x + self->smoothVel.x;
-  (self->base).base.vel.y = (self->base).base.vel.y + self->smoothVel.y;
-  (self->base).base.vel.z = (self->base).base.vel.z + self->smoothVel.z;
+  ax = VfMul(VfSub(ax, VfMul(self->smoothVel.x, stiff)), dt);
+  ay = VfMul(VfSub(ay, VfMul(self->smoothVel.y, stiff)), dt);
+  az = VfMul(VfSub(az, VfMul(self->smoothVel.z, stiff)), dt);
+  self->smoothVel.x = VfAdd(self->smoothVel.x, ax);
+  self->smoothVel.y = VfAdd(self->smoothVel.y, ay);
+  self->smoothVel.z = VfAdd(self->smoothVel.z, az);
+  (self->base).base.vel.x = VfAdd((self->base).base.vel.x, self->smoothVel.x);
+  (self->base).base.vel.y = VfAdd((self->base).base.vel.y, self->smoothVel.y);
+  (self->base).base.vel.z = VfAdd((self->base).base.vel.z, self->smoothVel.z);
 }

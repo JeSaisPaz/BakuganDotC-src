@@ -854,10 +854,10 @@ void BtlHudPhaseBuild(BtlHud *self)
                 a = (float)alpha * 0.00392156979f;
                 GfxHsvToRgb(*hue, (1.10000002f - a * a) * 0.909090996f, 1.0f, a, rgba);
                 /* vsat0 / vscl by S701 (255) / vf2iz 23 / vi2uc: RGBA8, lane 0 in the low byte */
-                packed = (u32)VfI2uc(VfF2iz(VfSat0(rgba[0]) * 255.0f, 23)) |
-                         (u32)VfI2uc(VfF2iz(VfSat0(rgba[1]) * 255.0f, 23)) << 8 |
-                         (u32)VfI2uc(VfF2iz(VfSat0(rgba[2]) * 255.0f, 23)) << 16 |
-                         (u32)VfI2uc(VfF2iz(VfSat0(rgba[3]) * 255.0f, 23)) << 24;
+                packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(rgba[0]), 255.0f), 23)) |
+                         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(rgba[1]), 255.0f), 23)) << 8 |
+                         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(rgba[2]), 255.0f), 23)) << 16 |
+                         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(rgba[3]), 255.0f), 23)) << 24;
                 clut[j].word = packed;
                 clut[j].rgba[3] = alpha;
             }

@@ -60,26 +60,26 @@ void GameGimmickCorePointLaunch(GameGimmickCorePoint *obj, int index, const floa
   obj->hopStep = aim;
   STATIC_ZERO_GUARD();
   obj->hopStart.y = obj->hopStart.y + 14.0f;
-  aim.x = aim.x * 13.0f;
-  aim.z = aim.z * 13.0f;
-  obj->hopStep.x = obj->hopStep.x * 2.0f;
-  obj->hopStep.y = obj->hopStep.y * 2.0f;
-  obj->hopStep.z = obj->hopStep.z * 2.0f;
+  aim.x = VfMul(aim.x, 13.0f);
+  aim.z = VfMul(aim.z, 13.0f);
+  obj->hopStep.x = VfMul(obj->hopStep.x, 2.0f);
+  obj->hopStep.y = VfMul(obj->hopStep.y, 2.0f);
+  obj->hopStep.z = VfMul(obj->hopStep.z, 2.0f);
   obj->hopStep.w = 0.0f;
   if (index > 0) {
     angle = (index % 2 != 0) ? -0.78539819f : 0.78539819f;
     /* rotation about Y: rows (c, 0, -s), (0, 1, 0), (s, 0, c) */
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
-    m00 = c;
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
+    m00 = VfDot2(1.0f, 0.0f, c, s);
     m01 = 0.0f;
-    m02 = -s;
-    m10 = 0.0f;
+    m02 = VfDot2(1.0f, 0.0f, -s, c);
+    m10 = VfDot2(0.0f, 0.0f, c, s);
     m11 = 1.0f;
-    m12 = 0.0f;
-    m20 = s;
+    m12 = VfDot2(0.0f, 0.0f, -s, c);
+    m20 = VfDot2(0.0f, 1.0f, c, s);
     m21 = 0.0f;
-    m22 = c;
+    m22 = VfDot2(0.0f, 1.0f, -s, c);
     x = aim.x;
     y = aim.y;
     z = aim.z;
@@ -94,38 +94,38 @@ void GameGimmickCorePointLaunch(GameGimmickCorePoint *obj, int index, const floa
     obj->hopStep.z = m20 * x + m21 * y + m22 * z;
   }
   /* hopEnd += aim; planned = hopEnd - hopStart; hopMid = (hopEnd + hopStart) * 0.5 */
-  obj->hopEnd.x = obj->hopEnd.x + aim.x;
-  obj->hopEnd.y = obj->hopEnd.y + aim.y;
-  obj->hopEnd.z = obj->hopEnd.z + aim.z;
-  planned.x = obj->hopEnd.x - obj->hopStart.x;
-  planned.y = obj->hopEnd.y - obj->hopStart.y;
-  planned.z = obj->hopEnd.z - obj->hopStart.z;
+  obj->hopEnd.x = VfAdd(obj->hopEnd.x, aim.x);
+  obj->hopEnd.y = VfAdd(obj->hopEnd.y, aim.y);
+  obj->hopEnd.z = VfAdd(obj->hopEnd.z, aim.z);
+  planned.x = VfSub(obj->hopEnd.x, obj->hopStart.x);
+  planned.y = VfSub(obj->hopEnd.y, obj->hopStart.y);
+  planned.z = VfSub(obj->hopEnd.z, obj->hopStart.z);
   planned.w = obj->hopEnd.w;
-  obj->hopMid.x = (obj->hopEnd.x + obj->hopStart.x) * 0.5f;
-  obj->hopMid.y = (obj->hopEnd.y + obj->hopStart.y) * 0.5f;
-  obj->hopMid.z = (obj->hopEnd.z + obj->hopStart.z) * 0.5f;
+  obj->hopMid.x = VfMul(VfAdd(obj->hopEnd.x, obj->hopStart.x), 0.5f);
+  obj->hopMid.y = VfMul(VfAdd(obj->hopEnd.y, obj->hopStart.y), 0.5f);
+  obj->hopMid.z = VfMul(VfAdd(obj->hopEnd.z, obj->hopStart.z), 0.5f);
   obj->hopMid.w = 0.0f;
   STATIC_ZERO_GUARD();
   STATIC_ZERO_GUARD();
   STATIC_ZERO_GUARD();
   obj->hopMid.y = obj->hopMid.y + (obj->hopStart.y - obj->hopEnd.y) * 0.5f;
   /* rayEnd = hopMid + normalize(hopEnd - hopMid) * 500 (normalised lanes clamped to [-1, 1]) */
-  rayDir.x = obj->hopEnd.x - obj->hopMid.x;
-  rayDir.y = obj->hopEnd.y - obj->hopMid.y;
-  rayDir.z = obj->hopEnd.z - obj->hopMid.z;
-  lenSq = rayDir.x * rayDir.x + rayDir.y * rayDir.y + rayDir.z * rayDir.z;
+  rayDir.x = VfSub(obj->hopEnd.x, obj->hopMid.x);
+  rayDir.y = VfSub(obj->hopEnd.y, obj->hopMid.y);
+  rayDir.z = VfSub(obj->hopEnd.z, obj->hopMid.z);
+  lenSq = VfDot3(rayDir.x, rayDir.y, rayDir.z, rayDir.x, rayDir.y, rayDir.z);
   if (VfIsZero(lenSq)) {
     k = 0.0f;
   } else {
     k = VfRsq(lenSq);
   }
-  rayDir.x = VfSat1(rayDir.x * k) * 500.0f;
-  rayDir.y = VfSat1(rayDir.y * k) * 500.0f;
-  rayDir.z = VfSat1(rayDir.z * k) * 500.0f;
+  rayDir.x = VfMul(VfSat1(VfMul(rayDir.x, k)), 500.0f);
+  rayDir.y = VfMul(VfSat1(VfMul(rayDir.y, k)), 500.0f);
+  rayDir.z = VfMul(VfSat1(VfMul(rayDir.z, k)), 500.0f);
   rayDir.w = 0.0f;
-  rayEnd.x = obj->hopMid.x + rayDir.x;
-  rayEnd.y = obj->hopMid.y + rayDir.y;
-  rayEnd.z = obj->hopMid.z + rayDir.z;
+  rayEnd.x = VfAdd(obj->hopMid.x, rayDir.x);
+  rayEnd.y = VfAdd(obj->hopMid.y, rayDir.y);
+  rayEnd.z = VfAdd(obj->hopMid.z, rayDir.z);
   rayEnd.w = obj->hopMid.w;
   STATIC_ZERO_GUARD();
   STATIC_ZERO_GUARD();
@@ -146,9 +146,9 @@ void GameGimmickCorePointLaunch(GameGimmickCorePoint *obj, int index, const floa
   g_collisionSegmentDesc.start[1] = origin.y;
   g_collisionSegmentDesc.start[2] = origin.z;
   g_collisionSegmentDesc.start[3] = origin.w;
-  g_collisionSegmentDesc.dir[0] = end.x - origin.x;
-  g_collisionSegmentDesc.dir[1] = end.y - origin.y;
-  g_collisionSegmentDesc.dir[2] = end.z - origin.z;
+  g_collisionSegmentDesc.dir[0] = VfSub(end.x, origin.x);
+  g_collisionSegmentDesc.dir[1] = VfSub(end.y, origin.y);
+  g_collisionSegmentDesc.dir[2] = VfSub(end.z, origin.z);
   g_collisionSegmentDesc.dir[3] = end.w;
   if (CollisionRaycast(0x1bf077e, &g_collisionSegmentBlock2, 0) != NULL) {
     hit = g_collisionHitResult.point;
@@ -158,9 +158,9 @@ void GameGimmickCorePointLaunch(GameGimmickCorePoint *obj, int index, const floa
     obj->hopEnd = hit;
   }
   /* hopMid = (hopEnd + hopStart) * 0.5, then raised by the apex factor */
-  obj->hopMid.x = (obj->hopEnd.x + obj->hopStart.x) * 0.5f;
-  obj->hopMid.y = (obj->hopEnd.y + obj->hopStart.y) * 0.5f;
-  obj->hopMid.z = (obj->hopEnd.z + obj->hopStart.z) * 0.5f;
+  obj->hopMid.x = VfMul(VfAdd(obj->hopEnd.x, obj->hopStart.x), 0.5f);
+  obj->hopMid.y = VfMul(VfAdd(obj->hopEnd.y, obj->hopStart.y), 0.5f);
+  obj->hopMid.z = VfMul(VfAdd(obj->hopEnd.z, obj->hopStart.z), 0.5f);
   obj->hopMid.w = 0.0f;
   STATIC_ZERO_GUARD();
   STATIC_ZERO_GUARD();
@@ -169,11 +169,11 @@ void GameGimmickCorePointLaunch(GameGimmickCorePoint *obj, int index, const floa
   STATIC_ZERO_GUARD();
   obj->hopHeight = obj->hopMid.y;
   /* |planned| and |hopEnd - hopStart| */
-  x = obj->hopEnd.x - obj->hopStart.x;
-  y = obj->hopEnd.y - obj->hopStart.y;
-  z = obj->hopEnd.z - obj->hopStart.z;
-  plannedLen = __builtin_sqrtf(planned.x * planned.x + planned.y * planned.y + planned.z * planned.z);
-  travelLen = __builtin_sqrtf(x * x + y * y + z * z);
+  x = VfSub(obj->hopEnd.x, obj->hopStart.x);
+  y = VfSub(obj->hopEnd.y, obj->hopStart.y);
+  z = VfSub(obj->hopEnd.z, obj->hopStart.z);
+  plannedLen = VfSqrt(VfDot3(planned.x, planned.y, planned.z, planned.x, planned.y, planned.z));
+  travelLen = VfSqrt(VfDot3(x, y, z, x, y, z));
   if (plannedLen <= 1e-05f) {
     plannedLen = 1e-05f;
   }

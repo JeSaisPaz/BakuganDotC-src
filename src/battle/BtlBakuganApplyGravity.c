@@ -38,9 +38,9 @@ void BtlBakuganApplyGravity(BtlBakugan *self)
     scale = GfxGetMotionTimeScale();
     /* step.xyz = velocity.xyz * scale (vscl.t); the sv.q also stores a lane 3 the function never
        set (stale C710.w), left out. */
-    step[0] = self->base.velocity[0] * scale;
-    step[1] = self->base.velocity[1] * scale;
-    step[2] = self->base.velocity[2] * scale;
+    step[0] = VfMul(self->base.velocity[0], scale);
+    step[1] = VfMul(self->base.velocity[1], scale);
+    step[2] = VfMul(self->base.velocity[2], scale);
     BtlBakuganApplyVelocity(self, step);
     if ((self->stateFlags & 0x40000000) != 0) {
         self->airborneFrames = self->airborneFrames + 1;

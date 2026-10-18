@@ -79,7 +79,7 @@ void BtlItemUpdate(void *item)
     self->pos[2] = self->basePos[2];
     self->pos[3] = self->basePos[3];
     angle = (float)self->popFrame * 0.05f * 3.1415927f * 0.9f;
-    s = __builtin_sinf(angle);
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
     self->pos[1] = self->pos[1] + s * 250.0f;
     break;
   case 5:
@@ -118,10 +118,10 @@ void BtlItemUpdate(void *item)
     dir[2] = self->picker->base.pos[2];
     dir[3] = self->picker->base.pos[3];
     dir[1] = dir[1] + 100.0f;
-    dir[0] = dir[0] - self->pos[0];
-    dir[1] = dir[1] - self->pos[1];
-    dir[2] = dir[2] - self->pos[2];
-    distSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+    dir[0] = VfSub(dir[0], self->pos[0]);
+    dir[1] = VfSub(dir[1], self->pos[1]);
+    dir[2] = VfSub(dir[2], self->pos[2]);
+    distSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
     if (distSq < 6400.0f) {
       BtlItemApplyPickup(self);
       BtlItemDespawn(self);
@@ -131,10 +131,10 @@ void BtlItemUpdate(void *item)
     yaw = yaw + self->homeYaw * self->homeCurve;
     pitch = atan2f(dir[1], __builtin_sqrtf(dir[0] * dir[0] + dir[2] * dir[2]));
     pitch = pitch + self->homePitch * self->homeCurve;
-    cosPitch = __builtin_cosf(pitch);
-    cosYaw = __builtin_cosf(yaw);
-    sinPitch = __builtin_sinf(pitch);
-    sinYaw = __builtin_sinf(yaw);
+    cosPitch = VfCosQuarter(VfMul(pitch, 0.636619747f));
+    cosYaw = VfCosQuarter(VfMul(yaw, 0.636619747f));
+    sinPitch = VfSinQuarter(VfMul(pitch, 0.636619747f));
+    sinYaw = VfSinQuarter(VfMul(yaw, 0.636619747f));
     dir[0] = cosYaw * cosPitch;
     dir[1] = sinPitch;
     dir[2] = sinYaw * cosPitch;
@@ -147,13 +147,13 @@ void BtlItemUpdate(void *item)
       self->reserved58 = limit;
     }
     /* dir.w gets the bank zero S713 (vscl.t C710 stored as a quad); pos.w is kept */
-    dir[0] = dir[0] * self->reserved58;
-    dir[1] = dir[1] * self->reserved58;
-    dir[2] = dir[2] * self->reserved58;
+    dir[0] = VfMul(dir[0], self->reserved58);
+    dir[1] = VfMul(dir[1], self->reserved58);
+    dir[2] = VfMul(dir[2], self->reserved58);
     dir[3] = 0.0f;
-    self->pos[0] = self->pos[0] + dir[0];
-    self->pos[1] = self->pos[1] + dir[1];
-    self->pos[2] = self->pos[2] + dir[2];
+    self->pos[0] = VfAdd(self->pos[0], dir[0]);
+    self->pos[1] = VfAdd(self->pos[1], dir[1]);
+    self->pos[2] = VfAdd(self->pos[2], dir[2]);
     curve = self->homeCurve - 0.03f;
     self->homeCurve = curve;
     if (curve < 0.0f) {
@@ -180,20 +180,20 @@ tail:
   if (self->model != NULL) {
     root = self->model->data->rootMatrix;
     angle = (float)self->age * 0.1f;
-    c = __builtin_cosf(angle);
-    sn = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    sn = VfSinQuarter(VfMul(angle, 0.636619747f));
     /* root = rotY(angle) scaled by diag(10, 10, 10, 1), row 3 = pos */
-    root[0] = c * 10.0f;
+    root[0] = VfDot2(10.0f, 0.0f, c, sn);
     root[1] = 0.0f;
-    root[2] = -sn * 10.0f;
+    root[2] = VfDot2(10.0f, 0.0f, -sn, c);
     root[3] = 0.0f;
-    root[4] = 0.0f;
-    root[5] = 10.0f;
-    root[6] = 0.0f;
+    root[4] = VfDot2(0.0f, 0.0f, c, sn);
+    root[5] = VfDot2(10.0f, 0.0f, 1.0f, 0.0f);
+    root[6] = VfDot2(0.0f, 0.0f, -sn, c);
     root[7] = 0.0f;
-    root[8] = sn * 10.0f;
+    root[8] = VfDot2(0.0f, 10.0f, c, sn);
     root[9] = 0.0f;
-    root[10] = c * 10.0f;
+    root[10] = VfDot2(0.0f, 10.0f, -sn, c);
     root[11] = 0.0f;
     root = self->model->data->rootMatrix;
     root[12] = self->pos[0];

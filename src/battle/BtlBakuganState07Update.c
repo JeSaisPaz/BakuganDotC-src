@@ -48,12 +48,12 @@ static inline void BtlBakuganScaleAim(float *aim, float len)
   float inv;
   float k;
 
-  lenSq = aim[0] * aim[0] + aim[1] * aim[1] + aim[2] * aim[2];
+  lenSq = VfDot3(aim[0], aim[1], aim[2], aim[0], aim[1], aim[2]);
   inv = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-  k = inv * len;
-  aim[0] = aim[0] * k;
-  aim[1] = aim[1] * k;
-  aim[2] = aim[2] * k;
+  k = VfMul(inv, len);
+  aim[0] = VfMul(aim[0], k);
+  aim[1] = VfMul(aim[1], k);
+  aim[2] = VfMul(aim[2], k);
   aim[3] = 0.0f;
 }
 
@@ -175,19 +175,19 @@ void BtlBakuganState07Update(BtlBakugan *self)
         yaw = self->base.rot[1];
         speed = BtlBakuganGetScaledStat48(self) * 0.800000012f;
         /* vrot.q [C,0,S,0] of yaw * 2/π, scaled by speed (lanes 0..2), stored as the velocity */
-        velocity[0] = __builtin_cosf(yaw) * speed;
-        velocity[1] = 0.0f * speed;
-        velocity[2] = __builtin_sinf(yaw) * speed;
+        velocity[0] = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), speed);
+        velocity[1] = VfMul(0.0f, speed);
+        velocity[2] = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), speed);
         velocity[3] = 0.0f;
       } else if (self->subTimer == 0) {
         /* horizontal speed squared: vdot.t with the y lane zeroed */
-        hsq = velocity[0] * velocity[0] + velocity[2] * velocity[2];
+        hsq = VfDot2(velocity[0], velocity[2], velocity[0], velocity[2]);
         speed = BtlBakuganGetMeleeStepSpeed(self);
         if (hsq < speed * BtlBakuganGetMeleeStepSpeed(self)) {
           yaw = self->base.rot[1];
           speed = BtlBakuganGetMeleeStepSpeed(self);
-          velocity[0] = velocity[0] + __builtin_cosf(yaw) * speed;
-          velocity[2] = velocity[2] + __builtin_sinf(yaw) * speed;
+          velocity[0] = VfAdd(velocity[0], VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), speed));
+          velocity[2] = VfAdd(velocity[2], VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), speed));
           velocity[1] = 0.0f;
         } else {
           self->subTimer = 1;
@@ -362,9 +362,9 @@ void BtlBakuganState07Update(BtlBakugan *self)
       if (aim[1] < target->groundY) {
         aim[1] = target->groundY;
       }
-      aim[0] = aim[0] - self->base.pos[0];
-      aim[1] = aim[1] - self->base.pos[1];
-      aim[2] = aim[2] - self->base.pos[2];
+      aim[0] = VfSub(aim[0], self->base.pos[0]);
+      aim[1] = VfSub(aim[1], self->base.pos[1]);
+      aim[2] = VfSub(aim[2], self->base.pos[2]);
       if (set->flags & 0x80) {
         BtlBakuganAimVelocity(aim, velocity, self->dashSpeed);
         self->dashSpeed = self->dashSpeed * 0.850000024f;
@@ -384,7 +384,7 @@ void BtlBakuganState07Update(BtlBakugan *self)
         }
         velocity[1] = vy;
       } else {
-        dist = __builtin_sqrtf(aim[0] * aim[0] + aim[1] * aim[1] + aim[2] * aim[2]);
+        dist = VfSqrt(VfDot3(aim[0], aim[1], aim[2], aim[0], aim[1], aim[2]));
         gap = dist - self->combat.stats->reachRadius * 1.29999995f;
         speed = self->dashSpeed;
         if (gap < 0.0f) {
@@ -394,10 +394,10 @@ void BtlBakuganState07Update(BtlBakugan *self)
         }
         BtlBakuganScaleAim(aim, gap);
         /* velocity += (aim - velocity) * 0.3, all four lanes */
-        velocity[0] = velocity[0] + (aim[0] - velocity[0]) * 0.300000012f;
-        velocity[1] = velocity[1] + (aim[1] - velocity[1]) * 0.300000012f;
-        velocity[2] = velocity[2] + (aim[2] - velocity[2]) * 0.300000012f;
-        velocity[3] = velocity[3] + (aim[3] - velocity[3]) * 0.300000012f;
+        velocity[0] = VfAdd(velocity[0], VfMul(VfSub(aim[0], velocity[0]), 0.300000012f));
+        velocity[1] = VfAdd(velocity[1], VfMul(VfSub(aim[1], velocity[1]), 0.300000012f));
+        velocity[2] = VfAdd(velocity[2], VfMul(VfSub(aim[2], velocity[2]), 0.300000012f));
+        velocity[3] = VfAdd(velocity[3], VfMul(VfSub(aim[3], velocity[3]), 0.300000012f));
         if ((target->stateFlags & 0x40000) && (target->flags & 2)) {
           if ((s32)self->attackPhase < 3) {
             self->dashSpeed = BtlBakuganGetMeleeLungeSpeed(self);
@@ -433,7 +433,7 @@ void BtlBakuganState07Update(BtlBakugan *self)
   }
   if (!homing) {
     /* horizontal damping: velocity.x/z *= 0.83 */
-    velocity[0] = velocity[0] * 0.829999983f;
-    velocity[2] = velocity[2] * 0.829999983f;
+    velocity[0] = VfMul(velocity[0], 0.829999983f);
+    velocity[2] = VfMul(velocity[2], 0.829999983f);
   }
 }

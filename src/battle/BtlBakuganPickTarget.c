@@ -49,10 +49,10 @@ s32 BtlBakuganPickTarget(BtlBakugan *self, s32 mode)
             }
         }
         /* |self->pos - unit->pos|^2 over x, y, z */
-        dx = self->base.pos[0] - unit->base.pos[0];
-        dy = self->base.pos[1] - unit->base.pos[1];
-        dz = self->base.pos[2] - unit->base.pos[2];
-        dist = dx * dx + dy * dy + dz * dz;
+        dx = VfSub(self->base.pos[0], unit->base.pos[0]);
+        dy = VfSub(self->base.pos[1], unit->base.pos[1]);
+        dz = VfSub(self->base.pos[2], unit->base.pos[2]);
+        dist = VfDot3(dx, dy, dz, dx, dy, dz);
         pairs[count].depth = -dist;
         pairs[count].id = unit->base.base.id;
         count++;

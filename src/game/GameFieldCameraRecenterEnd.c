@@ -13,8 +13,8 @@ void GameFieldCameraRecenterEnd(float *savedEye)
     g_gfxActiveCamera->eye[3] = savedEye[3];
     /* vadd.t: only x/y/z are shifted, w keeps its value. */
     target = g_gfxActiveCamera->target;
-    target[0] = target[0] + savedEye[0];
-    target[1] = target[1] + savedEye[1];
-    target[2] = target[2] + savedEye[2];
+    target[0] = VfAdd(target[0], savedEye[0]);
+    target[1] = VfAdd(target[1], savedEye[1]);
+    target[2] = VfAdd(target[2], savedEye[2]);
     GfxCameraUpdate(g_gfxActiveCamera, 1);
 }

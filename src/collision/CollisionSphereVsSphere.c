@@ -11,10 +11,10 @@
 s32 CollisionSphereVsSphere(const CollisionSphere *sphere, const CollisionSphere *other,
                              ScePspFVector4 *out)
 {
-  float dx = other->center[0] - sphere->center[0];
-  float dy = other->center[1] - sphere->center[1];
-  float dz = other->center[2] - sphere->center[2];
-  float distSq = dx * dx + dy * dy + dz * dz;
+  float dx = VfSub(other->center[0], sphere->center[0]);
+  float dy = VfSub(other->center[1], sphere->center[1]);
+  float dz = VfSub(other->center[2], sphere->center[2]);
+  float distSq = VfDot3(dx, dy, dz, dx, dy, dz);
   float sum = sphere->radius + other->radius;
   bool hit = distSq <= sum * sum;
 
@@ -26,23 +26,23 @@ s32 CollisionSphereVsSphere(const CollisionSphere *sphere, const CollisionSphere
     float ny;
     float nz;
 
-    dx = other->center[0] - sphere->center[0];
-    dy = other->center[1] - sphere->center[1];
-    dz = other->center[2] - sphere->center[2];
-    lenSq = dx * dx + dy * dy + dz * dz;
+    dx = VfSub(other->center[0], sphere->center[0]);
+    dy = VfSub(other->center[1], sphere->center[1]);
+    dz = VfSub(other->center[2], sphere->center[2]);
+    lenSq = VfDot3(dx, dy, dz, dx, dy, dz);
     inv = VfRsq(lenSq);
     if (VfIsZero(lenSq))
       inv = 0.0f; /* vcmovt from bank S713 */
-    nx = VfSat1(dx * inv);
-    ny = VfSat1(dy * inv);
-    nz = VfSat1(dz * inv);
-    out->x = nx * mid;
-    out->y = ny * mid;
-    out->z = nz * mid;
+    nx = VfSat1(VfMul(dx, inv));
+    ny = VfSat1(VfMul(dy, inv));
+    nz = VfSat1(VfMul(dz, inv));
+    out->x = VfMul(nx, mid);
+    out->y = VfMul(ny, mid);
+    out->z = VfMul(nz, mid);
     out->w = 0.0f; /* bank S713, the w lane of C710 */
-    out->x = out->x + sphere->center[0];
-    out->y = out->y + sphere->center[1];
-    out->z = out->z + sphere->center[2];
+    out->x = VfAdd(out->x, sphere->center[0]);
+    out->y = VfAdd(out->y, sphere->center[1]);
+    out->z = VfAdd(out->z, sphere->center[2]);
   }
   return hit;
 }

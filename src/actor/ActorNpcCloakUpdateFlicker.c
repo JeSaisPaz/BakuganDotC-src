@@ -24,7 +24,7 @@ void ActorNpcCloakUpdateFlicker(ActorNpcCloak *self)
     if (phase == 0) {
         frame = self->flickerFrame;
         self->base.base.base.base.ambient[3] =
-            __builtin_sinf((float)frame * 0.0055555557f * 3.1415927f) * 0.2f;
+            VfSinQuarter(VfMul((float)frame * 0.0055555557f * 3.1415927f, 0.636619747f)) * 0.2f;
         if (frame >= 0x5b) {
             self->flickerPhase = 1;
             self->flickerFrame = 0;
@@ -42,7 +42,7 @@ void ActorNpcCloakUpdateFlicker(ActorNpcCloak *self)
     } else if (phase == 2) {
         frame = self->flickerFrame;
         self->base.base.base.base.ambient[3] =
-            __builtin_cosf((float)frame * 0.0055555557f * 3.1415927f) * 0.2f;
+            VfCosQuarter(VfMul((float)frame * 0.0055555557f * 3.1415927f, 0.636619747f)) * 0.2f;
         frame = frame + 15;
         self->flickerFrame = frame;
         if (frame >= 0x5b) {

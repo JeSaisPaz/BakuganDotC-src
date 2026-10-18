@@ -256,10 +256,10 @@ void GameFieldPhaseMain(CoreTask *task)
       /* talkLookAt += (partner position - talkLookAt) * talkBlendRate */
       t = field->talkBlendRate;
       tmp = cam->talkLookAt;
-      tmp.x = tmp.x + (partner->base.pos[0] - tmp.x) * t;
-      tmp.y = tmp.y + (partner->base.pos[1] - tmp.y) * t;
-      tmp.z = tmp.z + (partner->base.pos[2] - tmp.z) * t;
-      tmp.w = tmp.w + (partner->base.pos[3] - tmp.w) * t;
+      tmp.x = VfAdd(tmp.x, VfMul(VfSub(partner->base.pos[0], tmp.x), t));
+      tmp.y = VfAdd(tmp.y, VfMul(VfSub(partner->base.pos[1], tmp.y), t));
+      tmp.z = VfAdd(tmp.z, VfMul(VfSub(partner->base.pos[2], tmp.z), t));
+      tmp.w = VfAdd(tmp.w, VfMul(VfSub(partner->base.pos[3], tmp.w), t));
       cam->talkLookAt = tmp;
       if (g_gameFieldTalkEyeMaxY < cam->talkEye.y) {
         t = field->talkBlendRate;

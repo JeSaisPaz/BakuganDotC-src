@@ -49,8 +49,8 @@ CoreObject *GameGimmickEffectMarkerCtor(GameGimmickEffectMarker *obj, s32 kind, 
       effect = (GfxEffect *)obj->effect2;
       /* vrot of (heading + 3.14) * S703 (2/pi): cos/sin of the angle in radians */
       angle = heading + 3.14f;
-      c = __builtin_cosf(angle);
-      s = __builtin_sinf(angle);
+      c = VfCosQuarter(VfMul(angle, 0.636619747f));
+      s = VfSinQuarter(VfMul(angle, 0.636619747f));
       effect->matrix[0] = c;
       effect->matrix[1] = 0.0f;
       effect->matrix[2] = -s;
@@ -83,8 +83,8 @@ CoreObject *GameGimmickEffectMarkerCtor(GameGimmickEffectMarker *obj, s32 kind, 
     }
     effect = (GfxEffect *)obj->effect;
     angle = heading + 3.14f;
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
     effect->matrix[0] = c;
     effect->matrix[1] = 0.0f;
     effect->matrix[2] = -s;

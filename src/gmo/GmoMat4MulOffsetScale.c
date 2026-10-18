@@ -7,10 +7,10 @@ static ScePspFVector4 ComposeField(const ScePspFMatrix4 *p, float c0, float c1, 
 {
     ScePspFVector4 r;
 
-    r.x = c0 * p->x.x + c1 * p->y.x + c2 * p->z.x + c3 * p->w.x;
-    r.y = c0 * p->x.y + c1 * p->y.y + c2 * p->z.y + c3 * p->w.y;
-    r.z = c0 * p->x.z + c1 * p->y.z + c2 * p->z.z + c3 * p->w.z;
-    r.w = c0 * p->x.w + c1 * p->y.w + c2 * p->z.w + c3 * p->w.w;
+    r.x = VfDot4(c0, c1, c2, c3, p->x.x, p->y.x, p->z.x, p->w.x);
+    r.y = VfDot4(c0, c1, c2, c3, p->x.y, p->y.y, p->z.y, p->w.y);
+    r.z = VfDot4(c0, c1, c2, c3, p->x.z, p->y.z, p->z.z, p->w.z);
+    r.w = VfDot4(c0, c1, c2, c3, p->x.w, p->y.w, p->z.w, p->w.w);
     return r;
 }
 
@@ -28,22 +28,22 @@ ScePspFMatrix4 *GmoMat4MulOffsetScale(ScePspFMatrix4 *dst, const ScePspFMatrix4 
     ScePspFMatrix4 m;
     ScePspFMatrix4 r;
 
-    m.w.x = l.x.x * v.x + l.y.x * v.y + l.z.x * v.z + l.w.x;
-    m.w.y = l.x.y * v.x + l.y.y * v.y + l.z.y * v.z + l.w.y;
-    m.w.z = l.x.z * v.x + l.y.z * v.y + l.z.z * v.z + l.w.z;
-    m.w.w = l.x.w * v.x + l.y.w * v.y + l.z.w * v.z + l.w.w;
-    m.x.x = l.x.x * v.w;
-    m.x.y = l.x.y * v.w;
-    m.x.z = l.x.z * v.w;
-    m.x.w = l.x.w * v.w;
-    m.y.x = l.y.x * v.w;
-    m.y.y = l.y.y * v.w;
-    m.y.z = l.y.z * v.w;
-    m.y.w = l.y.w * v.w;
-    m.z.x = l.z.x * v.w;
-    m.z.y = l.z.y * v.w;
-    m.z.z = l.z.z * v.w;
-    m.z.w = l.z.w * v.w;
+    m.w.x = VfDot4(l.x.x, l.y.x, l.z.x, l.w.x, v.x, v.y, v.z, 1.0f);
+    m.w.y = VfDot4(l.x.y, l.y.y, l.z.y, l.w.y, v.x, v.y, v.z, 1.0f);
+    m.w.z = VfDot4(l.x.z, l.y.z, l.z.z, l.w.z, v.x, v.y, v.z, 1.0f);
+    m.w.w = VfDot4(l.x.w, l.y.w, l.z.w, l.w.w, v.x, v.y, v.z, 1.0f);
+    m.x.x = VfMul(l.x.x, v.w);
+    m.x.y = VfMul(l.x.y, v.w);
+    m.x.z = VfMul(l.x.z, v.w);
+    m.x.w = VfMul(l.x.w, v.w);
+    m.y.x = VfMul(l.y.x, v.w);
+    m.y.y = VfMul(l.y.y, v.w);
+    m.y.z = VfMul(l.y.z, v.w);
+    m.y.w = VfMul(l.y.w, v.w);
+    m.z.x = VfMul(l.z.x, v.w);
+    m.z.y = VfMul(l.z.y, v.w);
+    m.z.z = VfMul(l.z.z, v.w);
+    m.z.w = VfMul(l.z.w, v.w);
 
     r.x = ComposeField(&p, m.x.x, m.x.y, m.x.z, m.x.w);
     r.y = ComposeField(&p, m.y.x, m.y.y, m.y.z, m.y.w);

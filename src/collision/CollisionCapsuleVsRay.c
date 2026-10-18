@@ -24,10 +24,10 @@ bool CollisionCapsuleVsRay(const void *capsuleArg, const void *ray, ScePspFVecto
     }
     p0 = g_collisionClosestPoints[0];
     p1 = g_collisionClosestPoints[1];
-    dx = p1.x - p0.x;
-    dy = p1.y - p0.y;
-    dz = p1.z - p0.z;
-    lenSq = dx * dx + dy * dy + dz * dz;
+    dx = VfSub(p1.x, p0.x);
+    dy = VfSub(p1.y, p0.y);
+    dz = VfSub(p1.z, p0.z);
+    lenSq = VfDot3(dx, dy, dz, dx, dy, dz);
     /* vcmp EZ + vcmovt: bank constant S713 (0.0f) replaces the inverse length of a zero vector. */
     if (VfIsZero(lenSq)) {
         inv = 0.0f;
@@ -35,12 +35,12 @@ bool CollisionCapsuleVsRay(const void *capsuleArg, const void *ray, ScePspFVecto
         inv = VfRsq(lenSq);
     }
     /* vpfxd [-1:1,-1:1,-1:1,M] + vscl.t, then vscl.t into C710 whose lane 3 is S713 (0.0f). */
-    out->x = VfSat1(dx * inv) * distSq;
-    out->y = VfSat1(dy * inv) * distSq;
-    out->z = VfSat1(dz * inv) * distSq;
+    out->x = VfMul(VfSat1(VfMul(dx, inv)), distSq);
+    out->y = VfMul(VfSat1(VfMul(dy, inv)), distSq);
+    out->z = VfMul(VfSat1(VfMul(dz, inv)), distSq);
     out->w = 0.0f;
-    out->x = out->x + g_collisionClosestPoints[0].x;
-    out->y = out->y + g_collisionClosestPoints[0].y;
-    out->z = out->z + g_collisionClosestPoints[0].z;
+    out->x = VfAdd(out->x, g_collisionClosestPoints[0].x);
+    out->y = VfAdd(out->y, g_collisionClosestPoints[0].y);
+    out->z = VfAdd(out->z, g_collisionClosestPoints[0].z);
     return true;
 }

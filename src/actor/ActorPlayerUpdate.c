@@ -121,24 +121,24 @@ void ActorPlayerUpdate(ActorPlayer *self)
 
   /* shadow billboard position xyz += modelOffset xyz (w kept) */
   billboard = ((BtlShadow *)self->base.shadow)->billboard;
-  billboard->posX = billboard->posX + self->modelOffset[0];
-  billboard->posY = billboard->posY + self->modelOffset[1];
-  billboard->posZ = billboard->posZ + self->modelOffset[2];
+  billboard->posX = VfAdd(billboard->posX, self->modelOffset[0]);
+  billboard->posY = VfAdd(billboard->posY, self->modelOffset[1]);
+  billboard->posZ = VfAdd(billboard->posZ, self->modelOffset[2]);
   ActorUpdateFootsteps(&self->base);
 
   if ((self->base.flags & 1) == 0) {
     /* tiltQuat += (g_vecUp - tiltQuat) * 0.2; then xyz normalised and clamped to [-1, 1]
        (0 if zero length), w = 0 */
     tilt = self->base.tiltQuat;
-    tilt[0] = tilt[0] + (g_vecUp.x - tilt[0]) * 0.2f;
-    tilt[1] = tilt[1] + (g_vecUp.y - tilt[1]) * 0.2f;
-    tilt[2] = tilt[2] + (g_vecUp.z - tilt[2]) * 0.2f;
-    tilt[3] = tilt[3] + (g_vecUp.w - tilt[3]) * 0.2f;
-    lenSq = tilt[0] * tilt[0] + tilt[1] * tilt[1] + tilt[2] * tilt[2];
+    tilt[0] = VfAdd(tilt[0], VfMul(VfSub(g_vecUp.x, tilt[0]), 0.2f));
+    tilt[1] = VfAdd(tilt[1], VfMul(VfSub(g_vecUp.y, tilt[1]), 0.2f));
+    tilt[2] = VfAdd(tilt[2], VfMul(VfSub(g_vecUp.z, tilt[2]), 0.2f));
+    tilt[3] = VfAdd(tilt[3], VfMul(VfSub(g_vecUp.w, tilt[3]), 0.2f));
+    lenSq = VfDot3(tilt[0], tilt[1], tilt[2], tilt[0], tilt[1], tilt[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    x = VfSat1(tilt[0] * k);
-    y = VfSat1(tilt[1] * k);
-    z = VfSat1(tilt[2] * k);
+    x = VfSat1(VfMul(tilt[0], k));
+    y = VfSat1(VfMul(tilt[1], k));
+    z = VfSat1(VfMul(tilt[2], k));
     tilt[0] = x;
     tilt[1] = y;
     tilt[2] = z;

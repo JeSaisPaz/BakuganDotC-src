@@ -39,30 +39,30 @@ static inline void BtlHudRadarOffset(BtlHud *self, BtlBakugan *unit, float *tmp,
     tmp[2] = unit->base.pos[2];
     tmp[3] = unit->base.pos[3];
     tmp[1] = 0.0f;
-    tmp[0] = tmp[0] * self->radarScale;
-    tmp[1] = tmp[1] * self->radarScale;
-    tmp[2] = tmp[2] * self->radarScale;
+    tmp[0] = VfMul(tmp[0], self->radarScale);
+    tmp[1] = VfMul(tmp[1], self->radarScale);
+    tmp[2] = VfMul(tmp[2], self->radarScale);
     tmp[0] = tmp[0] - originX;
     tmp[2] = tmp[2] - originZ;
     angle = -atan2f(g_gfxActiveCamera->dir[2], g_gfxActiveCamera->dir[0]) - 1.57079637f;
-    t = angle * 0.636619747f;
+    t = VfMul(angle, 0.636619747f);
     c = VfCosQuarter(t);
     s = VfSinQuarter(t);
     x = tmp[0];
     y = tmp[1];
     z = tmp[2];
     /* rotate (x, z) by the rows (c, 0, -s) and (s, 0, c) */
-    tmp[0] = x * c + y * 0.0f + z * -s;
-    tmp[2] = x * s + y * 0.0f + z * c;
-    lenSq = tmp[0] * tmp[0] + 0.0f * 0.0f + tmp[2] * tmp[2];
+    tmp[0] = VfDot3(x, y, z, c, 0.0f, -s);
+    tmp[2] = VfDot3(x, y, z, s, 0.0f, c);
+    lenSq = VfDot3(tmp[0], 0.0f, tmp[2], tmp[0], 0.0f, tmp[2]);
     if (!(lenSq <= 900.0f)) {
         /* clamp to radius 30: offset * 30 / |offset| (0 when the length is zero) */
-        lenSq = tmp[0] * tmp[0] + tmp[1] * tmp[1] + tmp[2] * tmp[2];
+        lenSq = VfDot3(tmp[0], tmp[1], tmp[2], tmp[0], tmp[1], tmp[2]);
         k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        k = k * 30.0f;
-        tmp[0] = tmp[0] * k;
-        tmp[1] = tmp[1] * k;
-        tmp[2] = tmp[2] * k;
+        k = VfMul(k, 30.0f);
+        tmp[0] = VfMul(tmp[0], k);
+        tmp[1] = VfMul(tmp[1], k);
+        tmp[2] = VfMul(tmp[2], k);
     }
 }
 

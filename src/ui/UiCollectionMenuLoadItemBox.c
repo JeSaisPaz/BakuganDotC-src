@@ -40,17 +40,17 @@ void UiCollectionMenuLoadItemBox(UiCollectionMenu *self)
   self->itemBox = model;
   /* vrot of 0.5 * S703 (2/pi): a Y rotation by 0.5 rad, columns 1 and 3 from vidt. */
   m = model->data->rootMatrix;
-  m[0] = __builtin_cosf(0.5f);
+  m[0] = VfCosQuarter(0.5f * 0.636619747f);
   m[1] = 0.0f;
-  m[2] = -__builtin_sinf(0.5f);
+  m[2] = -VfSinQuarter(0.5f * 0.636619747f);
   m[3] = 0.0f;
   m[4] = 0.0f;
   m[5] = 1.0f;
   m[6] = 0.0f;
   m[7] = 0.0f;
-  m[8] = __builtin_sinf(0.5f);
+  m[8] = VfSinQuarter(0.5f * 0.636619747f);
   m[9] = 0.0f;
-  m[10] = __builtin_cosf(0.5f);
+  m[10] = VfCosQuarter(0.5f * 0.636619747f);
   m[11] = 0.0f;
   m[12] = 0.0f;
   m[13] = 0.0f;
@@ -63,9 +63,9 @@ void UiCollectionMenuLoadItemBox(UiCollectionMenu *self)
   /* vscl of the first three columns by scale[0..2]. */
   m = self->itemBox->data->rootMatrix;
   for (i = 0; i < 4; i++) {
-    m[i] = m[i] * scale[0];
-    m[4 + i] = m[4 + i] * scale[1];
-    m[8 + i] = m[8 + i] * scale[2];
+    m[i] = VfMul(m[i], scale[0]);
+    m[4 + i] = VfMul(m[4 + i], scale[1]);
+    m[8 + i] = VfMul(m[8 + i], scale[2]);
   }
   self->itemBox->pos[0] = 240.0f;
   self->itemBox->pos[1] = -35.0f;

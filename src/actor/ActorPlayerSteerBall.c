@@ -53,33 +53,33 @@ void ActorPlayerSteerBall(ActorPlayer *self)
     head[3] = actor->mtx[15];
     head[1] = head[1] + 12.0f;
 
-    diff[0] = head[0] - tgtPos[0];
-    diff[1] = head[1] - tgtPos[1];
-    diff[2] = head[2] - tgtPos[2];
-    distSq = diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
+    diff[0] = VfSub(head[0], tgtPos[0]);
+    diff[1] = VfSub(head[1], tgtPos[1]);
+    diff[2] = VfSub(head[2], tgtPos[2]);
+    distSq = VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]);
 
     /* dir = normalize(head - tgtPos), clamped per lane; scale 0 (bank S713) for a zero vector */
-    lenSq = diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
+    lenSq = VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]);
     if (VfIsZero(lenSq)) {
       scale = 0.0f;
     } else {
       scale = VfRsq(lenSq);
     }
-    dir[0] = VfSat1(diff[0] * scale);
-    dir[1] = VfSat1(diff[1] * scale);
-    dir[2] = VfSat1(diff[2] * scale);
+    dir[0] = VfSat1(VfMul(diff[0], scale));
+    dir[1] = VfSat1(VfMul(diff[1], scale));
+    dir[2] = VfSat1(VfMul(diff[2], scale));
 
     dist = __builtin_sqrtf(distSq) - 6.3f;
-    aim[0] = tgtPos[0] + dir[0] * dist;
-    aim[1] = tgtPos[1] + dir[1] * dist;
-    aim[2] = tgtPos[2] + dir[2] * dist;
+    aim[0] = VfAdd(tgtPos[0], VfMul(dir[0], dist));
+    aim[1] = VfAdd(tgtPos[1], VfMul(dir[1], dist));
+    aim[2] = VfAdd(tgtPos[2], VfMul(dir[2], dist));
 
     rcp = VfRcp(18.0f);
     ball = (ActorBall *)self->ball;
     velY = ball->base.velocity[1];
-    ball->base.velocity[0] = (aim[0] - self->ballStart[0]) * rcp;
-    ball->base.velocity[1] = (aim[1] - self->ballStart[1]) * rcp;
-    ball->base.velocity[2] = (aim[2] - self->ballStart[2]) * rcp;
+    ball->base.velocity[0] = VfMul(VfSub(aim[0], self->ballStart[0]), rcp);
+    ball->base.velocity[1] = VfMul(VfSub(aim[1], self->ballStart[1]), rcp);
+    ball->base.velocity[2] = VfMul(VfSub(aim[2], self->ballStart[2]), rcp);
     ball->base.velocity[3] = tgtPos[3];
     ((ActorBall *)self->ball)->base.velocity[1] = velY;
     return;

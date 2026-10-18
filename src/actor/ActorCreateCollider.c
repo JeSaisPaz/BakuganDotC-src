@@ -52,7 +52,7 @@ void ActorCreateCollider(Actor *self)
   x = self->collShape.axis[0];
   y = self->collShape.axis[1];
   z = self->collShape.axis[2];
-  self->collShape.axisLen = __builtin_sqrtf(x * x + y * y + z * z);
+  self->collShape.axisLen = VfSqrt(VfDot3(x, y, z, x, y, z));
   CollisionColliderInit(&collider->node, (const u32 *)&self->collShape, 0, self, 0);
   ((CollisionCollider *)self->collider2)->shapeBlock.installed = 0;
   collider = (CollisionCollider *)self->collider2;

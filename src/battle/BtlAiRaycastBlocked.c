@@ -83,10 +83,10 @@ int BtlAiRaycastBlocked(BtlAi *self, float *from, float *to, float *hit)
     ((void (*)(void *))update->fn)((u8 *)segment + update->delta);
     if (CollisionRaycast(0x3fbf2700, &g_collisionSegmentBlock, 0) != NULL) {
         /* |start - hitPoint| over x, y, z. */
-        dx = start[0] - g_collisionHitResult.point.x;
-        dy = start[1] - g_collisionHitResult.point.y;
-        dz = start[2] - g_collisionHitResult.point.z;
-        dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+        dx = VfSub(start[0], g_collisionHitResult.point.x);
+        dy = VfSub(start[1], g_collisionHitResult.point.y);
+        dz = VfSub(start[2], g_collisionHitResult.point.z);
+        dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
         if (kind != 0) {
             t = t * 0.8f;
         }

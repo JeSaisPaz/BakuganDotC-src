@@ -43,7 +43,7 @@ s32 ActorBallCheckHit(float radius, ActorBall *ball, float *pos, float *vel, s32
   desc->radius = radius * 2.0f;
   desc->start.w = desc->radius * desc->radius;
   /* dir.w = |dir.xyz| */
-  desc->dir.w = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z);
+  desc->dir.w = VfSqrt(VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z));
   query->shape = block;
   query->owner = ball;
   query->heading = atan2f(vel[2], vel[0]);
@@ -57,7 +57,7 @@ s32 ActorBallCheckHit(float radius, ActorBall *ball, float *pos, float *vel, s32
   desc->dir = *(const ScePspFVector4 *)vel;
   desc->radius = radius;
   desc->start.w = radius * radius;
-  desc->dir.w = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z);
+  desc->dir.w = VfSqrt(VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z));
 
   if (result == 0) {
     /* No object hit: raycast the map. */

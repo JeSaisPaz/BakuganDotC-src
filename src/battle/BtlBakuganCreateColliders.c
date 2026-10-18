@@ -40,9 +40,7 @@ void BtlBakuganCreateColliders(BtlBakugan *self, float offsetY, float radius)
   self->bodyShape.axisLen = 0.0f;
   self->bodyShape.radius = radius;
   self->bodyShape.radiusSq = radius * radius;
-  axisLen = __builtin_sqrtf(self->bodyShape.axis[0] * self->bodyShape.axis[0] +
-                            self->bodyShape.axis[1] * self->bodyShape.axis[1] +
-                            self->bodyShape.axis[2] * self->bodyShape.axis[2]);
+  axisLen = VfSqrt(VfDot3(self->bodyShape.axis[0], self->bodyShape.axis[1], self->bodyShape.axis[2], self->bodyShape.axis[0], self->bodyShape.axis[1], self->bodyShape.axis[2]));
   self->bodyShape.axisLen = axisLen;
   CollisionColliderInit(&collider->node, (const u32 *)&self->bodyShape, 0, self, 0);
   self->collider0->shapeBlock.installed = 0;

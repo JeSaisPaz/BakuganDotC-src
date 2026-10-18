@@ -54,19 +54,19 @@ void GameFieldCameraModeTalk(GameFieldCamera *cam)
   look.y = look.y + g_gameFieldCameraTalkLookAtHeight;
   cam->followGoal = cam->followLookAt;
   /* followLookAt += (look - followLookAt) * 0.1 (all four lanes) */
-  cam->followLookAt.x = cam->followLookAt.x + (look.x - cam->followLookAt.x) * 0.1f;
-  cam->followLookAt.y = cam->followLookAt.y + (look.y - cam->followLookAt.y) * 0.1f;
-  cam->followLookAt.z = cam->followLookAt.z + (look.z - cam->followLookAt.z) * 0.1f;
-  cam->followLookAt.w = cam->followLookAt.w + (look.w - cam->followLookAt.w) * 0.1f;
+  cam->followLookAt.x = VfAdd(cam->followLookAt.x, VfMul(VfSub(look.x, cam->followLookAt.x), 0.1f));
+  cam->followLookAt.y = VfAdd(cam->followLookAt.y, VfMul(VfSub(look.y, cam->followLookAt.y), 0.1f));
+  cam->followLookAt.z = VfAdd(cam->followLookAt.z, VfMul(VfSub(look.z, cam->followLookAt.z), 0.1f));
+  cam->followLookAt.w = VfAdd(cam->followLookAt.w, VfMul(VfSub(look.w, cam->followLookAt.w), 0.1f));
   cam->talkBlend = cam->talkBlend + 4;
   cam->pitch = cam->pitch + cam->pitch * -0.2f;
   /* offset = eye - followLookAt (xyz, w = eye.w); dist = |offset.xyz| */
-  tmp.x = cam->base.eye[0] - cam->followLookAt.x;
-  tmp.y = cam->base.eye[1] - cam->followLookAt.y;
-  tmp.z = cam->base.eye[2] - cam->followLookAt.z;
+  tmp.x = VfSub(cam->base.eye[0], cam->followLookAt.x);
+  tmp.y = VfSub(cam->base.eye[1], cam->followLookAt.y);
+  tmp.z = VfSub(cam->base.eye[2], cam->followLookAt.z);
   tmp.w = cam->base.eye[3];
   offset = tmp;
-  dist = __builtin_sqrtf(offset.x * offset.x + offset.y * offset.y + offset.z * offset.z);
+  dist = VfSqrt(VfDot3(offset.x, offset.y, offset.z, offset.x, offset.y, offset.z));
   radius = dist + (cam->talkEye.y - dist) * 0.1f;
   elev = -atan2f(offset.y, __builtin_sqrtf(offset.x * offset.x + offset.z * offset.z));
   elev = elev + (-cam->pitch - elev) * 0.2f;
@@ -90,7 +90,7 @@ void GameFieldCameraModeTalk(GameFieldCamera *cam)
     }
     yawErr = wrap;
     ramp = ramp * ramp * 3.14159274f;
-    cosRamp = __builtin_cosf(ramp);
+    cosRamp = VfCosQuarter(VfMul(ramp, 0.636619747f));
     vel = cam->yawVel;
     wrap = vel - yawErr * ((1.0f - cosRamp) * 0.5f) * 0.1f;
     wrap = wrap - (float)(s32)(wrap * 0.318309873f) * 6.28318548f;
@@ -110,19 +110,19 @@ void GameFieldCameraModeTalk(GameFieldCamera *cam)
   }
   yaw = yawTarget + cam->yawVel;
   /* offset = (cos yaw, 0, sin yaw, 0) * radius (w not scaled) */
-  offset.x = __builtin_cosf(yaw) * radius;
-  offset.y = 0.0f * radius;
-  offset.z = __builtin_sinf(yaw) * radius;
+  offset.x = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), radius);
+  offset.y = VfMul(0.0f, radius);
+  offset.z = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), radius);
   offset.w = 0.0f;
   /* axis = normalize(offset.z, offset.y, -offset.x), each lane clamped to [-1, 1]; w = 0 */
   axis.x = offset.z;
   axis.y = offset.y;
   axis.z = -offset.x;
-  len = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
+  len = VfDot3(axis.x, axis.y, axis.z, axis.x, axis.y, axis.z);
   len = VfIsZero(len) ? 0.0f : VfRsq(len);
-  axis.x = VfSat1(axis.x * len);
-  axis.y = VfSat1(axis.y * len);
-  axis.z = VfSat1(axis.z * len);
+  axis.x = VfSat1(VfMul(axis.x, len));
+  axis.y = VfSat1(VfMul(axis.y, len));
+  axis.z = VfSat1(VfMul(axis.z, len));
   axis.w = 0.0f;
   quat = MathQuatFromAxisAngle(elev, (float *)&rot, (const float *)&axis);
   /* rotated = quat * (offset.xyz, 0) * conj(quat) */
@@ -134,18 +134,17 @@ void GameFieldCameraModeTalk(GameFieldCamera *cam)
   qc.y = -q.y;
   qc.z = -q.z;
   qc.w = q.w;
-  qv.x = q.x * offset.w + q.y * offset.z - q.z * offset.y + q.w * offset.x;
-  qv.y = -q.x * offset.z + q.y * offset.w + q.z * offset.x + q.w * offset.y;
-  qv.z = q.x * offset.y - q.y * offset.x + q.z * offset.w + q.w * offset.z;
-  qv.w = -q.x * offset.x - q.y * offset.y - q.z * offset.z + q.w * offset.w;
-  rotated.x = qv.x * qc.w + qv.y * qc.z - qv.z * qc.y + qv.w * qc.x;
-  rotated.y = -qv.x * qc.z + qv.y * qc.w + qv.z * qc.x + qv.w * qc.y;
-  rotated.z = qv.x * qc.y - qv.y * qc.x + qv.z * qc.w + qv.w * qc.z;
-  rotated.w = -qv.x * qc.x - qv.y * qc.y - qv.z * qc.z + qv.w * qc.w;
+  qv.x = VfDot4(q.x, q.y, q.z, q.w, offset.w, offset.z, -offset.y, offset.x);
+  qv.y = VfDot4(-q.x, q.y, q.z, q.w, offset.z, offset.w, offset.x, offset.y);
+  qv.z = VfDot4(q.x, q.y, q.z, q.w, offset.y, -offset.x, offset.w, offset.z);
+  qv.w = VfDot4(-q.x, q.y, q.z, q.w, offset.x, -offset.y, -offset.z, offset.w);
+  rotated.x = VfDot4(qv.x, qv.y, qv.z, qv.w, qc.w, qc.z, -qc.y, qc.x);
+  rotated.y = VfDot4(-qv.x, qv.y, qv.z, qv.w, qc.z, qc.w, qc.x, qc.y);
+  rotated.z = VfDot4(qv.x, qv.y, qv.z, qv.w, qc.y, -qc.x, qc.w, qc.z);
   /* eye = followLookAt + rotated (xyz, w = followLookAt.w); target = followLookAt */
-  tmp.x = cam->followLookAt.x + rotated.x;
-  tmp.y = cam->followLookAt.y + rotated.y;
-  tmp.z = cam->followLookAt.z + rotated.z;
+  tmp.x = VfAdd(cam->followLookAt.x, rotated.x);
+  tmp.y = VfAdd(cam->followLookAt.y, rotated.y);
+  tmp.z = VfAdd(cam->followLookAt.z, rotated.z);
   tmp.w = cam->followLookAt.w;
   cam->base.eye[0] = tmp.x;
   cam->base.eye[1] = tmp.y;
@@ -157,11 +156,11 @@ void GameFieldCameraModeTalk(GameFieldCamera *cam)
   cam->base.target[3] = cam->followLookAt.w;
   if (__builtin_fabsf(yawErr) < 0.001f) {
     /* dist = |eye - followLookAt| */
-    rotated.x = cam->base.eye[0] - cam->followLookAt.x;
-    rotated.y = cam->base.eye[1] - cam->followLookAt.y;
-    rotated.z = cam->base.eye[2] - cam->followLookAt.z;
+    rotated.x = VfSub(cam->base.eye[0], cam->followLookAt.x);
+    rotated.y = VfSub(cam->base.eye[1], cam->followLookAt.y);
+    rotated.z = VfSub(cam->base.eye[2], cam->followLookAt.z);
     rotated.w = cam->base.eye[3];
-    dist = __builtin_sqrtf(rotated.x * rotated.x + rotated.y * rotated.y + rotated.z * rotated.z);
+    dist = VfSqrt(VfDot3(rotated.x, rotated.y, rotated.z, rotated.x, rotated.y, rotated.z));
     if (__builtin_fabsf(cam->talkEye.y - dist) < 0.001f) {
       cam->stepState = cam->stepState + 1;
     }

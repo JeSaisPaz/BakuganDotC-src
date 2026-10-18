@@ -30,9 +30,9 @@ float SndPointSegmentDistSq(const float *point, const float *a, const float *b, 
   seg.info = g_collisionSegmentVtbl;
   seg.type = 2;
   /* dir = b - a over x, y, z (vsub.t keeps lane w of b, 0), staged through tmp; start = a. */
-  tmp[0] = vb[0] - va[0];
-  tmp[1] = vb[1] - va[1];
-  tmp[2] = vb[2] - va[2];
+  tmp[0] = VfSub(vb[0], va[0]);
+  tmp[1] = VfSub(vb[1], va[1]);
+  tmp[2] = VfSub(vb[2], va[2]);
   tmp[3] = vb[3];
   seg.dir[0] = tmp[0];
   seg.dir[1] = tmp[1];

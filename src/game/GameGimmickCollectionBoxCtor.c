@@ -51,20 +51,20 @@ CoreObject *GameGimmickCollectionBoxCtor(GameGimmickCollectionBox *obj, s32 kind
 
   /* Y rotation (vrot of the angle times 2/pi), its upper 3x4 scaled by 0.15. */
   angle = obj->base.base.rot[1] + 0.35f;
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   m = obj->base.base.data->rootMatrix;
-  m[0] = c * 0.15f;
+  m[0] = VfMul(c, 0.15f);
   m[1] = 0.0f;
-  m[2] = -s * 0.15f;
+  m[2] = VfMul(-s, 0.15f);
   m[3] = 0.0f;
   m[4] = 0.0f;
   m[5] = 0.15f;
   m[6] = 0.0f;
   m[7] = 0.0f;
-  m[8] = s * 0.15f;
+  m[8] = VfMul(s, 0.15f);
   m[9] = 0.0f;
-  m[10] = c * 0.15f;
+  m[10] = VfMul(c, 0.15f);
   m[11] = 0.0f;
   m[12] = obj->base.base.pos[0];
   m[13] = obj->base.base.pos[1];

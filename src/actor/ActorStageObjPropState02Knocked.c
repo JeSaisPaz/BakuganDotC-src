@@ -104,9 +104,9 @@ void ActorStageObjPropState02Knocked(ActorStageObjProp *self)
     }
     /* dir = model position - contactPos (w keeps the model's w) */
     mtx = &self->base.base.data->rootMatrix[12];
-    dir[0] = mtx[0] - self->contactPos[0];
-    dir[1] = mtx[1] - self->contactPos[1];
-    dir[2] = mtx[2] - self->contactPos[2];
+    dir[0] = VfSub(mtx[0], self->contactPos[0]);
+    dir[1] = VfSub(mtx[1], self->contactPos[1]);
+    dir[2] = VfSub(mtx[2], self->contactPos[2]);
     dir[3] = mtx[3];
     topples = ActorStageObjKindTopples(&self->base) != 0;
     if (topples) {
@@ -117,22 +117,22 @@ void ActorStageObjPropState02Knocked(ActorStageObjProp *self)
       velScale = 0.15f;
     }
     /* dir = normalise(dir) * dirScale + contactVel * velScale; w = 0 (bank S713) */
-    len2 = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+    len2 = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
     inv = VfRsq(len2);
     if (VfIsZero(len2)) {
       inv = 0.0f;
     }
-    k = inv * dirScale;
-    dir[0] = dir[0] * k;
-    dir[1] = dir[1] * k;
-    dir[2] = dir[2] * k;
+    k = VfMul(inv, dirScale);
+    dir[0] = VfMul(dir[0], k);
+    dir[1] = VfMul(dir[1], k);
+    dir[2] = VfMul(dir[2], k);
     dir[3] = 0.0f;
-    vel[0] = self->contactVel[0] * velScale;
-    vel[1] = self->contactVel[1] * velScale;
-    vel[2] = self->contactVel[2] * velScale;
-    dir[0] = dir[0] + vel[0];
-    dir[1] = dir[1] + vel[1];
-    dir[2] = dir[2] + vel[2];
+    vel[0] = VfMul(self->contactVel[0], velScale);
+    vel[1] = VfMul(self->contactVel[1], velScale);
+    vel[2] = VfMul(self->contactVel[2], velScale);
+    dir[0] = VfAdd(dir[0], vel[0]);
+    dir[1] = VfAdd(dir[1], vel[1]);
+    dir[2] = VfAdd(dir[2], vel[2]);
     if (topples) {
       dir[1] = 10.0f;
     } else {

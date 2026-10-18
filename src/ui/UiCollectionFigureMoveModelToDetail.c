@@ -49,8 +49,8 @@ bool UiCollectionFigureMoveModelToDetail(UiCollectionFigure *self, bool back)
 
   /* root matrix = yaw turn of 3.14f rad (vrot of 3.14f * 2/pi quarter turns); rows 1 and 3
      identity */
-  c = __builtin_cosf(3.14f);
-  sn = __builtin_sinf(3.14f);
+  c = VfCosQuarter(3.14f * 0.636619747f);
+  sn = VfSinQuarter(3.14f * 0.636619747f);
   mtx = self->models[self->detailCell]->data->rootMatrix;
   mtx[0] = c;  mtx[1] = 0.0f;  mtx[2] = -sn;  mtx[3] = 0.0f;
   mtx[4] = 0.0f;  mtx[5] = 1.0f;  mtx[6] = 0.0f;  mtx[7] = 0.0f;
@@ -72,7 +72,7 @@ bool UiCollectionFigureMoveModelToDetail(UiCollectionFigure *self, bool back)
   scl[3] = 0.0f;
   for (row = 0; row < 3; row++) {
     for (col = 0; col < 4; col++) {
-      mtx[row * 4 + col] = mtx[row * 4 + col] * scl[row];
+      mtx[row * 4 + col] = VfMul(mtx[row * 4 + col], scl[row]);
     }
   }
 
@@ -96,7 +96,7 @@ bool UiCollectionFigureMoveModelToDetail(UiCollectionFigure *self, bool back)
     scl[3] = 0.0f;
     for (row = 0; row < 3; row++) {
       for (col = 0; col < 4; col++) {
-        mtx[row * 4 + col] = mtx[row * 4 + col] * scl[row];
+        mtx[row * 4 + col] = VfMul(mtx[row * 4 + col], scl[row]);
       }
     }
     done = true;

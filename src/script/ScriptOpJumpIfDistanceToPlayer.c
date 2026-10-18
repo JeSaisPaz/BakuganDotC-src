@@ -37,10 +37,10 @@ int ScriptOpJumpIfDistanceToPlayer(Script *script)
   }
   if (player != NULL && unit != NULL && cmp < 6) {
     dist = dist * dist;
-    dx = player->base.pos[0] - unit->base.pos[0];
-    dy = player->base.pos[1] - unit->base.pos[1];
-    dz = player->base.pos[2] - unit->base.pos[2];
-    d2 = dx * dx + dy * dy + dz * dz;
+    dx = VfSub(player->base.pos[0], unit->base.pos[0]);
+    dy = VfSub(player->base.pos[1], unit->base.pos[1]);
+    dz = VfSub(player->base.pos[2], unit->base.pos[2]);
+    d2 = VfDot3(dx, dy, dz, dx, dy, dz);
     switch (cmp) {
     case 1:
       if (d2 <= dist) {

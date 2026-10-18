@@ -59,7 +59,7 @@ void BtlHudUpdateBattleEndBanner(BtlHud *self)
             self->resultWait++;
         }
         t = (float)self->resultWait * 0.0500000007f - 1.0f;
-        c = __builtin_cosf((1.0f - t * t) * 3.14159274f);
+        c = VfCosQuarter(VfMul((1.0f - t * t) * 3.14159274f, 0.636619747f));
         fade = (1.0f - c) * 0.5f;
         sprite->alpha = fade;
         if (!(fade < 1.0f)) {
@@ -78,12 +78,12 @@ void BtlHudUpdateBattleEndBanner(BtlHud *self)
             self->resultWait++;
         }
         t = (float)self->resultWait * 0.0399999991f - 1.0f;
-        c = __builtin_cosf((1.0f - t * t) * 3.14159274f);
+        c = VfCosQuarter(VfMul((1.0f - t * t) * 3.14159274f, 0.636619747f));
         fade = (1.0f - c) * 0.5f;
         sprite->alpha = 1.0f - fade;
         zoom = self->bannerZoom;
         t = zoom * 0.0399999991f - 1.0f;
-        s = __builtin_sinf(1.0f - t * t);
+        s = VfSinQuarter(VfMul((1.0f - t * t), 0.636619747f));
         self->bannerZoom = zoom + 1.5f;
         GfxSpriteSetScaleRotation(sprite, s * 0.800000012f + 1.0f, fade * 0.600000024f + 1.0f,
                                   0.0f, false);

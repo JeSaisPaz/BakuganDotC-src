@@ -36,6 +36,6 @@ void BtlBakuganState18Update(BtlBakugan *self)
     }
   }
   keep = BtlScaleRetentionByTimeStep(0.7f);
-  self->base.velocity[0] = self->base.velocity[0] * keep;
-  self->base.velocity[2] = self->base.velocity[2] * keep;
+  self->base.velocity[0] = VfMul(self->base.velocity[0], keep);
+  self->base.velocity[2] = VfMul(self->base.velocity[2], keep);
 }

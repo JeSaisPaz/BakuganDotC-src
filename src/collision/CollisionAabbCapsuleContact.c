@@ -22,24 +22,24 @@ bool CollisionAabbCapsuleContact(const float *aabb, const void *capsule, ScePspF
     hit = CollisionAabbOverlapCapsule(aabb, capsule);
     if (hit) {
         /* Inlined centre: (min + max) * 0.5f; w is the bank zero S713 (vscl.t into C710). */
-        g_collisionAabbCenterTmp.x = (aabb[0] + aabb[4]) * 0.5f;
-        g_collisionAabbCenterTmp.y = (aabb[1] + aabb[5]) * 0.5f;
-        g_collisionAabbCenterTmp.z = (aabb[2] + aabb[6]) * 0.5f;
+        g_collisionAabbCenterTmp.x = VfMul(VfAdd(aabb[0], aabb[4]), 0.5f);
+        g_collisionAabbCenterTmp.y = VfMul(VfAdd(aabb[1], aabb[5]), 0.5f);
+        g_collisionAabbCenterTmp.z = VfMul(VfAdd(aabb[2], aabb[6]), 0.5f);
         g_collisionAabbCenterTmp.w = 0.0f;
         CollisionSegmentClosestPoint(&c->segment, &g_collisionAabbCenterTmp, &t, &closest);
         center = CollisionAabbCenter((const ScePspFVector4 *)aabb);
-        diff.x = center->x - closest.x;
-        diff.y = center->y - closest.y;
-        diff.z = center->z - closest.z;
-        lenSq = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
+        diff.x = VfSub(center->x, closest.x);
+        diff.y = VfSub(center->y, closest.y);
+        diff.z = VfSub(center->z, closest.z);
+        lenSq = VfDot3(diff.x, diff.y, diff.z, diff.x, diff.y, diff.z);
         /* vcmp EZ + vcmovt: a zero length takes the bank zero S713 instead of 1/sqrt. */
         scale = VfRsq(lenSq);
         if (VfIsZero(lenSq))
             scale = 0.0f;
-        scale = scale * c->radius;
-        out->x = diff.x * scale + closest.x;
-        out->y = diff.y * scale + closest.y;
-        out->z = diff.z * scale + closest.z;
+        scale = VfMul(scale, c->radius);
+        out->x = VfAdd(VfMul(diff.x, scale), closest.x);
+        out->y = VfAdd(VfMul(diff.y, scale), closest.y);
+        out->z = VfAdd(VfMul(diff.z, scale), closest.z);
         /* w: S713 (0.0f) through vscl.t C710. */
         out->w = 0.0f;
     }

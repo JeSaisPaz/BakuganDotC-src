@@ -23,8 +23,8 @@ GfxSprite *BtlStageCreateStopWallSprite(float width, float height, float repeat,
     sprite->alpha = g_colorWhite.w;
     sprite->maybe_billboardParams80[0] = repeat;
     /* vrot of pose[3] * S703 (2/pi) in quarter turns = cos/sin of pose[3] radians */
-    c = __builtin_cosf(pose[3]);
-    s = __builtin_sinf(pose[3]);
+    c = VfCosQuarter(VfMul(pose[3], 0.636619747f));
+    s = VfSinQuarter(VfMul(pose[3], 0.636619747f));
     sprite->matrix[0] = c;
     sprite->matrix[1] = 0.0f;
     sprite->matrix[2] = -s;

@@ -121,7 +121,7 @@ void UiCardEquipUpdatePointerArrows(UiCardEquip *self)
       t = self->arrowT + 0.033333335f;
       self->arrowT = t;
       base = self->arrowBaseAlpha;
-      base = base - (1.0f - __builtin_cosf(t * 3.1415927f)) * 0.5f * 0.4f;
+      base = base - (1.0f - VfCosQuarter(VfMul(t * 3.1415927f, 0.636619747f))) * 0.5f * 0.4f;
       sprites = (GfxSprite **)self->base.data;
       sprites[self->groups[0x14][0] + stride * self->arrowSlot + colour]->alpha = base;
     } else {
@@ -132,7 +132,7 @@ void UiCardEquipUpdatePointerArrows(UiCardEquip *self)
       t = self->arrowT + 0.033333335f;
       self->arrowT = t;
       base = self->arrowBaseAlpha;
-      base = base - (1.0f - __builtin_cosf(t * 3.1415927f)) * 0.5f * 0.8f;
+      base = base - (1.0f - VfCosQuarter(VfMul(t * 3.1415927f, 0.636619747f))) * 0.5f * 0.8f;
       sprites = (GfxSprite **)self->base.data;
       sprites[self->groups[0x14][0] + stride * self->arrowSlot + colour]->alpha = base;
     } else {

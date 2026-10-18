@@ -35,16 +35,16 @@ void GameQuestCamPathModeGetSegmentPoint(GameQuestCamPathMode *self, float *out)
   }
   a = seg->a->pos;
   w = 1.0f - seg->t;
-  a.x = a.x * w;
-  a.y = a.y * w;
-  a.z = a.z * w;
+  a.x = VfMul(a.x, w);
+  a.y = VfMul(a.y, w);
+  a.z = VfMul(a.z, w);
   b = seg->b->pos;
   w = seg->t;
-  b.x = b.x * w;
-  b.y = b.y * w;
-  b.z = b.z * w;
-  out[0] = a.x + b.x;
-  out[1] = a.y + b.y;
-  out[2] = a.z + b.z;
+  b.x = VfMul(b.x, w);
+  b.y = VfMul(b.y, w);
+  b.z = VfMul(b.z, w);
+  out[0] = VfAdd(a.x, b.x);
+  out[1] = VfAdd(a.y, b.y);
+  out[2] = VfAdd(a.z, b.z);
   out[3] = 0.0f; /* lane S713 of the vscl.t result: the bank zero */
 }

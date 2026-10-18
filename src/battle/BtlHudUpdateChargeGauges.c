@@ -76,13 +76,13 @@ void BtlHudUpdateChargeGauges(BtlHud *self, BtlBakugan *unit)
             }
             if (UiGetWindowActive(0xb) == 1) {
                 /* vsin.s of angle * S703 (2/pi): sine of the angle in radians */
-                sinv = __builtin_sinf(self->gaugeGlowAngle[i]);
+                sinv = VfSinQuarter(VfMul(self->gaugeGlowAngle[i], 0.636619747f));
                 glowStage = sinv * 0.2f + 0.4f;
                 /* tint/alpha = yellow + (white - yellow) * glowStage */
-                glow->tint[0] = g_colorYellow.x + (g_colorWhite.x - g_colorYellow.x) * glowStage;
-                glow->tint[1] = g_colorYellow.y + (g_colorWhite.y - g_colorYellow.y) * glowStage;
-                glow->tint[2] = g_colorYellow.z + (g_colorWhite.z - g_colorYellow.z) * glowStage;
-                glow->alpha = g_colorYellow.w + (g_colorWhite.w - g_colorYellow.w) * glowStage;
+                glow->tint[0] = VfAdd(g_colorYellow.x, VfMul(VfSub(g_colorWhite.x, g_colorYellow.x), glowStage));
+                glow->tint[1] = VfAdd(g_colorYellow.y, VfMul(VfSub(g_colorWhite.y, g_colorYellow.y), glowStage));
+                glow->tint[2] = VfAdd(g_colorYellow.z, VfMul(VfSub(g_colorWhite.z, g_colorYellow.z), glowStage));
+                glow->alpha = VfAdd(g_colorYellow.w, VfMul(VfSub(g_colorWhite.w, g_colorYellow.w), glowStage));
                 glow->alpha = glowStage;
             }
         } else {

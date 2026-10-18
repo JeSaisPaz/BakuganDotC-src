@@ -26,13 +26,13 @@ void UiFieldHudStage32Phase(UiFieldHud *self)
   /* viewDir = normalize(camera dir with y = 0), each lane saturated to [-1,1] */
   dirX = g_gfxActiveCamera->dir[0];
   dirZ = g_gfxActiveCamera->dir[2];
-  lenSq = dirX * dirX + 0.0f * 0.0f + dirZ * dirZ;
+  lenSq = VfDot3(dirX, 0.0f, dirZ, dirX, 0.0f, dirZ);
   scale = VfRsq(lenSq);
   if (VfIsZero(lenSq)) {
     scale = 0.0f;
   }
-  self->viewDir[0] = VfSat1(dirX * scale);
-  self->viewDir[1] = VfSat1(dirZ * scale);
+  self->viewDir[0] = VfSat1(VfMul(dirX, scale));
+  self->viewDir[1] = VfSat1(VfMul(dirZ, scale));
 
   if (ActorPlayerGetByte3ad(self->player) != 0 || ActorPlayerGetByte3ae(self->player) != 0) {
     ((GfxSprite **)self->base.data)[0x2a]->flags |= 1;

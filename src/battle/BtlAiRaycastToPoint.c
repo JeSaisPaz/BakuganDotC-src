@@ -14,9 +14,9 @@ s32 BtlAiRaycastToPoint(BtlAi *self, float *point)
     origin[1] = ownerPos[1];
     origin[2] = ownerPos[2];
     origin[3] = ownerPos[3];
-    dir[0] = point[0] - origin[0];
-    dir[1] = point[1] - origin[1];
-    dir[2] = point[2] - origin[2];
+    dir[0] = VfSub(point[0], origin[0]);
+    dir[1] = VfSub(point[1], origin[1]);
+    dir[2] = VfSub(point[2], origin[2]);
     dir[3] = point[3];
     BtlAiRaycastBlocked(self, origin, dir, NULL);
     return 1;

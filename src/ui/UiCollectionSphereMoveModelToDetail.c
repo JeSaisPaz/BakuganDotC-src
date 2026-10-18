@@ -46,8 +46,8 @@ bool UiCollectionSphereMoveModelToDetail(UiCollectionSphere *self, bool back)
   }
   mtx = self->models[self->detailCell]->data->rootMatrix;
   /* yaw turn of 3.14f rad (vrot of 3.14f * 2/pi quarter turns); rows 1 and 3 identity */
-  c = __builtin_cosf(3.14f);
-  sn = __builtin_sinf(3.14f);
+  c = VfCosQuarter(3.14f * 0.636619747f);
+  sn = VfSinQuarter(3.14f * 0.636619747f);
   mtx[0] = c;  mtx[1] = 0.0f;  mtx[2] = -sn;  mtx[3] = 0.0f;
   mtx[4] = 0.0f;  mtx[5] = 1.0f;  mtx[6] = 0.0f;  mtx[7] = 0.0f;
   mtx[8] = sn;  mtx[9] = 0.0f;  mtx[10] = c;  mtx[11] = 0.0f;
@@ -71,7 +71,7 @@ bool UiCollectionSphereMoveModelToDetail(UiCollectionSphere *self, bool back)
   /* scale the first three rows by vec[0..2] */
   for (row = 0; row < 3; row++) {
     for (col = 0; col < 4; col++) {
-      mtx[row * 4 + col] = mtx[row * 4 + col] * vec[row];
+      mtx[row * 4 + col] = VfMul(mtx[row * 4 + col], vec[row]);
     }
   }
 
@@ -95,7 +95,7 @@ bool UiCollectionSphereMoveModelToDetail(UiCollectionSphere *self, bool back)
     mtx = self->models[idx]->data->rootMatrix;
     for (row = 0; row < 3; row++) {
       for (col = 0; col < 4; col++) {
-        mtx[row * 4 + col] = mtx[row * 4 + col] * vec[row];
+        mtx[row * 4 + col] = VfMul(mtx[row * 4 + col], vec[row]);
       }
     }
     done = true;

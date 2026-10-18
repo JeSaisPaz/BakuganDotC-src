@@ -8,8 +8,8 @@
 
 void UiOrbitPoint(float angle, float cx, float cy, float px, float py, float *out, u32 radius)
 {
-    float c = __builtin_cosf(angle);
-    float s = __builtin_sinf(angle);
+    float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    float s = VfSinQuarter(VfMul(angle, 0.636619747f));
 
     out[0] = cx + ((float)radius - px) * c;
     out[1] = cy + ((float)radius - py) * s;

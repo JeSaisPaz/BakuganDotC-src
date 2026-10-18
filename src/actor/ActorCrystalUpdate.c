@@ -83,11 +83,11 @@ void ActorCrystalUpdate(ActorCrystal *self)
     cam = g_gfxActiveCamera;
     heading = cam->yaw;
     /* Camera-to-crystal vector scaled by 10, flattened to the XZ plane. */
-    d[0] = (self->base.base.pos[0] - cam->eye[0]) * 10.0f;
-    d[1] = (self->base.base.pos[1] - cam->eye[1]) * 10.0f;
-    d[2] = (self->base.base.pos[2] - cam->eye[2]) * 10.0f;
+    d[0] = VfMul(VfSub(self->base.base.pos[0], cam->eye[0]), 10.0f);
+    d[1] = VfMul(VfSub(self->base.base.pos[1], cam->eye[1]), 10.0f);
+    d[2] = VfMul(VfSub(self->base.base.pos[2], cam->eye[2]), 10.0f);
     d[1] = 0.0f;
-    lenSq = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
+    lenSq = VfDot3(d[0], d[1], d[2], d[0], d[1], d[2]);
     if (!(lenSq <= 1.0f)) {
         heading = -atan2f(d[2], d[0]);
     }
@@ -104,10 +104,10 @@ void ActorCrystalUpdate(ActorCrystal *self)
     tilt = tilt * -0.0318471342f;
     /* `a`: rotation about Y by `heading`, `b`: rotation about Z by `tilt`, one column per row
        index (vrot of the angle times 2/pi, in quarter turns). */
-    ca = __builtin_cosf(heading);
-    sa = __builtin_sinf(heading);
-    ct = __builtin_cosf(tilt);
-    st = __builtin_sinf(tilt);
+    ca = VfCosQuarter(VfMul(heading, 0.636619747f));
+    sa = VfSinQuarter(VfMul(heading, 0.636619747f));
+    ct = VfCosQuarter(VfMul(tilt, 0.636619747f));
+    st = VfSinQuarter(VfMul(tilt, 0.636619747f));
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
             a[i][j] = (i == j) ? 1.0f : 0.0f;
@@ -125,7 +125,7 @@ void ActorCrystalUpdate(ActorCrystal *self)
     /* vmmul.q E200, E100, E000: r = a * b (row-major, r[j][i] = sum_k a[j][k] * b[k][i]). */
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            r[j][i] = a[j][0] * b[0][i] + a[j][1] * b[1][i] + a[j][2] * b[2][i] + a[j][3] * b[3][i];
+            r[j][i] = VfDot4(a[j][0], a[j][1], a[j][2], a[j][3], b[0][i], b[1][i], b[2][i], b[3][i]);
         }
     }
     for (n = 0; n < 3; n++) {

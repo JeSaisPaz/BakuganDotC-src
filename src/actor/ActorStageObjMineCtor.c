@@ -36,10 +36,10 @@ ActorStageObjMine *ActorStageObjMineCtor(ActorStageObjMine *self, int kind, floa
     self->base.base.scale[3] = 0.0f;
   }
   /* |max - min| over xyz (vsub.q / vdot.t / vsqrt.s) */
-  dx = maxCorner[0] - minCorner[0];
-  dy = maxCorner[1] - minCorner[1];
-  dz = maxCorner[2] - minCorner[2];
-  size = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+  dx = VfSub(maxCorner[0], minCorner[0]);
+  dy = VfSub(maxCorner[1], minCorner[1]);
+  dz = VfSub(maxCorner[2], minCorner[2]);
+  size = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
   self->base.triggerRadius = size * 0.4f * self->base.base.scale[0];
 
   rootY = &self->base.base.data->rootMatrix[13];

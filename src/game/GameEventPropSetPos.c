@@ -15,8 +15,8 @@ void GameEventPropSetPos(GameEventProp *prop, const s32 *pos)
     x = (float)pos[0] * 0.00024414062f;
     y = (float)pos[1] * 0.00024414062f;
     z = (float)pos[2] * 0.00024414062f;
-    model->pos[0] = x * 20.0f;
-    model->pos[1] = y * 20.0f;
-    model->pos[2] = z * 20.0f;
+    model->pos[0] = VfMul(x, 20.0f);
+    model->pos[1] = VfMul(y, 20.0f);
+    model->pos[2] = VfMul(z, 20.0f);
   }
 }

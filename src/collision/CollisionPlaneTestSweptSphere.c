@@ -23,7 +23,7 @@ bool CollisionPlaneTestSweptSphere(const float *plane, const void *query, float 
     float tt;
 
     /* dist = dot(normal, start) - d */
-    dist = plane[0] * q->start[0] + plane[1] * q->start[1] + plane[2] * q->start[2];
+    dist = VfDot3(plane[0], plane[1], plane[2], q->start[0], q->start[1], q->start[2]);
     dist = dist - plane[3];
     if (fabsf(dist) <= q->radius) {
         *t = 0.0f;
@@ -36,7 +36,7 @@ bool CollisionPlaneTestSweptSphere(const float *plane, const void *query, float 
     }
 
     /* speed = dot(normal, axis) */
-    speed.f = plane[0] * q->axis[0] + plane[1] * q->axis[1] + plane[2] * q->axis[2];
+    speed.f = VfDot3(plane[0], plane[1], plane[2], q->axis[0], q->axis[1], q->axis[2]);
     if (!(speed.f * dist < 0.0f)) {
         return false;
     }
@@ -61,9 +61,9 @@ bool CollisionPlaneTestSweptSphere(const float *plane, const void *query, float 
 
     tt = *t;
     /* point = (start + axis * t) - normal * r; lane 3 keeps start's (radiusSq). */
-    point[0] = (q->start[0] + q->axis[0] * tt) - plane[0] * r;
-    point[1] = (q->start[1] + q->axis[1] * tt) - plane[1] * r;
-    point[2] = (q->start[2] + q->axis[2] * tt) - plane[2] * r;
+    point[0] = VfSub(VfAdd(q->start[0], VfMul(q->axis[0], tt)), VfMul(plane[0], r));
+    point[1] = VfSub(VfAdd(q->start[1], VfMul(q->axis[1], tt)), VfMul(plane[1], r));
+    point[2] = VfSub(VfAdd(q->start[2], VfMul(q->axis[2], tt)), VfMul(plane[2], r));
     point[3] = q->radiusSq;
     return true;
 }

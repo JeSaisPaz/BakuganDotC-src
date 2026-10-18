@@ -53,7 +53,7 @@ void BtlSwordBlurDraw(BtlSwordBlur *self, u32 **cursor)
         u32 lane[4];
 
         for (i = 0; i < 4; i++) {
-            lane[i] = VfI2uc(VfF2iz(VfSat0(self->color[i]) * 255.0f, 23));
+            lane[i] = VfI2uc(VfF2iz(VfMul(VfSat0(self->color[i]), 255.0f), 23));
         }
         rgba = lane[0] | lane[1] << 8 | lane[2] << 16 | lane[3] << 24;
     }
@@ -100,15 +100,15 @@ void BtlSwordBlurDraw(BtlSwordBlur *self, u32 **cursor)
         list[0] = BtlSwordBlurBits(self->tip[slot][0]);
         list[1] = BtlSwordBlurBits(self->tip[slot][1]);
         list[2] = BtlSwordBlurBits(self->tip[slot][2]);
-        point[0] = self->tip[slot][0] + (self->base[slot][0] - self->tip[slot][0]) * 0.3333f;
-        point[1] = self->tip[slot][1] + (self->base[slot][1] - self->tip[slot][1]) * 0.3333f;
-        point[2] = self->tip[slot][2] + (self->base[slot][2] - self->tip[slot][2]) * 0.3333f;
+        point[0] = VfAdd(self->tip[slot][0], VfMul(VfSub(self->base[slot][0], self->tip[slot][0]), 0.3333f));
+        point[1] = VfAdd(self->tip[slot][1], VfMul(VfSub(self->base[slot][1], self->tip[slot][1]), 0.3333f));
+        point[2] = VfAdd(self->tip[slot][2], VfMul(VfSub(self->base[slot][2], self->tip[slot][2]), 0.3333f));
         list[3] = BtlSwordBlurBits(point[0]);
         list[4] = BtlSwordBlurBits(point[1]);
         list[5] = BtlSwordBlurBits(point[2]);
-        point[0] = self->tip[slot][0] + (self->base[slot][0] - self->tip[slot][0]) * 0.6666f;
-        point[1] = self->tip[slot][1] + (self->base[slot][1] - self->tip[slot][1]) * 0.6666f;
-        point[2] = self->tip[slot][2] + (self->base[slot][2] - self->tip[slot][2]) * 0.6666f;
+        point[0] = VfAdd(self->tip[slot][0], VfMul(VfSub(self->base[slot][0], self->tip[slot][0]), 0.6666f));
+        point[1] = VfAdd(self->tip[slot][1], VfMul(VfSub(self->base[slot][1], self->tip[slot][1]), 0.6666f));
+        point[2] = VfAdd(self->tip[slot][2], VfMul(VfSub(self->base[slot][2], self->tip[slot][2]), 0.6666f));
         list[6] = BtlSwordBlurBits(point[0]);
         list[7] = BtlSwordBlurBits(point[1]);
         list[8] = BtlSwordBlurBits(point[2]);

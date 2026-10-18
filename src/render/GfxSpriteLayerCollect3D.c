@@ -19,16 +19,14 @@ int GfxSpriteLayerCollect3D(GfxSprite *sprite, GfxSpriteSortPair *out, GfxCamera
             if (sprite->preDrawCallback != NULL) {
                 ((void (*)(GfxSprite *))sprite->preDrawCallback)(sprite);
             }
-            sprite->toCamera[0] = camera->eye[0] - sprite->posX;
-            sprite->toCamera[1] = camera->eye[1] - sprite->posY;
-            sprite->toCamera[2] = camera->eye[2] - sprite->posZ;
+            sprite->toCamera[0] = VfSub(camera->eye[0], sprite->posX);
+            sprite->toCamera[1] = VfSub(camera->eye[1], sprite->posY);
+            sprite->toCamera[2] = VfSub(camera->eye[2], sprite->posZ);
             sprite->toCamera[3] = camera->eye[3];
             if ((sprite->flags & 0x80) != 0) {
                 key = g_gfxSpriteFarDepthKey;
             } else {
-                key = sprite->toCamera[0] * sprite->toCamera[0] +
-                      sprite->toCamera[1] * sprite->toCamera[1] +
-                      sprite->toCamera[2] * sprite->toCamera[2];
+                key = VfDot3(sprite->toCamera[0], sprite->toCamera[1], sprite->toCamera[2], sprite->toCamera[0], sprite->toCamera[1], sprite->toCamera[2]);
             }
             out->depth = key;
             out->sprite = sprite;

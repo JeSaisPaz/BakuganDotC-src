@@ -15,17 +15,17 @@ void CollisionRayTransform(const CollisionRayShape *ray, const ScePspFMatrix4 *m
   ScePspFVector4 inv;
 
   o.w = 1.0f;
-  r.x = mtx->x.x * o.x + mtx->y.x * o.y + mtx->z.x * o.z + mtx->w.x * o.w;
-  r.y = mtx->x.y * o.x + mtx->y.y * o.y + mtx->z.y * o.z + mtx->w.y * o.w;
-  r.z = mtx->x.z * o.x + mtx->y.z * o.y + mtx->z.z * o.z + mtx->w.z * o.w;
-  r.w = mtx->x.w * o.x + mtx->y.w * o.y + mtx->z.w * o.z + mtx->w.w * o.w;
+  r.x = VfDot4(mtx->x.x, mtx->y.x, mtx->z.x, mtx->w.x, o.x, o.y, o.z, o.w);
+  r.y = VfDot4(mtx->x.y, mtx->y.y, mtx->z.y, mtx->w.y, o.x, o.y, o.z, o.w);
+  r.z = VfDot4(mtx->x.z, mtx->y.z, mtx->z.z, mtx->w.z, o.x, o.y, o.z, o.w);
+  r.w = VfDot4(mtx->x.w, mtx->y.w, mtx->z.w, mtx->w.w, o.x, o.y, o.z, o.w);
   out->origin = r;
 
   d = ray->dir;
   /* vtfm3 writes x/y/z only; the w lane still holds the transformed origin's w */
-  r.x = mtx->x.x * d.x + mtx->y.x * d.y + mtx->z.x * d.z;
-  r.y = mtx->x.y * d.x + mtx->y.y * d.y + mtx->z.y * d.z;
-  r.z = mtx->x.z * d.x + mtx->y.z * d.y + mtx->z.z * d.z;
+  r.x = VfDot3(mtx->x.x, mtx->y.x, mtx->z.x, d.x, d.y, d.z);
+  r.y = VfDot3(mtx->x.y, mtx->y.y, mtx->z.y, d.x, d.y, d.z);
+  r.z = VfDot3(mtx->x.z, mtx->y.z, mtx->z.z, d.x, d.y, d.z);
   out->dir = r;
 
   /* bank constant S713 = 0.0f: zero-component substitute and inv.w */

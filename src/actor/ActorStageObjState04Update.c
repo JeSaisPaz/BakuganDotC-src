@@ -15,7 +15,7 @@
 /* Random float in [0, 1): vrndf1 gives [1, 2), minus the bank constant S733 = 1.0f. */
 static inline float State04Random(void)
 {
-  return PlatformRandFloat12() - 1.0f;
+  return VfSub(PlatformRandFloat12(), 1.0f);
 }
 
 /* lv.q/sv.q copy of the model position (all four lanes). */

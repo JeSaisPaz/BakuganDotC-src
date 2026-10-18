@@ -54,32 +54,32 @@ void ActorStageObjInitFields(ActorStageObjBase *self)
     min[i] = bounds[i];
   }
 
-  self->halfHeight = (max[1] - min[1]) * 0.5f;
+  self->halfHeight = (VfSub(max[1], min[1])) * 0.5f;
 
-  dx = min[0] - max[0];
-  dy = min[1] - max[1];
-  dz = min[2] - max[2];
-  self->diagonal = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+  dx = VfSub(min[0], max[0]);
+  dy = VfSub(min[1], max[1]);
+  dz = VfSub(min[2], max[2]);
+  self->diagonal = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
 
   max[1] = 0.0f;
   min[1] = 0.0f;
-  dx = min[0] - max[0];
-  dy = min[1] - max[1];
-  dz = min[2] - max[2];
-  self->diagonal2 = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+  dx = VfSub(min[0], max[0]);
+  dy = VfSub(min[1], max[1]);
+  dz = VfSub(min[2], max[2]);
+  self->diagonal2 = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
 
   self->extents[0] = 0.0f;
   self->extents[1] = 0.0f;
   self->extents[2] = 0.0f;
   self->extents[3] = 0.0f;
   if (min[0] < 0.0f) {
-    self->extents[0] = max[0] - min[0];
-    self->extents[1] = max[1] - min[1];
-    self->extents[2] = max[2] - min[2];
+    self->extents[0] = VfSub(max[0], min[0]);
+    self->extents[1] = VfSub(max[1], min[1]);
+    self->extents[2] = VfSub(max[2], min[2]);
   } else {
-    self->extents[0] = max[0] + min[0];
-    self->extents[1] = max[1] + min[1];
-    self->extents[2] = max[2] + min[2];
+    self->extents[0] = VfAdd(max[0], min[0]);
+    self->extents[1] = VfAdd(max[1], min[1]);
+    self->extents[2] = VfAdd(max[2], min[2]);
   }
   self->extents[3] = max[3];
 

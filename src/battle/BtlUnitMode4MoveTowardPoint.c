@@ -28,14 +28,14 @@ static void Mode4Normalize(float *out, const float *v)
     float lenSq;
     float k;
 
-    lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+    lenSq = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
     k = VfRsq(lenSq);
     if (VfIsZero(lenSq)) {
         k = 0.0f;
     }
-    out[0] = VfSat1(v[0] * k);
-    out[1] = VfSat1(v[1] * k);
-    out[2] = VfSat1(v[2] * k);
+    out[0] = VfSat1(VfMul(v[0], k));
+    out[1] = VfSat1(VfMul(v[1], k));
+    out[2] = VfSat1(VfMul(v[2], k));
     out[3] = 0.0f;
 }
 
@@ -151,15 +151,15 @@ void BtlUnitMode4MoveTowardPoint(BtlUnitMode4 *self, const float *target)
     if (unit->combat.stats->dashMode != 1) {
         /* toTarget = normalize(target - pos) (w = target[3] before the normalise),
            velDir = normalize(velocity) */
-        toTarget[0] = target[0] - unit->base.pos[0];
-        toTarget[1] = target[1] - unit->base.pos[1];
-        toTarget[2] = target[2] - unit->base.pos[2];
+        toTarget[0] = VfSub(target[0], unit->base.pos[0]);
+        toTarget[1] = VfSub(target[1], unit->base.pos[1]);
+        toTarget[2] = VfSub(target[2], unit->base.pos[2]);
         toTarget[3] = target[3];
         Mode4Normalize(toTarget, toTarget);
         Mode4Normalize(velDir, unit->base.velocity);
-        dot = velDir[0] * toTarget[0] + velDir[1] * toTarget[1] + velDir[2] * toTarget[2];
+        dot = VfDot3(velDir[0], velDir[1], velDir[2], toTarget[0], toTarget[1], toTarget[2]);
         /* vcos of |diff| x S703: cos of the angle in radians */
-        cosTurn = __builtin_cosf(__builtin_fabsf(diff));
+        cosTurn = VfCosQuarter(VfMul(__builtin_fabsf(diff), 0.636619747f));
         shape = (dot + 1.0f) * 0.6f;
         v = unit->base.velocity[1] + cosTurn * toTarget[1] * unit->dashSpeed * shape;
         unit->base.velocity[1] = v;
@@ -189,8 +189,8 @@ void BtlUnitMode4MoveTowardPoint(BtlUnitMode4 *self, const float *target)
     /* velocity.xz = (cos, sin)(dashHeading) * dashSpeed (vrot [C,0,S,0], lanes 0 and 2 stored) */
     heading = unit->dashHeading;
     speed = unit->dashSpeed;
-    unit->base.velocity[0] = __builtin_cosf(heading) * speed;
-    unit->base.velocity[2] = __builtin_sinf(heading) * speed;
+    unit->base.velocity[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), speed);
+    unit->base.velocity[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), speed);
     unit->stateFlags = unit->stateFlags | 1;
     Mode4Normalize(velDir2, unit->base.velocity);
     unit->orient[0] = velDir2[1] * -0.899999976f; /* 0xbf666666 */
@@ -198,11 +198,11 @@ void BtlUnitMode4MoveTowardPoint(BtlUnitMode4 *self, const float *target)
     unit->orient[2] = 0.0f;
     unit->orient[3] = 0.0f;
     /* orient.xz rotated by rot[1] (vrot [C,0,-S,0] / [S,0,C,0] + vdot.t), then normalised */
-    c = __builtin_cosf(unit->base.rot[1]);
-    s = __builtin_sinf(unit->base.rot[1]);
-    rotated[0] = unit->orient[0] * c + unit->orient[1] * 0.0f + unit->orient[2] * -s;
+    c = VfCosQuarter(VfMul(unit->base.rot[1], 0.636619747f));
+    s = VfSinQuarter(VfMul(unit->base.rot[1], 0.636619747f));
+    rotated[0] = VfDot3(unit->orient[0], unit->orient[1], unit->orient[2], c, 0.0f, -s);
     rotated[1] = unit->orient[1];
-    rotated[2] = unit->orient[0] * s + unit->orient[1] * 0.0f + unit->orient[2] * c;
+    rotated[2] = VfDot3(unit->orient[0], unit->orient[1], unit->orient[2], s, 0.0f, c);
     rotated[3] = unit->orient[3];
     Mode4Normalize(unit->orient, rotated);
 

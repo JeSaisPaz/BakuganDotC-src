@@ -36,7 +36,7 @@ void CollisionMeshTreeQueryType3(const CollisionFacePart *part, const CollisionB
         }
         plane = &((const ScePspFVector4 *)PspPtr(part->normals))[face[3]];
         /* vdot.t of the plane normal and the sphere centre (VFPU registers dead afterwards) */
-        if ((plane->x * query->center.x + plane->y * query->center.y + plane->z * query->center.z) - plane->w < 0.0f) {
+        if (VfDot3(plane->x, plane->y, plane->z, query->center.x, query->center.y, query->center.z) - plane->w < 0.0f) {
             continue;
         }
         if (!CollisionTriangleTestSphere(&((const ScePspFVector4 *)PspPtr(part->vertices))[face[0]].x, &((const ScePspFVector4 *)PspPtr(part->vertices))[face[1]].x,

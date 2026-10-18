@@ -90,10 +90,10 @@ void BtlBakuganCreateAttachments(BtlBakugan *self)
         rot[3] = VfCosQuarter(a);
         node = GfxModelGetNode(self->wingModel, 0);
         /* vqmul.q: rotate (x) rot */
-        q[0] = node->rotate[0] * rot[3] + node->rotate[1] * rot[2] - node->rotate[2] * rot[1] + node->rotate[3] * rot[0];
-        q[1] = -node->rotate[0] * rot[2] + node->rotate[1] * rot[3] + node->rotate[2] * rot[0] + node->rotate[3] * rot[1];
-        q[2] = node->rotate[0] * rot[1] - node->rotate[1] * rot[0] + node->rotate[2] * rot[3] + node->rotate[3] * rot[2];
-        q[3] = -node->rotate[0] * rot[0] - node->rotate[1] * rot[1] - node->rotate[2] * rot[2] + node->rotate[3] * rot[3];
+        q[0] = VfDot4(node->rotate[0], node->rotate[1], node->rotate[2], node->rotate[3], rot[3], rot[2], -rot[1], rot[0]);
+        q[1] = VfDot4(-node->rotate[0], node->rotate[1], node->rotate[2], node->rotate[3], rot[2], rot[3], rot[0], rot[1]);
+        q[2] = VfDot4(node->rotate[0], node->rotate[1], node->rotate[2], node->rotate[3], rot[1], -rot[0], rot[3], rot[2]);
+        q[3] = VfDot4(-node->rotate[0], node->rotate[1], node->rotate[2], node->rotate[3], rot[0], -rot[1], -rot[2], rot[3]);
         node->rotate[0] = q[0];
         node->rotate[1] = q[1];
         node->rotate[2] = q[2];

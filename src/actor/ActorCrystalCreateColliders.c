@@ -52,9 +52,7 @@ void ActorCrystalCreateColliders(ActorCrystal *self)
   r = k * 180.0f;
   self->base.bodyShape.radius = r;
   self->base.bodyShape.radiusSq = r * r;
-  axisLen = __builtin_sqrtf(self->base.bodyShape.axis[0] * self->base.bodyShape.axis[0] +
-                            self->base.bodyShape.axis[1] * self->base.bodyShape.axis[1] +
-                            self->base.bodyShape.axis[2] * self->base.bodyShape.axis[2]);
+  axisLen = VfSqrt(VfDot3(self->base.bodyShape.axis[0], self->base.bodyShape.axis[1], self->base.bodyShape.axis[2], self->base.bodyShape.axis[0], self->base.bodyShape.axis[1], self->base.bodyShape.axis[2]));
   self->base.bodyShape.axisLen = axisLen;
   CollisionColliderInit(&self->base.collider0->node, (const u32 *)&self->base.bodyShape, 0, self, 0);
   self->base.collider0->shapeBlock.installed = 0;
@@ -85,9 +83,7 @@ void ActorCrystalCreateColliders(ActorCrystal *self)
   r = scale * 260.0f;
   self->pushShape.radius = r;
   self->pushShape.radiusSq = r * r;
-  axisLen = __builtin_sqrtf(self->pushShape.axis[0] * self->pushShape.axis[0] +
-                            self->pushShape.axis[1] * self->pushShape.axis[1] +
-                            self->pushShape.axis[2] * self->pushShape.axis[2]);
+  axisLen = VfSqrt(VfDot3(self->pushShape.axis[0], self->pushShape.axis[1], self->pushShape.axis[2], self->pushShape.axis[0], self->pushShape.axis[1], self->pushShape.axis[2]));
   self->pushShape.axisLen = axisLen;
   CollisionColliderInit(&collider->node, (const u32 *)&self->pushShape, 0, self, 0);
   self->base.collider1->shapeBlock.installed = 0;

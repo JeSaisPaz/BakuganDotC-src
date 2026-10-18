@@ -34,14 +34,14 @@ void BtlAttackReflect(BtlAttack *self)
        The w lane is the bank zero S713. */
     {
         const float *anchor = self->reflector->anchorMatrix[3];
-        float dx = self->pos[0] - anchor[0];
-        float dy = self->pos[1] - anchor[1];
-        float dz = self->pos[2] - anchor[2];
-        float lenSq = dx * dx + dy * dy + dz * dz;
+        float dx = VfSub(self->pos[0], anchor[0]);
+        float dy = VfSub(self->pos[1], anchor[1]);
+        float dz = VfSub(self->pos[2], anchor[2]);
+        float lenSq = VfDot3(dx, dy, dz, dx, dy, dz);
         float k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        bounce[0] = VfSat1(dx * k);
-        bounce[1] = VfSat1(dy * k);
-        bounce[2] = VfSat1(dz * k);
+        bounce[0] = VfSat1(VfMul(dx, k));
+        bounce[1] = VfSat1(VfMul(dy, k));
+        bounce[2] = VfSat1(VfMul(dz, k));
         bounce[3] = 0.0f;
     }
     effect = (GfxEffect *)GfxEffectSpawnAttachedDir(g_btlAttackEffectMgr, 0x3d,

@@ -61,7 +61,7 @@ void BtlBakuganState03Update(BtlBakugan *self)
 
     if (!BtlBakuganApplyHover(self) && !BtlBakuganIsAirborne(self, 1)) {
         /* squared length of velocity xyz */
-        speedSq = vel[0] * vel[0] + vel[1] * vel[1] + vel[2] * vel[2];
+        speedSq = VfDot3(vel[0], vel[1], vel[2], vel[0], vel[1], vel[2]);
         if (!(speedSq <= 256.0f)) {
             BtlBakuganSpawnFootstepEffect(40.0f, 2.0f, self, (self->stateCounter & 1) != 0 ? 2 : 3);
         }
@@ -75,6 +75,6 @@ void BtlBakuganState03Update(BtlBakugan *self)
     }
     keep = BtlScaleRetentionByTimeStep(0.850000024f);
     /* velocity.x and .z *= keep; y untouched */
-    vel[0] = vel[0] * keep;
-    vel[2] = vel[2] * keep;
+    vel[0] = VfMul(vel[0], keep);
+    vel[2] = VfMul(vel[2], keep);
 }

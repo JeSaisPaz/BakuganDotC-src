@@ -41,22 +41,21 @@ u32 BtlAttackSweepHit(float radius, BtlAttack *self, float *from, float *to, s32
         for (i = 0; i < 4; i++) {
             offset[i] = from[i];
         }
-        offset[0] = offset[0] - self->owner->base.pos[0];
-        offset[1] = offset[1] - self->owner->base.pos[1];
-        offset[2] = offset[2] - self->owner->base.pos[2];
+        offset[0] = VfSub(offset[0], self->owner->base.pos[0]);
+        offset[1] = VfSub(offset[1], self->owner->base.pos[1]);
+        offset[2] = VfSub(offset[2], self->owner->base.pos[2]);
         offset[1] = 0.0f;
         /* dir.xyz += offset; start.xyz -= offset */
-        desc->dir.x = desc->dir.x + offset[0];
-        desc->dir.y = desc->dir.y + offset[1];
-        desc->dir.z = desc->dir.z + offset[2];
-        desc->start.x = desc->start.x - offset[0];
-        desc->start.y = desc->start.y - offset[1];
-        desc->start.z = desc->start.z - offset[2];
+        desc->dir.x = VfAdd(desc->dir.x, offset[0]);
+        desc->dir.y = VfAdd(desc->dir.y, offset[1]);
+        desc->dir.z = VfAdd(desc->dir.z, offset[2]);
+        desc->start.x = VfSub(desc->start.x, offset[0]);
+        desc->start.y = VfSub(desc->start.y, offset[1]);
+        desc->start.z = VfSub(desc->start.z, offset[2]);
     }
     desc->start.w = desc->radius * desc->radius;
     /* dir.w = |dir.xyz| */
-    len = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y +
-                          desc->dir.z * desc->dir.z);
+    len = VfSqrt(VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z));
     desc->dir.w = len;
     g_btlAttackHitQuery.shape = &desc->shapeBlock;
     g_btlAttackHitQuery.owner = self->owner;
@@ -101,12 +100,12 @@ u32 BtlAttackSweepHit(float radius, BtlAttack *self, float *from, float *to, s32
         if (desc->start.y + desc->dir.y < desc->radius) {
             hit = 1;
             /* hit point = start + dir * 0.5 (xyz; w from start) */
-            half[0] = desc->dir.x * 0.5f;
-            half[1] = desc->dir.y * 0.5f;
-            half[2] = desc->dir.z * 0.5f;
-            mid[0] = desc->start.x + half[0];
-            mid[1] = desc->start.y + half[1];
-            mid[2] = desc->start.z + half[2];
+            half[0] = VfMul(desc->dir.x, 0.5f);
+            half[1] = VfMul(desc->dir.y, 0.5f);
+            half[2] = VfMul(desc->dir.z, 0.5f);
+            mid[0] = VfAdd(desc->start.x, half[0]);
+            mid[1] = VfAdd(desc->start.y, half[1]);
+            mid[2] = VfAdd(desc->start.z, half[2]);
             mid[3] = desc->start.w;
             g_btlAttackHitQuery.contact.x = mid[0];
             g_btlAttackHitQuery.contact.y = mid[1];

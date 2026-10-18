@@ -59,13 +59,13 @@ void BtlMainUpdateScene(BtlMain *self)
             self->focusFrames = self->focusFrames - 1;
         }
 
-        cosine = __builtin_cosf(self->focusBlend * 3.14159274f);
+        cosine = VfCosQuarter(VfMul(self->focusBlend * 3.14159274f, 0.636619747f));
         ease = (1.0f - cosine) * 0.5f;
         /* focus += (focusTarget - focus) * ease, all four lanes */
         for (i = 0; i < 4; i++) {
-            self->focus[i] = self->focus[i] + (self->focusTarget[i] - self->focus[i]) * ease;
+            self->focus[i] = VfAdd(self->focus[i], VfMul(VfSub(self->focusTarget[i], self->focus[i]), ease));
         }
-        cosine = __builtin_cosf(self->focusBlend * 3.14159274f);
+        cosine = VfCosQuarter(VfMul(self->focusBlend * 3.14159274f, 0.636619747f));
         self->focus[3] = (1.0f - cosine) * 0.5f * self->focusTarget[3];
     }
 }

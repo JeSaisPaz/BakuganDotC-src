@@ -57,8 +57,8 @@ void BtlAttackType07Update(BtlAttack *self)
     }
 
     /* rot = rotation by 55 degrees (0x3f75be0b rad, vrot of angle x S703) about Z, column-major */
-    angleCos = __builtin_cosf(0.959931076f);
-    angleSin = __builtin_sinf(0.959931076f);
+    angleCos = VfCosQuarter(0.959931076f * 0.636619747f);
+    angleSin = VfSinQuarter(0.959931076f * 0.636619747f);
     rot[0] = angleCos;
     rot[1] = angleSin;
     rot[2] = 0.0f;
@@ -80,8 +80,7 @@ void BtlAttackType07Update(BtlAttack *self)
     a = self->bone->localMatrix;
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            prod[j * 4 + i] = a[i] * rot[j * 4 + 0] + a[4 + i] * rot[j * 4 + 1] +
-                              a[8 + i] * rot[j * 4 + 2] + a[12 + i] * rot[j * 4 + 3];
+            prod[j * 4 + i] = VfDot4(a[i], a[4 + i], a[8 + i], a[12 + i], rot[j * 4 + 0], rot[j * 4 + 1], rot[j * 4 + 2], rot[j * 4 + 3]);
         }
     }
     for (i = 0; i < 16; i++) {
@@ -93,8 +92,7 @@ void BtlAttackType07Update(BtlAttack *self)
     b = self->bone->localMatrix;
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            self->mtx[j][i] = a[i] * b[j * 4 + 0] + a[4 + i] * b[j * 4 + 1] +
-                              a[8 + i] * b[j * 4 + 2] + a[12 + i] * b[j * 4 + 3];
+            self->mtx[j][i] = VfDot4(a[i], a[4 + i], a[8 + i], a[12 + i], b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3]);
         }
     }
 
@@ -104,8 +102,7 @@ void BtlAttackType07Update(BtlAttack *self)
     offset[2] = g_btlAttackType07Offset.z;
     offset[3] = 1.0f;
     for (i = 0; i < 4; i++) {
-        self->pos[i] = self->mtx[0][i] * offset[0] + self->mtx[1][i] * offset[1] +
-                       self->mtx[2][i] * offset[2] + self->mtx[3][i] * offset[3];
+        self->pos[i] = VfDot4(self->mtx[0][i], self->mtx[1][i], self->mtx[2][i], self->mtx[3][i], offset[0], offset[1], offset[2], offset[3]);
     }
 
     target = (BtlBakugan *)BtlFindBakuganById(self->targetId);
@@ -116,9 +113,9 @@ void BtlAttackType07Update(BtlAttack *self)
         point[3] = target->base.pos[3];
         point[1] = point[1] + target->height * 0.800000012f;
         /* toPoint = point - pos (xyz; w = point.w) */
-        toPoint[0] = point[0] - self->pos[0];
-        toPoint[1] = point[1] - self->pos[1];
-        toPoint[2] = point[2] - self->pos[2];
+        toPoint[0] = VfSub(point[0], self->pos[0]);
+        toPoint[1] = VfSub(point[1], self->pos[1]);
+        toPoint[2] = VfSub(point[2], self->pos[2]);
         toPoint[3] = point[3];
         BtlAttackSweepHit(10.0f, self, self->pos, toPoint, 0x94, 3, 0, 0x31bf337e);
     } else if (BtlAttackSweepHit(10.0f, self, self->pos, self->vel, 0x94, 3, 0, 0x31bf337e) != 0) {
@@ -129,13 +126,13 @@ void BtlAttackType07Update(BtlAttack *self)
     } else {
         /* point = pos + (cos, 0, sin)(yaw) x 500 (xyz; w = 0 from the vrot) */
         yaw = self->owner->base.rot[1];
-        point[0] = __builtin_cosf(yaw) * 500.0f;
+        point[0] = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), 500.0f);
         point[1] = 0.0f;
-        point[2] = __builtin_sinf(yaw) * 500.0f;
+        point[2] = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), 500.0f);
         point[3] = 0.0f;
-        point[0] = point[0] + self->pos[0];
-        point[1] = point[1] + self->pos[1];
-        point[2] = point[2] + self->pos[2];
+        point[0] = VfAdd(point[0], self->pos[0]);
+        point[1] = VfAdd(point[1], self->pos[1]);
+        point[2] = VfAdd(point[2], self->pos[2]);
     }
     GfxEffectSpawn(g_btlAttackEffectMgr, 0xeb, self->pos);
     if (self->age % 3 == 0) {
@@ -143,19 +140,19 @@ void BtlAttackType07Update(BtlAttack *self)
     }
 
     /* point -= pos (xyz); length = |point|; point = clamped normalise(point), w = S713 (0) */
-    point[0] = point[0] - self->pos[0];
-    point[1] = point[1] - self->pos[1];
-    point[2] = point[2] - self->pos[2];
-    lenSq = point[0] * point[0] + point[1] * point[1] + point[2] * point[2];
-    length = __builtin_sqrtf(lenSq);
+    point[0] = VfSub(point[0], self->pos[0]);
+    point[1] = VfSub(point[1], self->pos[1]);
+    point[2] = VfSub(point[2], self->pos[2]);
+    lenSq = VfDot3(point[0], point[1], point[2], point[0], point[1], point[2]);
+    length = VfSqrt(lenSq);
     if (VfIsZero(lenSq)) {
         inv = 0.0f;
     } else {
         inv = VfRsq(lenSq);
     }
-    point[0] = VfSat1(point[0] * inv);
-    point[1] = VfSat1(point[1] * inv);
-    point[2] = VfSat1(point[2] * inv);
+    point[0] = VfSat1(VfMul(point[0], inv));
+    point[1] = VfSat1(VfMul(point[1], inv));
+    point[2] = VfSat1(VfMul(point[2], inv));
     point[3] = 0.0f;
     effect = (GfxEffect *)self->effect;
     effect->dir[0] = point[0];
@@ -174,9 +171,9 @@ void BtlAttackType07Update(BtlAttack *self)
 
     /* points[i] = pos + point x scales[i] (xyz; w = pos.w) */
     for (i = 0; i < 6; i++) {
-        points[i].x = self->pos[0] + point[0] * scales[i];
-        points[i].y = self->pos[1] + point[1] * scales[i];
-        points[i].z = self->pos[2] + point[2] * scales[i];
+        points[i].x = VfAdd(self->pos[0], VfMul(point[0], scales[i]));
+        points[i].y = VfAdd(self->pos[1], VfMul(point[1], scales[i]));
+        points[i].z = VfAdd(self->pos[2], VfMul(point[2], scales[i]));
         points[i].w = self->pos[3];
     }
 }

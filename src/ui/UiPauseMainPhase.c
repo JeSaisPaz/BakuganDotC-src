@@ -280,7 +280,7 @@ void UiPauseMainPhase(UiPause *self)
 
   if (self->base.phaseStep >= 3) {
     self->cursorPulse = self->cursorPulse + 0.08f;
-    c = __builtin_cosf(self->cursorPulse * 3.1415927f);
+    c = VfCosQuarter(VfMul(self->cursorPulse * 3.1415927f, 0.636619747f));
     k = 0.3f - (1.0f - c) * 0.5f * 0.3f;
     sprite = ((GfxSprite **)self->base.data)[self->cursor + 5];
     sprite->addColor[0] = k;

@@ -24,10 +24,10 @@ s32 GfxModelDistanceFade(float nearDist, float farDist, GfxModel *self, const fl
 
   self->visible = 1;
   /* |eye - pos| over x, y, z */
-  dx = g_gfxActiveCamera->eye[0] - pos[0];
-  dy = g_gfxActiveCamera->eye[1] - pos[1];
-  dz = g_gfxActiveCamera->eye[2] - pos[2];
-  dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+  dx = VfSub(g_gfxActiveCamera->eye[0], pos[0]);
+  dy = VfSub(g_gfxActiveCamera->eye[1], pos[1]);
+  dz = VfSub(g_gfxActiveCamera->eye[2], pos[2]);
+  dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
 
   if (dist < nearDist) {
     cap = 1.0f - (nearDist - dist) / nearDist;

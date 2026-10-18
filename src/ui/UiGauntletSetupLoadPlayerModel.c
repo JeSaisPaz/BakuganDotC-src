@@ -39,8 +39,8 @@ void UiGauntletSetupLoadPlayerModel(UiGauntletSetup *self)
   {
     float *m = model->data->rootMatrix;
     float angle = 0.0f;
-    float c = __builtin_cosf(angle);
-    float s = __builtin_sinf(angle);
+    float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    float s = VfSinQuarter(VfMul(angle, 0.636619747f));
 
     m[0] = c;    m[1] = 0.0f; m[2] = -s;   m[3] = 0.0f;
     m[4] = 0.0f; m[5] = 1.0f; m[6] = 0.0f; m[7] = 0.0f;
@@ -59,7 +59,7 @@ void UiGauntletSetupLoadPlayerModel(UiGauntletSetup *self)
 
     for (row = 0; row < 3; row++) {
       for (i = 0; i < 4; i++) {
-        m[row * 4 + i] = m[row * 4 + i] * scale[row];
+        m[row * 4 + i] = VfMul(m[row * 4 + i], scale[row]);
       }
     }
   }

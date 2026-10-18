@@ -12,26 +12,26 @@ static void BtlAttackTrailShotBasis(float *m, const float *dir)
     float lenSq;
     float k;
 
-    lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+    lenSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    f[0] = VfSat1(dir[0] * k);
-    f[1] = VfSat1(dir[1] * k);
-    f[2] = VfSat1(dir[2] * k);
-    s[0] = g_vecUp.y * f[2] - g_vecUp.z * f[1];
-    s[1] = g_vecUp.z * f[0] - g_vecUp.x * f[2];
-    s[2] = g_vecUp.x * f[1] - g_vecUp.y * f[0];
-    lenSq = s[0] * s[0] + s[1] * s[1] + s[2] * s[2];
+    f[0] = VfSat1(VfMul(dir[0], k));
+    f[1] = VfSat1(VfMul(dir[1], k));
+    f[2] = VfSat1(VfMul(dir[2], k));
+    s[0] = VfDot2(g_vecUp.y, g_vecUp.z, f[2], -f[1]);
+    s[1] = VfDot2(g_vecUp.z, g_vecUp.x, f[0], -f[2]);
+    s[2] = VfDot2(g_vecUp.x, g_vecUp.y, f[1], -f[0]);
+    lenSq = VfDot3(s[0], s[1], s[2], s[0], s[1], s[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    s[0] = VfSat1(s[0] * k);
-    s[1] = VfSat1(s[1] * k);
-    s[2] = VfSat1(s[2] * k);
+    s[0] = VfSat1(VfMul(s[0], k));
+    s[1] = VfSat1(VfMul(s[1], k));
+    s[2] = VfSat1(VfMul(s[2], k));
     m[0] = s[0];
     m[1] = s[1];
     m[2] = s[2];
     m[3] = 0.0f;
-    m[4] = f[1] * s[2] - f[2] * s[1];
-    m[5] = f[2] * s[0] - f[0] * s[2];
-    m[6] = f[0] * s[1] - f[1] * s[0];
+    m[4] = VfDot2(f[1], f[2], s[2], -s[1]);
+    m[5] = VfDot2(f[2], f[0], s[0], -s[2]);
+    m[6] = VfDot2(f[0], f[1], s[1], -s[0]);
     m[7] = 0.0f;
     m[8] = f[0];
     m[9] = f[1];
@@ -54,8 +54,7 @@ static void BtlAttackTrailShotMulSwapYZ(float *m)
 
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            r[j * 4 + i] = b[j * 4 + 0] * m[0 * 4 + i] + b[j * 4 + 1] * m[1 * 4 + i] +
-                           b[j * 4 + 2] * m[2 * 4 + i] + b[j * 4 + 3] * m[3 * 4 + i];
+            r[j * 4 + i] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], m[0 * 4 + i], m[1 * 4 + i], m[2 * 4 + i], m[3 * 4 + i]);
         }
     }
     for (i = 0; i < 16; i++) {
@@ -97,21 +96,21 @@ void BtlAttackUpdateTrailShot(BtlAttack *self, s32 hitKind)
             angle = -angle;
         }
         /* vrot of angle * S703 (2/pi) in quarter turns: dir.xz rotated about Y, y and w kept */
-        c = __builtin_cosf(angle);
-        s = __builtin_sinf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
+        s = VfSinQuarter(VfMul(angle, 0.636619747f));
         dx = self->dir[0];
         dy = self->dir[1];
         dz = self->dir[2];
-        self->dir[0] = dx * c + dy * 0.0f + dz * -s;
-        self->dir[2] = dx * s + dy * 0.0f + dz * c;
+        self->dir[0] = VfDot3(dx, dy, dz, c, 0.0f, -s);
+        self->dir[2] = VfDot3(dx, dy, dz, s, 0.0f, c);
         self->turnRate = 0.209999993f; /* 0x3e570a3d */
         muzzle = GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0xb3, self->pos, self->dir);
         BtlAttackTrailShotBasis(muzzle->matrix, self->dir);
         /* rows 0..2 scaled by (1.5, 1.5, -1.5), all four lanes */
         for (i = 0; i < 4; i++) {
-            muzzle->matrix[0 + i] = muzzle->matrix[0 + i] * 1.5f;
-            muzzle->matrix[4 + i] = muzzle->matrix[4 + i] * 1.5f;
-            muzzle->matrix[8 + i] = muzzle->matrix[8 + i] * -1.5f;
+            muzzle->matrix[0 + i] = VfMul(muzzle->matrix[0 + i], 1.5f);
+            muzzle->matrix[4 + i] = VfMul(muzzle->matrix[4 + i], 1.5f);
+            muzzle->matrix[8 + i] = VfMul(muzzle->matrix[8 + i], -1.5f);
         }
         BtlAttackTrailShotMulSwapYZ(muzzle->matrix);
     } else {
@@ -128,24 +127,24 @@ void BtlAttackUpdateTrailShot(BtlAttack *self, s32 hitKind)
         trailPos[1] = self->pos[1];
         trailPos[2] = self->pos[2];
         trailPos[3] = self->pos[3];
-        trailStep[0] = self->vel[0] * 0.330000013f; /* 0x3ea8f5c3 */
-        trailStep[1] = self->vel[1] * 0.330000013f;
-        trailStep[2] = self->vel[2] * 0.330000013f;
+        trailStep[0] = VfMul(self->vel[0], 0.330000013f); /* 0x3ea8f5c3 */
+        trailStep[1] = VfMul(self->vel[1], 0.330000013f);
+        trailStep[2] = VfMul(self->vel[2], 0.330000013f);
         trailStep[3] = 0.0f;
         for (i = 0; i < 3; i++) {
             GfxEffectSpawn(g_btlAttackEffectMgr, 0xb2, trailPos);
             /* trailPos.xyz += trailStep.xyz */
-            trailPos[0] = trailPos[0] + trailStep[0];
-            trailPos[1] = trailPos[1] + trailStep[1];
-            trailPos[2] = trailPos[2] + trailStep[2];
+            trailPos[0] = VfAdd(trailPos[0], trailStep[0]);
+            trailPos[1] = VfAdd(trailPos[1], trailStep[1]);
+            trailPos[2] = VfAdd(trailPos[2], trailStep[2]);
         }
         if (!(self->turnRate <= 0.100000001f)) { /* 0x3dcccccd */
             self->turnRate = self->turnRate - 0.0199999996f; /* 0x3ca3d70a */
         }
         /* pos.xyz += vel.xyz (w kept) */
-        self->pos[0] = self->pos[0] + self->vel[0];
-        self->pos[1] = self->pos[1] + self->vel[1];
-        self->pos[2] = self->pos[2] + self->vel[2];
+        self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+        self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+        self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
     }
 
     effect = (GfxEffect *)self->effect;

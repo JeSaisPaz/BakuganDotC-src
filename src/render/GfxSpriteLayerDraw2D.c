@@ -116,9 +116,9 @@ void GfxSpriteLayerDraw2D(GfxSpriteLayer *self, void *packet)
     dl += 2;
 
     /* Specular colour: clamp to [0, 1], scale by 255 (bank constant S701), truncate to bytes. */
-    spec = (u32)VfI2uc(VfF2iz(VfSat0(sprite->addColor[0]) * 255.0f, 23)) |
-           (u32)VfI2uc(VfF2iz(VfSat0(sprite->addColor[1]) * 255.0f, 23)) << 8 |
-           (u32)VfI2uc(VfF2iz(VfSat0(sprite->addColor[2]) * 255.0f, 23)) << 16;
+    spec = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(sprite->addColor[0]), 255.0f), 23)) |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(sprite->addColor[1]), 255.0f), 23)) << 8 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(sprite->addColor[2]), 255.0f), 23)) << 16;
     dl[0] = (spec & 0xffffff) | 0x57000000; /* material specular colour */
     dl += 1;
 

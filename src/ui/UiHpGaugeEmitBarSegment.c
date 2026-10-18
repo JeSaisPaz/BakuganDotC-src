@@ -27,10 +27,10 @@ u32 * UiHpGaugeEmitBarSegment(float x0, float y0, float x1, float y1, float z, U
   u32 *cmd;
   ScePspFVector4 white;
 
-  packed = (u32)VfI2uc(VfF2iz(VfSat0(color->x) * 255.0f, 23)) |
-           (u32)VfI2uc(VfF2iz(VfSat0(color->y) * 255.0f, 23)) << 8 |
-           (u32)VfI2uc(VfF2iz(VfSat0(color->z) * 255.0f, 23)) << 16 |
-           (u32)VfI2uc(VfF2iz(VfSat0(color->w) * 255.0f, 23)) << 24;
+  packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(color->x), 255.0f), 23)) |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(color->y), 255.0f), 23)) << 8 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(color->z), 255.0f), 23)) << 16 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(color->w), 255.0f), 23)) << 24;
   light = (u16)((packed >> 28) << 12 | ((packed >> 20) & 0xf) << 8 | ((packed >> 12) & 0xf) << 4 |
                 ((packed >> 4) & 0xf));
   dark = (u16)((packed >> 28) << 12 | ((packed >> 22) & 7) << 8 | ((packed >> 14) & 7) << 4 |
@@ -67,10 +67,10 @@ u32 * UiHpGaugeEmitBarSegment(float x0, float y0, float x1, float y1, float z, U
   (*bottom)[4].x = ix0; (*bottom)[4].y = -2;  (*bottom)[4].z = iz; (*bottom)[4].colour = light;
 
   white = g_colorWhite;
-  packed = (u32)VfI2uc(VfF2iz(VfSat0(white.x) * 255.0f, 23)) |
-           (u32)VfI2uc(VfF2iz(VfSat0(white.y) * 255.0f, 23)) << 8 |
-           (u32)VfI2uc(VfF2iz(VfSat0(white.z) * 255.0f, 23)) << 16 |
-           (u32)VfI2uc(VfF2iz(VfSat0(white.w) * 255.0f, 23)) << 24;
+  packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(white.x), 255.0f), 23)) |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(white.y), 255.0f), 23)) << 8 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(white.z), 255.0f), 23)) << 16 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(white.w), 255.0f), 23)) << 24;
   cmd[0] = (packed & 0xffffff) | 0x55000000; /* material colour */
   cmd[1] = (packed >> 24) | 0x58000000;      /* material alpha */
   cmd += 2;

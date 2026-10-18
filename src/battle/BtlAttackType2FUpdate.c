@@ -31,29 +31,29 @@ void BtlAttackType2FUpdate(BtlAttack *self)
     target = (BtlBakugan *)BtlFindBakuganById(self->targetId);
     if (target != NULL) {
         /* d = target pos - owner pos (xyz), w from the target */
-        d[0] = target->base.pos[0] - self->owner->base.pos[0];
-        d[1] = target->base.pos[1] - self->owner->base.pos[1];
-        d[2] = target->base.pos[2] - self->owner->base.pos[2];
+        d[0] = VfSub(target->base.pos[0], self->owner->base.pos[0]);
+        d[1] = VfSub(target->base.pos[1], self->owner->base.pos[1]);
+        d[2] = VfSub(target->base.pos[2], self->owner->base.pos[2]);
         d[3] = target->base.pos[3];
         /* vrot of (pi/2 * 2/pi) quarter turns */
-        c = __builtin_cosf(VF_PI_2);
-        s = __builtin_sinf(VF_PI_2);
-        offset[0] = d[0] * c + d[1] * 0.0f + d[2] * -s;
+        c = VfCosQuarter(VF_PI_2 * 0.636619747f);
+        s = VfSinQuarter(VF_PI_2 * 0.636619747f);
+        offset[0] = VfDot3(d[0], d[1], d[2], c, 0.0f, -s);
         offset[1] = d[1];
-        offset[2] = d[0] * s + d[1] * 0.0f + d[2] * c;
+        offset[2] = VfDot3(d[0], d[1], d[2], s, 0.0f, c);
         offset[3] = d[3];
         offset[1] = 0.0f;
         length = self->paramF2 * 80.0f;
         /* offset.xyz = normalize(offset.xyz) * length (0 when |offset| is 0), w = 0 */
-        lenSq = offset[0] * offset[0] + offset[1] * offset[1] + offset[2] * offset[2];
+        lenSq = VfDot3(offset[0], offset[1], offset[2], offset[0], offset[1], offset[2]);
         inv = VfRsq(lenSq);
         if (VfIsZero(lenSq)) {
             inv = 0.0f;
         }
-        k = inv * length;
-        offset[0] = offset[0] * k;
-        offset[1] = offset[1] * k;
-        offset[2] = offset[2] * k;
+        k = VfMul(inv, length);
+        offset[0] = VfMul(offset[0], k);
+        offset[1] = VfMul(offset[1], k);
+        offset[2] = VfMul(offset[2], k);
         offset[3] = 0.0f;
     } else {
         offset[0] = 0.0f;
@@ -69,7 +69,7 @@ void BtlAttackType2FUpdate(BtlAttack *self)
         BtlAttackSetPendingHit(self, 0xd3, &g_btlAttackHitQuery.contact.x);
         return;
     }
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

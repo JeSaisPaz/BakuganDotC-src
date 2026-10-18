@@ -136,10 +136,10 @@ Actor *ActorCtor(Actor *self, s32 modelId)
   self->base.fogNear = 0.0f;
   self->base.lighting = 1;
   /* vsat0.q, vscl.q by S701 (the bank's 255), vf2iz.q 23, vi2uc.q */
-  self->base.fogColor = (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.x) * 255.0f, 23)) |
-                        (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.y) * 255.0f, 23)) << 8 |
-                        (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.z) * 255.0f, 23)) << 16 |
-                        (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.w) * 255.0f, 23)) << 24;
+  self->base.fogColor = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.x), 255.0f), 23)) |
+                        (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.y), 255.0f), 23)) << 8 |
+                        (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.z), 255.0f), 23)) << 16 |
+                        (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.w), 255.0f), 23)) << 24;
   GfxModelCreateSoundObject(&self->base, 3);
   ActorCreateCollider(self);
   self->pushed = 0;

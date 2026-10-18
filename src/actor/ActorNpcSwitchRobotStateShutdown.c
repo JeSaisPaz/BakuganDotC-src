@@ -62,7 +62,7 @@ void ActorNpcSwitchRobotStateShutdown(ActorNpcSwitchRobot *self)
     record->heading = 0;
     /* translation row scaled by 0.05 (vscl.t; lane 3 is not used) */
     for (i = 0; i < 3; i++) {
-      scaled[i] = self->base.base.mtx[12 + i] * 0.05f;
+      scaled[i] = VfMul(self->base.base.mtx[12 + i], 0.05f);
     }
     for (i = 0; i < 3; i++) {
       if (scaled[i] <= 0.0f) {
@@ -110,7 +110,7 @@ void ActorNpcSwitchRobotStateShutdown(ActorNpcSwitchRobot *self)
       rise[3] = 0.0f;
       /* velocity.xyz += (0, 10, 0), w untouched (vadd.t) */
       for (i = 0; i < 3; i++) {
-        model->velocity[i] = model->velocity[i] + rise[i];
+        model->velocity[i] = VfAdd(model->velocity[i], rise[i]);
       }
     }
     if (self->timer-- < 0) {

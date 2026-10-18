@@ -18,12 +18,12 @@ void UiWorldMapJetHoverStep(UiScreen *screen)
 
   t = map->jetHoverTimerY + 0.008333334f;
   map->jetHoverTimerY = t;
-  c = __builtin_cosf(t * 3.1415927f);
+  c = VfCosQuarter(VfMul(t * 3.1415927f, 0.636619747f));
   map->jetModel->pos[1] = (1.0f - c) * 0.5f * 5.0f + -20.0f;
 
   t = map->jetHoverTimerX + 0.008333334f;
   map->jetHoverTimerX = t;
-  c = __builtin_cosf(t * 3.1415927f);
+  c = VfCosQuarter(VfMul(t * 3.1415927f, 0.636619747f));
   map->jetModel->pos[0] = (1.0f - c) * 0.5f * 8.0f + -4.0f;
 
   gmo = map->jetModel->data;

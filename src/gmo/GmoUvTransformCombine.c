@@ -10,10 +10,10 @@ float *GmoUvTransformCombine(float *dst, const float *a, const float *b)
     float a1 = a[1];
     float a2 = a[2];
     float a3 = a[3];
-    float r0 = b[0] * a2 + a0;
-    float r1 = b[1] * a3 + a1;
-    float r2 = b[2] * a2;
-    float r3 = b[3] * a3;
+    float r0 = VfAdd(VfMul(b[0], a2), a0);
+    float r1 = VfAdd(VfMul(b[1], a3), a1);
+    float r2 = VfMul(b[2], a2);
+    float r3 = VfMul(b[3], a3);
 
     dst[0] = r0;
     dst[1] = r1;

@@ -60,19 +60,19 @@ void ActorStageObjEggCrystalOnHit(ActorStageObjEggCrystal *self)
   }
   /* pos = hitPos pulled 4 units along the camera direction (w kept). */
   camDir = g_gfxActiveCamera->dir;
-  pos[0] = hitPos[0] - camDir[0] * 4.0f;
-  pos[1] = hitPos[1] - camDir[1] * 4.0f;
-  pos[2] = hitPos[2] - camDir[2] * 4.0f;
+  pos[0] = VfSub(hitPos[0], VfMul(camDir[0], 4.0f));
+  pos[1] = VfSub(hitPos[1], VfMul(camDir[1], 4.0f));
+  pos[2] = VfSub(hitPos[2], VfMul(camDir[2], 4.0f));
   pos[3] = hitPos[3];
   /* flat = (pos - self pos) with y = 0, normalised (0 for a zero length), clamped, w = 0. */
-  flat[0] = pos[0] - self->base.base.pos[0];
+  flat[0] = VfSub(pos[0], self->base.base.pos[0]);
   flat[1] = 0.0f;
-  flat[2] = pos[2] - self->base.base.pos[2];
-  lenSq = flat[0] * flat[0] + flat[1] * flat[1] + flat[2] * flat[2];
+  flat[2] = VfSub(pos[2], self->base.base.pos[2]);
+  lenSq = VfDot3(flat[0], flat[1], flat[2], flat[0], flat[1], flat[2]);
   invLen = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-  dir[0] = VfSat1(flat[0] * invLen);
-  dir[1] = VfSat1(flat[1] * invLen);
-  dir[2] = VfSat1(flat[2] * invLen);
+  dir[0] = VfSat1(VfMul(flat[0], invLen));
+  dir[1] = VfSat1(VfMul(flat[1], invLen));
+  dir[2] = VfSat1(VfMul(flat[2], invLen));
   dir[3] = 0.0f;
   ActorStageObjEggCrystalSpawnHitEffect(self, pos, dir);
 
@@ -98,9 +98,9 @@ void ActorStageObjEggCrystalOnHit(ActorStageObjEggCrystal *self)
       heading = atan2f(self->base.base.pos[2] - hitPos[2], self->base.base.pos[0] - hitPos[0]);
     }
     /* debrisVel = (cos, 0, sin) of heading (vrot with S703 = 2/pi) * 10, w = 0. */
-    self->debrisVel[0] = __builtin_cosf(heading) * 10.0f;
+    self->debrisVel[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), 10.0f);
     self->debrisVel[1] = 0.0f;
-    self->debrisVel[2] = __builtin_sinf(heading) * 10.0f;
+    self->debrisVel[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), 10.0f);
     self->debrisVel[3] = 0.0f;
     self->base.shakePhase = 0;
     self->base.dead = 1;

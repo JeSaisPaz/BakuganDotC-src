@@ -45,8 +45,8 @@ void ActorPlayerStateThrow(ActorPlayer *self)
     return;
   }
   /* velocity.xz *= 0.8 (vscl.t on xyz, only x and z stored back) */
-  actor->base.velocity[0] = actor->base.velocity[0] * 0.8f;
-  actor->base.velocity[2] = actor->base.velocity[2] * 0.8f;
+  actor->base.velocity[0] = VfMul(actor->base.velocity[0], 0.8f);
+  actor->base.velocity[2] = VfMul(actor->base.velocity[2], 0.8f);
   self->throwLocked = 0;
 
   switch (actor->waitTimer) {

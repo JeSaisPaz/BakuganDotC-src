@@ -15,7 +15,7 @@ bool CollisionFaceFilterWall(const CollisionFacePart *part, const u16 *face)
 
         /* y = lane 1 of `vtfm3.t C000, E100, C200`: the part matrix rows (at 0x0, 0x10, 0x20) loaded
            as columns, so y = Σ_k n[k] · m[4k + 1] */
-        y = m[1] * n->x + m[5] * n->y + m[9] * n->z;
+        y = VfDot3(m[1], m[5], m[9], n->x, n->y, n->z);
     } else {
         y = n->y;
     }

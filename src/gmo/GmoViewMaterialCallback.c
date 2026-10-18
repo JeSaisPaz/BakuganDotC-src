@@ -13,10 +13,10 @@ static ScePspFVector4 ClipTransform(const ScePspFMatrix4 *m, float x, float y, f
 {
   ScePspFVector4 r;
 
-  r.x = m->x.x * x + m->y.x * y + m->z.x * z + m->w.x;
-  r.y = m->x.y * x + m->y.y * y + m->z.y * z + m->w.y;
-  r.z = m->x.z * x + m->y.z * y + m->z.z * z + m->w.z;
-  r.w = m->x.w * x + m->y.w * y + m->z.w * z + m->w.w;
+  r.x = VfDot4(m->x.x, m->y.x, m->z.x, m->w.x, x, y, z, 1.0f);
+  r.y = VfDot4(m->x.y, m->y.y, m->z.y, m->w.y, x, y, z, 1.0f);
+  r.z = VfDot4(m->x.z, m->y.z, m->z.z, m->w.z, x, y, z, 1.0f);
+  r.w = VfDot4(m->x.w, m->y.w, m->z.w, m->w.w, x, y, z, 1.0f);
   return r;
 }
 
@@ -30,23 +30,23 @@ static u32 ClipOutcode(const ScePspFMatrix4 *mvp, const ScePspFVector4 *eye, flo
   u32 code;
 
   c = ClipTransform(mvp, x, y, z);
-  s.x = eye->x * c.x;
-  s.y = eye->y * c.y;
-  s.z = eye->z * c.z;
-  s.w = eye->w * c.w;
+  s.x = VfMul(eye->x, c.x);
+  s.y = VfMul(eye->y, c.y);
+  s.z = VfMul(eye->z, c.z);
+  s.w = VfMul(eye->w, c.w);
   code = 0;
-  code |= (c.x >= c.w) ? 0x001 : 0;
-  code |= (c.y >= c.w) ? 0x002 : 0;
-  code |= (c.z >= c.w) ? 0x004 : 0;
-  code |= (c.x < -c.w) ? 0x008 : 0;
-  code |= (c.y < -c.w) ? 0x010 : 0;
-  code |= (c.z < -c.w) ? 0x020 : 0;
-  code |= (s.x >= s.w) ? 0x040 : 0;
-  code |= (s.y >= s.w) ? 0x080 : 0;
-  code |= (s.z >= s.w) ? 0x100 : 0;
-  code |= (s.x < -s.w) ? 0x200 : 0;
-  code |= (s.y < -s.w) ? 0x400 : 0;
-  code |= (s.z < -s.w) ? 0x800 : 0;
+  code |= VfSge(c.x, c.w) != 0.0f ? 0x001 : 0;
+  code |= VfSge(c.y, c.w) != 0.0f ? 0x002 : 0;
+  code |= VfSge(c.z, c.w) != 0.0f ? 0x004 : 0;
+  code |= VfSlt(c.x, -c.w) != 0.0f ? 0x008 : 0;
+  code |= VfSlt(c.y, -c.w) != 0.0f ? 0x010 : 0;
+  code |= VfSlt(c.z, -c.w) != 0.0f ? 0x020 : 0;
+  code |= VfSge(s.x, s.w) != 0.0f ? 0x040 : 0;
+  code |= VfSge(s.y, s.w) != 0.0f ? 0x080 : 0;
+  code |= VfSge(s.z, s.w) != 0.0f ? 0x100 : 0;
+  code |= VfSlt(s.x, -s.w) != 0.0f ? 0x200 : 0;
+  code |= VfSlt(s.y, -s.w) != 0.0f ? 0x400 : 0;
+  code |= VfSlt(s.z, -s.w) != 0.0f ? 0x800 : 0;
   return code;
 }
 
@@ -302,22 +302,22 @@ void GmoViewMaterialCallback(GmoDlContext *ctx)
   dl = inst->displayList;
   dlWords = inst->displayListWords;
   eye = g_gmoEyePos;
-  mvpS.x.x = mvp.x.x * eye.x;
-  mvpS.x.y = mvp.x.y * eye.y;
-  mvpS.x.z = mvp.x.z * eye.z;
-  mvpS.x.w = mvp.x.w * eye.w;
-  mvpS.y.x = mvp.y.x * eye.x;
-  mvpS.y.y = mvp.y.y * eye.y;
-  mvpS.y.z = mvp.y.z * eye.z;
-  mvpS.y.w = mvp.y.w * eye.w;
-  mvpS.z.x = mvp.z.x * eye.x;
-  mvpS.z.y = mvp.z.y * eye.y;
-  mvpS.z.z = mvp.z.z * eye.z;
-  mvpS.z.w = mvp.z.w * eye.w;
-  mvpS.w.x = mvp.w.x * eye.x;
-  mvpS.w.y = mvp.w.y * eye.y;
-  mvpS.w.z = mvp.w.z * eye.z;
-  mvpS.w.w = mvp.w.w * eye.w;
+  mvpS.x.x = VfMul(mvp.x.x, eye.x);
+  mvpS.x.y = VfMul(mvp.x.y, eye.y);
+  mvpS.x.z = VfMul(mvp.x.z, eye.z);
+  mvpS.x.w = VfMul(mvp.x.w, eye.w);
+  mvpS.y.x = VfMul(mvp.y.x, eye.x);
+  mvpS.y.y = VfMul(mvp.y.y, eye.y);
+  mvpS.y.z = VfMul(mvp.y.z, eye.z);
+  mvpS.y.w = VfMul(mvp.y.w, eye.w);
+  mvpS.z.x = VfMul(mvp.z.x, eye.x);
+  mvpS.z.y = VfMul(mvp.z.y, eye.y);
+  mvpS.z.z = VfMul(mvp.z.z, eye.z);
+  mvpS.z.w = VfMul(mvp.z.w, eye.w);
+  mvpS.w.x = VfMul(mvp.w.x, eye.x);
+  mvpS.w.y = VfMul(mvp.w.y, eye.y);
+  mvpS.w.z = VfMul(mvp.w.z, eye.z);
+  mvpS.w.w = VfMul(mvp.w.w, eye.w);
   depth.f = g_gmoMeshDepthCenter - g_gmoClipDepthBias;
   g_gmoClipDepthCmd = depth.u >> 8 | 0x47000000;
 
@@ -387,22 +387,22 @@ void GmoViewMaterialCallback(GmoDlContext *ctx)
       out = outBase;
       pl = *plane;
       prevV = *last;
-      dPrev = prevV.pos.x * pl.x + prevV.pos.y * pl.y + prevV.pos.z * pl.z + prevV.pos.w * pl.w;
+      dPrev = VfDot4(prevV.pos.x, prevV.pos.y, prevV.pos.z, prevV.pos.w, pl.x, pl.y, pl.z, pl.w);
       for (src = in; ; src++) {
         curV = *src;
-        dCur = curV.pos.x * pl.x + curV.pos.y * pl.y + curV.pos.z * pl.z + curV.pos.w * pl.w;
-        if (dPrev <= 0.0f) {
+        dCur = VfDot4(curV.pos.x, curV.pos.y, curV.pos.z, curV.pos.w, pl.x, pl.y, pl.z, pl.w);
+        if (VfDaz(dPrev) <= 0.0f) {
           *out++ = prevV;
         }
-        if (dCur * dPrev < 0.0f) {
-          t = VfRcp(dCur - dPrev) * dCur;
-          out->pos.x = curV.pos.x - (curV.pos.x - prevV.pos.x) * t;
-          out->pos.y = curV.pos.y - (curV.pos.y - prevV.pos.y) * t;
-          out->pos.z = curV.pos.z - (curV.pos.z - prevV.pos.z) * t;
-          out->pos.w = curV.pos.w - (curV.pos.w - prevV.pos.w) * t;
-          out->wt.x = curV.wt.x - (curV.wt.x - prevV.wt.x) * t;
-          out->wt.y = curV.wt.y - (curV.wt.y - prevV.wt.y) * t;
-          out->wt.z = curV.wt.z - (curV.wt.z - prevV.wt.z) * t;
+        if (VfDaz(VfMul(dCur, dPrev)) < 0.0f) {
+          t = VfMul(VfRcp(VfSub(dCur, dPrev)), dCur);
+          out->pos.x = VfSub(curV.pos.x, VfMul(VfSub(curV.pos.x, prevV.pos.x), t));
+          out->pos.y = VfSub(curV.pos.y, VfMul(VfSub(curV.pos.y, prevV.pos.y), t));
+          out->pos.z = VfSub(curV.pos.z, VfMul(VfSub(curV.pos.z, prevV.pos.z), t));
+          out->pos.w = VfSub(curV.pos.w, VfMul(VfSub(curV.pos.w, prevV.pos.w), t));
+          out->wt.x = VfSub(curV.wt.x, VfMul(VfSub(curV.wt.x, prevV.wt.x), t));
+          out->wt.y = VfSub(curV.wt.y, VfMul(VfSub(curV.wt.y, prevV.wt.y), t));
+          out->wt.z = VfSub(curV.wt.z, VfMul(VfSub(curV.wt.z, prevV.wt.z), t));
           out->wt.w = 0.0f;
           out++;
         }
@@ -546,14 +546,14 @@ void GmoViewMaterialCallback(GmoDlContext *ctx)
       w2 = src->wt.z;
       if (texSize != 0) {
         for (i = 0; i < 2; i++) {
-          v[i] = uv[0][i] * w0 + uv[1][i] * w1 + uv[2][i] * w2;
+          v[i] = VfDot3(uv[0][i], uv[1][i], uv[2][i], w0, w1, w2);
         }
         o = PutF32s(o, v, 2);
       }
       if (colSize != 0) {
         packed = 0;
         for (i = 0; i < 4; i++) {
-          t = col[0][i] * w0 + col[1][i] * w1 + col[2][i] * w2;
+          t = VfDot3(col[0][i], col[1][i], col[2][i], w0, w1, w2);
           packed |= (u32)VfI2uc(VfF2iz(t, 23)) << (i * 8);
         }
         __builtin_memcpy(o, &packed, sizeof packed);
@@ -561,12 +561,12 @@ void GmoViewMaterialCallback(GmoDlContext *ctx)
       }
       if (nrmSize != 0) {
         for (i = 0; i < 3; i++) {
-          v[i] = nrm[0][i] * w0 + nrm[1][i] * w1 + nrm[2][i] * w2;
+          v[i] = VfDot3(nrm[0][i], nrm[1][i], nrm[2][i], w0, w1, w2);
         }
         o = PutF32s(o, v, 3);
       }
       for (i = 0; i < 3; i++) {
-        v[i] = pos[0][i] * w0 + pos[1][i] * w1 + pos[2][i] * w2;
+        v[i] = VfDot3(pos[0][i], pos[1][i], pos[2][i], w0, w1, w2);
       }
       o = PutF32s(o, v, 3);
       src++;

@@ -51,8 +51,7 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
     /* real water */
     if (BtlBakuganIsInStageWater(self) != 0 && !(surface <= self->base.pos[1])) {
         /* horizontal speed: length of velocity with y zeroed */
-        speed = __builtin_sqrtf(self->base.velocity[0] * self->base.velocity[0] + 0.0f * 0.0f +
-                                self->base.velocity[2] * self->base.velocity[2]);
+        speed = VfSqrt(VfDot3(self->base.velocity[0], 0.0f, self->base.velocity[2], self->base.velocity[0], 0.0f, self->base.velocity[2]));
         period = (180.0f - speed * 6.5f) * 0.1f;
         if (period < 3.0f) {
             frames = 3;
@@ -71,11 +70,11 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
         pos[1] = surface;
         /* dir *= 2 (w = S713 = 0); pos.xyz += dir */
         for (i = 0; i < 3; i++) {
-            dir[i] = dir[i] * 2.0f;
+            dir[i] = VfMul(dir[i], 2.0f);
         }
         dir[3] = 0.0f;
         for (i = 0; i < 3; i++) {
-            pos[i] = pos[i] + dir[i];
+            pos[i] = VfAdd(pos[i], dir[i]);
         }
         if (self->inWater == 0) {
             GfxEffectSpawn(g_worldEffectMgr, 0x29, pos);
@@ -89,7 +88,7 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
         if ((frames < 10 && BDC_MOD(self->frameCounter, frames) == 0) || self->inWater == 0) {
             /* dir *= 0.1 (w = S713 = 0) */
             for (i = 0; i < 3; i++) {
-                dir[i] = dir[i] * 0.1f;
+                dir[i] = VfMul(dir[i], 0.1f);
             }
             dir[3] = 0.0f;
             GfxEffectSpawnDirected(g_worldEffectMgr, 0x2b, pos, dir);
@@ -97,13 +96,13 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
         if (frames < 10) {
             mgr = g_worldEffectMgr;
             /* dir = normalise(dir), scale S713 (0) if zero length, saturated to [-1, 1] */
-            lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+            lenSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
             scale = VfRsq(lenSq);
             if (VfIsZero(lenSq)) {
                 scale = 0.0f;
             }
             for (i = 0; i < 3; i++) {
-                dir[i] = VfSat1(dir[i] * scale);
+                dir[i] = VfSat1(VfMul(dir[i], scale));
             }
             dir[3] = 0.0f;
             GfxEffectSpawnDirected(mgr, 0x2e, pos, dir);
@@ -122,8 +121,7 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
 
     /* stages 0xc..0xf */
     if (BtlBakuganIsInWaterStage0CTo0F(self) != 0 && !(surface <= self->base.pos[1])) {
-        speed = __builtin_sqrtf(self->base.velocity[0] * self->base.velocity[0] + 0.0f * 0.0f +
-                                self->base.velocity[2] * self->base.velocity[2]);
+        speed = VfSqrt(VfDot3(self->base.velocity[0], 0.0f, self->base.velocity[2], self->base.velocity[0], 0.0f, self->base.velocity[2]));
         period = (180.0f - speed * 6.5f) * 0.1f;
         if (period < 3.0f) {
             frames = 3;
@@ -141,18 +139,18 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
         }
         pos2[1] = surface;
         for (i = 0; i < 3; i++) {
-            dir2[i] = dir2[i] * 2.0f;
+            dir2[i] = VfMul(dir2[i], 2.0f);
         }
         dir2[3] = 0.0f;
         for (i = 0; i < 3; i++) {
-            pos2[i] = pos2[i] + dir2[i];
+            pos2[i] = VfAdd(pos2[i], dir2[i]);
         }
         if (self->slowWalk == 0 && self->base.velocity[1] < -8.0f && self->airborneFrames > 8) {
             GfxEffectSpawn(g_worldEffectMgr, 0x35, pos2);
         }
         if ((frames < 10 && BDC_MOD(self->frameCounter, frames) == 0) || self->slowWalk == 0) {
             for (i = 0; i < 3; i++) {
-                dir2[i] = dir2[i] * 0.1f;
+                dir2[i] = VfMul(dir2[i], 0.1f);
             }
             dir2[3] = 0.0f;
             GfxEffectSpawnDirected(g_worldEffectMgr, 0x34, pos2, dir2);
@@ -172,8 +170,7 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
 
     /* stages 0x12..0x1b */
     if (BtlBakuganIsInWaterStage12To1B(self) != 0 && !(surface <= self->base.pos[1])) {
-        speed = __builtin_sqrtf(self->base.velocity[0] * self->base.velocity[0] + 0.0f * 0.0f +
-                                self->base.velocity[2] * self->base.velocity[2]);
+        speed = VfSqrt(VfDot3(self->base.velocity[0], 0.0f, self->base.velocity[2], self->base.velocity[0], 0.0f, self->base.velocity[2]));
         period = (180.0f - speed * 6.5f) * 0.1f;
         if (period < 3.0f) {
             frames = 3;
@@ -191,11 +188,11 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
         }
         pos3[1] = surface;
         for (i = 0; i < 3; i++) {
-            dir3[i] = dir3[i] * 2.0f;
+            dir3[i] = VfMul(dir3[i], 2.0f);
         }
         dir3[3] = 0.0f;
         for (i = 0; i < 3; i++) {
-            pos3[i] = pos3[i] + dir3[i];
+            pos3[i] = VfAdd(pos3[i], dir3[i]);
         }
         if (self->inWater12To1B == 0) {
             GfxEffectSpawn(g_worldEffectMgr, 0x32, pos3);
@@ -209,7 +206,7 @@ void BtlBakuganSpawnWaterEffects(BtlBakugan *self)
         }
         if ((frames < 10 && BDC_MOD(self->frameCounter, frames) == 0) || self->inWater12To1B == 0) {
             for (i = 0; i < 3; i++) {
-                dir3[i] = dir3[i] * 0.1f;
+                dir3[i] = VfMul(dir3[i], 0.1f);
             }
             dir3[3] = 0.0f;
             GfxEffectSpawnDirected(g_worldEffectMgr, 0x2f, pos3, dir3);

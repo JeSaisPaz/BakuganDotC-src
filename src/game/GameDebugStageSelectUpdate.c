@@ -107,7 +107,7 @@ void GameDebugStageSelectUpdate(GameDebugStageSelect *self)
     }
     pulse = self->pulse + 0.05f;
     self->pulse = pulse;
-    self->highlight = (1.0f - __builtin_cosf(pulse * 3.1415927f)) * 0.5f * 0.7f + 0.3f;
+    self->highlight = (1.0f - VfCosQuarter(VfMul(pulse * 3.1415927f, 0.636619747f))) * 0.5f * 0.7f + 0.3f;
     break;
   case 5:
     fader = GfxGetActiveFader();

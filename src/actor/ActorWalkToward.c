@@ -34,17 +34,17 @@ int ActorWalkToward(Actor *self, float *target, float speed, float arriveDist)
   }
   if (facing) {
     /* XZ distance: both points with y forced to 0 (vsub.q / vdot.t / vsqrt.s) */
-    dx = self->base.pos[0] - target[0];
-    dz = self->base.pos[2] - target[2];
-    dist = __builtin_sqrtf(dx * dx + dz * dz);
+    dx = VfSub(self->base.pos[0], target[0]);
+    dz = VfSub(self->base.pos[2], target[2]);
+    dist = VfSqrt(VfDot2(dx, dz, dx, dz));
     if (dist < arriveDist) {
       done = 1;
     } else {
       /* vrot.q [C,0,S,0] of rot[1] * 2/pi, then vscl.t by speed (w stays 0) */
       angle = self->base.rot[1];
-      self->base.velocity[0] = __builtin_cosf(angle) * speed;
-      self->base.velocity[1] = 0.0f * speed;
-      self->base.velocity[2] = __builtin_sinf(angle) * speed;
+      self->base.velocity[0] = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), speed);
+      self->base.velocity[1] = VfMul(0.0f, speed);
+      self->base.velocity[2] = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), speed);
       self->base.velocity[3] = 0.0f;
     }
   } else {
@@ -62,10 +62,10 @@ int ActorWalkToward(Actor *self, float *target, float speed, float arriveDist)
     }
   }
   if (!done) {
-    dx = self->checkpoint[0] - self->base.pos[0];
-    dy = self->checkpoint[1] - self->base.pos[1];
-    dz = self->checkpoint[2] - self->base.pos[2];
-    dist2 = dx * dx + dy * dy + dz * dz;
+    dx = VfSub(self->checkpoint[0], self->base.pos[0]);
+    dy = VfSub(self->checkpoint[1], self->base.pos[1]);
+    dz = VfSub(self->checkpoint[2], self->base.pos[2]);
+    dist2 = VfDot3(dx, dy, dz, dx, dy, dz);
     if (dist2 < speed * speed) {
       self->stuckFrames++;
       if (self->stuckFrames >= 0x1f) {

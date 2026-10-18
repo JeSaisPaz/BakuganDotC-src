@@ -7,9 +7,9 @@
 u32 *GmoColorToRgba8(float r, float g, float b, float a, u32 *out)
 
 {
-  *out = (u32)VfI2uc(VfF2iz(VfSat0(r) * 255.0f, 23)) |
-         (u32)VfI2uc(VfF2iz(VfSat0(g) * 255.0f, 23)) << 8 |
-         (u32)VfI2uc(VfF2iz(VfSat0(b) * 255.0f, 23)) << 16 |
-         (u32)VfI2uc(VfF2iz(VfSat0(a) * 255.0f, 23)) << 24;
+  *out = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(r), 255.0f), 23)) |
+         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g), 255.0f), 23)) << 8 |
+         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(b), 255.0f), 23)) << 16 |
+         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(a), 255.0f), 23)) << 24;
   return out;
 }

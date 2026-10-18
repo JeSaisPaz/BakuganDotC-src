@@ -28,7 +28,7 @@ void GameGimmickCorePointState00Idle(GameGimmickCorePoint *obj)
     float pos[4];
 
     spin = obj->spin;
-    bob = (1.0f - __builtin_cosf((float)spin * 0.0055555557f * 3.1415927f)) * 0.5f;
+    bob = (1.0f - VfCosQuarter(VfMul((float)spin * 0.0055555557f * 3.1415927f, 0.636619747f))) * 0.5f;
     bob = bob * 2.0f;
     obj->base.base.pos[1] = obj->baseY + bob;
     obj->spin = (spin + 5) % 360;
@@ -61,9 +61,9 @@ void GameGimmickCorePointState00Idle(GameGimmickCorePoint *obj)
             float dz;
 
             /* XZ distance: the y lane of the difference is zeroed before the dot product. */
-            dx = near->base.base.pos[0] - pos[0];
-            dz = near->base.base.pos[2] - pos[2];
-            dist = __builtin_sqrtf(dx * dx + dz * dz);
+            dx = VfSub(near->base.base.pos[0], pos[0]);
+            dz = VfSub(near->base.base.pos[2], pos[2]);
+            dist = VfSqrt(VfDot2(dx, dz, dx, dz));
             if (dist <= obj->pickupRadius) {
                 hit = true;
             }

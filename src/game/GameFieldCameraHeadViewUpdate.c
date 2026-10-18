@@ -19,12 +19,10 @@ void GameFieldCameraHeadViewUpdate(void *view, float *outEye, float *outLook)
   float dist2;
 
   GameFieldCameraSpringStep(0.8f, view, eye, look, hv->targetEye, hv->targetLook);
-  dx = eye[0] - hv->targetEye[0];
-  dy = eye[1] - hv->targetEye[1];
-  dz = eye[2] - hv->targetEye[2];
-  dist2 = dx * dx;
-  dist2 = dist2 + dy * dy;
-  dist2 = dist2 + dz * dz;
+  dx = VfSub(eye[0], hv->targetEye[0]);
+  dy = VfSub(eye[1], hv->targetEye[1]);
+  dz = VfSub(eye[2], hv->targetEye[2]);
+  dist2 = VfDot3(dx, dy, dz, dx, dy, dz);
   if (dist2 < 2500.0f) {
     GameFieldCameraProbeCtor(probe);
     GameFieldCameraProbeCollide(probe, outEye, outLook, eye, hv->targetLook);

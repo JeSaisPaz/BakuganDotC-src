@@ -18,7 +18,7 @@ void GfxFaderStep(GfxFader *self)
         progress = (float)self->elapsed / (float)self->duration;
         self->progress = progress;
         for (i = 0; i < 4; i++) {
-            self->color[i] = self->start[i] + (self->end[i] - self->start[i]) * progress;
+            self->color[i] = VfAdd(self->start[i], VfMul(VfSub(self->end[i], self->start[i]), progress));
         }
     } else {
         self->progress = 1.0f;

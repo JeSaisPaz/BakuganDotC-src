@@ -69,9 +69,9 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
     target = (BtlBakugan *)BtlBakuganGetTarget(self->owner);
     if (self->age == 0) {
         self->mtx[0][0] = speed;
-        self->vel[0] = self->vel[0] * speed;
-        self->vel[1] = self->vel[1] * speed;
-        self->vel[2] = self->vel[2] * speed;
+        self->vel[0] = VfMul(self->vel[0], speed);
+        self->vel[1] = VfMul(self->vel[1], speed);
+        self->vel[2] = VfMul(self->vel[2], speed);
         self->vel[3] = 0.0f; /* lane 3 of C710 = S713 */
         scale = 1.0f;
         if (!(self->paramF2 == 0.0f)) {
@@ -109,63 +109,62 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
             self->param0 = 1;
         } else {
             /* delta = target - auxVec (xyz, w = target w); chase = 0.3 x delta (w = 0) */
-            delta[0] = target->base.pos[0] - self->auxVec[0];
-            delta[1] = target->base.pos[1] - self->auxVec[1];
-            delta[2] = target->base.pos[2] - self->auxVec[2];
+            delta[0] = VfSub(target->base.pos[0], self->auxVec[0]);
+            delta[1] = VfSub(target->base.pos[1], self->auxVec[1]);
+            delta[2] = VfSub(target->base.pos[2], self->auxVec[2]);
             delta[3] = target->base.pos[3];
-            chase[0] = delta[0] * 0.300000012f;
-            chase[1] = delta[1] * 0.300000012f;
-            chase[2] = delta[2] * 0.300000012f;
+            chase[0] = VfMul(delta[0], 0.300000012f);
+            chase[1] = VfMul(delta[1], 0.300000012f);
+            chase[2] = VfMul(delta[2], 0.300000012f);
             chase[3] = 0.0f;
-            lenSq = chase[0] * chase[0] + chase[1] * chase[1] + chase[2] * chase[2];
+            lenSq = VfDot3(chase[0], chase[1], chase[2], chase[0], chase[1], chase[2]);
             if (!(lenSq <= 400.0f)) {
                 /* clamp the step to 20 units */
-                lenSq = chase[0] * chase[0] + chase[1] * chase[1] + chase[2] * chase[2];
+                lenSq = VfDot3(chase[0], chase[1], chase[2], chase[0], chase[1], chase[2]);
                 if (VfIsZero(lenSq)) {
                     inv = 0.0f;
                 } else {
                     inv = VfRsq(lenSq);
                 }
-                inv = inv * 20.0f;
-                chase[0] = chase[0] * inv;
-                chase[1] = chase[1] * inv;
-                chase[2] = chase[2] * inv;
+                inv = VfMul(inv, 20.0f);
+                chase[0] = VfMul(chase[0], inv);
+                chase[1] = VfMul(chase[1], inv);
+                chase[2] = VfMul(chase[2], inv);
                 chase[3] = 0.0f;
             }
-            self->auxVec[0] = self->auxVec[0] + chase[0];
-            self->auxVec[1] = self->auxVec[1] + chase[1];
-            self->auxVec[2] = self->auxVec[2] + chase[2];
+            self->auxVec[0] = VfAdd(self->auxVec[0], chase[0]);
+            self->auxVec[1] = VfAdd(self->auxVec[1], chase[1]);
+            self->auxVec[2] = VfAdd(self->auxVec[2], chase[2]);
             chase[0] = self->auxVec[0];
             chase[1] = self->auxVec[1];
             chase[2] = self->auxVec[2];
             chase[3] = self->auxVec[3];
             chase[1] = chase[1] + 100.0f;
-            chase[0] = chase[0] - self->pos[0];
-            chase[1] = chase[1] - self->pos[1];
-            chase[2] = chase[2] - self->pos[2];
-            distSq = chase[0] * chase[0] + chase[1] * chase[1] + chase[2] * chase[2];
+            chase[0] = VfSub(chase[0], self->pos[0]);
+            chase[1] = VfSub(chase[1], self->pos[1]);
+            chase[2] = VfSub(chase[2], self->pos[2]);
+            distSq = VfDot3(chase[0], chase[1], chase[2], chase[0], chase[1], chase[2]);
             if (self->mtx[0][1] < distSq || distSq < 40000.0f) {
                 self->param0 = 1;
                 /* dir.xyz = normalise(vel.xyz), clamped to [-1, 1]; w = S713 */
-                lenSq = self->vel[0] * self->vel[0] + self->vel[1] * self->vel[1] +
-                        self->vel[2] * self->vel[2];
+                lenSq = VfDot3(self->vel[0], self->vel[1], self->vel[2], self->vel[0], self->vel[1], self->vel[2]);
                 if (VfIsZero(lenSq)) {
                     inv = 0.0f;
                 } else {
                     inv = VfRsq(lenSq);
                 }
-                self->dir[0] = VfSat1(self->vel[0] * inv);
-                self->dir[1] = VfSat1(self->vel[1] * inv);
-                self->dir[2] = VfSat1(self->vel[2] * inv);
+                self->dir[0] = VfSat1(VfMul(self->vel[0], inv));
+                self->dir[1] = VfSat1(VfMul(self->vel[1], inv));
+                self->dir[2] = VfSat1(VfMul(self->vel[2], inv));
                 self->dir[3] = 0.0f;
                 BtlAttackSteerToTarget(self->mtx[0][0], 50.0f, self, 1, NULL);
                 self->turnRate = 0.0799999982f;
             } else {
                 self->mtx[0][1] = distSq;
-                ox = self->owner->base.pos[0] - self->auxVec[0];
-                oy = self->owner->base.pos[1] - self->auxVec[1];
-                oz = self->owner->base.pos[2] - self->auxVec[2];
-                ownerDist = __builtin_sqrtf(ox * ox + oy * oy + oz * oz);
+                ox = VfSub(self->owner->base.pos[0], self->auxVec[0]);
+                oy = VfSub(self->owner->base.pos[1], self->auxVec[1]);
+                oz = VfSub(self->owner->base.pos[2], self->auxVec[2]);
+                ownerDist = VfSqrt(VfDot3(ox, oy, oz, ox, oy, oz));
                 weight = self->paramF2 +
                          (__builtin_sqrtf(distSq) / ownerDist - self->paramF2) * 0.200000003f;
                 self->paramF2 = weight;
@@ -178,49 +177,49 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
                                __builtin_sqrtf(chase[0] * chase[0] + chase[2] * chase[2]));
                 pitch = pitch + self->paramF1 * self->paramF2;
                 /* vcos/vsin of angle x S703 (2/pi): plain cos/sin of the angle */
-                cosPitch = __builtin_cosf(pitch);
-                cosYaw = __builtin_cosf(yaw);
-                sinPitch = __builtin_sinf(pitch);
-                sinYaw = __builtin_sinf(yaw);
+                cosPitch = VfCosQuarter(VfMul(pitch, 0.636619747f));
+                cosYaw = VfCosQuarter(VfMul(yaw, 0.636619747f));
+                sinPitch = VfSinQuarter(VfMul(pitch, 0.636619747f));
+                sinYaw = VfSinQuarter(VfMul(yaw, 0.636619747f));
                 self->vel[0] = cosYaw * cosPitch;
                 self->vel[1] = sinPitch;
                 self->vel[2] = sinYaw * cosPitch;
                 self->vel[3] = 0.0f;
-                self->vel[0] = self->vel[0] * self->mtx[0][0];
-                self->vel[1] = self->vel[1] * self->mtx[0][0];
-                self->vel[2] = self->vel[2] * self->mtx[0][0];
+                self->vel[0] = VfMul(self->vel[0], self->mtx[0][0]);
+                self->vel[1] = VfMul(self->vel[1], self->mtx[0][0]);
+                self->vel[2] = VfMul(self->vel[2], self->mtx[0][0]);
                 self->vel[3] = 0.0f;
             }
         }
 
         if (target != NULL) {
             /* rel = target - owner (xyz, w = target w) */
-            rel[0] = target->base.pos[0] - self->owner->base.pos[0];
-            rel[1] = target->base.pos[1] - self->owner->base.pos[1];
-            rel[2] = target->base.pos[2] - self->owner->base.pos[2];
+            rel[0] = VfSub(target->base.pos[0], self->owner->base.pos[0]);
+            rel[1] = VfSub(target->base.pos[1], self->owner->base.pos[1]);
+            rel[2] = VfSub(target->base.pos[2], self->owner->base.pos[2]);
             rel[3] = target->base.pos[3];
             /* horizontal perpendicular axis (-rel.z, 0, rel.x), normalised and clamped */
             axis[0] = -rel[2];
             axis[1] = 0.0f;
             axis[2] = rel[0];
-            lenSq = axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2];
+            lenSq = VfDot3(axis[0], axis[1], axis[2], axis[0], axis[1], axis[2]);
             if (VfIsZero(lenSq)) {
                 inv = 0.0f;
             } else {
                 inv = VfRsq(lenSq);
             }
-            axis[0] = VfSat1(axis[0] * inv);
-            axis[1] = VfSat1(axis[1] * inv);
-            axis[2] = VfSat1(axis[2] * inv);
+            axis[0] = VfSat1(VfMul(axis[0], inv));
+            axis[1] = VfSat1(VfMul(axis[1], inv));
+            axis[2] = VfSat1(VfMul(axis[2], inv));
             axis[3] = 0.0f;
             /* quat = (axis x sin, cos) of half of pi/2: the VFPU angle is 1/pi x pi/2 quarter
                turns */
             halfTurn = 0.318309873f * 1.57079637f;
             c = VfCosQuarter(halfTurn);
             s = VfSinQuarter(halfTurn);
-            quat[0] = axis[0] * s;
-            quat[1] = axis[1] * s;
-            quat[2] = axis[2] * s;
+            quat[0] = VfMul(axis[0], s);
+            quat[1] = VfMul(axis[1], s);
+            quat[2] = VfMul(axis[2], s);
             quat[3] = c;
             conj[0] = -quat[0];
             conj[1] = -quat[1];
@@ -231,69 +230,67 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
             vq[2] = rel[2];
             vq[3] = 0.0f; /* S203 = S730 */
             /* tmp = quat x vq; rotated = tmp x conj */
-            tmp[0] = quat[0] * vq[3] + quat[1] * vq[2] - quat[2] * vq[1] + quat[3] * vq[0];
-            tmp[1] = -quat[0] * vq[2] + quat[1] * vq[3] + quat[2] * vq[0] + quat[3] * vq[1];
-            tmp[2] = quat[0] * vq[1] - quat[1] * vq[0] + quat[2] * vq[3] + quat[3] * vq[2];
-            tmp[3] = -quat[0] * vq[0] - quat[1] * vq[1] - quat[2] * vq[2] + quat[3] * vq[3];
-            rotated[0] = tmp[0] * conj[3] + tmp[1] * conj[2] - tmp[2] * conj[1] + tmp[3] * conj[0];
-            rotated[1] = -tmp[0] * conj[2] + tmp[1] * conj[3] + tmp[2] * conj[0] + tmp[3] * conj[1];
-            rotated[2] = tmp[0] * conj[1] - tmp[1] * conj[0] + tmp[2] * conj[3] + tmp[3] * conj[2];
-            rotated[3] = -tmp[0] * conj[0] - tmp[1] * conj[1] - tmp[2] * conj[2] + tmp[3] * conj[3];
+            tmp[0] = VfDot4(quat[0], quat[1], quat[2], quat[3], vq[3], vq[2], -vq[1], vq[0]);
+            tmp[1] = VfDot4(-quat[0], quat[1], quat[2], quat[3], vq[2], vq[3], vq[0], vq[1]);
+            tmp[2] = VfDot4(quat[0], quat[1], quat[2], quat[3], vq[1], -vq[0], vq[3], vq[2]);
+            tmp[3] = VfDot4(-quat[0], quat[1], quat[2], quat[3], vq[0], -vq[1], -vq[2], vq[3]);
+            rotated[0] = VfDot4(tmp[0], tmp[1], tmp[2], tmp[3], conj[3], conj[2], -conj[1], conj[0]);
+            rotated[1] = VfDot4(-tmp[0], tmp[1], tmp[2], tmp[3], conj[2], conj[3], conj[0], conj[1]);
+            rotated[2] = VfDot4(tmp[0], tmp[1], tmp[2], tmp[3], conj[1], -conj[0], conj[3], conj[2]);
             /* chase = rotated scaled to 450 units (w = 0) */
-            lenSq = rotated[0] * rotated[0] + rotated[1] * rotated[1] + rotated[2] * rotated[2];
+            lenSq = VfDot3(rotated[0], rotated[1], rotated[2], rotated[0], rotated[1], rotated[2]);
             if (VfIsZero(lenSq)) {
                 inv = 0.0f;
             } else {
                 inv = VfRsq(lenSq);
             }
-            inv = inv * 450.0f;
-            chase[0] = rotated[0] * inv;
-            chase[1] = rotated[1] * inv;
-            chase[2] = rotated[2] * inv;
+            inv = VfMul(inv, 450.0f);
+            chase[0] = VfMul(rotated[0], inv);
+            chase[1] = VfMul(rotated[1], inv);
+            chase[2] = VfMul(rotated[2], inv);
             chase[3] = 0.0f;
             /* aim = chase + owner + 0.5 x rel - pos */
-            half[0] = rel[0] * 0.5f;
-            half[1] = rel[1] * 0.5f;
-            half[2] = rel[2] * 0.5f;
+            half[0] = VfMul(rel[0], 0.5f);
+            half[1] = VfMul(rel[1], 0.5f);
+            half[2] = VfMul(rel[2], 0.5f);
             half[3] = 0.0f;
-            rotated[0] = self->owner->base.pos[0] + half[0];
-            rotated[1] = self->owner->base.pos[1] + half[1];
-            rotated[2] = self->owner->base.pos[2] + half[2];
+            rotated[0] = VfAdd(self->owner->base.pos[0], half[0]);
+            rotated[1] = VfAdd(self->owner->base.pos[1], half[1]);
+            rotated[2] = VfAdd(self->owner->base.pos[2], half[2]);
             rotated[3] = self->owner->base.pos[3];
-            chase[0] = chase[0] + rotated[0];
-            chase[1] = chase[1] + rotated[1];
-            chase[2] = chase[2] + rotated[2];
-            chase[0] = chase[0] - self->pos[0];
-            chase[1] = chase[1] - self->pos[1];
-            chase[2] = chase[2] - self->pos[2];
+            chase[0] = VfAdd(chase[0], rotated[0]);
+            chase[1] = VfAdd(chase[1], rotated[1]);
+            chase[2] = VfAdd(chase[2], rotated[2]);
+            chase[0] = VfSub(chase[0], self->pos[0]);
+            chase[1] = VfSub(chase[1], self->pos[1]);
+            chase[2] = VfSub(chase[2], self->pos[2]);
             /* fwd = normalise(vel), clamped */
-            lenSq = self->vel[0] * self->vel[0] + self->vel[1] * self->vel[1] +
-                    self->vel[2] * self->vel[2];
+            lenSq = VfDot3(self->vel[0], self->vel[1], self->vel[2], self->vel[0], self->vel[1], self->vel[2]);
             if (VfIsZero(lenSq)) {
                 inv = 0.0f;
             } else {
                 inv = VfRsq(lenSq);
             }
-            fwd[0] = VfSat1(self->vel[0] * inv);
-            fwd[1] = VfSat1(self->vel[1] * inv);
-            fwd[2] = VfSat1(self->vel[2] * inv);
+            fwd[0] = VfSat1(VfMul(self->vel[0], inv));
+            fwd[1] = VfSat1(VfMul(self->vel[1], inv));
+            fwd[2] = VfSat1(VfMul(self->vel[2], inv));
             /* right = normalise(aim x fwd), clamped */
-            right[0] = chase[1] * fwd[2] - chase[2] * fwd[1];
-            right[1] = chase[2] * fwd[0] - chase[0] * fwd[2];
-            right[2] = chase[0] * fwd[1] - chase[1] * fwd[0];
-            lenSq = right[0] * right[0] + right[1] * right[1] + right[2] * right[2];
+            right[0] = VfDot2(chase[1], chase[2], fwd[2], -fwd[1]);
+            right[1] = VfDot2(chase[2], chase[0], fwd[0], -fwd[2]);
+            right[2] = VfDot2(chase[0], chase[1], fwd[1], -fwd[0]);
+            lenSq = VfDot3(right[0], right[1], right[2], right[0], right[1], right[2]);
             if (VfIsZero(lenSq)) {
                 inv = 0.0f;
             } else {
                 inv = VfRsq(lenSq);
             }
-            right[0] = VfSat1(right[0] * inv);
-            right[1] = VfSat1(right[1] * inv);
-            right[2] = VfSat1(right[2] * inv);
+            right[0] = VfSat1(VfMul(right[0], inv));
+            right[1] = VfSat1(VfMul(right[1], inv));
+            right[2] = VfSat1(VfMul(right[2], inv));
             /* up = fwd x right */
-            up[0] = fwd[1] * right[2] - fwd[2] * right[1];
-            up[1] = fwd[2] * right[0] - fwd[0] * right[2];
-            up[2] = fwd[0] * right[1] - fwd[1] * right[0];
+            up[0] = VfDot2(fwd[1], fwd[2], right[2], -right[1]);
+            up[1] = VfDot2(fwd[2], fwd[0], right[0], -right[2]);
+            up[2] = VfDot2(fwd[0], fwd[1], right[1], -right[0]);
             /* rows right, up, fwd with w = 0, then (0, 0, 0, 1) */
             m = ((GfxEffect *)self->effect)->matrix;
             m[0] = right[0];
@@ -326,7 +323,7 @@ void BtlAttackUpdateHoming(BtlAttack *self, s32 hitId, s32 hitEffect, float spee
         }
     }
     /* pos.xyz += vel.xyz (w kept) */
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

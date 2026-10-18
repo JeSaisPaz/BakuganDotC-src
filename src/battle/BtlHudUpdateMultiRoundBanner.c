@@ -31,10 +31,10 @@ static inline void MultiRoundSetPos(GfxSprite *spr, const float *src)
 /* pos += (target - pos) * t, all four lanes (vsub.q/vscl.q/vadd.q). */
 static inline void MultiRoundLerpPos(GfxSprite *spr, float tx, float ty, float tz, float tw, float t)
 {
-    spr->posX = spr->posX + (tx - spr->posX) * t;
-    spr->posY = spr->posY + (ty - spr->posY) * t;
-    spr->posZ = spr->posZ + (tz - spr->posZ) * t;
-    spr->posW = spr->posW + (tw - spr->posW) * t;
+    spr->posX = VfAdd(spr->posX, VfMul(VfSub(tx, spr->posX), t));
+    spr->posY = VfAdd(spr->posY, VfMul(VfSub(ty, spr->posY), t));
+    spr->posZ = VfAdd(spr->posZ, VfMul(VfSub(tz, spr->posZ), t));
+    spr->posW = VfAdd(spr->posW, VfMul(VfSub(tw, spr->posW), t));
 }
 
 /* Sprite index i (0..2) is updated in the fade states unless it is the skipped one. */

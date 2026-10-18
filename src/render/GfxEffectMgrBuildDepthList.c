@@ -19,14 +19,14 @@ u32 GfxEffectMgrBuildDepthList(void *first, GfxEffectDepthEntry *out, GfxCamera 
       float *d = effect->toCamera;
       float key;
 
-      d[0] = camera->eye[0] - effect->pos[0];
-      d[1] = camera->eye[1] - effect->pos[1];
-      d[2] = camera->eye[2] - effect->pos[2];
+      d[0] = VfSub(camera->eye[0], effect->pos[0]);
+      d[1] = VfSub(camera->eye[1], effect->pos[1]);
+      d[2] = VfSub(camera->eye[2], effect->pos[2]);
       d[3] = camera->eye[3];
       if ((effect->flags & 0x80) != 0) {
         key = g_gfxEffectFarDepthKey;
       } else {
-        key = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
+        key = VfDot3(d[0], d[1], d[2], d[0], d[1], d[2]);
       }
       entry->key = key;
       entry->effect = effect;

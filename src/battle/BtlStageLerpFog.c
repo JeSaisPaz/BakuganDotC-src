@@ -28,13 +28,13 @@ void BtlStageLerpFog(float t, BtlArenaFog *out, float *scratch, const BtlArenaFo
         bColor[i] = (float)(int)(byte * 0x01010101u >> 1) / 2147483648.0f;
     }
     for (i = 0; i < 4; i++) {
-        float d = bColor[i] - scratch[i];
-        d = d * t;
-        scratch[i] = scratch[i] + d;
+        float d = VfSub(bColor[i], scratch[i]);
+        d = VfMul(d, t);
+        scratch[i] = VfAdd(scratch[i], d);
     }
     packed = 0;
     for (i = 0; i < 4; i++) {
-        float c = VfSat0(scratch[i]) * 255.0f;
+        float c = VfMul(VfSat0(scratch[i]), 255.0f);
         packed |= (u32)VfI2uc(VfF2iz(c, 23)) << (i * 8);
     }
     out->color = packed;

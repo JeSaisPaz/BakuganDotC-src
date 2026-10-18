@@ -35,10 +35,10 @@ ActorStageObjProp *ActorStageObjPropCtor(ActorStageObjProp *self, int kind, floa
 
   max = ActorStageObjGetBounds(&self->base) + 4;
   min = ActorStageObjGetBounds(&self->base);
-  dx = max[0] - min[0];
-  dy = max[1] - min[1];
-  dz = max[2] - min[2];
-  self->radius = __builtin_sqrtf(dx * dx + dy * dy + dz * dz) * 0.5f;
+  dx = VfSub(max[0], min[0]);
+  dy = VfSub(max[1], min[1]);
+  dz = VfSub(max[2], min[2]);
+  self->radius = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz)) * 0.5f;
 
   maxY = ActorStageObjGetBounds(&self->base)[5];
   self->halfHeight = (maxY - ActorStageObjGetBounds(&self->base)[1]) * 0.5f;

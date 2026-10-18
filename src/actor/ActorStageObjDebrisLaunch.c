@@ -114,10 +114,7 @@ void ActorStageObjDebrisLaunch(float floorY, float centerY, void *debris, float 
         root = self->base.data->rootMatrix;
         for (j = 0; j < 4; j++) {
             for (r = 0; r < 4; r++) {
-                prod[j * 4 + r] = node->localMatrix[j * 4 + 0] * root[0 * 4 + r]
-                                + node->localMatrix[j * 4 + 1] * root[1 * 4 + r]
-                                + node->localMatrix[j * 4 + 2] * root[2 * 4 + r]
-                                + node->localMatrix[j * 4 + 3] * root[3 * 4 + r];
+                prod[j * 4 + r] = VfDot4(node->localMatrix[j * 4 + 0], node->localMatrix[j * 4 + 1], node->localMatrix[j * 4 + 2], node->localMatrix[j * 4 + 3], root[0 * 4 + r], root[1 * 4 + r], root[2 * 4 + r], root[3 * 4 + r]);
             }
         }
         for (k = 0; k < 16; k++) {
@@ -129,26 +126,26 @@ void ActorStageObjDebrisLaunch(float floorY, float centerY, void *debris, float 
         CollisionPhysBoxApplyImpulse(0.5f, &self->fragments[i], &g_vecUp.x, NULL);
 
         /* push = node position - centre; dist = |push| */
-        tmp[0] = node->localMatrix[12] - centre[0];
-        tmp[1] = node->localMatrix[13] - centre[1];
-        tmp[2] = node->localMatrix[14] - centre[2];
+        tmp[0] = VfSub(node->localMatrix[12], centre[0]);
+        tmp[1] = VfSub(node->localMatrix[13], centre[1]);
+        tmp[2] = VfSub(node->localMatrix[14], centre[2]);
         tmp[3] = node->localMatrix[15];
         push[0] = tmp[0];
         push[1] = tmp[1];
         push[2] = tmp[2];
         push[3] = tmp[3];
-        dist = __builtin_sqrtf(push[0] * push[0] + push[1] * push[1] + push[2] * push[2]);
+        dist = VfSqrt(VfDot3(push[0], push[1], push[2], push[0], push[1], push[2]));
         if (!(dist <= 300.0f)) {
             dist = 300.0f;
         }
         dist = dist * 0.05f;
         /* push = normalize(push) * speed; bank S713 = 0 for a zero-length push */
-        lenSq = push[0] * push[0] + push[1] * push[1] + push[2] * push[2];
+        lenSq = VfDot3(push[0], push[1], push[2], push[0], push[1], push[2]);
         scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        scale = scale * dist;
-        push[0] = push[0] * scale;
-        push[1] = push[1] * scale;
-        push[2] = push[2] * scale;
+        scale = VfMul(scale, dist);
+        push[0] = VfMul(push[0], scale);
+        push[1] = VfMul(push[1], scale);
+        push[2] = VfMul(push[2], scale);
         push[3] = 0.0f;
         if (g_debrisRandCentreInit == 0) {
             g_debrisRandCentreInit = 1;
@@ -162,22 +159,22 @@ void ActorStageObjDebrisLaunch(float floorY, float centerY, void *debris, float 
         rnd[2] = PlatformRandFloat12();
         rnd[1] = PlatformRandFloat12();
         rnd[0] = PlatformRandFloat12();
-        rnd[0] = rnd[0] - g_debrisRandCentre.x;
-        rnd[1] = rnd[1] - g_debrisRandCentre.y;
-        rnd[2] = rnd[2] - g_debrisRandCentre.z;
+        rnd[0] = VfSub(rnd[0], g_debrisRandCentre.x);
+        rnd[1] = VfSub(rnd[1], g_debrisRandCentre.y);
+        rnd[2] = VfSub(rnd[2], g_debrisRandCentre.z);
         rnd[3] = 0.0f;
-        rnd[0] = rnd[0] * g_debrisSpread.x;
-        rnd[1] = rnd[1] * g_debrisSpread.y;
-        rnd[2] = rnd[2] * g_debrisSpread.z;
-        tmp[0] = push[0] + rnd[0];
-        tmp[1] = push[1] + rnd[1];
-        tmp[2] = push[2] + rnd[2];
+        rnd[0] = VfMul(rnd[0], g_debrisSpread.x);
+        rnd[1] = VfMul(rnd[1], g_debrisSpread.y);
+        rnd[2] = VfMul(rnd[2], g_debrisSpread.z);
+        tmp[0] = VfAdd(push[0], rnd[0]);
+        tmp[1] = VfAdd(push[1], rnd[1]);
+        tmp[2] = VfAdd(push[2], rnd[2]);
         tmp[3] = push[3];
         CollisionPhysBoxAddVelocity(&self->fragments[i], tmp);
         CollisionPhysBoxAddVelocity(&self->fragments[i], &self->launchVel.x);
-        tmp[0] = push[0] * 5.0f;
-        tmp[1] = push[1] * 5.0f;
-        tmp[2] = push[2] * 5.0f;
+        tmp[0] = VfMul(push[0], 5.0f);
+        tmp[1] = VfMul(push[1], 5.0f);
+        tmp[2] = VfMul(push[2], 5.0f);
         tmp[3] = 0.0f;
         CollisionPhysBoxNudgeRandomCorner(&self->fragments[i], tmp);
         self->fragLast[i] = 0;

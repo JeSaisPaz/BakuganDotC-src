@@ -36,10 +36,10 @@ float CollisionPhysBoxApplyImpulse(float scale, CollisionPhysBox *box, const flo
     sum = 0.0f;
     maxDist = sum;
     for (i = 0; i < 8; i++) {
-        dx = box->pos[i].x - point->x;
-        dy = box->pos[i].y - point->y;
-        dz = box->pos[i].z - point->z;
-        d = dx * dx + dy * dy + dz * dz;
+        dx = VfSub(box->pos[i].x, point->x);
+        dy = VfSub(box->pos[i].y, point->y);
+        dz = VfSub(box->pos[i].z, point->z);
+        d = VfDot3(dx, dy, dz, dx, dy, dz);
         dist[i] = d;
         if (maxDist < d) {
             maxDist = dist[i];
@@ -52,9 +52,9 @@ float CollisionPhysBoxApplyImpulse(float scale, CollisionPhysBox *box, const flo
     for (i = 0; i < 8; i++) {
         w = (limit - dist[i]) * norm;
         if (!(w <= 0.0f)) {
-            box->vel[i].x = box->vel[i].x + dir[0] * w;
-            box->vel[i].y = box->vel[i].y + dir[1] * w;
-            box->vel[i].z = box->vel[i].z + dir[2] * w;
+            box->vel[i].x = VfAdd(box->vel[i].x, VfMul(dir[0], w));
+            box->vel[i].y = VfAdd(box->vel[i].y, VfMul(dir[1], w));
+            box->vel[i].z = VfAdd(box->vel[i].z, VfMul(dir[2], w));
             total = w + total;
         }
     }

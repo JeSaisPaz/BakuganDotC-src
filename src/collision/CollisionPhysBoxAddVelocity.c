@@ -11,8 +11,8 @@ void CollisionPhysBoxAddVelocity(CollisionPhysBox *self, const float *delta)
 
   for (i = 0; i < 8; i++) {
     ScePspFVector4 *v = &self->vel[i];
-    v->x = v->x + delta[0];
-    v->y = v->y + delta[1];
-    v->z = v->z + delta[2];
+    v->x = VfAdd(v->x, delta[0]);
+    v->y = VfAdd(v->y, delta[1]);
+    v->z = VfAdd(v->z, delta[2]);
   }
 }

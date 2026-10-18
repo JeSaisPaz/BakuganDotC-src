@@ -48,19 +48,19 @@ int ActorNpcWalkToward(ActorNpc *self, float *target, float speed, float arriveD
   }
   if (facing) {
     /* XZ distance: both points with y = 0 */
-    dx = pos[0] - target[0];
+    dx = VfSub(pos[0], target[0]);
     dy = 0.0f - 0.0f;
-    dz = pos[2] - target[2];
-    dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+    dz = VfSub(pos[2], target[2]);
+    dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
     if (dist < arriveDist) {
       ActorPlayMotion(0.2f, self, 0, 1, 0);
       SndObjectStopSound(self->base.base.sound, 0x2c0003e);
       done = 1;
       if (snap) {
         heading = self->base.base.rot[1];
-        vel[0] = __builtin_cosf(heading) * dist;
-        vel[1] = 0.0f * dist;
-        vel[2] = __builtin_sinf(heading) * dist;
+        vel[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), dist);
+        vel[1] = VfMul(0.0f, dist);
+        vel[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), dist);
         vel[3] = 0.0f;
       }
     } else {
@@ -88,9 +88,9 @@ int ActorNpcWalkToward(ActorNpc *self, float *target, float speed, float arriveD
         }
       }
       heading = self->base.base.rot[1];
-      vel[0] = __builtin_cosf(heading) * speed;
-      vel[1] = 0.0f * speed;
-      vel[2] = __builtin_sinf(heading) * speed;
+      vel[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), speed);
+      vel[1] = VfMul(0.0f, speed);
+      vel[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), speed);
       vel[3] = 0.0f;
     }
   } else {
@@ -108,17 +108,17 @@ int ActorNpcWalkToward(ActorNpc *self, float *target, float speed, float arriveD
   }
   if (!done) {
     /* 3D squared distance from the checkpoint */
-    dx = chk[0] - pos[0];
-    dy = chk[1] - pos[1];
-    dz = chk[2] - pos[2];
-    dist2 = dx * dx + dy * dy + dz * dz;
+    dx = VfSub(chk[0], pos[0]);
+    dy = VfSub(chk[1], pos[1]);
+    dz = VfSub(chk[2], pos[2]);
+    dist2 = VfDot3(dx, dy, dz, dx, dy, dz);
     speed2 = speed * speed;
     if (dist2 < speed2) {
       /* XZ squared distance to the target */
-      dx = target[0] - pos[0];
+      dx = VfSub(target[0], pos[0]);
       dy = 0.0f;
-      dz = target[2] - pos[2];
-      dist2 = dx * dx + dy * dy + dz * dz;
+      dz = VfSub(target[2], pos[2]);
+      dist2 = VfDot3(dx, dy, dz, dx, dy, dz);
       if (dist2 < speed2) {
         chk[0] = target[0];
         chk[1] = target[1];

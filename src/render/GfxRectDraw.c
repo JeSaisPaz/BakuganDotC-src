@@ -67,10 +67,10 @@ void GfxRectDraw(void *rect, u32 *list)
   list[2] = 0xe1000000;
   list += 3;
   /* colour clamped to [0, 1], scaled by 255 (bank constant S701) and truncated to bytes, red low */
-  packed = (u32)VfI2uc(VfF2iz(VfSat0(r->color[0]) * 255.0f, 23)) |
-           (u32)VfI2uc(VfF2iz(VfSat0(r->color[1]) * 255.0f, 23)) << 8 |
-           (u32)VfI2uc(VfF2iz(VfSat0(r->color[2]) * 255.0f, 23)) << 16 |
-           (u32)VfI2uc(VfF2iz(VfSat0(r->color[3]) * 255.0f, 23)) << 24;
+  packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(r->color[0]), 255.0f), 23)) |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(r->color[1]), 255.0f), 23)) << 8 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(r->color[2]), 255.0f), 23)) << 16 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(r->color[3]), 255.0f), 23)) << 24;
   list[0] = (packed & 0xffffff) | 0x55000000;
   list[1] = (packed >> 0x18) | 0x58000000;
   list += 2;

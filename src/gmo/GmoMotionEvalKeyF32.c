@@ -34,10 +34,10 @@ ScePspFVector4 GmoMotionEvalKeyF32(float frame, float t0, float t1, const GmoMot
         return r;
     }
     if (mode == 1) {
-        r.x = k0[1] + (k1[1] - k0[1]) * t;
-        r.y = k0[2] + (k1[2] - k0[2]) * t;
-        r.z = k0[3] + (k1[3] - k0[3]) * t;
-        r.w = k0[4] + (k1[4] - k0[4]) * t;
+        r.x = VfAdd(k0[1], VfMul(VfSub(k1[1], k0[1]), t));
+        r.y = VfAdd(k0[2], VfMul(VfSub(k1[2], k0[2]), t));
+        r.z = VfAdd(k0[3], VfMul(VfSub(k1[3], k0[3]), t));
+        r.w = VfAdd(k0[4], VfMul(VfSub(k1[4], k0[4]), t));
         return r;
     }
     if (mode == 2) {

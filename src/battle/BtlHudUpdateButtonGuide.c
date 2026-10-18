@@ -76,7 +76,7 @@ void BtlHudUpdateButtonGuide(BtlHud *self)
             fade = 1.57079637f;
         }
         self->guideFade = fade;
-        value = __builtin_sinf(fade);
+        value = VfSinQuarter(VfMul(fade, 0.636619747f));
         for (i = 0; i < 7; i++) {
             self->sprites[panel[i]]->alpha = value;
         }
@@ -118,7 +118,7 @@ void BtlHudUpdateButtonGuide(BtlHud *self)
             fade = 1.57079637f;
         }
         self->guideFade = fade;
-        value = __builtin_sinf(fade);
+        value = VfSinQuarter(VfMul(fade, 0.636619747f));
         for (i = 0; i < 7; i++) {
             self->sprites[panel[i]]->alpha = value;
         }

@@ -31,9 +31,9 @@ void GfxPuffKindDarkSmoke(GfxPuff *puff)
     if (step < 2) {
         /* fade in */
         puff->base.alpha = puff->base.alpha + 0.1f;
-        puff->base.scaleX = puff->base.scaleX * 0.83f;
-        puff->base.scaleY = puff->base.scaleY * 0.83f;
-        puff->base.scaleZ = puff->base.scaleZ * 0.83f;
+        puff->base.scaleX = VfMul(puff->base.scaleX, 0.83f);
+        puff->base.scaleY = VfMul(puff->base.scaleY, 0.83f);
+        puff->base.scaleZ = VfMul(puff->base.scaleZ, 0.83f);
         puff->base.angle = 0.0f;
         if (!(puff->base.alpha < puff->param170)) {
             puff->base.alpha = puff->param170;
@@ -41,9 +41,9 @@ void GfxPuffKindDarkSmoke(GfxPuff *puff)
         }
     } else if (step < 3) {
         /* fade out */
-        puff->base.scaleX = puff->base.scaleX * 0.87f;
-        puff->base.scaleY = puff->base.scaleY * 0.87f;
-        puff->base.scaleZ = puff->base.scaleZ * 0.87f;
+        puff->base.scaleX = VfMul(puff->base.scaleX, 0.87f);
+        puff->base.scaleY = VfMul(puff->base.scaleY, 0.87f);
+        puff->base.scaleZ = VfMul(puff->base.scaleZ, 0.87f);
         puff->base.angle = 0.0f;
         alpha = puff->base.alpha - 0.03f;
         puff->base.alpha = alpha;
@@ -52,11 +52,11 @@ void GfxPuffKindDarkSmoke(GfxPuff *puff)
             return;
         }
     }
-    puff->base.width = puff->base.width + g_puffStaticVec[0];
-    puff->base.height = puff->base.height + g_puffStaticVec[1];
-    puff->base.depth = puff->base.depth + g_puffStaticVec[2];
-    puff->base.posX = puff->base.posX + puff->base.scaleX;
-    puff->base.posY = puff->base.posY + puff->base.scaleY;
-    puff->base.posZ = puff->base.posZ + puff->base.scaleZ;
+    puff->base.width = VfAdd(puff->base.width, g_puffStaticVec[0]);
+    puff->base.height = VfAdd(puff->base.height, g_puffStaticVec[1]);
+    puff->base.depth = VfAdd(puff->base.depth, g_puffStaticVec[2]);
+    puff->base.posX = VfAdd(puff->base.posX, puff->base.scaleX);
+    puff->base.posY = VfAdd(puff->base.posY, puff->base.scaleY);
+    puff->base.posZ = VfAdd(puff->base.posZ, puff->base.scaleZ);
     puff->base.posY = puff->base.posY + 0.1f;
 }

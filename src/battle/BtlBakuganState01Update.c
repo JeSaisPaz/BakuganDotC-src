@@ -104,8 +104,8 @@ void BtlBakuganState01Update(BtlBakugan *self)
         speed = speed * factor;
         /* velocity.x = cos(heading) * speed, velocity.z = sin(heading) * speed (vrot.q of
            heading x 2/pi); velocity.y is left untouched */
-        self->base.velocity[0] = __builtin_cosf(self->input->heading) * speed;
-        self->base.velocity[2] = __builtin_sinf(self->input->heading) * speed;
+        self->base.velocity[0] = VfMul(VfCosQuarter(VfMul(self->input->heading, 0.636619747f)), speed);
+        self->base.velocity[2] = VfMul(VfSinQuarter(VfMul(self->input->heading, 0.636619747f)), speed);
     }
 
     BtlBakuganApplyHover(self);

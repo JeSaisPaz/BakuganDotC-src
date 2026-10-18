@@ -73,8 +73,8 @@ ActorStageObjEggCrystal *ActorStageObjEggCrystalCtor(ActorStageObjEggCrystal *se
   heading = pos[3];
   self->base.base.rot[1] = heading;
   data = self->base.base.data;
-  c = __builtin_cosf(heading);
-  s = __builtin_sinf(heading);
+  c = VfCosQuarter(VfMul(heading, 0.636619747f));
+  s = VfSinQuarter(VfMul(heading, 0.636619747f));
   data->rootMatrix[0] = c;
   data->rootMatrix[1] = 0.0f;
   data->rootMatrix[2] = -s;

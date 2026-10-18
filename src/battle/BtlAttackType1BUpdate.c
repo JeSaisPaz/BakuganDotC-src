@@ -12,26 +12,26 @@ static void BtlAttackType1BBasis(float *m, const float *dir)
     float lenSq;
     float k;
 
-    lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+    lenSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    f[0] = VfSat1(dir[0] * k);
-    f[1] = VfSat1(dir[1] * k);
-    f[2] = VfSat1(dir[2] * k);
-    s[0] = g_vecUp.y * f[2] - g_vecUp.z * f[1];
-    s[1] = g_vecUp.z * f[0] - g_vecUp.x * f[2];
-    s[2] = g_vecUp.x * f[1] - g_vecUp.y * f[0];
-    lenSq = s[0] * s[0] + s[1] * s[1] + s[2] * s[2];
+    f[0] = VfSat1(VfMul(dir[0], k));
+    f[1] = VfSat1(VfMul(dir[1], k));
+    f[2] = VfSat1(VfMul(dir[2], k));
+    s[0] = VfDot2(g_vecUp.y, g_vecUp.z, f[2], -f[1]);
+    s[1] = VfDot2(g_vecUp.z, g_vecUp.x, f[0], -f[2]);
+    s[2] = VfDot2(g_vecUp.x, g_vecUp.y, f[1], -f[0]);
+    lenSq = VfDot3(s[0], s[1], s[2], s[0], s[1], s[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    s[0] = VfSat1(s[0] * k);
-    s[1] = VfSat1(s[1] * k);
-    s[2] = VfSat1(s[2] * k);
+    s[0] = VfSat1(VfMul(s[0], k));
+    s[1] = VfSat1(VfMul(s[1], k));
+    s[2] = VfSat1(VfMul(s[2], k));
     m[0] = s[0];
     m[1] = s[1];
     m[2] = s[2];
     m[3] = 0.0f;
-    m[4] = f[1] * s[2] - f[2] * s[1];
-    m[5] = f[2] * s[0] - f[0] * s[2];
-    m[6] = f[0] * s[1] - f[1] * s[0];
+    m[4] = VfDot2(f[1], f[2], s[2], -s[1]);
+    m[5] = VfDot2(f[2], f[0], s[0], -s[2]);
+    m[6] = VfDot2(f[0], f[1], s[1], -s[0]);
     m[7] = 0.0f;
     m[8] = f[0];
     m[9] = f[1];
@@ -54,8 +54,7 @@ static void BtlAttackType1BMulSwapYZ(float *m)
 
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            r[j * 4 + i] = b[j * 4 + 0] * m[0 * 4 + i] + b[j * 4 + 1] * m[1 * 4 + i] +
-                           b[j * 4 + 2] * m[2 * 4 + i] + b[j * 4 + 3] * m[3 * 4 + i];
+            r[j * 4 + i] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], m[0 * 4 + i], m[1 * 4 + i], m[2 * 4 + i], m[3 * 4 + i]);
         }
     }
     for (i = 0; i < 16; i++) {
@@ -99,21 +98,20 @@ void BtlAttackType1BUpdate(BtlAttack *self)
         BtlAttackType1BBasis(muzzle->matrix, self->dir);
         /* vtfm3.t with the basis fields as columns: d = spread.x*side + spread.y*up' + spread.z*fwd */
         for (i = 0; i < 3; i++) {
-            d[i] = muzzle->matrix[0 + i] * spread.x + muzzle->matrix[4 + i] * spread.y +
-                   muzzle->matrix[8 + i] * spread.z;
+            d[i] = VfDot3(muzzle->matrix[0 + i], muzzle->matrix[4 + i], muzzle->matrix[8 + i], spread.x, spread.y, spread.z);
         }
         /* dir = d normalised (lanes clamped to [-1, 1], zero length scaled by S713 = 0); w is the
            basis' 0 lane, then S713 = 0 */
-        lenSq = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
+        lenSq = VfDot3(d[0], d[1], d[2], d[0], d[1], d[2]);
         k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        self->dir[0] = VfSat1(d[0] * k);
-        self->dir[1] = VfSat1(d[1] * k);
-        self->dir[2] = VfSat1(d[2] * k);
+        self->dir[0] = VfSat1(VfMul(d[0], k));
+        self->dir[1] = VfSat1(VfMul(d[1], k));
+        self->dir[2] = VfSat1(VfMul(d[2], k));
         self->dir[3] = 0.0f;
         BtlAttackType1BBasis(muzzle->matrix, self->dir);
         /* fields scaled by (1, 1, -1): only the third changes */
         for (i = 0; i < 4; i++) {
-            muzzle->matrix[8 + i] = muzzle->matrix[8 + i] * -1.0f;
+            muzzle->matrix[8 + i] = VfMul(muzzle->matrix[8 + i], -1.0f);
         }
         BtlAttackType1BMulSwapYZ(muzzle->matrix);
         self->turnRate = 0.0399999991f; /* 0x3d23d70a */
@@ -130,9 +128,9 @@ void BtlAttackType1BUpdate(BtlAttack *self)
             BtlAttackEnd(self);
             return;
         }
-        self->pos[0] = self->pos[0] + self->vel[0];
-        self->pos[1] = self->pos[1] + self->vel[1];
-        self->pos[2] = self->pos[2] + self->vel[2];
+        self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+        self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+        self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
     }
 
     BtlAttackType1BBasis(((GfxEffect *)self->effect)->matrix, self->dir);

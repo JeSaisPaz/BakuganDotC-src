@@ -26,9 +26,9 @@ void *GfxMeshObjCreateSmokeColumn(s32 ref)
     mask1->stencilTest = (u32)ref << 8 | 0xdcff0002;
     m = mask1->basis;
     for (i = 0; i < 4; i++) {
-        m[i] = m[i] * -1.0f;
-        m[4 + i] = m[4 + i] * -6.0f;
-        m[8 + i] = m[8 + i] * -1.0f;
+        m[i] = VfMul(m[i], -1.0f);
+        m[4 + i] = VfMul(m[4 + i], -6.0f);
+        m[8 + i] = VfMul(m[8 + i], -1.0f);
     }
     smoke = GfxMeshObjCreateList3(7, NULL);
     GfxMeshObjStateStencilSmoke(smoke);

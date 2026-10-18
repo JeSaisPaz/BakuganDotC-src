@@ -11,10 +11,10 @@ static void UiBakuganRotateField(float *d, const float *r, float c, float s)
   float z = r[2];
   float w = r[3];
 
-  d[0] = x * c + y * 0.0f + z * s + w * 0.0f;
-  d[1] = x * 0.0f + y * 1.0f + z * 0.0f + w * 0.0f;
-  d[2] = x * -s + y * 0.0f + z * c + w * 0.0f;
-  d[3] = x * 0.0f + y * 0.0f + z * 0.0f + w * 1.0f;
+  d[0] = VfDot4(x, y, z, w, c, 0.0f, s, 0.0f);
+  d[1] = VfDot4(x, y, z, w, 0.0f, 1.0f, 0.0f, 0.0f);
+  d[2] = VfDot4(x, y, z, w, -s, 0.0f, c, 0.0f);
+  d[3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 /* Rotates a menu model's root matrix (`model->data->rootMatrix`) about Y by the display angle of
@@ -34,8 +34,8 @@ void UiBakuganRotateModel(void *model, u32 id, u32 form)
   m = ((GfxModel *)model)->data->rootMatrix;
   angle = table[(id & 0xff) * 2 + (form & 0xff)];
   /* vmul.s by S703 (2/π) then vrot in quarter turns: cos/sin of the angle in radians */
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   for (i = 0; i < 4; i++) {
     float r[4];
 

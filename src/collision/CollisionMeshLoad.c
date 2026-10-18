@@ -37,6 +37,8 @@ void CollisionMeshLoad(void *block, bool keepWorldVerts)
   float sz;
   float rc;
   float rs;
+  float m1[12];
+  float m2[12];
 
   file = (CollisionFile *)self->desc;
   chunkIdx = 0;
@@ -120,23 +122,47 @@ void CollisionMeshLoad(void *block, bool keepWorldVerts)
           sy = geom->z.y;
           sz = geom->z.z;
           /* vrot on angle * 2/pi (bank S703) in quarter turns: cos/sin of the angle. */
-          rc = __builtin_cosf(geom->y.x);
-          rs = __builtin_sinf(geom->y.x);
+          rc = VfCosQuarter(VfMul(geom->y.x, 0.636619747f));
+          rs = VfSinQuarter(VfMul(geom->y.x, 0.636619747f));
           /* Scale matrix times the X rotation. The Y and Z rotations take their angles from
              S101/S102 (off-diagonal zeros of the scale matrix), not from the Y/Z angles, so
              they are identity rotations: only the X angle is applied (original bug). */
-          tmp.x.x = sx;
-          tmp.x.y = 0.0f;
-          tmp.x.z = 0.0f;
-          tmp.x.w = 0.0f;
-          tmp.y.x = 0.0f;
-          tmp.y.y = rc * sy;
-          tmp.y.z = rs * sy;
-          tmp.y.w = 0.0f;
-          tmp.z.x = 0.0f;
-          tmp.z.y = -rs * sz;
-          tmp.z.z = rc * sz;
-          tmp.z.w = 0.0f;
+          m1[0] = VfDot2(sx, 0.0f, 1.0f, 0.0f);
+          m1[1] = VfDot3(sx, 0.0f, 0.0f, 0.0f, rc, -rs);
+          m1[2] = VfDot3(sx, 0.0f, 0.0f, 0.0f, rs, rc);
+          m1[3] = VfDot2(sx, 0.0f, 0.0f, 0.0f);
+          m1[4] = VfDot2(sy, 0.0f, 0.0f, 0.0f);
+          m1[5] = VfDot2(sy, 0.0f, rc, -rs);
+          m1[6] = VfDot2(sy, 0.0f, rs, rc);
+          m1[7] = VfDot2(sy, 0.0f, 0.0f, 0.0f);
+          m1[8] = VfDot2(sz, 0.0f, 0.0f, 0.0f);
+          m1[9] = VfDot2(0.0f, sz, rc, -rs);
+          m1[10] = VfDot2(0.0f, sz, rs, rc);
+          m1[11] = VfDot2(sz, 0.0f, 0.0f, 0.0f);
+          m2[0] = VfDot4(m1[0], m1[1], m1[2], m1[3], 1.0f, 0.0f, 0.0f, 0.0f);
+          m2[1] = VfDot4(m1[0], m1[1], m1[2], m1[3], 0.0f, 1.0f, 0.0f, 0.0f);
+          m2[2] = VfDot4(m1[0], m1[1], m1[2], m1[3], -0.0f, 0.0f, 1.0f, 0.0f);
+          m2[3] = VfDot4(m1[0], m1[1], m1[2], m1[3], 0.0f, 0.0f, 0.0f, 1.0f);
+          m2[4] = VfDot4(m1[4], m1[5], m1[6], m1[7], 1.0f, 0.0f, 0.0f, 0.0f);
+          m2[5] = VfDot4(m1[4], m1[5], m1[6], m1[7], 0.0f, 1.0f, 0.0f, 0.0f);
+          m2[6] = VfDot4(m1[4], m1[5], m1[6], m1[7], -0.0f, 0.0f, 1.0f, 0.0f);
+          m2[7] = VfDot4(m1[4], m1[5], m1[6], m1[7], 0.0f, 0.0f, 0.0f, 1.0f);
+          m2[8] = VfDot4(m1[8], m1[9], m1[10], m1[11], 1.0f, 0.0f, 0.0f, 0.0f);
+          m2[9] = VfDot4(m1[8], m1[9], m1[10], m1[11], 0.0f, 1.0f, 0.0f, 0.0f);
+          m2[10] = VfDot4(m1[8], m1[9], m1[10], m1[11], -0.0f, 0.0f, 1.0f, 0.0f);
+          m2[11] = VfDot4(m1[8], m1[9], m1[10], m1[11], 0.0f, 0.0f, 0.0f, 1.0f);
+          tmp.x.x = VfDot4(m2[0], m2[1], m2[2], m2[3], 1.0f, -0.0f, 0.0f, 0.0f);
+          tmp.x.y = VfDot4(m2[0], m2[1], m2[2], m2[3], 0.0f, 1.0f, 0.0f, 0.0f);
+          tmp.x.z = VfDot4(m2[0], m2[1], m2[2], m2[3], 0.0f, 0.0f, 1.0f, 0.0f);
+          tmp.x.w = VfDot4(m2[0], m2[1], m2[2], m2[3], 0.0f, 0.0f, 0.0f, 1.0f);
+          tmp.y.x = VfDot4(m2[4], m2[5], m2[6], m2[7], 1.0f, -0.0f, 0.0f, 0.0f);
+          tmp.y.y = VfDot4(m2[4], m2[5], m2[6], m2[7], 0.0f, 1.0f, 0.0f, 0.0f);
+          tmp.y.z = VfDot4(m2[4], m2[5], m2[6], m2[7], 0.0f, 0.0f, 1.0f, 0.0f);
+          tmp.y.w = VfDot4(m2[4], m2[5], m2[6], m2[7], 0.0f, 0.0f, 0.0f, 1.0f);
+          tmp.z.x = VfDot4(m2[8], m2[9], m2[10], m2[11], 1.0f, -0.0f, 0.0f, 0.0f);
+          tmp.z.y = VfDot4(m2[8], m2[9], m2[10], m2[11], 0.0f, 1.0f, 0.0f, 0.0f);
+          tmp.z.z = VfDot4(m2[8], m2[9], m2[10], m2[11], 0.0f, 0.0f, 1.0f, 0.0f);
+          tmp.z.w = VfDot4(m2[8], m2[9], m2[10], m2[11], 0.0f, 0.0f, 0.0f, 1.0f);
           tmp.w = geom->x;
           tmp.w.w = 1.0f;
           *geom = tmp;

@@ -16,26 +16,26 @@ void GfxEffectChainSolveBackward(GfxEffectChain *chain)
         ScePspFVector4 *a = &chain->points[i - 1];
         ScePspFVector4 *b = &chain->points[i];
         float maxLen = (chain->linkLengths != NULL) ? chain->linkLengths[i] : chain->maxLinkLength;
-        float dx = a->x - b->x;
-        float dy = a->y - b->y;
-        float dz = a->z - b->z;
-        float dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+        float dx = VfSub(a->x, b->x);
+        float dy = VfSub(a->y, b->y);
+        float dz = VfSub(a->z, b->z);
+        float dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
 
         if (!(dist <= 0.0f) && !(dist <= maxLen)) {
-            float inv = 1.0f / dist;
-            float pull = (dist - maxLen) * 0.03f * inv;
-            float keep = inv * maxLen;
+            float inv = VfRcp(dist);
+            float pull = VfMul(VfMul(VfSub(dist, maxLen), 0.03f), inv);
+            float keep = VfMul(inv, maxLen);
             ScePspFVector4 *v = &chain->velocities[i];
             float vx = v->x;
             float vy = v->y;
             float vz = v->z;
 
-            a->x = b->x + dx * keep;
-            a->y = b->y + dy * keep;
-            a->z = b->z + dz * keep;
-            v->x = vx - dx * pull;
-            v->y = vy - dy * pull;
-            v->z = vz - dz * pull;
+            a->x = VfAdd(b->x, VfMul(dx, keep));
+            a->y = VfAdd(b->y, VfMul(dy, keep));
+            a->z = VfAdd(b->z, VfMul(dz, keep));
+            v->x = VfSub(vx, VfMul(dx, pull));
+            v->y = VfSub(vy, VfMul(dy, pull));
+            v->z = VfSub(vz, VfMul(dz, pull));
         }
     }
 }

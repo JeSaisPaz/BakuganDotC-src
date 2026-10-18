@@ -111,10 +111,7 @@ CoreObject *GameGimmickCameraCtor(GameGimmickCamera *obj, s32 kind, void *record
     dst = (float *)cone;
     for (j = 0; j < 4; j++) {
       for (i = 0; i < 4; i++) {
-        dst[j * 4 + i] = node->localMatrix[j * 4 + 0] * model->rootMatrix[0 * 4 + i] +
-                         node->localMatrix[j * 4 + 1] * model->rootMatrix[1 * 4 + i] +
-                         node->localMatrix[j * 4 + 2] * model->rootMatrix[2 * 4 + i] +
-                         node->localMatrix[j * 4 + 3] * model->rootMatrix[3 * 4 + i];
+        dst[j * 4 + i] = VfDot4(node->localMatrix[j * 4 + 0], node->localMatrix[j * 4 + 1], node->localMatrix[j * 4 + 2], node->localMatrix[j * 4 + 3], model->rootMatrix[0 * 4 + i], model->rootMatrix[1 * 4 + i], model->rootMatrix[2 * 4 + i], model->rootMatrix[3 * 4 + i]);
       }
     }
     obj->coneEffect = GfxEffectSpawnFollowMatrix(g_worldEffectMgr, 0x2f, (float *)cone);

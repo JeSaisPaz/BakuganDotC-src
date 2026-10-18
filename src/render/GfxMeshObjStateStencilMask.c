@@ -52,7 +52,7 @@ void GfxMeshObjStateStencilMask(GfxMeshObj *self)
   self->color[3] = 0.004f;
   /* basis rows 0..2 *= 16 (all four lanes); position = bank C720 (0, 0, 0, 0) */
   for (i = 0; i < 12; i++)
-    self->basis[i] = self->basis[i] * 16.0f;
+    self->basis[i] = VfMul(self->basis[i], 16.0f);
   self->pos[0] = 0.0f;
   self->pos[1] = 0.0f;
   self->pos[2] = 0.0f;

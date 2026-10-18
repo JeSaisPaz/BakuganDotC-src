@@ -42,9 +42,9 @@ void BtlAttackType80Update(BtlAttack *self)
         effect = (GfxEffect *)self->effect;
         entry = &((const VtblEntry *)effect->base.vtable)[2];
         ((void (*)(void *))entry->fn)((u8 *)effect + entry->delta);
-        self->vel[0] = self->vel[0] * 22.0f;
-        self->vel[1] = self->vel[1] * 22.0f;
-        self->vel[2] = self->vel[2] * 22.0f;
+        self->vel[0] = VfMul(self->vel[0], 22.0f);
+        self->vel[1] = VfMul(self->vel[1], 22.0f);
+        self->vel[2] = VfMul(self->vel[2], 22.0f);
         self->vel[3] = 0.0f; /* S713 of the VFPU bank, stored with the scaled column */
         step[0] = self->vel[0];
         step[1] = self->vel[1];
@@ -61,7 +61,7 @@ void BtlAttackType80Update(BtlAttack *self)
         if (!(self->paramF1 <= 0x1.921fb6p+2f)) {
             self->paramF1 = 0x1.921fb6p+2f; /* 2 pi */
         }
-        wave = __builtin_sinf(self->paramF1);
+        wave = VfSinQuarter(VfMul(self->paramF1, 0.636619747f));
         step[1] = step[1] + wave * 16.0f;
         effect = (GfxEffect *)self->effect;
         effect->dir[0] = step[0];
@@ -79,9 +79,9 @@ void BtlAttackType80Update(BtlAttack *self)
         body->layer = savedLayer;
     }
     if (self->age > 0) {
-        self->pos[0] = self->pos[0] + step[0];
-        self->pos[1] = self->pos[1] + step[1];
-        self->pos[2] = self->pos[2] + step[2];
+        self->pos[0] = VfAdd(self->pos[0], step[0]);
+        self->pos[1] = VfAdd(self->pos[1], step[1]);
+        self->pos[2] = VfAdd(self->pos[2], step[2]);
     }
     return;
 

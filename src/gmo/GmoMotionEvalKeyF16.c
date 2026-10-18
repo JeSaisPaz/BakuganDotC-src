@@ -42,10 +42,10 @@ ScePspFVector4 GmoMotionEvalKeyF16(float frame, float t0, float t1, const GmoMot
             a[i] = VfH2f(k0[i + 1]);
             b[i] = VfH2f(k1[i + 1]);
         }
-        r.x = a[0] + (b[0] - a[0]) * t;
-        r.y = a[1] + (b[1] - a[1]) * t;
-        r.z = a[2] + (b[2] - a[2]) * t;
-        r.w = a[3] + (b[3] - a[3]) * t;
+        r.x = VfAdd(a[0], VfMul(VfSub(b[0], a[0]), t));
+        r.y = VfAdd(a[1], VfMul(VfSub(b[1], a[1]), t));
+        r.z = VfAdd(a[2], VfMul(VfSub(b[2], a[2]), t));
+        r.w = VfAdd(a[3], VfMul(VfSub(b[3], a[3]), t));
         return r;
     }
     if (mode == 2) {

@@ -87,17 +87,17 @@ void GameGimmickCollidableUpdate(GameGimmickCollidable *obj)
           hitPos.w = col->hitPos.w;
           /* dir.xyz = normalize(playerPos - hitPos), clamped to [-1, 1] (0 when zero length);
              dir.w = S713 = 0; start = objPos */
-          diff.x = playerPos.x - hitPos.x;
-          diff.y = playerPos.y - hitPos.y;
-          diff.z = playerPos.z - hitPos.z;
-          lenSq = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
+          diff.x = VfSub(playerPos.x, hitPos.x);
+          diff.y = VfSub(playerPos.y, hitPos.y);
+          diff.z = VfSub(playerPos.z, hitPos.z);
+          lenSq = VfDot3(diff.x, diff.y, diff.z, diff.x, diff.y, diff.z);
           scale = VfRsq(lenSq);
           if (VfIsZero(lenSq)) {
             scale = 0.0f;
           }
-          dir.x = VfSat1(diff.x * scale);
-          dir.y = VfSat1(diff.y * scale);
-          dir.z = VfSat1(diff.z * scale);
+          dir.x = VfSat1(VfMul(diff.x, scale));
+          dir.y = VfSat1(VfMul(diff.y, scale));
+          dir.z = VfSat1(VfMul(diff.z, scale));
           dir.w = 0.0f;
           start = objPos;
           GameGimmickCorePointLaunch(cp, i, &dir.x, &start.x);

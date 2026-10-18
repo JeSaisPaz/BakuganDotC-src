@@ -48,14 +48,14 @@ void GfxEffectPushBakugans(float radius, float angle, float height, GfxEffect *e
         if (kind == g_btlMapFlashKind) {
             continue;
         }
-        dx = effect->pos[0] - unit->base.pos[0];
-        dy = effect->pos[1] - unit->base.pos[1];
-        dz = effect->pos[2] - unit->base.pos[2];
+        dx = VfSub(effect->pos[0], unit->base.pos[0]);
+        dy = VfSub(effect->pos[1], unit->base.pos[1]);
+        dz = VfSub(effect->pos[2], unit->base.pos[2]);
         if (!(__builtin_fabsf(dy) < height)) {
             continue;
         }
         dy = 0.0f;
-        distSq = dx * dx + dy * dy + dz * dz;
+        distSq = VfDot3(dx, dy, dz, dx, dy, dz);
         if (radiusSq <= distSq) {
             continue;
         }
@@ -68,21 +68,21 @@ void GfxEffectPushBakugans(float radius, float angle, float height, GfxEffect *e
             push = 25.0f;
         }
         /* normalize (dx, 0, dz) and scale by push; a zero offset gives a zero vector */
-        lenSq = dx * dx + dy * dy + dz * dz;
+        lenSq = VfDot3(dx, dy, dz, dx, dy, dz);
         if (VfIsZero(lenSq)) {
             scale = 0.0f;
         } else {
             scale = VfRsq(lenSq);
         }
-        scale = scale * push;
-        nx = dx * scale;
-        ny = dy * scale;
-        nz = dz * scale;
+        scale = VfMul(scale, push);
+        nx = VfMul(dx, scale);
+        ny = VfMul(dy, scale);
+        nz = VfMul(dz, scale);
         /* rotate by angle about Y: (x·cos − z·sin, y, x·sin + z·cos) */
-        c = __builtin_cosf(angle);
-        s = __builtin_sinf(angle);
-        unit->tiltPush[0] = unit->tiltPush[0] + (nx * c - nz * s);
-        unit->tiltPush[1] = unit->tiltPush[1] + ny;
-        unit->tiltPush[2] = unit->tiltPush[2] + (nx * s + nz * c);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
+        s = VfSinQuarter(VfMul(angle, 0.636619747f));
+        unit->tiltPush[0] = VfAdd(unit->tiltPush[0], VfDot3(nx, ny, nz, c, 0.0f, -s));
+        unit->tiltPush[1] = VfAdd(unit->tiltPush[1], ny);
+        unit->tiltPush[2] = VfAdd(unit->tiltPush[2], VfDot3(nx, ny, nz, s, 0.0f, c));
     }
 }

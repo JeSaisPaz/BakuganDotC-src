@@ -71,9 +71,9 @@ void BtlUnitAltState20Update(BtlBakugan *unit)
             BtlAttackLaunchAuto(attack, NULL, NULL, (s16 *)&ev);
         } else {
             /* dir = (cos, 0, sin, 0) of the heading (vrot of heading * 2/pi in quarter turns) */
-            dir[0] = __builtin_cosf(unit->base.rot[1]);
+            dir[0] = VfCosQuarter(VfMul(unit->base.rot[1], 0.636619747f));
             dir[1] = 0.0f;
-            dir[2] = __builtin_sinf(unit->base.rot[1]);
+            dir[2] = VfSinQuarter(VfMul(unit->base.rot[1], 0.636619747f));
             dir[3] = 0.0f;
             BtlAttackLaunchAuto(attack, NULL, dir, (s16 *)&ev);
         }

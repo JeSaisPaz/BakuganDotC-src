@@ -21,9 +21,9 @@ void BtlAttackType09Update(BtlAttack *self)
     }
     if (self->age == 0) {
         /* vel.xyz *= 50.0f; the w lane of the sv.q is stale (C710 lane 3 never set here) */
-        self->vel[0] *= 50.0f;
-        self->vel[1] *= 50.0f;
-        self->vel[2] *= 50.0f;
+        self->vel[0] = VfMul(self->vel[0], 50.0f);
+        self->vel[1] = VfMul(self->vel[1], 50.0f);
+        self->vel[2] = VfMul(self->vel[2], 50.0f);
         return;
     }
     BtlAttackCheckClash(self);
@@ -39,7 +39,7 @@ void BtlAttackType09Update(BtlAttack *self)
         return;
     }
     /* pos.xyz += vel.xyz (w kept) */
-    pos[0] += self->vel[0];
-    pos[1] += self->vel[1];
-    pos[2] += self->vel[2];
+    pos[0] = VfAdd(pos[0], self->vel[0]);
+    pos[1] = VfAdd(pos[1], self->vel[1]);
+    pos[2] = VfAdd(pos[2], self->vel[2]);
 }

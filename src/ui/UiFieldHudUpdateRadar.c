@@ -27,16 +27,22 @@ static inline void UiFieldHudRotateMatrix(float *matrix, float angle)
   float s;
   float x;
   float y;
+  float z;
+  float w;
   s32 i;
 
-  t = angle * 0.636619747f;
+  t = VfMul(angle, 0.636619747f);
   c = VfCosQuarter(t);
   s = VfSinQuarter(t);
   for (i = 0; i < 4; i++) {
     x = matrix[i * 4 + 0];
     y = matrix[i * 4 + 1];
-    matrix[i * 4 + 0] = c * x + -s * y;
-    matrix[i * 4 + 1] = s * x + c * y;
+    z = matrix[i * 4 + 2];
+    w = matrix[i * 4 + 3];
+    matrix[i * 4 + 0] = VfDot4(x, y, z, w, c, -s, 0.0f, 0.0f);
+    matrix[i * 4 + 1] = VfDot4(x, y, z, w, s, c, 0.0f, 0.0f);
+    matrix[i * 4 + 2] = VfDot4(x, y, z, w, 0.0f, 0.0f, 1.0f, 0.0f);
+    matrix[i * 4 + 3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
   }
 }
 

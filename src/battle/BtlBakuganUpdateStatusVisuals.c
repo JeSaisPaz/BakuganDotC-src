@@ -37,10 +37,10 @@
 /* d = column `col` of a * b (vmmul with a in M100, b in M200; matrices column-major) */
 static void UsvMtxColumn(ScePspFVector4 *d, const float *a, const float *col)
 {
-    d->x = col[0] * a[0] + col[1] * a[4] + col[2] * a[8] + col[3] * a[12];
-    d->y = col[0] * a[1] + col[1] * a[5] + col[2] * a[9] + col[3] * a[13];
-    d->z = col[0] * a[2] + col[1] * a[6] + col[2] * a[10] + col[3] * a[14];
-    d->w = col[0] * a[3] + col[1] * a[7] + col[2] * a[11] + col[3] * a[15];
+    d->x = VfDot4(col[0], col[1], col[2], col[3], a[0], a[4], a[8], a[12]);
+    d->y = VfDot4(col[0], col[1], col[2], col[3], a[1], a[5], a[9], a[13]);
+    d->z = VfDot4(col[0], col[1], col[2], col[3], a[2], a[6], a[10], a[14]);
+    d->w = VfDot4(col[0], col[1], col[2], col[3], a[3], a[7], a[11], a[15]);
 }
 
 /* d = a * b */
@@ -55,10 +55,10 @@ static void UsvMtxMul(ScePspFMatrix4 *d, const float *a, const float *b)
 /* d = m . (x, y, z, w) (vtfm4.q with E100) */
 static void UsvTransform(float *d, const ScePspFMatrix4 *m, float x, float y, float z, float w)
 {
-    d[0] = m->x.x * x + m->y.x * y + m->z.x * z + m->w.x * w;
-    d[1] = m->x.y * x + m->y.y * y + m->z.y * z + m->w.y * w;
-    d[2] = m->x.z * x + m->y.z * y + m->z.z * z + m->w.z * w;
-    d[3] = m->x.w * x + m->y.w * y + m->z.w * z + m->w.w * w;
+    d[0] = VfDot4(m->x.x, m->y.x, m->z.x, m->w.x, x, y, z, w);
+    d[1] = VfDot4(m->x.y, m->y.y, m->z.y, m->w.y, x, y, z, w);
+    d[2] = VfDot4(m->x.z, m->y.z, m->z.z, m->w.z, x, y, z, w);
+    d[3] = VfDot4(m->x.w, m->y.w, m->z.w, m->w.w, x, y, z, w);
 }
 
 /* Effect `fx` follows bone matrix `root * node`: dir = matrix . axis (all four lanes), anchorPos =
@@ -85,22 +85,22 @@ static void UsvAim(GfxEffect *fx, const ScePspFVector4 *to, const ScePspFVector4
     float inv;
     float k;
 
-    dx = to->x - from->x;
-    dy = to->y - from->y;
-    dz = to->z - from->z;
-    lenSq = dx * dx + dy * dy + dz * dz;
-    len = __builtin_sqrtf(lenSq);
+    dx = VfSub(to->x, from->x);
+    dy = VfSub(to->y, from->y);
+    dz = VfSub(to->z, from->z);
+    lenSq = VfDot3(dx, dy, dz, dx, dy, dz);
+    len = VfSqrt(lenSq);
     len = len * 0.100000001f;
     if (VfIsZero(lenSq)) {
         inv = 0.0f;
     } else {
         inv = VfRsq(lenSq);
     }
-    k = inv * 30.0f;
+    k = VfMul(inv, 30.0f);
     fx->size[1] = len;
-    fx->dir[0] = dx * k;
-    fx->dir[1] = dy * k;
-    fx->dir[2] = dz * k;
+    fx->dir[0] = VfMul(dx, k);
+    fx->dir[1] = VfMul(dy, k);
+    fx->dir[2] = VfMul(dz, k);
     fx->dir[3] = 0.0f;
 }
 
@@ -134,8 +134,7 @@ void BtlBakuganUpdateStatusVisuals(BtlBakugan *self)
             if (!(self->base.ambient[3] <= 0.100000001f) && self->wallHitFrames % 3 == 0 &&
                 self->wallHitFrames < 4) {
                 /* vdot.t of (velocity.x, 0, velocity.z) with itself (S001 zeroed) */
-                speedSq = self->base.velocity[0] * self->base.velocity[0] +
-                          self->base.velocity[2] * self->base.velocity[2];
+                speedSq = VfDot2(self->base.velocity[0], self->base.velocity[2], self->base.velocity[0], self->base.velocity[2]);
                 if (!(speedSq <= 289.0f)) {
                     GfxEffectSpawnDirected(g_worldEffectMgr, 0x1e, self->wallHitPoint,
                                            self->wallHitNormal);
@@ -420,10 +419,10 @@ void BtlBakuganUpdateStatusVisuals(BtlBakugan *self)
     self->statePos[3] = pt.w;
     GfxModelGetNodeWorldPos(&self->base, &pt, "Bip01_R_Tail");
     /* statePos += (pt - statePos) * 0.5 (all four lanes) */
-    self->statePos[0] = self->statePos[0] + (pt.x - self->statePos[0]) * 0.5f;
-    self->statePos[1] = self->statePos[1] + (pt.y - self->statePos[1]) * 0.5f;
-    self->statePos[2] = self->statePos[2] + (pt.z - self->statePos[2]) * 0.5f;
-    self->statePos[3] = self->statePos[3] + (pt.w - self->statePos[3]) * 0.5f;
+    self->statePos[0] = VfAdd(self->statePos[0], VfMul(VfSub(pt.x, self->statePos[0]), 0.5f));
+    self->statePos[1] = VfAdd(self->statePos[1], VfMul(VfSub(pt.y, self->statePos[1]), 0.5f));
+    self->statePos[2] = VfAdd(self->statePos[2], VfMul(VfSub(pt.z, self->statePos[2]), 0.5f));
+    self->statePos[3] = VfAdd(self->statePos[3], VfMul(VfSub(pt.w, self->statePos[3]), 0.5f));
     if ((self->frameCounter & 3) == 0 && !(self->charge < 100.0f)) {
         GfxEffectSpawnAttached(g_worldEffectMgr, 0x108, self->statePos);
     }

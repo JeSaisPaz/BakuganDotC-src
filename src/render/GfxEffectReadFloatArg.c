@@ -24,7 +24,7 @@ float GfxEffectReadFloatArg(GfxEffect *effect, float *args, s32 *cursor, u16 *cm
       hi = args[idx + 1];
       *cursor = idx + 2;
       hi = hi - lo;
-      return lo + hi * (PlatformRandFloat12() - 1.0f);
+      return lo + hi * (VfSub(PlatformRandFloat12(), 1.0f));
     }
     lo = args[idx];
   } else {

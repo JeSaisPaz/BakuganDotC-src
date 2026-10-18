@@ -17,7 +17,7 @@ s32 BtlAiPadCalcStick(BtlAiPad *self)
     dir[1] = 0.0f;
     dir[2] = -self->stickX;
     dir[3] = 0.0f;
-    lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+    lenSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
     mag = (lenSq - 0.300000012f) * 1.42857146f;
     self->stickMagnitude = mag;
     if (mag <= 0.5f) {

@@ -61,9 +61,9 @@ void GameQuestPathFindNearestNode(s16 *obj)
     }
     node = *slot;
     /* local = (pos - node->pos) on xyz, w = the position's w */
-    local[0] = pos->x - node->pos.x;
-    local[1] = pos->y - node->pos.y;
-    local[2] = pos->z - node->pos.z;
+    local[0] = VfSub(pos->x, node->pos.x);
+    local[1] = VfSub(pos->y, node->pos.y);
+    local[2] = VfSub(pos->z, node->pos.z);
     local[3] = pos->w;
     /* m = B * A row-major (a[i], b[i] = rows C1i0 / C2i0 of the quaternion product matrices) */
     q = node->rot;
@@ -77,17 +77,17 @@ void GameQuestPathFindNearestNode(s16 *obj)
     b[3][0] = -q.x; b[3][1] = -q.y; b[3][2] = -q.z; b[3][3] = q.w;
     for (c = 0; c < 3; c++) {
       for (r = 0; r < 3; r++) {
-        m[c][r] = b[c][0] * a[0][r] + b[c][1] * a[1][r] + b[c][2] * a[2][r] + b[c][3] * a[3][r];
+        m[c][r] = VfDot4(b[c][0], b[c][1], b[c][2], b[c][3], a[0][r], a[1][r], a[2][r], a[3][r]);
       }
     }
     /* inverse: transposed rotation, translation -(R * 0) */
     for (r = 0; r < 3; r++) {
-      tr[r] = m[r][0] * 0.0f + m[r][1] * 0.0f + m[r][2] * 0.0f;
+      tr[r] = VfDot3(m[r][0], m[r][1], m[r][2], 0.0f, 0.0f, 0.0f);
     }
     for (r = 0; r < 3; r++) {
-      out[r] = local[0] * m[r][0] + local[1] * m[r][1] + local[2] * m[r][2] + local[3] * -tr[r];
+      out[r] = VfDot4(local[0], local[1], local[2], local[3], m[r][0], m[r][1], m[r][2], -tr[r]);
     }
-    out[3] = local[0] * 0.0f + local[1] * 0.0f + local[2] * 0.0f + local[3] * 1.0f;
+    out[3] = VfDot4(local[0], local[1], local[2], local[3], 0.0f, 0.0f, 0.0f, 1.0f);
     local[0] = out[0];
     local[1] = out[1];
     local[2] = out[2];

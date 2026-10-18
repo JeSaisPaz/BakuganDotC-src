@@ -13,10 +13,10 @@
 
 static u32 UiBakuganSelectPackWhite(void)
 {
-  return (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.x) * 255.0f, 23)) |
-         (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.y) * 255.0f, 23)) << 8 |
-         (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.z) * 255.0f, 23)) << 16 |
-         (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.w) * 255.0f, 23)) << 24;
+  return (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.x), 255.0f), 23)) |
+         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.y), 255.0f), 23)) << 8 |
+         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.z), 255.0f), 23)) << 16 |
+         (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.w), 255.0f), 23)) << 24;
 }
 
 static void UiBakuganSelectDrawModel(GfxModel *model, GfxCamera *camera, float depth)

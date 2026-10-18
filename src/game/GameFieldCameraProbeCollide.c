@@ -19,30 +19,30 @@ void GameFieldCameraProbeCollide(void *probe, float *outEye, float *outLook, flo
     float k;
 
     (void)probe;
-    dir[0] = look[0] - eye[0];
+    dir[0] = VfSub(look[0], eye[0]);
     dir[1] = 0.0f;
-    dir[2] = look[2] - eye[2];
-    len2 = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+    dir[2] = VfSub(look[2], eye[2]);
+    len2 = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
     if (len2 < 1e-05f) {
         dir[2] = 0.0f;
         dir[0] = 1.0f;
     } else {
         k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-        dir[0] = VfSat1(dir[0] * k);
-        dir[1] = VfSat1(dir[1] * k);
-        dir[2] = VfSat1(dir[2] * k);
+        dir[0] = VfSat1(VfMul(dir[0], k));
+        dir[1] = VfSat1(VfMul(dir[1], k));
+        dir[2] = VfSat1(VfMul(dir[2], k));
     }
     start[0] = look[0];
     start[1] = eye[1];
     start[2] = look[2];
     start[3] = look[3];
-    seg[0] = eye[0] - start[0];
-    seg[1] = eye[1] - start[1];
-    seg[2] = eye[2] - start[2];
+    seg[0] = VfSub(eye[0], start[0]);
+    seg[1] = VfSub(eye[1], start[1]);
+    seg[2] = VfSub(eye[2], start[2]);
     seg[3] = eye[3];
-    seg[0] = seg[0] + dir[0] * -3.0f;
-    seg[1] = seg[1] + dir[1] * -3.0f;
-    seg[2] = seg[2] + dir[2] * -3.0f;
+    seg[0] = VfAdd(seg[0], VfMul(dir[0], -3.0f));
+    seg[1] = VfAdd(seg[1], VfMul(dir[1], -3.0f));
+    seg[2] = VfAdd(seg[2], VfMul(dir[2], -3.0f));
     g_collisionSegmentDesc.start[0] = start[0];
     g_collisionSegmentDesc.start[1] = start[1];
     g_collisionSegmentDesc.start[2] = start[2];
@@ -56,9 +56,9 @@ void GameFieldCameraProbeCollide(void *probe, float *outEye, float *outLook, flo
         outEye[1] = g_collisionHitResult.point.y;
         outEye[2] = g_collisionHitResult.point.z;
         outEye[3] = g_collisionHitResult.point.w;
-        outEye[0] = outEye[0] + g_collisionHitResult.normal.x * 3.0f;
-        outEye[1] = outEye[1] + g_collisionHitResult.normal.y * 3.0f;
-        outEye[2] = outEye[2] + g_collisionHitResult.normal.z * 3.0f;
+        outEye[0] = VfAdd(outEye[0], VfMul(g_collisionHitResult.normal.x, 3.0f));
+        outEye[1] = VfAdd(outEye[1], VfMul(g_collisionHitResult.normal.y, 3.0f));
+        outEye[2] = VfAdd(outEye[2], VfMul(g_collisionHitResult.normal.z, 3.0f));
     } else {
         outEye[0] = eye[0];
         outEye[1] = eye[1];

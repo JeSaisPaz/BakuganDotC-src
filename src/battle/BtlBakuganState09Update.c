@@ -32,13 +32,11 @@ void BtlBakuganState09Update(BtlBakugan *self)
     self->stateFlags |= 0x1000000;
     if (BtlBakuganIsLocalPlayer(self) && (s32)self->attackPhase < 3) {
         /* dir = normalised velocity */
-        lenSq = self->base.velocity[0] * self->base.velocity[0]
-              + self->base.velocity[1] * self->base.velocity[1]
-              + self->base.velocity[2] * self->base.velocity[2];
+        lenSq = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
         k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        dir[0] = VfSat1(self->base.velocity[0] * k);
-        dir[1] = VfSat1(self->base.velocity[1] * k);
-        dir[2] = VfSat1(self->base.velocity[2] * k);
+        dir[0] = VfSat1(VfMul(self->base.velocity[0], k));
+        dir[1] = VfSat1(VfMul(self->base.velocity[1], k));
+        dir[2] = VfSat1(VfMul(self->base.velocity[2], k));
         dir[3] = 0.0f;
         GfxEffectSpawnDirected(g_worldEffectMgr, 0x1d, self->base.pos, dir);
         GfxEffectSpawnDirected(g_worldEffectMgr, 0x1d, self->base.pos, dir);
@@ -47,13 +45,11 @@ void BtlBakuganState09Update(BtlBakugan *self)
     ((void (*)(void *))entry->fn)((u8 *)self + entry->delta);
     if ((s32)self->attackPhase < 3) {
         self->stateFlags |= 1;
-        lenSq = self->base.velocity[0] * self->base.velocity[0]
-              + self->base.velocity[1] * self->base.velocity[1]
-              + self->base.velocity[2] * self->base.velocity[2];
+        lenSq = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
         k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        norm[0] = VfSat1(self->base.velocity[0] * k);
-        norm[1] = VfSat1(self->base.velocity[1] * k);
-        norm[2] = VfSat1(self->base.velocity[2] * k);
+        norm[0] = VfSat1(VfMul(self->base.velocity[0], k));
+        norm[1] = VfSat1(VfMul(self->base.velocity[1], k));
+        norm[2] = VfSat1(VfMul(self->base.velocity[2], k));
         norm[3] = 0.0f;
         self->orient[0] = norm[1] * -0.899999976f;
         self->orient[1] = 1.0f;
@@ -61,20 +57,18 @@ void BtlBakuganState09Update(BtlBakugan *self)
         self->orient[3] = 0.0f;
         /* rotate xz by rot.y (vrot of rot.y * 2/pi in quarter turns) */
         angle = self->base.rot[1];
-        c = __builtin_cosf(angle);
-        s = __builtin_sinf(angle);
-        ox = self->orient[0] * c + self->orient[1] * 0.0f + self->orient[2] * -s;
-        oz = self->orient[0] * s + self->orient[1] * 0.0f + self->orient[2] * c;
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
+        s = VfSinQuarter(VfMul(angle, 0.636619747f));
+        ox = VfDot3(self->orient[0], self->orient[1], self->orient[2], c, 0.0f, -s);
+        oz = VfDot3(self->orient[0], self->orient[1], self->orient[2], s, 0.0f, c);
         self->orient[0] = ox;
         self->orient[2] = oz;
         /* normalise orient */
-        lenSq = self->orient[0] * self->orient[0]
-              + self->orient[1] * self->orient[1]
-              + self->orient[2] * self->orient[2];
+        lenSq = VfDot3(self->orient[0], self->orient[1], self->orient[2], self->orient[0], self->orient[1], self->orient[2]);
         k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        self->orient[0] = VfSat1(self->orient[0] * k);
-        self->orient[1] = VfSat1(self->orient[1] * k);
-        self->orient[2] = VfSat1(self->orient[2] * k);
+        self->orient[0] = VfSat1(VfMul(self->orient[0], k));
+        self->orient[1] = VfSat1(VfMul(self->orient[1], k));
+        self->orient[2] = VfSat1(VfMul(self->orient[2], k));
         self->orient[3] = 0.0f;
     }
     if (self->state != 9) {

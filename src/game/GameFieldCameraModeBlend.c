@@ -22,29 +22,29 @@ void GameFieldCameraModeBlend(GameFieldCamera *cam)
     if (t != t) {
       t = __builtin_signbit(t) ? 0.0f : 1.0f;
     } else {
-      t = t <= 0.0f ? 0.0f : t > 1.0f ? 1.0f : t;
+      t = VfMax(VfMin(t, 1.0f), 0.0f);
     }
     cam->blend = t;
     /* vcos.s of (t * t * π) * S703 (2/π): the cosine of t * t * π radians. */
-    k = (1.0f - __builtin_cosf(t * t * 3.1415927f)) * 0.5f;
+    k = (1.0f - VfCosQuarter(VfMul(t * t * 3.1415927f, 0.636619747f))) * 0.5f;
 
-    d[0] = (cam->blendEyeFrom.x - cam->blendEyeTo.x) * k;
-    d[1] = (cam->blendEyeFrom.y - cam->blendEyeTo.y) * k;
-    d[2] = (cam->blendEyeFrom.z - cam->blendEyeTo.z) * k;
-    d[3] = (cam->blendEyeFrom.w - cam->blendEyeTo.w) * k;
-    cam->base.eye[0] = cam->blendEyeTo.x + d[0];
-    cam->base.eye[1] = cam->blendEyeTo.y + d[1];
-    cam->base.eye[2] = cam->blendEyeTo.z + d[2];
-    cam->base.eye[3] = cam->blendEyeTo.w + d[3];
+    d[0] = VfMul(VfSub(cam->blendEyeFrom.x, cam->blendEyeTo.x), k);
+    d[1] = VfMul(VfSub(cam->blendEyeFrom.y, cam->blendEyeTo.y), k);
+    d[2] = VfMul(VfSub(cam->blendEyeFrom.z, cam->blendEyeTo.z), k);
+    d[3] = VfMul(VfSub(cam->blendEyeFrom.w, cam->blendEyeTo.w), k);
+    cam->base.eye[0] = VfAdd(cam->blendEyeTo.x, d[0]);
+    cam->base.eye[1] = VfAdd(cam->blendEyeTo.y, d[1]);
+    cam->base.eye[2] = VfAdd(cam->blendEyeTo.z, d[2]);
+    cam->base.eye[3] = VfAdd(cam->blendEyeTo.w, d[3]);
 
-    d[0] = (cam->blendLookFrom.x - cam->blendLookTo.x) * k;
-    d[1] = (cam->blendLookFrom.y - cam->blendLookTo.y) * k;
-    d[2] = (cam->blendLookFrom.z - cam->blendLookTo.z) * k;
-    d[3] = (cam->blendLookFrom.w - cam->blendLookTo.w) * k;
-    cam->base.target[0] = cam->blendLookTo.x + d[0];
-    cam->base.target[1] = cam->blendLookTo.y + d[1];
-    cam->base.target[2] = cam->blendLookTo.z + d[2];
-    cam->base.target[3] = cam->blendLookTo.w + d[3];
+    d[0] = VfMul(VfSub(cam->blendLookFrom.x, cam->blendLookTo.x), k);
+    d[1] = VfMul(VfSub(cam->blendLookFrom.y, cam->blendLookTo.y), k);
+    d[2] = VfMul(VfSub(cam->blendLookFrom.z, cam->blendLookTo.z), k);
+    d[3] = VfMul(VfSub(cam->blendLookFrom.w, cam->blendLookTo.w), k);
+    cam->base.target[0] = VfAdd(cam->blendLookTo.x, d[0]);
+    cam->base.target[1] = VfAdd(cam->blendLookTo.y, d[1]);
+    cam->base.target[2] = VfAdd(cam->blendLookTo.z, d[2]);
+    cam->base.target[3] = VfAdd(cam->blendLookTo.w, d[3]);
 
     if (cam->blend <= 0.0f) {
       GameFieldCameraSetMode(cam, 0);

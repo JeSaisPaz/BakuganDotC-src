@@ -49,7 +49,7 @@ void UiTitlePressStartPhase(UiScreen *screen)
       title->animAngle = 1.5707964f;
       angle = 1.5707964f;
     }
-    alpha = __builtin_sinf(angle);
+    alpha = VfSinQuarter(VfMul(angle, 0.636619747f));
     if ((screen->pad->pressed & 0x4000) != 0) {
       alpha = 1.0f;
       confirm = true;
@@ -79,7 +79,7 @@ void UiTitlePressStartPhase(UiScreen *screen)
       angle = 1.5707964f;
     }
     title->animAngle = angle;
-    alpha = __builtin_sinf(angle);
+    alpha = VfSinQuarter(VfMul(angle, 0.636619747f));
     ((GfxSprite **)screen->data)[0]->alpha = alpha;
     ((GfxSprite **)screen->data)[1]->alpha = alpha;
     ((GfxSprite **)screen->data)[5]->alpha = alpha;
@@ -115,7 +115,7 @@ void UiTitlePressStartPhase(UiScreen *screen)
       angle = angle - 3.1415927f;
       title->animAngle = angle;
     }
-    alpha = __builtin_sinf(angle);
+    alpha = VfSinQuarter(VfMul(angle, 0.636619747f));
     ((GfxSprite **)screen->data)[0]->alpha = alpha * 0.9f + 0.1f;
   }
   if (confirm) {

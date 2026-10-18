@@ -31,8 +31,10 @@ void BtlDemoCamStateMain(BtlDemoCam *self)
   float eyeY;
   float c;
   float s;
-  float y;
-  float z;
+  float v[4];
+  float m1[16];
+  float m2[16];
+  float m3[16];
   s32 eyeSpan;
   s32 lensSpan;
   s32 keyBSpan;
@@ -65,12 +67,12 @@ void BtlDemoCamStateMain(BtlDemoCam *self)
 
   /* vmin.s against S733 (1.0f), then vmax.s against S713 (0.0f). The quotients of two ints with a
      non-zero divisor are never NaN; a tie returns the second operand, so -0.0f becomes +0.0f. */
-  lensT = lensT < 1.0f ? lensT : 1.0f;
-  lensT = lensT > 0.0f ? lensT : 0.0f;
-  eyeT = eyeT < 1.0f ? eyeT : 1.0f;
-  eyeT = eyeT > 0.0f ? eyeT : 0.0f;
-  keyBT = keyBT < 1.0f ? keyBT : 1.0f;
-  keyBT = keyBT > 0.0f ? keyBT : 0.0f;
+  lensT = VfMin(lensT, 1.0f);
+  lensT = VfMax(lensT, 0.0f);
+  eyeT = VfMin(eyeT, 1.0f);
+  eyeT = VfMax(eyeT, 0.0f);
+  keyBT = VfMin(keyBT, 1.0f);
+  keyBT = VfMax(keyBT, 0.0f);
 
   if (lensT == 1.0f) {
     for (i = 0; i < 4; i++) {
@@ -81,7 +83,7 @@ void BtlDemoCamStateMain(BtlDemoCam *self)
   }
   else {
     for (i = 0; i < 4; i++) {
-      eye[i] = self->lensKey[1][i] + (self->lensKey[0][i] - self->lensKey[1][i]) * lensT;
+      eye[i] = VfAdd(self->lensKey[1][i], VfMul(VfSub(self->lensKey[0][i], self->lensKey[1][i]), lensT));
     }
     fovScale = self->lensA[0] * lensT + self->lensA[1] * (1.0f - lensT);
     roll = self->lensB[0] * lensT + self->lensB[1] * (1.0f - lensT);
@@ -96,9 +98,9 @@ void BtlDemoCamStateMain(BtlDemoCam *self)
   }
   else {
     for (i = 0; i < 4; i++) {
-      target[i] = self->eyeKey[1][i] + (self->eyeKey[0][i] - self->eyeKey[1][i]) * eyeT;
+      target[i] = VfAdd(self->eyeKey[1][i], VfMul(VfSub(self->eyeKey[0][i], self->eyeKey[1][i]), eyeT));
     }
-    angleX = self->lookKey[1][0] + (self->lookKey[0][0] - self->lookKey[1][0]) * eyeT;
+    angleX = VfAdd(self->lookKey[1][0], VfMul(VfSub(self->lookKey[0][0], self->lookKey[1][0]), eyeT));
   }
 
   if (keyBT == 1.0f) {
@@ -108,7 +110,7 @@ void BtlDemoCamStateMain(BtlDemoCam *self)
   }
   else {
     for (i = 0; i < 3; i++) {
-      offset[i] = self->keyBA[1][i] + (self->keyBA[0][i] - self->keyBA[1][i]) * keyBT;
+      offset[i] = VfAdd(self->keyBA[1][i], VfMul(VfSub(self->keyBA[0][i], self->keyBA[1][i]), keyBT));
     }
   }
 
@@ -190,38 +192,85 @@ void BtlDemoCamStateMain(BtlDemoCam *self)
   /* The binary builds identity x Rx(angleX) x Ry x Rz with vmidt/vrot/vmmul, but the Y and Z
      vrot read S101/S102 of the identity just loaded into M100 (0), so the product is Rx(angleX)
      (angle scaled by S703 = 2/pi into quarter turns). vtfm4 then maps x and w unchanged. */
-  c = __builtin_cosf(angleX);
-  s = __builtin_sinf(angleX);
-  y = target[1];
-  z = target[2];
-  target[1] = y * c - z * s;
-  target[2] = y * s + z * c;
-  y = eye[1];
-  z = eye[2];
-  eye[1] = y * c - z * s;
-  eye[2] = y * s + z * c;
+  c = VfCosQuarter(VfMul(angleX, 0.636619747f));
+  s = VfSinQuarter(VfMul(angleX, 0.636619747f));
+  /* m1 = I x Rx(angleX); m2 = m1 x Ry(S101 = 0); m3 = m2 x Rz(S102 = 0): vrot of 0 gives cos 1, sin 0, -sin -0. */
+  m1[1] = VfDot2(0.0f, 0.0f, c, -s);
+  m1[2] = VfDot2(0.0f, 0.0f, s, c);
+  m1[5] = VfDot2(1.0f, 0.0f, c, -s);
+  m1[6] = VfDot2(1.0f, 0.0f, s, c);
+  m1[9] = VfDot2(0.0f, 1.0f, c, -s);
+  m1[10] = VfDot2(0.0f, 1.0f, s, c);
+  m1[13] = VfDot2(0.0f, 0.0f, c, -s);
+  m1[14] = VfDot2(0.0f, 0.0f, s, c);
+  m2[0] = VfDot3(1.0f, m1[1], m1[2], 1.0f, 0.0f, 0.0f);
+  m2[1] = VfDot2(m1[1], m1[2], 1.0f, 0.0f);
+  m2[2] = VfDot2(m1[1], m1[2], 0.0f, 1.0f);
+  m2[3] = VfDot2(m1[1], m1[2], 0.0f, 0.0f);
+  m2[4] = VfDot2(m1[5], m1[6], 0.0f, 0.0f);
+  m2[5] = VfDot2(m1[5], m1[6], 1.0f, 0.0f);
+  m2[6] = VfDot2(m1[5], m1[6], 0.0f, 1.0f);
+  m2[7] = VfDot2(m1[5], m1[6], 0.0f, 0.0f);
+  m2[8] = VfDot2(m1[9], m1[10], 0.0f, 0.0f);
+  m2[9] = VfDot2(m1[9], m1[10], 1.0f, 0.0f);
+  m2[10] = VfDot2(m1[9], m1[10], 0.0f, 1.0f);
+  m2[11] = VfDot2(m1[9], m1[10], 0.0f, 0.0f);
+  m2[12] = VfDot2(m1[13], m1[14], 0.0f, 0.0f);
+  m2[13] = VfDot2(m1[13], m1[14], 1.0f, 0.0f);
+  m2[14] = VfDot2(m1[13], m1[14], 0.0f, 1.0f);
+  m2[15] = VfDot3(m1[13], m1[14], 1.0f, 0.0f, 0.0f, 1.0f);
+  m3[0] = VfDot4(m2[0], m2[1], m2[2], m2[3], 1.0f, -0.0f, 0.0f, 0.0f);
+  m3[1] = VfDot4(m2[0], m2[1], m2[2], m2[3], 0.0f, 1.0f, 0.0f, 0.0f);
+  m3[2] = VfDot4(m2[0], m2[1], m2[2], m2[3], 0.0f, 0.0f, 1.0f, 0.0f);
+  m3[3] = VfDot4(m2[0], m2[1], m2[2], m2[3], 0.0f, 0.0f, 0.0f, 1.0f);
+  m3[4] = VfDot4(m2[4], m2[5], m2[6], m2[7], 1.0f, -0.0f, 0.0f, 0.0f);
+  m3[5] = VfDot4(m2[4], m2[5], m2[6], m2[7], 0.0f, 1.0f, 0.0f, 0.0f);
+  m3[6] = VfDot4(m2[4], m2[5], m2[6], m2[7], 0.0f, 0.0f, 1.0f, 0.0f);
+  m3[7] = VfDot4(m2[4], m2[5], m2[6], m2[7], 0.0f, 0.0f, 0.0f, 1.0f);
+  m3[8] = VfDot4(m2[8], m2[9], m2[10], m2[11], 1.0f, -0.0f, 0.0f, 0.0f);
+  m3[9] = VfDot4(m2[8], m2[9], m2[10], m2[11], 0.0f, 1.0f, 0.0f, 0.0f);
+  m3[10] = VfDot4(m2[8], m2[9], m2[10], m2[11], 0.0f, 0.0f, 1.0f, 0.0f);
+  m3[11] = VfDot4(m2[8], m2[9], m2[10], m2[11], 0.0f, 0.0f, 0.0f, 1.0f);
+  m3[12] = VfDot4(m2[12], m2[13], m2[14], m2[15], 1.0f, -0.0f, 0.0f, 0.0f);
+  m3[13] = VfDot4(m2[12], m2[13], m2[14], m2[15], 0.0f, 1.0f, 0.0f, 0.0f);
+  m3[14] = VfDot4(m2[12], m2[13], m2[14], m2[15], 0.0f, 0.0f, 1.0f, 0.0f);
+  m3[15] = VfDot4(m2[12], m2[13], m2[14], m2[15], 0.0f, 0.0f, 0.0f, 1.0f);
+  for (i = 0; i < 4; i++) {
+    v[i] = target[i];
+  }
+  target[0] = VfDot4(v[0], v[1], v[2], v[3], m3[0], m3[4], m3[8], m3[12]);
+  target[1] = VfDot4(v[0], v[1], v[2], v[3], m3[1], m3[5], m3[9], m3[13]);
+  target[2] = VfDot4(v[0], v[1], v[2], v[3], m3[2], m3[6], m3[10], m3[14]);
+  target[3] = VfDot4(v[0], v[1], v[2], v[3], m3[3], m3[7], m3[11], m3[15]);
+  for (i = 0; i < 4; i++) {
+    v[i] = eye[i];
+  }
+  eye[0] = VfDot4(v[0], v[1], v[2], v[3], m3[0], m3[4], m3[8], m3[12]);
+  eye[1] = VfDot4(v[0], v[1], v[2], v[3], m3[1], m3[5], m3[9], m3[13]);
+  eye[2] = VfDot4(v[0], v[1], v[2], v[3], m3[2], m3[6], m3[10], m3[14]);
+  eye[3] = VfDot4(v[0], v[1], v[2], v[3], m3[3], m3[7], m3[11], m3[15]);
 
   if (self->fixedOffset != 0) {
     for (i = 0; i < 3; i++) {
-      self->base.eye[i] = eye[i] + offset[i];
+      self->base.eye[i] = VfAdd(eye[i], offset[i]);
     }
     self->base.eye[3] = eye[3];
     for (i = 0; i < 3; i++) {
-      self->base.target[i] = target[i] + offset[i];
+      self->base.target[i] = VfAdd(target[i], offset[i]);
     }
     self->base.target[3] = target[3];
     fov = self->fov;
   }
   else {
     BtlGetStageAmbientColor(amb);
-    self->base.eye[0] = (eye[0] + amb[0]) + g_btlDemoCamVector.x;
-    self->base.eye[1] = (eye[1] + amb[1]) + g_btlDemoCamVector.y;
-    self->base.eye[2] = (eye[2] + amb[2]) + g_btlDemoCamVector.z;
+    self->base.eye[0] = VfAdd(VfAdd(eye[0], amb[0]), g_btlDemoCamVector.x);
+    self->base.eye[1] = VfAdd(VfAdd(eye[1], amb[1]), g_btlDemoCamVector.y);
+    self->base.eye[2] = VfAdd(VfAdd(eye[2], amb[2]), g_btlDemoCamVector.z);
     self->base.eye[3] = eye[3];
     BtlGetStageAmbientColor(amb);
-    self->base.target[0] = (target[0] + amb[0]) + g_btlDemoCamVector.x;
-    self->base.target[1] = (target[1] + amb[1]) + g_btlDemoCamVector.y;
-    self->base.target[2] = (target[2] + amb[2]) + g_btlDemoCamVector.z;
+    self->base.target[0] = VfAdd(VfAdd(target[0], amb[0]), g_btlDemoCamVector.x);
+    self->base.target[1] = VfAdd(VfAdd(target[1], amb[1]), g_btlDemoCamVector.y);
+    self->base.target[2] = VfAdd(VfAdd(target[2], amb[2]), g_btlDemoCamVector.z);
     self->base.target[3] = target[3];
     eyeY = self->base.eye[1];
     self->base.target[1] = eyeY + self->lookHeightBlend * (self->base.target[1] - eyeY);

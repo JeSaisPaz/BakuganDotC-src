@@ -40,7 +40,7 @@ void BtlAttackType40Update(BtlAttack *self)
         effect->dir[2] = self->dir[2];
         effect->dir[3] = self->dir[3];
     }
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

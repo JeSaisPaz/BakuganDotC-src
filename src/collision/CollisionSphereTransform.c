@@ -15,9 +15,9 @@ void CollisionSphereTransform(const CollisionSphere *sphere, const ScePspFMatrix
 
   /* vtfm4.q with the w lane set to 1.0f (vfim); the result's w lane lands on radiusSq and is
      overwritten below, so it is not computed. */
-  out->center[0] = mtx->x.x * x + mtx->y.x * y + mtx->z.x * z + mtx->w.x;
-  out->center[1] = mtx->x.y * x + mtx->y.y * y + mtx->z.y * z + mtx->w.y;
-  out->center[2] = mtx->x.z * x + mtx->y.z * y + mtx->z.z * z + mtx->w.z;
+  out->center[0] = VfDot4(mtx->x.x, mtx->y.x, mtx->z.x, mtx->w.x, x, y, z, 1.0f);
+  out->center[1] = VfDot4(mtx->x.y, mtx->y.y, mtx->z.y, mtx->w.y, x, y, z, 1.0f);
+  out->center[2] = VfDot4(mtx->x.z, mtx->y.z, mtx->z.z, mtx->w.z, x, y, z, 1.0f);
   r = sphere->radius;
   out->radius = r;
   out->radiusSq = r * r;

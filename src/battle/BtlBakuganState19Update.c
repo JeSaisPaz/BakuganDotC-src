@@ -32,8 +32,8 @@ void BtlBakuganState19Update(BtlBakugan *self)
         keep = BtlScaleRetentionByTimeStep(0.699999988f);
     }
     /* vscl.t of velocity.xyz, only x and z stored back (y kept) */
-    velocity[0] = velocity[0] * keep;
-    velocity[2] = velocity[2] * keep;
+    velocity[0] = VfMul(velocity[0], keep);
+    velocity[2] = VfMul(velocity[2], keep);
 
     if (BtlBakuganIsMotion(self, 0x10d) != 0) {
         if (!GfxModelMotionReached(&self->base, self->dashHeading + 0.100000001f)) {

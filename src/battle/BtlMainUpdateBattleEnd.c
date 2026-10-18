@@ -59,16 +59,16 @@ void BtlMainUpdateBattleEnd(BtlMain *self)
         }
         level = (float)step;
         base = level * 0.0599999987f;
-        sine = __builtin_sinf(self->endPulsePhase);
+        sine = VfSinQuarter(VfMul(self->endPulsePhase, 0.636619747f));
         intensity = base * 0.5f + base + sine * base;
         red = g_colorRed;
         centreAlpha = (s32)(intensity * 0.100000001f * 255.0f) & 0xff;
         edgeAlpha = (s32)(intensity * 255.0f) & 0xff;
         for (i = 0; i < 3; i++) {
-            packed = (u32)VfI2uc(VfF2iz(VfSat0(red.x) * 255.0f, 23)) |
-                     ((u32)VfI2uc(VfF2iz(VfSat0(red.y) * 255.0f, 23)) << 8) |
-                     ((u32)VfI2uc(VfF2iz(VfSat0(red.z) * 255.0f, 23)) << 16) |
-                     ((u32)VfI2uc(VfF2iz(VfSat0(red.w) * 255.0f, 23)) << 24);
+            packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(red.x), 255.0f), 23)) |
+                     ((u32)VfI2uc(VfF2iz(VfMul(VfSat0(red.y), 255.0f), 23)) << 8) |
+                     ((u32)VfI2uc(VfF2iz(VfMul(VfSat0(red.z), 255.0f), 23)) << 16) |
+                     ((u32)VfI2uc(VfF2iz(VfMul(VfSat0(red.w), 255.0f), 23)) << 24);
             self->endGradient[i] =
                 (packed & 0x00ffffff) | (((i & 1) != 0 ? centreAlpha : edgeAlpha) << 24);
         }
@@ -149,8 +149,8 @@ void BtlMainUpdateBattleEnd(BtlMain *self)
             self->endZoomTarget = 0.0f;
         }
         camera = g_gfxActiveCamera;
-        cosine = __builtin_cosf(self->endZoomProgress);
-        sine = __builtin_sinf(self->endZoomProgress);
+        cosine = VfCosQuarter(VfMul(self->endZoomProgress, 0.636619747f));
+        sine = VfSinQuarter(VfMul(self->endZoomProgress, 0.636619747f));
         GfxCameraSetScreenOffset(camera->screenOffset[0] + cosine * self->endZoomTarget,
                                  camera->screenOffset[1] + sine * self->endZoomTarget, camera);
         self->endZoomProgress = self->endZoomProgress + self->endZoomParam;

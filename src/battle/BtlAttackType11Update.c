@@ -84,47 +84,44 @@ void BtlAttackType11Update(BtlAttack *self)
     local = self->bone->localMatrix;
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            self->mtx[j][i] = local[j * 4 + 0] * root[0 * 4 + i] + local[j * 4 + 1] * root[1 * 4 + i] +
-                              local[j * 4 + 2] * root[2 * 4 + i] + local[j * 4 + 3] * root[3 * 4 + i];
+            self->mtx[j][i] = VfDot4(local[j * 4 + 0], local[j * 4 + 1], local[j * 4 + 2], local[j * 4 + 3], root[0 * 4 + i], root[1 * 4 + i], root[2 * 4 + i], root[3 * 4 + i]);
         }
     }
     for (i = 0; i < 4; i++) {
-        self->pos[i] = self->mtx[0][i] * g_btlAttackType11Offset.x + self->mtx[1][i] * g_btlAttackType11Offset.y +
-                       self->mtx[2][i] * g_btlAttackType11Offset.z + self->mtx[3][i] * 1.0f;
+        self->pos[i] = VfDot4(self->mtx[0][i], self->mtx[1][i], self->mtx[2][i], self->mtx[3][i], g_btlAttackType11Offset.x, g_btlAttackType11Offset.y, g_btlAttackType11Offset.z, 1.0f);
     }
     for (i = 0; i < 3; i++) {
-        v[i] = self->mtx[0][i] * g_btlAttackType11Dir.x + self->mtx[1][i] * g_btlAttackType11Dir.y +
-               self->mtx[2][i] * g_btlAttackType11Dir.z;
+        v[i] = VfDot3(self->mtx[0][i], self->mtx[1][i], self->mtx[2][i], g_btlAttackType11Dir.x, g_btlAttackType11Dir.y, g_btlAttackType11Dir.z);
     }
-    lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+    lenSq = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
     scale = VfRsq(lenSq);
     if (VfIsZero(lenSq)) {
         scale = 0.0f;
     }
-    self->auxVec[0] = VfSat1(v[0] * scale);
-    self->auxVec[1] = VfSat1(v[1] * scale);
-    self->auxVec[2] = VfSat1(v[2] * scale);
+    self->auxVec[0] = VfSat1(VfMul(v[0], scale));
+    self->auxVec[1] = VfSat1(VfMul(v[1], scale));
+    self->auxVec[2] = VfSat1(VfMul(v[2], scale));
     self->auxVec[3] = 0.0f;
 
     target = (BtlBakugan *)BtlFindBakuganById(self->targetId);
     if (target != NULL) {
         /* auxVec.y = y of clamp(normalise(target pos - owner pos)) */
-        v[0] = target->base.pos[0] - self->owner->base.pos[0];
-        v[1] = target->base.pos[1] - self->owner->base.pos[1];
-        v[2] = target->base.pos[2] - self->owner->base.pos[2];
-        lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+        v[0] = VfSub(target->base.pos[0], self->owner->base.pos[0]);
+        v[1] = VfSub(target->base.pos[1], self->owner->base.pos[1]);
+        v[2] = VfSub(target->base.pos[2], self->owner->base.pos[2]);
+        lenSq = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
         scale = VfRsq(lenSq);
         if (VfIsZero(lenSq)) {
             scale = 0.0f;
         }
-        self->auxVec[1] = VfSat1(v[1] * scale);
+        self->auxVec[1] = VfSat1(VfMul(v[1], scale));
     }
 
     /* segment = auxVec x (length x 12), w = 0 (bank S713) */
     scale = self->paramF0 * 12.0f;
-    self->segment[0] = self->auxVec[0] * scale;
-    self->segment[1] = self->auxVec[1] * scale;
-    self->segment[2] = self->auxVec[2] * scale;
+    self->segment[0] = VfMul(self->auxVec[0], scale);
+    self->segment[1] = VfMul(self->auxVec[1], scale);
+    self->segment[2] = VfMul(self->auxVec[2], scale);
     self->segment[3] = 0.0f;
     if (self->age == 0) {
         for (i = 0; i < 4; i++) {
@@ -133,7 +130,7 @@ void BtlAttackType11Update(BtlAttack *self)
     } else {
         /* vel += (auxVec - vel) x 0.2 (all four lanes) */
         for (i = 0; i < 4; i++) {
-            self->vel[i] = self->vel[i] + (self->auxVec[i] - self->vel[i]) * 0.200000003f;
+            self->vel[i] = VfAdd(self->vel[i], VfMul(VfSub(self->auxVec[i], self->vel[i]), 0.200000003f));
         }
     }
     effect = self->effect;
@@ -151,9 +148,9 @@ void BtlAttackType11Update(BtlAttack *self)
             self->param1++;
         } else if ((self->param0 & 1) != 0) {
             /* spawnPos = hit point + contact normal x 3 (xyz, w from the hit point) */
-            spawnPos[0] = g_btlAttackHitQuery.contact.x + g_collisionHitResult.normal.x * 3.0f;
-            spawnPos[1] = g_btlAttackHitQuery.contact.y + g_collisionHitResult.normal.y * 3.0f;
-            spawnPos[2] = g_btlAttackHitQuery.contact.z + g_collisionHitResult.normal.z * 3.0f;
+            spawnPos[0] = VfAdd(g_btlAttackHitQuery.contact.x, VfMul(g_collisionHitResult.normal.x, 3.0f));
+            spawnPos[1] = VfAdd(g_btlAttackHitQuery.contact.y, VfMul(g_collisionHitResult.normal.y, 3.0f));
+            spawnPos[2] = VfAdd(g_btlAttackHitQuery.contact.z, VfMul(g_collisionHitResult.normal.z, 3.0f));
             spawnPos[3] = g_btlAttackHitQuery.contact.w;
             GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0xa1, spawnPos, &g_collisionHitResult.normal.x);
             BtlAttackPlaySound(self, 0x200099, NULL, 0, 0);

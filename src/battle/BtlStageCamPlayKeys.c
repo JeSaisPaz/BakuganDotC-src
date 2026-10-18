@@ -84,9 +84,9 @@ void BtlStageCamPlayKeys(BtlStageCam *task)
                     look[1] = next.target[1];
                     look[2] = next.target[2];
                     look[3] = 0.0f;
-                    eye[0] += unitPos[0];
-                    eye[1] += unitPos[1];
-                    eye[2] += unitPos[2];
+                    eye[0] = VfAdd(eye[0], unitPos[0]);
+                    eye[1] = VfAdd(eye[1], unitPos[1]);
+                    eye[2] = VfAdd(eye[2], unitPos[2]);
                     eyeArg[0] = eye[0];
                     eyeArg[1] = eye[1];
                     eyeArg[2] = eye[2];

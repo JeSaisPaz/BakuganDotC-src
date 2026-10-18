@@ -35,9 +35,9 @@ void BtlAttackType1CUpdate(BtlAttack *self)
             owner = self->owner;
             angle = owner->base.rot[1];
             /* vrot [C,0,S,0] scaled by 500 (xyz), then + owner pos (xyz); w stays 0 */
-            origin[0] = __builtin_cosf(angle) * 500.0f + owner->base.pos[0];
-            origin[1] = 0.0f * 500.0f + owner->base.pos[1];
-            origin[2] = __builtin_sinf(angle) * 500.0f + owner->base.pos[2];
+            origin[0] = VfAdd(VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), 500.0f), owner->base.pos[0]);
+            origin[1] = VfAdd(0.0f * 500.0f, owner->base.pos[1]);
+            origin[2] = VfAdd(VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), 500.0f), owner->base.pos[2]);
             origin[3] = 0.0f;
             owner = self->owner;
             fallback[0] = owner->base.pos[0];

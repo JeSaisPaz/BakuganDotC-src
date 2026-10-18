@@ -45,6 +45,6 @@ void GameFieldCameraUpdate(GameFieldCamera *cam)
             pos[i] = cam->base.eye[i];
         goal = ((Actor *)cam->target)->base.pos;
         for (i = 0; i < 4; i++)
-            pos[i] = pos[i] + (goal[i] - pos[i]) * 0.5f;
+            pos[i] = VfAdd(pos[i], VfMul(VfSub(goal[i], pos[i]), 0.5f));
     }
 }

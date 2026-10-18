@@ -12,15 +12,19 @@
    and 1 mix, columns 2 and 3 are kept (identity rows). */
 static void UiLoadIconRotate(float *matrix, float angle)
 {
-  float c = __builtin_cosf(angle);
-  float s = __builtin_sinf(angle);
+  float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  float s = VfSinQuarter(VfMul(angle, 0.636619747f));
   int i;
 
   for (i = 0; i < 4; i++) {
     float a0 = matrix[4 * i];
     float a1 = matrix[4 * i + 1];
-    matrix[4 * i] = a0 * c + a1 * -s;
-    matrix[4 * i + 1] = a0 * s + a1 * c;
+    float a2 = matrix[4 * i + 2];
+    float a3 = matrix[4 * i + 3];
+    matrix[4 * i] = VfDot4(a0, a1, a2, a3, c, -s, 0.0f, 0.0f);
+    matrix[4 * i + 1] = VfDot4(a0, a1, a2, a3, s, c, 0.0f, 0.0f);
+    matrix[4 * i + 2] = VfDot4(a0, a1, a2, a3, 0.0f, 0.0f, 1.0f, 0.0f);
+    matrix[4 * i + 3] = VfDot4(a0, a1, a2, a3, 0.0f, 0.0f, 0.0f, 1.0f);
   }
 }
 

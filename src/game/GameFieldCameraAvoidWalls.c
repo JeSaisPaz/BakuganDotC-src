@@ -37,10 +37,10 @@ void GameFieldCameraAvoidWalls(GameFieldCamera *cam)
 
     /* goalDist2 = |followGoal - followLookAt|² (xyz) */
     {
-        float dx = cam->followGoal.x - cam->followLookAt.x;
-        float dy = cam->followGoal.y - cam->followLookAt.y;
-        float dz = cam->followGoal.z - cam->followLookAt.z;
-        goalDist2 = dx * dx + dy * dy + dz * dz;
+        float dx = VfSub(cam->followGoal.x, cam->followLookAt.x);
+        float dy = VfSub(cam->followGoal.y, cam->followLookAt.y);
+        float dz = VfSub(cam->followGoal.z, cam->followLookAt.z);
+        goalDist2 = VfDot3(dx, dy, dz, dx, dy, dz);
     }
     goalMoving = 0;
     if (!(goalDist2 <= 0.1f)) {
@@ -49,9 +49,9 @@ void GameFieldCameraAvoidWalls(GameFieldCamera *cam)
 
     desc = &g_collisionSweptSphereDesc;
     /* eyeOfs.xyz = eye - target (w = eye.w) */
-    eyeOfs.x = cam->base.eye[0] - cam->base.target[0];
-    eyeOfs.y = cam->base.eye[1] - cam->base.target[1];
-    eyeOfs.z = cam->base.eye[2] - cam->base.target[2];
+    eyeOfs.x = VfSub(cam->base.eye[0], cam->base.target[0]);
+    eyeOfs.y = VfSub(cam->base.eye[1], cam->base.target[1]);
+    eyeOfs.z = VfSub(cam->base.eye[2], cam->base.target[2]);
     eyeOfs.w = cam->base.eye[3];
     desc->radius = 3.3f;
     desc->start.x = cam->base.target[0];
@@ -66,27 +66,27 @@ void GameFieldCameraAvoidWalls(GameFieldCamera *cam)
     if (CollisionRaycast(0x37bf0700, &desc->shapeBlock, 1) != NULL) {
         /* hit = dir * bestT; dir = normalize(dir) * 4; hit += dir; dist = |hit| */
         t = g_collisionHitInfo.bestT;
-        hit.x = desc->dir.x * t;
-        hit.y = desc->dir.y * t;
-        hit.z = desc->dir.z * t;
+        hit.x = VfMul(desc->dir.x, t);
+        hit.y = VfMul(desc->dir.y, t);
+        hit.z = VfMul(desc->dir.z, t);
         hit.w = 0.0f;
-        d2 = desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z;
+        d2 = VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z);
         r = VfIsZero(d2) ? 0.0f : VfRsq(d2);
-        r = r * 4.0f;
-        desc->dir.x = desc->dir.x * r;
-        desc->dir.y = desc->dir.y * r;
-        desc->dir.z = desc->dir.z * r;
+        r = VfMul(r, 4.0f);
+        desc->dir.x = VfMul(desc->dir.x, r);
+        desc->dir.y = VfMul(desc->dir.y, r);
+        desc->dir.z = VfMul(desc->dir.z, r);
         desc->dir.w = 0.0f;
-        hit.x = hit.x + desc->dir.x;
-        hit.y = hit.y + desc->dir.y;
-        hit.z = hit.z + desc->dir.z;
-        dist = __builtin_sqrtf(hit.x * hit.x + hit.y * hit.y + hit.z * hit.z);
+        hit.x = VfAdd(hit.x, desc->dir.x);
+        hit.y = VfAdd(hit.y, desc->dir.y);
+        hit.z = VfAdd(hit.z, desc->dir.z);
+        dist = VfSqrt(VfDot3(hit.x, hit.y, hit.z, hit.x, hit.y, hit.z));
         if (dist < cam->distance) {
             cam->distance = dist;
             /* eye = start + hit (w = start.w), staged through newEye */
-            newEye.x = desc->start.x + hit.x;
-            newEye.y = desc->start.y + hit.y;
-            newEye.z = desc->start.z + hit.z;
+            newEye.x = VfAdd(desc->start.x, hit.x);
+            newEye.y = VfAdd(desc->start.y, hit.y);
+            newEye.z = VfAdd(desc->start.z, hit.z);
             newEye.w = desc->start.w;
             cam->base.eye[0] = newEye.x;
             cam->base.eye[1] = newEye.y;
@@ -97,9 +97,9 @@ void GameFieldCameraAvoidWalls(GameFieldCamera *cam)
             cam->wallAvoidTimer = 30;
         }
         /* eyeOfs = eye - target (w = eye.w), staged through tmp */
-        tmp.x = cam->base.eye[0] - cam->base.target[0];
-        tmp.y = cam->base.eye[1] - cam->base.target[1];
-        tmp.z = cam->base.eye[2] - cam->base.target[2];
+        tmp.x = VfSub(cam->base.eye[0], cam->base.target[0]);
+        tmp.y = VfSub(cam->base.eye[1], cam->base.target[1]);
+        tmp.z = VfSub(cam->base.eye[2], cam->base.target[2]);
         tmp.w = cam->base.eye[3];
         eyeOfs = tmp;
     }
@@ -117,43 +117,43 @@ void GameFieldCameraAvoidWalls(GameFieldCamera *cam)
             cam->wallAvoidTimer = timer;
             ramp = (float)-timer * 0.033333335f;
             /* blend = clamp(ramp, 0, 1) (vmin with S733, vmax with S713; ramp is never NaN) */
-            blend = (ramp < 1.0f) ? ramp : 1.0f;
-            blend = (blend > 0.0f) ? blend : 0.0f;
+            blend = VfMin(ramp, 1.0f);
+            blend = VfMax(blend, 0.0f);
 
             /* dir = normalize(dir) * default distance */
-            d2 = desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z;
+            d2 = VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z);
             r = VfIsZero(d2) ? 0.0f : VfRsq(d2);
-            r = r * g_gameFieldCameraDefaultDistance;
-            desc->dir.x = desc->dir.x * r;
-            desc->dir.y = desc->dir.y * r;
-            desc->dir.z = desc->dir.z * r;
+            r = VfMul(r, g_gameFieldCameraDefaultDistance);
+            desc->dir.x = VfMul(desc->dir.x, r);
+            desc->dir.y = VfMul(desc->dir.y, r);
+            desc->dir.z = VfMul(desc->dir.z, r);
             desc->dir.w = 0.0f;
             dist = g_gameFieldCameraDefaultDistance;
 
             if (CollisionRaycast(0x37bf0700, &desc->shapeBlock, 1) != NULL) {
                 t = g_collisionHitInfo.bestT;
-                hit2.x = desc->dir.x * t;
-                hit2.y = desc->dir.y * t;
-                hit2.z = desc->dir.z * t;
+                hit2.x = VfMul(desc->dir.x, t);
+                hit2.y = VfMul(desc->dir.y, t);
+                hit2.z = VfMul(desc->dir.z, t);
                 hit2.w = 0.0f;
-                d2 = desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y + desc->dir.z * desc->dir.z;
+                d2 = VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z);
                 r = VfIsZero(d2) ? 0.0f : VfRsq(d2);
-                r = r * 4.0f;
-                desc->dir.x = desc->dir.x * r;
-                desc->dir.y = desc->dir.y * r;
-                desc->dir.z = desc->dir.z * r;
+                r = VfMul(r, 4.0f);
+                desc->dir.x = VfMul(desc->dir.x, r);
+                desc->dir.y = VfMul(desc->dir.y, r);
+                desc->dir.z = VfMul(desc->dir.z, r);
                 desc->dir.w = 0.0f;
-                hit2.x = hit2.x + desc->dir.x;
-                hit2.y = hit2.y + desc->dir.y;
-                hit2.z = hit2.z + desc->dir.z;
-                len = __builtin_sqrtf(hit2.x * hit2.x + hit2.y * hit2.y + hit2.z * hit2.z);
+                hit2.x = VfAdd(hit2.x, desc->dir.x);
+                hit2.y = VfAdd(hit2.y, desc->dir.y);
+                hit2.z = VfAdd(hit2.z, desc->dir.z);
+                len = VfSqrt(VfDot3(hit2.x, hit2.y, hit2.z, hit2.x, hit2.y, hit2.z));
                 if (!(dist <= len)) {
-                    dist = __builtin_sqrtf(hit2.x * hit2.x + hit2.y * hit2.y + hit2.z * hit2.z);
+                    dist = VfSqrt(VfDot3(hit2.x, hit2.y, hit2.z, hit2.x, hit2.y, hit2.z));
                 }
             }
 
             /* vcos.s of (blend * π) * S703: the quarter-turn scale cancels */
-            c = __builtin_cosf(blend * 3.14159274f);
+            c = VfCosQuarter(VfMul(blend * 3.14159274f, 0.636619747f));
             step = (1.0f - c) * 0.5f * (dist - cam->distance) * 0.1f;
             if (goalMoving != 0) {
                 step = cam->distance;
@@ -166,7 +166,7 @@ void GameFieldCameraAvoidWalls(GameFieldCamera *cam)
             cam->distance = cam->distance + step;
         }
         /* dist = |eyeOfs| */
-        dist = __builtin_sqrtf(eyeOfs.x * eyeOfs.x + eyeOfs.y * eyeOfs.y + eyeOfs.z * eyeOfs.z);
+        dist = VfSqrt(VfDot3(eyeOfs.x, eyeOfs.y, eyeOfs.z, eyeOfs.x, eyeOfs.y, eyeOfs.z));
     }
 
     if (dist < 7.8f) {

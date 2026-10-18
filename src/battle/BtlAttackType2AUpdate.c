@@ -29,13 +29,13 @@ void BtlAttackType2AUpdate(BtlAttack *self)
         }
         self->paramF2 = rate;
         /* vrot by rate * 2/pi quarter turns = rate radians; vel.y/w kept */
-        c = __builtin_cosf(rate);
-        sn = __builtin_sinf(rate);
+        c = VfCosQuarter(VfMul(rate, 0.636619747f));
+        sn = VfSinQuarter(VfMul(rate, 0.636619747f));
         x = self->vel[0];
         y = self->vel[1];
         z = self->vel[2];
-        self->vel[0] = x * c + y * 0.0f + z * -sn;
-        self->vel[2] = x * sn + y * 0.0f + z * c;
+        self->vel[0] = VfDot3(x, y, z, c, 0.0f, -sn);
+        self->vel[2] = VfDot3(x, y, z, sn, 0.0f, c);
     }
     BtlAttackUpdateBeam(9.0f, self, 0xf0, 0xf1, 0xf2, 0x4d, 0x28);
 }

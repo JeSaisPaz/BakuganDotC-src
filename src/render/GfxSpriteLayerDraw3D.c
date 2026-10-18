@@ -53,7 +53,6 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
   float s;
   float lenSq;
   float inv;
-  float sum;
   float axis[3];
   float vx[3];
   float vy[3];
@@ -111,22 +110,22 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
          m[j][r] = sum over k of local[j][k] * basis[k][r], basis = the camera billboard (0) or the
          sprite matrix (10). */
       angle = sprite->maybe_billboardParams80[2];
-      c = __builtin_cosf(angle);
-      s = __builtin_sinf(angle);
-      local[0] = c * sprite->width;
-      local[1] = s * sprite->width;
-      local[2] = 0.0f;
-      local[3] = 0.0f;
-      local[4] = -s * sprite->height;
-      local[5] = c * sprite->height;
-      local[6] = 0.0f;
-      local[7] = 0.0f;
-      local[8] = 0.0f;
-      local[9] = 0.0f;
-      local[10] = sprite->depth;
-      local[11] = 0.0f;
-      local[12] = 0.0f;
-      local[13] = 0.0f;
+      c = VfCosQuarter(VfMul(angle, 0.636619747f));
+      s = VfSinQuarter(VfMul(angle, 0.636619747f));
+      local[0] = VfDot2(sprite->width, 0.0f, c, -s);
+      local[1] = VfDot2(sprite->width, 0.0f, s, c);
+      local[2] = VfDot2(sprite->width, 0.0f, 0.0f, 0.0f);
+      local[3] = VfDot2(sprite->width, 0.0f, 0.0f, 0.0f);
+      local[4] = VfDot2(0.0f, sprite->height, c, -s);
+      local[5] = VfDot2(0.0f, sprite->height, s, c);
+      local[6] = VfDot2(sprite->height, 0.0f, 0.0f, 0.0f);
+      local[7] = VfDot2(sprite->height, 0.0f, 0.0f, 0.0f);
+      local[8] = VfDot3(0.0f, 0.0f, sprite->depth, c, -s, 0.0f);
+      local[9] = VfDot3(0.0f, 0.0f, sprite->depth, s, c, 0.0f);
+      local[10] = VfDot2(sprite->depth, 0.0f, 1.0f, 0.0f);
+      local[11] = VfDot2(sprite->depth, 0.0f, 0.0f, 0.0f);
+      local[12] = VfDot2(0.0f, 0.0f, c, -s);
+      local[13] = VfDot2(0.0f, 0.0f, s, c);
       local[14] = 0.0f;
       local[15] = 1.0f;
       if (sprite->billboardMode == 0) {
@@ -136,11 +135,8 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
       }
       for (j = 0; j < 4; j++) {
         for (r = 0; r < 4; r++) {
-          sum = local[j * 4] * basis[0 * 4 + r];
-          for (k = 1; k < 4; k++) {
-            sum = sum + local[j * 4 + k] * basis[k * 4 + r];
-          }
-          m[j * 4 + r] = sum;
+          m[j * 4 + r] = VfDot4(local[j * 4 + 0], local[j * 4 + 1], local[j * 4 + 2], local[j * 4 + 3],
+                                basis[0 * 4 + r], basis[1 * 4 + r], basis[2 * 4 + r], basis[3 * 4 + r]);
         }
       }
       break;
@@ -150,9 +146,9 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
     case 2:
       /* sprite matrix rows 0-2 scaled by width/height/depth (row 3 of m left as it was) */
       for (k = 0; k < 4; k++) {
-        m[k] = sprite->matrix[k] * sprite->width;
-        m[4 + k] = sprite->matrix[4 + k] * sprite->height;
-        m[8 + k] = sprite->matrix[8 + k] * sprite->depth;
+        m[k] = VfMul(sprite->matrix[k], sprite->width);
+        m[4 + k] = VfMul(sprite->matrix[4 + k], sprite->height);
+        m[8 + k] = VfMul(sprite->matrix[8 + k], sprite->depth);
       }
       break;
     case 3:
@@ -173,11 +169,7 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
       qb[3][0] = -lane[0]; qb[3][1] = -lane[1]; qb[3][2] = -lane[2]; qb[3][3] = lane[3];
       for (j = 0; j < 3; j++) {
         for (r = 0; r < 3; r++) {
-          sum = qb[j][0] * qa[0][r];
-          for (k = 1; k < 4; k++) {
-            sum = sum + qb[j][k] * qa[k][r];
-          }
-          m[j * 4 + r] = sum;
+          m[j * 4 + r] = VfDot4(qb[j][0], qb[j][1], qb[j][2], qb[j][3], qa[0][r], qa[1][r], qa[2][r], qa[3][r]);
         }
         m[j * 4 + 3] = 0.0f;
       }
@@ -202,30 +194,30 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
       vz[0] = sprite->toCamera[0];
       vz[1] = sprite->toCamera[1];
       vz[2] = sprite->toCamera[2];
-      lenSq = vz[0] * vz[0] + vz[1] * vz[1] + vz[2] * vz[2];
+      lenSq = VfDot3(vz[0], vz[1], vz[2], vz[0], vz[1], vz[2]);
       inv = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-      vz[0] = VfSat1(vz[0] * inv);
-      vz[1] = VfSat1(vz[1] * inv);
-      vz[2] = VfSat1(vz[2] * inv);
-      vx[0] = axis[1] * vz[2] - axis[2] * vz[1];
-      vx[1] = axis[2] * vz[0] - axis[0] * vz[2];
-      vx[2] = axis[0] * vz[1] - axis[1] * vz[0];
-      lenSq = vx[0] * vx[0] + vx[1] * vx[1] + vx[2] * vx[2];
+      vz[0] = VfSat1(VfMul(vz[0], inv));
+      vz[1] = VfSat1(VfMul(vz[1], inv));
+      vz[2] = VfSat1(VfMul(vz[2], inv));
+      vx[0] = VfDot2(axis[1], axis[2], vz[2], -vz[1]);
+      vx[1] = VfDot2(axis[2], axis[0], vz[0], -vz[2]);
+      vx[2] = VfDot2(axis[0], axis[1], vz[1], -vz[0]);
+      lenSq = VfDot3(vx[0], vx[1], vx[2], vx[0], vx[1], vx[2]);
       inv = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-      vx[0] = VfSat1(vx[0] * inv);
-      vx[1] = VfSat1(vx[1] * inv);
-      vx[2] = VfSat1(vx[2] * inv);
-      vy[0] = vz[1] * vx[2] - vz[2] * vx[1];
-      vy[1] = vz[2] * vx[0] - vz[0] * vx[2];
-      vy[2] = vz[0] * vx[1] - vz[1] * vx[0];
+      vx[0] = VfSat1(VfMul(vx[0], inv));
+      vx[1] = VfSat1(VfMul(vx[1], inv));
+      vx[2] = VfSat1(VfMul(vx[2], inv));
+      vy[0] = VfDot2(vz[1], vz[2], vx[2], -vx[1]);
+      vy[1] = VfDot2(vz[2], vz[0], vx[0], -vx[2]);
+      vy[2] = VfDot2(vz[0], vz[1], vx[1], -vx[0]);
       for (k = 0; k < 3; k++) {
-        m[k] = vx[k] * sprite->width;
-        m[4 + k] = vy[k] * sprite->height;
-        m[8 + k] = vz[k] * sprite->depth;
+        m[k] = VfMul(vx[k], sprite->width);
+        m[4 + k] = VfMul(vy[k], sprite->height);
+        m[8 + k] = VfMul(vz[k], sprite->depth);
       }
-      m[3] = 0.0f * sprite->width;
-      m[7] = 0.0f * sprite->height;
-      m[11] = 0.0f * sprite->depth;
+      m[3] = VfMul(0.0f, sprite->width);
+      m[7] = VfMul(0.0f, sprite->height);
+      m[11] = VfMul(0.0f, sprite->depth);
       m[12] = 0.0f;
       m[13] = 0.0f;
       m[14] = 0.0f;
@@ -238,9 +230,9 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
 
     if (origin != NULL) {
       /* relPos = pos - origin (xyz; w stays pos.w) */
-      relPos[0] = sprite->posX - origin[0];
-      relPos[1] = sprite->posY - origin[1];
-      relPos[2] = sprite->posZ - origin[2];
+      relPos[0] = VfSub(sprite->posX, origin[0]);
+      relPos[1] = VfSub(sprite->posY, origin[1]);
+      relPos[2] = VfSub(sprite->posZ, origin[2]);
       relPos[3] = sprite->posW;
       dl = GfxDlWriteSpriteWorldMatrix(dl, world, relPos);
     } else {
@@ -278,10 +270,10 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
     }
 
     /* tint rgb + alpha saturated to [0,1], scaled by 255 and packed to 4 bytes (r in the low byte) */
-    rgba = (u32)VfI2uc(VfF2iz(VfSat0(sprite->tint[0]) * 255.0f, 23)) |
-           (u32)VfI2uc(VfF2iz(VfSat0(sprite->tint[1]) * 255.0f, 23)) << 8 |
-           (u32)VfI2uc(VfF2iz(VfSat0(sprite->tint[2]) * 255.0f, 23)) << 16 |
-           (u32)VfI2uc(VfF2iz(VfSat0(sprite->alpha) * 255.0f, 23)) << 24;
+    rgba = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(sprite->tint[0]), 255.0f), 23)) |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(sprite->tint[1]), 255.0f), 23)) << 8 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(sprite->tint[2]), 255.0f), 23)) << 16 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(sprite->alpha), 255.0f), 23)) << 24;
     dl[0] = (rgba & 0xffffff) | 0x55000000;
     dl[1] = rgba >> 24 | 0x58000000;
     dl += 2;

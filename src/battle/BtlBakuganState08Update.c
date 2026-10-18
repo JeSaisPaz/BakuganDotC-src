@@ -60,35 +60,35 @@ static inline void BtlBakuganAimDelta(float *delta, BtlBakugan *to, BtlBakugan *
 {
   float tw = to->base.pos[3];
 
-  delta[0] = to->base.pos[0] - from->base.pos[0];
-  delta[1] = to->base.pos[1] - from->base.pos[1];
-  delta[2] = to->base.pos[2] - from->base.pos[2];
+  delta[0] = VfSub(to->base.pos[0], from->base.pos[0]);
+  delta[1] = VfSub(to->base.pos[1], from->base.pos[1]);
+  delta[2] = VfSub(to->base.pos[2], from->base.pos[2]);
   delta[3] = tw;
 }
 
 /* aim.xyz *= len / |aim.xyz| (inverse length 0 for a zero vector); aim.w becomes 0. */
 static inline void BtlBakuganScaleAim(float *aim, float len)
 {
-  float sq = aim[0] * aim[0] + aim[1] * aim[1] + aim[2] * aim[2];
+  float sq = VfDot3(aim[0], aim[1], aim[2], aim[0], aim[1], aim[2]);
   float inv = VfRsq(sq);
   float k;
 
   if (VfIsZero(sq)) {
     inv = 0.0f;
   }
-  k = inv * len;
-  aim[0] = aim[0] * k;
-  aim[1] = aim[1] * k;
-  aim[2] = aim[2] * k;
+  k = VfMul(inv, len);
+  aim[0] = VfMul(aim[0], k);
+  aim[1] = VfMul(aim[1], k);
+  aim[2] = VfMul(aim[2], k);
   aim[3] = 0.0f;
 }
 
 /* step = {cos(yaw), 0, sin(yaw)} * speed, step.w = 0. */
 static inline void BtlBakuganHeadingStep(float *step, float yaw, float speed)
 {
-  step[0] = __builtin_cosf(yaw) * speed;
-  step[1] = 0.0f * speed;
-  step[2] = __builtin_sinf(yaw) * speed;
+  step[0] = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), speed);
+  step[1] = VfMul(0.0f, speed);
+  step[2] = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), speed);
   step[3] = 0.0f;
 }
 
@@ -202,15 +202,15 @@ void BtlBakuganState08Update(BtlBakugan *self)
   velocity = self->base.velocity;
   if (BtlBakuganIsAirborne(self, 1) == 0 || (self->stateFlags & 0x80000) != 0) {
     /* velocity.xyz *= 0.8; velocity.w becomes 0 */
-    velocity[0] = velocity[0] * 0.8f;
-    velocity[1] = velocity[1] * 0.8f;
-    velocity[2] = velocity[2] * 0.8f;
+    velocity[0] = VfMul(velocity[0], 0.8f);
+    velocity[1] = VfMul(velocity[1], 0.8f);
+    velocity[2] = VfMul(velocity[2], 0.8f);
     velocity[3] = 0.0f;
     self->dashSpeed = self->dashSpeed * 0.9f;
   } else {
     velocity[1] = velocity[1] * 0.84f;
-    velocity[0] = velocity[0] * 0.93f;
-    velocity[2] = velocity[2] * 0.93f;
+    velocity[0] = VfMul(velocity[0], 0.93f);
+    velocity[2] = VfMul(velocity[2], 0.93f);
     self->dashSpeed = self->dashSpeed * 0.93f;
   }
 
@@ -235,15 +235,15 @@ void BtlBakuganState08Update(BtlBakugan *self)
     if (!(rate == 0.0f)) {
       rate = rate * (float)self->attackFrame;
       /* clamp to [0, 1] (vmin/vmax: rate is never NaN) */
-      rate = rate < 1.0f ? rate : 1.0f;
-      rate = rate > 0.0f ? rate : 0.0f;
+      rate = VfMin(rate, 1.0f);
+      rate = VfMax(rate, 0.0f);
       BtlBakuganCallSetMotionSpeed(self, rate * rate);
     }
     if ((set->flags & 0x4000) != 0 && self->attackPhase == 2) {
       target = (BtlBakugan *)BtlBakuganGetTarget(self);
       if (target != NULL) {
         BtlBakuganAimDelta(aim, target, self);
-        dist = __builtin_sqrtf(aim[0] * aim[0] + aim[1] * aim[1] + aim[2] * aim[2]);
+        dist = VfSqrt(VfDot3(aim[0], aim[1], aim[2], aim[0], aim[1], aim[2]));
         gap = dist - self->combat.stats->reachRadius * 1.3f;
         speed = BtlBakuganGetScaledStat4C(self);
         if (gap < 0.0f) {
@@ -258,10 +258,10 @@ void BtlBakuganState08Update(BtlBakugan *self)
         BtlBakuganHeadingStep(aim, yaw, speed);
       }
       /* velocity += (aim - velocity) * 0.3 (all four lanes) */
-      velocity[0] = velocity[0] + (aim[0] - velocity[0]) * 0.3f;
-      velocity[1] = velocity[1] + (aim[1] - velocity[1]) * 0.3f;
-      velocity[2] = velocity[2] + (aim[2] - velocity[2]) * 0.3f;
-      velocity[3] = velocity[3] + (aim[3] - velocity[3]) * 0.3f;
+      velocity[0] = VfAdd(velocity[0], VfMul(VfSub(aim[0], velocity[0]), 0.3f));
+      velocity[1] = VfAdd(velocity[1], VfMul(VfSub(aim[1], velocity[1]), 0.3f));
+      velocity[2] = VfAdd(velocity[2], VfMul(VfSub(aim[2], velocity[2]), 0.3f));
+      velocity[3] = VfAdd(velocity[3], VfMul(VfSub(aim[3], velocity[3]), 0.3f));
       self->stateFlags |= 0x1000000;
     }
     if ((set->flags & 0x80) != 0) {
@@ -277,9 +277,9 @@ void BtlBakuganState08Update(BtlBakugan *self)
       } else {
         BtlBakuganHeadingStep(step, self->base.rot[1], self->dashSpeed);
         /* velocity.xyz += step.xyz */
-        velocity[0] = velocity[0] + step[0];
-        velocity[1] = velocity[1] + step[1];
-        velocity[2] = velocity[2] + step[2];
+        velocity[0] = VfAdd(velocity[0], step[0]);
+        velocity[1] = VfAdd(velocity[1], step[1]);
+        velocity[2] = VfAdd(velocity[2], step[2]);
       }
     }
   }

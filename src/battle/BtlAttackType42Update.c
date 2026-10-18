@@ -23,7 +23,7 @@ void BtlAttackType42Update(BtlAttack *self)
         return;
     }
     /* pos.xyz += vel.xyz (vadd.t; w kept) */
-    self->pos[0] += self->vel[0];
-    self->pos[1] += self->vel[1];
-    self->pos[2] += self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

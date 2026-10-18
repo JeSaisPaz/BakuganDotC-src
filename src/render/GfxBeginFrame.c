@@ -35,10 +35,10 @@ void GfxBeginFrame(GfxDisplay *display)
     g_renderListCursor = list;
 
     /* vsat0.q, vscl.q by S701 (255), vf2iz.q 23, vi2uc.q */
-    colour = (u32)VfI2uc(VfF2iz(VfSat0(display->clearColor[0]) * 255.0f, 23)) |
-             (u32)VfI2uc(VfF2iz(VfSat0(display->clearColor[1]) * 255.0f, 23)) << 8 |
-             (u32)VfI2uc(VfF2iz(VfSat0(display->clearColor[2]) * 255.0f, 23)) << 16 |
-             (u32)VfI2uc(VfF2iz(VfSat0(display->clearColor[3]) * 255.0f, 23)) << 24;
+    colour = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(display->clearColor[0]), 255.0f), 23)) |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(display->clearColor[1]), 255.0f), 23)) << 8 |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(display->clearColor[2]), 255.0f), 23)) << 16 |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(display->clearColor[3]), 255.0f), 23)) << 24;
 
     /* Jump over the inline vertex data. */
     verts = (GfxGeColorVertex16 *)(list + 2);

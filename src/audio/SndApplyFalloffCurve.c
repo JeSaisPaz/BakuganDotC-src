@@ -10,14 +10,14 @@
 float SndApplyFalloffCurve(float t, s32 curveId)
 {
     if (curveId == 1) {
-        float c = __builtin_cosf(t * 1.5707964f);
+        float c = VfCosQuarter(VfMul(t * 1.5707964f, 0.636619747f));
         return (c - (1.0f - t)) + t;
     }
     if (curveId == -1) {
         return 1.0f - t;
     }
     if (curveId == -2) {
-        float c = __builtin_cosf(t * 1.5707964f);
+        float c = VfCosQuarter(VfMul(t * 1.5707964f, 0.636619747f));
         return (1.0f - t) * 2.0f - c;
     }
     if (curveId == -3) {

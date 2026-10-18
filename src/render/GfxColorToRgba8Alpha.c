@@ -6,10 +6,10 @@
    255 (the VFPU bank constant S701) and truncated to a byte. */
 u32 GfxColorToRgba8Alpha(const ScePspFVector4 *rgba, float alpha)
 {
-    float a = rgba->w * alpha;
+    float a = VfMul(rgba->w, alpha);
 
-    return (u32)VfI2uc(VfF2iz(VfSat0(rgba->x) * 255.0f, 23)) |
-           (u32)VfI2uc(VfF2iz(VfSat0(rgba->y) * 255.0f, 23)) << 8 |
-           (u32)VfI2uc(VfF2iz(VfSat0(rgba->z) * 255.0f, 23)) << 16 |
-           (u32)VfI2uc(VfF2iz(VfSat0(a) * 255.0f, 23)) << 24;
+    return (u32)VfI2uc(VfF2iz(VfMul(VfSat0(rgba->x), 255.0f), 23)) |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(rgba->y), 255.0f), 23)) << 8 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(rgba->z), 255.0f), 23)) << 16 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(a), 255.0f), 23)) << 24;
 }

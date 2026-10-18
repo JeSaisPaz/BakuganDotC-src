@@ -17,12 +17,12 @@ bool CollisionAabbOverlapCapsule(const float *aabb, const void *query)
     int i;
 
     for (i = 0; i < 3; i++) {
-        lo[i] = aabb[i] - c->radius;
-        hi[i] = aabb[4 + i] + c->radius;
-        size[i] = hi[i] - lo[i];
+        lo[i] = VfSub(aabb[i], c->radius);
+        hi[i] = VfAdd(aabb[4 + i], c->radius);
+        size[i] = VfSub(hi[i], lo[i]);
     }
     for (i = 0; i < 3; i++)
-        mid[i] = c->start[i] * 2.0f + c->axis[i] - lo[i] - hi[i];
+        mid[i] = VfSub(VfSub(VfAdd(VfMul(c->start[i], 2.0f), c->axis[i]), lo[i]), hi[i]);
 
     adx = __builtin_fabsf(c->axis[0]);
     if (!(__builtin_fabsf(mid[0]) <= adx + size[0]))

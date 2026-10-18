@@ -12,14 +12,14 @@ void GameQuestCamIntegrate(float dt, GameQuestCamSpring *self, float *pos, float
   float dz;
 
   GameQuestCamApplyAccel(dt, self, vel, accel);
-  dx = vel[0] * dt;
-  dy = vel[1] * dt;
-  dz = vel[2] * dt;
+  dx = VfMul(vel[0], dt);
+  dy = VfMul(vel[1], dt);
+  dz = VfMul(vel[2], dt);
   /* step.w gets the stale lane 3 of C710 (never set here): left out. */
   self->step.x = dx;
   self->step.y = dy;
   self->step.z = dz;
-  pos[0] = pos[0] + dx;
-  pos[1] = pos[1] + dy;
-  pos[2] = pos[2] + dz;
+  pos[0] = VfAdd(pos[0], dx);
+  pos[1] = VfAdd(pos[1], dy);
+  pos[2] = VfAdd(pos[2], dz);
 }

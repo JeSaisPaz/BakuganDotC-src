@@ -167,11 +167,11 @@ void ActorStageObjState00Update(ActorStageObjBase *self)
     effPos[2] = col->hitPos.z;
     effPos[3] = col->hitPos.w;
     for (i = 0; i < 3; i++) {
-      camOff[i] = g_gfxActiveCamera->dir[i] * 4.0f;
+      camOff[i] = VfMul(g_gfxActiveCamera->dir[i], 4.0f);
     }
     camOff[3] = 0.0f;
     for (i = 0; i < 3; i++) {
-      effPos[i] = effPos[i] - camOff[i];
+      effPos[i] = VfSub(effPos[i], camOff[i]);
     }
     GfxEffectSpawn(g_worldEffectMgr, 9, effPos);
     cat = self->category;

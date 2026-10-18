@@ -26,7 +26,9 @@ void UiNameEntryIntroPhase(UiNameEntry *self)
   float c;
   float sn;
   float x;
+  float y;
   float z;
+  float w;
 
   switch (self->base.phaseStep) {
   case 0:
@@ -45,13 +47,17 @@ void UiNameEntryIntroPhase(UiNameEntry *self)
        each baseMatrix row becomes row * R (vmmul.q E200, E100, E000), then the translation row
        (+0x30), saved before, is stored back, so only rows 0..2 change. */
     m = self->baseMatrix;
-    c = __builtin_cosf(0.09424778f); /* 0x3dc104fb */
-    sn = __builtin_sinf(0.09424778f);
+    c = VfCosQuarter(0.09424778f * 0.636619747f); /* 0x3dc104fb */
+    sn = VfSinQuarter(0.09424778f * 0.636619747f);
     for (i = 0; i < 3; i++) {
       x = m[i * 4 + 0];
+      y = m[i * 4 + 1];
       z = m[i * 4 + 2];
-      m[i * 4 + 0] = x * c + z * sn;
-      m[i * 4 + 2] = -(x * sn) + z * c;
+      w = m[i * 4 + 3];
+      m[i * 4 + 0] = VfDot4(c, 0.0f, sn, 0.0f, x, y, z, w);
+      m[i * 4 + 1] = VfDot4(0.0f, 1.0f, 0.0f, 0.0f, x, y, z, w);
+      m[i * 4 + 2] = VfDot4(-sn, 0.0f, c, 0.0f, x, y, z, w);
+      m[i * 4 + 3] = VfDot4(0.0f, 0.0f, 0.0f, 1.0f, x, y, z, w);
     }
     if (((GfxModel *)self->avatar)->rot[1] <= 1.5707964f) {
       ((GfxSprite **)self->base.data)[1]->flags |= 1;

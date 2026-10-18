@@ -78,27 +78,25 @@ void BtlBakuganState05Update(BtlBakugan *self)
             angle = CoreRandFloat(6.28f);
             /* kick = {cos, 0, sin, 0}(angle) * 0.1; velocity.xyz += kick.xyz;
                velocity.xyz = normalise(velocity.xyz) * 40 (scale 0 when zero length), .w = 0 */
-            kick[0] = __builtin_cosf(angle) * 0.1f;
+            kick[0] = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), 0.1f);
             kick[1] = 0.0f * 0.1f;
-            kick[2] = __builtin_sinf(angle) * 0.1f;
+            kick[2] = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), 0.1f);
             kick[3] = 0.0f;
-            self->base.velocity[0] = self->base.velocity[0] + kick[0];
-            self->base.velocity[1] = self->base.velocity[1] + kick[1];
-            self->base.velocity[2] = self->base.velocity[2] + kick[2];
-            lenSq = self->base.velocity[0] * self->base.velocity[0] +
-                    self->base.velocity[1] * self->base.velocity[1] +
-                    self->base.velocity[2] * self->base.velocity[2];
+            self->base.velocity[0] = VfAdd(self->base.velocity[0], kick[0]);
+            self->base.velocity[1] = VfAdd(self->base.velocity[1], kick[1]);
+            self->base.velocity[2] = VfAdd(self->base.velocity[2], kick[2]);
+            lenSq = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
             scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-            scale = scale * 40.0f;
-            self->base.velocity[0] = self->base.velocity[0] * scale;
-            self->base.velocity[1] = self->base.velocity[1] * scale;
-            self->base.velocity[2] = self->base.velocity[2] * scale;
+            scale = VfMul(scale, 40.0f);
+            self->base.velocity[0] = VfMul(self->base.velocity[0], scale);
+            self->base.velocity[1] = VfMul(self->base.velocity[1], scale);
+            self->base.velocity[2] = VfMul(self->base.velocity[2], scale);
             self->base.velocity[3] = 0.0f;
             self->base.velocity[1] = 30.0f;
         } else {
             /* velocity.x/z *= 0.83 */
-            self->base.velocity[0] = self->base.velocity[0] * 0.83f;
-            self->base.velocity[2] = self->base.velocity[2] * 0.83f;
+            self->base.velocity[0] = VfMul(self->base.velocity[0], 0.83f);
+            self->base.velocity[2] = VfMul(self->base.velocity[2], 0.83f);
             self->base.velocity[1] =
                 self->base.velocity[1] + ((float)-self->subTimer - self->base.velocity[1]) * 0.25f;
             self->tiltStep = 0.0f;

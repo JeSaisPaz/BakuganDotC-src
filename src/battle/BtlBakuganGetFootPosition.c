@@ -42,16 +42,15 @@ float *BtlBakuganGetFootPosition(BtlBakugan *self, int foot, int variant)
         b = node->localMatrix;
         for (j = 0; j < 4; j++) {
             for (r = 0; r < 4; r++) {
-                world[j * 4 + r] = b[j * 4 + 0] * a[0 * 4 + r] + b[j * 4 + 1] * a[1 * 4 + r] +
-                                   b[j * 4 + 2] * a[2 * 4 + r] + b[j * 4 + 3] * a[3 * 4 + r];
+                world[j * 4 + r] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], a[0 * 4 + r], a[1 * 4 + r], a[2 * 4 + r], a[3 * 4 + r]);
             }
         }
         /* vtfm4.q C000, E100, C200: g_btlFootPos = sum_k offset[k] * column k of world */
         t = g_btlFootNodeOffset;
-        g_btlFootPos[0] = world[0] * t[0] + world[4] * t[1] + world[8] * t[2] + world[12] * t[3];
-        g_btlFootPos[1] = world[1] * t[0] + world[5] * t[1] + world[9] * t[2] + world[13] * t[3];
-        g_btlFootPos[2] = world[2] * t[0] + world[6] * t[1] + world[10] * t[2] + world[14] * t[3];
-        g_btlFootPos[3] = world[3] * t[0] + world[7] * t[1] + world[11] * t[2] + world[15] * t[3];
+        g_btlFootPos[0] = VfDot4(world[0], world[4], world[8], world[12], t[0], t[1], t[2], t[3]);
+        g_btlFootPos[1] = VfDot4(world[1], world[5], world[9], world[13], t[0], t[1], t[2], t[3]);
+        g_btlFootPos[2] = VfDot4(world[2], world[6], world[10], world[14], t[0], t[1], t[2], t[3]);
+        g_btlFootPos[3] = VfDot4(world[3], world[7], world[11], world[15], t[0], t[1], t[2], t[3]);
     } else if (self->base.base.unk08 == 10) {
         legIndex = 0;
         if (variant == 0) {

@@ -39,15 +39,15 @@ void GmoModelComputeWorldMatricesBind(GmoModel *self)
   y = q[1];
   z = q[2];
   w = q[3];
-  rot[0][0] = w * w + z * -z + -y * y + -x * -x;
-  rot[0][1] = w * z + z * w + -y * -x + -x * -y;
-  rot[0][2] = w * -y + z * x + -y * w + -x * -z;
-  rot[1][0] = -z * w + w * -z + x * y + -y * -x;
-  rot[1][1] = -z * z + w * w + x * -x + -y * -y;
-  rot[1][2] = -z * -y + w * x + x * w + -y * -z;
-  rot[2][0] = y * w + -x * -z + w * y + -z * -x;
-  rot[2][1] = y * z + -x * w + w * -x + -z * -y;
-  rot[2][2] = y * -y + -x * x + w * w + -z * -z;
+  rot[0][0] = VfDot4(w, z, -y, -x, w, -z, y, -x);
+  rot[0][1] = VfDot4(w, z, -y, -x, z, w, -x, -y);
+  rot[0][2] = VfDot4(w, z, -y, -x, -y, x, w, -z);
+  rot[1][0] = VfDot4(-z, w, x, -y, w, -z, y, -x);
+  rot[1][1] = VfDot4(-z, w, x, -y, z, w, -x, -y);
+  rot[1][2] = VfDot4(-z, w, x, -y, -y, x, w, -z);
+  rot[2][0] = VfDot4(y, -x, w, -z, w, -z, y, -x);
+  rot[2][1] = VfDot4(y, -x, w, -z, z, w, -x, -y);
+  rot[2][2] = VfDot4(y, -x, w, -z, -y, x, w, -z);
 
   if (self->flags28 & 1)
     root = self->rootMatrix;
@@ -116,10 +116,10 @@ void GmoModelComputeWorldMatricesBind(GmoModel *self)
     }
     if (parentFlags & 0x40) {
       for (k = 0; k < 3; k++)
-        adj[k] = adj[k] * (1.0f / parent->scale[k]);
+        adj[k] = VfMul(adj[k], (VfRcp(parent->scale[k])));
     }
     for (k = 0; k < 3; k++)
-      colScale[k] = adj[k] * s[k];
+      colScale[k] = VfMul(adj[k], s[k]);
     wrow[0] = 0.0f;
     wrow[1] = 0.0f;
     wrow[2] = 0.0f;
@@ -133,15 +133,15 @@ void GmoModelComputeWorldMatricesBind(GmoModel *self)
       } else {
         for (k = 0; k < 3; k++) {
           colScale[k] = 1.0f;
-          wrow[k] = adj[k] * s[k];
+          wrow[k] = VfMul(adj[k], s[k]);
         }
       }
     }
     for (k = 0; k < 3; k++)
-      t[k] = t[k] * inh[k];
+      t[k] = VfMul(t[k], inh[k]);
     for (c = 0; c < 3; c++)
       for (r = 0; r < 3; r++)
-        rot[c][r] = rot[c][r] * colScale[c];
+        rot[c][r] = VfMul(rot[c][r], colScale[c]);
 
     if (flags & 0x80) {
       const float *pivot = node->block38;
@@ -150,16 +150,16 @@ void GmoModelComputeWorldMatricesBind(GmoModel *self)
 
       for (k = 0; k < 3; k++) {
         p[k] = pivot[k];
-        off[k] = p[k] * inh[k];
+        off[k] = VfMul(p[k], inh[k]);
       }
       if (flags & 0x01) {
         for (k = 0; k < 3; k++)
-          p[k] = p[k] * wrow[k];
+          p[k] = VfMul(p[k], wrow[k]);
       }
       for (k = 0; k < 3; k++) {
-        float rp = rot[0][k] * p[0] + rot[1][k] * p[1] + rot[2][k] * p[2];
+        float rp = VfDot3(rot[0][k], rot[1][k], rot[2][k], p[0], p[1], p[2]);
 
-        t[k] = (t[k] + off[k]) - rp;
+        t[k] = VfSub(VfAdd(t[k], off[k]), rp);
       }
     }
 
@@ -190,7 +190,7 @@ void GmoModelComputeWorldMatricesBind(GmoModel *self)
       for (c = 0; c < 4; c++) {
         for (r = 0; r < 3; r++)
           node->localMatrix[c * 4 + r] =
-              L[c][0] * P[0][r] + L[c][1] * P[1][r] + L[c][2] * P[2][r] + L[c][3] * P[3][r];
+              VfDot4(L[c][0], L[c][1], L[c][2], L[c][3], P[0][r], P[1][r], P[2][r], P[3][r]);
         node->localMatrix[c * 4 + 3] = wrow[c];
       }
 
@@ -199,7 +199,7 @@ void GmoModelComputeWorldMatricesBind(GmoModel *self)
       if ((flags & 0x02) && parent != NULL) {
         for (c = 0; c < 3; c++) {
           for (r = 0; r < 3; r++)
-            parent->localMatrix[c * 4 + r] = P[c][r] * inh[c];
+            parent->localMatrix[c * 4 + r] = VfMul(P[c][r], inh[c]);
           parent->localMatrix[c * 4 + 3] = 0.0f;
         }
       }
@@ -215,7 +215,7 @@ void GmoModelComputeWorldMatricesBind(GmoModel *self)
       rot[2][2] = hy - xx;
       for (c = 0; c < 3; c++)
         for (r = 0; r < 3; r++)
-          rot[c][r] = rot[c][r] + rot[c][r];
+          rot[c][r] = VfAdd(rot[c][r], rot[c][r]);
     }
   }
 }

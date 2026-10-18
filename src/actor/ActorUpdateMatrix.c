@@ -34,8 +34,7 @@ void ActorUpdateMatrix(Actor *self)
     b[2][0] = q[1];  b[2][1] = -q[0]; b[2][2] = q[3];  b[2][3] = q[2];
     for (j = 0; j < 3; j++) {
         for (i = 0; i < 3; i++) {
-            tilt[j * 4 + i] = b[j][0] * a[0][i] + b[j][1] * a[1][i] + b[j][2] * a[2][i] +
-                              b[j][3] * a[3][i];
+            tilt[j * 4 + i] = VfDot4(b[j][0], b[j][1], b[j][2], b[j][3], a[0][i], a[1][i], a[2][i], a[3][i]);
         }
         tilt[j * 4 + 3] = 0.0f;
     }
@@ -52,23 +51,23 @@ void ActorUpdateMatrix(Actor *self)
         angle = angle + 6.28318548f;
     }
     dst = self->base.data->rootMatrix;
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
-    dst[0] = self->base.scale[0] * c;
-    dst[1] = 0.0f;
-    dst[2] = self->base.scale[0] * -s;
-    dst[3] = 0.0f;
-    dst[4] = 0.0f;
-    dst[5] = self->base.scale[1];
-    dst[6] = 0.0f;
-    dst[7] = 0.0f;
-    dst[8] = self->base.scale[2] * s;
-    dst[9] = 0.0f;
-    dst[10] = self->base.scale[2] * c;
-    dst[11] = 0.0f;
-    dst[12] = 0.0f;
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
+    dst[0] = VfDot2(self->base.scale[0], 0.0f, c, s);
+    dst[1] = VfDot2(self->base.scale[0], 0.0f, 0.0f, 0.0f);
+    dst[2] = VfDot2(self->base.scale[0], 0.0f, -s, c);
+    dst[3] = VfDot2(self->base.scale[0], 0.0f, 0.0f, 0.0f);
+    dst[4] = VfDot3(0.0f, self->base.scale[1], 0.0f, c, 0.0f, s);
+    dst[5] = VfDot2(self->base.scale[1], 0.0f, 1.0f, 0.0f);
+    dst[6] = VfDot3(0.0f, self->base.scale[1], 0.0f, -s, 0.0f, c);
+    dst[7] = VfDot2(self->base.scale[1], 0.0f, 0.0f, 0.0f);
+    dst[8] = VfDot2(0.0f, self->base.scale[2], c, s);
+    dst[9] = VfDot2(self->base.scale[2], 0.0f, 0.0f, 0.0f);
+    dst[10] = VfDot2(0.0f, self->base.scale[2], -s, c);
+    dst[11] = VfDot2(self->base.scale[2], 0.0f, 0.0f, 0.0f);
+    dst[12] = VfDot2(0.0f, 0.0f, c, s);
     dst[13] = 0.0f;
-    dst[14] = 0.0f;
+    dst[14] = VfDot2(0.0f, 0.0f, -s, c);
     dst[15] = 1.0f;
 
     /* rootMatrix = tilt * rootMatrix (column j = sum_k rootMatrix[j][k] * tilt column k). */
@@ -78,8 +77,7 @@ void ActorUpdateMatrix(Actor *self)
     }
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            dst[j * 4 + i] = m[j * 4 + 0] * tilt[0 + i] + m[j * 4 + 1] * tilt[4 + i] +
-                             m[j * 4 + 2] * tilt[8 + i] + m[j * 4 + 3] * tilt[12 + i];
+            dst[j * 4 + i] = VfDot4(m[j * 4 + 0], m[j * 4 + 1], m[j * 4 + 2], m[j * 4 + 3], tilt[0 + i], tilt[4 + i], tilt[8 + i], tilt[12 + i]);
         }
     }
 

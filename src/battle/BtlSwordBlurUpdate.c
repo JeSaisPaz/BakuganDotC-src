@@ -70,10 +70,7 @@ void BtlSwordBlurUpdate(BtlSwordBlur *blur)
     root = blur->owner->base.data->rootMatrix;
     for (c = 0; c < 4; c++) {
         for (r = 0; r < 4; r++) {
-            mtx[c * 4 + r] = root[0 * 4 + r] * bone->localMatrix[c * 4 + 0]
-                           + root[1 * 4 + r] * bone->localMatrix[c * 4 + 1]
-                           + root[2 * 4 + r] * bone->localMatrix[c * 4 + 2]
-                           + root[3 * 4 + r] * bone->localMatrix[c * 4 + 3];
+            mtx[c * 4 + r] = VfDot4(root[0 * 4 + r], root[1 * 4 + r], root[2 * 4 + r], root[3 * 4 + r], bone->localMatrix[c * 4 + 0], bone->localMatrix[c * 4 + 1], bone->localMatrix[c * 4 + 2], bone->localMatrix[c * 4 + 3]);
         }
     }
 
@@ -100,12 +97,10 @@ void BtlSwordBlurUpdate(BtlSwordBlur *blur)
 
     /* tipOut/baseOut = mtx * (offset.xyz, 1) (vtfm4.q E100 form, w lane set to 1 by vfim). */
     for (r = 0; r < 4; r++) {
-        tipOut[r] = mtx[0 + r] * tip[0] + mtx[4 + r] * tip[1] + mtx[8 + r] * tip[2]
-                  + mtx[12 + r] * 1.0f;
+        tipOut[r] = VfDot4(mtx[0 + r], mtx[4 + r], mtx[8 + r], mtx[12 + r], tip[0], tip[1], tip[2], 1.0f);
     }
     for (r = 0; r < 4; r++) {
-        baseOut[r] = mtx[0 + r] * base[0] + mtx[4 + r] * base[1] + mtx[8 + r] * base[2]
-                   + mtx[12 + r] * 1.0f;
+        baseOut[r] = VfDot4(mtx[0 + r], mtx[4 + r], mtx[8 + r], mtx[12 + r], base[0], base[1], base[2], 1.0f);
     }
     BtlSwordBlurPushSegment(blur, tipOut, baseOut);
 

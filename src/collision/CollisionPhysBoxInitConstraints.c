@@ -15,11 +15,11 @@ void CollisionPhysBoxInitConstraints(CollisionPhysBox *self)
     for (i = 0; i < 28; i++) {
         const ScePspFVector4 *b = &self->pos[g_collisionPhysBoxEdges[i * 2 + 1]];
         const ScePspFVector4 *a = &self->pos[g_collisionPhysBoxEdges[i * 2]];
-        float dx = b->x - a->x;
-        float dy = b->y - a->y;
-        float dz = b->z - a->z;
+        float dx = VfSub(b->x, a->x);
+        float dy = VfSub(b->y, a->y);
+        float dz = VfSub(b->z, a->z);
 
-        self->restLen[i] = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+        self->restLen[i] = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
     }
     self->floorY = 0.0f;
     self->contactVec.x = 0.0f;

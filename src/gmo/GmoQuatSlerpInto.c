@@ -24,46 +24,46 @@ ScePspFVector4 GmoQuatSlerpInto(float t, float *dst, ScePspFVector4 q)
     p.y = dst[1];
     p.z = dst[2];
     p.w = dst[3];
-    d = VfSat1(p.x * q.x + p.y * q.y + p.z * q.z + p.w * q.w);
-    diff.x = (q.x - p.x) * t;
-    diff.y = (q.y - p.y) * t;
-    diff.z = (q.z - p.z) * t;
-    diff.w = (q.w - p.w) * t;
-    sum.x = (q.x + p.x) * t;
-    sum.y = (q.y + p.y) * t;
-    sum.z = (q.z + p.z) * t;
-    sum.w = (q.w + p.w) * t;
-    if (d < 0.0f) {
+    d = VfSat1(VfDot4(p.x, p.y, p.z, p.w, q.x, q.y, q.z, q.w));
+    diff.x = VfMul(VfSub(q.x, p.x), t);
+    diff.y = VfMul(VfSub(q.y, p.y), t);
+    diff.z = VfMul(VfSub(q.z, p.z), t);
+    diff.w = VfMul(VfSub(q.w, p.w), t);
+    sum.x = VfMul(VfAdd(q.x, p.x), t);
+    sum.y = VfMul(VfAdd(q.y, p.y), t);
+    sum.z = VfMul(VfAdd(q.z, p.z), t);
+    sum.w = VfMul(VfAdd(q.w, p.w), t);
+    if (VfDaz(d) < 0.0f) {
         q.x = -q.x;
         q.y = -q.y;
         q.z = -q.z;
         q.w = -q.w;
     }
-    if (!(d < 0.998046875f)) {
-        r.x = p.x + diff.x;
-        r.y = p.y + diff.y;
-        r.z = p.z + diff.z;
-        r.w = p.w + diff.w;
+    if (!(VfDaz(d) < 0.998046875f)) {
+        r.x = VfAdd(p.x, diff.x);
+        r.y = VfAdd(p.y, diff.y);
+        r.z = VfAdd(p.z, diff.z);
+        r.w = VfAdd(p.w, diff.w);
         return r;
     }
-    if (d < -0.998046875f) {
-        r.x = p.x - sum.x;
-        r.y = p.y - sum.y;
-        r.z = p.z - sum.z;
-        r.w = p.w - sum.w;
+    if (VfDaz(d) < -0.998046875f) {
+        r.x = VfSub(p.x, sum.x);
+        r.y = VfSub(p.y, sum.y);
+        r.z = VfSub(p.z, sum.z);
+        r.w = VfSub(p.w, sum.w);
         return r;
     }
-    sq = __builtin_sqrtf(1.0f - d * d);
-    th = 1.0f - __builtin_fabsf(VfAsinQuarter(d));
-    if (!(__builtin_fabsf(d) < 0.707106769f)) {
+    sq = VfSqrt(VfSub(1.0f, VfMul(d, d)));
+    th = VfSub(1.0f, __builtin_fabsf(VfAsinQuarter(d)));
+    if (!(__builtin_fabsf(VfDaz(d)) < 0.707106769f)) {
         th = VfAsinQuarter(sq);
     }
-    wp = VfSinQuarter((1.0f - t) * th);
-    wq = VfSinQuarter(t * th);
+    wp = VfSinQuarter(VfMul(VfSub(1.0f, t), th));
+    wq = VfSinQuarter(VfMul(t, th));
     inv = VfRcp(VfSinQuarter(th));
-    r.x = (p.x * wp + q.x * wq) * inv;
-    r.y = (p.y * wp + q.y * wq) * inv;
-    r.z = (p.z * wp + q.z * wq) * inv;
-    r.w = (p.w * wp + q.w * wq) * inv;
+    r.x = VfMul(VfDot2(p.x, q.x, wp, wq), inv);
+    r.y = VfMul(VfDot2(p.y, q.y, wp, wq), inv);
+    r.z = VfMul(VfDot2(p.z, q.z, wp, wq), inv);
+    r.w = VfMul(VfDot2(p.w, q.w, wp, wq), inv);
     return r;
 }

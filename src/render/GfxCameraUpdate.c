@@ -27,10 +27,10 @@ static float GfxCameraRsqOrZero(float d)
 /* Column `j` of `a * b` (column-major): the sum over k of b.j[k] * column k of `a`. */
 static void GfxCameraMulColumn(ScePspFVector4 *d, const ScePspFMatrix4 *a, const ScePspFVector4 *col)
 {
-    d->x = col->x * a->x.x + col->y * a->y.x + col->z * a->z.x + col->w * a->w.x;
-    d->y = col->x * a->x.y + col->y * a->y.y + col->z * a->z.y + col->w * a->w.y;
-    d->z = col->x * a->x.z + col->y * a->y.z + col->z * a->z.z + col->w * a->w.z;
-    d->w = col->x * a->x.w + col->y * a->y.w + col->z * a->z.w + col->w * a->w.w;
+    d->x = VfDot4(col->x, col->y, col->z, col->w, a->x.x, a->y.x, a->z.x, a->w.x);
+    d->y = VfDot4(col->x, col->y, col->z, col->w, a->x.y, a->y.y, a->z.y, a->w.y);
+    d->z = VfDot4(col->x, col->y, col->z, col->w, a->x.z, a->y.z, a->z.z, a->w.z);
+    d->w = VfDot4(col->x, col->y, col->z, col->w, a->x.w, a->y.w, a->z.w, a->w.w);
 }
 
 static void GfxCameraMatMul(ScePspFMatrix4 *d, const ScePspFMatrix4 *a, const ScePspFMatrix4 *b)
@@ -70,79 +70,78 @@ void GfxCameraUpdate(GfxCamera *camera, u32 flags)
     float n2;
 
     if (flags & 1) {
-        diff[0] = camera->target[0] - camera->eye[0];
-        diff[1] = camera->target[1] - camera->eye[1];
-        diff[2] = camera->target[2] - camera->eye[2];
+        diff[0] = VfSub(camera->target[0], camera->eye[0]);
+        diff[1] = VfSub(camera->target[1], camera->eye[1]);
+        diff[2] = VfSub(camera->target[2], camera->eye[2]);
         if (diff[0] != 0.0f || diff[2] != 0.0f) {
             /* dir = normalize(diff), w = S713 (bank 0) */
-            s = GfxCameraRsqOrZero(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
-            camera->dir[0] = VfSat1(diff[0] * s);
-            camera->dir[1] = VfSat1(diff[1] * s);
-            camera->dir[2] = VfSat1(diff[2] * s);
+            s = GfxCameraRsqOrZero(VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]));
+            camera->dir[0] = VfSat1(VfMul(diff[0], s));
+            camera->dir[1] = VfSat1(VfMul(diff[1], s));
+            camera->dir[2] = VfSat1(VfMul(diff[2], s));
             camera->dir[3] = 0.0f;
 
             /* view = look-at: f = normalize(eye - target), x = up x f, y = f x x */
-            f[0] = camera->eye[0] - camera->target[0];
-            f[1] = camera->eye[1] - camera->target[1];
-            f[2] = camera->eye[2] - camera->target[2];
-            s = GfxCameraRsqOrZero(f[0] * f[0] + f[1] * f[1] + f[2] * f[2]);
-            f[0] = VfSat1(f[0] * s);
-            f[1] = VfSat1(f[1] * s);
-            f[2] = VfSat1(f[2] * s);
-            xa[0] = camera->up[1] * f[2] - camera->up[2] * f[1];
-            xa[1] = camera->up[2] * f[0] - camera->up[0] * f[2];
-            xa[2] = camera->up[0] * f[1] - camera->up[1] * f[0];
-            ya[0] = f[1] * xa[2] - f[2] * xa[1];
-            ya[1] = f[2] * xa[0] - f[0] * xa[2];
-            ya[2] = f[0] * xa[1] - f[1] * xa[0];
-            sx = GfxCameraRsqOrZero(xa[0] * xa[0] + xa[1] * xa[1] + xa[2] * xa[2]);
-            sy = GfxCameraRsqOrZero(ya[0] * ya[0] + ya[1] * ya[1] + ya[2] * ya[2]);
-            xa[0] = VfSat1(xa[0] * sx);
-            xa[1] = VfSat1(xa[1] * sx);
-            xa[2] = VfSat1(xa[2] * sx);
-            ya[0] = VfSat1(ya[0] * sy);
-            ya[1] = VfSat1(ya[1] * sy);
-            ya[2] = VfSat1(ya[2] * sy);
+            f[0] = VfSub(camera->eye[0], camera->target[0]);
+            f[1] = VfSub(camera->eye[1], camera->target[1]);
+            f[2] = VfSub(camera->eye[2], camera->target[2]);
+            s = GfxCameraRsqOrZero(VfDot3(f[0], f[1], f[2], f[0], f[1], f[2]));
+            f[0] = VfSat1(VfMul(f[0], s));
+            f[1] = VfSat1(VfMul(f[1], s));
+            f[2] = VfSat1(VfMul(f[2], s));
+            xa[0] = VfDot2(camera->up[1], camera->up[2], f[2], -f[1]);
+            xa[1] = VfDot2(camera->up[2], camera->up[0], f[0], -f[2]);
+            xa[2] = VfDot2(camera->up[0], camera->up[1], f[1], -f[0]);
+            ya[0] = VfDot2(f[1], f[2], xa[2], -xa[1]);
+            ya[1] = VfDot2(f[2], f[0], xa[0], -xa[2]);
+            ya[2] = VfDot2(f[0], f[1], xa[1], -xa[0]);
+            sx = GfxCameraRsqOrZero(VfDot3(xa[0], xa[1], xa[2], xa[0], xa[1], xa[2]));
+            sy = GfxCameraRsqOrZero(VfDot3(ya[0], ya[1], ya[2], ya[0], ya[1], ya[2]));
+            xa[0] = VfSat1(VfMul(xa[0], sx));
+            xa[1] = VfSat1(VfMul(xa[1], sx));
+            xa[2] = VfSat1(VfMul(xa[2], sx));
+            ya[0] = VfSat1(VfMul(ya[0], sy));
+            ya[1] = VfSat1(VfMul(ya[1], sy));
+            ya[2] = VfSat1(VfMul(ya[2], sy));
             ex = -camera->eye[0];
             ey = -camera->eye[1];
             ez = -camera->eye[2];
-            camera->view.x.x = xa[0];
-            camera->view.x.y = ya[0];
-            camera->view.x.z = f[0];
-            camera->view.x.w = 0.0f;
-            camera->view.y.x = xa[1];
-            camera->view.y.y = ya[1];
-            camera->view.y.z = f[1];
-            camera->view.y.w = 0.0f;
-            camera->view.z.x = xa[2];
-            camera->view.z.y = ya[2];
-            camera->view.z.z = f[2];
-            camera->view.z.w = 0.0f;
-            camera->view.w.x = xa[0] * ex + xa[1] * ey + xa[2] * ez + 0.0f;
-            camera->view.w.y = ya[0] * ex + ya[1] * ey + ya[2] * ez + 0.0f;
-            camera->view.w.z = f[0] * ex + f[1] * ey + f[2] * ez + 0.0f;
-            camera->view.w.w = 1.0f;
+            camera->view.x.x = VfDot3(1.0f, 0.0f, 0.0f, xa[0], ya[0], f[0]);
+            camera->view.x.y = VfDot3(0.0f, 1.0f, 0.0f, xa[0], ya[0], f[0]);
+            camera->view.x.z = VfDot3(0.0f, 0.0f, 1.0f, xa[0], ya[0], f[0]);
+            camera->view.x.w = VfDot3(0.0f, 0.0f, 0.0f, xa[0], ya[0], f[0]);
+            camera->view.y.x = VfDot3(1.0f, 0.0f, 0.0f, xa[1], ya[1], f[1]);
+            camera->view.y.y = VfDot3(0.0f, 1.0f, 0.0f, xa[1], ya[1], f[1]);
+            camera->view.y.z = VfDot3(0.0f, 0.0f, 1.0f, xa[1], ya[1], f[1]);
+            camera->view.y.w = VfDot3(0.0f, 0.0f, 0.0f, xa[1], ya[1], f[1]);
+            camera->view.z.x = VfDot3(1.0f, 0.0f, 0.0f, xa[2], ya[2], f[2]);
+            camera->view.z.y = VfDot3(0.0f, 1.0f, 0.0f, xa[2], ya[2], f[2]);
+            camera->view.z.z = VfDot3(0.0f, 0.0f, 1.0f, xa[2], ya[2], f[2]);
+            camera->view.z.w = VfDot3(0.0f, 0.0f, 0.0f, xa[2], ya[2], f[2]);
+            camera->view.w.x = VfDot4(xa[0], xa[1], xa[2], 0.0f, ex, ey, ez, 1.0f);
+            camera->view.w.y = VfDot4(ya[0], ya[1], ya[2], 0.0f, ex, ey, ez, 1.0f);
+            camera->view.w.z = VfDot4(f[0], f[1], f[2], 0.0f, ex, ey, ez, 1.0f);
+            camera->view.w.w = VfDot4(camera->view.x.w, camera->view.y.w, camera->view.z.w, 1.0f, ex, ey, ez, 1.0f);
 
             /* billboard = (normalize(g_vecUp x d), d x that, d = normalize(dir)), identity w */
-            s = GfxCameraRsqOrZero(camera->dir[0] * camera->dir[0] + camera->dir[1] * camera->dir[1] +
-                                   camera->dir[2] * camera->dir[2]);
-            d[0] = VfSat1(camera->dir[0] * s);
-            d[1] = VfSat1(camera->dir[1] * s);
-            d[2] = VfSat1(camera->dir[2] * s);
-            bx[0] = g_vecUp.y * d[2] - g_vecUp.z * d[1];
-            bx[1] = g_vecUp.z * d[0] - g_vecUp.x * d[2];
-            bx[2] = g_vecUp.x * d[1] - g_vecUp.y * d[0];
-            s = GfxCameraRsqOrZero(bx[0] * bx[0] + bx[1] * bx[1] + bx[2] * bx[2]);
-            bx[0] = VfSat1(bx[0] * s);
-            bx[1] = VfSat1(bx[1] * s);
-            bx[2] = VfSat1(bx[2] * s);
+            s = GfxCameraRsqOrZero(VfDot3(camera->dir[0], camera->dir[1], camera->dir[2], camera->dir[0], camera->dir[1], camera->dir[2]));
+            d[0] = VfSat1(VfMul(camera->dir[0], s));
+            d[1] = VfSat1(VfMul(camera->dir[1], s));
+            d[2] = VfSat1(VfMul(camera->dir[2], s));
+            bx[0] = VfDot2(g_vecUp.y, g_vecUp.z, d[2], -d[1]);
+            bx[1] = VfDot2(g_vecUp.z, g_vecUp.x, d[0], -d[2]);
+            bx[2] = VfDot2(g_vecUp.x, g_vecUp.y, d[1], -d[0]);
+            s = GfxCameraRsqOrZero(VfDot3(bx[0], bx[1], bx[2], bx[0], bx[1], bx[2]));
+            bx[0] = VfSat1(VfMul(bx[0], s));
+            bx[1] = VfSat1(VfMul(bx[1], s));
+            bx[2] = VfSat1(VfMul(bx[2], s));
             camera->billboard.x.x = bx[0];
             camera->billboard.x.y = bx[1];
             camera->billboard.x.z = bx[2];
             camera->billboard.x.w = 0.0f;
-            camera->billboard.y.x = d[1] * bx[2] - d[2] * bx[1];
-            camera->billboard.y.y = d[2] * bx[0] - d[0] * bx[2];
-            camera->billboard.y.z = d[0] * bx[1] - d[1] * bx[0];
+            camera->billboard.y.x = VfDot2(d[1], d[2], bx[2], -bx[1]);
+            camera->billboard.y.y = VfDot2(d[2], d[0], bx[0], -bx[2]);
+            camera->billboard.y.z = VfDot2(d[0], d[1], bx[1], -bx[0]);
             camera->billboard.y.w = 0.0f;
             camera->billboard.z.x = d[0];
             camera->billboard.z.y = d[1];
@@ -166,26 +165,25 @@ void GfxCameraUpdate(GfxCamera *camera, u32 flags)
             /* viewOrtho = view with its rotation columns re-orthonormalised:
                z = x' x y', x = y' x z, each scaled by 1/length (no zero check) */
             camera->viewOrtho = camera->view;
-            c2[0] = camera->viewOrtho.x.y * camera->viewOrtho.y.z - camera->viewOrtho.x.z * camera->viewOrtho.y.y;
-            c2[1] = camera->viewOrtho.x.z * camera->viewOrtho.y.x - camera->viewOrtho.x.x * camera->viewOrtho.y.z;
-            c2[2] = camera->viewOrtho.x.x * camera->viewOrtho.y.y - camera->viewOrtho.x.y * camera->viewOrtho.y.x;
-            c0[0] = camera->viewOrtho.y.y * c2[2] - camera->viewOrtho.y.z * c2[1];
-            c0[1] = camera->viewOrtho.y.z * c2[0] - camera->viewOrtho.y.x * c2[2];
-            c0[2] = camera->viewOrtho.y.x * c2[1] - camera->viewOrtho.y.y * c2[0];
-            sx = VfRsq(c0[0] * c0[0] + c0[1] * c0[1] + c0[2] * c0[2]);
-            sy = VfRsq(camera->viewOrtho.y.x * camera->viewOrtho.y.x + camera->viewOrtho.y.y * camera->viewOrtho.y.y +
-                       camera->viewOrtho.y.z * camera->viewOrtho.y.z);
-            s = VfRsq(c2[0] * c2[0] + c2[1] * c2[1] + c2[2] * c2[2]);
-            camera->viewOrtho.x.x = c0[0] * sx;
-            camera->viewOrtho.x.y = c0[1] * sx;
-            camera->viewOrtho.x.z = c0[2] * sx;
+            c2[0] = VfDot2(camera->viewOrtho.x.y, camera->viewOrtho.x.z, camera->viewOrtho.y.z, -camera->viewOrtho.y.y);
+            c2[1] = VfDot2(camera->viewOrtho.x.z, camera->viewOrtho.x.x, camera->viewOrtho.y.x, -camera->viewOrtho.y.z);
+            c2[2] = VfDot2(camera->viewOrtho.x.x, camera->viewOrtho.x.y, camera->viewOrtho.y.y, -camera->viewOrtho.y.x);
+            c0[0] = VfDot2(camera->viewOrtho.y.y, camera->viewOrtho.y.z, c2[2], -c2[1]);
+            c0[1] = VfDot2(camera->viewOrtho.y.z, camera->viewOrtho.y.x, c2[0], -c2[2]);
+            c0[2] = VfDot2(camera->viewOrtho.y.x, camera->viewOrtho.y.y, c2[1], -c2[0]);
+            sx = VfRsq(VfDot3(c0[0], c0[1], c0[2], c0[0], c0[1], c0[2]));
+            sy = VfRsq(VfDot3(camera->viewOrtho.y.x, camera->viewOrtho.y.y, camera->viewOrtho.y.z, camera->viewOrtho.y.x, camera->viewOrtho.y.y, camera->viewOrtho.y.z));
+            s = VfRsq(VfDot3(c2[0], c2[1], c2[2], c2[0], c2[1], c2[2]));
+            camera->viewOrtho.x.x = VfMul(c0[0], sx);
+            camera->viewOrtho.x.y = VfMul(c0[1], sx);
+            camera->viewOrtho.x.z = VfMul(c0[2], sx);
             camera->viewOrtho.x.w = 0.0f;
-            camera->viewOrtho.y.x = camera->viewOrtho.y.x * sy;
-            camera->viewOrtho.y.y = camera->viewOrtho.y.y * sy;
-            camera->viewOrtho.y.z = camera->viewOrtho.y.z * sy;
-            camera->viewOrtho.z.x = c2[0] * s;
-            camera->viewOrtho.z.y = c2[1] * s;
-            camera->viewOrtho.z.z = c2[2] * s;
+            camera->viewOrtho.y.x = VfMul(camera->viewOrtho.y.x, sy);
+            camera->viewOrtho.y.y = VfMul(camera->viewOrtho.y.y, sy);
+            camera->viewOrtho.y.z = VfMul(camera->viewOrtho.y.z, sy);
+            camera->viewOrtho.z.x = VfMul(c2[0], s);
+            camera->viewOrtho.z.y = VfMul(c2[1], s);
+            camera->viewOrtho.z.z = VfMul(c2[2], s);
             camera->viewOrtho.z.w = 0.0f;
             if (g_gfxCameraOrthoRotInit == 0) {
                 g_gfxCameraOrthoRotInit = 1;
@@ -223,27 +221,27 @@ void GfxCameraUpdate(GfxCamera *camera, u32 flags)
         camera->frustumBottom = (offY - h) - camera->frustumOffset[1];
         camera->frustumTop = (h + offY) - camera->frustumOffset[1];
         /* proj = off-centre perspective from (right, left, top, bottom) and nearZ/farZ */
-        n2 = camera->nearZ + camera->nearZ;
-        nf = camera->nearZ * camera->farZ;
-        nf = nf + nf;
-        rl = 1.0f / (camera->frustumRight - camera->frustumLeft);
-        tb = 1.0f / (camera->frustumTop - camera->frustumBottom);
-        s = 1.0f / (camera->nearZ - camera->farZ);
-        camera->proj.x.x = n2 * rl;
+        n2 = VfAdd(camera->nearZ, camera->nearZ);
+        nf = VfMul(camera->nearZ, camera->farZ);
+        nf = VfAdd(nf, nf);
+        rl = VfRcp(VfSub(camera->frustumRight, camera->frustumLeft));
+        tb = VfRcp(VfSub(camera->frustumTop, camera->frustumBottom));
+        s = VfRcp(VfSub(camera->nearZ, camera->farZ));
+        camera->proj.x.x = VfMul(n2, rl);
         camera->proj.x.y = 0.0f;
         camera->proj.x.z = 0.0f;
         camera->proj.x.w = 0.0f;
         camera->proj.y.x = 0.0f;
-        camera->proj.y.y = n2 * tb;
+        camera->proj.y.y = VfMul(n2, tb);
         camera->proj.y.z = 0.0f;
         camera->proj.y.w = 0.0f;
-        camera->proj.z.x = (camera->frustumRight + camera->frustumLeft) * rl;
-        camera->proj.z.y = (camera->frustumTop + camera->frustumBottom) * tb;
-        camera->proj.z.z = (camera->nearZ + camera->farZ) * s;
+        camera->proj.z.x = VfMul(VfAdd(camera->frustumRight, camera->frustumLeft), rl);
+        camera->proj.z.y = VfMul(VfAdd(camera->frustumTop, camera->frustumBottom), tb);
+        camera->proj.z.z = VfMul(VfAdd(camera->nearZ, camera->farZ), s);
         camera->proj.z.w = -1.0f; /* vfim 0xbc00 */
         camera->proj.w.x = 0.0f;
         camera->proj.w.y = 0.0f;
-        camera->proj.w.z = nf * s;
+        camera->proj.w.z = VfMul(nf, s);
         camera->proj.w.w = 0.0f;
         camera->viewProjValid = 0;
         camera->maybe_matrixValid = 0;

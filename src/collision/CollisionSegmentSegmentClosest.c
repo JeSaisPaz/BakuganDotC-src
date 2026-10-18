@@ -14,7 +14,7 @@ static inline float SegSegClamp01(float q)
 {
   if (q != q)
     return __builtin_signbit(q) ? 0.0f : 1.0f;
-  return q <= 0.0f ? 0.0f : q > 1.0f ? 1.0f : q;
+  return VfMax(VfMin(q, 1.0f), 0.0f);
 }
 
 float CollisionSegmentSegmentClosest(const void *a, const void *b, float *s, float *t, ScePspFVector4 *pa, ScePspFVector4 *pb)
@@ -36,12 +36,12 @@ float CollisionSegmentSegmentClosest(const void *a, const void *b, float *s, flo
   float dz;
 
   /* d = a.start - b.start; aa = |a.dir|^2; bb = |b.dir|^2; bd = b.dir.d */
-  d[0] = sa->start[0] - sb->start[0];
-  d[1] = sa->start[1] - sb->start[1];
-  d[2] = sa->start[2] - sb->start[2];
-  aa = sa->dir[0] * sa->dir[0] + sa->dir[1] * sa->dir[1] + sa->dir[2] * sa->dir[2];
-  bb = sb->dir[0] * sb->dir[0] + sb->dir[1] * sb->dir[1] + sb->dir[2] * sb->dir[2];
-  bd = sb->dir[0] * d[0] + sb->dir[1] * d[1] + sb->dir[2] * d[2];
+  d[0] = VfSub(sa->start[0], sb->start[0]);
+  d[1] = VfSub(sa->start[1], sb->start[1]);
+  d[2] = VfSub(sa->start[2], sb->start[2]);
+  aa = VfDot3(sa->dir[0], sa->dir[1], sa->dir[2], sa->dir[0], sa->dir[1], sa->dir[2]);
+  bb = VfDot3(sb->dir[0], sb->dir[1], sb->dir[2], sb->dir[0], sb->dir[1], sb->dir[2]);
+  bd = VfDot3(sb->dir[0], sb->dir[1], sb->dir[2], d[0], d[1], d[2]);
 
   if (aa <= 0.0001f && bb <= 0.0001f) {
     /* both degenerate: the origins (all four lanes copied) */
@@ -55,10 +55,10 @@ float CollisionSegmentSegmentClosest(const void *a, const void *b, float *s, flo
     pb->y = sb->start[1];
     pb->z = sb->start[2];
     pb->w = sb->start[3];
-    dx = pa->x - pb->x;
-    dy = pa->y - pb->y;
-    dz = pa->z - pb->z;
-    return dx * dx + dy * dy + dz * dz;
+    dx = VfSub(pa->x, pb->x);
+    dy = VfSub(pa->y, pb->y);
+    dz = VfSub(pa->z, pb->z);
+    return VfDot3(dx, dy, dz, dx, dy, dz);
   }
 
   if (aa <= 0.0001f) {
@@ -69,14 +69,14 @@ float CollisionSegmentSegmentClosest(const void *a, const void *b, float *s, flo
     *t = SegSegClamp01(tN);
   } else {
     /* ad = a.dir.d */
-    ad = sa->dir[0] * d[0] + sa->dir[1] * d[1] + sa->dir[2] * d[2];
+    ad = VfDot3(sa->dir[0], sa->dir[1], sa->dir[2], d[0], d[1], d[2]);
     if (bb <= 0.0001f) {
       /* b degenerate: t = 0, s = clamp(-ad / aa) */
       *t = 0.0f;
       *s = SegSegClamp01(-ad / aa);
     } else {
       /* ab = a.dir.b.dir */
-      ab = sa->dir[0] * sb->dir[0] + sa->dir[1] * sb->dir[1] + sa->dir[2] * sb->dir[2];
+      ab = VfDot3(sa->dir[0], sa->dir[1], sa->dir[2], sb->dir[0], sb->dir[1], sb->dir[2]);
       denom = aa * bb - ab * ab;
       if (denom == 0.0f) {
         sN = 0.5f;
@@ -98,19 +98,19 @@ float CollisionSegmentSegmentClosest(const void *a, const void *b, float *s, flo
 
   /* pa = a.start + a.dir * s (w from a.start) */
   k = *s;
-  pa->x = sa->start[0] + sa->dir[0] * k;
-  pa->y = sa->start[1] + sa->dir[1] * k;
-  pa->z = sa->start[2] + sa->dir[2] * k;
+  pa->x = VfAdd(sa->start[0], VfMul(sa->dir[0], k));
+  pa->y = VfAdd(sa->start[1], VfMul(sa->dir[1], k));
+  pa->z = VfAdd(sa->start[2], VfMul(sa->dir[2], k));
   pa->w = sa->start[3];
 
   /* pb = b.start + b.dir * t (w from b.start); return |pa - pb|^2 */
   k = *t;
-  pb->x = sb->start[0] + sb->dir[0] * k;
-  pb->y = sb->start[1] + sb->dir[1] * k;
-  pb->z = sb->start[2] + sb->dir[2] * k;
+  pb->x = VfAdd(sb->start[0], VfMul(sb->dir[0], k));
+  pb->y = VfAdd(sb->start[1], VfMul(sb->dir[1], k));
+  pb->z = VfAdd(sb->start[2], VfMul(sb->dir[2], k));
   pb->w = sb->start[3];
-  dx = pa->x - pb->x;
-  dy = pa->y - pb->y;
-  dz = pa->z - pb->z;
-  return dx * dx + dy * dy + dz * dz;
+  dx = VfSub(pa->x, pb->x);
+  dy = VfSub(pa->y, pb->y);
+  dz = VfSub(pa->z, pb->z);
+  return VfDot3(dx, dy, dz, dx, dy, dz);
 }

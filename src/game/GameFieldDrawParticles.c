@@ -55,10 +55,10 @@ u32 *GameFieldDrawParticles(void *owner, u32 *dl, void **set)
         if (!(model->ambient[3] < 1.0f) && model->visible != 0) {
             rootPos = &model->data->rootMatrix[12];
             /* depth = |eye - rootPos|^2 over xyz */
-            dx = eye[0] - rootPos[0];
-            dy = eye[1] - rootPos[1];
-            dz = eye[2] - rootPos[2];
-            pairs[count].depth = dx * dx + dy * dy + dz * dz;
+            dx = VfSub(eye[0], rootPos[0]);
+            dy = VfSub(eye[1], rootPos[1]);
+            dz = VfSub(eye[2], rootPos[2]);
+            pairs[count].depth = VfDot3(dx, dy, dz, dx, dy, dz);
             pairs[count].model = model;
             count = count + 1;
         }
@@ -71,15 +71,15 @@ u32 *GameFieldDrawParticles(void *owner, u32 *dl, void **set)
 
             model = pairs[i].model;
             rootPos = &model->data->rootMatrix[12];
-            rootPos[0] = rootPos[0] - eye[0];
-            rootPos[1] = rootPos[1] - eye[1];
-            rootPos[2] = rootPos[2] - eye[2];
+            rootPos[0] = VfSub(rootPos[0], eye[0]);
+            rootPos[1] = VfSub(rootPos[1], eye[1]);
+            rootPos[2] = VfSub(rootPos[2], eye[2]);
             draw = &((const VtblEntry *)model->base.vtable)[8];
             ((void (*)(void *, u32 **))draw->fn)((u8 *)model + draw->delta, &dl);
             rootPos = &model->data->rootMatrix[12];
-            rootPos[0] = rootPos[0] + eye[0];
-            rootPos[1] = rootPos[1] + eye[1];
-            rootPos[2] = rootPos[2] + eye[2];
+            rootPos[0] = VfAdd(rootPos[0], eye[0]);
+            rootPos[1] = VfAdd(rootPos[1], eye[1]);
+            rootPos[2] = VfAdd(rootPos[2], eye[2]);
         }
     }
     GameFieldCameraRecenterEnd(eye);

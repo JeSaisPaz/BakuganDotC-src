@@ -74,8 +74,8 @@ void ActorSetState(Actor *self, s32 state, s8 keepVars)
         ActorPlayMotion(0.2f, self, 1, 1, 0);
         break;
     case 7:
-        self->base.velocity[0] = self->base.velocity[0] * 0.8f;
-        self->base.velocity[2] = self->base.velocity[2] * 0.8f;
+        self->base.velocity[0] = VfMul(self->base.velocity[0], 0.8f);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], 0.8f);
         ActorPlayMotion(0.5f, self, 8, 0, 0);
         break;
     case 8:

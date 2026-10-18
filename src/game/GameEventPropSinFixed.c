@@ -28,7 +28,7 @@ static inline float EvtSinWrap(float a)
 s32 GameEventPropSinFixed(s32 angle)
 {
     float a = (float)angle * EVT_TWO_PI * EVT_INV_65535;
-    float s = __builtin_sinf(EvtSinWrap(a));
+    float s = VfSinQuarter(VfMul(EvtSinWrap(a), 0.636619747f));
 
     if (!(s <= 0.0f)) {
         return (s32)(s16)(s32)(s * 4096.0f + 0.5f);

@@ -40,9 +40,9 @@ int ActorStageObjAttrLandmarkTestOcclusion(ActorStageObjAttrLandmark *self, void
   target[3] = bakugan->base.pos[3];
   target[1] = target[1] + bakugan->combat.stats->height * 0.5f;
   /* delta = target - eye (xyz); w keeps target's w */
-  delta[0] = target[0] - eye[0];
-  delta[1] = target[1] - eye[1];
-  delta[2] = target[2] - eye[2];
+  delta[0] = VfSub(target[0], eye[0]);
+  delta[1] = VfSub(target[1], eye[1]);
+  delta[2] = VfSub(target[2], eye[2]);
   delta[3] = target[3];
   if (self->collisionBox != NULL) {
     g_collisionSegmentDesc.start[0] = eye[0];

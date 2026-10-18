@@ -71,9 +71,9 @@ void ActorStageObjBreakPieceCraneCollapse(ActorStageObjBreakPiece *self)
     scale[3] = 0.0f;
     /* dir = g_vecDown * scale (vmul.t, staged through nodePos); lane w is a stale VFPU
        lane (S713) the function never sets, so it is left out. */
-    nodePos.x = g_vecDown.x * scale[0];
-    nodePos.y = g_vecDown.y * scale[1];
-    nodePos.z = g_vecDown.z * scale[2];
+    nodePos.x = VfMul(g_vecDown.x, scale[0]);
+    nodePos.y = VfMul(g_vecDown.y, scale[1]);
+    nodePos.z = VfMul(g_vecDown.z, scale[2]);
     g_collisionSweptSphereDesc.dir.x = nodePos.x;
     g_collisionSweptSphereDesc.dir.y = nodePos.y;
     g_collisionSweptSphereDesc.dir.z = nodePos.z;

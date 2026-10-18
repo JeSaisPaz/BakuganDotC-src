@@ -203,9 +203,9 @@ void BtlBakuganOnHit(BtlBakugan *self)
     savedVel[1] = vel[1];
     savedVel[2] = vel[2];
     savedVel[3] = vel[3];
-    vel[0] = __builtin_cosf(heading) * 40.0f;
+    vel[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), 40.0f);
     vel[1] = 0.0f * 40.0f;
-    vel[2] = __builtin_sinf(heading) * 40.0f;
+    vel[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), 40.0f);
     vel[3] = 0.0f;
 
     guardable = (u8)BtlBakuganIsGuardableHit(self, attackId);
@@ -224,19 +224,19 @@ void BtlBakuganOnHit(BtlBakugan *self)
             guardDir[2] = collider->hitPos.z;
             guardDir[3] = collider->hitPos.w;
         }
-        guardDir[0] = guardDir[0] - self->guardAnchor[0];
-        guardDir[1] = guardDir[1] - self->guardAnchor[1];
-        guardDir[2] = guardDir[2] - self->guardAnchor[2];
+        guardDir[0] = VfSub(guardDir[0], self->guardAnchor[0]);
+        guardDir[1] = VfSub(guardDir[1], self->guardAnchor[1]);
+        guardDir[2] = VfSub(guardDir[2], self->guardAnchor[2]);
         guardDir[1] = 0.0f;
         /* normalise x/z (inverse length 0 for a zero vector), clamped to [-1, 1]; w is S713 (0) */
-        lenSq = guardDir[0] * guardDir[0] + guardDir[1] * guardDir[1] + guardDir[2] * guardDir[2];
+        lenSq = VfDot3(guardDir[0], guardDir[1], guardDir[2], guardDir[0], guardDir[1], guardDir[2]);
         invLen = VfRsq(lenSq);
         if (VfIsZero(lenSq)) {
             invLen = 0.0f;
         }
-        guardDir[0] = VfSat1(guardDir[0] * invLen);
-        guardDir[1] = VfSat1(guardDir[1] * invLen);
-        guardDir[2] = VfSat1(guardDir[2] * invLen);
+        guardDir[0] = VfSat1(VfMul(guardDir[0], invLen));
+        guardDir[1] = VfSat1(VfMul(guardDir[1], invLen));
+        guardDir[2] = VfSat1(VfMul(guardDir[2], invLen));
         guardDir[3] = 0.0f;
         if (BtlCombatHasEnergy(&self->combat) == 0 || guardable == 0) {
             GfxEffectSpawnAttachedDir(g_worldEffectMgr, 0x39, self->guardAnchor, guardDir);
@@ -602,19 +602,18 @@ void BtlBakuganOnHit(BtlBakugan *self)
             self->flags = self->flags | 0x800;
             /* knock-back scaled by 0.0034 * (300 - distance to the attacker), 0 when that is not
                above 0 (bgtz on the float bits); w is S713 (0) */
-            delta[0] = self->base.pos[0] - attacker->base.pos[0];
-            delta[1] = self->base.pos[1] - attacker->base.pos[1];
-            delta[2] = self->base.pos[2] - attacker->base.pos[2];
-            distBits.f = 300.0f - __builtin_sqrtf(delta[0] * delta[0] + delta[1] * delta[1] +
-                                                  delta[2] * delta[2]);
+            delta[0] = VfSub(self->base.pos[0], attacker->base.pos[0]);
+            delta[1] = VfSub(self->base.pos[1], attacker->base.pos[1]);
+            delta[2] = VfSub(self->base.pos[2], attacker->base.pos[2]);
+            distBits.f = 300.0f - VfSqrt(VfDot3(delta[0], delta[1], delta[2], delta[0], delta[1], delta[2]));
             if ((s32)distBits.u > 0) {
                 scale = distBits.f * 0.00340000005f;
             } else {
                 scale = 0.0f * 0.00340000005f;
             }
-            vel[0] = vel[0] * scale;
-            vel[1] = vel[1] * scale;
-            vel[2] = vel[2] * scale;
+            vel[0] = VfMul(vel[0], scale);
+            vel[1] = VfMul(vel[1], scale);
+            vel[2] = VfMul(vel[2], scale);
             vel[3] = 0.0f;
         }
         BtlBakuganStartHitShake(0.2f, self, vel);
@@ -679,9 +678,9 @@ void BtlBakuganOnHit(BtlBakugan *self)
         if (attackId == 0x20) {
             entry = &((const VtblEntry *)self->base.base.vtable)[6]; /* +0x30 BtlBakuganSetMotionSpeed */
             ((float (*)(float, void *))entry->fn)(0.5f, (u8 *)self + entry->delta);
-            vel[0] = vel[0] * 2.0f;
-            vel[1] = vel[1] * 2.0f;
-            vel[2] = vel[2] * 2.0f;
+            vel[0] = VfMul(vel[0], 2.0f);
+            vel[1] = VfMul(vel[1], 2.0f);
+            vel[2] = VfMul(vel[2], 2.0f);
             vel[3] = 0.0f;
         }
         break;
@@ -729,9 +728,9 @@ void BtlBakuganOnHit(BtlBakugan *self)
             motion = 0xf2;
         }
         self->stateFlags = self->stateFlags | (u32)self->motionIdPair[0];
-        vel[0] = vel[0] * 1.20000005f;
-        vel[1] = vel[1] * 1.20000005f;
-        vel[2] = vel[2] * 1.20000005f;
+        vel[0] = VfMul(vel[0], 1.20000005f);
+        vel[1] = VfMul(vel[1], 1.20000005f);
+        vel[2] = VfMul(vel[2], 1.20000005f);
         vel[3] = 0.0f;
         self->base.velocity[1] = 34.0f;
         BtlBakuganPlayMotion(0.0f, self, motion, 1, 1);
@@ -740,25 +739,25 @@ void BtlBakuganOnHit(BtlBakugan *self)
             self->subTimer = -1;
             self->stateFlags = self->stateFlags & ~0x20u;
         } else if (kind == 5 || attackId == 0xb6) {
-            vel[0] = vel[0] * 0.180000007f;
-            vel[2] = vel[2] * 0.180000007f;
+            vel[0] = VfMul(vel[0], 0.180000007f);
+            vel[2] = VfMul(vel[2], 0.180000007f);
             if (attackId == 0x86) {
                 self->base.velocity[1] = 10.0f;
                 self->stateFlags = self->stateFlags & ~0x20u;
-                vel[0] = vel[0] * 0.100000001f;
-                vel[2] = vel[2] * 0.100000001f;
+                vel[0] = VfMul(vel[0], 0.100000001f);
+                vel[2] = VfMul(vel[2], 0.100000001f);
             } else {
                 self->base.velocity[1] = 60.0f;
             }
             self->flags = self->flags | 2;
         } else if (kind == 6 || attackId == 0xb7) {
             if (BtlBakuganIsAirborne(self, 1) != 0) {
-                vel[0] = vel[0] * 0.625f;
-                vel[2] = vel[2] * 0.625f;
+                vel[0] = VfMul(vel[0], 0.625f);
+                vel[2] = VfMul(vel[2], 0.625f);
                 self->base.velocity[1] = -10.0f;
             } else {
-                vel[0] = vel[0] * 0.875f;
-                vel[2] = vel[2] * 0.875f;
+                vel[0] = VfMul(vel[0], 0.875f);
+                vel[2] = VfMul(vel[2], 0.875f);
                 self->base.velocity[1] = 1.0f;
             }
             self->stateFlags = self->stateFlags & ~0x20u;
@@ -795,9 +794,9 @@ void BtlBakuganOnHit(BtlBakugan *self)
             fallMotion = 0xea;
         }
         self->stateFlags = self->stateFlags | (u32)self->motionIdPair[0];
-        vel[0] = vel[0] * 1.5f;
-        vel[1] = vel[1] * 1.5f;
-        vel[2] = vel[2] * 1.5f;
+        vel[0] = VfMul(vel[0], 1.5f);
+        vel[1] = VfMul(vel[1], 1.5f);
+        vel[2] = VfMul(vel[2], 1.5f);
         vel[3] = 0.0f;
         self->base.velocity[1] = 50.0f;
         if (BtlBakuganHasMotion(self, 0xf4) != 0) {

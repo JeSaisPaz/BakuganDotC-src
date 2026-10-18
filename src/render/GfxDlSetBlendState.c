@@ -43,10 +43,10 @@ u32 *GfxDlSetBlendState(u32 *list, const ScePspFVector4 *colour, u32 tex, s32 bl
     list += 3;
     break;
   }
-  packed = (u32)VfI2uc(VfF2iz(VfSat0(colour->x) * 255.0f, 23)) |
-           (u32)VfI2uc(VfF2iz(VfSat0(colour->y) * 255.0f, 23)) << 8 |
-           (u32)VfI2uc(VfF2iz(VfSat0(colour->z) * 255.0f, 23)) << 16 |
-           (u32)VfI2uc(VfF2iz(VfSat0(colour->w) * 255.0f, 23)) << 24;
+  packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->x), 255.0f), 23)) |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->y), 255.0f), 23)) << 8 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->z), 255.0f), 23)) << 16 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->w), 255.0f), 23)) << 24;
   list[0] = (packed & 0xffffff) | 0x55000000;
   list[1] = (packed >> 24) | 0x58000000;
   return list + 2;

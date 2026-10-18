@@ -73,9 +73,9 @@ void ActorSeparateFromActors(Actor *self, float *delta)
       continue;
     }
     /* diff = self->pos - other->pos (xyz, w from self), staged through tmp */
-    tmp[0] = self->base.pos[0] - other->base.pos[0];
-    tmp[1] = self->base.pos[1] - other->base.pos[1];
-    tmp[2] = self->base.pos[2] - other->base.pos[2];
+    tmp[0] = VfSub(self->base.pos[0], other->base.pos[0]);
+    tmp[1] = VfSub(self->base.pos[1], other->base.pos[1]);
+    tmp[2] = VfSub(self->base.pos[2], other->base.pos[2]);
     tmp[3] = self->base.pos[3];
     diff[0] = tmp[0];
     diff[1] = tmp[1];
@@ -90,7 +90,7 @@ void ActorSeparateFromActors(Actor *self, float *delta)
       weight = 1.0f;
     }
     diff[1] = 0.0f;
-    dist = __builtin_sqrtf(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
+    dist = VfSqrt(VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]));
     if (dist < self->bodyShape.radius * 2.0f && !(dist <= 0.001f)) {
       push = self->bodyShape.radius * 2.0f - dist;
       if (!(push <= 100.0f)) {
@@ -98,16 +98,16 @@ void ActorSeparateFromActors(Actor *self, float *delta)
       }
       weight = push * 0.7f * weight;
       /* diff = normalize(diff) * weight (w = S713 = 0); accum += diff (xyz) */
-      lenSq = diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
+      lenSq = VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]);
       inv = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-      scale = inv * weight;
-      diff[0] = diff[0] * scale;
-      diff[1] = diff[1] * scale;
-      diff[2] = diff[2] * scale;
+      scale = VfMul(inv, weight);
+      diff[0] = VfMul(diff[0], scale);
+      diff[1] = VfMul(diff[1], scale);
+      diff[2] = VfMul(diff[2], scale);
       diff[3] = 0.0f;
-      accum[0] = accum[0] + diff[0];
-      accum[1] = accum[1] + diff[1];
-      accum[2] = accum[2] + diff[2];
+      accum[0] = VfAdd(accum[0], diff[0]);
+      accum[1] = VfAdd(accum[1], diff[1]);
+      accum[2] = VfAdd(accum[2], diff[2]);
       anyPush = 1;
       pushedThis = 1;
     } else if (dist <= 0.001f) {
@@ -125,9 +125,9 @@ void ActorSeparateFromActors(Actor *self, float *delta)
       }
       /* diff = (cos, 0, sin)(heading) * 2r (vrot of heading·2/π) */
       len = self->bodyShape.radius * 2.0f;
-      diff[0] = __builtin_cosf(heading) * len;
-      diff[1] = 0.0f * len;
-      diff[2] = __builtin_sinf(heading) * len;
+      diff[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), len);
+      diff[1] = VfMul(0.0f, len);
+      diff[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), len);
       diff[3] = 0.0f;
       hit = CollisionRaycastRayB(self->collisionMask, origin, diff);
       if (hit != NULL) {
@@ -135,14 +135,14 @@ void ActorSeparateFromActors(Actor *self, float *delta)
       }
       /* diff = (cos, 0, sin)(heading) * 5·weight */
       len = weight * 5.0f;
-      diff[0] = __builtin_cosf(heading) * len;
-      diff[1] = 0.0f * len;
-      diff[2] = __builtin_sinf(heading) * len;
+      diff[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), len);
+      diff[1] = VfMul(0.0f, len);
+      diff[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), len);
       diff[3] = 0.0f;
       diff[1] = 0.0f;
-      accum[0] = accum[0] + diff[0];
-      accum[1] = accum[1] + diff[1];
-      accum[2] = accum[2] + diff[2];
+      accum[0] = VfAdd(accum[0], diff[0]);
+      accum[1] = VfAdd(accum[1], diff[1]);
+      accum[2] = VfAdd(accum[2], diff[2]);
       anyPush = 1;
       pushedThis = 1;
     }
@@ -153,16 +153,16 @@ void ActorSeparateFromActors(Actor *self, float *delta)
   if (anyPush == 0) {
     return;
   }
-  lenSq = accum[0] * accum[0] + accum[1] * accum[1] + accum[2] * accum[2];
+  lenSq = VfDot3(accum[0], accum[1], accum[2], accum[0], accum[1], accum[2]);
   zero = 0.0f;
   if (!(lenSq <= self->bodyShape.radius * self->bodyShape.radius)) {
     /* accum = normalize(accum) * bodyShape.radius (w = S713 = 0) */
-    len = accum[0] * accum[0] + accum[1] * accum[1] + accum[2] * accum[2];
+    len = VfDot3(accum[0], accum[1], accum[2], accum[0], accum[1], accum[2]);
     inv = VfIsZero(len) ? 0.0f : VfRsq(len);
-    scale = inv * self->bodyShape.radius;
-    accum[0] = accum[0] * scale;
-    accum[1] = accum[1] * scale;
-    accum[2] = accum[2] * scale;
+    scale = VfMul(inv, self->bodyShape.radius);
+    accum[0] = VfMul(accum[0], scale);
+    accum[1] = VfMul(accum[1], scale);
+    accum[2] = VfMul(accum[2], scale);
     accum[3] = 0.0f;
   }
   collider = (CollisionCollider *)self->bodyCollider;
@@ -190,26 +190,26 @@ void ActorSeparateFromActors(Actor *self, float *delta)
     return;
   }
   /* dirXZ, accum = normalised and clamped to [-1, 1] per lane; w lane masked (register holds S713 = 0) */
-  len = dirXZ[0] * dirXZ[0] + dirXZ[1] * dirXZ[1] + dirXZ[2] * dirXZ[2];
+  len = VfDot3(dirXZ[0], dirXZ[1], dirXZ[2], dirXZ[0], dirXZ[1], dirXZ[2]);
   inv = VfIsZero(len) ? 0.0f : VfRsq(len);
-  dirXZ[0] = VfSat1(dirXZ[0] * inv);
-  dirXZ[1] = VfSat1(dirXZ[1] * inv);
-  dirXZ[2] = VfSat1(dirXZ[2] * inv);
+  dirXZ[0] = VfSat1(VfMul(dirXZ[0], inv));
+  dirXZ[1] = VfSat1(VfMul(dirXZ[1], inv));
+  dirXZ[2] = VfSat1(VfMul(dirXZ[2], inv));
   dirXZ[3] = 0.0f;
-  len = accum[0] * accum[0] + accum[1] * accum[1] + accum[2] * accum[2];
+  len = VfDot3(accum[0], accum[1], accum[2], accum[0], accum[1], accum[2]);
   inv = VfIsZero(len) ? 0.0f : VfRsq(len);
-  accum[0] = VfSat1(accum[0] * inv);
-  accum[1] = VfSat1(accum[1] * inv);
-  accum[2] = VfSat1(accum[2] * inv);
+  accum[0] = VfSat1(VfMul(accum[0], inv));
+  accum[1] = VfSat1(VfMul(accum[1], inv));
+  accum[2] = VfSat1(VfMul(accum[2], inv));
   accum[3] = 0.0f;
-  cosv = dirXZ[0] * accum[0] + dirXZ[1] * accum[1] + dirXZ[2] * accum[2];
+  cosv = VfDot3(dirXZ[0], dirXZ[1], dirXZ[2], accum[0], accum[1], accum[2]);
   if (!(cosv < zero)) {
     return;
   }
   scale = 1.0f / (__builtin_sqrtf(lenSq) * cosv * -6.0f + 1.0f);
   /* delta *= scale (xyz); the sv.q writes lane 3 from S713 = 0 */
-  delta[0] = delta[0] * scale;
-  delta[1] = delta[1] * scale;
-  delta[2] = delta[2] * scale;
+  delta[0] = VfMul(delta[0], scale);
+  delta[1] = VfMul(delta[1], scale);
+  delta[2] = VfMul(delta[2], scale);
   delta[3] = 0.0f;
 }

@@ -44,19 +44,19 @@ s32 CollisionTriangleTestSweptSphere(void *part, const u16 *face, void *query, f
     nx = -q->axis[0];
     ny = -q->axis[1];
     nz = -q->axis[2];
-    lenSq = nx * nx + ny * ny + nz * nz;
+    lenSq = VfDot3(nx, ny, nz, nx, ny, nz);
     k = VfRsq(lenSq);
     if (VfIsZero(lenSq)) {
         k = 0.0f;
     }
-    nx = VfSat1(nx * k);
-    ny = VfSat1(ny * k);
-    nz = VfSat1(nz * k);
-    dx = g_collisionMeshQuery.point.x - q->start[0];
-    dy = g_collisionMeshQuery.point.y - q->start[1];
-    dz = g_collisionMeshQuery.point.z - q->start[2];
-    b = dx * nx + dy * ny + dz * nz;
-    c = dx * dx + dy * dy + dz * dz;
+    nx = VfSat1(VfMul(nx, k));
+    ny = VfSat1(VfMul(ny, k));
+    nz = VfSat1(VfMul(nz, k));
+    dx = VfSub(g_collisionMeshQuery.point.x, q->start[0]);
+    dy = VfSub(g_collisionMeshQuery.point.y, q->start[1]);
+    dz = VfSub(g_collisionMeshQuery.point.z, q->start[2]);
+    b = VfDot3(dx, dy, dz, nx, ny, nz);
+    c = VfDot3(dx, dy, dz, dx, dy, dz);
 
     c = c - q->radiusSq;
     if (!(c <= 0.0f) && !(b <= 0.0f)) {

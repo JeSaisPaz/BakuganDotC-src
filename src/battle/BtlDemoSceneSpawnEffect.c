@@ -29,9 +29,9 @@ void BtlDemoSceneSpawnEffect(BtlDemoScenePlayer *task, int id, float *pos, const
         return;
     }
     BtlGetStageAmbientColor(offset);
-    pos[0] = pos[0] + offset[0];
-    pos[1] = pos[1] + offset[1];
-    pos[2] = pos[2] + offset[2];
+    pos[0] = VfAdd(pos[0], offset[0]);
+    pos[1] = VfAdd(pos[1], offset[1]);
+    pos[2] = VfAdd(pos[2], offset[2]);
     if (mtx == NULL) {
         if (task->stagePool != 0) {
             effect = (GfxEffect *)GfxEffectSpawn(g_btlUnitEffectMgr, effectId, pos);

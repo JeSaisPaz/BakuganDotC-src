@@ -21,16 +21,16 @@ void BtlEnemySpawnerSpawn(void *spawner)
     BtlBakugan *unit;
     const VtblEntry *entry;
 
-    angle = (PlatformRandFloat12() - 1.0f) * 6.28318548f;
-    quarter = angle * 0.636619772f;
+    angle = VfMul(VfSub(PlatformRandFloat12(), 1.0f), 6.28318548f);
+    quarter = VfMul(angle, 0.636619772f);
     /* pos = (cos, 0, sin, 0) * 120 (xyz scaled), then + centre (xyz only) */
-    pos[0] = VfCosQuarter(quarter) * 120.0f;
+    pos[0] = VfMul(VfCosQuarter(quarter), 120.0f);
     pos[1] = 0.0f * 120.0f;
-    pos[2] = VfSinQuarter(quarter) * 120.0f;
+    pos[2] = VfMul(VfSinQuarter(quarter), 120.0f);
     pos[3] = 0.0f;
-    pos[0] = pos[0] + self->centerX;
-    pos[1] = pos[1] + self->centerY;
-    pos[2] = pos[2] + self->centerZ;
+    pos[0] = VfAdd(pos[0], self->centerX);
+    pos[1] = VfAdd(pos[1], self->centerY);
+    pos[2] = VfAdd(pos[2], self->centerZ);
     obj = BtlCreateBakugan(0x15, 4, pos);
     unit = obj;
     BtlBakuganCreateHpGauge(unit);

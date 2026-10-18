@@ -23,10 +23,10 @@ int GameQuestCamModeTargetMoved(GameQuestCamModeBase *self)
   owner = (CamMovedOwner *)self->base.base.followed;
   e = &owner->vtbl[2];
   pos = ((const float *(*)(void *))e->fn)((char *)owner + e->delta);
-  dx = self->targetPos.x - pos[0];
-  dy = self->targetPos.y - pos[1];
-  dz = self->targetPos.z - pos[2];
-  dist = dx * dx + dy * dy + dz * dz;
+  dx = VfSub(self->targetPos.x, pos[0]);
+  dy = VfSub(self->targetPos.y, pos[1]);
+  dz = VfSub(self->targetPos.z, pos[2]);
+  dist = VfDot3(dx, dy, dz, dx, dy, dz);
   if (dist < 1.1920929e-07f) {
     return 0;
   }

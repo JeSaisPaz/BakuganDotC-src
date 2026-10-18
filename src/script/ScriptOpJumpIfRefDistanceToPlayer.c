@@ -40,10 +40,10 @@ int ScriptOpJumpIfRefDistanceToPlayer(Script *script)
     {
       const float *a = player->base.pos;
       const float *b = unit->base.pos;
-      float dx = a[0] - b[0];
-      float dy = a[1] - b[1];
-      float dz = a[2] - b[2];
-      d2 = dx * dx + dy * dy + dz * dz;
+      float dx = VfSub(a[0], b[0]);
+      float dy = VfSub(a[1], b[1]);
+      float dz = VfSub(a[2], b[2]);
+      d2 = VfDot3(dx, dy, dz, dx, dy, dz);
     }
     switch (cmp) {
     case 1:

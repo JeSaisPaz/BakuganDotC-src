@@ -23,11 +23,11 @@ void GameQuestCamPointModeCheckBehind(GameQuestCamPointMode *self)
   owner = (CamBehindOwner *)self->base.base.base.followed;
   e = &owner->vtbl[2];
   pos = ((const float *(*)(void *))e->fn)((char *)owner + e->delta);
-  dx = pos[0] - self->base.targetPos.x;
-  dy = pos[1] - self->base.targetPos.y;
-  dz = pos[2] - self->base.targetPos.z;
+  dx = VfSub(pos[0], self->base.targetPos.x);
+  dy = VfSub(pos[1], self->base.targetPos.y);
+  dz = VfSub(pos[2], self->base.targetPos.z);
   /* The listing also copies the 16 bytes at (*entry)+0x50 to an unused stack slot (dead). */
-  if (dx * self->viewDir.x + dy * self->viewDir.y + dz * self->viewDir.z < 0.0f) {
+  if (VfDot3(dx, dy, dz, self->viewDir.x, self->viewDir.y, self->viewDir.z) < 0.0f) {
     self->base.behind = 1;
   }
 }

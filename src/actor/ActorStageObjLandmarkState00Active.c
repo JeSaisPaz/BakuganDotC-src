@@ -69,8 +69,8 @@ void ActorStageObjLandmarkState00Active(ActorStageObjLandmark *self)
   /* The binary first multiplies an uninitialised stack matrix by Rx and Rz and then overwrites it
      with the plain Y rotation (see Notes): only Ry survives. vrot with angle * S703 (2/pi) in
      quarter turns is cos/sin of the angle in radians. */
-  c = __builtin_cosf(self->orbAngle);
-  s = __builtin_sinf(self->orbAngle);
+  c = VfCosQuarter(VfMul(self->orbAngle, 0.636619747f));
+  s = VfSinQuarter(VfMul(self->orbAngle, 0.636619747f));
   if (self->orbNode != NULL) {
     m = self->orbNode->localMatrix;
     m[0] = c;

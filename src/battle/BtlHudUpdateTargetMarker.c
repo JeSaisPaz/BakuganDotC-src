@@ -77,8 +77,8 @@ static inline s32 BtlHudAnimateMarker(BtlHud *self, float fadeStep, float pulseS
         self->markerSpin += TWO_PI;
     }
 
-    alpha = __builtin_sinf(self->markerFade) * alphaAmp + alphaBase;
-    scale = __builtin_sinf(self->markerPulse) * scaleAmp + 1.0f;
+    alpha = VfSinQuarter(VfMul(self->markerFade, 0.636619747f)) * alphaAmp + alphaBase;
+    scale = VfSinQuarter(VfMul(self->markerPulse, 0.636619747f)) * scaleAmp + 1.0f;
     alpha *= targetAlpha;
 
     for (i = 0; i < 1; i++) {
@@ -164,10 +164,10 @@ void BtlHudUpdateTargetMarker(BtlHud *self)
     GfxCameraProjectPointFacing(g_gfxActiveCamera, screen, pos);
 
     /* Style and palette tint */
-    dx = player->base.pos[0] - self->markerTarget->base.pos[0];
-    dy = player->base.pos[1] - self->markerTarget->base.pos[1];
-    dz = player->base.pos[2] - self->markerTarget->base.pos[2];
-    distance = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+    dx = VfSub(player->base.pos[0], self->markerTarget->base.pos[0]);
+    dy = VfSub(player->base.pos[1], self->markerTarget->base.pos[1]);
+    dz = VfSub(player->base.pos[2], self->markerTarget->base.pos[2]);
+    distance = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
     if ((self->markerTarget->stateFlags & 0x30000000) != 0) {
         for (i = 0; i < 3; i++) {
             GfxPaletteBlendSetRow(self->markerBlend[i], 0);

@@ -18,8 +18,8 @@ static void ItemBoxSetRotY(float *m, float angle)
   float c;
   float s;
 
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   m[0] = c;
   m[1] = 0.0f;
   m[2] = -s;
@@ -47,22 +47,28 @@ static void ItemBoxFinish(UiCollectionMenu *self)
   float *pos;
   float c;
   float s;
+  float x;
   float y;
   float z;
+  float w;
   int i;
 
   m = self->itemBox->data->rootMatrix;
-  c = __builtin_cosf(0.5f);
-  s = __builtin_sinf(0.5f);
-  for (i = 0; i < 4; i++) {
+  c = VfCosQuarter(0.5f * 0.636619747f);
+  s = VfSinQuarter(0.5f * 0.636619747f);
+  for (i = 0; i < 3; i++) { /* row 3 of the product is overwritten by pos below */
+    x = m[i * 4 + 0];
     y = m[i * 4 + 1];
     z = m[i * 4 + 2];
-    m[i * 4 + 1] = y * c - z * s;
-    m[i * 4 + 2] = y * s + z * c;
+    w = m[i * 4 + 3];
+    m[i * 4 + 0] = VfDot4(1.0f, 0.0f, 0.0f, 0.0f, x, y, z, w);
+    m[i * 4 + 1] = VfDot4(0.0f, c, -s, 0.0f, x, y, z, w);
+    m[i * 4 + 2] = VfDot4(0.0f, s, c, 0.0f, x, y, z, w);
+    m[i * 4 + 3] = VfDot4(0.0f, 0.0f, 0.0f, 1.0f, x, y, z, w);
   }
   m = self->itemBox->data->rootMatrix;
   for (i = 0; i < 12; i++) {
-    m[i] = m[i] * 1.20000005f; /* 0x3f99999a */
+    m[i] = VfMul(m[i], 1.20000005f); /* 0x3f99999a */
   }
   pos = self->itemBox->pos;
   m = self->itemBox->data->rootMatrix;

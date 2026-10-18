@@ -29,9 +29,9 @@ void BtlAttackType52Update(BtlAttack *self)
             owner = self->owner;
             angle = owner->base.rot[1];
             /* vrot [C,0,S,0] scaled by 500 (xyz), then + owner pos (xyz); w stays 0 */
-            point[0] = __builtin_cosf(angle) * 500.0f + owner->base.pos[0];
-            point[1] = 0.0f * 500.0f + owner->base.pos[1];
-            point[2] = __builtin_sinf(angle) * 500.0f + owner->base.pos[2];
+            point[0] = VfAdd(VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), 500.0f), owner->base.pos[0]);
+            point[1] = VfAdd(0.0f * 500.0f, owner->base.pos[1]);
+            point[2] = VfAdd(VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), 500.0f), owner->base.pos[2]);
             point[3] = 0.0f;
         }
         self->pos[0] = point[0];

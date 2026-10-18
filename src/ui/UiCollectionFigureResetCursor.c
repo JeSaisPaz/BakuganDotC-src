@@ -87,8 +87,8 @@ void UiCollectionFigureResetCursor(UiCollectionFigure *self)
 
     /* rootMatrix = rotation about Y by 3.14 */
     angle = 3.14f;
-    c = __builtin_cosf(angle);
-    sn = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    sn = VfSinQuarter(VfMul(angle, 0.636619747f));
     matrix = self->models[i]->data->rootMatrix;
     matrix[0] = c;
     matrix[1] = 0.0f;
@@ -110,8 +110,8 @@ void UiCollectionFigureResetCursor(UiCollectionFigure *self)
     /* rootMatrix = rootMatrix * rotation about X by -0 (vmmul.q E200, E100, E000, row-major):
        element [k][l] of the result = sum over j of rootMatrix[k][j] * rot[j][l] */
     angle = -0.0f;
-    c = __builtin_cosf(angle);
-    sn = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    sn = VfSinQuarter(VfMul(angle, 0.636619747f));
     rot[0] = 1.0f;
     rot[1] = 0.0f;
     rot[2] = 0.0f;
@@ -134,8 +134,7 @@ void UiCollectionFigureResetCursor(UiCollectionFigure *self)
     }
     for (k = 0; k < 4; k++) {
       for (l = 0; l < 4; l++) {
-        matrix[k * 4 + l] = src[k * 4 + 0] * rot[0 * 4 + l] + src[k * 4 + 1] * rot[1 * 4 + l] +
-                            src[k * 4 + 2] * rot[2 * 4 + l] + src[k * 4 + 3] * rot[3 * 4 + l];
+        matrix[k * 4 + l] = VfDot4(src[k * 4 + 0], src[k * 4 + 1], src[k * 4 + 2], src[k * 4 + 3], rot[0 * 4 + l], rot[1 * 4 + l], rot[2 * 4 + l], rot[3 * 4 + l]);
       }
     }
 
@@ -144,12 +143,12 @@ void UiCollectionFigureResetCursor(UiCollectionFigure *self)
     self->cellScale[i] = s;
     matrix = self->models[i]->data->rootMatrix;
     for (k = 0; k < 12; k++) {
-      matrix[k] = matrix[k] * s;
+      matrix[k] = VfMul(matrix[k], s);
     }
 
     /* height = tintBase + (1 - cos(tintTimer * pi)) * 0.5 * 0.2 */
     s = self->tintBase;
-    c = __builtin_cosf(self->tintTimer * 3.1415927f);
+    c = VfCosQuarter(VfMul(self->tintTimer * 3.1415927f, 0.636619747f));
     self->models[i]->pos[1] = s + (1.0f - c) * 0.5f * 0.2f;
 
     /* translation row = pos (all four words), w = 1 */

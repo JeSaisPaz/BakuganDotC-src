@@ -34,9 +34,9 @@ void GameGimmickCorePointUpdateBounce(GameGimmickCorePoint *obj)
   s = g_corePointBounceScaleWeight * 2.0f * t * (1.0f - t) + t * t;
   if (obj->hopCount == 0) {
     /* dead stack copy of scale: xyz * s, w = bank S713 (0) */
-    scaled[0] = obj->scale.x * s;
-    scaled[1] = obj->scale.y * s;
-    scaled[2] = obj->scale.z * s;
+    scaled[0] = VfMul(obj->scale.x, s);
+    scaled[1] = VfMul(obj->scale.y, s);
+    scaled[2] = VfMul(obj->scale.z, s);
     scaled[3] = 0.0f;
     (void)scaled;
     obj->base.base.scale[0] = 1.0f;
@@ -77,9 +77,9 @@ void GameGimmickCorePointUpdateBounce(GameGimmickCorePoint *obj)
 
   if ((s32)obj->hopCount < (s32)g_corePointHopCount - 2) {
     /* xyz * decay; `vscl.t` + `sv.q` store the bank's S713 (0) into w */
-    obj->hopStep.x = obj->hopStep.x * g_corePointHopDecay;
-    obj->hopStep.y = obj->hopStep.y * g_corePointHopDecay;
-    obj->hopStep.z = obj->hopStep.z * g_corePointHopDecay;
+    obj->hopStep.x = VfMul(obj->hopStep.x, g_corePointHopDecay);
+    obj->hopStep.y = VfMul(obj->hopStep.y, g_corePointHopDecay);
+    obj->hopStep.z = VfMul(obj->hopStep.z, g_corePointHopDecay);
     obj->hopStep.w = 0.0f;
   }
   obj->hopFrame = 0;
@@ -89,14 +89,14 @@ void GameGimmickCorePointUpdateBounce(GameGimmickCorePoint *obj)
   obj->hopStart.y = obj->hopEnd.y;
   obj->hopStart.z = obj->hopEnd.z;
   /* hopEnd.xyz += hopStep.xyz (w kept) */
-  obj->hopEnd.x = obj->hopEnd.x + obj->hopStep.x;
-  obj->hopEnd.y = obj->hopEnd.y + obj->hopStep.y;
-  obj->hopEnd.z = obj->hopEnd.z + obj->hopStep.z;
+  obj->hopEnd.x = VfAdd(obj->hopEnd.x, obj->hopStep.x);
+  obj->hopEnd.y = VfAdd(obj->hopEnd.y, obj->hopStep.y);
+  obj->hopEnd.z = VfAdd(obj->hopEnd.z, obj->hopStep.z);
   obj->hopHeight = obj->hopHeight * g_corePointHopDecay;
   /* hopMid.xyz = (hopEnd + hopStart) * 0.5; w = bank S713 (0) */
-  obj->hopMid.x = (obj->hopEnd.x + obj->hopStart.x) * 0.5f;
-  obj->hopMid.y = (obj->hopEnd.y + obj->hopStart.y) * 0.5f;
-  obj->hopMid.z = (obj->hopEnd.z + obj->hopStart.z) * 0.5f;
+  obj->hopMid.x = VfMul(VfAdd(obj->hopEnd.x, obj->hopStart.x), 0.5f);
+  obj->hopMid.y = VfMul(VfAdd(obj->hopEnd.y, obj->hopStart.y), 0.5f);
+  obj->hopMid.z = VfMul(VfAdd(obj->hopEnd.z, obj->hopStart.z), 0.5f);
   obj->hopMid.w = 0.0f;
   if (g_staticZeroFGuard == 0) {
     g_staticZeroFGuard = 1;

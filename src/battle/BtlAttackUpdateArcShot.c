@@ -33,12 +33,12 @@ void BtlAttackUpdateArcShot(BtlAttack *self, s32 hitKind)
         offset[0] = self->vel[0];
         offset[1] = 0.0f;
         offset[2] = self->vel[2];
-        lenSq = offset[0] * offset[0] + offset[1] * offset[1] + offset[2] * offset[2];
+        lenSq = VfDot3(offset[0], offset[1], offset[2], offset[0], offset[1], offset[2]);
         scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        scale = scale * 10.0f;
-        offset[0] = offset[0] * scale;
-        offset[1] = offset[1] * scale;
-        offset[2] = offset[2] * scale;
+        scale = VfMul(scale, 10.0f);
+        offset[0] = VfMul(offset[0], scale);
+        offset[1] = VfMul(offset[1], scale);
+        offset[2] = VfMul(offset[2], scale);
         offset[3] = 0.0f;
         angle = 1.57079637f;
         if (!(self->paramF2 == 0.0f)) {
@@ -46,27 +46,27 @@ void BtlAttackUpdateArcShot(BtlAttack *self, s32 hitKind)
         }
         /* vrot with angle * S703 (2/pi) in quarter turns: cos/sin of the angle in radians.
            offset x/z rotated about y: x' = c*x - s*z, z' = s*x + c*z (y, w kept). */
-        c = __builtin_cosf(angle);
-        s = __builtin_sinf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
+        s = VfSinQuarter(VfMul(angle, 0.636619747f));
         x = offset[0];
         y = offset[1];
         z = offset[2];
-        offset[0] = x * c + y * 0.0f + z * -s;
-        offset[2] = x * s + y * 0.0f + z * c;
+        offset[0] = VfDot3(x, y, z, c, 0.0f, -s);
+        offset[2] = VfDot3(x, y, z, s, 0.0f, c);
         /* dir rotated the same way by angle * 0.03 */
         angle = angle * 0.0299999993f;
-        c = __builtin_cosf(angle);
-        s = __builtin_sinf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
+        s = VfSinQuarter(VfMul(angle, 0.636619747f));
         x = self->dir[0];
         y = self->dir[1];
         z = self->dir[2];
-        self->dir[0] = x * c + y * 0.0f + z * -s;
-        self->dir[2] = x * s + y * 0.0f + z * c;
+        self->dir[0] = VfDot3(x, y, z, c, 0.0f, -s);
+        self->dir[2] = VfDot3(x, y, z, s, 0.0f, c);
         self->turnRate = 0.0199999996f;
         /* pos.xyz += offset.xyz (w kept) */
-        self->pos[0] = self->pos[0] + offset[0];
-        self->pos[1] = self->pos[1] + offset[1];
-        self->pos[2] = self->pos[2] + offset[2];
+        self->pos[0] = VfAdd(self->pos[0], offset[0]);
+        self->pos[1] = VfAdd(self->pos[1], offset[1]);
+        self->pos[2] = VfAdd(self->pos[2], offset[2]);
         return;
     }
     if (BtlAttackResolveClash(self, 0xbb) != 0) {
@@ -78,7 +78,7 @@ void BtlAttackUpdateArcShot(BtlAttack *self, s32 hitKind)
         return;
     }
     /* pos.xyz += vel.xyz (w kept) */
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

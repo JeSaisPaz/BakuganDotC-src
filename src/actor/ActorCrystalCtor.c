@@ -29,9 +29,9 @@ static void CrystalBoxBuildInverse(CollisionBox *box)
     float ty;
     float tz;
 
-    tx = m->x.x * m->w.x + m->x.y * m->w.y + m->x.z * m->w.z;
-    ty = m->y.x * m->w.x + m->y.y * m->w.y + m->y.z * m->w.z;
-    tz = m->z.x * m->w.x + m->z.y * m->w.y + m->z.z * m->w.z;
+    tx = VfDot3(m->x.x, m->x.y, m->x.z, m->w.x, m->w.y, m->w.z);
+    ty = VfDot3(m->y.x, m->y.y, m->y.z, m->w.x, m->w.y, m->w.z);
+    tz = VfDot3(m->z.x, m->z.y, m->z.z, m->w.x, m->w.y, m->w.z);
     box->invTransform.x.x = m->x.x;
     box->invTransform.x.y = m->y.x;
     box->invTransform.x.z = m->z.x;
@@ -94,9 +94,9 @@ ActorCrystal *ActorCrystalCtor(ActorCrystal *self, s32 modelId, s32 mode, float 
     self->spawnFlag = flag;
     self->barrierVariant = 0;
     /* scale.xyz *= 0.6; scale.w = bank S713 (0) */
-    self->base.base.scale[0] = self->base.base.scale[0] * 0.6f;
-    self->base.base.scale[1] = self->base.base.scale[1] * 0.6f;
-    self->base.base.scale[2] = self->base.base.scale[2] * 0.6f;
+    self->base.base.scale[0] = VfMul(self->base.base.scale[0], 0.6f);
+    self->base.base.scale[1] = VfMul(self->base.base.scale[1], 0.6f);
+    self->base.base.scale[2] = VfMul(self->base.base.scale[2], 0.6f);
     self->base.base.scale[3] = 0.0f;
     if (g_scriptGlobalVars[8] == 1 && g_scriptGlobalVars[1] == 10 && flag == 1) {
         self->base.base.scale[0] = 1.0f;
@@ -238,9 +238,7 @@ ActorCrystal *ActorCrystalCtor(ActorCrystal *self, s32 modelId, s32 mode, float 
     r = 0.0f;
     self->extraCapsule0.radius = r;
     self->extraCapsule0.radiusSq = r * r;
-    self->extraCapsule0.axisLen = __builtin_sqrtf(self->extraCapsule0.axis[0] * self->extraCapsule0.axis[0] +
-                                                  self->extraCapsule0.axis[1] * self->extraCapsule0.axis[1] +
-                                                  self->extraCapsule0.axis[2] * self->extraCapsule0.axis[2]);
+    self->extraCapsule0.axisLen = VfSqrt(VfDot3(self->extraCapsule0.axis[0], self->extraCapsule0.axis[1], self->extraCapsule0.axis[2], self->extraCapsule0.axis[0], self->extraCapsule0.axis[1], self->extraCapsule0.axis[2]));
     /* modelBox extents = bank C720 (0) */
     data = self->base.base.data;
     self->modelBox.aabbMin.x = 0.0f;
@@ -307,14 +305,14 @@ ActorCrystal *ActorCrystalCtor(ActorCrystal *self, s32 modelId, s32 mode, float 
     self->focusCamera = 1;
     for (i = 0; i < 3; i++) {
         /* random in [0, 1): vrndf1 minus bank S733 (1) */
-        jitter = PlatformRandFloat12() - 1.0f;
+        jitter = VfSub(PlatformRandFloat12(), 1.0f);
         angle = ((float)i * 0.33f + 0.15f + jitter * 0.23f) * 6.2831855f;
         /* vrot [C,0,S,0] of angle * S703 (2/pi), scaled by 700, plus the model position */
-        px = __builtin_cosf(angle) * 700.0f;
-        pz = __builtin_sinf(angle) * 700.0f;
-        self->orbitPoints[i][0] = px + self->base.base.pos[0];
-        self->orbitPoints[i][1] = 0.0f + self->base.base.pos[1];
-        self->orbitPoints[i][2] = pz + self->base.base.pos[2];
+        px = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), 700.0f);
+        pz = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), 700.0f);
+        self->orbitPoints[i][0] = VfAdd(px, self->base.base.pos[0]);
+        self->orbitPoints[i][1] = VfAdd(0.0f, self->base.base.pos[1]);
+        self->orbitPoints[i][2] = VfAdd(pz, self->base.base.pos[2]);
         self->orbitPoints[i][3] = 0.0f;
     }
     MemLock();
@@ -349,10 +347,10 @@ ActorCrystal *ActorCrystalCtor(ActorCrystal *self, s32 modelId, s32 mode, float 
         self->collisionBox->invValid = 1;
     }
     k = self->base.base.scale[0] * 0.9f;
-    self->collisionBox->aabbMin.x = self->collisionBox->aabbMin.x * k;
-    self->collisionBox->aabbMin.z = self->collisionBox->aabbMin.z * k;
-    self->collisionBox->aabbMax.x = self->collisionBox->aabbMax.x * k;
-    self->collisionBox->aabbMax.z = self->collisionBox->aabbMax.z * k;
+    self->collisionBox->aabbMin.x = VfMul(self->collisionBox->aabbMin.x, k);
+    self->collisionBox->aabbMin.z = VfMul(self->collisionBox->aabbMin.z, k);
+    self->collisionBox->aabbMax.x = VfMul(self->collisionBox->aabbMax.x, k);
+    self->collisionBox->aabbMax.z = VfMul(self->collisionBox->aabbMax.z, k);
     self->collisionBox->aabbMax.y = self->collisionBox->aabbMax.y - 100.0f;
     if (self->collisionBox->aabbMax.y <= 30.0f) {
         self->collisionBox->aabbMax.y = 30.0f;

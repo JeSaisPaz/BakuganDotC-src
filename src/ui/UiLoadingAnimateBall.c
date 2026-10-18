@@ -45,5 +45,5 @@ void UiLoadingAnimateBall(UiLoading *self)
   if (!(phase <= UI_LOADING_TWO_PI)) {
     self->ballPhase = self->ballPhase - UI_LOADING_TWO_PI;
   }
-  glow->alpha = __builtin_sinf(self->ballPhase) * 0.15f + 0.8f;
+  glow->alpha = VfSinQuarter(VfMul(self->ballPhase, 0.636619747f)) * 0.15f + 0.8f;
 }

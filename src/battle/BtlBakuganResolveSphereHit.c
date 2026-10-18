@@ -21,9 +21,9 @@ void BtlBakuganResolveSphereHit(BtlBakugan *self, CollisionSphereQuery *sphere, 
 
     (void)self;
     reach = sphere->radius + 0.100000001f;
-    pos[0] = point->x + normal->x * reach;
-    pos[1] = point->y + normal->y * reach;
-    pos[2] = point->z + normal->z * reach;
+    pos[0] = VfAdd(point->x, VfMul(normal->x, reach));
+    pos[1] = VfAdd(point->y, VfMul(normal->y, reach));
+    pos[2] = VfAdd(point->z, VfMul(normal->z, reach));
     pos[3] = point->w;
     if (keepHeight == 0) {
         pos[1] = pos[1] - sphere->radius;
@@ -32,18 +32,18 @@ void BtlBakuganResolveSphereHit(BtlBakugan *self, CollisionSphereQuery *sphere, 
     tangent[0] = -normal->z;
     tangent[1] = normal->y;
     tangent[2] = normal->x;
-    scale = (velocity[0] * tangent[0] + velocity[1] * tangent[1] + velocity[2] * tangent[2]) *
+    scale = VfDot3(velocity[0], velocity[1], velocity[2], tangent[0], tangent[1], tangent[2]) *
             0.0399999991f;
 
-    velocity[0] = tangent[0] * scale;
-    velocity[1] = tangent[1] * scale;
-    velocity[2] = tangent[2] * scale;
+    velocity[0] = VfMul(tangent[0], scale);
+    velocity[1] = VfMul(tangent[1], scale);
+    velocity[2] = VfMul(tangent[2], scale);
     velocity[3] = 0.0f; /* w lane of C710: bank S713 */
     velocity[1] = 0.0f;
 
-    outPos[0] = pos[0] + velocity[0];
-    outPos[1] = pos[1] + velocity[1];
-    outPos[2] = pos[2] + velocity[2];
+    outPos[0] = VfAdd(pos[0], velocity[0]);
+    outPos[1] = VfAdd(pos[1], velocity[1]);
+    outPos[2] = VfAdd(pos[2], velocity[2]);
     outPos[3] = pos[3];
     sphere->center.x = outPos[0];
     sphere->center.y = outPos[1];

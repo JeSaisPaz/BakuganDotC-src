@@ -123,30 +123,26 @@ void GameGimmickCameraScanState(GameGimmickCamera *obj)
   }
 
   /* qYaw = (0, 0, S, C) and qTilt = (S, 0, 0, C) of angle * (1/pi) quarter turns (half angles) */
-  turns = obj->sweepAngle * 0.318309873f;
+  turns = VfMul(obj->sweepAngle, 0.318309873f);
   qYaw.x = 0.0f;
   qYaw.y = 0.0f;
   qYaw.z = VfSinQuarter(turns);
   qYaw.w = VfCosQuarter(turns);
-  turns = obj->coneAngle * 0.318309873f;
+  turns = VfMul(obj->coneAngle, 0.318309873f);
   qTilt.x = VfSinQuarter(turns);
   qTilt.y = 0.0f;
   qTilt.z = 0.0f;
   qTilt.w = VfCosQuarter(turns);
 
   /* qTmp = lensPos (x) qYaw; qRot = qTmp (x) qTilt (vqmul.q) */
-  qTmp.x = obj->lensPos.x * qYaw.w + obj->lensPos.y * qYaw.z - obj->lensPos.z * qYaw.y +
-           obj->lensPos.w * qYaw.x;
-  qTmp.y = -obj->lensPos.x * qYaw.z + obj->lensPos.y * qYaw.w + obj->lensPos.z * qYaw.x +
-           obj->lensPos.w * qYaw.y;
-  qTmp.z = obj->lensPos.x * qYaw.y - obj->lensPos.y * qYaw.x + obj->lensPos.z * qYaw.w +
-           obj->lensPos.w * qYaw.z;
-  qTmp.w = -obj->lensPos.x * qYaw.x - obj->lensPos.y * qYaw.y - obj->lensPos.z * qYaw.z +
-           obj->lensPos.w * qYaw.w;
-  qRot.x = qTmp.x * qTilt.w + qTmp.y * qTilt.z - qTmp.z * qTilt.y + qTmp.w * qTilt.x;
-  qRot.y = -qTmp.x * qTilt.z + qTmp.y * qTilt.w + qTmp.z * qTilt.x + qTmp.w * qTilt.y;
-  qRot.z = qTmp.x * qTilt.y - qTmp.y * qTilt.x + qTmp.z * qTilt.w + qTmp.w * qTilt.z;
-  qRot.w = -qTmp.x * qTilt.x - qTmp.y * qTilt.y - qTmp.z * qTilt.z + qTmp.w * qTilt.w;
+  qTmp.x = VfDot4(obj->lensPos.x, obj->lensPos.y, obj->lensPos.z, obj->lensPos.w, qYaw.w, qYaw.z, -qYaw.y, qYaw.x);
+  qTmp.y = VfDot4(-obj->lensPos.x, obj->lensPos.y, obj->lensPos.z, obj->lensPos.w, qYaw.z, qYaw.w, qYaw.x, qYaw.y);
+  qTmp.z = VfDot4(obj->lensPos.x, obj->lensPos.y, obj->lensPos.z, obj->lensPos.w, qYaw.y, -qYaw.x, qYaw.w, qYaw.z);
+  qTmp.w = VfDot4(-obj->lensPos.x, obj->lensPos.y, obj->lensPos.z, obj->lensPos.w, qYaw.x, -qYaw.y, -qYaw.z, qYaw.w);
+  qRot.x = VfDot4(qTmp.x, qTmp.y, qTmp.z, qTmp.w, qTilt.w, qTilt.z, -qTilt.y, qTilt.x);
+  qRot.y = VfDot4(-qTmp.x, qTmp.y, qTmp.z, qTmp.w, qTilt.z, qTilt.w, qTilt.x, qTilt.y);
+  qRot.z = VfDot4(qTmp.x, qTmp.y, qTmp.z, qTmp.w, qTilt.y, -qTilt.x, qTilt.w, qTilt.z);
+  qRot.w = VfDot4(-qTmp.x, qTmp.y, qTmp.z, qTmp.w, qTilt.x, -qTilt.y, -qTilt.z, qTilt.w);
   node = (GmoNode *)obj->lensNode;
   node->rotate[0] = qRot.x;
   node->rotate[1] = qRot.y;
@@ -161,8 +157,7 @@ void GameGimmickCameraScanState(GameGimmickCamera *obj)
   root = obj->base.base.data->rootMatrix;
   for (a = 0; a < 4; a++) {
     for (b = 0; b < 4; b++) {
-      prod[a * 4 + b] = mtx[a * 4 + 0] * root[0 * 4 + b] + mtx[a * 4 + 1] * root[1 * 4 + b] +
-                        mtx[a * 4 + 2] * root[2 * 4 + b] + mtx[a * 4 + 3] * root[3 * 4 + b];
+      prod[a * 4 + b] = VfDot4(mtx[a * 4 + 0], mtx[a * 4 + 1], mtx[a * 4 + 2], mtx[a * 4 + 3], root[0 * 4 + b], root[1 * 4 + b], root[2 * 4 + b], root[3 * 4 + b]);
     }
   }
   for (a = 0; a < 16; a++) {
@@ -188,26 +183,25 @@ void GameGimmickCameraScanState(GameGimmickCamera *obj)
 
   /* coneMatrix.w.xyz += mtx * (0, -1, 0.9, 0) (vtfm4.q E100) */
   for (b = 0; b < 3; b++) {
-    (&tmp.x)[b] = mtx[0 * 4 + b] * 0.0f + mtx[1 * 4 + b] * -1.0f + mtx[2 * 4 + b] * 0.9f +
-                  mtx[3 * 4 + b] * 0.0f;
+    (&tmp.x)[b] = VfDot4(mtx[0 * 4 + b], mtx[1 * 4 + b], mtx[2 * 4 + b], mtx[3 * 4 + b], 0.0f, -1.0f, 0.9f, 0.0f);
   }
-  cone->w.x = cone->w.x + tmp.x;
-  cone->w.y = cone->w.y + tmp.y;
-  cone->w.z = cone->w.z + tmp.z;
+  cone->w.x = VfAdd(cone->w.x, tmp.x);
+  cone->w.y = VfAdd(cone->w.y, tmp.y);
+  cone->w.z = VfAdd(cone->w.z, tmp.z);
 
   if (obj->spotEffect != NULL) {
     /* distance along the cone axis (matrix Y) down to the camera's height */
     dist = cone->w.y - obj->base.base.pos[1];
-    sinCone = __builtin_sinf(obj->coneAngle);
+    sinCone = VfSinQuarter(VfMul(obj->coneAngle, 0.636619747f));
     dist = -dist / sinCone;
     /* spot = coneMatrix * (0, dist, 0, 0) + coneMatrix.w.xyz */
-    spot.x = cone->x.x * 0.0f + cone->y.x * dist + cone->z.x * 0.0f + cone->w.x * 0.0f;
-    spot.y = cone->x.y * 0.0f + cone->y.y * dist + cone->z.y * 0.0f + cone->w.y * 0.0f;
-    spot.z = cone->x.z * 0.0f + cone->y.z * dist + cone->z.z * 0.0f + cone->w.z * 0.0f;
-    spot.w = cone->x.w * 0.0f + cone->y.w * dist + cone->z.w * 0.0f + cone->w.w * 0.0f;
-    spot.x = spot.x + cone->w.x;
-    spot.y = spot.y + cone->w.y;
-    spot.z = spot.z + cone->w.z;
+    spot.x = VfDot4(cone->x.x, cone->y.x, cone->z.x, cone->w.x, 0.0f, dist, 0.0f, 0.0f);
+    spot.y = VfDot4(cone->x.y, cone->y.y, cone->z.y, cone->w.y, 0.0f, dist, 0.0f, 0.0f);
+    spot.z = VfDot4(cone->x.z, cone->y.z, cone->z.z, cone->w.z, 0.0f, dist, 0.0f, 0.0f);
+    spot.w = VfDot4(cone->x.w, cone->y.w, cone->z.w, cone->w.w, 0.0f, dist, 0.0f, 0.0f);
+    spot.x = VfAdd(spot.x, cone->w.x);
+    spot.y = VfAdd(spot.y, cone->w.y);
+    spot.z = VfAdd(spot.z, cone->w.z);
     /* the sprite keeps its own height */
     spotModel = (GfxModel *)obj->spotEffect;
     spot.y = spotModel->ambient[1];

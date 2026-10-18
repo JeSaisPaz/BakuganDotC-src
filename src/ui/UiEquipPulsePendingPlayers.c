@@ -18,7 +18,7 @@ void UiEquipPulsePendingPlayers(UiEquip *self)
 
     if (self->pulseOn != 0) {
         self->pulseT = self->pulseT + 0.06666667f;
-        c = __builtin_cosf(self->pulseT * 3.1415927f);
+        c = VfCosQuarter(VfMul(self->pulseT * 3.1415927f, 0.636619747f));
         self->pulseAlpha = 1.0f - (1.0f - c) * 0.5f;
         if (SaveGetProfileFlag0() == 0) {
             for (i = self->spriteIdx[8]; i < self->spriteIdx[8] + self->playerCount; i++) {

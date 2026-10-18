@@ -61,7 +61,7 @@ void BtlHudPhaseRoundEnd(BtlHud *self)
         self->resultTimer++;
         t = (float)self->resultTimer * 0.0416666679f - 1.0f;
         angle = (1.0f - t * t) * 3.14159274f;
-        c = __builtin_cosf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
         banner->posX = self->resultBannerX +
                        (float)self->resultSlideX * (1.0f - (1.0f - c) * 0.5f);
         banner->alpha = banner->alpha + 0.05f;
@@ -97,7 +97,7 @@ void BtlHudPhaseRoundEnd(BtlHud *self)
     self->resultTimer++;
     t = (float)self->resultTimer * 0.0416666679f - 1.0f;
     angle = (1.0f - t * t) * 3.14159274f;
-    c = __builtin_cosf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
     banner->posX = self->resultBannerX + (float)self->resultSlideX * ((1.0f - c) * 0.5f);
     banner->alpha = banner->alpha - 0.119999997f;
     self->sprites[0xf0]->alpha = banner->alpha * 0.800000012f;

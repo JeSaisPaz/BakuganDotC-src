@@ -47,7 +47,7 @@
 /* sin(angle): the listing's vsin.s of angle * S703 (2/pi), a quarter-turn sine. */
 static inline float RatingSin(float angle)
 {
-    return __builtin_sinf(angle);
+    return VfSinQuarter(VfMul(angle, 0.636619747f));
 }
 
 /* Clamps the angle to [0, pi/2] (a NaN becomes pi/2). */

@@ -42,13 +42,13 @@
 /* VFPU vsin.s of angle * S703 (2/pi) quarter turns: sin(angle). */
 static inline float LampVfpuSin(float angle)
 {
-    return __builtin_sinf(angle);
+    return VfSinQuarter(VfMul(angle, 0.636619747f));
 }
 
 /* VFPU vcos.s of angle * S703 (2/pi) quarter turns: cos(angle). */
 static inline float LampVfpuCos(float angle)
 {
-    return __builtin_cosf(angle);
+    return VfCosQuarter(VfMul(angle, 0.636619747f));
 }
 
 /* Pulse alpha of a lamp whose phase is `phase`: (1 - cos(phase * pi)) / 2 * 0.2, not below 0. */

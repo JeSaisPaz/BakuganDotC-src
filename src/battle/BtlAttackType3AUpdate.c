@@ -58,9 +58,9 @@ void BtlAttackType3AUpdate(BtlAttack *self)
             BtlAttackSetPendingHit(self, 0xc5, &g_btlAttackHitQuery.contact.x);
             return;
         }
-        self->pos[0] = self->pos[0] + self->vel[0];
-        self->pos[1] = self->pos[1] + self->vel[1];
-        self->pos[2] = self->pos[2] + self->vel[2];
+        self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+        self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+        self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
         return;
     }
 
@@ -89,8 +89,7 @@ void BtlAttackType3AUpdate(BtlAttack *self)
     b = self->bone->localMatrix;
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            self->mtx[j][i] = b[j * 4 + 0] * a[i] + b[j * 4 + 1] * a[4 + i] +
-                              b[j * 4 + 2] * a[8 + i] + b[j * 4 + 3] * a[12 + i];
+            self->mtx[j][i] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], a[i], a[4 + i], a[8 + i], a[12 + i]);
         }
     }
     /* pos = mtx x (variant->pos.xyz, 1) */
@@ -98,43 +97,42 @@ void BtlAttackType3AUpdate(BtlAttack *self)
     y = variant->pos[1];
     z = variant->pos[2];
     for (i = 0; i < 4; i++) {
-        self->pos[i] = self->mtx[0][i] * x + self->mtx[1][i] * y + self->mtx[2][i] * z +
-                       self->mtx[3][i];
+        self->pos[i] = VfDot4(self->mtx[0][i], self->mtx[1][i], self->mtx[2][i], self->mtx[3][i], x, y, z, 1.0f);
     }
 
     /* dir.xyz += 0.2 * variant->dirDelta.xyz */
-    scaled[0] = variant->dirDelta[0] * 0.200000003f;
-    scaled[1] = variant->dirDelta[1] * 0.200000003f;
-    scaled[2] = variant->dirDelta[2] * 0.200000003f;
-    self->dir[0] = self->dir[0] + scaled[0];
-    self->dir[1] = self->dir[1] + scaled[1];
-    self->dir[2] = self->dir[2] + scaled[2];
+    scaled[0] = VfMul(variant->dirDelta[0], 0.200000003f);
+    scaled[1] = VfMul(variant->dirDelta[1], 0.200000003f);
+    scaled[2] = VfMul(variant->dirDelta[2], 0.200000003f);
+    self->dir[0] = VfAdd(self->dir[0], scaled[0]);
+    self->dir[1] = VfAdd(self->dir[1], scaled[1]);
+    self->dir[2] = VfAdd(self->dir[2], scaled[2]);
 
     /* dir = (clamp(normalise(dir.xyz), -1, 1), 0); zero length scales by 0 */
     x = self->dir[0];
     y = self->dir[1];
     z = self->dir[2];
-    len2 = x * x + y * y + z * z;
+    len2 = VfDot3(x, y, z, x, y, z);
     k = VfRsq(len2);
     if (VfIsZero(len2)) {
         k = 0.0f;
     }
-    self->dir[0] = VfSat1(x * k);
-    self->dir[1] = VfSat1(y * k);
-    self->dir[2] = VfSat1(z * k);
+    self->dir[0] = VfSat1(VfMul(x, k));
+    self->dir[1] = VfSat1(VfMul(y, k));
+    self->dir[2] = VfSat1(VfMul(z, k));
     self->dir[3] = 0.0f;
 
     turn = (u32)((s32)self->paramF2 & 0xff);
     if (turn == 1 || turn == 3 || turn == 2 || turn == 4) {
         angle = (turn == 1 || turn == 3) ? -0.261799395f : 0.261799395f;
         /* dir x/z rotated by angle about y: x' = c*x - s*z, z' = s*x + c*z (y, w kept) */
-        c = __builtin_cosf(angle);
-        s = __builtin_sinf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
+        s = VfSinQuarter(VfMul(angle, 0.636619747f));
         x = self->dir[0];
         y = self->dir[1];
         z = self->dir[2];
-        self->dir[0] = x * c + y * 0.0f + z * -s;
-        self->dir[2] = x * s + y * 0.0f + z * c;
+        self->dir[0] = VfDot3(x, y, z, c, 0.0f, -s);
+        self->dir[2] = VfDot3(x, y, z, s, 0.0f, c);
     }
 
     /* attached effect direction = dir */

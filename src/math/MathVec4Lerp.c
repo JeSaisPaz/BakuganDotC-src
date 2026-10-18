@@ -8,8 +8,8 @@ void MathVec4Lerp(const ScePspFVector4 *a, ScePspFVector4 *out, const ScePspFVec
     ScePspFVector4 va = *a;
     ScePspFVector4 vb = *b;
 
-    out->x = va.x + (vb.x - va.x) * t;
-    out->y = va.y + (vb.y - va.y) * t;
-    out->z = va.z + (vb.z - va.z) * t;
-    out->w = va.w + (vb.w - va.w) * t;
+    out->x = VfAdd(va.x, VfMul(VfSub(vb.x, va.x), t));
+    out->y = VfAdd(va.y, VfMul(VfSub(vb.y, va.y), t));
+    out->z = VfAdd(va.z, VfMul(VfSub(vb.z, va.z), t));
+    out->w = VfAdd(va.w, VfMul(VfSub(vb.w, va.w), t));
 }

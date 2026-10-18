@@ -17,7 +17,7 @@ float BtlCameraCalcDefaultPitch(float height, float basePitch)
     if (t != t) {
         t = __builtin_signbit(t) ? 0.0f : 1.0f;
     } else {
-        t = t <= 0.0f ? 0.0f : t > 1.0f ? 1.0f : t;
+        t = VfMax(VfMin(t, 1.0f), 0.0f);
     }
     return basePitch + (1.0f - t) * (0.52359879f - basePitch); /* 0x3f060a92 */
 }

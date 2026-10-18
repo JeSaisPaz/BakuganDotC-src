@@ -61,14 +61,14 @@ void GameFieldUpdateBackgroundBattle(CoreTask *task)
       if (wilda != NULL && gf->effectMgr2 != NULL) {
         /* dir = normalize(fortress.pos - wilda.pos), saturated to [-1,1], zero for a
            zero-length vector; never read afterwards (lane 3 of the store is stale, left out) */
-        dir[0] = pos[0] - wilda->base.pos[0];
-        dir[1] = pos[1] - wilda->base.pos[1];
-        dir[2] = pos[2] - wilda->base.pos[2];
-        scale = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+        dir[0] = VfSub(pos[0], wilda->base.pos[0]);
+        dir[1] = VfSub(pos[1], wilda->base.pos[1]);
+        dir[2] = VfSub(pos[2], wilda->base.pos[2]);
+        scale = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
         scale = VfIsZero(scale) ? 0.0f : VfRsq(scale);
-        dir[0] = VfSat1(dir[0] * scale);
-        dir[1] = VfSat1(dir[1] * scale);
-        dir[2] = VfSat1(dir[2] * scale);
+        dir[0] = VfSat1(VfMul(dir[0], scale));
+        dir[1] = VfSat1(VfMul(dir[1], scale));
+        dir[2] = VfSat1(VfMul(dir[2], scale));
         shotA[0] = 101.5f;
         shotA[1] = 202.5f;
         shotA[2] = -801.2f;
@@ -82,10 +82,10 @@ void GameFieldUpdateBackgroundBattle(CoreTask *task)
       }
       player = (Actor *)ActorFindPlayer();
       /* dist = |player.pos - pos| (xyz) */
-      diff[0] = player->base.pos[0] - pos[0];
-      diff[1] = player->base.pos[1] - pos[1];
-      diff[2] = player->base.pos[2] - pos[2];
-      dist = __builtin_sqrtf(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
+      diff[0] = VfSub(player->base.pos[0], pos[0]);
+      diff[1] = VfSub(player->base.pos[1], pos[1]);
+      diff[2] = VfSub(player->base.pos[2], pos[2]);
+      dist = VfSqrt(VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]));
       dist = dist - 800.0f;
       if (dist < 0.0f) {
         dist = 0.0f;
@@ -115,10 +115,10 @@ void GameFieldUpdateBackgroundBattle(CoreTask *task)
         GfxEffectSpawn(gf->effectMgr, 0x51, hitPos);
         player = (Actor *)ActorFindPlayer();
         /* dist = |player.pos - pos| (xyz) */
-        diff[0] = player->base.pos[0] - pos[0];
-        diff[1] = player->base.pos[1] - pos[1];
-        diff[2] = player->base.pos[2] - pos[2];
-        dist = __builtin_sqrtf(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
+        diff[0] = VfSub(player->base.pos[0], pos[0]);
+        diff[1] = VfSub(player->base.pos[1], pos[1]);
+        diff[2] = VfSub(player->base.pos[2], pos[2]);
+        dist = VfSqrt(VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]));
         vol = (300.0f - dist) * 0.0033333334f;
         if (!(vol <= 1.0f)) {
           vol = 1.0f;

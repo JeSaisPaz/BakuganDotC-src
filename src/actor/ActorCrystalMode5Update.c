@@ -44,10 +44,10 @@ int ActorCrystalMode5Update(ActorCrystal *self)
       return 1;
     }
     if (step <= 0) {
-      dx = self->base.base.pos[0] - target->base.pos[0];
-      dy = self->base.base.pos[1] - target->base.pos[1];
-      dz = self->base.base.pos[2] - target->base.pos[2];
-      dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+      dx = VfSub(self->base.base.pos[0], target->base.pos[0]);
+      dy = VfSub(self->base.base.pos[1], target->base.pos[1]);
+      dz = VfSub(self->base.base.pos[2], target->base.pos[2]);
+      dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
       if (!(dist < self->attackRange)) {
         self->step = 999;
         return result;
@@ -59,13 +59,13 @@ int ActorCrystalMode5Update(ActorCrystal *self)
                    target->base.pos[0] - self->base.base.pos[0]);
     self->fireParam = angle;
     /* vrot [C,0,S,0] of angle * 2/pi (bank S703), scaled by 250 on x, y, z */
-    dir[0] = __builtin_cosf(angle) * 250.0f;
+    dir[0] = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), 250.0f);
     dir[1] = 0.0f;
-    dir[2] = __builtin_sinf(angle) * 250.0f;
+    dir[2] = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), 250.0f);
     dir[3] = 0.0f;
-    self->firePoint[0] = dir[0] + self->base.base.pos[0];
-    self->firePoint[1] = dir[1] + self->base.base.pos[1];
-    self->firePoint[2] = dir[2] + self->base.base.pos[2];
+    self->firePoint[0] = VfAdd(dir[0], self->base.base.pos[0]);
+    self->firePoint[1] = VfAdd(dir[1], self->base.base.pos[1]);
+    self->firePoint[2] = VfAdd(dir[2], self->base.base.pos[2]);
     self->firePoint[3] = dir[3];
     self->firePoint[1] = self->firePoint[1] + 250.0f;
     if (SndHasListener()) {
@@ -79,24 +79,23 @@ int ActorCrystalMode5Update(ActorCrystal *self)
     aim[2] = target->base.pos[2];
     aim[3] = target->base.pos[3];
     aim[1] = aim[1] + target->combat.stats->height;
-    self->firePoint2[0] = aim[0] - self->firePoint[0];
-    self->firePoint2[1] = aim[1] - self->firePoint[1];
-    self->firePoint2[2] = aim[2] - self->firePoint[2];
+    self->firePoint2[0] = VfSub(aim[0], self->firePoint[0]);
+    self->firePoint2[1] = VfSub(aim[1], self->firePoint[1]);
+    self->firePoint2[2] = VfSub(aim[2], self->firePoint[2]);
     self->firePoint2[3] = aim[3];
     /* normalise (factor 0 for a zero vector, bank S713), clamp to [-1, 1]; w is S713 = 0 */
-    lenSq = self->firePoint2[0] * self->firePoint2[0] + self->firePoint2[1] * self->firePoint2[1] +
-            self->firePoint2[2] * self->firePoint2[2];
+    lenSq = VfDot3(self->firePoint2[0], self->firePoint2[1], self->firePoint2[2], self->firePoint2[0], self->firePoint2[1], self->firePoint2[2]);
     k = VfRsq(lenSq);
     if (VfIsZero(lenSq)) {
       k = 0.0f;
     }
-    self->firePoint2[0] = VfSat1(self->firePoint2[0] * k);
-    self->firePoint2[1] = VfSat1(self->firePoint2[1] * k);
-    self->firePoint2[2] = VfSat1(self->firePoint2[2] * k);
+    self->firePoint2[0] = VfSat1(VfMul(self->firePoint2[0], k));
+    self->firePoint2[1] = VfSat1(VfMul(self->firePoint2[1], k));
+    self->firePoint2[2] = VfSat1(VfMul(self->firePoint2[2], k));
     self->firePoint2[3] = 0.0f;
-    self->firePoint2[0] = self->firePoint2[0] * 2.5f;
-    self->firePoint2[1] = self->firePoint2[1] * 2.5f;
-    self->firePoint2[2] = self->firePoint2[2] * 2.5f;
+    self->firePoint2[0] = VfMul(self->firePoint2[0], 2.5f);
+    self->firePoint2[1] = VfMul(self->firePoint2[1], 2.5f);
+    self->firePoint2[2] = VfMul(self->firePoint2[2], 2.5f);
     self->firePoint2[3] = 0.0f;
     self->timer = 0;
     self->step = self->step + 1;

@@ -52,10 +52,10 @@ void GameQuestCamResolveCollision(float dt, GameQuestCamSpring *self)
   accel[3] = self->accel.w;
   GameQuestCamIntegrate(dt, self, pos, vel, accel);
 
-  dir.x = pos[0] - self->ctrl->lookAt.x;
-  dir.y = pos[1] - self->ctrl->lookAt.y;
-  dir.z = pos[2] - self->ctrl->lookAt.z;
-  lenSq = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
+  dir.x = VfSub(pos[0], self->ctrl->lookAt.x);
+  dir.y = VfSub(pos[1], self->ctrl->lookAt.y);
+  dir.z = VfSub(pos[2], self->ctrl->lookAt.z);
+  lenSq = VfDot3(dir.x, dir.y, dir.z, dir.x, dir.y, dir.z);
   if (lenSq <= 0.01f) {
     dir = g_gameQuestCamTargetAxisConsts.posZ;
   } else {
@@ -64,17 +64,17 @@ void GameQuestCamResolveCollision(float dt, GameQuestCamSpring *self)
     if (VfIsZero(lenSq)) {
       scale = 0.0f;
     }
-    dir.x = VfSat1(dir.x * scale);
-    dir.y = VfSat1(dir.y * scale);
-    dir.z = VfSat1(dir.z * scale);
+    dir.x = VfSat1(VfMul(dir.x, scale));
+    dir.y = VfSat1(VfMul(dir.y, scale));
+    dir.z = VfSat1(VfMul(dir.z, scale));
   }
   scale = self->ctrl->radius;
-  dir.x = dir.x * scale;
-  dir.y = dir.y * scale;
-  dir.z = dir.z * scale;
-  pos[0] = pos[0] + dir.x;
-  pos[1] = pos[1] + dir.y;
-  pos[2] = pos[2] + dir.z;
+  dir.x = VfMul(dir.x, scale);
+  dir.y = VfMul(dir.y, scale);
+  dir.z = VfMul(dir.z, scale);
+  pos[0] = VfAdd(pos[0], dir.x);
+  pos[1] = VfAdd(pos[1], dir.y);
+  pos[2] = VfAdd(pos[2], dir.z);
 
   /* C720 (0, 0, 0, 0) */
   hit[0] = 0.0f;
@@ -94,23 +94,23 @@ void GameQuestCamResolveCollision(float dt, GameQuestCamSpring *self)
     return;
   }
 
-  diff.x = hit[0] - pos[0];
-  diff.y = hit[1] - pos[1];
-  diff.z = hit[2] - pos[2];
-  dist = __builtin_sqrtf(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
+  diff.x = VfSub(hit[0], pos[0]);
+  diff.y = VfSub(hit[1], pos[1]);
+  diff.z = VfSub(hit[2], pos[2]);
+  dist = VfSqrt(VfDot3(diff.x, diff.y, diff.z, diff.x, diff.y, diff.z));
   radius = self->ctrl->radius;
   if (dist < radius * 2.0f && !(dist <= 1e-05f)) {
     scale = 1.0f / dist;
-    diff.x = diff.x * scale;
-    diff.y = diff.y * scale;
-    diff.z = diff.z * scale;
+    diff.x = VfMul(diff.x, scale);
+    diff.y = VfMul(diff.y, scale);
+    diff.z = VfMul(diff.z, scale);
     scale = (dist * 0.2f + 0.030000001f) * radius * 5.0f;
-    diff.x = diff.x * scale;
-    diff.y = diff.y * scale;
-    diff.z = diff.z * scale;
-    self->accel.x = self->accel.x + diff.x;
-    self->accel.y = self->accel.y + diff.y;
-    self->accel.z = self->accel.z + diff.z;
+    diff.x = VfMul(diff.x, scale);
+    diff.y = VfMul(diff.y, scale);
+    diff.z = VfMul(diff.z, scale);
+    self->accel.x = VfAdd(self->accel.x, diff.x);
+    self->accel.y = VfAdd(self->accel.y, diff.y);
+    self->accel.z = VfAdd(self->accel.z, diff.z);
     return;
   }
   target->point.x = hit[0];

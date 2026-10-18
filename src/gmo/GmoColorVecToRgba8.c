@@ -11,7 +11,7 @@ u32 *GmoColorVecToRgba8(u32 *out, const float *in)
 
   for (i = 0; i < 4; i++) {
     /* vsat0.q, vscl.q by 255 (viim), vf2iz.q ..., 23, vi2uc.q */
-    packed |= (u32)VfI2uc(VfF2iz(VfSat0(in[i]) * 255.0f, 23)) << (i * 8);
+    packed |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(in[i]), 255.0f), 23)) << (i * 8);
   }
   *out = packed;
   return out;

@@ -16,8 +16,8 @@ float ActorNpcGetViewHeading(ActorNpc *self)
 
     if (head != NULL) {
         m = head->localMatrix;
-        x = m[0] * g_vecX.x + m[4] * g_vecX.y + m[8] * g_vecX.z + m[12] * g_vecX.w;
-        z = m[2] * g_vecX.x + m[6] * g_vecX.y + m[10] * g_vecX.z + m[14] * g_vecX.w;
+        x = VfDot4(m[0], m[4], m[8], m[12], g_vecX.x, g_vecX.y, g_vecX.z, g_vecX.w);
+        z = VfDot4(m[2], m[6], m[10], m[14], g_vecX.x, g_vecX.y, g_vecX.z, g_vecX.w);
         yaw = atan2f(z, x);
     }
     return self->base.base.rot[1] + yaw;

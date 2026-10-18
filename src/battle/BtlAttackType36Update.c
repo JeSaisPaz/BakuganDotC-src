@@ -23,12 +23,11 @@ void BtlAttackType36Update(BtlAttack *self)
         /* dir = normalise(dir.xyz), each lane clamped to [-1, 1], 0 for zero length; w becomes
            the bank zero S713. */
         {
-            float lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] +
-                          self->dir[2] * self->dir[2];
+            float lenSq = VfDot3(self->dir[0], self->dir[1], self->dir[2], self->dir[0], self->dir[1], self->dir[2]);
             float k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-            self->dir[0] = VfSat1(self->dir[0] * k);
-            self->dir[1] = VfSat1(self->dir[1] * k);
-            self->dir[2] = VfSat1(self->dir[2] * k);
+            self->dir[0] = VfSat1(VfMul(self->dir[0], k));
+            self->dir[1] = VfSat1(VfMul(self->dir[1], k));
+            self->dir[2] = VfSat1(VfMul(self->dir[2], k));
             self->dir[3] = 0.0f;
         }
         effect = GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0xe0, self->pos, self->dir);

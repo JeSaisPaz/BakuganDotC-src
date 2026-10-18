@@ -11,5 +11,5 @@ void UiWorldMapJetWobbleStep(UiScreen *screen)
 
   t = map->jetWobbleTimer + 0.008333334f;
   map->jetWobbleTimer = t;
-  map->jetWobble = (1.0f - __builtin_cosf(t * 3.1415927f)) * 0.5f * 0.2f;
+  map->jetWobble = (1.0f - VfCosQuarter(VfMul(t * 3.1415927f, 0.636619747f))) * 0.5f * 0.2f;
 }

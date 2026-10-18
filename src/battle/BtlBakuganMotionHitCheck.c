@@ -64,15 +64,14 @@ int BtlBakuganMotionHitCheck(BtlBakugan *self, void *ev)
     desc->start.y = desc->start.y + height;
     sweep = hitEv->reach * scale;
     /* dir = (cos yaw, 0, sin yaw) * sweep; the vrot.q leaves lane w 0 */
-    desc->dir.x = __builtin_cosf(self->base.rot[1]) * sweep;
-    desc->dir.y = 0.0f * sweep;
-    desc->dir.z = __builtin_sinf(self->base.rot[1]) * sweep;
+    desc->dir.x = VfMul(VfCosQuarter(VfMul(self->base.rot[1], 0.636619747f)), sweep);
+    desc->dir.y = VfMul(0.0f, sweep);
+    desc->dir.z = VfMul(VfSinQuarter(VfMul(self->base.rot[1], 0.636619747f)), sweep);
     desc->dir.w = 0.0f;
     desc->radius = radius;
     desc->start.w = radius * radius;
     /* dir.w = |dir.xyz| */
-    desc->dir.w = __builtin_sqrtf(desc->dir.x * desc->dir.x + desc->dir.y * desc->dir.y +
-                                  desc->dir.z * desc->dir.z);
+    desc->dir.w = VfSqrt(VfDot3(desc->dir.x, desc->dir.y, desc->dir.z, desc->dir.x, desc->dir.y, desc->dir.z));
 
     query->shape = &desc->shapeBlock;
     query->ownerCollider = self->collider0;

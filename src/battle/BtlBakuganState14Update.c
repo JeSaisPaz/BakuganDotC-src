@@ -30,13 +30,13 @@ void BtlBakuganState14Update(BtlBakugan *self)
     }
     if (GfxModelMotionReached(&self->base, 0.400000006f) && (self->commands & 1) != 0) {
         /* |velocity| with y zeroed */
-        speed = __builtin_sqrtf(vel[0] * vel[0] + 0.0f * 0.0f + vel[2] * vel[2]);
+        speed = VfSqrt(VfDot3(vel[0], 0.0f, vel[2], vel[0], 0.0f, vel[2]));
         self->dashSpeed = speed;
         BtlBakuganSetState(self, 1, 0);
         return;
     }
     if (GfxModelMotionReached(&self->base, 0.899999976f)) {
-        speed = __builtin_sqrtf(vel[0] * vel[0] + 0.0f * 0.0f + vel[2] * vel[2]);
+        speed = VfSqrt(VfDot3(vel[0], 0.0f, vel[2], vel[0], 0.0f, vel[2]));
         self->dashSpeed = speed;
         BtlBakuganSetState(self, 0, 0);
         return;
@@ -44,11 +44,11 @@ void BtlBakuganState14Update(BtlBakugan *self)
     BtlBakuganApplyHover(self);
     /* velocity.x and .z *= damping (0.92 in motion 0xc, else 0.8); y untouched */
     if (BtlBakuganIsMotion(self, 0xc)) {
-        vel[0] = vel[0] * 0.920000017f;
-        vel[2] = vel[2] * 0.920000017f;
+        vel[0] = VfMul(vel[0], 0.920000017f);
+        vel[2] = VfMul(vel[2], 0.920000017f);
     } else {
-        vel[0] = vel[0] * 0.800000012f;
-        vel[2] = vel[2] * 0.800000012f;
+        vel[0] = VfMul(vel[0], 0.800000012f);
+        vel[2] = VfMul(vel[2], 0.800000012f);
     }
     if (self->subTimer == 0) {
         self->subTimer = 1;
@@ -64,7 +64,7 @@ void BtlBakuganState14Update(BtlBakugan *self)
     }
     if (self->combat.stats->moveStyle != 0 && self->combat.stats->hoverHeight == 0.0f) {
         /* squared speed with y zeroed */
-        speed = vel[0] * vel[0] + 0.0f * 0.0f + vel[2] * vel[2];
+        speed = VfDot3(vel[0], 0.0f, vel[2], vel[0], 0.0f, vel[2]);
         if (!(speed <= 4.0f)) {
             BtlBakuganSpawnSkidEffect(self);
         }

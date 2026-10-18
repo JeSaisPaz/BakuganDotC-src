@@ -40,7 +40,7 @@ void UiMainMenuUpdateItemBoxLights(UiMainMenu *self)
       self->lightStep = self->lightStep + 1;
     } else if (step < 3) {
       self->lightPulse[1] = self->lightPulse[1] + 0.033333335f;
-      level = (1.0f - __builtin_cosf(self->lightPulse[1] * 3.1415927f)) * 0.5f;
+      level = (1.0f - VfCosQuarter(VfMul(self->lightPulse[1] * 3.1415927f, 0.636619747f))) * 0.5f;
       self->lightPulse[0] = level;
       GfxModelScaleAmbientColorByName(level, model, "Mark_light");
     }

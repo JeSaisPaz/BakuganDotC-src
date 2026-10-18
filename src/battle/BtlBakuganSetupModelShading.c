@@ -21,10 +21,10 @@ void BtlBakuganSetupModelShading(void *model)
         return;
     }
     self->lighting = 1;
-    packed = (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.x) * 255.0f, 23)) |
-             (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.y) * 255.0f, 23)) << 8 |
-             (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.z) * 255.0f, 23)) << 16 |
-             (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.w) * 255.0f, 23)) << 24;
+    packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.x), 255.0f), 23)) |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.y), 255.0f), 23)) << 8 |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.z), 255.0f), 23)) << 16 |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.w), 255.0f), 23)) << 24;
     self->fogColor = packed;
     GfxModelForEachMaterial(self, (void *)BtlBakuganMaterialSetAlphaRef, NULL);
     nibble = (s8)((((g_btlKindStatTables[self->base.unk08][3] & 0xf0) >> 4) ^ 8) - 8);

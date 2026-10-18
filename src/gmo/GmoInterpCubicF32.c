@@ -22,19 +22,19 @@ ScePspFVector4 GmoInterpCubicF32(float t, const GmoMotionKeyCubicF *key0, const 
 
     for (i = 0; i < 4; i++) {
         p0[i] = key0->comp[i].value;
-        p1[i] = (key0->comp[i].outHandle + key0->comp[i].value) * 3.0f;
+        p1[i] = VfMul(VfAdd(key0->comp[i].outHandle, key0->comp[i].value), 3.0f);
         p3[i] = key1->comp[i].value;
-        p2[i] = (key1->comp[i].inHandle + key1->comp[i].value) * 3.0f;
+        p2[i] = VfMul(VfAdd(key1->comp[i].inHandle, key1->comp[i].value), 3.0f);
     }
-    u = 1.0f - t;
-    u2 = u * u;
-    t2 = t * t;
-    w[0] = u * u2;
-    w[1] = t * t2;
-    w[2] = t * u2;
-    w[3] = u * t2;
+    u = VfSub(1.0f, t);
+    u2 = VfMul(u, u);
+    t2 = VfMul(t, t);
+    w[0] = VfMul(u, u2);
+    w[1] = VfMul(t, t2);
+    w[2] = VfMul(t, u2);
+    w[3] = VfMul(u, t2);
     for (i = 0; i < 4; i++) {
-        r[i] = p0[i] * w[0] + p3[i] * w[1] + p1[i] * w[2] + p2[i] * w[3];
+        r[i] = VfDot4(p0[i], p3[i], p1[i], p2[i], w[0], w[1], w[2], w[3]);
     }
     out.x = r[0];
     out.y = r[1];

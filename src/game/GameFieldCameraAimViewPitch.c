@@ -30,16 +30,16 @@ void GameFieldCameraAimViewPitch(GameFieldCameraAimView *aim)
   }
   /* vrot.q of angle * S703 (2/π): columns (c, s, 0, 0), (-s, c, 0, 0), then identity columns
      (0, 0, 1, 0), (0, 0, 0, 1); vtfm4.q E100 gives d = Σ_k dir[k] · column_k. */
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   t0 = aim->dir[0];
   t1 = aim->dir[1];
   t2 = aim->dir[2];
   t3 = aim->dir[3];
-  rotated[0] = c * t0 + -s * t1 + 0.0f * t2 + 0.0f * t3;
-  rotated[1] = s * t0 + c * t1 + 0.0f * t2 + 0.0f * t3;
-  rotated[2] = 0.0f * t0 + 0.0f * t1 + 1.0f * t2 + 0.0f * t3;
-  rotated[3] = 0.0f * t0 + 0.0f * t1 + 0.0f * t2 + 1.0f * t3;
+  rotated[0] = VfDot4(c, -s, 0.0f, 0.0f, t0, t1, t2, t3);
+  rotated[1] = VfDot4(s, c, 0.0f, 0.0f, t0, t1, t2, t3);
+  rotated[2] = VfDot4(0.0f, 0.0f, 1.0f, 0.0f, t0, t1, t2, t3);
+  rotated[3] = VfDot4(0.0f, 0.0f, 0.0f, 1.0f, t0, t1, t2, t3);
   if (!(fabsf(rotated[0]) <= 0.62f)) {
     aim->dir[0] = rotated[0];
     aim->dir[1] = rotated[1];

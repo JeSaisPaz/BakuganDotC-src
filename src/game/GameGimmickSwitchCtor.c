@@ -42,10 +42,10 @@ CoreObject *GameGimmickSwitchCtor(GameGimmickSwitch *obj, s32 kind, void *record
   obj->base.base.fogFar = 0.0f;
   obj->base.base.fogNear = 0.0f;
   obj->base.base.lighting = 1;
-  obj->base.base.fogColor = (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.x) * 255.0f, 23)) |
-                           (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.y) * 255.0f, 23)) << 8 |
-                           (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.z) * 255.0f, 23)) << 16 |
-                           (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.w) * 255.0f, 23)) << 24;
+  obj->base.base.fogColor = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.x), 255.0f), 23)) |
+                           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.y), 255.0f), 23)) << 8 |
+                           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.z), 255.0f), 23)) << 16 |
+                           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.w), 255.0f), 23)) << 24;
 
   specular[0] = 0.6f;
   specular[1] = 0.6f;
@@ -120,12 +120,12 @@ CoreObject *GameGimmickSwitchCtor(GameGimmickSwitch *obj, s32 kind, void *record
   center[1] = obj->base.base.pos[1] + 14.0f;
   center[2] = obj->base.base.pos[2];
   angle = 1.5707964f - obj->base.base.rot[1];
-  offset[0] = __builtin_cosf(angle) * 3.0f;
+  offset[0] = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), 3.0f);
   offset[1] = 0.0f * 3.0f;
-  offset[2] = __builtin_sinf(angle) * 3.0f;
-  center[0] = center[0] + offset[0];
-  center[1] = center[1] + offset[1];
-  center[2] = center[2] + offset[2];
+  offset[2] = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), 3.0f);
+  center[0] = VfAdd(center[0], offset[0]);
+  center[1] = VfAdd(center[1], offset[1]);
+  center[2] = VfAdd(center[2], offset[2]);
   sphere = (CollisionSphere *)((CollisionCollider *)obj->pressCollider)->shapeBlock.desc;
   sphere->center[0] = center[0];
   sphere->center[1] = center[1];

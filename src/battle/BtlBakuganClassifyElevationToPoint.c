@@ -10,11 +10,11 @@ int BtlBakuganClassifyElevationToPoint(BtlBakugan *self, float *point)
     float horizontal;
     float angle;
 
-    dx = self->base.pos[0] - point[0];
-    dy = self->base.pos[1] - point[1];
-    dz = self->base.pos[2] - point[2];
+    dx = VfSub(self->base.pos[0], point[0]);
+    dy = VfSub(self->base.pos[1], point[1]);
+    dz = VfSub(self->base.pos[2], point[2]);
     /* vdot.t with the y lane zeroed, then vsqrt.s */
-    horizontal = __builtin_sqrtf(dx * dx + 0.0f * 0.0f + dz * dz);
+    horizontal = VfSqrt(VfDot3(dx, 0.0f, dz, dx, 0.0f, dz));
     angle = atan2f(dy, horizontal);
     if (!(angle <= 0.314159274f)) {
         return 5;

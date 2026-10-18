@@ -7,26 +7,26 @@
    Returns `out`. */
 float *GmoQuatFromEulerA(float *out, const float *euler)
 {
-    float ax = euler[0] * 0.318309873f;
-    float ay = euler[1] * 0.318309873f;
-    float az = euler[2] * 0.318309873f;
+    float ax = VfMul(euler[0], 0.318309873f);
+    float ay = VfMul(euler[1], 0.318309873f);
+    float az = VfMul(euler[2], 0.318309873f);
     float cx = VfCosQuarter(ax);
     float cy = VfCosQuarter(ay);
     float cz = VfCosQuarter(az);
     float sx = VfSinQuarter(ax);
     float sy = VfSinQuarter(ay);
     float sz = VfSinQuarter(az);
-    float cyz = cy * cz;
-    float czx = cz * cx;
-    float cxy = cx * cy;
-    float syz = sy * sz;
-    float szx = sz * sx;
-    float sxy = sx * sy;
-    float w = cyz * cx + syz * sx;
+    float cyz = VfMul(cy, cz);
+    float czx = VfMul(cz, cx);
+    float cxy = VfMul(cx, cy);
+    float syz = VfMul(sy, sz);
+    float szx = VfMul(sz, sx);
+    float sxy = VfMul(sx, sy);
+    float w = VfAdd(VfMul(cyz, cx), VfMul(syz, sx));
 
-    out[0] = cyz * sx - syz * cx;
-    out[1] = czx * sy + szx * cy;
-    out[2] = cxy * sz - sxy * cz;
+    out[0] = VfSub(VfMul(cyz, sx), VfMul(syz, cx));
+    out[1] = VfAdd(VfMul(czx, sy), VfMul(szx, cy));
+    out[2] = VfSub(VfMul(cxy, sz), VfMul(sxy, cz));
     out[3] = w;
     return out;
 }

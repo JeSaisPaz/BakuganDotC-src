@@ -32,31 +32,31 @@ CollisionDebugPrim *CollisionDebugAddLine(const ScePspFVector4 *origin, const fl
   if (mtx == (ScePspFMatrix4 *)0x0) {
     prim->from = *origin;
     /* vadd.t: xyz summed, w of origin kept */
-    prim->to.x = origin->x + dir[0];
-    prim->to.y = origin->y + dir[1];
-    prim->to.z = origin->z + dir[2];
+    prim->to.x = VfAdd(origin->x, dir[0]);
+    prim->to.y = VfAdd(origin->y, dir[1]);
+    prim->to.z = VfAdd(origin->z, dir[2]);
     prim->to.w = origin->w;
   } else {
     /* vtfm4.q C000, E100, C200: mtx * origin */
-    from.x = mtx->x.x * origin->x + mtx->y.x * origin->y + mtx->z.x * origin->z + mtx->w.x * origin->w;
-    from.y = mtx->x.y * origin->x + mtx->y.y * origin->y + mtx->z.y * origin->z + mtx->w.y * origin->w;
-    from.z = mtx->x.z * origin->x + mtx->y.z * origin->y + mtx->z.z * origin->z + mtx->w.z * origin->w;
-    from.w = mtx->x.w * origin->x + mtx->y.w * origin->y + mtx->z.w * origin->z + mtx->w.w * origin->w;
+    from.x = VfDot4(mtx->x.x, mtx->y.x, mtx->z.x, mtx->w.x, origin->x, origin->y, origin->z, origin->w);
+    from.y = VfDot4(mtx->x.y, mtx->y.y, mtx->z.y, mtx->w.y, origin->x, origin->y, origin->z, origin->w);
+    from.z = VfDot4(mtx->x.z, mtx->y.z, mtx->z.z, mtx->w.z, origin->x, origin->y, origin->z, origin->w);
+    from.w = VfDot4(mtx->x.w, mtx->y.w, mtx->z.w, mtx->w.w, origin->x, origin->y, origin->z, origin->w);
     prim->from = from;
     /* vtfm3.t C000, E100, C200: upper 3x3 of mtx * dir */
-    dirMtx.x = mtx->x.x * dir[0] + mtx->y.x * dir[1] + mtx->z.x * dir[2];
-    dirMtx.y = mtx->x.y * dir[0] + mtx->y.y * dir[1] + mtx->z.y * dir[2];
-    dirMtx.z = mtx->x.z * dir[0] + mtx->y.z * dir[1] + mtx->z.z * dir[2];
+    dirMtx.x = VfDot3(mtx->x.x, mtx->y.x, mtx->z.x, dir[0], dir[1], dir[2]);
+    dirMtx.y = VfDot3(mtx->x.y, mtx->y.y, mtx->z.y, dir[0], dir[1], dir[2]);
+    dirMtx.z = VfDot3(mtx->x.z, mtx->y.z, mtx->z.z, dir[0], dir[1], dir[2]);
     /* vadd.t: xyz summed, w of from kept */
-    prim->to.x = from.x + dirMtx.x;
-    prim->to.y = from.y + dirMtx.y;
-    prim->to.z = from.z + dirMtx.z;
+    prim->to.x = VfAdd(from.x, dirMtx.x);
+    prim->to.y = VfAdd(from.y, dirMtx.y);
+    prim->to.z = VfAdd(from.z, dirMtx.z);
     prim->to.w = from.w;
   }
   /* vsat0.q, vscl.q by S701 (255.0f), vf2iz.q 23, vi2uc.q */
-  prim->colour = (u32)VfI2uc(VfF2iz(VfSat0(colour->x) * 255.0f, 23)) |
-                 (u32)VfI2uc(VfF2iz(VfSat0(colour->y) * 255.0f, 23)) << 8 |
-                 (u32)VfI2uc(VfF2iz(VfSat0(colour->z) * 255.0f, 23)) << 16 |
-                 (u32)VfI2uc(VfF2iz(VfSat0(colour->w) * 255.0f, 23)) << 24;
+  prim->colour = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->x), 255.0f), 23)) |
+                 (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->y), 255.0f), 23)) << 8 |
+                 (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->z), 255.0f), 23)) << 16 |
+                 (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->w), 255.0f), 23)) << 24;
   return prim;
 }

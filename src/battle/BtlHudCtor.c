@@ -150,7 +150,7 @@ BtlHud *BtlHudCtor(BtlHud *self)
         ZeroQuad(self->reserved410[i]);
     }
     for (i = 0; i < 3; i++) {
-        self->gaugeFlipTimer[i] = (PlatformRandFloat12() - 1.0f) * 8.0f;
+        self->gaugeFlipTimer[i] = (VfSub(PlatformRandFloat12(), 1.0f)) * 8.0f;
     }
     self->gateCutInState = 0;
     self->gateCutInPhaseA = 0.0f;

@@ -5,9 +5,9 @@
 
 float ActorDistSqTo(Actor *actor, const float *pos)
 {
-  float dx = pos[0] - actor->base.pos[0];
-  float dy = pos[1] - actor->base.pos[1];
-  float dz = pos[2] - actor->base.pos[2];
+  float dx = VfSub(pos[0], actor->base.pos[0]);
+  float dy = VfSub(pos[1], actor->base.pos[1]);
+  float dz = VfSub(pos[2], actor->base.pos[2]);
 
-  return dx * dx + dy * dy + dz * dz;
+  return VfDot3(dx, dy, dz, dx, dy, dz);
 }

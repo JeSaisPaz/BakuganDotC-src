@@ -56,11 +56,11 @@ void UiLoadingAnimateIcon(UiLoading *self, GfxSprite *icon, s32 index)
     param[0] = param[0] + 1.0f;
     /* fallthrough */
   case 1:
-    r0 = PlatformRandFloat12() - 1.0f;
-    r1 = PlatformRandFloat12() - 1.0f;
+    r0 = VfSub(PlatformRandFloat12(), 1.0f);
+    r1 = VfSub(PlatformRandFloat12(), 1.0f);
     param[1] = ((float)row[0] - r1 * 4.0f) + r0 * 8.0f;
-    r0 = PlatformRandFloat12() - 1.0f;
-    r1 = PlatformRandFloat12() - 1.0f;
+    r0 = VfSub(PlatformRandFloat12(), 1.0f);
+    r1 = VfSub(PlatformRandFloat12(), 1.0f);
     param[2] = ((float)row[1] - r1 * 4.0f) + r0 * 8.0f;
     s = (float)row[2] + param[1];
     icon->scaleX = s;
@@ -98,7 +98,7 @@ void UiLoadingAnimateIcon(UiLoading *self, GfxSprite *icon, s32 index)
       s = 1.57079637f;
     }
     icon->scaleZ = s;
-    t = __builtin_sinf(s);
+    t = VfSinQuarter(VfMul(s, 0.636619747f));
     UiIconCopy4(ctrl, p1);
     ctrl[0] = p1[0] + (p0[0] - p1[0]) * 0.200000003f;
     __builtin_memcpy(&curveY, &row[6], sizeof curveY);
@@ -144,7 +144,7 @@ void UiLoadingAnimateIcon(UiLoading *self, GfxSprite *icon, s32 index)
   case 10:
     icon->scaleZ = icon->scaleZ + 0.0500000007f;
     y = param[2];
-    icon->posY = y + __builtin_sinf(icon->scaleZ) * 8.0f;
+    icon->posY = y + VfSinQuarter(VfMul(icon->scaleZ, 0.636619747f)) * 8.0f;
     if (icon->scaleZ < 9.42477798f) {
       break;
     }
@@ -204,7 +204,7 @@ void UiLoadingAnimateIcon(UiLoading *self, GfxSprite *icon, s32 index)
       s = 1.57079637f;
     }
     icon->scaleZ = s;
-    t = __builtin_sinf(s);
+    t = VfSinQuarter(VfMul(s, 0.636619747f));
     UiIconCopy4(ctrl, p1);
     ctrl[0] = p1[0] + (p0[0] - p1[0]) * 0.200000003f;
     __builtin_memcpy(&curveY, &row[6], sizeof curveY);

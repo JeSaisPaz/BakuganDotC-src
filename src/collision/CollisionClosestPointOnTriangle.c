@@ -9,16 +9,16 @@
 /* out.xyz = x.xyz - y.xyz, out.w = x.w (vsub.t keeps the loaded w lane). */
 static inline void Vec3Sub(float *out, const float *x, const float *y)
 {
-    out[0] = x[0] - y[0];
-    out[1] = x[1] - y[1];
-    out[2] = x[2] - y[2];
+    out[0] = VfSub(x[0], y[0]);
+    out[1] = VfSub(x[1], y[1]);
+    out[2] = VfSub(x[2], y[2]);
     out[3] = x[3];
 }
 
 /* x.xyz . y.xyz (vdot.t). */
 static inline float Vec3Dot(const float *x, const float *y)
 {
-    return x[0] * y[0] + x[1] * y[1] + x[2] * y[2];
+    return VfDot3(x[0], x[1], x[2], y[0], y[1], y[2]);
 }
 
 /* out.xyz = base.xyz + dir.xyz * s, out.w = base.w (vscl.t then vadd.t). */
@@ -26,12 +26,12 @@ static inline void Vec3AddScaled(float *out, const float *base, const float *dir
 {
     float scaled[3];
 
-    scaled[0] = dir[0] * s;
-    scaled[1] = dir[1] * s;
-    scaled[2] = dir[2] * s;
-    out[0] = base[0] + scaled[0];
-    out[1] = base[1] + scaled[1];
-    out[2] = base[2] + scaled[2];
+    scaled[0] = VfMul(dir[0], s);
+    scaled[1] = VfMul(dir[1], s);
+    scaled[2] = VfMul(dir[2], s);
+    out[0] = VfAdd(base[0], scaled[0]);
+    out[1] = VfAdd(base[1], scaled[1]);
+    out[2] = VfAdd(base[2], scaled[2]);
     out[3] = base[3];
 }
 

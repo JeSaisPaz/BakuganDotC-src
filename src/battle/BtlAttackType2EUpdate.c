@@ -27,7 +27,7 @@ void BtlAttackType2EUpdate(BtlAttack *self)
         return;
     }
     /* pos.xyz += vel.xyz (w kept) */
-    pos[0] = pos[0] + self->vel[0];
-    pos[1] = pos[1] + self->vel[1];
-    pos[2] = pos[2] + self->vel[2];
+    pos[0] = VfAdd(pos[0], self->vel[0]);
+    pos[1] = VfAdd(pos[1], self->vel[1]);
+    pos[2] = VfAdd(pos[2], self->vel[2]);
 }

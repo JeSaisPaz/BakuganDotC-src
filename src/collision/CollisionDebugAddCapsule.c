@@ -16,10 +16,10 @@ static inline ScePspFVector4 CapsuleTransformPoint(const ScePspFMatrix4 *m, cons
 {
   ScePspFVector4 r;
 
-  r.x = m->x.x * p[0] + m->y.x * p[1] + m->z.x * p[2] + m->w.x;
-  r.y = m->x.y * p[0] + m->y.y * p[1] + m->z.y * p[2] + m->w.y;
-  r.z = m->x.z * p[0] + m->y.z * p[1] + m->z.z * p[2] + m->w.z;
-  r.w = m->x.w * p[0] + m->y.w * p[1] + m->z.w * p[2] + m->w.w;
+  r.x = VfDot4(m->x.x, m->y.x, m->z.x, m->w.x, p[0], p[1], p[2], 1.0f);
+  r.y = VfDot4(m->x.y, m->y.y, m->z.y, m->w.y, p[0], p[1], p[2], 1.0f);
+  r.z = VfDot4(m->x.z, m->y.z, m->z.z, m->w.z, p[0], p[1], p[2], 1.0f);
+  r.w = VfDot4(m->x.w, m->y.w, m->z.w, m->w.w, p[0], p[1], p[2], 1.0f);
   return r;
 }
 
@@ -28,10 +28,10 @@ static inline ScePspFVector4 CapsuleMulColumn(const ScePspFMatrix4 *a, const Sce
 {
   ScePspFVector4 r;
 
-  r.x = b->x * a->x.x + b->y * a->y.x + b->z * a->z.x + b->w * a->w.x;
-  r.y = b->x * a->x.y + b->y * a->y.y + b->z * a->z.y + b->w * a->w.y;
-  r.z = b->x * a->x.z + b->y * a->y.z + b->z * a->z.z + b->w * a->w.z;
-  r.w = b->x * a->x.w + b->y * a->y.w + b->z * a->z.w + b->w * a->w.w;
+  r.x = VfDot4(b->x, b->y, b->z, b->w, a->x.x, a->y.x, a->z.x, a->w.x);
+  r.y = VfDot4(b->x, b->y, b->z, b->w, a->x.y, a->y.y, a->z.y, a->w.y);
+  r.z = VfDot4(b->x, b->y, b->z, b->w, a->x.z, a->y.z, a->z.z, a->w.z);
+  r.w = VfDot4(b->x, b->y, b->z, b->w, a->x.w, a->y.w, a->z.w, a->w.w);
   return r;
 }
 
@@ -100,9 +100,9 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
     world = mtx;
   }
   /* vtfm3.t: 3x3 of world * axis (the stored w lane is stale and never read) */
-  axisWorld[0] = world->x.x * capsule->axis[0] + world->y.x * capsule->axis[1] + world->z.x * capsule->axis[2];
-  axisWorld[1] = world->x.y * capsule->axis[0] + world->y.y * capsule->axis[1] + world->z.y * capsule->axis[2];
-  axisWorld[2] = world->x.z * capsule->axis[0] + world->y.z * capsule->axis[1] + world->z.z * capsule->axis[2];
+  axisWorld[0] = VfDot3(world->x.x, world->y.x, world->z.x, capsule->axis[0], capsule->axis[1], capsule->axis[2]);
+  axisWorld[1] = VfDot3(world->x.y, world->y.y, world->z.y, capsule->axis[0], capsule->axis[1], capsule->axis[2]);
+  axisWorld[2] = VfDot3(world->x.z, world->y.z, world->z.z, capsule->axis[0], capsule->axis[1], capsule->axis[2]);
   startWorld = CapsuleTransformPoint(world, capsule->start);
 
   MemLock();
@@ -117,10 +117,10 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
     ring = mem;
   }
   /* vsat0, scale by S701 (255), vf2iz 23, vi2uc: one byte per lane, x in the low byte */
-  ring->colour = (u32)VfI2uc(VfF2iz(VfSat0(colour->x) * 255.0f, 23)) |
-                 (u32)VfI2uc(VfF2iz(VfSat0(colour->y) * 255.0f, 23)) << 8 |
-                 (u32)VfI2uc(VfF2iz(VfSat0(colour->z) * 255.0f, 23)) << 16 |
-                 (u32)VfI2uc(VfF2iz(VfSat0(colour->w) * 255.0f, 23)) << 24;
+  ring->colour = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->x), 255.0f), 23)) |
+                 (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->y), 255.0f), 23)) << 8 |
+                 (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->z), 255.0f), 23)) << 16 |
+                 (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->w), 255.0f), 23)) << 24;
   ring->kind = 2;
 
   vertical = false;
@@ -150,23 +150,22 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
     end = 8;
   } else {
     /* inlined `MathMat4LookDir`(&ring->mtx, axis, &g_vecDown); a zero length scales by S713 (0) */
-    lenSq = capsule->axis[0] * capsule->axis[0] + capsule->axis[1] * capsule->axis[1] +
-            capsule->axis[2] * capsule->axis[2];
+    lenSq = VfDot3(capsule->axis[0], capsule->axis[1], capsule->axis[2], capsule->axis[0], capsule->axis[1], capsule->axis[2]);
     inv = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    zAxis.x = VfSat1(capsule->axis[0] * inv);
-    zAxis.y = VfSat1(capsule->axis[1] * inv);
-    zAxis.z = VfSat1(capsule->axis[2] * inv);
-    xAxis.x = g_vecDown.y * zAxis.z - g_vecDown.z * zAxis.y;
-    xAxis.y = g_vecDown.z * zAxis.x - g_vecDown.x * zAxis.z;
-    xAxis.z = g_vecDown.x * zAxis.y - g_vecDown.y * zAxis.x;
-    lenSq = xAxis.x * xAxis.x + xAxis.y * xAxis.y + xAxis.z * xAxis.z;
+    zAxis.x = VfSat1(VfMul(capsule->axis[0], inv));
+    zAxis.y = VfSat1(VfMul(capsule->axis[1], inv));
+    zAxis.z = VfSat1(VfMul(capsule->axis[2], inv));
+    xAxis.x = VfDot2(g_vecDown.y, g_vecDown.z, zAxis.z, -zAxis.y);
+    xAxis.y = VfDot2(g_vecDown.z, g_vecDown.x, zAxis.x, -zAxis.z);
+    xAxis.z = VfDot2(g_vecDown.x, g_vecDown.y, zAxis.y, -zAxis.x);
+    lenSq = VfDot3(xAxis.x, xAxis.y, xAxis.z, xAxis.x, xAxis.y, xAxis.z);
     inv = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    xAxis.x = VfSat1(xAxis.x * inv);
-    xAxis.y = VfSat1(xAxis.y * inv);
-    xAxis.z = VfSat1(xAxis.z * inv);
-    yAxis.x = zAxis.y * xAxis.z - zAxis.z * xAxis.y;
-    yAxis.y = zAxis.z * xAxis.x - zAxis.x * xAxis.z;
-    yAxis.z = zAxis.x * xAxis.y - zAxis.y * xAxis.x;
+    xAxis.x = VfSat1(VfMul(xAxis.x, inv));
+    xAxis.y = VfSat1(VfMul(xAxis.y, inv));
+    xAxis.z = VfSat1(VfMul(xAxis.z, inv));
+    yAxis.x = VfDot2(zAxis.y, zAxis.z, xAxis.z, -xAxis.y);
+    yAxis.y = VfDot2(zAxis.z, zAxis.x, xAxis.x, -xAxis.z);
+    yAxis.z = VfDot2(zAxis.x, zAxis.y, xAxis.y, -xAxis.x);
     ring->mtx.x.x = xAxis.x;
     ring->mtx.x.y = xAxis.y;
     ring->mtx.x.z = xAxis.z;
@@ -188,18 +187,18 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
 
   /* scale the x, y, z columns (all four lanes) by the radius */
   radius = capsule->radius;
-  ring->mtx.x.x = ring->mtx.x.x * radius;
-  ring->mtx.x.y = ring->mtx.x.y * radius;
-  ring->mtx.x.z = ring->mtx.x.z * radius;
-  ring->mtx.x.w = ring->mtx.x.w * radius;
-  ring->mtx.y.x = ring->mtx.y.x * radius;
-  ring->mtx.y.y = ring->mtx.y.y * radius;
-  ring->mtx.y.z = ring->mtx.y.z * radius;
-  ring->mtx.y.w = ring->mtx.y.w * radius;
-  ring->mtx.z.x = ring->mtx.z.x * radius;
-  ring->mtx.z.y = ring->mtx.z.y * radius;
-  ring->mtx.z.z = ring->mtx.z.z * radius;
-  ring->mtx.z.w = ring->mtx.z.w * radius;
+  ring->mtx.x.x = VfMul(ring->mtx.x.x, radius);
+  ring->mtx.x.y = VfMul(ring->mtx.x.y, radius);
+  ring->mtx.x.z = VfMul(ring->mtx.x.z, radius);
+  ring->mtx.x.w = VfMul(ring->mtx.x.w, radius);
+  ring->mtx.y.x = VfMul(ring->mtx.y.x, radius);
+  ring->mtx.y.y = VfMul(ring->mtx.y.y, radius);
+  ring->mtx.y.z = VfMul(ring->mtx.y.z, radius);
+  ring->mtx.y.w = VfMul(ring->mtx.y.w, radius);
+  ring->mtx.z.x = VfMul(ring->mtx.z.x, radius);
+  ring->mtx.z.y = VfMul(ring->mtx.z.y, radius);
+  ring->mtx.z.z = VfMul(ring->mtx.z.z, radius);
+  ring->mtx.z.w = VfMul(ring->mtx.z.w, radius);
   /* ring->mtx = world * ring->mtx (through `product`), then translation = startWorld, w = 1 */
   product.x = CapsuleMulColumn(world, &ring->mtx.x);
   product.y = CapsuleMulColumn(world, &ring->mtx.y);
@@ -251,9 +250,9 @@ void CollisionDebugAddCapsule(const CollisionCapsule *capsule, const ScePspFVect
     CollisionDebugPrimCopyCtor(mem, ring);
     endRing = mem;
   }
-  endRing->mtx.w.x = endRing->mtx.w.x + axisWorld[0];
-  endRing->mtx.w.y = endRing->mtx.w.y + axisWorld[1];
-  endRing->mtx.w.z = endRing->mtx.w.z + axisWorld[2];
+  endRing->mtx.w.x = VfAdd(endRing->mtx.w.x, axisWorld[0]);
+  endRing->mtx.w.y = VfAdd(endRing->mtx.w.y, axisWorld[1]);
+  endRing->mtx.w.z = VfAdd(endRing->mtx.w.z, axisWorld[2]);
   endRing->mtx.w.w = 1.0f;
   endRing->frames = frames;
 

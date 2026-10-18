@@ -29,21 +29,21 @@ void ActorSlideOffHit(CollisionSphereQuery *query, float *outPos, float *delta, 
     push = 1.0f;
     if (g_collisionHitInfo.surface < 7) {
         if (fabsf(normal->y) < 0.3f) {
-            lenXZ = __builtin_sqrtf(normal->x * normal->x + 0.0f * 0.0f + normal->z * normal->z);
+            lenXZ = VfSqrt(VfDot3(normal->x, 0.0f, normal->z, normal->x, 0.0f, normal->z));
             push = atan2f(fabsf(normal->y), lenXZ) * 0.7f + push;
             normal->y = 0.0f;
         }
     }
     reach = query->radius + 0.001f;
-    sx = normal->x * reach;
-    sy = normal->y * reach;
-    sz = normal->z * reach;
-    sx = sx * push;
-    sy = sy * push;
-    sz = sz * push;
-    px = point->x + sx;
-    py = point->y + sy;
-    pz = point->z + sz;
+    sx = VfMul(normal->x, reach);
+    sy = VfMul(normal->y, reach);
+    sz = VfMul(normal->z, reach);
+    sx = VfMul(sx, push);
+    sy = VfMul(sy, push);
+    sz = VfMul(sz, push);
+    px = VfAdd(point->x, sx);
+    py = VfAdd(point->y, sy);
+    pz = VfAdd(point->z, sz);
     pw = point->w;
     if (keepY == 0) {
         py = py - query->radius;
@@ -53,17 +53,17 @@ void ActorSlideOffHit(CollisionSphereQuery *query, float *outPos, float *delta, 
     tx = -normal->z;
     ty = normal->y;
     tz = normal->x;
-    dot = delta[0] * tx + delta[1] * ty + delta[2] * tz;
+    dot = VfDot3(delta[0], delta[1], delta[2], tx, ty, tz);
     scale = dot * 0.04f;
-    delta[0] = tx * scale;
-    delta[1] = ty * scale;
-    delta[2] = tz * scale;
+    delta[0] = VfMul(tx, scale);
+    delta[1] = VfMul(ty, scale);
+    delta[2] = VfMul(tz, scale);
     delta[3] = 0.0f;
     delta[1] = 0.0f;
 
-    outPos[0] = px + delta[0];
-    outPos[1] = py + delta[1];
-    outPos[2] = pz + delta[2];
+    outPos[0] = VfAdd(px, delta[0]);
+    outPos[1] = VfAdd(py, delta[1]);
+    outPos[2] = VfAdd(pz, delta[2]);
     outPos[3] = pw;
     query->center.x = outPos[0];
     query->center.y = outPos[1];

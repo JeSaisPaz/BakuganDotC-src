@@ -35,12 +35,12 @@ bool CollisionAabbRaySlab(float tmax, const float *aabb, const void *ray)
     tmin = 0.0f;
 
     /* vsub.t/vmul.t: per-axis slab entry/exit parameters. */
-    lo0 = (aabb[0] - r->origin.x) * r->invDir.x;
-    lo1 = (aabb[1] - r->origin.y) * r->invDir.y;
-    lo2 = (aabb[2] - r->origin.z) * r->invDir.z;
-    hi0 = (aabb[4] - r->origin.x) * r->invDir.x;
-    hi1 = (aabb[5] - r->origin.y) * r->invDir.y;
-    hi2 = (aabb[6] - r->origin.z) * r->invDir.z;
+    lo0 = VfMul(VfSub(aabb[0], r->origin.x), r->invDir.x);
+    lo1 = VfMul(VfSub(aabb[1], r->origin.y), r->invDir.y);
+    lo2 = VfMul(VfSub(aabb[2], r->origin.z), r->invDir.z);
+    hi0 = VfMul(VfSub(aabb[4], r->origin.x), r->invDir.x);
+    hi1 = VfMul(VfSub(aabb[5], r->origin.y), r->invDir.y);
+    hi2 = VfMul(VfSub(aabb[6], r->origin.z), r->invDir.z);
 
     if (!(lo0 <= tmin))
         tmin = lo0;

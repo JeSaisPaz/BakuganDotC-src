@@ -26,9 +26,9 @@ void BtlDemoSceneTrackSphere(BtlDemoScenePlayer *task)
     /* sum.xyz = stage.xyz + node.translate * 0.1, sum.w = stage.w; written to the root-matrix
        translation row, then copied to the follower's position. */
     node = task->sphereNode->translate;
-    s0 = stage[0] + node[0] * 0.1f;
-    s1 = stage[1] + node[1] * 0.1f;
-    s2 = stage[2] + node[2] * 0.1f;
+    s0 = VfAdd(stage[0], VfMul(node[0], 0.1f));
+    s1 = VfAdd(stage[1], VfMul(node[1], 0.1f));
+    s2 = VfAdd(stage[2], VfMul(node[2], 0.1f));
     translate[0] = s0;
     translate[1] = s1;
     translate[2] = s2;

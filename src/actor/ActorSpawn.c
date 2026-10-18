@@ -123,9 +123,9 @@ void *ActorSpawn(s32 modelId, s32 flag, float *pos)
   if (self != NULL) {
     /* scale.xyz *= 0.1f; the sv.q also stores lane 3 from S713, which this function never
        sets (stale VFPU state), so scale.w is left out (see ## Notes) */
-    self->base.scale[0] = self->base.scale[0] * 0.1f;
-    self->base.scale[1] = self->base.scale[1] * 0.1f;
-    self->base.scale[2] = self->base.scale[2] * 0.1f;
+    self->base.scale[0] = VfMul(self->base.scale[0], 0.1f);
+    self->base.scale[1] = VfMul(self->base.scale[1], 0.1f);
+    self->base.scale[2] = VfMul(self->base.scale[2], 0.1f);
   }
 
   if (!(stageLit | cloak)) {

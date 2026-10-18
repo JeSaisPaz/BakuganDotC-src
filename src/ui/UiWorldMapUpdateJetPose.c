@@ -13,8 +13,8 @@
 /* m = Rx(angle): rows (1,0,0,0), (0,c,s,0), (0,-s,c,0), (0,0,0,1). */
 static void JetPoseSetRotX(float *m, float angle)
 {
-  float c = __builtin_cosf(angle);
-  float s = __builtin_sinf(angle);
+  float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  float s = VfSinQuarter(VfMul(angle, 0.636619747f));
 
   m[0] = 1.0f;
   m[1] = 0.0f;
@@ -40,7 +40,7 @@ static void JetPoseScaleRows(float *m, float k)
   int i;
 
   for (i = 0; i < 12; i++) {
-    m[i] = m[i] * k;
+    m[i] = VfMul(m[i], k);
   }
 }
 
@@ -48,16 +48,20 @@ static void JetPoseScaleRows(float *m, float k)
    each row becomes (c*x + s*z, y, -s*x + c*z, w). */
 static void JetPoseMulRotY(float *m, float angle)
 {
-  float c = __builtin_cosf(angle);
-  float s = __builtin_sinf(angle);
-  float x, z;
+  float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  float s = VfSinQuarter(VfMul(angle, 0.636619747f));
+  float x, y, z, w;
   int r;
 
   for (r = 0; r < 4; r++) {
     x = m[r * 4 + 0];
+    y = m[r * 4 + 1];
     z = m[r * 4 + 2];
-    m[r * 4 + 0] = x * c + z * s;
-    m[r * 4 + 2] = x * -s + z * c;
+    w = m[r * 4 + 3];
+    m[r * 4 + 0] = VfDot4(x, y, z, w, c, 0.0f, s, 0.0f);
+    m[r * 4 + 1] = VfDot4(x, y, z, w, 0.0f, 1.0f, 0.0f, 0.0f);
+    m[r * 4 + 2] = VfDot4(x, y, z, w, -s, 0.0f, c, 0.0f);
+    m[r * 4 + 3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
   }
 }
 
@@ -65,16 +69,20 @@ static void JetPoseMulRotY(float *m, float angle)
    (c*x - s*y, s*x + c*y, z, w). */
 static void JetPoseMulRotZ(float *m, float angle)
 {
-  float c = __builtin_cosf(angle);
-  float s = __builtin_sinf(angle);
-  float x, y;
+  float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  float s = VfSinQuarter(VfMul(angle, 0.636619747f));
+  float x, y, z, w;
   int r;
 
   for (r = 0; r < 4; r++) {
     x = m[r * 4 + 0];
     y = m[r * 4 + 1];
-    m[r * 4 + 0] = x * c + y * -s;
-    m[r * 4 + 1] = x * s + y * c;
+    z = m[r * 4 + 2];
+    w = m[r * 4 + 3];
+    m[r * 4 + 0] = VfDot4(x, y, z, w, c, -s, 0.0f, 0.0f);
+    m[r * 4 + 1] = VfDot4(x, y, z, w, s, c, 0.0f, 0.0f);
+    m[r * 4 + 2] = VfDot4(x, y, z, w, 0.0f, 0.0f, 1.0f, 0.0f);
+    m[r * 4 + 3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
   }
 }
 

@@ -25,11 +25,11 @@
 /* |a - b| over xyz (the binary's vsub.q / vdot.t / vsqrt.s sequence). */
 static inline float StageObjFadeDistance(const float *a, const float *b)
 {
-  float dx = a[0] - b[0];
-  float dy = a[1] - b[1];
-  float dz = a[2] - b[2];
+  float dx = VfSub(a[0], b[0]);
+  float dy = VfSub(a[1], b[1]);
+  float dz = VfSub(a[2], b[2]);
 
-  return __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+  return VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
 }
 
 int ActorStageObjUpdateFade(float radius, float farDist, void *unused, ActorStageObjBase *self, float *alpha, char *translucent, char allowTranslucent)

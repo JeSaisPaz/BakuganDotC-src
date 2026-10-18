@@ -43,15 +43,15 @@ int BtlUnitAltTryBlockKind15(BtlBakugan *self)
         float lenSq;
         float k;
 
-        dir[0] = from[0] - self->guardAnchor[0];
+        dir[0] = VfSub(from[0], self->guardAnchor[0]);
         dir[1] = 0.0f;
-        dir[2] = from[2] - self->guardAnchor[2];
+        dir[2] = VfSub(from[2], self->guardAnchor[2]);
         dir[3] = from[3];
-        lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+        lenSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
         k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        dir[0] = VfSat1(dir[0] * k);
-        dir[1] = VfSat1(dir[1] * k);
-        dir[2] = VfSat1(dir[2] * k);
+        dir[0] = VfSat1(VfMul(dir[0], k));
+        dir[1] = VfSat1(VfMul(dir[1], k));
+        dir[2] = VfSat1(VfMul(dir[2], k));
     }
     if (!guardable || ((CollisionCollider *)self->collider0)->hitParam164 != 2) {
         return 0;

@@ -147,51 +147,51 @@ s32 CollisionMeshTestShape(void *meshBlock, void *query, float *hit, u32 surface
                 planeNormal = &((const ScePspFVector4 *)PspPtr(part->normals))[g_collisionHitInfo.face[3]];
                 v = *planeNormal;
                 /* vtfm3.t: xyz only; the sv.q also writes a stale VFPU lane to normal.w (left out). */
-                g_collisionHitResult.normal.x = rot->x.x * v.x + rot->y.x * v.y + rot->z.x * v.z;
-                g_collisionHitResult.normal.y = rot->x.y * v.x + rot->y.y * v.y + rot->z.y * v.z;
-                g_collisionHitResult.normal.z = rot->x.z * v.x + rot->y.z * v.y + rot->z.z * v.z;
+                g_collisionHitResult.normal.x = VfDot3(rot->x.x, rot->y.x, rot->z.x, v.x, v.y, v.z);
+                g_collisionHitResult.normal.y = VfDot3(rot->x.y, rot->y.y, rot->z.y, v.x, v.y, v.z);
+                g_collisionHitResult.normal.z = VfDot3(rot->x.z, rot->y.z, rot->z.z, v.x, v.y, v.z);
             } else {
                 /* normal = clamp(normalize(rotation * (center - point))), w = 0 (S713). */
-                v.x = center->x - g_collisionHitResult.point.x;
-                v.y = center->y - g_collisionHitResult.point.y;
-                v.z = center->z - g_collisionHitResult.point.z;
-                g_collisionHitResult.normal.x = rot->x.x * v.x + rot->y.x * v.y + rot->z.x * v.z;
-                g_collisionHitResult.normal.y = rot->x.y * v.x + rot->y.y * v.y + rot->z.y * v.z;
-                g_collisionHitResult.normal.z = rot->x.z * v.x + rot->y.z * v.y + rot->z.z * v.z;
+                v.x = VfSub(center->x, g_collisionHitResult.point.x);
+                v.y = VfSub(center->y, g_collisionHitResult.point.y);
+                v.z = VfSub(center->z, g_collisionHitResult.point.z);
+                g_collisionHitResult.normal.x = VfDot3(rot->x.x, rot->y.x, rot->z.x, v.x, v.y, v.z);
+                g_collisionHitResult.normal.y = VfDot3(rot->x.y, rot->y.y, rot->z.y, v.x, v.y, v.z);
+                g_collisionHitResult.normal.z = VfDot3(rot->x.z, rot->y.z, rot->z.z, v.x, v.y, v.z);
                 v.x = g_collisionHitResult.normal.x;
                 v.y = g_collisionHitResult.normal.y;
                 v.z = g_collisionHitResult.normal.z;
-                k = v.x * v.x + v.y * v.y + v.z * v.z;
+                k = VfDot3(v.x, v.y, v.z, v.x, v.y, v.z);
                 k = VfIsZero(k) ? 0.0f : VfRsq(k);
-                g_collisionHitResult.normal.x = VfSat1(v.x * k);
-                g_collisionHitResult.normal.y = VfSat1(v.y * k);
-                g_collisionHitResult.normal.z = VfSat1(v.z * k);
+                g_collisionHitResult.normal.x = VfSat1(VfMul(v.x, k));
+                g_collisionHitResult.normal.y = VfSat1(VfMul(v.y, k));
+                g_collisionHitResult.normal.z = VfSat1(VfMul(v.z, k));
                 g_collisionHitResult.normal.w = 0.0f;
             }
             /* point = rotation * (point.xyz, 1). */
             v = g_collisionHitResult.point;
             g_collisionHitResult.point.x =
-                rot->x.x * v.x + rot->y.x * v.y + rot->z.x * v.z + rot->w.x;
+                VfDot4(rot->x.x, rot->y.x, rot->z.x, rot->w.x, v.x, v.y, v.z, 1.0f);
             g_collisionHitResult.point.y =
-                rot->x.y * v.x + rot->y.y * v.y + rot->z.y * v.z + rot->w.y;
+                VfDot4(rot->x.y, rot->y.y, rot->z.y, rot->w.y, v.x, v.y, v.z, 1.0f);
             g_collisionHitResult.point.z =
-                rot->x.z * v.x + rot->y.z * v.y + rot->z.z * v.z + rot->w.z;
+                VfDot4(rot->x.z, rot->y.z, rot->z.z, rot->w.z, v.x, v.y, v.z, 1.0f);
             g_collisionHitResult.point.w =
-                rot->x.w * v.x + rot->y.w * v.y + rot->z.w * v.z + rot->w.w;
+                VfDot4(rot->x.w, rot->y.w, rot->z.w, rot->w.w, v.x, v.y, v.z, 1.0f);
         } else if (g_collisionHitInfo.fromClosestPoint == 0) {
             part = g_collisionHitInfo.part;
             planeNormal = &((const ScePspFVector4 *)PspPtr(part->normals))[g_collisionHitInfo.face[3]];
             g_collisionHitResult.normal = *planeNormal;
         } else {
             /* normal = clamp(normalize(center - point)), w = 0 (S713). */
-            v.x = center->x - g_collisionHitResult.point.x;
-            v.y = center->y - g_collisionHitResult.point.y;
-            v.z = center->z - g_collisionHitResult.point.z;
-            k = v.x * v.x + v.y * v.y + v.z * v.z;
+            v.x = VfSub(center->x, g_collisionHitResult.point.x);
+            v.y = VfSub(center->y, g_collisionHitResult.point.y);
+            v.z = VfSub(center->z, g_collisionHitResult.point.z);
+            k = VfDot3(v.x, v.y, v.z, v.x, v.y, v.z);
             k = VfIsZero(k) ? 0.0f : VfRsq(k);
-            g_collisionHitResult.normal.x = VfSat1(v.x * k);
-            g_collisionHitResult.normal.y = VfSat1(v.y * k);
-            g_collisionHitResult.normal.z = VfSat1(v.z * k);
+            g_collisionHitResult.normal.x = VfSat1(VfMul(v.x, k));
+            g_collisionHitResult.normal.y = VfSat1(VfMul(v.y, k));
+            g_collisionHitResult.normal.z = VfSat1(VfMul(v.z, k));
             g_collisionHitResult.normal.w = 0.0f;
         }
         hit[0] = g_collisionHitResult.point.x;

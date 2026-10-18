@@ -20,9 +20,9 @@ int BtlStageGetLensFlarePos(float *out)
     out[2] = entry->primaryPos[2];
     if (g_btlArenaIndex == 8) {
         /* vscl.t into C710: the w lane stored is the bank's S713 = 0 */
-        out[0] = out[0] * 0.899999976f; /* 0x3f666666 */
-        out[1] = out[1] * 0.899999976f;
-        out[2] = out[2] * 0.899999976f;
+        out[0] = VfMul(out[0], 0.899999976f); /* 0x3f666666 */
+        out[1] = VfMul(out[1], 0.899999976f);
+        out[2] = VfMul(out[2], 0.899999976f);
         out[3] = 0.0f;
         out[1] = out[1] * 0.600000024f; /* 0x3f19999a */
     }

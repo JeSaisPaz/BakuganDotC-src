@@ -9,14 +9,14 @@ void GfxSpriteResetMatrix(GfxSprite *sprite)
 {
   float *m = sprite->matrix;
 
-  m[0] = sprite->width;
-  m[1] = 0.0f;
-  m[2] = 0.0f;
-  m[3] = 0.0f;
-  m[4] = 0.0f;
-  m[5] = sprite->height;
-  m[6] = 0.0f;
-  m[7] = 0.0f;
+  m[0] = VfDot2(sprite->width, 0.0f, 1.0f, 0.0f);
+  m[1] = VfDot2(sprite->width, 0.0f, 0.0f, 0.0f);
+  m[2] = VfDot2(sprite->width, 0.0f, 0.0f, 0.0f);
+  m[3] = VfDot2(sprite->width, 0.0f, 0.0f, 0.0f);
+  m[4] = VfDot2(sprite->height, 0.0f, -0.0f, 0.0f);
+  m[5] = VfDot2(sprite->height, 0.0f, 1.0f, 0.0f);
+  m[6] = VfDot2(sprite->height, 0.0f, 0.0f, 0.0f);
+  m[7] = VfDot2(sprite->height, 0.0f, 0.0f, 0.0f);
   m[8] = 0.0f;
   m[9] = 0.0f;
   m[10] = 0.0f;

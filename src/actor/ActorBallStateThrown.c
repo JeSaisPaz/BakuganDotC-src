@@ -50,7 +50,7 @@ void ActorBallStateThrown(CoreObject *ball)
   case 10:
     goto home;
   case 2:
-    b->wobbleYaw = (PlatformRandFloat12() - 1.0f) * 0.62831855f + -0.31415927f;
+    b->wobbleYaw = (VfSub(PlatformRandFloat12(), 1.0f)) * 0.62831855f + -0.31415927f;
     b->wobblePitch = 0.31415927f;
     b->wobbleScale = 1.0f;
     b->homeSpeed = 8.0f;
@@ -66,7 +66,7 @@ void ActorBallStateThrown(CoreObject *ball)
     pos = b->base.pos;
     vel = b->base.velocity;
     if (ActorBallCheckHit(1.4f, b, pos, vel, 0xbb, 1) == 0) {
-      b->travelled = b->travelled + __builtin_sqrtf(vel[0] * vel[0] + vel[1] * vel[1] + vel[2] * vel[2]);
+      b->travelled = b->travelled + VfSqrt(VfDot3(vel[0], vel[1], vel[2], vel[0], vel[1], vel[2]));
       if (!(b->travelled <= 150.0f)) {
         b->step++;
       }
@@ -86,26 +86,26 @@ void ActorBallStateThrown(CoreObject *ball)
     ActorNotifyNearestGuardOfNoise(b->vec1e0, noise);
     if (b->flag1d0 != 0) {
       /* dir = normalize(pos - contact), saturated to [-1, 1]; zero length gives 0; w = 0 */
-      dir[0] = pos[0] - g_actorBallHitQuery.contact.x;
-      dir[1] = pos[1] - g_actorBallHitQuery.contact.y;
-      dir[2] = pos[2] - g_actorBallHitQuery.contact.z;
-      lenSq = dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2];
+      dir[0] = VfSub(pos[0], g_actorBallHitQuery.contact.x);
+      dir[1] = VfSub(pos[1], g_actorBallHitQuery.contact.y);
+      dir[2] = VfSub(pos[2], g_actorBallHitQuery.contact.z);
+      lenSq = VfDot3(dir[0], dir[1], dir[2], dir[0], dir[1], dir[2]);
       k = VfRsq(lenSq);
       if (VfIsZero(lenSq)) {
         k = 0.0f;
       }
-      dir[0] = VfSat1(dir[0] * k);
-      dir[1] = VfSat1(dir[1] * k);
-      dir[2] = VfSat1(dir[2] * k);
+      dir[0] = VfSat1(VfMul(dir[0], k));
+      dir[1] = VfSat1(VfMul(dir[1], k));
+      dir[2] = VfSat1(VfMul(dir[2], k));
       dir[3] = 0.0f;
       if (ActorBallHitIsFloor(ball)) {
         g_actorBallHitQuery.contact.y = g_actorBallHitQuery.contact.y + 0.2f;
         /* dir = hitNormal + (camera dir - hitNormal) * 0.02 */
         cam = g_gfxActiveCamera->dir;
-        dir[0] = b->hitNormal[0] + (cam[0] - b->hitNormal[0]) * 0.02f;
-        dir[1] = b->hitNormal[1] + (cam[1] - b->hitNormal[1]) * 0.02f;
-        dir[2] = b->hitNormal[2] + (cam[2] - b->hitNormal[2]) * 0.02f;
-        dir[3] = b->hitNormal[3] + (cam[3] - b->hitNormal[3]) * 0.02f;
+        dir[0] = VfAdd(b->hitNormal[0], VfMul(VfSub(cam[0], b->hitNormal[0]), 0.02f));
+        dir[1] = VfAdd(b->hitNormal[1], VfMul(VfSub(cam[1], b->hitNormal[1]), 0.02f));
+        dir[2] = VfAdd(b->hitNormal[2], VfMul(VfSub(cam[2], b->hitNormal[2]), 0.02f));
+        dir[3] = VfAdd(b->hitNormal[3], VfMul(VfSub(cam[3], b->hitNormal[3]), 0.02f));
       }
       b->hitPoint[0] = g_actorBallHitQuery.contact.x;
       b->hitPoint[1] = g_actorBallHitQuery.contact.y;
@@ -138,10 +138,10 @@ home:
   }
   ActorGetLeftUpperArmPos(b->owner, armPos);
   pos = b->base.pos;
-  delta[0] = armPos[0] - pos[0];
-  delta[1] = armPos[1] - pos[1];
-  delta[2] = armPos[2] - pos[2];
-  dist = __builtin_sqrtf(delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2]);
+  delta[0] = VfSub(armPos[0], pos[0]);
+  delta[1] = VfSub(armPos[1], pos[1]);
+  delta[2] = VfSub(armPos[2], pos[2]);
+  dist = VfSqrt(VfDot3(delta[0], delta[1], delta[2], delta[0], delta[1], delta[2]));
   if (dist < 3.0f) {
     b->step++;
     return;
@@ -155,10 +155,10 @@ home:
   yaw = atan2f(delta[2], delta[0]) + b->wobbleYaw * b->wobbleScale;
   pitch = atan2f(delta[1], __builtin_sqrtf(delta[0] * delta[0] + delta[2] * delta[2])) +
           b->wobblePitch * b->wobbleScale;
-  cp = __builtin_cosf(pitch);
-  delta[0] = __builtin_cosf(yaw) * cp;
-  delta[1] = __builtin_sinf(pitch);
-  delta[2] = __builtin_sinf(yaw) * cp;
+  cp = VfCosQuarter(VfMul(pitch, 0.636619747f));
+  delta[0] = VfCosQuarter(VfMul(yaw, 0.636619747f)) * cp;
+  delta[1] = VfSinQuarter(VfMul(pitch, 0.636619747f));
+  delta[2] = VfSinQuarter(VfMul(yaw, 0.636619747f)) * cp;
   delta[3] = 0.0f;
   if (b->homeSpeed < 16.0f) {
     b->homeSpeed = b->homeSpeed + 0.2f;
@@ -167,18 +167,18 @@ home:
   if (!(b->homeSpeed <= limit)) {
     b->homeSpeed = limit;
   }
-  delta[0] = delta[0] * b->homeSpeed;
-  delta[1] = delta[1] * b->homeSpeed;
-  delta[2] = delta[2] * b->homeSpeed;
+  delta[0] = VfMul(delta[0], b->homeSpeed);
+  delta[1] = VfMul(delta[1], b->homeSpeed);
+  delta[2] = VfMul(delta[2], b->homeSpeed);
   if ((((Actor *)b->owner)->flags & 0x20210) == 0) {
     vel = ((Actor *)b->owner)->base.velocity;
-    delta[0] = delta[0] + vel[0];
-    delta[1] = delta[1] + vel[1];
-    delta[2] = delta[2] + vel[2];
+    delta[0] = VfAdd(delta[0], vel[0]);
+    delta[1] = VfAdd(delta[1], vel[1]);
+    delta[2] = VfAdd(delta[2], vel[2]);
   }
-  pos[0] = pos[0] + delta[0];
-  pos[1] = pos[1] + delta[1];
-  pos[2] = pos[2] + delta[2];
+  pos[0] = VfAdd(pos[0], delta[0]);
+  pos[1] = VfAdd(pos[1], delta[1]);
+  pos[2] = VfAdd(pos[2], delta[2]);
   scale = b->wobbleScale - 0.05f;
   b->wobbleScale = scale;
   if (scale < 0.0f) {

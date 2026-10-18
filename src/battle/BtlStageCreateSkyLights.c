@@ -32,13 +32,13 @@ void BtlStageCreateSkyLights(int arena)
   } else {
     if (arena == 8) {
       /* vscl.t xyz by 0.9 (0x3f666666); the stored w is bank S713 = 0 */
-      primary[0] = primary[0] * 0.899999976f;
-      primary[1] = primary[1] * 0.899999976f;
-      primary[2] = primary[2] * 0.899999976f;
+      primary[0] = VfMul(primary[0], 0.899999976f);
+      primary[1] = VfMul(primary[1], 0.899999976f);
+      primary[2] = VfMul(primary[2], 0.899999976f);
       primary[3] = 0.0f;
-      secondary[0] = secondary[0] * 0.899999976f;
-      secondary[1] = secondary[1] * 0.899999976f;
-      secondary[2] = secondary[2] * 0.899999976f;
+      secondary[0] = VfMul(secondary[0], 0.899999976f);
+      secondary[1] = VfMul(secondary[1], 0.899999976f);
+      secondary[2] = VfMul(secondary[2], 0.899999976f);
       secondary[3] = 0.0f;
       primary[1] = primary[1] * 0.600000024f; /* 0x3f19999a */
       secondary[1] = secondary[1] * 0.600000024f;

@@ -26,12 +26,12 @@ void *GameFieldPointSpawnEffect(void *point)
     fx = GfxEffectSpawn(g_worldEffectMgr, 6, p->pos);
     effect = fx;
     heading = p->heading;
-    fx->matrix[0] = __builtin_cosf(heading);
-    fx->matrix[1] = __builtin_sinf(heading);
+    fx->matrix[0] = VfCosQuarter(VfMul(heading, 0.636619747f));
+    fx->matrix[1] = VfSinQuarter(VfMul(heading, 0.636619747f));
     fx->matrix[2] = 0.0f;
     fx->matrix[3] = 0.0f;
-    fx->matrix[4] = -__builtin_sinf(heading);
-    fx->matrix[5] = __builtin_cosf(heading);
+    fx->matrix[4] = -VfSinQuarter(VfMul(heading, 0.636619747f));
+    fx->matrix[5] = VfCosQuarter(VfMul(heading, 0.636619747f));
     fx->matrix[6] = 0.0f;
     fx->matrix[7] = 0.0f;
     fx->matrix[8] = 0.0f;

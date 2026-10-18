@@ -25,15 +25,15 @@ static void NormalizeXyzClamp(float *v)
   float len2;
   float k;
 
-  len2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+  len2 = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
   if (VfIsZero(len2)) {
     k = 0.0f;
   } else {
     k = VfRsq(len2);
   }
-  v[0] = VfSat1(v[0] * k);
-  v[1] = VfSat1(v[1] * k);
-  v[2] = VfSat1(v[2] * k);
+  v[0] = VfSat1(VfMul(v[0], k));
+  v[1] = VfSat1(VfMul(v[1], k));
+  v[2] = VfSat1(VfMul(v[2], k));
   v[3] = 0.0f;
 }
 
@@ -78,18 +78,18 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
       hitter = &((BtlBakugan *)self->hitBy)->base;
       angle = hitter->rot[1];
       /* the heading vector is built in the hitter's pos, then copied to toppleAxis */
-      hitter->pos[0] = __builtin_cosf(angle);
+      hitter->pos[0] = VfCosQuarter(VfMul(angle, 0.636619747f));
       hitter->pos[1] = 0.0f;
-      hitter->pos[2] = __builtin_sinf(angle);
+      hitter->pos[2] = VfSinQuarter(VfMul(angle, 0.636619747f));
       hitter->pos[3] = 0.0f;
       self->toppleAxis[0] = hitter->pos[0];
       self->toppleAxis[1] = hitter->pos[1];
       self->toppleAxis[2] = hitter->pos[2];
       self->toppleAxis[3] = hitter->pos[3];
     } else {
-      self->toppleAxis[0] = self->base.pos[0] - self->hitPos[0];
-      self->toppleAxis[1] = self->base.pos[1] - self->hitPos[1];
-      self->toppleAxis[2] = self->base.pos[2] - self->hitPos[2];
+      self->toppleAxis[0] = VfSub(self->base.pos[0], self->hitPos[0]);
+      self->toppleAxis[1] = VfSub(self->base.pos[1], self->hitPos[1]);
+      self->toppleAxis[2] = VfSub(self->base.pos[2], self->hitPos[2]);
       self->toppleAxis[3] = self->base.pos[3];
     }
     self->toppleAxis[1] = 0.0f;
@@ -132,7 +132,7 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
     }
     self->toppleTime = self->toppleTime + 0.004166667f;
     angle = self->val260;
-    c = __builtin_cosf(self->toppleTime * self->toppleTime * 3.14159274f);
+    c = VfCosQuarter(VfMul(self->toppleTime * self->toppleTime * 3.14159274f, 0.636619747f));
     angle = angle + (1.0f - c) * 0.5f * 1.5707964f;
     self->val260 = angle;
     if (!(angle < 1.5707964f)) {
@@ -140,12 +140,12 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
       self->step = self->step + 1;
     }
     /* quaternion (axis * sin(a/2), cos(a/2)) */
-    half = 0.318309873f * self->val260;
+    half = VfMul(0.318309873f, self->val260);
     c = VfCosQuarter(half);
     s = VfSinQuarter(half);
-    quat[0] = self->toppleAxis[0] * s;
-    quat[1] = self->toppleAxis[1] * s;
-    quat[2] = self->toppleAxis[2] * s;
+    quat[0] = VfMul(self->toppleAxis[0], s);
+    quat[1] = VfMul(self->toppleAxis[1], s);
+    quat[2] = VfMul(self->toppleAxis[2], s);
     quat[3] = c;
     /* rows of A (qa) and B (qb) swizzled from the quaternion; vmmul.q E000,E200,E100: rotMtx = qb * qa
        (row-major) */
@@ -159,8 +159,7 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
     qb[3][0] = -quat[0]; qb[3][1] = -quat[1]; qb[3][2] = -quat[2]; qb[3][3] = quat[3];
     for (j = 0; j < 4; j++) {
       for (r = 0; r < 4; r++) {
-        rotMtx[j * 4 + r] = qb[j][0] * qa[0][r] + qb[j][1] * qa[1][r] + qb[j][2] * qa[2][r] +
-                            qb[j][3] * qa[3][r];
+        rotMtx[j * 4 + r] = VfDot4(qb[j][0], qb[j][1], qb[j][2], qb[j][3], qa[0][r], qa[1][r], qa[2][r], qa[3][r]);
       }
     }
     /* w lane of the axes cleared, translation (0, 0, 0, 1) */
@@ -174,7 +173,7 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
     rotMtx[12] = self->base.pos[0];
     rotMtx[14] = self->base.pos[2];
     sink = self->sinkY;
-    c = __builtin_cosf(self->toppleTime * self->toppleTime * 3.14159274f);
+    c = VfCosQuarter(VfMul(self->toppleTime * self->toppleTime * 3.14159274f, 0.636619747f));
     ease = (1.0f - c) * 0.5f;
     hi = ActorStageObjGetBounds(self)[4];
     bounds = ActorStageObjGetBounds(self);
@@ -184,8 +183,8 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
     yawMtx[13] = self->base.pos[1];
     /* yaw rotation columns (cos, 0, -sin, 0), (0, 1, 0, 0), (sin, 0, cos, 0), (0, 0, 0, 1) */
     angle = self->base.rot[1];
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
     yawRot[0][0] = c;    yawRot[0][1] = 0.0f; yawRot[0][2] = -s;   yawRot[0][3] = 0.0f;
     yawRot[1][0] = 0.0f; yawRot[1][1] = 1.0f; yawRot[1][2] = 0.0f; yawRot[1][3] = 0.0f;
     yawRot[2][0] = s;    yawRot[2][1] = 0.0f; yawRot[2][2] = c;    yawRot[2][3] = 0.0f;
@@ -193,8 +192,7 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
     /* vmmul.q E200,E100,E000: yawMtx <- yawMtx * yawRot (row-major) */
     for (i = 0; i < 4; i++) {
       for (r = 0; r < 4; r++) {
-        world[i * 4 + r] = yawMtx[i * 4 + 0] * yawRot[0][r] + yawMtx[i * 4 + 1] * yawRot[1][r] +
-                           yawMtx[i * 4 + 2] * yawRot[2][r] + yawMtx[i * 4 + 3] * yawRot[3][r];
+        world[i * 4 + r] = VfDot4(yawMtx[i * 4 + 0], yawMtx[i * 4 + 1], yawMtx[i * 4 + 2], yawMtx[i * 4 + 3], yawRot[0][r], yawRot[1][r], yawRot[2][r], yawRot[3][r]);
       }
     }
     for (i = 0; i < 16; i++) {
@@ -203,8 +201,7 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
     /* vmmul.q M000,M100 (rotMtx),M200 (yawMtx): world <- yawMtx * rotMtx (row-major) */
     for (j = 0; j < 4; j++) {
       for (r = 0; r < 4; r++) {
-        world[j * 4 + r] = yawMtx[j * 4 + 0] * rotMtx[0 * 4 + r] + yawMtx[j * 4 + 1] * rotMtx[1 * 4 + r] +
-                           yawMtx[j * 4 + 2] * rotMtx[2 * 4 + r] + yawMtx[j * 4 + 3] * rotMtx[3 * 4 + r];
+        world[j * 4 + r] = VfDot4(yawMtx[j * 4 + 0], yawMtx[j * 4 + 1], yawMtx[j * 4 + 2], yawMtx[j * 4 + 3], rotMtx[0 * 4 + r], rotMtx[1 * 4 + r], rotMtx[2 * 4 + r], rotMtx[3 * 4 + r]);
       }
     }
     for (i = 0; i < 16; i++) {
@@ -227,7 +224,7 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
       mtx = self->base.data->rootMatrix;
       bounds = ActorStageObjGetBounds(self);
       h = bounds[5] * 2.0f;
-      y = h * (PlatformRandFloat12() - 1.0f);
+      y = h * (VfSub(PlatformRandFloat12(), 1.0f));
       bounds = ActorStageObjGetBounds(self);
       local.x = 0.0f;
       local.y = y - bounds[5];
@@ -238,9 +235,9 @@ void ActorStageObjState07Update(ActorStageObjBase *self)
       spawnPos[1] = out.y;
       spawnPos[2] = out.z;
       spawnPos[3] = out.w;
-      dir[0] = self->base.pos[0] - spawnPos[0];
-      dir[1] = self->base.pos[1] - spawnPos[1];
-      dir[2] = self->base.pos[2] - spawnPos[2];
+      dir[0] = VfSub(self->base.pos[0], spawnPos[0]);
+      dir[1] = VfSub(self->base.pos[1], spawnPos[1]);
+      dir[2] = VfSub(self->base.pos[2], spawnPos[2]);
       dir[3] = self->base.pos[3];
       dir[1] = 0.0f;
       NormalizeXyzClamp(dir);

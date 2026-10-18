@@ -144,20 +144,20 @@ int BtlBakuganRunBallEntry(BtlBakugan *self)
         /* rootMatrix = scale (1, 1, 1) times the yaw rotation by angle (the listing builds the
            unit-scale diagonal and multiplies it in; the scale is 1, so the product is the
            rotation itself) */
-        c = __builtin_cosf(angle);
-        s = __builtin_sinf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
+        s = VfSinQuarter(VfMul(angle, 0.636619747f));
         m = ballData->rootMatrix;
-        m[0] = c;
+        m[0] = VfDot2(1.0f, 0.0f, c, s);
         m[1] = 0.0f;
-        m[2] = -s;
+        m[2] = VfDot2(1.0f, 0.0f, -s, c);
         m[3] = 0.0f;
-        m[4] = 0.0f;
+        m[4] = VfDot2(0.0f, 0.0f, c, s);
         m[5] = 1.0f;
-        m[6] = 0.0f;
+        m[6] = VfDot2(0.0f, 0.0f, -s, c);
         m[7] = 0.0f;
-        m[8] = s;
+        m[8] = VfDot2(0.0f, 1.0f, c, s);
         m[9] = 0.0f;
-        m[10] = c;
+        m[10] = VfDot2(0.0f, 1.0f, -s, c);
         m[11] = 0.0f;
         m[12] = 0.0f;
         m[13] = 0.0f;
@@ -317,7 +317,7 @@ int BtlBakuganRunBallEntry(BtlBakugan *self)
         grow = unit->ballEntryGrow + 0.08f;
         unit->ballEntryGrow = grow;
         angle = grow * 3.14159274f;
-        c = __builtin_cosf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
         grow = (1.0f - c) * 0.5f;
         node = GfxModelGetNode(&self->base, 1);
         node->scale[0] = grow;
@@ -337,7 +337,7 @@ int BtlBakuganRunBallEntry(BtlBakugan *self)
         grow = unit->ballEntryGrow;
         for (i = 0; i < 4; i++) {
             self->base.pos[i] =
-                self->base.pos[i] + (unit->ctorVecs[1][i] - self->base.pos[i]) * grow;
+                VfAdd(self->base.pos[i], VfMul(VfSub(unit->ctorVecs[1][i], self->base.pos[i]), grow));
         }
         if (unit->ballEntryGrow < 1.0f) {
             return 0;

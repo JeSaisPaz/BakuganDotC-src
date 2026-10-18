@@ -49,9 +49,9 @@ BtlFinishTask *BtlFinishTaskCtor(BtlFinishTask *self, void *unit, s32 arg, s32 m
     self->camera.fov = 50.0f;
     angle = ((BtlBakugan *)self->unit)->base.rot[1] + 1.57079637f;
     /* vrot [C,0,S,0] of angle * S703 (2/pi) */
-    self->camDir[0] = __builtin_cosf(angle);
+    self->camDir[0] = VfCosQuarter(VfMul(angle, 0.636619747f));
     self->camDir[1] = 0.0f;
-    self->camDir[2] = __builtin_sinf(angle);
+    self->camDir[2] = VfSinQuarter(VfMul(angle, 0.636619747f));
     self->camDir[3] = 0.0f;
     self->camDir[1] = 0.400000006f;
     /* normalise xyz (1/sqrt, 0 for a zero length), each lane saturated to [-1, 1];
@@ -59,14 +59,14 @@ BtlFinishTask *BtlFinishTaskCtor(BtlFinishTask *self, void *unit, s32 arg, s32 m
     x = self->camDir[0];
     y = self->camDir[1];
     z = self->camDir[2];
-    len2 = x * x + y * y + z * z;
+    len2 = VfDot3(x, y, z, x, y, z);
     inv = VfRsq(len2);
     if (VfIsZero(len2)) {
         inv = 0.0f;
     }
-    self->camDir[0] = VfSat1(x * inv);
-    self->camDir[1] = VfSat1(y * inv);
-    self->camDir[2] = VfSat1(z * inv);
+    self->camDir[0] = VfSat1(VfMul(x, inv));
+    self->camDir[1] = VfSat1(VfMul(y, inv));
+    self->camDir[2] = VfSat1(VfMul(z, inv));
     self->camDir[3] = 0.0f;
     self->camDistance = 2000.0f;
     self->camBlend = 0.0f;
@@ -97,8 +97,8 @@ BtlFinishTask *BtlFinishTaskCtor(BtlFinishTask *self, void *unit, s32 arg, s32 m
             if (attacker != NULL) {
                 frame = GfxModelMotionFrame(&attacker->base) - 2.0f;
                 /* vmin with S733 (1), then vmax with S713 (0); a tie keeps the bank operand */
-                frame = frame < 1.0f ? frame : 1.0f;
-                frame = frame > 0.0f ? frame : 0.0f;
+                frame = VfMin(frame, 1.0f);
+                frame = VfMax(frame, 0.0f);
                 self->attackerFrame = frame;
             }
         }
@@ -112,9 +112,9 @@ BtlFinishTask *BtlFinishTaskCtor(BtlFinishTask *self, void *unit, s32 arg, s32 m
     /* other modes: focus stays 0 (uninitialised in the binary).
        eye.xyz = focus + camDir * camDistance, eye.w = focus.w; target = focus */
     dist = self->camDistance;
-    self->camera.eye[0] = focus[0] + self->camDir[0] * dist;
-    self->camera.eye[1] = focus[1] + self->camDir[1] * dist;
-    self->camera.eye[2] = focus[2] + self->camDir[2] * dist;
+    self->camera.eye[0] = VfAdd(focus[0], VfMul(self->camDir[0], dist));
+    self->camera.eye[1] = VfAdd(focus[1], VfMul(self->camDir[1], dist));
+    self->camera.eye[2] = VfAdd(focus[2], VfMul(self->camDir[2], dist));
     self->camera.eye[3] = focus[3];
     self->camera.target[0] = focus[0];
     self->camera.target[1] = focus[1];

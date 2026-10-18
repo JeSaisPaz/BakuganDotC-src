@@ -16,34 +16,34 @@ void CoreBezierEval(float t, CoreBezier *self)
     ScePspFVector4 term0;
     ScePspFVector4 term1;
 
-    self->p0.x = self->p0.x * k0;
-    self->p0.y = self->p0.y * k0;
-    self->p0.z = self->p0.z * k0;
+    self->p0.x = VfMul(self->p0.x, k0);
+    self->p0.y = VfMul(self->p0.y, k0);
+    self->p0.z = VfMul(self->p0.z, k0);
     self->p0.w = 0.0f;
     term0.x = self->p0.x;
     term0.y = self->p0.y;
     term0.z = self->p0.z;
 
-    self->p1.x = self->p1.x * k1;
-    self->p1.y = self->p1.y * k1;
-    self->p1.z = self->p1.z * k1;
+    self->p1.x = VfMul(self->p1.x, k1);
+    self->p1.y = VfMul(self->p1.y, k1);
+    self->p1.z = VfMul(self->p1.z, k1);
     self->p1.w = 0.0f;
     term1.x = self->p1.x;
     term1.y = self->p1.y;
     term1.z = self->p1.z;
 
-    self->p2.x = self->p2.x * k2;
-    self->p2.y = self->p2.y * k2;
-    self->p2.z = self->p2.z * k2;
+    self->p2.x = VfMul(self->p2.x, k2);
+    self->p2.y = VfMul(self->p2.y, k2);
+    self->p2.z = VfMul(self->p2.z, k2);
     self->p2.w = 0.0f;
     self->result.x = self->p2.x;
     self->result.y = self->p2.y;
     self->result.z = self->p2.z;
 
-    self->result.x = self->result.x + term0.x;
-    self->result.y = self->result.y + term0.y;
-    self->result.z = self->result.z + term0.z;
-    self->result.x = self->result.x + term1.x;
-    self->result.y = self->result.y + term1.y;
-    self->result.z = self->result.z + term1.z;
+    self->result.x = VfAdd(self->result.x, term0.x);
+    self->result.y = VfAdd(self->result.y, term0.y);
+    self->result.z = VfAdd(self->result.z, term0.z);
+    self->result.x = VfAdd(self->result.x, term1.x);
+    self->result.y = VfAdd(self->result.y, term1.y);
+    self->result.z = VfAdd(self->result.z, term1.z);
 }

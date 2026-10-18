@@ -14,17 +14,17 @@ void BtlAttackType74Update(BtlAttack *self)
     float offset[3];
 
     if (self->age == 0) {
-        offset[0] = -self->dir[2] * 40.0f;
-        offset[1] = self->dir[1] * 40.0f;
-        offset[2] = self->dir[0] * 40.0f;
+        offset[0] = VfMul(-self->dir[2], 40.0f);
+        offset[1] = VfMul(self->dir[1], 40.0f);
+        offset[2] = VfMul(self->dir[0], 40.0f);
         if (self->paramF2 < 0.0f) {
-            self->pos[0] = self->pos[0] - offset[0];
-            self->pos[1] = self->pos[1] - offset[1];
-            self->pos[2] = self->pos[2] - offset[2];
+            self->pos[0] = VfSub(self->pos[0], offset[0]);
+            self->pos[1] = VfSub(self->pos[1], offset[1]);
+            self->pos[2] = VfSub(self->pos[2], offset[2]);
         } else {
-            self->pos[0] = self->pos[0] + offset[0];
-            self->pos[1] = self->pos[1] + offset[1];
-            self->pos[2] = self->pos[2] + offset[2];
+            self->pos[0] = VfAdd(self->pos[0], offset[0]);
+            self->pos[1] = VfAdd(self->pos[1], offset[1]);
+            self->pos[2] = VfAdd(self->pos[2], offset[2]);
         }
         if (ABS(self->paramF2) < 50.0f) {
             self->pos[1] = self->pos[1] - 12.0f;
@@ -34,9 +34,9 @@ void BtlAttackType74Update(BtlAttack *self)
     }
     BtlAttackUpdateGuided(0.300000012f, self->paramF2, self, 0x97, 0x100, 0x1b);
     if (self->age == 0 && ABS(self->paramF2) < 50.0f) {
-        self->vel[0] = self->vel[0] * 0.800000012f;
-        self->vel[1] = self->vel[1] * 0.800000012f;
-        self->vel[2] = self->vel[2] * 0.800000012f;
+        self->vel[0] = VfMul(self->vel[0], 0.800000012f);
+        self->vel[1] = VfMul(self->vel[1], 0.800000012f);
+        self->vel[2] = VfMul(self->vel[2], 0.800000012f);
         self->vel[3] = 0.0f;
     }
 }

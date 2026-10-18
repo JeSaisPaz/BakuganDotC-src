@@ -18,7 +18,7 @@ static inline void Vec4Lerp(float *pos, const float *target, float t)
     s32 k;
 
     for (k = 0; k < 4; k++) {
-        pos[k] = pos[k] + (target[k] - pos[k]) * t;
+        pos[k] = VfAdd(pos[k], VfMul(VfSub(target[k], pos[k]), t));
     }
 }
 
@@ -75,7 +75,7 @@ void BtlHudAnimateStatusIcon(BtlHud *hud, s32 i, bool active)
         (*state)++;
         /* fall through */
     case 2: /* fade in */
-        value = __builtin_sinf(StepAngle(angle, FADE_IN_STEP));
+        value = VfSinQuarter(VfMul(StepAngle(angle, FADE_IN_STEP), 0.636619747f));
         sprite->alpha = value;
         if (value < 0.95f) {
             return;
@@ -90,7 +90,7 @@ void BtlHudAnimateStatusIcon(BtlHud *hud, s32 i, bool active)
         target[0] = (float)*slot * 24.0f + 76.0f;
         /* fall through */
     case 4: /* slide */
-        Vec4Lerp(&sprite->posX, target, __builtin_sinf(StepAngle(angle, FADE_IN_STEP)));
+        Vec4Lerp(&sprite->posX, target, VfSinQuarter(VfMul(StepAngle(angle, FADE_IN_STEP), 0.636619747f)));
         if (*angle < HALF_PI) {
             return;
         }
@@ -112,7 +112,7 @@ void BtlHudAnimateStatusIcon(BtlHud *hud, s32 i, bool active)
             *state = 2;
             return;
         }
-        value = __builtin_sinf(StepAngle(angle, FADE_OUT_STEP));
+        value = VfSinQuarter(VfMul(StepAngle(angle, FADE_OUT_STEP), 0.636619747f));
         sprite->alpha = value;
         if (!(value <= 0.05f)) {
             return;

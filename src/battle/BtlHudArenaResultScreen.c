@@ -40,7 +40,7 @@
 /* sin(angle): the VFPU's vsin.s of angle * 2/pi (quarter turns). */
 static inline float ArenaSin(float angle)
 {
-    return __builtin_sinf(angle);
+    return VfSinQuarter(VfMul(angle, 0.636619747f));
 }
 
 /* Clamps the angle to [0, pi/2] (a NaN becomes pi/2). */

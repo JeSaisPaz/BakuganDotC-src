@@ -31,8 +31,8 @@ void BtlBakuganState13Update(BtlBakugan *self)
     self->stateFlags |= 0x800000;
     if ((self->commands & 1) == 0) {
         self->dashSpeed = self->dashSpeed * 0.899999976f;
-        self->base.velocity[0] = self->base.velocity[0] * 0.899999976f;
-        self->base.velocity[2] = self->base.velocity[2] * 0.899999976f;
+        self->base.velocity[0] = VfMul(self->base.velocity[0], 0.899999976f);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], 0.899999976f);
         BtlBakuganPlayMotion(0.200000003f, self, 0xd, 1, 0);
     } else {
         speed = self->dashSpeed;
@@ -57,8 +57,8 @@ void BtlBakuganState13Update(BtlBakugan *self)
         ((float (*)(float, void *))entry->fn)(1.29999995f, (u8 *)self + entry->delta);
         heading = self->input->heading;
         speed = self->dashSpeed * factor;
-        self->base.velocity[0] = __builtin_cosf(heading) * speed;
-        self->base.velocity[2] = __builtin_sinf(heading) * speed;
+        self->base.velocity[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), speed);
+        self->base.velocity[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), speed);
     }
     if (BtlBakuganHasAttackCommand(self) != 0) {
         BtlBakuganStartAttackOrArt(self, 0);

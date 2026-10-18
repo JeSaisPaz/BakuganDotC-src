@@ -27,22 +27,22 @@ void GameQuestCamFollowPath(GameQuestCamPathMode *self)
     seg = (GameQuestPathSegment *)self->segment;
     /* point = from * (1 - t) + to * t (vscl.t: lane w is S713 = 0) */
     s = 1.0f - seg->t;
-    point.x = seg->from->pos.x * s;
-    point.y = seg->from->pos.y * s;
-    point.z = seg->from->pos.z * s;
+    point.x = VfMul(seg->from->pos.x, s);
+    point.y = VfMul(seg->from->pos.y, s);
+    point.z = VfMul(seg->from->pos.z, s);
     t = seg->t;
-    point.x = point.x + seg->to->pos.x * t;
-    point.y = point.y + seg->to->pos.y * t;
-    point.z = point.z + seg->to->pos.z * t;
+    point.x = VfAdd(point.x, VfMul(seg->to->pos.x, t));
+    point.y = VfAdd(point.y, VfMul(seg->to->pos.y, t));
+    point.z = VfAdd(point.z, VfMul(seg->to->pos.z, t));
     point.w = 0.0f;
     if (seg->dist < self->targetDist) {
         d2 = (float)pow((double)self->targetDist, 2.0);
         n2 = (float)pow((double)seg->dist, 2.0);
         pull = (float)sqrt((double)(d2 - n2));
         s = -pull;
-        point.x = point.x + seg->dir.x * s;
-        point.y = point.y + seg->dir.y * s;
-        point.z = point.z + seg->dir.z * s;
+        point.x = VfAdd(point.x, VfMul(seg->dir.x, s));
+        point.y = VfAdd(point.y, VfMul(seg->dir.y, s));
+        point.z = VfAdd(point.z, VfMul(seg->dir.z, s));
     }
     self->base.base.base.goal = point;
     if (self->segment == NULL ||

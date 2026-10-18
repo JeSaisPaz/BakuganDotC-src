@@ -16,7 +16,7 @@ void ActorNpcCloakSetMode(ActorNpcCloak *self, s32 mode)
     slot3 = &((const VtblEntry *)self->base.base.base.base.base.vtable)[3];
     if (mode == 2) {
         /* colour (1, 1, 1, 1) packed to RGBA8: all four lanes are the same */
-        lane = VfI2uc(VfF2iz(VfSat0(1.0f) * 255.0f, 23));
+        lane = VfI2uc(VfF2iz(VfMul(VfSat0(1.0f), 255.0f), 23));
         self->base.base.base.base.fogColor = lane | lane << 8 | lane << 16 | lane << 24;
         ((void (*)(void *, u8))slot3->fn)((u8 *)self + slot3->delta, 1);
     } else {

@@ -15,16 +15,16 @@ void GfxEffectRandomPointInShell(float rMin, float rMax, float span, float *out)
         span = 6.28318548f;
     }
     d = rMax - rMin;
-    u0 = PlatformRandFloat12() - 1.0f;
+    u0 = VfSub(PlatformRandFloat12(), 1.0f);
     angA = span * u0 - 3.14159274f;
-    u1 = PlatformRandFloat12() - 1.0f;
+    u1 = VfSub(PlatformRandFloat12(), 1.0f);
     angB = span * u1 - 3.14159274f;
     d = d * d;
-    u2 = PlatformRandFloat12() - 1.0f;
+    u2 = VfSub(PlatformRandFloat12(), 1.0f);
     d = d * u2;
     rad = __builtin_sqrtf(d + rMin * rMin);
-    out[2] = __builtin_sinf(angB) * rad;
-    cosB = __builtin_cosf(angB) * rad;
-    out[0] = __builtin_sinf(angA) * cosB;
-    out[1] = __builtin_cosf(angA) * cosB;
+    out[2] = VfSinQuarter(VfMul(angB, 0.636619747f)) * rad;
+    cosB = VfCosQuarter(VfMul(angB, 0.636619747f)) * rad;
+    out[0] = VfSinQuarter(VfMul(angA, 0.636619747f)) * cosB;
+    out[1] = VfCosQuarter(VfMul(angA, 0.636619747f)) * cosB;
 }

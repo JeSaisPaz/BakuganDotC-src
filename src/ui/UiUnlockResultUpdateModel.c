@@ -16,7 +16,7 @@ void UiUnlockResultUpdateModel(UiUnlockResult *self)
     return;
   }
   model->rot[1] = self->modelBaseY +
-                  __builtin_sinf(self->modelTimer * 3.1415927f * 0.0055555557f) * 0.16f;
+                  VfSinQuarter(VfMul(self->modelTimer * 3.1415927f * 0.0055555557f, 0.636619747f)) * 0.16f;
   model = (GfxModel *)self->model;
   if (!(self->modelTimer < 360.0f)) {
     self->modelTimer = 0.0f;

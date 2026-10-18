@@ -155,9 +155,9 @@ int BtlBakuganProcessMotionEvents(BtlBakugan *self)
             if (!inAttackWindow) {
                 break;
             }
-            effectDir[0] = __builtin_cosf(self->base.rot[1]);
+            effectDir[0] = VfCosQuarter(VfMul(self->base.rot[1], 0.636619747f));
             effectDir[1] = 0.0f;
-            effectDir[2] = __builtin_sinf(self->base.rot[1]);
+            effectDir[2] = VfSinQuarter(VfMul(self->base.rot[1], 0.636619747f));
             effectDir[3] = 0.0f;
             effectId = ev->param.ref.id;
             if (effectId == 0x8e) {
@@ -211,9 +211,9 @@ int BtlBakuganProcessMotionEvents(BtlBakugan *self)
             if (BtlBakuganGetTarget(self) != NULL) {
                 BtlAttackLaunchAuto(attack, NULL, NULL, (s16 *)ev);
             } else {
-                attackDir[0] = __builtin_cosf(self->base.rot[1]);
+                attackDir[0] = VfCosQuarter(VfMul(self->base.rot[1], 0.636619747f));
                 attackDir[1] = 0.0f;
-                attackDir[2] = __builtin_sinf(self->base.rot[1]);
+                attackDir[2] = VfSinQuarter(VfMul(self->base.rot[1], 0.636619747f));
                 attackDir[3] = 0.0f;
                 BtlAttackLaunchAuto(attack, NULL, attackDir, (s16 *)ev);
             }

@@ -33,8 +33,7 @@ void BtlBakuganUpdateModelMatrix(BtlBakugan *self)
     rhs[3][0] = -q[0]; rhs[3][1] = -q[1]; rhs[3][2] = -q[2]; rhs[3][3] = q[3];
     for (j = 0; j < 3; j++) {
         for (i = 0; i < 3; i++) {
-            tilt[j * 4 + i] = lhs[0][i] * rhs[j][0] + lhs[1][i] * rhs[j][1] +
-                              lhs[2][i] * rhs[j][2] + lhs[3][i] * rhs[j][3];
+            tilt[j * 4 + i] = VfDot4(lhs[0][i], lhs[1][i], lhs[2][i], lhs[3][i], rhs[j][0], rhs[j][1], rhs[j][2], rhs[j][3]);
         }
         tilt[j * 4 + 3] = 0.0f;
     }
@@ -52,21 +51,21 @@ void BtlBakuganUpdateModelMatrix(BtlBakugan *self)
         yaw = yaw - 6.28318548f;
     }
     /* rootMatrix = rotY(yaw) with column k scaled by scale[k] (vrot of yaw * 2/pi). */
-    c = __builtin_cosf(yaw);
-    s = __builtin_sinf(yaw);
+    c = VfCosQuarter(VfMul(yaw, 0.636619747f));
+    s = VfSinQuarter(VfMul(yaw, 0.636619747f));
     m = self->base.data->rootMatrix;
-    m[0] = c * self->base.scale[0];
-    m[1] = 0.0f;
-    m[2] = -s * self->base.scale[0];
-    m[3] = 0.0f;
-    m[4] = 0.0f;
-    m[5] = self->base.scale[1];
-    m[6] = 0.0f;
-    m[7] = 0.0f;
-    m[8] = s * self->base.scale[2];
-    m[9] = 0.0f;
-    m[10] = c * self->base.scale[2];
-    m[11] = 0.0f;
+    m[0] = VfDot2(self->base.scale[0], 0.0f, c, s);
+    m[1] = VfDot2(self->base.scale[0], 0.0f, 0.0f, 0.0f);
+    m[2] = VfDot2(self->base.scale[0], 0.0f, -s, c);
+    m[3] = VfDot2(self->base.scale[0], 0.0f, 0.0f, 0.0f);
+    m[4] = VfDot3(0.0f, self->base.scale[1], 0.0f, c, 0.0f, s);
+    m[5] = VfDot2(self->base.scale[1], 0.0f, 1.0f, 0.0f);
+    m[6] = VfDot3(0.0f, self->base.scale[1], 0.0f, -s, 0.0f, c);
+    m[7] = VfDot2(self->base.scale[1], 0.0f, 0.0f, 0.0f);
+    m[8] = VfDot2(0.0f, self->base.scale[2], c, s);
+    m[9] = VfDot2(self->base.scale[2], 0.0f, 0.0f, 0.0f);
+    m[10] = VfDot2(0.0f, self->base.scale[2], -s, c);
+    m[11] = VfDot2(self->base.scale[2], 0.0f, 0.0f, 0.0f);
     m[12] = 0.0f;
     m[13] = 0.0f;
     m[14] = 0.0f;
@@ -79,8 +78,7 @@ void BtlBakuganUpdateModelMatrix(BtlBakugan *self)
             col[i] = m[j * 4 + i];
         }
         for (i = 0; i < 4; i++) {
-            m[j * 4 + i] = tilt[0 * 4 + i] * col[0] + tilt[1 * 4 + i] * col[1] +
-                           tilt[2 * 4 + i] * col[2] + tilt[3 * 4 + i] * col[3];
+            m[j * 4 + i] = VfDot4(tilt[0 * 4 + i], tilt[1 * 4 + i], tilt[2 * 4 + i], tilt[3 * 4 + i], col[0], col[1], col[2], col[3]);
         }
     }
     /* Translation column = base.pos, w = 1. */

@@ -15,9 +15,9 @@ s32 BtlAiRaycastHeading(float heading, float dist, BtlAi *self)
     /* vmul.s by S703 (2/pi) then vrot.q [C,0,S,0]: cos/sin of `heading` in radians; vscl.t
        scales x, y, z by `dist` and leaves w at 0. The asm first stores C720 into the buffer,
        fully overwritten by this vector. */
-    to[0] = __builtin_cosf(heading) * dist;
-    to[1] = 0.0f * dist;
-    to[2] = __builtin_sinf(heading) * dist;
+    to[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), dist);
+    to[1] = VfMul(0.0f, dist);
+    to[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), dist);
     to[3] = 0.0f;
     owner = self->owner;
     from[0] = owner->base.pos[0];

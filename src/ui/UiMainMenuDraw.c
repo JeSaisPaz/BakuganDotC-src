@@ -60,9 +60,9 @@ void UiMainMenuDraw(UiMainMenu *self)
         fogDist.f = 0.0f;
       }
       /* vsat0.q, vscl.q by S701 (255), vf2iz.q 23, vi2uc.q; alpha byte masked off */
-      fogColor = (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.x) * 255.0f, 23)) |
-                 (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.y) * 255.0f, 23)) << 8 |
-                 (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.z) * 255.0f, 23)) << 16 |
+      fogColor = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.x), 255.0f), 23)) |
+                 (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.y), 255.0f), 23)) << 8 |
+                 (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.z), 255.0f), 23)) << 16 |
                  0xcf000000;
     }
     list[0] = fogColor;
@@ -98,9 +98,9 @@ void UiMainMenuDraw(UiMainMenu *self)
           fogDist.f = 0.0f;
         }
         /* vsat0.q, vscl.q by S701 (255), vf2iz.q 23, vi2uc.q; alpha byte masked off */
-        fogColor = (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.x) * 255.0f, 23)) |
-                   (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.y) * 255.0f, 23)) << 8 |
-                   (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.z) * 255.0f, 23)) << 16 |
+        fogColor = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.x), 255.0f), 23)) |
+                   (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.y), 255.0f), 23)) << 8 |
+                   (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.z), 255.0f), 23)) << 16 |
                    0xcf000000;
       }
       list[0] = fogColor;

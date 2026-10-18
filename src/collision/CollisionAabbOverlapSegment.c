@@ -16,8 +16,8 @@ bool CollisionAabbOverlapSegment(const float *aabb, const void *seg)
     int i;
 
     for (i = 0; i < 3; i++) {
-        size[i] = aabb[4 + i] - aabb[i];
-        mid[i] = s->start[i] * 2.0f + s->dir[i] - aabb[i] - aabb[4 + i];
+        size[i] = VfSub(aabb[4 + i], aabb[i]);
+        mid[i] = VfSub(VfSub(VfAdd(VfMul(s->start[i], 2.0f), s->dir[i]), aabb[i]), aabb[4 + i]);
     }
 
     adx = __builtin_fabsf(s->dir[0]);

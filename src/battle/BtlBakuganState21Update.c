@@ -64,8 +64,8 @@ void BtlBakuganState21Update(BtlBakugan *self)
         /* fallthrough */
     case 1:
         /* vscl.t by 0.8f (0x3f4ccccd); only lanes x and z are stored back */
-        self->base.velocity[0] = self->base.velocity[0] * 0.8f;
-        self->base.velocity[2] = self->base.velocity[2] * 0.8f;
+        self->base.velocity[0] = VfMul(self->base.velocity[0], 0.8f);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], 0.8f);
         if (--self->subWait > 0) {
             return;
         }
@@ -140,26 +140,21 @@ void BtlBakuganState21Update(BtlBakugan *self)
         tint[3] = color[3];
         t = (float)(35 - self->subWait) * 0.03f;
         /* vmin.s with the bank's S733 (1), then vmax.s with S713 (0); t is never NaN */
-        if (t > 1.0f) {
-            t = 1.0f;
-        }
-        if (t <= 0.0f) {
-            t = 0.0f;
-        }
+        t = VfMax(VfMin(t, 1.0f), 0.0f);
         angle = t * 3.14159274f;
         /* vcos.s of angle * S703 (2/pi): the quarter turn cancels */
-        c = __builtin_cosf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
         tint[3] = (1.0f - c) * 0.5f;
         entry = &((const VtblEntry *)self->base.base.vtable)[4];
         ((void (*)(void *, float *))entry->fn)((u8 *)self + entry->delta, tint);
         /* the asm recomputes the same cosine after the call */
-        c = __builtin_cosf(angle);
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
         scale = 1.0f - (1.0f - c) * 0.5f * 0.3f;
         node = (GmoNode *)GfxModelFindNode(&self->base, "Bip01_Pelvis");
         /* vscl.t of the xyz lanes, then sv.q puts the bank's S713 (0) in scaleW */
-        node->scale[0] = node->scale[0] * scale;
-        node->scale[1] = node->scale[1] * scale;
-        node->scale[2] = node->scale[2] * scale;
+        node->scale[0] = VfMul(node->scale[0], scale);
+        node->scale[1] = VfMul(node->scale[1], scale);
+        node->scale[2] = VfMul(node->scale[2], scale);
         node->scaleW = 0.0f;
         self->base.ambient[3] = self->base.ambient[3] - 0.05f;
         if (self->subWait-- > 0) {

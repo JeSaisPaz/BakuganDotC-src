@@ -56,10 +56,10 @@ CoreObject *GameGimmickCollidableCtor(GameGimmickCollidable *obj, s32 kind, void
   obj->base.base.fogNear = 0.0f;
   obj->base.base.lighting = 1;
   /* vsat0.q, vscl.q by S701 (255), vf2iz.q 23, vi2uc.q */
-  packed = (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.x) * 255.0f, 23)) |
-           (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.y) * 255.0f, 23)) << 8 |
-           (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.z) * 255.0f, 23)) << 16 |
-           (u32)VfI2uc(VfF2iz(VfSat0(g_colorBlack.w) * 255.0f, 23)) << 24;
+  packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.x), 255.0f), 23)) |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.y), 255.0f), 23)) << 8 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.z), 255.0f), 23)) << 16 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorBlack.w), 255.0f), 23)) << 24;
   obj->base.base.fogColor = packed;
 
   specular[0] = 0.6f;
@@ -153,9 +153,9 @@ CoreObject *GameGimmickCollidableCtor(GameGimmickCollidable *obj, s32 kind, void
   center[2] = obj->base.base.pos[2];
   /* offset = 3 * (cos, 0, sin, 0)(pi/2 - rot[1]) (vrot [C,0,S,0], vscl.t by 3), then x and z are
      zeroed: every lane added (vadd.t) is 0, so only the +0.0f adds remain */
-  center[0] = center[0] + 0.0f;
-  center[1] = center[1] + 0.0f;
-  center[2] = center[2] + 0.0f;
+  center[0] = VfAdd(center[0], 0.0f);
+  center[1] = VfAdd(center[1], 0.0f);
+  center[2] = VfAdd(center[2], 0.0f);
   sphere = (CollisionSphere *)((CollisionCollider *)obj->hitCollider)->shapeBlock.desc;
   /* sphere centre and radius² slot = center (sv.q; radiusSq gets the uninitialised lane) */
   sphere->center[0] = center[0];

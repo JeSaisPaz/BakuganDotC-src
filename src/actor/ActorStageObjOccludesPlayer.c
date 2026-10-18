@@ -53,9 +53,9 @@ int ActorStageObjOccludesPlayer(void *unused, ActorStageObjBase *self, void *pla
   target[3] = unit->base.pos[3];
   target[1] = target[1] + unit->combat.stats->height * 0.5f;
   /* delta = target - eye (xyz; w keeps target's w) */
-  delta[0] = target[0] - eye[0];
-  delta[1] = target[1] - eye[1];
-  delta[2] = target[2] - eye[2];
+  delta[0] = VfSub(target[0], eye[0]);
+  delta[1] = VfSub(target[1], eye[1]);
+  delta[2] = VfSub(target[2], eye[2]);
   delta[3] = target[3];
   if (self->blocksCamera == 0) {
     eye[1] = eye[1] + 50.0f;
@@ -86,12 +86,12 @@ int ActorStageObjOccludesPlayer(void *unused, ActorStageObjBase *self, void *pla
     return hidden;
   }
   /* eye.xyz -= delta.xyz; delta = target - eye (w keeps target's w) */
-  eye[0] = eye[0] - delta[0];
-  eye[1] = eye[1] - delta[1];
-  eye[2] = eye[2] - delta[2];
-  delta[0] = target[0] - eye[0];
-  delta[1] = target[1] - eye[1];
-  delta[2] = target[2] - eye[2];
+  eye[0] = VfSub(eye[0], delta[0]);
+  eye[1] = VfSub(eye[1], delta[1]);
+  eye[2] = VfSub(eye[2], delta[2]);
+  delta[0] = VfSub(target[0], eye[0]);
+  delta[1] = VfSub(target[1], eye[1]);
+  delta[2] = VfSub(target[2], eye[2]);
   delta[3] = target[3];
   g_collisionSweptSphereDesc.radius = unit->combat.stats->reachRadius * 0.5f;
   g_collisionSweptSphereDesc.start.x = eye[0];
@@ -105,9 +105,7 @@ int ActorStageObjOccludesPlayer(void *unused, ActorStageObjBase *self, void *pla
   r = g_collisionSweptSphereDesc.radius;
   g_collisionSweptSphereDesc.start.w = r * r;
   /* dir.w = |dir.xyz| */
-  g_collisionSweptSphereDesc.dir.w = __builtin_sqrtf(g_collisionSweptSphereDesc.dir.x * g_collisionSweptSphereDesc.dir.x +
-                                                     g_collisionSweptSphereDesc.dir.y * g_collisionSweptSphereDesc.dir.y +
-                                                     g_collisionSweptSphereDesc.dir.z * g_collisionSweptSphereDesc.dir.z);
+  g_collisionSweptSphereDesc.dir.w = VfSqrt(VfDot3(g_collisionSweptSphereDesc.dir.x, g_collisionSweptSphereDesc.dir.y, g_collisionSweptSphereDesc.dir.z, g_collisionSweptSphereDesc.dir.x, g_collisionSweptSphereDesc.dir.y, g_collisionSweptSphereDesc.dir.z));
   block = CollisionShapeBlockPrepare(&g_collisionSweptSphereDesc.shapeBlock);
   if (CollisionMeshTestShape(&((CollisionCollider *)self->collider)->shapeBlock, block, delta, 0xffffffffu) != 0) {
     hidden = 1;

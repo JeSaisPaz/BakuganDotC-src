@@ -17,14 +17,16 @@ static inline void UiCollectionSphereCellPose(UiCollectionSphere *self, int i)
   float c;
   float s;
   float tilt;
+  float x;
   float y;
   float z;
+  float w;
   int r;
 
   /* rootMatrix = rotY(3.14f): vrot of 3.14f * S703 (2/pi) is cosf/sinf(3.14f). */
   m = self->models[i]->data->rootMatrix;
-  c = __builtin_cosf(3.14f); /* 0x4048f5c3 */
-  s = __builtin_sinf(3.14f);
+  c = VfCosQuarter(3.14f * 0.636619747f); /* 0x4048f5c3 */
+  s = VfSinQuarter(3.14f * 0.636619747f);
   m[0] = c;
   m[1] = 0.0f;
   m[2] = -s;
@@ -45,13 +47,17 @@ static inline void UiCollectionSphereCellPose(UiCollectionSphere *self, int i)
      (x, c*y - s*z, s*y + c*z, w). */
   m = self->models[i]->data->rootMatrix;
   tilt = UiCollectionSphereGetModelTilt(self, (u8)i);
-  c = __builtin_cosf(tilt);
-  s = __builtin_sinf(tilt);
+  c = VfCosQuarter(VfMul(tilt, 0.636619747f));
+  s = VfSinQuarter(VfMul(tilt, 0.636619747f));
   for (r = 0; r < 4; r++) {
+    x = m[r * 4 + 0];
     y = m[r * 4 + 1];
     z = m[r * 4 + 2];
-    m[r * 4 + 1] = c * y - s * z;
-    m[r * 4 + 2] = s * y + c * z;
+    w = m[r * 4 + 3];
+    m[r * 4 + 0] = VfDot4(x, y, z, w, 1.0f, 0.0f, 0.0f, 0.0f);
+    m[r * 4 + 1] = VfDot4(x, y, z, w, 0.0f, c, -s, 0.0f);
+    m[r * 4 + 2] = VfDot4(x, y, z, w, 0.0f, s, c, 0.0f);
+    m[r * 4 + 3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
   }
 }
 
@@ -64,7 +70,7 @@ static inline void UiCollectionSphereCellScale(UiCollectionSphere *self, int i, 
   m = self->models[i]->data->rootMatrix;
   /* vscl.q of rows 0-2 (all four lanes) by the vector (scale, scale, scale, 0). */
   for (r = 0; r < 12; r++) {
-    m[r] = m[r] * scale;
+    m[r] = VfMul(m[r], scale);
   }
 }
 

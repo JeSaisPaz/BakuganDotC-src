@@ -207,9 +207,9 @@ void ActorStageObjBaseInit(ActorStageObjBase *self, u32 *pos)
       /* Inverse of a rigid transform: transposed rotation, translation -(R^T * t). */
       m = &box->transform;
       inv = &box->invTransform;
-      t0 = m->x.x * m->w.x + m->x.y * m->w.y + m->x.z * m->w.z;
-      t1 = m->y.x * m->w.x + m->y.y * m->w.y + m->y.z * m->w.z;
-      t2 = m->z.x * m->w.x + m->z.y * m->w.y + m->z.z * m->w.z;
+      t0 = VfDot3(m->x.x, m->x.y, m->x.z, m->w.x, m->w.y, m->w.z);
+      t1 = VfDot3(m->y.x, m->y.y, m->y.z, m->w.x, m->w.y, m->w.z);
+      t2 = VfDot3(m->z.x, m->z.y, m->z.z, m->w.x, m->w.y, m->w.z);
       tw = m->w.w;
       inv->x.x = m->x.x;
       inv->x.y = m->y.x;

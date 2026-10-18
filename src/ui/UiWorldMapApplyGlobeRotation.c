@@ -10,8 +10,8 @@
 /* m = Rx(angle): rows (1,0,0,0), (0,c,s,0), (0,-s,c,0), (0,0,0,1). */
 static void GlobeSetRotX(float *m, float angle)
 {
-  float c = __builtin_cosf(angle);
-  float s = __builtin_sinf(angle);
+  float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  float s = VfSinQuarter(VfMul(angle, 0.636619747f));
 
   m[0] = 1.0f;
   m[1] = 0.0f;
@@ -35,16 +35,20 @@ static void GlobeSetRotX(float *m, float angle)
    each row r becomes (c*x + s*z, y, -s*x + c*z, w). */
 static void GlobeMulRotY(float *m, float angle)
 {
-  float c = __builtin_cosf(angle);
-  float s = __builtin_sinf(angle);
-  float x, z;
+  float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  float s = VfSinQuarter(VfMul(angle, 0.636619747f));
+  float x, y, z, w;
   int r;
 
   for (r = 0; r < 4; r++) {
     x = m[r * 4 + 0];
+    y = m[r * 4 + 1];
     z = m[r * 4 + 2];
-    m[r * 4 + 0] = x * c + z * s;
-    m[r * 4 + 2] = x * -s + z * c;
+    w = m[r * 4 + 3];
+    m[r * 4 + 0] = VfDot4(c, 0.0f, s, 0.0f, x, y, z, w);
+    m[r * 4 + 1] = VfDot4(0.0f, 1.0f, 0.0f, 0.0f, x, y, z, w);
+    m[r * 4 + 2] = VfDot4(-s, 0.0f, c, 0.0f, x, y, z, w);
+    m[r * 4 + 3] = VfDot4(0.0f, 0.0f, 0.0f, 1.0f, x, y, z, w);
   }
 }
 
@@ -52,16 +56,20 @@ static void GlobeMulRotY(float *m, float angle)
    (c*x - s*y, s*x + c*y, z, w). */
 static void GlobeMulRotZ(float *m, float angle)
 {
-  float c = __builtin_cosf(angle);
-  float s = __builtin_sinf(angle);
-  float x, y;
+  float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  float s = VfSinQuarter(VfMul(angle, 0.636619747f));
+  float x, y, z, w;
   int r;
 
   for (r = 0; r < 4; r++) {
     x = m[r * 4 + 0];
     y = m[r * 4 + 1];
-    m[r * 4 + 0] = x * c + y * -s;
-    m[r * 4 + 1] = x * s + y * c;
+    z = m[r * 4 + 2];
+    w = m[r * 4 + 3];
+    m[r * 4 + 0] = VfDot4(c, -s, 0.0f, 0.0f, x, y, z, w);
+    m[r * 4 + 1] = VfDot4(s, c, 0.0f, 0.0f, x, y, z, w);
+    m[r * 4 + 2] = VfDot4(0.0f, 0.0f, 1.0f, 0.0f, x, y, z, w);
+    m[r * 4 + 3] = VfDot4(0.0f, 0.0f, 0.0f, 1.0f, x, y, z, w);
   }
 }
 

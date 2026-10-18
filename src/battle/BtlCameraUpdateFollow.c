@@ -33,7 +33,7 @@ void BtlCameraUpdateFollow(BtlCamera *camera)
     blend = 1.0f;
   }
   camera->eyeSnap = blend;
-  t = (1.0f - __builtin_cosf(blend * blend * 3.14159274f)) * 0.5f;
+  t = (1.0f - VfCosQuarter(VfMul(blend * blend * 3.14159274f, 0.636619747f))) * 0.5f;
 
   /* focus starts as the bank zero vector C720 */
   focus[0] = 0.0f;
@@ -43,7 +43,7 @@ void BtlCameraUpdateFollow(BtlCamera *camera)
   if (camera->followPos != NULL) {
     for (i = 0; i < 4; i++) {
       camera->followFocus[i] =
-          camera->followFocus[i] + (camera->followPos[i] - camera->followFocus[i]) * 0.08f;
+          VfAdd(camera->followFocus[i], VfMul(VfSub(camera->followPos[i], camera->followFocus[i]), 0.08f));
     }
     for (i = 0; i < 4; i++) {
       focus[i] = camera->followFocus[i];
@@ -59,7 +59,7 @@ void BtlCameraUpdateFollow(BtlCamera *camera)
   yaw = yaw + camera->followOffset3f4;
   wobble = camera->followWobble - 0.00800000038f;
   camera->followWobble = wobble;
-  yaw = yaw + __builtin_sinf(wobble) * 0.400000006f;
+  yaw = yaw + VfSinQuarter(VfMul(wobble, 0.636619747f)) * 0.400000006f;
   if (!(yaw <= 3.14159274f)) {
     yaw = yaw - 6.28318548f;
   } else if (yaw <= -3.14159274f) {
@@ -68,18 +68,18 @@ void BtlCameraUpdateFollow(BtlCamera *camera)
 
   /* vrot [C,0,S,0] scaled (vscl.t) by dist, then xyz + focus; w stays 0 */
   dist = camera->followDistance + camera->followDistanceOffset;
-  eyePos[0] = __builtin_cosf(yaw) * dist + focus[0];
-  eyePos[1] = 0.0f * dist + focus[1];
-  eyePos[2] = __builtin_sinf(yaw) * dist + focus[2];
+  eyePos[0] = VfAdd(VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), dist), focus[0]);
+  eyePos[1] = VfAdd(VfMul(0.0f, dist), focus[1]);
+  eyePos[2] = VfAdd(VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), dist), focus[2]);
   eyePos[3] = 0.0f;
   eyePos[1] = eyePos[1] + camera->followOffsetY;
 
   for (i = 0; i < 4; i++) {
     camera->base.target[i] =
-        camera->savedTarget[i] + (focus[i] - camera->savedTarget[i]) * t;
+        VfAdd(camera->savedTarget[i], VfMul(VfSub(focus[i], camera->savedTarget[i]), t));
   }
   for (i = 0; i < 4; i++) {
-    camera->base.eye[i] = camera->savedEye[i] + (eyePos[i] - camera->savedEye[i]) * t;
+    camera->base.eye[i] = VfAdd(camera->savedEye[i], VfMul(VfSub(eyePos[i], camera->savedEye[i]), t));
   }
 
   fov = camera->savedFov + (camera->followFov - camera->savedFov) * t;

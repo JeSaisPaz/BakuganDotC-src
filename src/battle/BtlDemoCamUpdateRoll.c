@@ -9,35 +9,35 @@
 void BtlDemoCamUpdateRoll(float roll, BtlDemoCam *self)
 {
     float *up = self->base.up;
-    float dx = self->base.target[0] - self->base.eye[0];
-    float dz = self->base.target[2] - self->base.eye[2];
+    float dx = VfSub(self->base.target[0], self->base.eye[0]);
+    float dz = VfSub(self->base.target[2], self->base.eye[2]);
     float turn = atan2f(dz, dx) + 1.57079637f;
-    float rs = __builtin_sinf(roll);
-    float rc = __builtin_cosf(roll);
-    float ca = __builtin_cosf(turn);
-    float sa = __builtin_sinf(turn);
+    float rs = VfSinQuarter(VfMul(roll, 0.636619747f));
+    float rc = VfCosQuarter(VfMul(roll, 0.636619747f));
+    float ca = VfCosQuarter(VfMul(turn, 0.636619747f));
+    float sa = VfSinQuarter(VfMul(turn, 0.636619747f));
     float rolled[4];
     float len;
     int i;
 
     /* rotate (rs, rc, 0) about Y: x = dot(v, (cos, 0, -sin)), z = dot(v, (sin, 0, cos)) */
-    rolled[0] = rs * ca + rc * 0.0f + 0.0f * -sa;
+    rolled[0] = VfDot3(rs, rc, 0.0f, ca, 0.0f, -sa);
     rolled[1] = rc;
-    rolled[2] = rs * sa + rc * 0.0f + 0.0f * ca;
+    rolled[2] = VfDot3(rs, rc, 0.0f, sa, 0.0f, ca);
     rolled[3] = 0.0f;
 
     for (i = 0; i < 4; i++) {
-        up[i] = up[i] + (rolled[i] - up[i]) * 0.300000012f;
+        up[i] = VfAdd(up[i], VfMul(VfSub(rolled[i], up[i]), 0.300000012f));
     }
 
-    len = up[0] * up[0] + up[1] * up[1] + up[2] * up[2];
+    len = VfDot3(up[0], up[1], up[2], up[0], up[1], up[2]);
     if (VfIsZero(len)) {
         len = 0.0f;
     } else {
         len = VfRsq(len);
     }
-    up[0] = VfSat1(up[0] * len);
-    up[1] = VfSat1(up[1] * len);
-    up[2] = VfSat1(up[2] * len);
+    up[0] = VfSat1(VfMul(up[0], len));
+    up[1] = VfSat1(VfMul(up[1], len));
+    up[2] = VfSat1(VfMul(up[2], len));
     up[3] = 0.0f;
 }

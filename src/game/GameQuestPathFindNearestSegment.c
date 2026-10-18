@@ -79,36 +79,36 @@ u8 GameQuestPathFindNearestSegment(void *cam, s32 *out, s32 *path, s16 node, flo
         continue;
       }
       /* dir = to->pos - from->pos in the horizontal plane */
-      dir.x = to->pos.x - from->pos.x;
-      dir.y = to->pos.y - from->pos.y;
-      dir.z = to->pos.z - from->pos.z;
+      dir.x = VfSub(to->pos.x, from->pos.x);
+      dir.y = VfSub(to->pos.y, from->pos.y);
+      dir.z = VfSub(to->pos.z, from->pos.z);
       dir.w = to->pos.w;
       if (g_staticZeroFGuard == 0) {
         g_staticZeroFGuard = 1;
         g_staticZeroF = 0.0f;
       }
       dir.y = 0.0f;
-      len = __builtin_sqrtf(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
+      len = VfSqrt(VfDot3(dir.x, dir.y, dir.z, dir.x, dir.y, dir.z));
       if (len < 0.0f) {
         continue;
       }
       inv = 1.0f / len;
       /* w comes from the bank's S713 (0) */
-      dir.x = dir.x * inv;
-      dir.y = dir.y * inv;
-      dir.z = dir.z * inv;
+      dir.x = VfMul(dir.x, inv);
+      dir.y = VfMul(dir.y, inv);
+      dir.z = VfMul(dir.z, inv);
       dir.w = 0.0f;
       /* rel = target - from->pos in the horizontal plane */
-      rel.x = target->x - from->pos.x;
-      rel.y = target->y - from->pos.y;
-      rel.z = target->z - from->pos.z;
+      rel.x = VfSub(target->x, from->pos.x);
+      rel.y = VfSub(target->y, from->pos.y);
+      rel.z = VfSub(target->z, from->pos.z);
       rel.w = target->w;
       if (g_staticZeroFGuard == 0) {
         g_staticZeroFGuard = 1;
         g_staticZeroF = 0.0f;
       }
       rel.y = 0.0f;
-      along = dir.x * rel.x + dir.y * rel.y + dir.z * rel.z;
+      along = VfDot3(dir.x, dir.y, dir.z, rel.x, rel.y, rel.z);
       if (along <= -minDist) {
         continue;
       }
@@ -116,11 +116,11 @@ u8 GameQuestPathFindNearestSegment(void *cam, s32 *out, s32 *path, s16 node, flo
         continue;
       }
       /* perp = cross(dir, rel) (w from the bank's S713), dist = |perp| */
-      perp.x = dir.y * rel.z - dir.z * rel.y;
-      perp.y = dir.z * rel.x - dir.x * rel.z;
-      perp.z = dir.x * rel.y - dir.y * rel.x;
+      perp.x = VfDot2(dir.y, dir.z, rel.z, -rel.y);
+      perp.y = VfDot2(dir.z, dir.x, rel.x, -rel.z);
+      perp.z = VfDot2(dir.x, dir.y, rel.y, -rel.x);
       perp.w = 0.0f;
-      dist = __builtin_sqrtf(perp.x * perp.x + perp.y * perp.y + perp.z * perp.z);
+      dist = VfSqrt(VfDot3(perp.x, perp.y, perp.z, perp.x, perp.y, perp.z));
       if (best <= dist) {
         continue;
       }

@@ -87,10 +87,7 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
         local = node->localMatrix;
         for (j = 0; j < 4; j++) {
             for (i = 0; i < 4; i++) {
-                self->mtx[j][i] = root[0 * 4 + i] * local[j * 4 + 0]
-                                  + root[1 * 4 + i] * local[j * 4 + 1]
-                                  + root[2 * 4 + i] * local[j * 4 + 2]
-                                  + root[3 * 4 + i] * local[j * 4 + 3];
+                self->mtx[j][i] = VfDot4(root[0 * 4 + i], root[1 * 4 + i], root[2 * 4 + i], root[3 * 4 + i], local[j * 4 + 0], local[j * 4 + 1], local[j * 4 + 2], local[j * 4 + 3]);
             }
         }
         if (ev->launchDist != 0.0f) {
@@ -100,18 +97,17 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
             offset[2] = 0.0f;
             offset[3] = 0.0f;
             for (i = 0; i < 3; i++) {
-                moved[i] = self->mtx[0][i] * offset[0] + self->mtx[1][i] * offset[1]
-                           + self->mtx[2][i] * offset[2];
+                moved[i] = VfDot3(self->mtx[0][i], self->mtx[1][i], self->mtx[2][i], offset[0], offset[1], offset[2]);
             }
-            self->mtx[3][0] = self->mtx[3][0] + moved[0];
-            self->mtx[3][1] = self->mtx[3][1] + moved[1];
-            self->mtx[3][2] = self->mtx[3][2] + moved[2];
+            self->mtx[3][0] = VfAdd(self->mtx[3][0], moved[0]);
+            self->mtx[3][1] = VfAdd(self->mtx[3][1], moved[1]);
+            self->mtx[3][2] = VfAdd(self->mtx[3][2], moved[2]);
         }
         /* dir = (cos(heading), 0, sin(heading), 0) (vrot.q of heading * 2/pi) */
         heading = self->owner->base.rot[1];
-        self->dir[0] = __builtin_cosf(heading);
+        self->dir[0] = VfCosQuarter(VfMul(heading, 0.636619747f));
         self->dir[1] = 0.0f;
-        self->dir[2] = __builtin_sinf(heading);
+        self->dir[2] = VfSinQuarter(VfMul(heading, 0.636619747f));
         self->dir[3] = 0.0f;
     } else {
         for (j = 0; j < 4; j++) {
@@ -126,17 +122,17 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
         self->mtx[3][3] = owner->base.pos[3];
         /* dir = (cos(heading), 0, sin(heading), 0) */
         heading = self->owner->base.rot[1];
-        self->dir[0] = __builtin_cosf(heading);
+        self->dir[0] = VfCosQuarter(VfMul(heading, 0.636619747f));
         self->dir[1] = 0.0f;
-        self->dir[2] = __builtin_sinf(heading);
+        self->dir[2] = VfSinQuarter(VfMul(heading, 0.636619747f));
         self->dir[3] = 0.0f;
         /* step = dir * launchDist; mtx[3].xyz += step */
-        step[0] = self->dir[0] * ev->launchDist;
-        step[1] = self->dir[1] * ev->launchDist;
-        step[2] = self->dir[2] * ev->launchDist;
-        self->mtx[3][0] = self->mtx[3][0] + step[0];
-        self->mtx[3][1] = self->mtx[3][1] + step[1];
-        self->mtx[3][2] = self->mtx[3][2] + step[2];
+        step[0] = VfMul(self->dir[0], ev->launchDist);
+        step[1] = VfMul(self->dir[1], ev->launchDist);
+        step[2] = VfMul(self->dir[2], ev->launchDist);
+        self->mtx[3][0] = VfAdd(self->mtx[3][0], step[0]);
+        self->mtx[3][1] = VfAdd(self->mtx[3][1], step[1]);
+        self->mtx[3][2] = VfAdd(self->mtx[3][2], step[2]);
         self->mtx[3][1] = self->mtx[3][1] + ev->reach;
     }
 
@@ -162,15 +158,14 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
             self->dir[2] = target->base.pos[2];
             self->dir[3] = target->base.pos[3];
             owner = self->owner;
-            self->dir[0] = self->dir[0] - owner->base.pos[0];
-            self->dir[1] = self->dir[1] - owner->base.pos[1];
-            self->dir[2] = self->dir[2] - owner->base.pos[2];
-            lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1]
-                    + self->dir[2] * self->dir[2];
+            self->dir[0] = VfSub(self->dir[0], owner->base.pos[0]);
+            self->dir[1] = VfSub(self->dir[1], owner->base.pos[1]);
+            self->dir[2] = VfSub(self->dir[2], owner->base.pos[2]);
+            lenSq = VfDot3(self->dir[0], self->dir[1], self->dir[2], self->dir[0], self->dir[1], self->dir[2]);
             k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-            self->dir[0] = VfSat1(self->dir[0] * k);
-            self->dir[1] = VfSat1(self->dir[1] * k);
-            self->dir[2] = VfSat1(self->dir[2] * k);
+            self->dir[0] = VfSat1(VfMul(self->dir[0], k));
+            self->dir[1] = VfSat1(VfMul(self->dir[1], k));
+            self->dir[2] = VfSat1(VfMul(self->dir[2], k));
             self->dir[3] = 0.0f;
         } else {
             owner = self->owner;
@@ -184,16 +179,15 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
             aimTarget[3] = target->base.pos[3];
             aimTarget[1] = aimTarget[1] + 80.0f;
             /* dir = normalize(aimTarget - aimFrom) (xyz; w = 0 as above, sv.q C710 at 0x08877488) */
-            self->dir[0] = aimTarget[0] - aimFrom[0];
-            self->dir[1] = aimTarget[1] - aimFrom[1];
-            self->dir[2] = aimTarget[2] - aimFrom[2];
+            self->dir[0] = VfSub(aimTarget[0], aimFrom[0]);
+            self->dir[1] = VfSub(aimTarget[1], aimFrom[1]);
+            self->dir[2] = VfSub(aimTarget[2], aimFrom[2]);
             self->dir[3] = aimTarget[3];
-            lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1]
-                    + self->dir[2] * self->dir[2];
+            lenSq = VfDot3(self->dir[0], self->dir[1], self->dir[2], self->dir[0], self->dir[1], self->dir[2]);
             k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-            self->dir[0] = VfSat1(self->dir[0] * k);
-            self->dir[1] = VfSat1(self->dir[1] * k);
-            self->dir[2] = VfSat1(self->dir[2] * k);
+            self->dir[0] = VfSat1(VfMul(self->dir[0], k));
+            self->dir[1] = VfSat1(VfMul(self->dir[1], k));
+            self->dir[2] = VfSat1(VfMul(self->dir[2], k));
             self->dir[3] = 0.0f;
             pitch = atan2f(self->dir[1],
                            __builtin_sqrtf(self->dir[0] * self->dir[0]
@@ -209,18 +203,18 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
                 axis[1] = 0.0f;
                 axis[2] = self->dir[0];
                 axis[3] = self->dir[3];
-                lenSq = axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2];
+                lenSq = VfDot3(axis[0], axis[1], axis[2], axis[0], axis[1], axis[2]);
                 k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-                axis[0] = VfSat1(axis[0] * k);
-                axis[1] = VfSat1(axis[1] * k);
-                axis[2] = VfSat1(axis[2] * k);
+                axis[0] = VfSat1(VfMul(axis[0], k));
+                axis[1] = VfSat1(VfMul(axis[1], k));
+                axis[2] = VfSat1(VfMul(axis[2], k));
                 /* quat = (axis * sin, cos) of delta * 1/pi quarter turns (half the angle) */
-                turns = 0.318309873f * delta;
+                turns = VfMul(0.318309873f, delta);
                 c = VfCosQuarter(turns);
                 s = VfSinQuarter(turns);
-                quat[0] = axis[0] * s;
-                quat[1] = axis[1] * s;
-                quat[2] = axis[2] * s;
+                quat[0] = VfMul(axis[0], s);
+                quat[1] = VfMul(axis[1], s);
+                quat[2] = VfMul(axis[2], s);
                 quat[3] = c;
                 conj[0] = -quat[0];
                 conj[1] = -quat[1];
@@ -231,18 +225,14 @@ void BtlAttackLaunch(BtlAttack *self, float *pos, float *dir, s16 *event, void *
                 res[1] = self->dir[1];
                 res[2] = self->dir[2];
                 res[3] = 0.0f;
-                tmp[0] = quat[0] * res[3] + quat[1] * res[2] - quat[2] * res[1] + quat[3] * res[0];
-                tmp[1] = -quat[0] * res[2] + quat[1] * res[3] + quat[2] * res[0] + quat[3] * res[1];
-                tmp[2] = quat[0] * res[1] - quat[1] * res[0] + quat[2] * res[3] + quat[3] * res[2];
-                tmp[3] = -quat[0] * res[0] - quat[1] * res[1] - quat[2] * res[2] + quat[3] * res[3];
-                self->dir[0] = tmp[0] * conj[3] + tmp[1] * conj[2] - tmp[2] * conj[1]
-                               + tmp[3] * conj[0];
-                self->dir[1] = -tmp[0] * conj[2] + tmp[1] * conj[3] + tmp[2] * conj[0]
-                               + tmp[3] * conj[1];
-                self->dir[2] = tmp[0] * conj[1] - tmp[1] * conj[0] + tmp[2] * conj[3]
-                               + tmp[3] * conj[2];
-                self->dir[3] = -tmp[0] * conj[0] - tmp[1] * conj[1] - tmp[2] * conj[2]
-                               + tmp[3] * conj[3];
+                tmp[0] = VfDot4(quat[0], quat[1], quat[2], quat[3], res[3], res[2], -res[1], res[0]);
+                tmp[1] = VfDot4(-quat[0], quat[1], quat[2], quat[3], res[2], res[3], res[0], res[1]);
+                tmp[2] = VfDot4(quat[0], quat[1], quat[2], quat[3], res[1], -res[0], res[3], res[2]);
+                tmp[3] = VfDot4(-quat[0], quat[1], quat[2], quat[3], res[0], -res[1], -res[2], res[3]);
+                self->dir[0] = VfDot4(tmp[0], tmp[1], tmp[2], tmp[3], conj[3], conj[2], -conj[1], conj[0]);
+                self->dir[1] = VfDot4(-tmp[0], tmp[1], tmp[2], tmp[3], conj[2], conj[3], conj[0], conj[1]);
+                self->dir[2] = VfDot4(tmp[0], tmp[1], tmp[2], tmp[3], conj[1], -conj[0], conj[3], conj[2]);
+                self->dir[3] = VfDot4(-tmp[0], tmp[1], tmp[2], tmp[3], conj[0], -conj[1], -conj[2], conj[3]);
             }
         }
     }

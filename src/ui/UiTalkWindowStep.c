@@ -78,7 +78,7 @@ void UiTalkWindowStep(void *win)
     if (!(ramp < 1.0f)) {
       hud->talkRamp = 1.0f;
     }
-    s = __builtin_sinf(fade);
+    s = VfSinQuarter(VfMul(fade, 0.636619747f));
     for (i = 0x7e; i < 0x81; i++) {
       hud->sprites[i]->alpha = s;
     }
@@ -211,7 +211,7 @@ void UiTalkWindowStep(void *win)
       fade = 1.5707964f;
     }
     hud->talkFade = fade;
-    s = __builtin_sinf(fade);
+    s = VfSinQuarter(VfMul(fade, 0.636619747f));
     hud->talkRamp = ramp;
     if (!(ramp < 1.0f)) {
       hud->talkRamp = 1.0f;

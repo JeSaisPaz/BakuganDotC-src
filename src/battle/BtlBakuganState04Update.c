@@ -67,18 +67,15 @@ void BtlBakuganState04Update(BtlBakugan *self)
         self->stateFlags |= self->motionIdPair[0];
         self->subWait = self->subWait + 1;
         if (BtlBakuganApplyHover(self) == 0) {
-            speedSq = self->base.velocity[0] * self->base.velocity[0] +
-                      self->base.velocity[1] * self->base.velocity[1] +
-                      self->base.velocity[2] * self->base.velocity[2];
+            speedSq = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
             if (!(speedSq <= 64.0f)) {
                 BtlBakuganSpawnFootstepEffect(40.0f, 2.0f, self, (self->stateCounter & 1) != 0 ? 2 : 3);
             }
         }
         keep = BtlScaleRetentionByTimeStep(0.9f);
-        self->base.velocity[0] = self->base.velocity[0] * keep;
-        self->base.velocity[2] = self->base.velocity[2] * keep;
-        speedSq = self->base.velocity[0] * self->base.velocity[0] +
-                  self->base.velocity[2] * self->base.velocity[2];
+        self->base.velocity[0] = VfMul(self->base.velocity[0], keep);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], keep);
+        speedSq = VfDot2(self->base.velocity[0], self->base.velocity[2], self->base.velocity[0], self->base.velocity[2]);
         if (speedSq < 225.0f) {
             BtlBakuganLand(self, 0, 1);
         }
@@ -130,10 +127,10 @@ void BtlBakuganState04Update(BtlBakugan *self)
             if (dist + self->base.pos[1] < self->groundPoint[1]) {
                 /* orient += (g_vecUp - orient) * (1 / (i + 1)) */
                 keep = 1.0f / (float)(i + 1);
-                self->orient[0] = self->orient[0] + (g_vecUp.x - self->orient[0]) * keep;
-                self->orient[1] = self->orient[1] + (g_vecUp.y - self->orient[1]) * keep;
-                self->orient[2] = self->orient[2] + (g_vecUp.z - self->orient[2]) * keep;
-                self->orient[3] = self->orient[3] + (g_vecUp.w - self->orient[3]) * keep;
+                self->orient[0] = VfAdd(self->orient[0], VfMul(VfSub(g_vecUp.x, self->orient[0]), keep));
+                self->orient[1] = VfAdd(self->orient[1], VfMul(VfSub(g_vecUp.y, self->orient[1]), keep));
+                self->orient[2] = VfAdd(self->orient[2], VfMul(VfSub(g_vecUp.z, self->orient[2]), keep));
+                self->orient[3] = VfAdd(self->orient[3], VfMul(VfSub(g_vecUp.w, self->orient[3]), keep));
                 break;
             }
         }
@@ -198,8 +195,8 @@ void BtlBakuganState04Update(BtlBakugan *self)
             self->subTimer = self->subTimer + 1;
         }
         keep = BtlScaleRetentionByTimeStep(0.95f);
-        self->base.velocity[0] = self->base.velocity[0] * keep;
-        self->base.velocity[2] = self->base.velocity[2] * keep;
+        self->base.velocity[0] = VfMul(self->base.velocity[0], keep);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], keep);
         break;
 
     case 2:
@@ -230,9 +227,9 @@ void BtlBakuganState04Update(BtlBakugan *self)
                 }
                 self->subTimer = 5;
                 /* velocity = {cos, 0, sin, 0}(dashHeading) with x/y/z scaled by 32 */
-                self->base.velocity[0] = __builtin_cosf(self->dashHeading) * 32.0f;
+                self->base.velocity[0] = VfMul(VfCosQuarter(VfMul(self->dashHeading, 0.636619747f)), 32.0f);
                 self->base.velocity[1] = 0.0f;
-                self->base.velocity[2] = __builtin_sinf(self->dashHeading) * 32.0f;
+                self->base.velocity[2] = VfMul(VfSinQuarter(VfMul(self->dashHeading, 0.636619747f)), 32.0f);
                 self->base.velocity[3] = 0.0f;
                 self->base.velocity[1] = 17.0f;
                 self->subWait = 0;
@@ -240,8 +237,8 @@ void BtlBakuganState04Update(BtlBakugan *self)
             BtlBakuganPlayMotion(0.0f, self, motion, 0, 0);
         }
         keep = BtlScaleRetentionByTimeStep(0.85f);
-        self->base.velocity[0] = self->base.velocity[0] * keep;
-        self->base.velocity[2] = self->base.velocity[2] * keep;
+        self->base.velocity[0] = VfMul(self->base.velocity[0], keep);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], keep);
         break;
 
     case 3:
@@ -254,8 +251,8 @@ void BtlBakuganState04Update(BtlBakugan *self)
             BtlBakuganSetState(self, 0, 0);
         }
         keep = BtlScaleRetentionByTimeStep(0.85f);
-        self->base.velocity[0] = self->base.velocity[0] * keep;
-        self->base.velocity[2] = self->base.velocity[2] * keep;
+        self->base.velocity[0] = VfMul(self->base.velocity[0], keep);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], keep);
         break;
 
     case 4:
@@ -273,8 +270,8 @@ void BtlBakuganState04Update(BtlBakugan *self)
         }
         BtlBakuganSetState(self, 0, 0);
         keep = BtlScaleRetentionByTimeStep(0.85f);
-        self->base.velocity[0] = self->base.velocity[0] * keep;
-        self->base.velocity[2] = self->base.velocity[2] * keep;
+        self->base.velocity[0] = VfMul(self->base.velocity[0], keep);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], keep);
         break;
 
     case 5:
@@ -305,8 +302,8 @@ void BtlBakuganState04Update(BtlBakugan *self)
             BtlBakuganSetState(self, 0, 0);
         }
         keep = BtlScaleRetentionByTimeStep(0.85f);
-        self->base.velocity[0] = self->base.velocity[0] * keep;
-        self->base.velocity[2] = self->base.velocity[2] * keep;
+        self->base.velocity[0] = VfMul(self->base.velocity[0], keep);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], keep);
         break;
 
     default:
@@ -322,8 +319,7 @@ void BtlBakuganState04Update(BtlBakugan *self)
     if ((self->stateCounter & 3) != 0 || self->subTimer != 1) {
         return;
     }
-    speedSq = self->base.velocity[0] * self->base.velocity[0] +
-              self->base.velocity[2] * self->base.velocity[2];
+    speedSq = VfDot2(self->base.velocity[0], self->base.velocity[2], self->base.velocity[0], self->base.velocity[2]);
     if (speedSq <= 1.0f) {
         return;
     }
@@ -341,24 +337,24 @@ void BtlBakuganState04Update(BtlBakugan *self)
     off[2] = PlatformRandFloat12();
     off[1] = PlatformRandFloat12();
     off[0] = PlatformRandFloat12();
-    off[0] = buf[0] * (off[0] - 1.0f);
-    off[1] = buf[1] * (off[1] - 1.0f);
-    off[2] = buf[2] * (off[2] - 1.0f);
+    off[0] = VfMul(buf[0], VfSub(off[0], 1.0f));
+    off[1] = VfMul(buf[1], VfSub(off[1], 1.0f));
+    off[2] = VfMul(buf[2], VfSub(off[2], 1.0f));
     off[3] = 0.0f;
     buf[0] = 40.0f;
     buf[1] = 0.0f;
     buf[2] = 40.0f;
     buf[3] = 0.0f;
-    off[0] = off[0] - buf[0];
-    off[1] = off[1] - buf[1];
-    off[2] = off[2] - buf[2];
+    off[0] = VfSub(off[0], buf[0]);
+    off[1] = VfSub(off[1], buf[1]);
+    off[2] = VfSub(off[2], buf[2]);
     effectId = 3;
     if (g_btlArenaIndex >= 12 && g_btlArenaIndex < 16) {
         effectId = 8;
     }
-    buf[0] = self->groundPoint[0] + off[0];
-    buf[1] = self->groundPoint[1] + off[1];
-    buf[2] = self->groundPoint[2] + off[2];
+    buf[0] = VfAdd(self->groundPoint[0], off[0]);
+    buf[1] = VfAdd(self->groundPoint[1], off[1]);
+    buf[2] = VfAdd(self->groundPoint[2], off[2]);
     buf[3] = self->groundPoint[3];
     GfxEffectSpawn(g_worldEffectMgr, effectId, buf);
 }

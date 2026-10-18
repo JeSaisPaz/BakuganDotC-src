@@ -40,7 +40,7 @@ void BtlHudUpdateTimer(BtlHud *self)
     if (self->timerScroll[0]->posY <= 200.0f) {
         return;
     }
-    rnd = PlatformRandFloat12() - 1.0f;
+    rnd = VfSub(PlatformRandFloat12(), 1.0f);
     self->timerScroll[0]->posY = rnd * 128.0f + -128.0f;
     self->timerScroll[1]->posY = self->timerScroll[0]->posY - 8.0f;
 }

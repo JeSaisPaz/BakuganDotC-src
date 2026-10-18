@@ -9,5 +9,5 @@ float SndListenerGetPan(SndListener *listener, const float *p)
 {
   float angle = atan2f(listener->target[2] - p[2], listener->target[0] - p[0]);
 
-  return -__builtin_sinf(angle + listener->heading);
+  return -VfSinQuarter(VfMul((angle + listener->heading), 0.636619747f));
 }

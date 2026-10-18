@@ -19,7 +19,7 @@
 static inline float RoundHalfEven(float x)
 {
   s32 i = (s32)x;
-  float frac = x - (float)i;
+  float frac = VfSub(x, (float)i);
 
   if (frac > 0.5f || (frac == 0.5f && (i & 1) != 0)) {
     i++;
@@ -68,13 +68,12 @@ s32 UiTalkBalloonFrameUpdate(GfxSprite *sprite)
   if (sprite->angle == 0.0f) {
     owner = self->owner;
     /* scale = targetPos - homePos (xyz), w = targetPos w; then z cleared */
-    sprite->scaleX = owner->targetPos[0] - owner->homePos[0];
-    sprite->scaleY = owner->targetPos[1] - owner->homePos[1];
-    sprite->scaleZ = owner->targetPos[2] - owner->homePos[2];
+    sprite->scaleX = VfSub(owner->targetPos[0], owner->homePos[0]);
+    sprite->scaleY = VfSub(owner->targetPos[1], owner->homePos[1]);
+    sprite->scaleZ = VfSub(owner->targetPos[2], owner->homePos[2]);
     sprite->angle = owner->targetPos[3];
     sprite->scaleZ = 0.0f;
-    len = __builtin_sqrtf(sprite->scaleX * sprite->scaleX + sprite->scaleY * sprite->scaleY +
-                          sprite->scaleZ * sprite->scaleZ);
+    len = VfSqrt(VfDot3(sprite->scaleX, sprite->scaleY, sprite->scaleZ, sprite->scaleX, sprite->scaleY, sprite->scaleZ));
     if (len <= 120.0f) {
       owner = self->owner;
       sprite->scaleX = owner->targetPos[0];
@@ -84,21 +83,20 @@ s32 UiTalkBalloonFrameUpdate(GfxSprite *sprite)
       sprite->angle = 1.0f;
     } else {
       /* scale = homePos + normalize(scale) * 120 (xyz); w = homePos w, then 1 */
-      t = sprite->scaleX * sprite->scaleX + sprite->scaleY * sprite->scaleY +
-          sprite->scaleZ * sprite->scaleZ;
+      t = VfDot3(sprite->scaleX, sprite->scaleY, sprite->scaleZ, sprite->scaleX, sprite->scaleY, sprite->scaleZ);
       k = VfRsq(t);
       if (VfIsZero(t)) {
         k = 0.0f; /* bank S713; unreachable here: the offset is longer than 120 */
       }
-      k = k * 120.0f;
-      sprite->scaleX = sprite->scaleX * k;
-      sprite->scaleY = sprite->scaleY * k;
-      sprite->scaleZ = sprite->scaleZ * k;
+      k = VfMul(k, 120.0f);
+      sprite->scaleX = VfMul(sprite->scaleX, k);
+      sprite->scaleY = VfMul(sprite->scaleY, k);
+      sprite->scaleZ = VfMul(sprite->scaleZ, k);
       sprite->angle = 0.0f; /* lane w of C710: bank S713 */
       owner = self->owner;
-      sprite->scaleX = owner->homePos[0] + sprite->scaleX;
-      sprite->scaleY = owner->homePos[1] + sprite->scaleY;
-      sprite->scaleZ = owner->homePos[2] + sprite->scaleZ;
+      sprite->scaleX = VfAdd(owner->homePos[0], sprite->scaleX);
+      sprite->scaleY = VfAdd(owner->homePos[1], sprite->scaleY);
+      sprite->scaleZ = VfAdd(owner->homePos[2], sprite->scaleZ);
       sprite->angle = owner->homePos[3];
       sprite->angle = 1.0f;
     }
@@ -121,14 +119,14 @@ s32 UiTalkBalloonFrameUpdate(GfxSprite *sprite)
   origin = &owner->printer->layer.view.w;
   /* printer origin = scale + (homePos - scale) * maybe_sizeW, all four lanes */
   t = sprite->maybe_sizeW;
-  dx = (owner->homePos[0] - sprite->scaleX) * t;
-  dy = (owner->homePos[1] - sprite->scaleY) * t;
-  dz = (owner->homePos[2] - sprite->scaleZ) * t;
-  dw = (owner->homePos[3] - sprite->angle) * t;
-  origin->x = sprite->scaleX + dx;
-  origin->y = sprite->scaleY + dy;
-  origin->z = sprite->scaleZ + dz;
-  origin->w = sprite->angle + dw;
+  dx = VfMul(VfSub(owner->homePos[0], sprite->scaleX), t);
+  dy = VfMul(VfSub(owner->homePos[1], sprite->scaleY), t);
+  dz = VfMul(VfSub(owner->homePos[2], sprite->scaleZ), t);
+  dw = VfMul(VfSub(owner->homePos[3], sprite->angle), t);
+  origin->x = VfAdd(sprite->scaleX, dx);
+  origin->y = VfAdd(sprite->scaleY, dy);
+  origin->z = VfAdd(sprite->scaleZ, dz);
+  origin->w = VfAdd(sprite->angle, dw);
   if (!(sprite->alpha <= 1.0f)) {
     sprite->alpha = 1.0f;
   }

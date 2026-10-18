@@ -16,11 +16,11 @@ s32 GameFieldJiggleScaleStep(float *matrix, float *scale, float *amplitude, s32 
     *amplitude = *amplitude * 0.5f;
     angle = (float)*frame * 0.73f;
     /* vcos of angle·(2/π) quarter turns (bank S703) is cos(angle) */
-    factor = 1.0f - __builtin_cosf(angle) * *amplitude;
+    factor = 1.0f - VfCosQuarter(VfMul(angle, 0.636619747f)) * *amplitude;
     *outFactor = factor;
-    matrix[0] = scale[0] * factor;
-    matrix[5] = scale[1] * factor;
-    matrix[10] = scale[2] * factor;
+    matrix[0] = VfMul(scale[0], factor);
+    matrix[5] = VfMul(scale[1], factor);
+    matrix[10] = VfMul(scale[2], factor);
     return 0;
   }
   matrix[0] = scale[0];

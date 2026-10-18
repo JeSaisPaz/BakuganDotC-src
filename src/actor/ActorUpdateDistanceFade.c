@@ -38,10 +38,10 @@ int ActorUpdateDistanceFade(GfxModel *self, float *pos, float *alpha, float near
   }
   /* |eye - pos| */
   eye = g_gfxActiveCamera->eye;
-  dx = eye[0] - pos[0];
-  dy = eye[1] - pos[1];
-  dz = eye[2] - pos[2];
-  dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+  dx = VfSub(eye[0], pos[0]);
+  dy = VfSub(eye[1], pos[1]);
+  dz = VfSub(eye[2], pos[2]);
+  dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
 
   if (dist < nearDist) {
     cap = 1.0f - (nearDist - dist) / nearDist;
@@ -58,10 +58,10 @@ int ActorUpdateDistanceFade(GfxModel *self, float *pos, float *alpha, float near
   player = (GfxModel *)ActorFindPlayer();
   if (player != NULL) {
     /* |player pos - pos| */
-    dx = player->pos[0] - pos[0];
-    dy = player->pos[1] - pos[1];
-    dz = player->pos[2] - pos[2];
-    playerDist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+    dx = VfSub(player->pos[0], pos[0]);
+    dy = VfSub(player->pos[1], pos[1]);
+    dz = VfSub(player->pos[2], pos[2]);
+    playerDist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
     if (!(dist <= playerDist)) {
       dist = playerDist;
     }

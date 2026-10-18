@@ -113,8 +113,7 @@ void ActorStageObjDebrisLaunchStrong(float floorY, float centerY, ActorStageObjD
         root = self->base.data->rootMatrix;
         for (j = 0; j < 4; j++) {
             for (r = 0; r < 4; r++) {
-                prod[j * 4 + r] = node[j * 4 + 0] * root[0 + r] + node[j * 4 + 1] * root[4 + r] +
-                                  node[j * 4 + 2] * root[8 + r] + node[j * 4 + 3] * root[12 + r];
+                prod[j * 4 + r] = VfDot4(node[j * 4 + 0], node[j * 4 + 1], node[j * 4 + 2], node[j * 4 + 3], root[0 + r], root[4 + r], root[8 + r], root[12 + r]);
             }
         }
         for (j = 0; j < 16; j++) {
@@ -126,25 +125,25 @@ void ActorStageObjDebrisLaunchStrong(float floorY, float centerY, ActorStageObjD
         CollisionPhysBoxApplyImpulse(0.5f, &self->fragments[i], &g_vecUp.x, NULL);
 
         /* dir = node position - centre (xyz, w = node w); dist = |dir| */
-        dir.x = node[12] - centre.x;
-        dir.y = node[13] - centre.y;
-        dir.z = node[14] - centre.z;
+        dir.x = VfSub(node[12], centre.x);
+        dir.y = VfSub(node[13], centre.y);
+        dir.z = VfSub(node[14], centre.z);
         dir.w = node[15];
-        dist = __builtin_sqrtf(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
+        dist = VfSqrt(VfDot3(dir.x, dir.y, dir.z, dir.x, dir.y, dir.z));
         if (!(dist <= 300.0f)) {
             dist = 300.0f;
         }
         /* dir = normalise(dir) * dist; factor 0 (bank S713) when |dir| is zero; w = S713 = 0 */
-        lenSq = dir.x * dir.x + dir.y * dir.y + dir.z * dir.z;
+        lenSq = VfDot3(dir.x, dir.y, dir.z, dir.x, dir.y, dir.z);
         if (VfIsZero(lenSq)) {
             k = 0.0f;
         } else {
             k = VfRsq(lenSq);
         }
-        k = k * dist;
-        dir.x = dir.x * k;
-        dir.y = dir.y * k;
-        dir.z = dir.z * k;
+        k = VfMul(k, dist);
+        dir.x = VfMul(dir.x, k);
+        dir.y = VfMul(dir.y, k);
+        dir.z = VfMul(dir.z, k);
         dir.w = 0.0f;
         if (g_debrisRandCentreInit == 0) {
             g_debrisRandCentreInit = 1;
@@ -158,23 +157,23 @@ void ActorStageObjDebrisLaunchStrong(float floorY, float centerY, ActorStageObjD
         rnd.z = PlatformRandFloat12();
         rnd.y = PlatformRandFloat12();
         rnd.x = PlatformRandFloat12();
-        rnd.x = rnd.x - g_debrisRandCentre.x;
-        rnd.y = rnd.y - g_debrisRandCentre.y;
-        rnd.z = rnd.z - g_debrisRandCentre.z;
+        rnd.x = VfSub(rnd.x, g_debrisRandCentre.x);
+        rnd.y = VfSub(rnd.y, g_debrisRandCentre.y);
+        rnd.z = VfSub(rnd.z, g_debrisRandCentre.z);
         rnd.w = 0.0f;
-        rnd.x = rnd.x * g_debrisStrongSpread.x;
-        rnd.y = rnd.y * g_debrisStrongSpread.y;
-        rnd.z = rnd.z * g_debrisStrongSpread.z;
-        tmp.x = dir.x + rnd.x;
-        tmp.y = dir.y + rnd.y;
-        tmp.z = dir.z + rnd.z;
+        rnd.x = VfMul(rnd.x, g_debrisStrongSpread.x);
+        rnd.y = VfMul(rnd.y, g_debrisStrongSpread.y);
+        rnd.z = VfMul(rnd.z, g_debrisStrongSpread.z);
+        tmp.x = VfAdd(dir.x, rnd.x);
+        tmp.y = VfAdd(dir.y, rnd.y);
+        tmp.z = VfAdd(dir.z, rnd.z);
         tmp.w = dir.w;
         CollisionPhysBoxAddVelocity(&self->fragments[i], &tmp.x);
         CollisionPhysBoxAddVelocity(&self->fragments[i], &self->launchVel.x);
         /* tmp = dir * 30 (xyz), w = S713 = 0 */
-        tmp.x = dir.x * 30.0f;
-        tmp.y = dir.y * 30.0f;
-        tmp.z = dir.z * 30.0f;
+        tmp.x = VfMul(dir.x, 30.0f);
+        tmp.y = VfMul(dir.y, 30.0f);
+        tmp.z = VfMul(dir.z, 30.0f);
         tmp.w = 0.0f;
         CollisionPhysBoxNudgeRandomCorner(&self->fragments[i], &tmp.x);
         self->fragLast[i] = 0;

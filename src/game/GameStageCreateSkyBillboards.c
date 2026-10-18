@@ -26,12 +26,12 @@ void GameStageCreateSkyBillboards(s32 stage)
     GameStageCreateBillboard(2000.0f, "ffx_moon", &p[0], 1);
     GameStageCreateBillboard(1000.0f, "ffx_moon", &p[4], 1);
   } else {
-    p[0] = p[0] * 0.7f;
-    p[1] = p[1] * 0.7f;
-    p[2] = p[2] * 0.7f;
-    p[4] = p[4] * 0.7f;
-    p[5] = p[5] * 0.7f;
-    p[6] = p[6] * 0.7f;
+    p[0] = VfMul(p[0], 0.7f);
+    p[1] = VfMul(p[1], 0.7f);
+    p[2] = VfMul(p[2], 0.7f);
+    p[4] = VfMul(p[4], 0.7f);
+    p[5] = VfMul(p[5], 0.7f);
+    p[6] = VfMul(p[6], 0.7f);
     p[1] = p[1] * 0.6f;
     p[5] = p[5] * 0.6f;
     GameStageCreateBillboard(2000.0f, "ffx_sun", &p[0], 2);

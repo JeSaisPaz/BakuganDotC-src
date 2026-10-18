@@ -50,7 +50,7 @@ void StopWallBuildShape(StopWall *self, s32 id)
   }
   /* centre = A + (B - A) * 0.5 through an aligned stack temporary */
   for (i = 0; i < 4; i++) {
-    mid[i] = self->cornerA[i] + (self->cornerB[i] - self->cornerA[i]) * 0.5f;
+    mid[i] = VfAdd(self->cornerA[i], VfMul(VfSub(self->cornerB[i], self->cornerA[i]), 0.5f));
   }
   for (i = 0; i < 4; i++) {
     self->centre[i] = mid[i];
@@ -102,9 +102,9 @@ void StopWallBuildShape(StopWall *self, s32 id)
     inv->z.y = m->y.z;
     inv->z.z = m->z.z;
     inv->z.w = 0.0f;
-    inv->w.x = -(m->x.x * m->w.x + m->x.y * m->w.y + m->x.z * m->w.z);
-    inv->w.y = -(m->y.x * m->w.x + m->y.y * m->w.y + m->y.z * m->w.z);
-    inv->w.z = -(m->z.x * m->w.x + m->z.y * m->w.y + m->z.z * m->w.z);
+    inv->w.x = -VfDot3(m->x.x, m->x.y, m->x.z, m->w.x, m->w.y, m->w.z);
+    inv->w.y = -VfDot3(m->y.x, m->y.y, m->y.z, m->w.x, m->w.y, m->w.z);
+    inv->w.z = -VfDot3(m->z.x, m->z.y, m->z.z, m->w.x, m->w.y, m->w.z);
     inv->w.w = m->w.w;
     box->invValid = 1;
   }

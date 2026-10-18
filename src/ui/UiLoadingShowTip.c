@@ -65,7 +65,7 @@ void UiLoadingShowTip(UiLoading *self)
     }
     self->tipScrollTimer = angle;
   }
-  t = __builtin_sinf(angle);
+  t = VfSinQuarter(VfMul(angle, 0.636619747f));
   self->tipScroll = t;
   sprite->alpha = t;
 }

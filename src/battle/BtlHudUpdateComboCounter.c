@@ -28,7 +28,7 @@
    ((r - 1) * 2pi - pi), then vsin of that times 2/pi quarter turns. */
 static inline float ComboJitter(void)
 {
-    return __builtin_sinf((PlatformRandFloat12() - 1.0f) * 6.28318548f - 3.14159274f);
+    return VfSinQuarter(VfMul(VfSub(VfMul(VfSub(PlatformRandFloat12(), 1.0f), 6.28318548f), 3.14159274f), 0.636619747f));
 }
 
 void BtlHudUpdateComboCounter(BtlHud *self)
@@ -90,7 +90,7 @@ void BtlHudUpdateComboCounter(BtlHud *self)
         if (!(self->comboAngle <= TWO_PI)) {
             self->comboAngle = self->comboAngle - TWO_PI;
         }
-        scale = __builtin_sinf(self->comboAngle) * PULSE_AMP + 1.0f;
+        scale = VfSinQuarter(VfMul(self->comboAngle, 0.636619747f)) * PULSE_AMP + 1.0f;
         self->comboPulseFrames++;
         if (self->comboPulseFrames >= 3) {
             pulseDone = 1;
@@ -152,7 +152,7 @@ void BtlHudUpdateComboCounter(BtlHud *self)
             angle = HALF_PI;
         }
         self->comboFade = angle;
-        alpha = __builtin_sinf(angle);
+        alpha = VfSinQuarter(VfMul(angle, 0.636619747f));
         angle = self->comboAngle + FADE_STEP;
         self->comboAngle = angle;
         if (angle < 0.0f) {
@@ -161,7 +161,7 @@ void BtlHudUpdateComboCounter(BtlHud *self)
             angle = HALF_PI;
         }
         self->comboAngle = angle;
-        scale = __builtin_sinf(angle) * ZOOM_AMP + 1.0f;
+        scale = VfSinQuarter(VfMul(angle, 0.636619747f)) * ZOOM_AMP + 1.0f;
         for (i = 0; i < 3; i++) {
             sprite = self->sprites[i];
             sprite->alpha = alpha;

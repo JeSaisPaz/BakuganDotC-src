@@ -27,10 +27,10 @@ u32 * GfxPlayerBlurWriteFeedbackPass(void *task, u32 *dl, void *tex)
     color[2] = 1.0f;
     color[3] = 0.94f;
     /* vsat0.q, vscl.q by S701 (255), vf2iz.q 23, vi2uc.q */
-    packed = (u32)VfI2uc(VfF2iz(VfSat0(color[0]) * 255.0f, 23)) |
-             (u32)VfI2uc(VfF2iz(VfSat0(color[1]) * 255.0f, 23)) << 8 |
-             (u32)VfI2uc(VfF2iz(VfSat0(color[2]) * 255.0f, 23)) << 16 |
-             (u32)VfI2uc(VfF2iz(VfSat0(color[3]) * 255.0f, 23)) << 24;
+    packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(color[0]), 255.0f), 23)) |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(color[1]), 255.0f), 23)) << 8 |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(color[2]), 255.0f), 23)) << 16 |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(color[3]), 255.0f), 23)) << 24;
     dl[0] = (packed & 0xffffff) | 0x55000000; /* material colour */
     dl[1] = (packed >> 24) | 0x58000000;      /* material alpha */
     dl += 2;

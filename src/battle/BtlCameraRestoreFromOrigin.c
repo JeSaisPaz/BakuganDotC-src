@@ -16,9 +16,9 @@ void BtlCameraRestoreFromOrigin(float *saved)
     eye[3] = saved[3];
 
     target = g_gfxActiveCamera->target;
-    target[0] = target[0] + saved[0];
-    target[1] = target[1] + saved[1];
-    target[2] = target[2] + saved[2];
+    target[0] = VfAdd(target[0], saved[0]);
+    target[1] = VfAdd(target[1], saved[1]);
+    target[2] = VfAdd(target[2], saved[2]);
 
     GfxCameraUpdate(g_gfxActiveCamera, 1);
 }

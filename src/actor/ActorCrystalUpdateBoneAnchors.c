@@ -24,10 +24,7 @@ void ActorCrystalUpdateBoneAnchors(ActorCrystal *self)
        node[j][k] * root row k (column-major root * node) */
     for (j = 0; j < 4; j++) {
         for (r = 0; r < 4; r++) {
-            self->base.anchorMatrix[j][r] = node[j * 4 + 0] * root[0 * 4 + r] +
-                                            node[j * 4 + 1] * root[1 * 4 + r] +
-                                            node[j * 4 + 2] * root[2 * 4 + r] +
-                                            node[j * 4 + 3] * root[3 * 4 + r];
+            self->base.anchorMatrix[j][r] = VfDot4(node[j * 4 + 0], node[j * 4 + 1], node[j * 4 + 2], node[j * 4 + 3], root[0 * 4 + r], root[1 * 4 + r], root[2 * 4 + r], root[3 * 4 + r]);
         }
     }
     if (self->base.collider0 != NULL) {
@@ -49,8 +46,8 @@ void ActorCrystalUpdateBoneAnchors(ActorCrystal *self)
         angle = angle + 6.28318548f;
     }
     /* angle * S703 (2/pi) fed to vrot: quarter turns, so plain cos/sin of the angle */
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
     self->facingMatrix[0][0] = c;
     self->facingMatrix[0][1] = 0.0f;
     self->facingMatrix[0][2] = -s;

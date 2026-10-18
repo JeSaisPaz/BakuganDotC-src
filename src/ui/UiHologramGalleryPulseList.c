@@ -16,7 +16,7 @@ void UiHologramGalleryPulseList(UiHologramGallery *self)
   for (i = 0; i < (int)self->slotCount; i++) {
     if (pulse[i].on != 0) {
       pulse[i].t = pulse[i].t + 0.025f;
-      c = __builtin_cosf(pulse[i].t * 3.1415927f);
+      c = VfCosQuarter(VfMul(pulse[i].t * 3.1415927f, 0.636619747f));
       level = (1.0f - c) * 0.5f * 0.6f;
       pulse[i].level = level;
       sprite = ((UiHologramGalleryData *)self->base.data)->sprites[170 + i];

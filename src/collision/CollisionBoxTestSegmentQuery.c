@@ -26,9 +26,9 @@ bool CollisionBoxTestSegmentQuery(CollisionBox *self, void *query)
   if (self->invValid == 0) {
     t = &self->transform;
     inv = &self->invTransform;
-    px = t->x.x * t->w.x + t->x.y * t->w.y + t->x.z * t->w.z;
-    py = t->y.x * t->w.x + t->y.y * t->w.y + t->y.z * t->w.z;
-    pz = t->z.x * t->w.x + t->z.y * t->w.y + t->z.z * t->w.z;
+    px = VfDot3(t->x.x, t->x.y, t->x.z, t->w.x, t->w.y, t->w.z);
+    py = VfDot3(t->y.x, t->y.y, t->y.z, t->w.x, t->w.y, t->w.z);
+    pz = VfDot3(t->z.x, t->z.y, t->z.z, t->w.x, t->w.y, t->w.z);
     inv->x.x = t->x.x;
     inv->x.y = t->y.x;
     inv->x.z = t->z.x;

@@ -22,13 +22,13 @@ void BtlAttackGetTargetAimPoint(BtlAttack *self, float *out)
     }
     /* vmul.s by the bank's 2/pi then vrot [C,0,S,0]: cos/sin of the angle in radians */
     yaw = self->owner->base.rot[1];
-    out[0] = __builtin_cosf(yaw) * 1000.0f;
+    out[0] = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), 1000.0f);
     out[1] = 0.0f * 1000.0f;
-    out[2] = __builtin_sinf(yaw) * 1000.0f;
+    out[2] = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), 1000.0f);
     out[3] = 0.0f;
     out[1] = 500.0f;
     pos = self->owner->base.pos;
-    out[0] = out[0] + pos[0];
-    out[1] = out[1] + pos[1];
-    out[2] = out[2] + pos[2];
+    out[0] = VfAdd(out[0], pos[0]);
+    out[1] = VfAdd(out[1], pos[1]);
+    out[2] = VfAdd(out[2], pos[2]);
 }

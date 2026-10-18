@@ -10,22 +10,22 @@ ScePspFMatrix4 *GmoMat4ApplyScaleTranslate(ScePspFMatrix4 *dst, const ScePspFMat
     ScePspFMatrix4 r;
     float s = v->w;
 
-    r.x.x = m->x.x * s;
-    r.x.y = m->x.y * s;
-    r.x.z = m->x.z * s;
-    r.x.w = m->x.w * s;
-    r.y.x = m->y.x * s;
-    r.y.y = m->y.y * s;
-    r.y.z = m->y.z * s;
-    r.y.w = m->y.w * s;
-    r.z.x = m->z.x * s;
-    r.z.y = m->z.y * s;
-    r.z.z = m->z.z * s;
-    r.z.w = m->z.w * s;
-    r.w.x = m->x.x * v->x + m->y.x * v->y + m->z.x * v->z + m->w.x;
-    r.w.y = m->x.y * v->x + m->y.y * v->y + m->z.y * v->z + m->w.y;
-    r.w.z = m->x.z * v->x + m->y.z * v->y + m->z.z * v->z + m->w.z;
-    r.w.w = m->x.w * v->x + m->y.w * v->y + m->z.w * v->z + m->w.w;
+    r.x.x = VfMul(m->x.x, s);
+    r.x.y = VfMul(m->x.y, s);
+    r.x.z = VfMul(m->x.z, s);
+    r.x.w = VfMul(m->x.w, s);
+    r.y.x = VfMul(m->y.x, s);
+    r.y.y = VfMul(m->y.y, s);
+    r.y.z = VfMul(m->y.z, s);
+    r.y.w = VfMul(m->y.w, s);
+    r.z.x = VfMul(m->z.x, s);
+    r.z.y = VfMul(m->z.y, s);
+    r.z.z = VfMul(m->z.z, s);
+    r.z.w = VfMul(m->z.w, s);
+    r.w.x = VfDot4(m->x.x, m->y.x, m->z.x, m->w.x, v->x, v->y, v->z, 1.0f);
+    r.w.y = VfDot4(m->x.y, m->y.y, m->z.y, m->w.y, v->x, v->y, v->z, 1.0f);
+    r.w.z = VfDot4(m->x.z, m->y.z, m->z.z, m->w.z, v->x, v->y, v->z, 1.0f);
+    r.w.w = VfDot4(m->x.w, m->y.w, m->z.w, m->w.w, v->x, v->y, v->z, 1.0f);
     *dst = r;
     return dst;
 }

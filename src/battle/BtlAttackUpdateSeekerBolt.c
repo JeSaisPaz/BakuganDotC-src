@@ -26,12 +26,12 @@ void BtlAttackUpdateSeekerBolt(BtlAttack *self, s32 hitKind)
     }
     if (self->age == 0) {
         /* pos.xyz += vel.xyz * 80 (pos.w kept) */
-        step[0] = self->vel[0] * 80.0f;
-        step[1] = self->vel[1] * 80.0f;
-        step[2] = self->vel[2] * 80.0f;
-        pos[0] = pos[0] + step[0];
-        pos[1] = pos[1] + step[1];
-        pos[2] = pos[2] + step[2];
+        step[0] = VfMul(self->vel[0], 80.0f);
+        step[1] = VfMul(self->vel[1], 80.0f);
+        step[2] = VfMul(self->vel[2], 80.0f);
+        pos[0] = VfAdd(pos[0], step[0]);
+        pos[1] = VfAdd(pos[1], step[1]);
+        pos[2] = VfAdd(pos[2], step[2]);
         self->pos[1] = self->pos[1] + 30.0f;
         return;
     }
@@ -56,17 +56,17 @@ void BtlAttackUpdateSeekerBolt(BtlAttack *self, s32 hitKind)
     trail[1] = pos[1];
     trail[2] = pos[2];
     trail[3] = pos[3];
-    step[0] = vel[0] * 0.100000001f;
-    step[1] = vel[1] * 0.100000001f;
-    step[2] = vel[2] * 0.100000001f;
+    step[0] = VfMul(vel[0], 0.100000001f);
+    step[1] = VfMul(vel[1], 0.100000001f);
+    step[2] = VfMul(vel[2], 0.100000001f);
     for (i = 0; i < 10; i++) {
         GfxEffectSpawn(g_btlAttackEffectMgr, 0x97, trail);
-        trail[0] = trail[0] + step[0];
-        trail[1] = trail[1] + step[1];
-        trail[2] = trail[2] + step[2];
+        trail[0] = VfAdd(trail[0], step[0]);
+        trail[1] = VfAdd(trail[1], step[1]);
+        trail[2] = VfAdd(trail[2], step[2]);
     }
     /* pos.xyz += vel.xyz */
-    pos[0] = pos[0] + vel[0];
-    pos[1] = pos[1] + vel[1];
-    pos[2] = pos[2] + vel[2];
+    pos[0] = VfAdd(pos[0], vel[0]);
+    pos[1] = VfAdd(pos[1], vel[1]);
+    pos[2] = VfAdd(pos[2], vel[2]);
 }

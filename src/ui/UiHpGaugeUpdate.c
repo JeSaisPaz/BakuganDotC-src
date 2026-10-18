@@ -106,7 +106,7 @@ void UiHpGaugeUpdate(UiHpGauge *self)
         if (!(v <= 6.2831855f)) {
             self->lowHpPhase = self->lowHpPhase - 6.2831855f;
         }
-        v = __builtin_sinf(self->lowHpPhase);
+        v = VfSinQuarter(VfMul(self->lowHpPhase, 0.636619747f));
         self->lowHpFlash = v * 0.2f + 0.3f;
     } else {
         self->lowHpFlash = 0.0f;

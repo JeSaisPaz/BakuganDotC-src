@@ -45,10 +45,10 @@ u32 *UiHpGaugeEmitBarSprite(float x0, float y0, float x1, float y1, UiHpGauge *s
   {
     const float *rgba = (const float *)color;
 
-    packed = (u32)VfI2uc(VfF2iz(VfSat0(rgba[0]) * 255.0f, 23)) |
-             (u32)VfI2uc(VfF2iz(VfSat0(rgba[1]) * 255.0f, 23)) << 8 |
-             (u32)VfI2uc(VfF2iz(VfSat0(rgba[2]) * 255.0f, 23)) << 16 |
-             (u32)VfI2uc(VfF2iz(VfSat0(rgba[3]) * 255.0f, 23)) << 24;
+    packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(rgba[0]), 255.0f), 23)) |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(rgba[1]), 255.0f), 23)) << 8 |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(rgba[2]), 255.0f), 23)) << 16 |
+             (u32)VfI2uc(VfF2iz(VfMul(VfSat0(rgba[3]), 255.0f), 23)) << 24;
   }
   dl[3] = (packed & 0xffffff) | 0x55000000; /* AMBIENT colour */
   dl[4] = (packed >> 0x18) | 0x58000000;    /* AMBIENT alpha */

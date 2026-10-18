@@ -29,9 +29,9 @@ CoreObject *ActorBallCreate(float scale, u32 kind, s32 unused, float *pos)
     ball = mem;
   }
   if (ball != NULL) {
-    ball->base.scale[0] = ball->base.scale[0] * scale;
-    ball->base.scale[1] = ball->base.scale[1] * scale;
-    ball->base.scale[2] = ball->base.scale[2] * scale;
+    ball->base.scale[0] = VfMul(ball->base.scale[0], scale);
+    ball->base.scale[1] = VfMul(ball->base.scale[1], scale);
+    ball->base.scale[2] = VfMul(ball->base.scale[2], scale);
     ball->base.scale[3] = 0.0f; /* `sv.q` of C710: lane 3 is the bank zero S713 */
     if (pos != NULL) {
       CollisionRaycastPoint(pos, ball->base.pos);

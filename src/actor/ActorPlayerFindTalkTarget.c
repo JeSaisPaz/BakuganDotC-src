@@ -31,18 +31,18 @@ void *ActorPlayerFindTalkTarget(ActorPlayer *self)
   best = NULL;
   bestDist = __builtin_inff();
   heading = self->base.base.rot[1];
-  point[0] = __builtin_cosf(heading) * 7.0f + self->base.base.pos[0];
-  point[1] = 0.0f * 7.0f + self->base.base.pos[1];
-  point[2] = __builtin_sinf(heading) * 7.0f + self->base.base.pos[2];
+  point[0] = VfAdd(VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), 7.0f), self->base.base.pos[0]);
+  point[1] = VfAdd(0.0f * 7.0f, self->base.base.pos[1]);
+  point[2] = VfAdd(VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), 7.0f), self->base.base.pos[2]);
 
   for (; actor != NULL; actor = (Actor *)actor->base.base.next) {
     if (actor == &self->base) {
       continue;
     }
     /* y difference cleared: XZ squared distance */
-    dx = point[0] - actor->base.pos[0];
-    dz = point[2] - actor->base.pos[2];
-    dist = dx * dx + 0.0f + dz * dz;
+    dx = VfSub(point[0], actor->base.pos[0]);
+    dz = VfSub(point[2], actor->base.pos[2]);
+    dist = VfDot3(dx, 0.0f, dz, dx, 1.0f, dz);
     radius = self->base.bodyShape.radius;
     if (ActorGetFacingSectorFrom(&self->base, actor->base.pos) == 1) {
       radius = radius * 2.0f;

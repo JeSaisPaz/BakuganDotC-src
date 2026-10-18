@@ -18,10 +18,10 @@ s32 GameGimmickCameraSeesPlayer(GameGimmickCamera *obj)
   if (player != NULL && ActorPlayerIsStealthed(player) == 0 && obj->spotEffect != NULL) {
     const float *a = ((GfxModel *)obj->spotEffect)->ambient;
     const float *p = player->base.base.pos;
-    float dx = a[0] - p[0];
-    float dy = a[1] - p[1];
-    float dz = a[2] - p[2];
-    float dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+    float dx = VfSub(a[0], p[0]);
+    float dy = VfSub(a[1], p[1]);
+    float dz = VfSub(a[2], p[2]);
+    float dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
 
     if (dist <= 15.0f) {
       result = 1;

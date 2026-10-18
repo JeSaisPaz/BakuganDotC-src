@@ -395,14 +395,14 @@ void UiUnlockCodeInputPhase(UiUnlockCode *self)
 
   /* cursor pulses: cos of the radian angle */
   angle = (float)self->cursorAngle * 0.0055555557f * 3.1415927f;
-  cosA = __builtin_cosf(angle);
+  cosA = VfCosQuarter(VfMul(angle, 0.636619747f));
   glowCursor = (1.0f - cosA) * 0.5f * 0.5f;
   t = (float)(self->cursorAngle + 60) * 0.0055555557f;
   angle = t * 3.1415927f;
-  cosA = __builtin_cosf(angle);
+  cosA = VfCosQuarter(VfMul(angle, 0.636619747f));
   glowKey = (1.0f - cosA) * 0.5f * 0.8f;
   angle = t * 3.1415927f;
-  cosA = __builtin_cosf(angle);
+  cosA = VfCosQuarter(VfMul(angle, 0.636619747f));
   glowFrame = (1.0f - cosA) * 0.5f * 0.1f;
 
   sprite = UiUnlockCodeInputSprite(self, 26);
@@ -443,7 +443,7 @@ void UiUnlockCodeInputPhase(UiUnlockCode *self)
 
   /* cursor frames breathe by up to 5% */
   angle = (float)(self->cursorAngle + 60) * 0.0055555557f * 3.1415927f;
-  cosA = __builtin_cosf(angle);
+  cosA = VfCosQuarter(VfMul(angle, 0.636619747f));
   scale = (1.0f - cosA) * 0.5f * 0.05f + 1.0f;
   width = GfxSpriteGetWidth(UiUnlockCodeInputSprite(self, 10)) * scale;
   sprite = UiUnlockCodeInputSprite(self, 10);

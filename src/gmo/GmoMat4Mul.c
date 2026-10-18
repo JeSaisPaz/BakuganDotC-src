@@ -8,10 +8,10 @@
    `dst` is written, so `dst` may alias either. Returns `dst`. */
 #define MUL_COL(d, J)                                                                       \
     do {                                                                                    \
-        (d).x = a->x.x * b->J.x + a->y.x * b->J.y + a->z.x * b->J.z + a->w.x * b->J.w;      \
-        (d).y = a->x.y * b->J.x + a->y.y * b->J.y + a->z.y * b->J.z + a->w.y * b->J.w;      \
-        (d).z = a->x.z * b->J.x + a->y.z * b->J.y + a->z.z * b->J.z + a->w.z * b->J.w;      \
-        (d).w = a->x.w * b->J.x + a->y.w * b->J.y + a->z.w * b->J.z + a->w.w * b->J.w;      \
+        (d).x = VfDot4(a->x.x, a->y.x, a->z.x, a->w.x, b->J.x, b->J.y, b->J.z, b->J.w); \
+        (d).y = VfDot4(a->x.y, a->y.y, a->z.y, a->w.y, b->J.x, b->J.y, b->J.z, b->J.w); \
+        (d).z = VfDot4(a->x.z, a->y.z, a->z.z, a->w.z, b->J.x, b->J.y, b->J.z, b->J.w); \
+        (d).w = VfDot4(a->x.w, a->y.w, a->z.w, a->w.w, b->J.x, b->J.y, b->J.z, b->J.w); \
     } while (0)
 
 ScePspFMatrix4 *GmoMat4Mul(ScePspFMatrix4 *dst, const ScePspFMatrix4 *a, const ScePspFMatrix4 *b)

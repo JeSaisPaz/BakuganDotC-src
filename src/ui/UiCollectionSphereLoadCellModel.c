@@ -11,10 +11,10 @@ static void UiCollectionSphereLoadRotXField(float *d, const float *r, float c, f
   float z = r[2];
   float w = r[3];
 
-  d[0] = x * 1.0f + y * 0.0f + z * 0.0f + w * 0.0f;
-  d[1] = x * 0.0f + y * c + z * -s + w * 0.0f;
-  d[2] = x * 0.0f + y * s + z * c + w * 0.0f;
-  d[3] = x * 0.0f + y * 0.0f + z * 0.0f + w * 1.0f;
+  d[0] = VfDot4(x, y, z, w, 1.0f, 0.0f, 0.0f, 0.0f);
+  d[1] = VfDot4(x, y, z, w, 0.0f, c, -s, 0.0f);
+  d[2] = VfDot4(x, y, z, w, 0.0f, s, c, 0.0f);
+  d[3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 /* Loads the 3D model of grid cell `cell` of the sphere (Bakugan figure) collection screen
@@ -59,8 +59,8 @@ void UiCollectionSphereLoadCellModel(UiCollectionSphere *self, u8 category, u8 i
 
   /* rootMatrix = rotation about Y by 3.14 (vmul.s by S703 then vrot in quarter turns) */
   m = model->data->rootMatrix;
-  c = __builtin_cosf(3.14f);
-  sn = __builtin_sinf(3.14f);
+  c = VfCosQuarter(3.14f * 0.636619747f);
+  sn = VfSinQuarter(3.14f * 0.636619747f);
   m[0] = c;
   m[1] = 0.0f;
   m[2] = -sn;
@@ -82,8 +82,8 @@ void UiCollectionSphereLoadCellModel(UiCollectionSphere *self, u8 category, u8 i
      read before the call) */
   m = self->models[cell]->data->rootMatrix;
   tilt = UiCollectionSphereGetModelTilt(self, cell);
-  c = __builtin_cosf(tilt);
-  sn = __builtin_sinf(tilt);
+  c = VfCosQuarter(VfMul(tilt, 0.636619747f));
+  sn = VfSinQuarter(VfMul(tilt, 0.636619747f));
   for (i = 0; i < 4; i++) {
     float r[4];
 
@@ -97,10 +97,10 @@ void UiCollectionSphereLoadCellModel(UiCollectionSphere *self, u8 category, u8 i
   self->modelScale[cell] = 0.4f;
   m = self->models[cell]->data->rootMatrix;
   for (i = 0; i < 3; i++) {
-    m[i * 4 + 0] = m[i * 4 + 0] * 0.4f;
-    m[i * 4 + 1] = m[i * 4 + 1] * 0.4f;
-    m[i * 4 + 2] = m[i * 4 + 2] * 0.4f;
-    m[i * 4 + 3] = m[i * 4 + 3] * 0.4f;
+    m[i * 4 + 0] = VfMul(m[i * 4 + 0], 0.4f);
+    m[i * 4 + 1] = VfMul(m[i * 4 + 1], 0.4f);
+    m[i * 4 + 2] = VfMul(m[i * 4 + 2], 0.4f);
+    m[i * 4 + 3] = VfMul(m[i * 4 + 3], 0.4f);
   }
 
   self->models[cell]->pos[0] = 0.0f;

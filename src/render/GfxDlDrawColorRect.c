@@ -31,10 +31,10 @@ u32 *GfxDlDrawColorRect(void *unused, u32 *list, const float *rect, const ScePsp
   body[2] = 0xe0000000;
   body[3] = 0xe1000000;
   body += 4;
-  packed = (u32)VfI2uc(VfF2iz(VfSat0(colour->x) * 255.0f, 23)) |
-           (u32)VfI2uc(VfF2iz(VfSat0(colour->y) * 255.0f, 23)) << 8 |
-           (u32)VfI2uc(VfF2iz(VfSat0(colour->z) * 255.0f, 23)) << 16 |
-           (u32)VfI2uc(VfF2iz(VfSat0(colour->w) * 255.0f, 23)) << 24;
+  packed = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->x), 255.0f), 23)) |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->y), 255.0f), 23)) << 8 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->z), 255.0f), 23)) << 16 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colour->w), 255.0f), 23)) << 24;
   body[0] = (packed & 0xffffff) | 0x55000000;
   body[1] = (packed >> 24) | 0x58000000;
   body[2] = 0x12800100;

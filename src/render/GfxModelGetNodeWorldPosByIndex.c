@@ -16,10 +16,10 @@ void GfxModelGetNodeWorldPosByIndex(GfxModel *self, ScePspFVector4 *out, s32 ind
   if (node != NULL) {
     a = self->data->rootMatrix;
     b = node->localMatrix;
-    out->x = b[12] * a[0] + b[13] * a[4] + b[14] * a[8] + b[15] * a[12];
-    out->y = b[12] * a[1] + b[13] * a[5] + b[14] * a[9] + b[15] * a[13];
-    out->z = b[12] * a[2] + b[13] * a[6] + b[14] * a[10] + b[15] * a[14];
-    out->w = b[12] * a[3] + b[13] * a[7] + b[14] * a[11] + b[15] * a[15];
+    out->x = VfDot4(b[12], b[13], b[14], b[15], a[0], a[4], a[8], a[12]);
+    out->y = VfDot4(b[12], b[13], b[14], b[15], a[1], a[5], a[9], a[13]);
+    out->z = VfDot4(b[12], b[13], b[14], b[15], a[2], a[6], a[10], a[14]);
+    out->w = VfDot4(b[12], b[13], b[14], b[15], a[3], a[7], a[11], a[15]);
     return;
   }
   *out = g_gfxVecZero;

@@ -12,8 +12,7 @@ static void Mat4Mul(float *out, const float *a, const float *b)
 
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            r[j * 4 + i] = b[j * 4 + 0] * a[0 * 4 + i] + b[j * 4 + 1] * a[1 * 4 + i] +
-                           b[j * 4 + 2] * a[2 * 4 + i] + b[j * 4 + 3] * a[3 * 4 + i];
+            r[j * 4 + i] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], a[0 * 4 + i], a[1 * 4 + i], a[2 * 4 + i], a[3 * 4 + i]);
         }
     }
     for (i = 0; i < 16; i++) {
@@ -93,8 +92,8 @@ void ActorPlayerUpdateMatrix(ActorPlayer *self)
     scl[5] = self->base.base.scale[1];
     scl[10] = self->base.base.scale[2];
     /* vrot of angle * 2/pi (S703) in quarter turns: plain cos/sin of the angle. */
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
     rotY[0] = c;     rotY[1] = 0.0f;  rotY[2] = -s;    rotY[3] = 0.0f;
     rotY[4] = 0.0f;  rotY[5] = 1.0f;  rotY[6] = 0.0f;  rotY[7] = 0.0f;
     rotY[8] = s;     rotY[9] = 0.0f;  rotY[10] = c;    rotY[11] = 0.0f;
@@ -112,9 +111,9 @@ void ActorPlayerUpdateMatrix(ActorPlayer *self)
     dst[14] = self->base.base.pos[2];
     dst[15] = self->base.base.pos[3];
     dst = self->base.base.data->rootMatrix;
-    dst[12] = dst[12] + self->modelOffset[0];
-    dst[13] = dst[13] + self->modelOffset[1];
-    dst[14] = dst[14] + self->modelOffset[2];
+    dst[12] = VfAdd(dst[12], self->modelOffset[0]);
+    dst[13] = VfAdd(dst[13], self->modelOffset[1]);
+    dst[14] = VfAdd(dst[14], self->modelOffset[2]);
     self->base.base.data->rootMatrix[15] = 1.0f;
 
     if (self->ball != NULL && self->handNode != NULL) {

@@ -7,12 +7,12 @@
 
 void GameQuestCamApplyAccel(float dt, GameQuestCamSpring *self, float *vel, float *accel)
 {
-  float sx = accel[0] * dt;
-  float sy = accel[1] * dt;
-  float sz = accel[2] * dt;
+  float sx = VfMul(accel[0], dt);
+  float sy = VfMul(accel[1], dt);
+  float sz = VfMul(accel[2], dt);
 
-  vel[0] = vel[0] + sx;
-  vel[1] = vel[1] + sy;
-  vel[2] = vel[2] + sz;
+  vel[0] = VfAdd(vel[0], sx);
+  vel[1] = VfAdd(vel[1], sy);
+  vel[2] = VfAdd(vel[2], sz);
   *(ScePspFVector4 *)accel = g_gameQuestCamSpringAxisConsts.zero;
 }

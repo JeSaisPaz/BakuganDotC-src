@@ -36,9 +36,9 @@ void BtlDemoCamUpdate(BtlDemoCam *self)
         float l0 = self->listener[0], l1 = self->listener[1];
         float l2 = self->listener[2], l3 = self->listener[3];
 
-        self->listener[0] = l0 + (tpos[0] - l0) * 0.5f;
-        self->listener[1] = l1 + (tpos[1] - l1) * 0.5f;
-        self->listener[2] = l2 + (tpos[2] - l2) * 0.5f;
-        self->listener[3] = l3 + (tpos[3] - l3) * 0.5f;
+        self->listener[0] = VfAdd(l0, VfMul(VfSub(tpos[0], l0), 0.5f));
+        self->listener[1] = VfAdd(l1, VfMul(VfSub(tpos[1], l1), 0.5f));
+        self->listener[2] = VfAdd(l2, VfMul(VfSub(tpos[2], l2), 0.5f));
+        self->listener[3] = VfAdd(l3, VfMul(VfSub(tpos[3], l3), 0.5f));
     }
 }

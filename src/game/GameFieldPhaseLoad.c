@@ -29,10 +29,8 @@ void GameFieldPhaseLoad(CoreTask *task)
   float angle;
   float c;
   float s;
-  float sum;
   s32 j;
   s32 r;
-  s32 k;
   bool fromLow;
   GfxFader *fader;
   IoLzsPackage *pkg;
@@ -216,18 +214,18 @@ void GameFieldPhaseLoad(CoreTask *task)
       projScale[2] = 1.0f;
       projScale[3] = 0.0f;
       /* scale the first three rows of the projection (`vscl.q`): y by 0.58 */
-      cam->proj.x.x = cam->proj.x.x * projScale[0];
-      cam->proj.x.y = cam->proj.x.y * projScale[0];
-      cam->proj.x.z = cam->proj.x.z * projScale[0];
-      cam->proj.x.w = cam->proj.x.w * projScale[0];
-      cam->proj.y.x = cam->proj.y.x * projScale[1];
-      cam->proj.y.y = cam->proj.y.y * projScale[1];
-      cam->proj.y.z = cam->proj.y.z * projScale[1];
-      cam->proj.y.w = cam->proj.y.w * projScale[1];
-      cam->proj.z.x = cam->proj.z.x * projScale[2];
-      cam->proj.z.y = cam->proj.z.y * projScale[2];
-      cam->proj.z.z = cam->proj.z.z * projScale[2];
-      cam->proj.z.w = cam->proj.z.w * projScale[2];
+      cam->proj.x.x = VfMul(cam->proj.x.x, projScale[0]);
+      cam->proj.x.y = VfMul(cam->proj.x.y, projScale[0]);
+      cam->proj.x.z = VfMul(cam->proj.x.z, projScale[0]);
+      cam->proj.x.w = VfMul(cam->proj.x.w, projScale[0]);
+      cam->proj.y.x = VfMul(cam->proj.y.x, projScale[1]);
+      cam->proj.y.y = VfMul(cam->proj.y.y, projScale[1]);
+      cam->proj.y.z = VfMul(cam->proj.y.z, projScale[1]);
+      cam->proj.y.w = VfMul(cam->proj.y.w, projScale[1]);
+      cam->proj.z.x = VfMul(cam->proj.z.x, projScale[2]);
+      cam->proj.z.y = VfMul(cam->proj.z.y, projScale[2]);
+      cam->proj.z.z = VfMul(cam->proj.z.z, projScale[2]);
+      cam->proj.z.w = VfMul(cam->proj.z.w, projScale[2]);
       sprite = GfxSpriteLayerCreateBillboard(field->layers[0],
                                              ((GfxPlayerBlurTask *)field->worldMapTask)->texture);
       /* `vmidt.q`: identity matrix */
@@ -242,8 +240,8 @@ void GameFieldPhaseLoad(CoreTask *task)
       /* Y rotation of pi/2 (0x3fc90fdb times the bank's S703 = 2/pi gives quarter turns for `vrot`,
          so cos/sin of the angle itself); rows of the matrix whose columns `vrot`/`vidt` build. */
       angle = 1.57079637f;
-      c = __builtin_cosf(angle);
-      s = __builtin_sinf(angle);
+      c = VfCosQuarter(VfMul(angle, 0.636619747f));
+      s = VfSinQuarter(VfMul(angle, 0.636619747f));
       rot[0][0] = c;    rot[0][1] = 0.0f; rot[0][2] = s;    rot[0][3] = 0.0f;
       rot[1][0] = 0.0f; rot[1][1] = 1.0f; rot[1][2] = 0.0f; rot[1][3] = 0.0f;
       rot[2][0] = -s;   rot[2][1] = 0.0f; rot[2][2] = c;    rot[2][3] = 0.0f;
@@ -252,11 +250,8 @@ void GameFieldPhaseLoad(CoreTask *task)
          16 bytes): new matrix[j*4+r] = sum_k rot[r][k] * matrix[j*4+k]. */
       for (j = 0; j < 4; j++) {
         for (r = 0; r < 4; r++) {
-          sum = rot[r][0] * sprite->matrix[j * 4 + 0];
-          for (k = 1; k < 4; k++) {
-            sum = sum + rot[r][k] * sprite->matrix[j * 4 + k];
-          }
-          result[j * 4 + r] = sum;
+          result[j * 4 + r] = VfDot4(rot[r][0], rot[r][1], rot[r][2], rot[r][3], sprite->matrix[j * 4 + 0],
+                                     sprite->matrix[j * 4 + 1], sprite->matrix[j * 4 + 2], sprite->matrix[j * 4 + 3]);
         }
       }
       for (j = 0; j < 16; j++) {

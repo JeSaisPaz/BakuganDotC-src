@@ -29,27 +29,27 @@ void BtlAttackType28Update(BtlAttack *self)
         self->turnRate = 0.0299999993f;
         self->dir[1] = self->dir[1] + 0.0500000007f;
         /* Normalise: scale 0 (bank S713) for a zero length; the C710 store puts S713 = 0 in w. */
-        lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] + self->dir[2] * self->dir[2];
+        lenSq = VfDot3(self->dir[0], self->dir[1], self->dir[2], self->dir[0], self->dir[1], self->dir[2]);
         scale = VfRsq(lenSq);
         if (VfIsZero(lenSq)) {
             scale = 0.0f;
         }
-        self->dir[0] = VfSat1(self->dir[0] * scale);
-        self->dir[1] = VfSat1(self->dir[1] * scale);
-        self->dir[2] = VfSat1(self->dir[2] * scale);
+        self->dir[0] = VfSat1(VfMul(self->dir[0], scale));
+        self->dir[1] = VfSat1(VfMul(self->dir[1], scale));
+        self->dir[2] = VfSat1(VfMul(self->dir[2], scale));
         self->dir[3] = 0.0f;
         angle = 0.0174532924f;
         if (self->paramF2 == 0.0f) {
             angle = -angle;
         }
         /* Rotate x/z about Y; the angle in quarter turns (times S703 = 2/pi). */
-        a = angle * 0.636619747f;
+        a = VfMul(angle, 0.636619747f);
         c = VfCosQuarter(a);
         s = VfSinQuarter(a);
         x = self->dir[0];
         z = self->dir[2];
-        self->dir[0] = x * c + self->dir[1] * 0.0f + z * -s;
-        self->dir[2] = x * s + self->dir[1] * 0.0f + z * c;
+        self->dir[0] = VfDot3(x, self->dir[1], z, c, 0.0f, -s);
+        self->dir[2] = VfDot3(x, self->dir[1], z, s, 0.0f, c);
     } else {
         if (BtlAttackResolveClash(self, 0xa8) != 0) {
             return;
@@ -59,9 +59,9 @@ void BtlAttackType28Update(BtlAttack *self)
             BtlAttackSetPendingHit(self, 0xa8, &g_btlAttackHitQuery.contact.x);
             return;
         }
-        self->pos[0] = self->pos[0] + self->vel[0];
-        self->pos[1] = self->pos[1] + self->vel[1];
-        self->pos[2] = self->pos[2] + self->vel[2];
+        self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+        self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+        self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
     }
     effect = (GfxEffect *)self->effect;
     effect->dir[0] = self->dir[0];

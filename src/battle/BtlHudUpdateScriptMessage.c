@@ -27,7 +27,7 @@
 /* sin(angle): `vsin.s` of angle * 2/pi (quarter turns) on the VFPU. */
 static inline float ScriptMsgVfpuSin(float angle)
 {
-    return __builtin_sinf(angle);
+    return VfSinQuarter(VfMul(angle, 0.636619747f));
 }
 
 /* Creates `msgLayer` / `msgSprites` if missing, builds layout 8, sets the layout sprites' alpha to
@@ -72,9 +72,9 @@ static void ScriptMsgBuildPanel(BtlHud *self, float alpha, float panelAlpha)
     }
     /* vadd.t of (0, 0, -1) onto posX/posY/posZ (posW is stored back unchanged) */
     first = self->msgSprites[0];
-    first->posX = first->posX + 0.0f;
-    first->posY = first->posY + 0.0f;
-    first->posZ = first->posZ + -1.0f;
+    first->posX = VfAdd(first->posX, 0.0f);
+    first->posY = VfAdd(first->posY, 0.0f);
+    first->posZ = VfAdd(first->posZ, -1.0f);
     self->sprites[0xf0]->flags |= 1;
     self->sprites[0xf0]->alpha = panelAlpha;
     self->sprites[0xef]->flags |= 1;

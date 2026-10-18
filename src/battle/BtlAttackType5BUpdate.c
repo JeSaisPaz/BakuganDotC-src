@@ -25,8 +25,7 @@ void BtlAttackType5BUpdate(BtlAttack *self)
     b = self->bone->localMatrix;
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            self->mtx[j][i] = b[j * 4 + 0] * a[i] + b[j * 4 + 1] * a[4 + i] +
-                              b[j * 4 + 2] * a[8 + i] + b[j * 4 + 3] * a[12 + i];
+            self->mtx[j][i] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], a[i], a[4 + i], a[8 + i], a[12 + i]);
         }
     }
     self->pos[0] = self->mtx[3][0];

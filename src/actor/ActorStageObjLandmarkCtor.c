@@ -121,9 +121,7 @@ ActorStageObjLandmark *ActorStageObjLandmarkCtor(ActorStageObjLandmark *self, fl
   self->capsule.axisLen = 0.0f;
   self->capsule.radius = 0.0f;
   self->capsule.radiusSq = 0.0f * 0.0f;
-  self->capsule.axisLen = __builtin_sqrtf(self->capsule.axis[0] * self->capsule.axis[0] +
-                                          self->capsule.axis[1] * self->capsule.axis[1] +
-                                          self->capsule.axis[2] * self->capsule.axis[2]);
+  self->capsule.axisLen = VfSqrt(VfDot3(self->capsule.axis[0], self->capsule.axis[1], self->capsule.axis[2], self->capsule.axis[0], self->capsule.axis[1], self->capsule.axis[2]));
   for (i = 0; i < 4; i++) {
     for (j = 0; j < 4; j++) {
       self->helperMatrix[i][j] = (i == j) ? 1.0f : 0.0f;
@@ -164,9 +162,9 @@ ActorStageObjLandmark *ActorStageObjLandmarkCtor(ActorStageObjLandmark *self, fl
   if (box->invValid == 0) {
     /* invTransform = transpose of the rotation (w lanes 0), translation -(R^T * t), w kept from t */
     m = &box->transform;
-    tx = m->x.x * m->w.x + m->x.y * m->w.y + m->x.z * m->w.z;
-    ty = m->y.x * m->w.x + m->y.y * m->w.y + m->y.z * m->w.z;
-    tz = m->z.x * m->w.x + m->z.y * m->w.y + m->z.z * m->w.z;
+    tx = VfDot3(m->x.x, m->x.y, m->x.z, m->w.x, m->w.y, m->w.z);
+    ty = VfDot3(m->y.x, m->y.y, m->y.z, m->w.x, m->w.y, m->w.z);
+    tz = VfDot3(m->z.x, m->z.y, m->z.z, m->w.x, m->w.y, m->w.z);
     box->invTransform.x.x = m->x.x;
     box->invTransform.x.y = m->y.x;
     box->invTransform.x.z = m->z.x;
@@ -188,11 +186,11 @@ ActorStageObjLandmark *ActorStageObjLandmarkCtor(ActorStageObjLandmark *self, fl
 
   k = self->base.base.scale[0] * 0.9f;
   box = self->collisionMesh;
-  box->aabbMin.x = box->aabbMin.x * k;
-  box->aabbMin.z = box->aabbMin.z * k;
+  box->aabbMin.x = VfMul(box->aabbMin.x, k);
+  box->aabbMin.z = VfMul(box->aabbMin.z, k);
   box = self->collisionMesh;
-  box->aabbMax.x = box->aabbMax.x * k;
-  box->aabbMax.z = box->aabbMax.z * k;
+  box->aabbMax.x = VfMul(box->aabbMax.x, k);
+  box->aabbMax.z = VfMul(box->aabbMax.z, k);
   self->collisionMesh->aabbMax.y = self->collisionMesh->aabbMax.y - 100.0f;
   if (self->collisionMesh->aabbMax.y <= 30.0f) {
     self->collisionMesh->aabbMax.y = 30.0f;

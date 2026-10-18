@@ -32,13 +32,13 @@ void BtlAttackType21Update(BtlAttack *self)
         } else {
             float yaw = self->owner->base.rot[1];
 
-            origin[0] = __builtin_cosf(yaw) * 500.0f;
+            origin[0] = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), 500.0f);
             origin[1] = 0.0f * 500.0f;
-            origin[2] = __builtin_sinf(yaw) * 500.0f;
+            origin[2] = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), 500.0f);
             origin[3] = 0.0f;
-            origin[0] = origin[0] + self->owner->base.pos[0];
-            origin[1] = origin[1] + self->owner->base.pos[1];
-            origin[2] = origin[2] + self->owner->base.pos[2];
+            origin[0] = VfAdd(origin[0], self->owner->base.pos[0]);
+            origin[1] = VfAdd(origin[1], self->owner->base.pos[1]);
+            origin[2] = VfAdd(origin[2], self->owner->base.pos[2]);
             for (i = 0; i < 4; i++) {
                 fallback[i] = self->owner->base.pos[i];
             }

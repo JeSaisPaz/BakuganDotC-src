@@ -45,7 +45,7 @@ void UiConfirmDialogDraw(UiConfirmDialog *self)
     ((ConfirmDrawFn)entry->fn)(target, packet);
   }
   if ((s32)self->subState >= 3) {
-    cosv = __builtin_cosf(self->pulsePhase * 3.1415927f);
+    cosv = VfCosQuarter(VfMul(self->pulsePhase * 3.1415927f, 0.636619747f));
     dim = (1.0f - cosv) * 0.5f * 0.3f;
 
     sprite = self->sprites[8 + (self->cursor == 0)];

@@ -30,12 +30,12 @@ void BtlBakuganStartCounter(BtlBakugan *self, char perfect)
     point[0] = self->base.velocity[0];
     point[1] = self->base.velocity[1];
     point[2] = self->base.velocity[2];
-    lenSq = point[0] * point[0] + point[1] * point[1] + point[2] * point[2];
+    lenSq = VfDot3(point[0], point[1], point[2], point[0], point[1], point[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    k = k * -1.0f;
-    point[0] = point[0] * k;
-    point[1] = point[1] * k;
-    point[2] = point[2] * k;
+    k = VfMul(k, -1.0f);
+    point[0] = VfMul(point[0], k);
+    point[1] = VfMul(point[1], k);
+    point[2] = VfMul(point[2], k);
     point[3] = 0.0f;
     effect = (GfxEffect *)GfxEffectSpawnAttachedDir(g_worldEffectMgr, 0x3a, self->guardAnchor, point);
     effect->ownerBakugan = self;
@@ -45,9 +45,9 @@ void BtlBakuganStartCounter(BtlBakugan *self, char perfect)
     BtlBakuganSetState(self, 0x13, 0);
     attacker = self->attacker;
     /* point = velocity = attacker.pos - pos (xyz), w = attacker's w */
-    point[0] = attacker->base.pos[0] - self->base.pos[0];
-    point[1] = attacker->base.pos[1] - self->base.pos[1];
-    point[2] = attacker->base.pos[2] - self->base.pos[2];
+    point[0] = VfSub(attacker->base.pos[0], self->base.pos[0]);
+    point[1] = VfSub(attacker->base.pos[1], self->base.pos[1]);
+    point[2] = VfSub(attacker->base.pos[2], self->base.pos[2]);
     point[3] = attacker->base.pos[3];
     self->base.velocity[0] = point[0];
     self->base.velocity[1] = point[1];
@@ -55,16 +55,16 @@ void BtlBakuganStartCounter(BtlBakugan *self, char perfect)
     self->base.velocity[3] = point[3];
     BtlBakuganSetHeading(self, atan2f(point[2], point[0]));
     /* point.xyz = normalize(point.xyz) * 100 + guardAnchor.xyz, w = 0 */
-    lenSq = point[0] * point[0] + point[1] * point[1] + point[2] * point[2];
+    lenSq = VfDot3(point[0], point[1], point[2], point[0], point[1], point[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    k = k * 100.0f;
-    point[0] = point[0] * k;
-    point[1] = point[1] * k;
-    point[2] = point[2] * k;
+    k = VfMul(k, 100.0f);
+    point[0] = VfMul(point[0], k);
+    point[1] = VfMul(point[1], k);
+    point[2] = VfMul(point[2], k);
     point[3] = 0.0f;
-    point[0] = point[0] + self->guardAnchor[0];
-    point[1] = point[1] + self->guardAnchor[1];
-    point[2] = point[2] + self->guardAnchor[2];
+    point[0] = VfAdd(point[0], self->guardAnchor[0]);
+    point[1] = VfAdd(point[1], self->guardAnchor[1]);
+    point[2] = VfAdd(point[2], self->guardAnchor[2]);
     if (perfect != 0) {
         self->dashHeading = 0.300000012f;
         effect = (GfxEffect *)GfxEffectSpawnAttachedDir(g_worldEffectMgr, 0x3d, self->guardAnchor, point);
@@ -83,12 +83,11 @@ void BtlBakuganStartCounter(BtlBakugan *self, char perfect)
         /* velocity.xyz = -80 * normalize(velocity.xyz), w = 0 */
         k = -80.0f;
     }
-    lenSq = self->base.velocity[0] * self->base.velocity[0] + self->base.velocity[1] * self->base.velocity[1] +
-            self->base.velocity[2] * self->base.velocity[2];
-    k = (VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq)) * k;
-    self->base.velocity[0] = self->base.velocity[0] * k;
-    self->base.velocity[1] = self->base.velocity[1] * k;
-    self->base.velocity[2] = self->base.velocity[2] * k;
+    lenSq = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
+    k = VfMul((VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq)), k);
+    self->base.velocity[0] = VfMul(self->base.velocity[0], k);
+    self->base.velocity[1] = VfMul(self->base.velocity[1], k);
+    self->base.velocity[2] = VfMul(self->base.velocity[2], k);
     self->base.velocity[3] = 0.0f;
     mgr = g_worldEffectMgr;
     pushed = GfxCameraPushPointAway(-30.0f, point);

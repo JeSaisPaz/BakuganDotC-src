@@ -10,16 +10,20 @@
    (c*m[r][0] - s*m[r][1], s*m[r][0] + c*m[r][1], m[r][2], m[r][3]). */
 static void StaffCreditRotateMatrix(float *m, float angle)
 {
-  float c = __builtin_cosf(angle);
-  float s = __builtin_sinf(angle);
-  float x, y;
+  float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  float s = VfSinQuarter(VfMul(angle, 0.636619747f));
+  float x, y, z, w;
   int r;
 
   for (r = 0; r < 4; r++) {
     x = m[r * 4 + 0];
     y = m[r * 4 + 1];
-    m[r * 4 + 0] = c * x - s * y;
-    m[r * 4 + 1] = s * x + c * y;
+    z = m[r * 4 + 2];
+    w = m[r * 4 + 3];
+    m[r * 4 + 0] = VfDot4(x, y, z, w, c, -s, 0.0f, 0.0f);
+    m[r * 4 + 1] = VfDot4(x, y, z, w, s, c, 0.0f, 0.0f);
+    m[r * 4 + 2] = VfDot4(x, y, z, w, 0.0f, 0.0f, 1.0f, 0.0f);
+    m[r * 4 + 3] = VfDot4(x, y, z, w, 0.0f, 0.0f, 0.0f, 1.0f);
   }
 }
 
@@ -30,7 +34,7 @@ void UiStaffCreditSpinEmblem(UiScreen *screen)
 
   if (g_staffCreditEmblemInit == 0) {
     g_staffCreditEmblemInit = 1;
-    g_staffCreditEmblemSin = __builtin_sinf(0.0174532924f); /* 0x3c8efa35: 1 degree */
+    g_staffCreditEmblemSin = VfSinQuarter(0.0174532924f * 0.636619747f); /* 0x3c8efa35: 1 degree */
   }
   obj = ((GfxSprite **)screen->data)[6];
   StaffCreditRotateMatrix(obj->matrix, -g_staffCreditEmblemSin);

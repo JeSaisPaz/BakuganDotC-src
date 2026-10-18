@@ -51,9 +51,9 @@ u8 GameEventCamTweenUpdate(GameEventCamTween *self)
       v[0] = (float)keys->eye[0] * 0.000244140625f;
       v[1] = (float)keys->eye[1] * 0.000244140625f;
       v[2] = (float)keys->eye[2] * 0.000244140625f;
-      cam->eye[0] = v[0] * 20.0f;
-      cam->eye[1] = v[1] * 20.0f;
-      cam->eye[2] = v[2] * 20.0f;
+      cam->eye[0] = VfMul(v[0], 20.0f);
+      cam->eye[1] = VfMul(v[1], 20.0f);
+      cam->eye[2] = VfMul(v[2], 20.0f);
     }
     break;
   case 1:
@@ -73,9 +73,9 @@ u8 GameEventCamTweenUpdate(GameEventCamTween *self)
       v[0] = (float)keys->target[0] * 0.000244140625f;
       v[1] = (float)keys->target[1] * 0.000244140625f;
       v[2] = (float)keys->target[2] * 0.000244140625f;
-      cam->target[0] = v[0] * 20.0f;
-      cam->target[1] = v[1] * 20.0f;
-      cam->target[2] = v[2] * 20.0f;
+      cam->target[0] = VfMul(v[0], 20.0f);
+      cam->target[1] = VfMul(v[1], 20.0f);
+      cam->target[2] = VfMul(v[2], 20.0f);
     }
     break;
   case 2:

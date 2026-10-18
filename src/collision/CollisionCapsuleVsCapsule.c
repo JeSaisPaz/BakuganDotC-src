@@ -18,9 +18,9 @@ bool CollisionCapsuleVsCapsule(const void *a, const void *b, ScePspFVector4 *out
   r = capA->radius + capB->radius;
   p0 = g_collisionClosestPoints[0];
   p1 = g_collisionClosestPoints[1];
-  out->x = p0.x + (p1.x - p0.x) * 0.5f;
-  out->y = p0.y + (p1.y - p0.y) * 0.5f;
-  out->z = p0.z + (p1.z - p0.z) * 0.5f;
-  out->w = p0.w + (p1.w - p0.w) * 0.5f;
+  out->x = VfAdd(p0.x, VfMul(VfSub(p1.x, p0.x), 0.5f));
+  out->y = VfAdd(p0.y, VfMul(VfSub(p1.y, p0.y), 0.5f));
+  out->z = VfAdd(p0.z, VfMul(VfSub(p1.z, p0.z), 0.5f));
+  out->w = VfAdd(p0.w, VfMul(VfSub(p1.w, p0.w), 0.5f));
   return distSq <= r * r;
 }

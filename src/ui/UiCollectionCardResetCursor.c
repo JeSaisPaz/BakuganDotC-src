@@ -62,7 +62,7 @@ void UiCollectionCardResetCursor(UiCollectionCard *self)
   for (i = 0; i < 4; i++) {
     if (self->slots[i + self->page * 4] != 0xff) {
       float y = self->bobPos[i][1];
-      float c = __builtin_cosf(self->bobT * 3.14159274f);
+      float c = VfCosQuarter(VfMul(self->bobT * 3.14159274f, 0.636619747f));
 
       sprites[13 + i]->posY = y - (1.0f - c) * 0.5f * 8.0f;
     }

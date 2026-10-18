@@ -34,14 +34,14 @@ void ActorBallUpdateGround(CoreObject *obj)
     ball->groundPoint[1] = g_collisionHitResult.point.y;
     ball->groundPoint[2] = g_collisionHitResult.point.z;
     ball->groundPoint[3] = g_collisionHitResult.point.w;
-    n[0] = ball->groundNormal[0] + (g_collisionHitResult.normal.x - ball->groundNormal[0]) * 0.5f;
-    n[1] = ball->groundNormal[1] + (g_collisionHitResult.normal.y - ball->groundNormal[1]) * 0.5f;
-    n[2] = ball->groundNormal[2] + (g_collisionHitResult.normal.z - ball->groundNormal[2]) * 0.5f;
-    n[3] = ball->groundNormal[3] + (g_collisionHitResult.normal.w - ball->groundNormal[3]) * 0.5f;
-    s = n[0] * n[0] + n[1] * n[1] + n[2] * n[2];
+    n[0] = VfAdd(ball->groundNormal[0], VfMul(VfSub(g_collisionHitResult.normal.x, ball->groundNormal[0]), 0.5f));
+    n[1] = VfAdd(ball->groundNormal[1], VfMul(VfSub(g_collisionHitResult.normal.y, ball->groundNormal[1]), 0.5f));
+    n[2] = VfAdd(ball->groundNormal[2], VfMul(VfSub(g_collisionHitResult.normal.z, ball->groundNormal[2]), 0.5f));
+    n[3] = VfAdd(ball->groundNormal[3], VfMul(VfSub(g_collisionHitResult.normal.w, ball->groundNormal[3]), 0.5f));
+    s = VfDot3(n[0], n[1], n[2], n[0], n[1], n[2]);
     s = VfIsZero(s) ? 0.0f : VfRsq(s);
     for (i = 0; i < 3; i++) {
-      ball->groundNormal[i] = VfSat1(n[i] * s);
+      ball->groundNormal[i] = VfSat1(VfMul(n[i], s));
     }
     ball->groundNormal[3] = 0.0f;
   }

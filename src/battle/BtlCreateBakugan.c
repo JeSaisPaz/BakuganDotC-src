@@ -96,10 +96,10 @@ void *BtlCreateBakugan(int kind, int mode, const float *spawn)
         unit->base.color[2] = 0.55f;
         unit->base.color[3] = 1.0f;
         /* ambient *= 0.7 (vscl.q), then alpha = 1 */
-        unit->base.ambient[0] *= 0.7f;
-        unit->base.ambient[1] *= 0.7f;
-        unit->base.ambient[2] *= 0.7f;
-        unit->base.ambient[3] *= 0.7f;
+        unit->base.ambient[0] = VfMul(unit->base.ambient[0], 0.7f);
+        unit->base.ambient[1] = VfMul(unit->base.ambient[1], 0.7f);
+        unit->base.ambient[2] = VfMul(unit->base.ambient[2], 0.7f);
+        unit->base.ambient[3] = VfMul(unit->base.ambient[3], 0.7f);
         unit->base.ambient[3] = 1.0f;
     }
     if (spawnPos != NULL) {

@@ -23,7 +23,7 @@ void GfxPuffKindFlash(GfxPuff *puff)
         puff->base.billboardMode = 0;
         puff->step = puff->step + 1;
         puff->param170 = 2.0f;
-        rot = (PlatformRandFloat12() - 1.0f) * 6.28318548f - 3.14159274f;
+        rot = VfSub(VfMul(VfSub(PlatformRandFloat12(), 1.0f), 6.28318548f), 3.14159274f);
         puff->base.maybe_billboardParams80[2] = rot;
     } else {
         size = puff->base.width + puff->param170;

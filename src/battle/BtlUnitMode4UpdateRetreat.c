@@ -87,10 +87,10 @@ void BtlUnitMode4UpdateRetreat(BtlUnitMode4 *self)
         point[3] = self->retreatPoint[3];
         BtlUnitMode4MoveTowardPoint(self, point);
         /* dist = |pos.xyz - retreatPoint.xyz| */
-        dx = unit->base.pos[0] - self->retreatPoint[0];
-        dy = unit->base.pos[1] - self->retreatPoint[1];
-        dz = unit->base.pos[2] - self->retreatPoint[2];
-        dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+        dx = VfSub(unit->base.pos[0], self->retreatPoint[0]);
+        dy = VfSub(unit->base.pos[1], self->retreatPoint[1]);
+        dz = VfSub(unit->base.pos[2], self->retreatPoint[2]);
+        dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
         if (dist < 150.0f) {
             self->retreatStep = 0x14;
         }

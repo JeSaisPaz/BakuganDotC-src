@@ -238,9 +238,9 @@ u32 GameFieldHandleInput(CoreTask *task)
       v[1] = (float)rec->eventFocus[1] * 0.000244140625f;
       v[2] = (float)rec->eventFocus[2] * 0.000244140625f;
       /* vscl.t + sv.q: lanes x, y, z; lane w is a stale VFPU value, left out */
-      actor->focusPoint[0] = v[0] * 20.0f;
-      actor->focusPoint[1] = v[1] * 20.0f;
-      actor->focusPoint[2] = v[2] * 20.0f;
+      actor->focusPoint[0] = VfMul(v[0], 20.0f);
+      actor->focusPoint[1] = VfMul(v[1], 20.0f);
+      actor->focusPoint[2] = VfMul(v[2], 20.0f);
     } else {
       GameFieldStartEvent(task, eventId, 0, 0, false);
       GameFieldCharSetFreezeAll(field->charSet);

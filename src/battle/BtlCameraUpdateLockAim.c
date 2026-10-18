@@ -31,10 +31,10 @@ static inline float BtlLockAimNegWrapAngle(float a)
 /* Quaternion product s * t, w last (vqmul.q). */
 static inline void BtlLockAimQuatMul(float *d, const float *s, const float *t)
 {
-    d[0] = s[0] * t[3] + s[1] * t[2] - s[2] * t[1] + s[3] * t[0];
-    d[1] = -s[0] * t[2] + s[1] * t[3] + s[2] * t[0] + s[3] * t[1];
-    d[2] = s[0] * t[1] - s[1] * t[0] + s[2] * t[3] + s[3] * t[2];
-    d[3] = -s[0] * t[0] - s[1] * t[1] - s[2] * t[2] + s[3] * t[3];
+    d[0] = VfDot4(s[0], s[1], s[2], s[3], t[3], t[2], -t[1], t[0]);
+    d[1] = VfDot4(-s[0], s[1], s[2], s[3], t[2], t[3], t[0], t[1]);
+    d[2] = VfDot4(s[0], s[1], s[2], s[3], t[1], -t[0], t[3], t[2]);
+    d[3] = VfDot4(-s[0], s[1], s[2], s[3], t[0], -t[1], -t[2], t[3]);
 }
 
 void BtlCameraUpdateLockAim(BtlCamera *camera, char snap)
@@ -68,9 +68,9 @@ void BtlCameraUpdateLockAim(BtlCamera *camera, char snap)
 
     /* dist = horizontal distance unit -> foe (y lane zeroed) */
     unit = (BtlBakugan *)camera->target;
-    dx = foe->base.pos[0] - unit->base.pos[0];
-    dz = foe->base.pos[2] - unit->base.pos[2];
-    dist = __builtin_sqrtf(dx * dx + dz * dz);
+    dx = VfSub(foe->base.pos[0], unit->base.pos[0]);
+    dz = VfSub(foe->base.pos[2], unit->base.pos[2]);
+    dist = VfSqrt(VfDot2(dx, dz, dx, dz));
     scaled = dist * 0.00076923077f;
     if (!(scaled <= 1.2f)) {
         scaled = 1.2f;
@@ -116,7 +116,7 @@ void BtlCameraUpdateLockAim(BtlCamera *camera, char snap)
         half[i] = camera->focusPoint[i];
     }
     for (i = 0; i < 4; i++) {
-        camera->focusPoint[i] = half[i] + (foe->base.pos[i] - half[i]) * 0.5f;
+        camera->focusPoint[i] = VfAdd(half[i], VfMul(VfSub(foe->base.pos[i], half[i]), 0.5f));
     }
     camera->focusPoint[1] = camera->focusPoint[1] + camera->kindParam3;
     for (i = 0; i < 4; i++) {
@@ -124,11 +124,11 @@ void BtlCameraUpdateLockAim(BtlCamera *camera, char snap)
     }
 
     /* yaw of eye -> lookPoint against the yaw of lookPoint -> focusPoint */
-    eyeAngle = atan2f(camera->lookPoint[2] - camera->base.eye[2],
-                      camera->lookPoint[0] - camera->base.eye[0]);
+    eyeAngle = atan2f(VfSub(camera->lookPoint[2], camera->base.eye[2]),
+                      VfSub(camera->lookPoint[0], camera->base.eye[0]));
     diff = BtlLockAimNegWrapAngle(
-        eyeAngle - atan2f(camera->focusPoint[2] - camera->lookPoint[2],
-                          camera->focusPoint[0] - camera->lookPoint[0]));
+        eyeAngle - atan2f(VfSub(camera->focusPoint[2], camera->lookPoint[2]),
+                          VfSub(camera->focusPoint[0], camera->lookPoint[0])));
 
     /* turn only past the 80-degree cone, narrowed as the foe gets farther */
     outer = 1.3962634f - (1.0f - near) * 1.3962634f * 0.7f;
@@ -143,9 +143,9 @@ void BtlCameraUpdateLockAim(BtlCamera *camera, char snap)
 
     /* offset = (cos yaw, 0, sin yaw, 0) * -param[2] (vrot of yaw * 2/pi, vscl.t) */
     k = -camera->kindParams->param[2];
-    offset[0] = __builtin_cosf(eyeAngle) * k;
-    offset[1] = 0.0f * k;
-    offset[2] = __builtin_sinf(eyeAngle) * k;
+    offset[0] = VfMul(VfCosQuarter(VfMul(eyeAngle, 0.636619747f)), k);
+    offset[1] = VfMul(0.0f, k);
+    offset[2] = VfMul(VfSinQuarter(VfMul(eyeAngle, 0.636619747f)), k);
     offset[3] = 0.0f;
 
     camera->lockOnElevation = BtlCameraCalcLockOnPitch(
@@ -157,21 +157,21 @@ void BtlCameraUpdateLockAim(BtlCamera *camera, char snap)
     side[0] = offset[2];
     side[1] = offset[1];
     side[2] = -offset[0];
-    lenSq = side[0] * side[0] + side[1] * side[1] + side[2] * side[2];
+    lenSq = VfDot3(side[0], side[1], side[2], side[0], side[1], side[2]);
     rs = VfRsq(lenSq);
     if (VfIsZero(lenSq)) {
         rs = 0.0f;
     }
-    side[0] = VfSat1(side[0] * rs);
-    side[1] = VfSat1(side[1] * rs);
-    side[2] = VfSat1(side[2] * rs);
+    side[0] = VfSat1(VfMul(side[0], rs));
+    side[1] = VfSat1(VfMul(side[1], rs));
+    side[2] = VfSat1(VfMul(side[2], rs));
     side[3] = 0.0f;
-    a = 0.31830987f * -camera->lockOnElevation;
+    a = VfMul(0.31830987f, -camera->lockOnElevation);
     c = VfCosQuarter(a);
     s = VfSinQuarter(a);
-    quat[0] = side[0] * s;
-    quat[1] = side[1] * s;
-    quat[2] = side[2] * s;
+    quat[0] = VfMul(side[0], s);
+    quat[1] = VfMul(side[1], s);
+    quat[2] = VfMul(side[2], s);
     quat[3] = c;
 
     camera->lockOnCatchUp = 0.0f;
@@ -184,9 +184,9 @@ void BtlCameraUpdateLockAim(BtlCamera *camera, char snap)
         offset[3] = 0.0f;
         BtlLockAimQuatMul(half, quat, offset);
         BtlLockAimQuatMul(rotated, half, conj);
-        camera->base.eye[0] = camera->lookPoint[0] + rotated[0];
-        camera->base.eye[1] = camera->lookPoint[1] + rotated[1];
-        camera->base.eye[2] = camera->lookPoint[2] + rotated[2];
+        camera->base.eye[0] = VfAdd(camera->lookPoint[0], rotated[0]);
+        camera->base.eye[1] = VfAdd(camera->lookPoint[1], rotated[1]);
+        camera->base.eye[2] = VfAdd(camera->lookPoint[2], rotated[2]);
         camera->base.eye[3] = camera->lookPoint[3];
         for (i = 0; i < 4; i++) {
             camera->base.target[i] = camera->focusPoint[i];

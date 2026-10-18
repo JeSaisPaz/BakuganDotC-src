@@ -43,13 +43,13 @@ void BtlAiWanderRun(BtlAi *self)
         radius = CoreRandFloat(2000.0f);
         angle = CoreRandAngle();
         /* goal.xyz = home.xyz + radius * (cos, 0, sin)(angle); goal.w = 0 */
-        goal[0] = __builtin_cosf(angle) * radius;
-        goal[1] = 0.0f * radius;
-        goal[2] = __builtin_sinf(angle) * radius;
+        goal[0] = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), radius);
+        goal[1] = VfMul(0.0f, radius);
+        goal[2] = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), radius);
         goal[3] = 0.0f;
-        goal[0] = goal[0] + self->wander.home[0];
-        goal[1] = goal[1] + self->wander.home[1];
-        goal[2] = goal[2] + self->wander.home[2];
+        goal[0] = VfAdd(goal[0], self->wander.home[0]);
+        goal[1] = VfAdd(goal[1], self->wander.home[1]);
+        goal[2] = VfAdd(goal[2], self->wander.home[2]);
         BtlAiSetGoalPoint(self, goal);
         layer->state = layer->state + 1;
     } else if (state == 2) {

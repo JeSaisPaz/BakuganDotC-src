@@ -83,7 +83,7 @@ void ActorCrystalUpdateFade(ActorCrystal *self)
     } else if (!(angle <= CRYSTAL_HALF_PI)) {
       angle = CRYSTAL_HALF_PI;
     }
-    alpha = __builtin_sinf(angle);
+    alpha = VfSinQuarter(VfMul(angle, 0.636619747f));
     self->base.base.ambient[3] = alpha;
     GfxModelScaleAmbientColor(alpha, &self->base.base, NULL);
     GfxModelScaleAmbientColorByName(alpha * 0.5f, &self->base.base, "mat_spel");
@@ -159,7 +159,7 @@ void ActorCrystalUpdateFade(ActorCrystal *self)
     } else if (!(angle <= CRYSTAL_HALF_PI)) {
       angle = CRYSTAL_HALF_PI;
     }
-    alpha = __builtin_sinf(angle);
+    alpha = VfSinQuarter(VfMul(angle, 0.636619747f));
     self->base.base.ambient[3] = alpha;
     GfxModelScaleAmbientColor(alpha, &self->base.base, NULL);
     GfxModelScaleAmbientColorByName(alpha * 0.5f, &self->base.base, "mat_spel");

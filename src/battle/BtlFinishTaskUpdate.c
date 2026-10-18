@@ -14,14 +14,14 @@ static int UnitVirtual(BtlBakugan *unit, int slot)
 static void RotateCamDir(BtlFinishTask *task)
 {
     float angle = 0x1.0bd084p+1f;
-    float c = __builtin_cosf(angle);
-    float s = __builtin_sinf(angle);
+    float c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    float s = VfSinQuarter(VfMul(angle, 0.636619747f));
     float x = task->camDir[0];
     float y = task->camDir[1];
     float z = task->camDir[2];
 
-    task->camDir[0] = x * c + y * 0.0f + z * -s;
-    task->camDir[2] = x * s + y * 0.0f + z * c;
+    task->camDir[0] = VfDot3(x, y, z, c, 0.0f, -s);
+    task->camDir[2] = VfDot3(x, y, z, s, 0.0f, c);
 }
 
 /* Runs the world effects the cinematic shows (ids 0x82, 0x1e4, 0x1f, 0x20, 0xa9) and the mesh
@@ -221,7 +221,7 @@ void BtlFinishTaskUpdate(BtlFinishTask *task)
 
     if (task->farCamera == 0) {
         task->camDistance = 300.0f;
-        c = __builtin_cosf(task->camBlend * task->camBlend * 3.14159274f);
+        c = VfCosQuarter(VfMul(task->camBlend * task->camBlend * 3.14159274f, 0.636619747f));
         zoom = 1.14999998f - (1.0f - c) * 0.5f * 0.400000006f;
         if (unit != NULL) {
             zoom = unit->height * 0x1.111112p-7f * zoom;
@@ -233,9 +233,9 @@ void BtlFinishTaskUpdate(BtlFinishTask *task)
         /* eye = focus + camDir * camDistance (xyz; w from focus) */
         float dist = task->camDistance;
 
-        task->camera.eye[0] = focus[0] + task->camDir[0] * dist;
-        task->camera.eye[1] = focus[1] + task->camDir[1] * dist;
-        task->camera.eye[2] = focus[2] + task->camDir[2] * dist;
+        task->camera.eye[0] = VfAdd(focus[0], VfMul(task->camDir[0], dist));
+        task->camera.eye[1] = VfAdd(focus[1], VfMul(task->camDir[1], dist));
+        task->camera.eye[2] = VfAdd(focus[2], VfMul(task->camDir[2], dist));
         task->camera.eye[3] = focus[3];
     }
     task->camera.target[0] = focus[0];

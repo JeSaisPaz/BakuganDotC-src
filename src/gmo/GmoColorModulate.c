@@ -18,9 +18,9 @@ u32 *GmoColorModulate(u32 *dst, const u32 *a, const u32 *b)
     u32 bb = (pb >> (i * 8)) & 0xff;
     float fa = (float)(int)(ba * 0x01010101u >> 1) / 2147483648.0f;
     float fb = (float)(int)(bb * 0x01010101u >> 1) / 2147483648.0f;
-    float prod = fa * fb;
+    float prod = VfMul(fa, fb);
 
-    result |= (u32)VfI2uc(VfF2iz(prod * 255.0f, 23)) << (i * 8);
+    result |= (u32)VfI2uc(VfF2iz(VfMul(prod, 255.0f), 23)) << (i * 8);
   }
   *dst = result;
   return dst;

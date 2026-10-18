@@ -16,7 +16,7 @@ static inline void ActorBallTrailLerpToSprite(float *dst, const float *from, con
   int k;
 
   for (k = 0; k < 4; k++) {
-    mid[k] = from[k] + (to[k] - from[k]) * factor;
+    mid[k] = VfAdd(from[k], VfMul(VfSub(to[k], from[k]), factor));
   }
   for (k = 0; k < 4; k++) {
     dst[k] = mid[k];

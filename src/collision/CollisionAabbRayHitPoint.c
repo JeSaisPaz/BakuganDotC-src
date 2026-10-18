@@ -18,12 +18,12 @@ bool CollisionAabbRayHitPoint(const float *aabb, const void *ray, ScePspFVector4
     hit = CollisionBvhTestRay(aabb, ray);
     if (hit) {
         t = g_collisionClosestParams[0];
-        x = r->dir.x * t;
-        y = r->dir.y * t;
-        z = r->dir.z * t;
-        x = r->origin.x + x;
-        y = r->origin.y + y;
-        z = r->origin.z + z;
+        x = VfMul(r->dir.x, t);
+        y = VfMul(r->dir.y, t);
+        z = VfMul(r->dir.z, t);
+        x = VfAdd(r->origin.x, x);
+        y = VfAdd(r->origin.y, y);
+        z = VfAdd(r->origin.z, z);
         w = r->origin.w;
         out->x = x;
         out->y = y;

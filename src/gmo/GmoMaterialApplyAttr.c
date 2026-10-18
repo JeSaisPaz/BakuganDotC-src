@@ -69,8 +69,8 @@ void GmoMaterialApplyAttr(float weight, void *mat, s32 type, s32 index, const fl
   packed = 0;
   for (lane = 0; lane < 4; lane++) {
     c = (float)(s32)(((word >> (lane * 8)) & 0xffu) * 0x01010101u >> 1) / 2147483648.0f;
-    c = c + (v[lane] - c) * weight;
-    packed |= (u32)VfI2uc(VfF2iz(VfSat0(c) * 255.0f, 23)) << (lane * 8);
+    c = VfAdd(c, VfMul(VfSub(v[lane], c), weight));
+    packed |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(c), 255.0f), 23)) << (lane * 8);
   }
   *rgba = packed;
   if (type == 0x82) {

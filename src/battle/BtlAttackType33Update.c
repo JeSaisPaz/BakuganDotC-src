@@ -22,9 +22,9 @@ void BtlAttackType33Update(BtlAttack *self)
     if (self->age == 0) {
         self->pos[1] = self->pos[1] + 30.0f;
         /* pos.xyz += dir.xyz * 65 */
-        self->pos[0] = self->pos[0] + self->dir[0] * 65.0f;
-        self->pos[1] = self->pos[1] + self->dir[1] * 65.0f;
-        self->pos[2] = self->pos[2] + self->dir[2] * 65.0f;
+        self->pos[0] = VfAdd(self->pos[0], VfMul(self->dir[0], 65.0f));
+        self->pos[1] = VfAdd(self->pos[1], VfMul(self->dir[1], 65.0f));
+        self->pos[2] = VfAdd(self->pos[2], VfMul(self->dir[2], 65.0f));
         self->turnRate = 1.0f;
         BtlAttackSteerToTarget(0.0f, 40.0f, self, 1, NULL);
         self->turnRate = 0.0199999996f;
@@ -48,7 +48,7 @@ void BtlAttackType33Update(BtlAttack *self)
     effect->dir[1] = self->dir[1];
     effect->dir[2] = self->dir[2];
     effect->dir[3] = self->dir[3];
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

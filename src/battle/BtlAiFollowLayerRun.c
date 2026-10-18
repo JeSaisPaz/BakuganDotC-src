@@ -45,9 +45,9 @@ void BtlAiFollowLayerRun(BtlAi *self)
         angle = CoreRandAngle();
         /* point.xyz = (cos a, 0, sin a) * dist + leader pos; w = 0 from the rotation */
         leaderPos = self->follow.leader->base.pos;
-        point[0] = __builtin_cosf(angle) * dist + leaderPos[0];
-        point[1] = 0.0f * dist + leaderPos[1];
-        point[2] = __builtin_sinf(angle) * dist + leaderPos[2];
+        point[0] = VfAdd(VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), dist), leaderPos[0]);
+        point[1] = VfAdd(VfMul(0.0f, dist), leaderPos[1]);
+        point[2] = VfAdd(VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), dist), leaderPos[2]);
         point[3] = 0.0f;
         BtlAiSetGoalPoint(self, point);
         layer->state = layer->state + 1;

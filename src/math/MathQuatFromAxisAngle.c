@@ -9,13 +9,13 @@ float *MathQuatFromAxisAngle(float angle, float *out, const float *axis)
     float x = axis[0];
     float y = axis[1];
     float z = axis[2];
-    float t = 0.318309873f * angle;
+    float t = VfMul(0.318309873f, angle);
     float c = VfCosQuarter(t);
     float s = VfSinQuarter(t);
 
-    out[0] = x * s;
-    out[1] = y * s;
-    out[2] = z * s;
+    out[0] = VfMul(x, s);
+    out[1] = VfMul(y, s);
+    out[2] = VfMul(z, s);
     out[3] = c;
     return out;
 }

@@ -40,7 +40,7 @@ void UiTalkBalloonDrawQuad(float extraWidth, void *packet, float *pos, float *co
   /* Colour pack: lane = clamp(color * 255) to a byte (S701 is the bank's 255.0). */
   packed = 0;
   for (col = 0; col < 4; col++) {
-    packed |= (u32)VfI2uc(VfF2iz(VfSat0(color[col]) * 255.0f, 23)) << (col * 8);
+    packed |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(color[col]), 255.0f), 23)) << (col * 8);
   }
   dl[0] = (packed & 0xffffff) | 0x55000000; /* material colour */
   dl[1] = (packed >> 24) | 0x58000000;      /* material alpha */

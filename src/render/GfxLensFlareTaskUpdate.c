@@ -105,8 +105,8 @@ void GfxLensFlareTaskUpdate(CoreTask *task)
     size = ((float)i * 0.5f + 1.0f) * g_gfxLensFlareElems[i].size;
     along = along + g_gfxLensFlareElems[i].step;
     /* lerped = screen + (center - screen) * along (vsub.q/vscl.q/vadd.q) */
-    lerped[0] = screen[0] + (center[0] - screen[0]) * along;
-    lerped[1] = screen[1] + (center[1] - screen[1]) * along;
+    lerped[0] = VfAdd(screen[0], VfMul(VfSub(center[0], screen[0]), along));
+    lerped[1] = VfAdd(screen[1], VfMul(VfSub(center[1], screen[1]), along));
     self->sprites[i]->posX = lerped[0];
     self->sprites[i]->posY = lerped[1];
     UiSpriteSetSize(size, size, self->sprites[i]);

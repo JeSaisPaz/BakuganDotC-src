@@ -22,9 +22,9 @@ void BtlCameraRebaseToOrigin(float *saved)
     eye[3] = 0.0f;
 
     target = g_gfxActiveCamera->target;
-    target[0] = target[0] - saved[0];
-    target[1] = target[1] - saved[1];
-    target[2] = target[2] - saved[2];
+    target[0] = VfSub(target[0], saved[0]);
+    target[1] = VfSub(target[1], saved[1]);
+    target[2] = VfSub(target[2], saved[2]);
 
     GfxCameraUpdate(g_gfxActiveCamera, 1);
 }

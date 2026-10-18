@@ -15,7 +15,7 @@
 /* floor(v) as the asm computes it: vf2id.s (round towards -inf) then vi2f.s back to float */
 static inline float UiTextPrinterFloor(float v)
 {
-  return (float)(int)floorf(v);
+  return (float)VfF2id(v, 0);
 }
 
 /* vec4 copy src -> dst (lv.q/sv.q in the asm) */

@@ -30,10 +30,10 @@ typedef void (*GmoMaterialAnimFn)(u32 **list, void *arg);
 /* Column `col` of `a * b` (`vmmul.q`): the sum over k of col[k] * column k of `a`. */
 static void GmoDlMat4MulColumn(ScePspFVector4 *d, const ScePspFMatrix4 *a, const ScePspFVector4 *col)
 {
-  d->x = col->x * a->x.x + col->y * a->y.x + col->z * a->z.x + col->w * a->w.x;
-  d->y = col->x * a->x.y + col->y * a->y.y + col->z * a->z.y + col->w * a->w.y;
-  d->z = col->x * a->x.z + col->y * a->y.z + col->z * a->z.z + col->w * a->w.z;
-  d->w = col->x * a->x.w + col->y * a->y.w + col->z * a->z.w + col->w * a->w.w;
+  d->x = VfDot4(col->x, col->y, col->z, col->w, a->x.x, a->y.x, a->z.x, a->w.x);
+  d->y = VfDot4(col->x, col->y, col->z, col->w, a->x.y, a->y.y, a->z.y, a->w.y);
+  d->z = VfDot4(col->x, col->y, col->z, col->w, a->x.z, a->y.z, a->z.z, a->w.z);
+  d->w = VfDot4(col->x, col->y, col->z, col->w, a->x.w, a->y.w, a->z.w, a->w.w);
 }
 
 /* `out = a * b` in the engine's column-major layout (`vmmul.q M000, M100, M200`); `out` must not
@@ -190,27 +190,27 @@ u32 GmoDlWriteMeshRenderState(GmoDlContext *self, GmoMaterial *material, GmoMode
     /* Re-orthonormalise the columns: z = x × y, x = y × z (`vcrsp.t`, `w` zeroed by `vzero.t R003`),
        each of x, y, z scaled by 1/|v| (`vdot.t`, `vrsq.t`, `vscl.t`); y keeps its `w`. */
     tmp = texMtx.m;
-    z.x = tmp.x.y * tmp.y.z - tmp.x.z * tmp.y.y;
-    z.y = tmp.x.z * tmp.y.x - tmp.x.x * tmp.y.z;
-    z.z = tmp.x.x * tmp.y.y - tmp.x.y * tmp.y.x;
+    z.x = VfDot2(tmp.x.y, tmp.x.z, tmp.y.z, -tmp.y.y);
+    z.y = VfDot2(tmp.x.z, tmp.x.x, tmp.y.x, -tmp.y.z);
+    z.z = VfDot2(tmp.x.x, tmp.x.y, tmp.y.y, -tmp.y.x);
     z.w = 0.0f;
-    x.x = tmp.y.y * z.z - tmp.y.z * z.y;
-    x.y = tmp.y.z * z.x - tmp.y.x * z.z;
-    x.z = tmp.y.x * z.y - tmp.y.y * z.x;
+    x.x = VfDot2(tmp.y.y, tmp.y.z, z.z, -z.y);
+    x.y = VfDot2(tmp.y.z, tmp.y.x, z.x, -z.z);
+    x.z = VfDot2(tmp.y.x, tmp.y.y, z.y, -z.x);
     x.w = 0.0f;
-    kx = VfRsq(x.x * x.x + x.y * x.y + x.z * x.z);
-    ky = VfRsq(tmp.y.x * tmp.y.x + tmp.y.y * tmp.y.y + tmp.y.z * tmp.y.z);
-    kz = VfRsq(z.x * z.x + z.y * z.y + z.z * z.z);
-    texMtx.m.x.x = x.x * kx;
-    texMtx.m.x.y = x.y * kx;
-    texMtx.m.x.z = x.z * kx;
+    kx = VfRsq(VfDot3(x.x, x.y, x.z, x.x, x.y, x.z));
+    ky = VfRsq(VfDot3(tmp.y.x, tmp.y.y, tmp.y.z, tmp.y.x, tmp.y.y, tmp.y.z));
+    kz = VfRsq(VfDot3(z.x, z.y, z.z, z.x, z.y, z.z));
+    texMtx.m.x.x = VfMul(x.x, kx);
+    texMtx.m.x.y = VfMul(x.y, kx);
+    texMtx.m.x.z = VfMul(x.z, kx);
     texMtx.m.x.w = x.w;
-    texMtx.m.y.x = tmp.y.x * ky;
-    texMtx.m.y.y = tmp.y.y * ky;
-    texMtx.m.y.z = tmp.y.z * ky;
-    texMtx.m.z.x = z.x * kz;
-    texMtx.m.z.y = z.y * kz;
-    texMtx.m.z.z = z.z * kz;
+    texMtx.m.y.x = VfMul(tmp.y.x, ky);
+    texMtx.m.y.y = VfMul(tmp.y.y, ky);
+    texMtx.m.y.z = VfMul(tmp.y.z, ky);
+    texMtx.m.z.x = VfMul(z.x, kz);
+    texMtx.m.z.y = VfMul(z.y, kz);
+    texMtx.m.z.z = VfMul(z.z, kz);
     texMtx.m.z.w = z.w;
     /* texMtx = camera->viewOrtho * texMtx. (The asm also spills the bank column C730 = (0, 0, 0, 1)
        to a stack slot nothing reads.) */

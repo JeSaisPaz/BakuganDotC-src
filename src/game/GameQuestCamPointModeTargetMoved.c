@@ -22,10 +22,10 @@ s32 GameQuestCamPointModeTargetMoved(GameQuestCamPointMode *self)
   owner = (CamMovedOwner *)self->base.base.base.followed;
   e = &owner->vtbl[2];
   pos = ((const ScePspFVector4 *(*)(void *))e->fn)((char *)owner + e->delta);
-  dx = self->base.targetPos.x - pos->x;
-  dy = self->base.targetPos.y - pos->y;
-  dz = self->base.targetPos.z - pos->z;
-  dist = dx * dx + dy * dy + dz * dz;
+  dx = VfSub(self->base.targetPos.x, pos->x);
+  dy = VfSub(self->base.targetPos.y, pos->y);
+  dz = VfSub(self->base.targetPos.z, pos->z);
+  dist = VfDot3(dx, dy, dz, dx, dy, dz);
   if (dist < 1.1920929e-07f) {
     return 0;
   }

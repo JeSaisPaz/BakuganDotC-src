@@ -87,19 +87,19 @@ void GameFieldCameraBeginTalkViewWith(GameFieldCamera *cam, Actor *other)
   }
   target = (Actor *)cam->target;
   /* delta = other - target (xyz), w from other */
-  delta.x = other->base.pos[0] - target->base.pos[0];
-  delta.y = other->base.pos[1] - target->base.pos[1];
-  delta.z = other->base.pos[2] - target->base.pos[2];
+  delta.x = VfSub(other->base.pos[0], target->base.pos[0]);
+  delta.y = VfSub(other->base.pos[1], target->base.pos[1]);
+  delta.z = VfSub(other->base.pos[2], target->base.pos[2]);
   delta.w = other->base.pos[3];
   /* side = 15 units along heading (vrot [C,0,S,0], vscl.t leaves w = 0) */
-  side.x = __builtin_cosf(heading) * 15.0f;
+  side.x = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), 15.0f);
   side.y = 0.0f * 15.0f;
-  side.z = __builtin_sinf(heading) * 15.0f;
+  side.z = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), 15.0f);
   side.w = 0.0f;
   target = (Actor *)cam->target;
-  base.x = target->base.pos[0] + side.x;
-  base.y = target->base.pos[1] + side.y;
-  base.z = target->base.pos[2] + side.z;
+  base.x = VfAdd(target->base.pos[0], side.x);
+  base.y = VfAdd(target->base.pos[1], side.y);
+  base.z = VfAdd(target->base.pos[2], side.z);
   base.w = target->base.pos[3];
   if (!(cam->talkSideOffset <= 3.1415927f)) {
     cam->talkSideOffset = cam->talkSideOffset - 6.2831855f;
@@ -109,9 +109,9 @@ void GameFieldCameraBeginTalkViewWith(GameFieldCamera *cam, Actor *other)
   }
   yaw = cam->talkSideOffset;
   cam->yaw = yaw;
-  len = __builtin_sqrtf(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
+  len = VfSqrt(VfDot3(delta.x, delta.y, delta.z, delta.x, delta.y, delta.z));
   cam->talkEye.y = len;
-  cam->talkEye.y = len / __builtin_cosf(0.0f);
+  cam->talkEye.y = len / VfCosQuarter(0.0f * 0.636619747f);
   yaw = yaw + 3.1415927f;
   if (!(yaw <= 3.1415927f)) {
     yaw = yaw - 6.2831855f;
@@ -120,12 +120,12 @@ void GameFieldCameraBeginTalkViewWith(GameFieldCamera *cam, Actor *other)
     yaw = yaw + 6.2831855f;
   }
   len = cam->talkEye.y;
-  offset.x = __builtin_cosf(yaw) * len;
-  offset.y = 0.0f * len;
-  offset.z = __builtin_sinf(yaw) * len;
+  offset.x = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), len);
+  offset.y = VfMul(0.0f, len);
+  offset.z = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), len);
   offset.w = 0.0f;
-  cam->talkLookAt.x = base.x + offset.x;
-  cam->talkLookAt.y = base.y + offset.y;
-  cam->talkLookAt.z = base.z + offset.z;
+  cam->talkLookAt.x = VfAdd(base.x, offset.x);
+  cam->talkLookAt.y = VfAdd(base.y, offset.y);
+  cam->talkLookAt.z = VfAdd(base.z, offset.z);
   cam->talkLookAt.w = base.w;
 }

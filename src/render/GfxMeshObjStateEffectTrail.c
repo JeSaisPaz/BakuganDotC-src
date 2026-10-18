@@ -68,7 +68,7 @@ static void TrailScaleBasis(float *basis, const float *size)
 
   for (r = 0; r < 3; r++) {
     for (c = 0; c < 4; c++) {
-      basis[r * 4 + c] = basis[r * 4 + c] * size[r];
+      basis[r * 4 + c] = VfMul(basis[r * 4 + c], size[r]);
     }
   }
 }
@@ -83,8 +83,7 @@ static void TrailMat4Mul(float *out, const float *a, const float *b)
 
   for (j = 0; j < 4; j++) {
     for (i = 0; i < 4; i++) {
-      r[j * 4 + i] = b[j * 4 + 0] * a[0 + i] + b[j * 4 + 1] * a[4 + i] + b[j * 4 + 2] * a[8 + i]
-                     + b[j * 4 + 3] * a[12 + i];
+      r[j * 4 + i] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], a[0 + i], a[4 + i], a[8 + i], a[12 + i]);
     }
   }
   TrailCopy16(out, r);
@@ -102,15 +101,15 @@ static void TrailNormalize(float *out, const float *in)
   x = in[0];
   y = in[1];
   z = in[2];
-  s = x * x + y * y + z * z;
+  s = VfDot3(x, y, z, x, y, z);
   if (VfIsZero(s)) {
     s = 0.0f;
   } else {
     s = VfRsq(s);
   }
-  out[0] = VfSat1(x * s);
-  out[1] = VfSat1(y * s);
-  out[2] = VfSat1(z * s);
+  out[0] = VfSat1(VfMul(x, s));
+  out[1] = VfSat1(VfMul(y, s));
+  out[2] = VfSat1(VfMul(z, s));
 }
 
 /* out.xyz = a x b; out may alias a or b */
@@ -120,9 +119,9 @@ static void TrailCross(float *out, const float *a, const float *b)
   float y;
   float z;
 
-  x = a[1] * b[2] - a[2] * b[1];
-  y = a[2] * b[0] - a[0] * b[2];
-  z = a[0] * b[1] - a[1] * b[0];
+  x = VfDot2(a[1], a[2], b[2], -b[1]);
+  y = VfDot2(a[2], a[0], b[0], -b[2]);
+  z = VfDot2(a[0], a[1], b[1], -b[0]);
   out[0] = x;
   out[1] = y;
   out[2] = z;
@@ -136,7 +135,7 @@ static u32 TrailPackColor(const float *color)
 
   rgba = 0;
   for (i = 0; i < 4; i++) {
-    rgba |= (u32)VfI2uc(VfF2iz(VfSat0(color[i]) * 255.0f, 23)) << (i * 8);
+    rgba |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(color[i]), 255.0f), 23)) << (i * 8);
   }
   return rgba;
 }
@@ -147,8 +146,8 @@ static void TrailRotY(float *out, float angle)
   float c;
   float s;
 
-  c = __builtin_cosf(angle);
-  s = __builtin_sinf(angle);
+  c = VfCosQuarter(VfMul(angle, 0.636619747f));
+  s = VfSinQuarter(VfMul(angle, 0.636619747f));
   out[0] = c;
   out[1] = 0.0f;
   out[2] = -s;
@@ -417,9 +416,9 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
     widths = self->vertexBuffer;
     for (i = 0; i < self->patchCountV; i++) {
       p = &self->effectChain.points[i];
-      dir[0] = self->effectChain.points[i + 1].x - p->x;
-      dir[1] = self->effectChain.points[i + 1].y - p->y;
-      dir[2] = self->effectChain.points[i + 1].z - p->z;
+      dir[0] = VfSub(self->effectChain.points[i + 1].x, p->x);
+      dir[1] = VfSub(self->effectChain.points[i + 1].y, p->y);
+      dir[2] = VfSub(self->effectChain.points[i + 1].z, p->z);
       TrailNormalize(dir, dir);
       switch (self->mode) {
       case 0:
@@ -442,9 +441,9 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
         break;
       case 4:
         p = &self->effectChain.points[i];
-        toEye[0] = p->x - g_gfxActiveCamera->eye[0];
-        toEye[1] = p->y - g_gfxActiveCamera->eye[1];
-        toEye[2] = p->z - g_gfxActiveCamera->eye[2];
+        toEye[0] = VfSub(p->x, g_gfxActiveCamera->eye[0]);
+        toEye[1] = VfSub(p->y, g_gfxActiveCamera->eye[1]);
+        toEye[2] = VfSub(p->z, g_gfxActiveCamera->eye[2]);
         TrailNormalize(toEye, toEye);
         TrailCross(dir, dir, toEye);
         break;
@@ -452,20 +451,20 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
         break;
       }
       width = widths[i];
-      dir[0] = dir[0] * width;
-      dir[1] = dir[1] * width;
-      dir[2] = dir[2] * width;
+      dir[0] = VfMul(dir[0], width);
+      dir[1] = VfMul(dir[1], width);
+      dir[2] = VfMul(dir[2], width);
       p = &self->effectChain.points[i];
-      side3[0] = p->x + dir[0];
-      side3[1] = p->y + dir[1];
-      side3[2] = p->z + dir[2];
+      side3[0] = VfAdd(p->x, dir[0]);
+      side3[1] = VfAdd(p->y, dir[1]);
+      side3[2] = VfAdd(p->z, dir[2]);
       ((GfxGeColorVertexF *)self->vertices)[i * 2].x = side3[0];
       ((GfxGeColorVertexF *)self->vertices)[i * 2].y = side3[1];
       ((GfxGeColorVertexF *)self->vertices)[i * 2].z = side3[2];
       p = &self->effectChain.points[i];
-      side3[0] = p->x - dir[0];
-      side3[1] = p->y - dir[1];
-      side3[2] = p->z - dir[2];
+      side3[0] = VfSub(p->x, dir[0]);
+      side3[1] = VfSub(p->y, dir[1]);
+      side3[2] = VfSub(p->z, dir[2]);
       ((GfxGeColorVertexF *)self->vertices)[i * 2 + 1].x = side3[0];
       ((GfxGeColorVertexF *)self->vertices)[i * 2 + 1].y = side3[1];
       ((GfxGeColorVertexF *)self->vertices)[i * 2 + 1].z = side3[2];
@@ -530,13 +529,13 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
         p = &self->effectChain.points[v];
         /* x/z rotated by the Y rotation of `angle` (fields (c,0,-s), (s,0,c)), scaled by the
            radius, y kept, plus the centre */
-        c = __builtin_cosf(angle);
-        s = __builtin_sinf(angle);
-        rx = p->x * c + p->y * 0.0f + p->z * -s;
-        rz = p->x * s + p->y * 0.0f + p->z * c;
-        vert->x = rx * radius + center->x;
-        vert->y = p->y + center->y;
-        vert->z = rz * radius + center->z;
+        c = VfCosQuarter(VfMul(angle, 0.636619747f));
+        s = VfSinQuarter(VfMul(angle, 0.636619747f));
+        rx = VfDot3(p->x, p->y, p->z, c, 0.0f, -s);
+        rz = VfDot3(p->x, p->y, p->z, s, 0.0f, c);
+        vert->x = VfAdd(VfMul(rx, radius), center->x);
+        vert->y = VfAdd(p->y, center->y);
+        vert->z = VfAdd(VfMul(rz, radius), center->z);
         angle = angle + widths[v];
         if (!self->effectChain.ready) {
           center = center + 1;
@@ -558,8 +557,8 @@ void GfxMeshObjStateEffectTrail(GfxMeshObj *self)
       diag[0] = effect->size[0];
       diag[5] = effect->size[1];
       diag[10] = effect->size[2];
-      c = __builtin_cosf(effect->worldDir[2]);
-      s = __builtin_sinf(effect->worldDir[2]);
+      c = VfCosQuarter(VfMul(effect->worldDir[2], 0.636619747f));
+      s = VfSinQuarter(VfMul(effect->worldDir[2], 0.636619747f));
       TrailIdentity(look);
       look[0] = c;
       look[1] = s;

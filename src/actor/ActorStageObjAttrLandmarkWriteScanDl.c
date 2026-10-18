@@ -25,10 +25,8 @@ void ActorStageObjAttrLandmarkWriteScanDl(u32 **dl, const float *scroll)
   u32 cmd;
   float c;
   float s;
-  float sum;
   int col;
   int row;
-  int k;
 
   p = GfxTextureWriteCall(g_attrLandmarkScanTex, *dl, 0);
   *dl = p;
@@ -69,8 +67,8 @@ void ActorStageObjAttrLandmarkWriteScanDl(u32 **dl, const float *scroll)
   mat[3][0] = mat[3][0] - scroll[0];
 
   /* rot columns: (c, 0, -s, 0), (0, 1, 0, 0), (s, 0, c, 0), (0, 0, 0, 1) for the angle pi/2. */
-  c = __builtin_cosf(VF_PI_2);
-  s = __builtin_sinf(VF_PI_2);
+  c = VfCosQuarter(VF_PI_2 * 0.636619747f);
+  s = VfSinQuarter(VF_PI_2 * 0.636619747f);
   for (col = 0; col < 4; col++) {
     for (row = 0; row < 4; row++) {
       rot[col][row] = 0.0f;
@@ -86,11 +84,8 @@ void ActorStageObjAttrLandmarkWriteScanDl(u32 **dl, const float *scroll)
   /* vmmul.q E200, E100, E000: out = mat * rot, out[col][row] = sum_k mat[col][k] * rot[k][row]. */
   for (col = 0; col < 4; col++) {
     for (row = 0; row < 4; row++) {
-      sum = 0.0f;
-      for (k = 0; k < 4; k++) {
-        sum = sum + mat[col][k] * rot[k][row];
-      }
-      out[col][row] = sum;
+      out[col][row] = VfDot4(mat[col][0], mat[col][1], mat[col][2], mat[col][3],
+                             rot[0][row], rot[1][row], rot[2][row], rot[3][row]);
     }
   }
 

@@ -17,12 +17,12 @@ void GfxEffectRandomPointInRing(float rMin, float rMax, float span, float *out)
         span = 6.28318548f;
     }
     width = rMax - rMin;
-    ang = span * (PlatformRandFloat12() - 1.0f);
+    ang = span * (VfSub(PlatformRandFloat12(), 1.0f));
     ang = ang - 3.14159274f;
     width = width * width;
-    width = width * (PlatformRandFloat12() - 1.0f);
+    width = width * (VfSub(PlatformRandFloat12(), 1.0f));
     rad = __builtin_sqrtf(width + rMin * rMin);
-    out[0] = __builtin_sinf(ang) * rad;
-    out[1] = __builtin_cosf(ang) * rad;
+    out[0] = VfSinQuarter(VfMul(ang, 0.636619747f)) * rad;
+    out[1] = VfCosQuarter(VfMul(ang, 0.636619747f)) * rad;
     out[2] = 0.0f;
 }

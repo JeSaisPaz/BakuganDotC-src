@@ -30,19 +30,17 @@ void *ActorNpcRobotCtor(ActorNpc *self, s32 modelId)
     self->base.collShape.axisLen = 0.0f;
     self->base.collShape.radius = 7.0f;
     self->base.collShape.radiusSq = 7.0f * 7.0f;
-    self->base.collShape.axisLen = __builtin_sqrtf(
-        self->base.collShape.axis[0] * self->base.collShape.axis[0] +
-        self->base.collShape.axis[1] * self->base.collShape.axis[1] +
-        self->base.collShape.axis[2] * self->base.collShape.axis[2]);
+    self->base.collShape.axisLen = VfSqrt(
+        VfDot3(self->base.collShape.axis[0], self->base.collShape.axis[1], self->base.collShape.axis[2], self->base.collShape.axis[0], self->base.collShape.axis[1], self->base.collShape.axis[2]));
   } else if (modelId == 0x52) {
     self->hearRadius = 125.0f;
     self->viewDist = 30.0f;
     self->viewHalfAngle = 0.7853982f;
     self->speed = 1.9499999f;
     /* scale.xyz *= 0.5; the w lane gets S713, the VFPU bank's 0 */
-    self->base.base.scale[0] = self->base.base.scale[0] * 0.5f;
-    self->base.base.scale[1] = self->base.base.scale[1] * 0.5f;
-    self->base.base.scale[2] = self->base.base.scale[2] * 0.5f;
+    self->base.base.scale[0] = VfMul(self->base.base.scale[0], 0.5f);
+    self->base.base.scale[1] = VfMul(self->base.base.scale[1], 0.5f);
+    self->base.base.scale[2] = VfMul(self->base.base.scale[2], 0.5f);
     self->base.base.scale[3] = 0.0f;
     self->base.collShape.start[0] = 0.0f;
     self->base.collShape.start[1] = 0.0f;
@@ -53,10 +51,8 @@ void *ActorNpcRobotCtor(ActorNpc *self, s32 modelId)
     self->base.collShape.axisLen = 0.0f;
     self->base.collShape.radius = 3.5f;
     self->base.collShape.radiusSq = 3.5f * 3.5f;
-    self->base.collShape.axisLen = __builtin_sqrtf(
-        self->base.collShape.axis[0] * self->base.collShape.axis[0] +
-        self->base.collShape.axis[1] * self->base.collShape.axis[1] +
-        self->base.collShape.axis[2] * self->base.collShape.axis[2]);
+    self->base.collShape.axisLen = VfSqrt(
+        VfDot3(self->base.collShape.axis[0], self->base.collShape.axis[1], self->base.collShape.axis[2], self->base.collShape.axis[0], self->base.collShape.axis[1], self->base.collShape.axis[2]));
   }
   ActorNpcRobotSetupModel(self);
   self->voiceId = 0x2a38;

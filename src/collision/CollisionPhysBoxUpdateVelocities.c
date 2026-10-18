@@ -11,17 +11,17 @@ void CollisionPhysBoxUpdateVelocities(CollisionPhysBox *self, const ScePspFVecto
     for (i = 0; i < 8; i++) {
         ScePspFVector4 *prev = &self->prevPos[i];
         const ScePspFVector4 *cur = &self->pos[i];
-        float dx = cur->x - prev->x - offset[i].x;
-        float dy = cur->y - prev->y - offset[i].y;
-        float dz = cur->z - prev->z - offset[i].z;
+        float dx = VfSub(VfSub(cur->x, prev->x), offset[i].x);
+        float dy = VfSub(VfSub(cur->y, prev->y), offset[i].y);
+        float dz = VfSub(VfSub(cur->z, prev->z), offset[i].z);
 
         *prev = *cur;
         if (self->pins[i] == 0) {
             ScePspFVector4 *vel = &self->vel[i];
 
-            vel->x = dx * 0.98974609375f;
-            vel->y = dy * 0.98974609375f;
-            vel->z = dz * 0.98974609375f;
+            vel->x = VfMul(dx, 0.98974609375f);
+            vel->y = VfMul(dy, 0.98974609375f);
+            vel->z = VfMul(dz, 0.98974609375f);
         } else if (self->pins[i] < 2) {
             ScePspFVector4 *vel = &self->vel[i];
 

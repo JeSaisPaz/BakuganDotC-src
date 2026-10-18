@@ -30,8 +30,8 @@ CoreObject *BtlStageCreateMapModel(const char *name, float *pose, void *list, u8
     }
     /* rootMatrix = rotation about Y by pose[3] (vmul.s by S703 = 2/pi, then vrot.q) */
     matrix = model->data->rootMatrix;
-    c = __builtin_cosf(pose[3]);
-    s = __builtin_sinf(pose[3]);
+    c = VfCosQuarter(VfMul(pose[3], 0.636619747f));
+    s = VfSinQuarter(VfMul(pose[3], 0.636619747f));
     matrix[0] = c;
     matrix[1] = 0.0f;
     matrix[2] = -s;

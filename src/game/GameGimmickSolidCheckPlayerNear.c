@@ -15,9 +15,9 @@ void GameGimmickSolidCheckPlayerNear(GameGimmick *gimmick)
     rec = gimmick->record;
     /* 20 x the record's half-size (1/4096 units), minimum 12: computed but never used.
        Lane 3 of the vscl.t result is stale and never read, so it is left out. */
-    scaled[0] = ((float)rec->extent[0] * 0.00024414062f) * 20.0f;
-    scaled[1] = ((float)rec->extent[1] * 0.00024414062f) * 20.0f;
-    scaled[2] = ((float)rec->extent[2] * 0.00024414062f) * 20.0f;
+    scaled[0] = VfMul(((float)rec->extent[0] * 0.00024414062f), 20.0f);
+    scaled[1] = VfMul(((float)rec->extent[1] * 0.00024414062f), 20.0f);
+    scaled[2] = VfMul(((float)rec->extent[2] * 0.00024414062f), 20.0f);
     if (scaled[0] < 12.0f) {
       scaled[0] = 12.0f;
     }

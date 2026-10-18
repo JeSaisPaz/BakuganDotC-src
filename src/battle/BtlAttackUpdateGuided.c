@@ -70,9 +70,9 @@ u32 BtlAttackUpdateGuided(float turn, float side, BtlAttack *self, s32 hitKind, 
         target = (BtlBakugan *)BtlBakuganGetTarget(self->owner);
         if (target != NULL) {
             /* dist = horizontal |pos - target pos| (y zeroed by vzero.s S011) */
-            x = self->pos[0] - target->base.pos[0];
-            z = self->pos[2] - target->base.pos[2];
-            dist = __builtin_sqrtf(x * x + 0.0f + z * z);
+            x = VfSub(self->pos[0], target->base.pos[0]);
+            z = VfSub(self->pos[2], target->base.pos[2]);
+            dist = VfSqrt(VfDot3(x, 0.0f, z, x, 1.0f, z));
             speed = dist * 0.0133333001f;
             if (speed < 35.0f) {
                 speed = 35.0f;
@@ -80,55 +80,55 @@ u32 BtlAttackUpdateGuided(float turn, float side, BtlAttack *self, s32 hitKind, 
                 speed = 45.0f;
             }
             /* vasin.s (quarter turns) x pi/2 */
-            pitch = __builtin_asinf(dist * -0.5f * -0.5f / (speed * speed));
+            pitch = VfMul(VfAsinQuarter(dist * -0.5f * -0.5f / (speed * speed)), 1.57079637f);
         }
         /* axis = (-vel.z, vel.y, vel.x); quat = (axis x sin, cos) of pitch x 1/pi quarter turns
            (pitch / 2 radians); vel = quat x (vel.xyz, 0) x conj(quat) */
         axis[0] = -self->vel[2];
         axis[1] = self->vel[1];
         axis[2] = self->vel[0];
-        half = 0.318309873f * pitch;
+        half = VfMul(0.318309873f, pitch);
         c = VfCosQuarter(half);
         s = VfSinQuarter(half);
-        quat[0] = axis[0] * s;
-        quat[1] = axis[1] * s;
-        quat[2] = axis[2] * s;
+        quat[0] = VfMul(axis[0], s);
+        quat[1] = VfMul(axis[1], s);
+        quat[2] = VfMul(axis[2], s);
         quat[3] = c;
         vec[0] = self->vel[0];
         vec[1] = self->vel[1];
         vec[2] = self->vel[2];
         vec[3] = 0.0f;
         /* tmp = quat (x) vec */
-        tmp[0] = quat[0] * vec[3] + quat[1] * vec[2] - quat[2] * vec[1] + quat[3] * vec[0];
-        tmp[1] = -quat[0] * vec[2] + quat[1] * vec[3] + quat[2] * vec[0] + quat[3] * vec[1];
-        tmp[2] = quat[0] * vec[1] - quat[1] * vec[0] + quat[2] * vec[3] + quat[3] * vec[2];
-        tmp[3] = -quat[0] * vec[0] - quat[1] * vec[1] - quat[2] * vec[2] + quat[3] * vec[3];
+        tmp[0] = VfDot4(quat[0], quat[1], quat[2], quat[3], vec[3], vec[2], -vec[1], vec[0]);
+        tmp[1] = VfDot4(-quat[0], quat[1], quat[2], quat[3], vec[2], vec[3], vec[0], vec[1]);
+        tmp[2] = VfDot4(quat[0], quat[1], quat[2], quat[3], vec[1], -vec[0], vec[3], vec[2]);
+        tmp[3] = VfDot4(-quat[0], quat[1], quat[2], quat[3], vec[0], -vec[1], -vec[2], vec[3]);
         /* vel = tmp (x) conj(quat) */
-        self->vel[0] = tmp[0] * quat[3] + tmp[1] * -quat[2] - tmp[2] * -quat[1] + tmp[3] * -quat[0];
-        self->vel[1] = -tmp[0] * -quat[2] + tmp[1] * quat[3] + tmp[2] * -quat[0] + tmp[3] * -quat[1];
-        self->vel[2] = tmp[0] * -quat[1] - tmp[1] * -quat[0] + tmp[2] * quat[3] + tmp[3] * -quat[2];
-        self->vel[3] = -tmp[0] * -quat[0] - tmp[1] * -quat[1] - tmp[2] * -quat[2] + tmp[3] * quat[3];
+        self->vel[0] = VfDot4(tmp[0], tmp[1], tmp[2], tmp[3], quat[3], -quat[2], quat[1], -quat[0]);
+        self->vel[1] = VfDot4(-tmp[0], tmp[1], tmp[2], tmp[3], -quat[2], quat[3], -quat[0], -quat[1]);
+        self->vel[2] = VfDot4(tmp[0], tmp[1], tmp[2], tmp[3], -quat[1], quat[0], quat[3], -quat[2]);
+        self->vel[3] = VfDot4(-tmp[0], tmp[1], tmp[2], tmp[3], -quat[0], quat[1], quat[2], quat[3]);
         if (!(side <= 0.139626339f)) {
             side = 0.139626339f;
         } else if (side < -0.139626339f) {
             side = -0.139626339f;
         }
         /* vel.x/z rotated about y by side (vrot of side x 2/pi quarter turns) */
-        c = __builtin_cosf(side);
-        s = __builtin_sinf(side);
+        c = VfCosQuarter(VfMul(side, 0.636619747f));
+        s = VfSinQuarter(VfMul(side, 0.636619747f));
         x = self->vel[0];
         z = self->vel[2];
-        self->vel[0] = x * c - z * s;
-        self->vel[2] = x * s + z * c;
+        self->vel[0] = VfDot3(x, self->vel[1], z, c, 0.0f, -s);
+        self->vel[2] = VfDot3(x, self->vel[1], z, s, 0.0f, c);
         /* effect dir = vel; vel.xyz *= speed, w = 0 */
         effect = (GfxEffect *)self->effect;
         effect->dir[0] = self->vel[0];
         effect->dir[1] = self->vel[1];
         effect->dir[2] = self->vel[2];
         effect->dir[3] = self->vel[3];
-        self->vel[0] = self->vel[0] * speed;
-        self->vel[1] = self->vel[1] * speed;
-        self->vel[2] = self->vel[2] * speed;
+        self->vel[0] = VfMul(self->vel[0], speed);
+        self->vel[1] = VfMul(self->vel[1], speed);
+        self->vel[2] = VfMul(self->vel[2], speed);
         self->vel[3] = 0.0f;
         effect = (GfxEffect *)self->effect;
         entry = &((const VtblEntry *)effect->base.vtable)[2];
@@ -144,24 +144,24 @@ u32 BtlAttackUpdateGuided(float turn, float side, BtlAttack *self, s32 hitKind, 
     if (target != NULL) {
         heading = atan2f(self->vel[2], self->vel[0]);
         /* offset = target pos - pos (xyz), y = 0, turned 90 degrees: (-z, 0, x) */
-        offset[0] = target->base.pos[0] - self->pos[0];
-        offset[2] = target->base.pos[2] - self->pos[2];
+        offset[0] = VfSub(target->base.pos[0], self->pos[0]);
+        offset[2] = VfSub(target->base.pos[2], self->pos[2]);
         offset[1] = 0.0f;
         x = -offset[2];
         z = offset[0];
         /* offset = normalise(x, 0, z) x side (zero length: scale 0) */
-        len2 = x * x + offset[1] * offset[1] + z * z;
+        len2 = VfDot3(x, offset[1], z, x, offset[1], z);
         if (VfIsZero(len2)) {
             inv = 0.0f;
         } else {
             inv = VfRsq(len2);
         }
-        k = inv * side;
-        offset[0] = x * k;
-        offset[1] = offset[1] * k;
-        offset[2] = z * k;
-        aim[0] = target->base.pos[0] + offset[0];
-        aim[2] = target->base.pos[2] + offset[2];
+        k = VfMul(inv, side);
+        offset[0] = VfMul(x, k);
+        offset[1] = VfMul(offset[1], k);
+        offset[2] = VfMul(z, k);
+        aim[0] = VfAdd(target->base.pos[0], offset[0]);
+        aim[2] = VfAdd(target->base.pos[2], offset[2]);
         want = atan2f(aim[2] - self->pos[2], aim[0] - self->pos[0]);
         if (!(want <= 3.14159274f)) {
             want = want - 6.28318548f;
@@ -187,12 +187,12 @@ u32 BtlAttackUpdateGuided(float turn, float side, BtlAttack *self, s32 hitKind, 
             }
             yaw = yaw * turn;
             /* vel.x/z rotated about y by yaw (vrot of yaw x 2/pi quarter turns) */
-            c = __builtin_cosf(yaw);
-            s = __builtin_sinf(yaw);
+            c = VfCosQuarter(VfMul(yaw, 0.636619747f));
+            s = VfSinQuarter(VfMul(yaw, 0.636619747f));
             x = self->vel[0];
             z = self->vel[2];
-            self->vel[0] = x * c - z * s;
-            self->vel[2] = x * s + z * c;
+            self->vel[0] = VfDot3(x, self->vel[1], z, c, 0.0f, -s);
+            self->vel[2] = VfDot3(x, self->vel[1], z, s, 0.0f, c);
         }
     }
 
@@ -205,15 +205,15 @@ u32 BtlAttackUpdateGuided(float turn, float side, BtlAttack *self, s32 hitKind, 
     effect->dir[3] = self->vel[3];
     /* effect dir.xyz = normalise(dir.xyz) clamped to [-1, 1] (zero length: scale 0); w = 0 */
     effect = (GfxEffect *)self->effect;
-    len2 = effect->dir[0] * effect->dir[0] + effect->dir[1] * effect->dir[1] + effect->dir[2] * effect->dir[2];
+    len2 = VfDot3(effect->dir[0], effect->dir[1], effect->dir[2], effect->dir[0], effect->dir[1], effect->dir[2]);
     if (VfIsZero(len2)) {
         inv = 0.0f;
     } else {
         inv = VfRsq(len2);
     }
-    effect->dir[0] = VfSat1(effect->dir[0] * inv);
-    effect->dir[1] = VfSat1(effect->dir[1] * inv);
-    effect->dir[2] = VfSat1(effect->dir[2] * inv);
+    effect->dir[0] = VfSat1(VfMul(effect->dir[0], inv));
+    effect->dir[1] = VfSat1(VfMul(effect->dir[1], inv));
+    effect->dir[2] = VfSat1(VfMul(effect->dir[2], inv));
     effect->dir[3] = 0.0f;
     g_btlAttackHitQuery.hitCollider = NULL;
     if (BtlAttackSweepHit(self->radius, self, self->pos, self->vel, hitKind, 3, 0, 0x31bf337e) != 0) {
@@ -232,8 +232,8 @@ u32 BtlAttackUpdateGuided(float turn, float side, BtlAttack *self, s32 hitKind, 
     }
     /* pos.xyz += vel.xyz x paramF1 */
     k = self->paramF1;
-    self->pos[0] = self->pos[0] + self->vel[0] * k;
-    self->pos[1] = self->pos[1] + self->vel[1] * k;
-    self->pos[2] = self->pos[2] + self->vel[2] * k;
+    self->pos[0] = VfAdd(self->pos[0], VfMul(self->vel[0], k));
+    self->pos[1] = VfAdd(self->pos[1], VfMul(self->vel[1], k));
+    self->pos[2] = VfAdd(self->pos[2], VfMul(self->vel[2], k));
     return 0;
 }

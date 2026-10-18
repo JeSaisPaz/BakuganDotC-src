@@ -24,11 +24,11 @@ void GameFieldCameraSpringStep(float damping, void **holder, float *outEye, floa
   k = k * k;
   /* accel = (targetEye - eye) * k - eyeVel * omega; eyeVel += accel / 30; eye += eyeVel / 30 */
   for (i = 0; i < 3; i++) {
-    acc = (targetEye[i] - s->eye[i]) * k;
-    acc = acc - s->eyeVel[i] * g_gameFieldCameraSpringOmega;
-    acc = acc * 0.0333333351f;
-    s->eyeVel[i] = s->eyeVel[i] + acc;
-    s->eye[i] = s->eye[i] + s->eyeVel[i] * 0.0333333351f;
+    acc = VfMul(VfSub(targetEye[i], s->eye[i]), k);
+    acc = VfSub(acc, VfMul(s->eyeVel[i], g_gameFieldCameraSpringOmega));
+    acc = VfMul(acc, 0.0333333351f);
+    s->eyeVel[i] = VfAdd(s->eyeVel[i], acc);
+    s->eye[i] = VfAdd(s->eye[i], VfMul(s->eyeVel[i], 0.0333333351f));
   }
   if (g_gameFieldCameraSpringOmegaInit == 0) {
     g_gameFieldCameraSpringOmegaInit = 1;
@@ -38,11 +38,11 @@ void GameFieldCameraSpringStep(float damping, void **holder, float *outEye, floa
   k = k * k;
   /* same step for the look-at: targetLook, look, lookVel */
   for (i = 0; i < 3; i++) {
-    acc = (targetLook[i] - s->look[i]) * k;
-    acc = acc - s->lookVel[i] * g_gameFieldCameraSpringOmega;
-    acc = acc * 0.0333333351f;
-    s->lookVel[i] = s->lookVel[i] + acc;
-    s->look[i] = s->look[i] + s->lookVel[i] * 0.0333333351f;
+    acc = VfMul(VfSub(targetLook[i], s->look[i]), k);
+    acc = VfSub(acc, VfMul(s->lookVel[i], g_gameFieldCameraSpringOmega));
+    acc = VfMul(acc, 0.0333333351f);
+    s->lookVel[i] = VfAdd(s->lookVel[i], acc);
+    s->look[i] = VfAdd(s->look[i], VfMul(s->lookVel[i], 0.0333333351f));
   }
   for (i = 0; i < 4; i++) {
     outEye[i] = s->eye[i];

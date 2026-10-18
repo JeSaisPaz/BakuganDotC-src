@@ -35,8 +35,8 @@ void GfxPaletteBlend(float t, GfxPaletteBlender *pb, s32 rowA, s32 rowB)
       for (lane = 0; lane < 4; lane++) {
         a = (float)(s32)(((wa >> (lane * 8)) & 0xffu) * 0x01010101u >> 1) / 2147483648.0f;
         b = (float)(s32)(((wb >> (lane * 8)) & 0xffu) * 0x01010101u >> 1) / 2147483648.0f;
-        a = a + (b - a) * t;
-        packed |= (u32)VfI2uc(VfF2iz(VfSat0(a) * 255.0f, 23)) << (lane * 8);
+        a = VfAdd(a, VfMul(VfSub(b, a), t));
+        packed |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(a), 255.0f), 23)) << (lane * 8);
       }
       *dst = packed;
       i++;

@@ -9,10 +9,10 @@
 
 static void GfxEffectTransform4(const float *m, const float *v, float *d)
 {
-  float r0 = m[0] * v[0] + m[4] * v[1] + m[8] * v[2] + m[12] * v[3];
-  float r1 = m[1] * v[0] + m[5] * v[1] + m[9] * v[2] + m[13] * v[3];
-  float r2 = m[2] * v[0] + m[6] * v[1] + m[10] * v[2] + m[14] * v[3];
-  float r3 = m[3] * v[0] + m[7] * v[1] + m[11] * v[2] + m[15] * v[3];
+  float r0 = VfDot4(m[0], m[4], m[8], m[12], v[0], v[1], v[2], v[3]);
+  float r1 = VfDot4(m[1], m[5], m[9], m[13], v[0], v[1], v[2], v[3]);
+  float r2 = VfDot4(m[2], m[6], m[10], m[14], v[0], v[1], v[2], v[3]);
+  float r3 = VfDot4(m[3], m[7], m[11], m[15], v[0], v[1], v[2], v[3]);
 
   d[0] = r0;
   d[1] = r1;
@@ -34,9 +34,9 @@ void GfxEffectUpdateWorldPos(GfxEffect *effect)
     float x, y, z, w;
 
     effect->offset[3] = 1.0f;
-    x = effect->attachPos[0] + effect->offset[0];
-    y = effect->attachPos[1] + effect->offset[1];
-    z = effect->attachPos[2] + effect->offset[2];
+    x = VfAdd(effect->attachPos[0], effect->offset[0]);
+    y = VfAdd(effect->attachPos[1], effect->offset[1]);
+    z = VfAdd(effect->attachPos[2], effect->offset[2]);
     w = effect->attachPos[3];
     effect->pos[0] = x;
     effect->pos[1] = y;

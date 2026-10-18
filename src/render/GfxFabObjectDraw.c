@@ -36,15 +36,14 @@ u32 *GfxFabObjectDraw(void *obj, u32 *list, const float *parentMtx, void *color,
   /* vmmul.q M000, M100 (parentMtx), M200 (transform): mtx = transform * parentMtx (row-major). */
   for (i = 0; i < 4; i++) {
     for (k = 0; k < 4; k++) {
-      mtx.f[i * 4 + k] = o->transform[i][0] * parentMtx[0 * 4 + k] + o->transform[i][1] * parentMtx[1 * 4 + k] +
-                         o->transform[i][2] * parentMtx[2 * 4 + k] + o->transform[i][3] * parentMtx[3 * 4 + k];
+      mtx.f[i * 4 + k] = VfDot4(o->transform[i][0], o->transform[i][1], o->transform[i][2], o->transform[i][3], parentMtx[0 * 4 + k], parentMtx[1 * 4 + k], parentMtx[2 * 4 + k], parentMtx[3 * 4 + k]);
     }
   }
   for (i = 0; i < 4; i++) {
-    col[i] = o->color[i] * c[i];
+    col[i] = VfMul(o->color[i], c[i]);
   }
   for (i = 0; i < 4; i++) {
-    colAdd[i] = o->colorAdd[i] + ca[i];
+    colAdd[i] = VfAdd(o->colorAdd[i], ca[i]);
   }
 
   if (o->ref[6] == 2) {
@@ -70,7 +69,7 @@ u32 *GfxFabObjectDraw(void *obj, u32 *list, const float *parentMtx, void *color,
   /* vsat0, vscl by S701 (255), vf2iz 23, vi2uc: lane 0 in the low byte */
   packed = 0;
   for (i = 0; i < 4; i++) {
-    packed |= (u32)VfI2uc(VfF2iz(VfSat0(col[i]) * 255.0f, 23)) << (i * 8);
+    packed |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(col[i]), 255.0f), 23)) << (i * 8);
   }
   list[0] = (packed & 0xffffff) | 0x55000000; /* AMBIENTCOLOR */
   list[1] = (packed >> 24) | 0x58000000;      /* AMBIENTALPHA */
@@ -78,7 +77,7 @@ u32 *GfxFabObjectDraw(void *obj, u32 *list, const float *parentMtx, void *color,
 
   packed = 0;
   for (i = 0; i < 4; i++) {
-    packed |= (u32)VfI2uc(VfF2iz(VfSat0(colAdd[i]) * 255.0f, 23)) << (i * 8);
+    packed |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(colAdd[i]), 255.0f), 23)) << (i * 8);
   }
   list[0] = (packed & 0xffffff) | 0x57000000;
   list += 1;

@@ -32,16 +32,15 @@ void BtlBakuganTiltToVelocity(float step, float blend, BtlBakugan *self)
     self->stateFlags |= 1;
 
     /* g_btlBakuganTiltDir.xyz = saturate(normalise(velocity.xyz)); .w = 0 (bank S713) */
-    len2 = self->base.velocity[0] * self->base.velocity[0] + self->base.velocity[1] * self->base.velocity[1] +
-           self->base.velocity[2] * self->base.velocity[2];
+    len2 = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
     if (VfIsZero(len2)) {
         k = 0.0f;
     } else {
         k = VfRsq(len2);
     }
-    g_btlBakuganTiltDir.x = VfSat1(self->base.velocity[0] * k);
-    g_btlBakuganTiltDir.y = VfSat1(self->base.velocity[1] * k);
-    g_btlBakuganTiltDir.z = VfSat1(self->base.velocity[2] * k);
+    g_btlBakuganTiltDir.x = VfSat1(VfMul(self->base.velocity[0], k));
+    g_btlBakuganTiltDir.y = VfSat1(VfMul(self->base.velocity[1], k));
+    g_btlBakuganTiltDir.z = VfSat1(VfMul(self->base.velocity[2], k));
     g_btlBakuganTiltDir.w = 0.0f;
     g_btlBakuganTiltDir.w = __builtin_sqrtf(g_btlBakuganTiltDir.x * g_btlBakuganTiltDir.x +
                                             g_btlBakuganTiltDir.z * g_btlBakuganTiltDir.z);
@@ -51,7 +50,7 @@ void BtlBakuganTiltToVelocity(float step, float blend, BtlBakugan *self)
     self->orient[3] = 0.0f;
 
     /* dot(new tilt, old tilt) */
-    dot = self->orient[0] * prevTilt[0] + self->orient[1] * prevTilt[1] + self->orient[2] * prevTilt[2];
+    dot = VfDot3(self->orient[0], self->orient[1], self->orient[2], prevTilt[0], prevTilt[1], prevTilt[2]);
 
     if (self->motionIdPair[0] == g_btlBakuganTiltFlipMotionIds[0] &&
         self->motionIdPair[1] == g_btlBakuganTiltFlipMotionIds[1]) {
@@ -61,29 +60,29 @@ void BtlBakuganTiltToVelocity(float step, float blend, BtlBakugan *self)
     }
 
     /* orient.xz rotated about Y by the angle; y and w kept */
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
     ox = self->orient[0];
     oz = self->orient[2];
-    self->orient[0] = ox * c - oz * s;
-    self->orient[2] = ox * s + oz * c;
+    self->orient[0] = VfDot3(ox, self->orient[1], oz, c, 0.0f, -s);
+    self->orient[2] = VfDot3(ox, self->orient[1], oz, s, 0.0f, c);
 
     /* orient = up + (orient - up) * blend */
-    self->orient[0] = g_vecUp.x + (self->orient[0] - g_vecUp.x) * blend;
-    self->orient[1] = g_vecUp.y + (self->orient[1] - g_vecUp.y) * blend;
-    self->orient[2] = g_vecUp.z + (self->orient[2] - g_vecUp.z) * blend;
-    self->orient[3] = g_vecUp.w + (self->orient[3] - g_vecUp.w) * blend;
+    self->orient[0] = VfAdd(g_vecUp.x, VfMul(VfSub(self->orient[0], g_vecUp.x), blend));
+    self->orient[1] = VfAdd(g_vecUp.y, VfMul(VfSub(self->orient[1], g_vecUp.y), blend));
+    self->orient[2] = VfAdd(g_vecUp.z, VfMul(VfSub(self->orient[2], g_vecUp.z), blend));
+    self->orient[3] = VfAdd(g_vecUp.w, VfMul(VfSub(self->orient[3], g_vecUp.w), blend));
 
     /* orient.xyz = saturate(normalise(orient.xyz)); .w = 0 (bank S713) */
-    len2 = self->orient[0] * self->orient[0] + self->orient[1] * self->orient[1] + self->orient[2] * self->orient[2];
+    len2 = VfDot3(self->orient[0], self->orient[1], self->orient[2], self->orient[0], self->orient[1], self->orient[2]);
     if (VfIsZero(len2)) {
         k = 0.0f;
     } else {
         k = VfRsq(len2);
     }
-    self->orient[0] = VfSat1(self->orient[0] * k);
-    self->orient[1] = VfSat1(self->orient[1] * k);
-    self->orient[2] = VfSat1(self->orient[2] * k);
+    self->orient[0] = VfSat1(VfMul(self->orient[0], k));
+    self->orient[1] = VfSat1(VfMul(self->orient[1], k));
+    self->orient[2] = VfSat1(VfMul(self->orient[2], k));
     self->orient[3] = 0.0f;
 
     d = 1.0f - dot;

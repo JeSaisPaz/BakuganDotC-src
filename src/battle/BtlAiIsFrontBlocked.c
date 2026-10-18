@@ -26,9 +26,9 @@ s32 BtlAiIsFrontBlocked(float dist, BtlAi *self)
             yaw = yaw - 0.785398185f;
         }
         /* vrot [C,0,S,0] of yaw * 2/pi (bank S703) then vscl.t by dist; lane w stays 0 */
-        to[0] = __builtin_cosf(yaw) * dist;
-        to[1] = 0.0f * dist;
-        to[2] = __builtin_sinf(yaw) * dist;
+        to[0] = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), dist);
+        to[1] = VfMul(0.0f, dist);
+        to[2] = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), dist);
         to[3] = 0.0f;
         from[0] = pos[0];
         from[1] = pos[1];

@@ -14,19 +14,19 @@ ScePspFMatrix4 *GmoMat4ApplyUvTransform(ScePspFMatrix4 *dst, const ScePspFMatrix
     float su = uv[2];
     float sv = uv[3];
 
-    r.x.x = m->x.x * su;
-    r.x.y = m->x.y * su;
-    r.x.z = m->x.z * su;
-    r.x.w = m->x.w * su;
-    r.y.x = m->y.x * sv;
-    r.y.y = m->y.y * sv;
-    r.y.z = m->y.z * sv;
-    r.y.w = m->y.w * sv;
+    r.x.x = VfMul(m->x.x, su);
+    r.x.y = VfMul(m->x.y, su);
+    r.x.z = VfMul(m->x.z, su);
+    r.x.w = VfMul(m->x.w, su);
+    r.y.x = VfMul(m->y.x, sv);
+    r.y.y = VfMul(m->y.y, sv);
+    r.y.z = VfMul(m->y.z, sv);
+    r.y.w = VfMul(m->y.w, sv);
     r.z = m->z;
-    r.w.x = m->x.x * u + m->y.x * v + m->z.x * 0.0f + m->w.x * 1.0f;
-    r.w.y = m->x.y * u + m->y.y * v + m->z.y * 0.0f + m->w.y * 1.0f;
-    r.w.z = m->x.z * u + m->y.z * v + m->z.z * 0.0f + m->w.z * 1.0f;
-    r.w.w = m->x.w * u + m->y.w * v + m->z.w * 0.0f + m->w.w * 1.0f;
+    r.w.x = VfDot4(m->x.x, m->y.x, m->z.x, m->w.x, u, v, 0.0f, 1.0f);
+    r.w.y = VfDot4(m->x.y, m->y.y, m->z.y, m->w.y, u, v, 0.0f, 1.0f);
+    r.w.z = VfDot4(m->x.z, m->y.z, m->z.z, m->w.z, u, v, 0.0f, 1.0f);
+    r.w.w = VfDot4(m->x.w, m->y.w, m->z.w, m->w.w, u, v, 0.0f, 1.0f);
     *dst = r;
     return dst;
 }

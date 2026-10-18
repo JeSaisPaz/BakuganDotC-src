@@ -25,15 +25,15 @@ static inline __attribute__((always_inline)) void UiMainMenuStepCarouselSetBaseM
   for (k = 0; k < 4; k++)
     saved[k] = m[12 + k];
 
-  cp = __builtin_cosf(-1.5707964f);
-  sp = __builtin_sinf(-1.5707964f);
+  cp = VfCosQuarter(-1.5707964f * 0.636619747f);
+  sp = VfSinQuarter(-1.5707964f * 0.636619747f);
   m[0] = 1.0f; m[1] = 0.0f; m[2] = 0.0f; m[3] = 0.0f;
   m[4] = 0.0f; m[5] = cp;   m[6] = sp;   m[7] = 0.0f;
   m[8] = 0.0f; m[9] = -sp;  m[10] = cp;  m[11] = 0.0f;
   m[12] = 0.0f; m[13] = 0.0f; m[14] = 0.0f; m[15] = 1.0f;
 
-  cy = __builtin_cosf(yaw);
-  sy = __builtin_sinf(yaw);
+  cy = VfCosQuarter(VfMul(yaw, 0.636619747f));
+  sy = VfSinQuarter(VfMul(yaw, 0.636619747f));
   r[0][0] = cy;   r[0][1] = 0.0f; r[0][2] = -sy;  r[0][3] = 0.0f;
   r[1][0] = 0.0f; r[1][1] = 1.0f; r[1][2] = 0.0f; r[1][3] = 0.0f;
   r[2][0] = sy;   r[2][1] = 0.0f; r[2][2] = cy;   r[2][3] = 0.0f;
@@ -44,8 +44,7 @@ static inline __attribute__((always_inline)) void UiMainMenuStepCarouselSetBaseM
       a[row][col] = m[row * 4 + col];
   for (row = 0; row < 4; row++)
     for (col = 0; col < 4; col++)
-      m[row * 4 + col] = a[row][0] * r[0][col] + a[row][1] * r[1][col] +
-                         a[row][2] * r[2][col] + a[row][3] * r[3][col];
+      m[row * 4 + col] = VfDot4(a[row][0], a[row][1], a[row][2], a[row][3], r[0][col], r[1][col], r[2][col], r[3][col]);
 
   for (k = 0; k < 4; k++)
     m[12 + k] = saved[k];

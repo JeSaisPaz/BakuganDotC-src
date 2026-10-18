@@ -24,29 +24,28 @@ void BtlAttackType79Update(BtlAttack *self)
     }
     if (self->age == 0) {
         /* vel.xyz *= 40; vel.w = 0 */
-        self->vel[0] = self->vel[0] * 40.0f;
-        self->vel[1] = self->vel[1] * 40.0f;
-        self->vel[2] = self->vel[2] * 40.0f;
+        self->vel[0] = VfMul(self->vel[0], 40.0f);
+        self->vel[1] = VfMul(self->vel[1], 40.0f);
+        self->vel[2] = VfMul(self->vel[2], 40.0f);
         self->vel[3] = 0.0f;
         /* rotate about y: x' = x cos - z sin, z' = x sin + z cos (angle * 2/pi in quarter turns) */
-        c = __builtin_cosf(self->paramF2);
-        s = __builtin_sinf(self->paramF2);
+        c = VfCosQuarter(VfMul(self->paramF2, 0.636619747f));
+        s = VfSinQuarter(VfMul(self->paramF2, 0.636619747f));
         vx = self->vel[0];
         vz = self->vel[2];
-        self->vel[0] = vx * c + vz * -s;
-        self->vel[2] = vx * s + vz * c;
+        self->vel[0] = VfDot3(vx, self->vel[1], vz, c, 0.0f, -s);
+        self->vel[2] = VfDot3(vx, self->vel[1], vz, s, 0.0f, c);
         effect = (GfxEffect *)self->effect;
         effect->dir[0] = self->vel[0];
         effect->dir[1] = self->vel[1];
         effect->dir[2] = self->vel[2];
         effect->dir[3] = self->vel[3];
         /* effect->dir = normalize(effect->dir), clamped to [-1, 1], w = 0 */
-        lenSq = effect->dir[0] * effect->dir[0] + effect->dir[1] * effect->dir[1] +
-                effect->dir[2] * effect->dir[2];
+        lenSq = VfDot3(effect->dir[0], effect->dir[1], effect->dir[2], effect->dir[0], effect->dir[1], effect->dir[2]);
         k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-        effect->dir[0] = VfSat1(effect->dir[0] * k);
-        effect->dir[1] = VfSat1(effect->dir[1] * k);
-        effect->dir[2] = VfSat1(effect->dir[2] * k);
+        effect->dir[0] = VfSat1(VfMul(effect->dir[0], k));
+        effect->dir[1] = VfSat1(VfMul(effect->dir[1], k));
+        effect->dir[2] = VfSat1(VfMul(effect->dir[2], k));
         effect->dir[3] = 0.0f;
         return;
     }
@@ -58,7 +57,7 @@ void BtlAttackType79Update(BtlAttack *self)
         return;
     }
     /* pos.xyz += vel.xyz (w kept) */
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

@@ -76,20 +76,20 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
       GfxEffectUpdateWorldPos(effect);
       /* vec = pos - prev (vsub.t: w keeps pos[3]) */
       for (i = 0; i < 3; i++) {
-        vec[i] = effect->pos[i] - prev[i];
+        vec[i] = VfSub(effect->pos[i], prev[i]);
       }
       vec[3] = effect->pos[3];
     } else {
       /* prev = pos - dir (w keeps pos[3]); vec = dir */
       for (i = 0; i < 3; i++) {
-        prev[i] = effect->pos[i] - effect->dir[i];
+        prev[i] = VfSub(effect->pos[i], effect->dir[i]);
       }
       prev[3] = effect->pos[3];
       for (i = 0; i < 4; i++) {
         vec[i] = effect->dir[i];
       }
     }
-    len = __builtin_sqrtf(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
+    len = VfSqrt(VfDot3(vec[0], vec[1], vec[2], vec[0], vec[1], vec[2]));
     if (len < 0.01f) {
       inv = 1.0f;
     } else {
@@ -101,7 +101,7 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
       child = (GfxEffect *)GfxEffectCreate(effect->mgr, id);
       /* child->pos = prev + (pos - prev) * t, all four lanes */
       for (i = 0; i < 4; i++) {
-        child->pos[i] = prev[i] + (effect->pos[i] - prev[i]) * t;
+        child->pos[i] = VfAdd(prev[i], VfMul(VfSub(effect->pos[i], prev[i]), t));
       }
       child->attachPos = NULL;
       child->attachMatrix = NULL;
@@ -110,7 +110,7 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
       }
       if (inherit != 0) {
         for (i = 0; i < 3; i++) {
-          child->dir[i] = child->dir[i] + effect->dir[i];
+          child->dir[i] = VfAdd(child->dir[i], effect->dir[i]);
         }
       }
       __builtin_memcpy(child->matrix, effect->matrix, sizeof(child->matrix));
@@ -155,8 +155,8 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
         child->pos[i] = src[i];
       }
       /* vcos/vsin of angle * 2/π (bank S703): the quarter turns cancel */
-      vec[0] = __builtin_cosf(angle) * radius;
-      vec[1] = __builtin_sinf(angle) * radius;
+      vec[0] = VfCosQuarter(VfMul(angle, 0.636619747f)) * radius;
+      vec[1] = VfSinQuarter(VfMul(angle, 0.636619747f)) * radius;
       vec[2] = 0.0f;
       vec[3] = 0.0f;
       MathMat4TransformVec4(effect->matrix, xf, vec);
@@ -164,7 +164,7 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
         vec[i] = xf[i];
       }
       for (i = 0; i < 3; i++) {
-        child->pos[i] = child->pos[i] + vec[i];
+        child->pos[i] = VfAdd(child->pos[i], vec[i]);
       }
       for (i = 0; i < 4; i++) {
         child->offset[i] = child->pos[i];
@@ -172,15 +172,15 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
       child->attachPos = effect->attachPos;
       child->attachMatrix = effect->attachMatrix;
       /* child->dir = normalize(vec) clamped to [-1, 1], scale 0 (S713) for a zero vector */
-      len = vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2];
+      len = VfDot3(vec[0], vec[1], vec[2], vec[0], vec[1], vec[2]);
       k = VfIsZero(len) ? 0.0f : VfRsq(len);
       for (i = 0; i < 3; i++) {
-        child->dir[i] = VfSat1(vec[i] * k);
+        child->dir[i] = VfSat1(VfMul(vec[i], k));
       }
       child->dir[3] = 0.0f;
       if (inherit != 0) {
         for (i = 0; i < 3; i++) {
-          child->dir[i] = child->dir[i] + effect->dir[i];
+          child->dir[i] = VfAdd(child->dir[i], effect->dir[i]);
         }
       }
       __builtin_memcpy(child->matrix, effect->matrix, sizeof(child->matrix));
@@ -226,19 +226,18 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
     }
     /* vec = matrix * vec (vtfm4 E: columns are the 16-byte rows of the matrix) */
     for (i = 0; i < 4; i++) {
-      tmp[i] = effect->matrix[i] * vec[0] + effect->matrix[4 + i] * vec[1] +
-               effect->matrix[8 + i] * vec[2] + effect->matrix[12 + i] * vec[3];
+      tmp[i] = VfDot4(effect->matrix[i], effect->matrix[4 + i], effect->matrix[8 + i], effect->matrix[12 + i], vec[0], vec[1], vec[2], vec[3]);
     }
     for (i = 0; i < 4; i++) {
       vec[i] = tmp[i];
     }
     for (i = 0; i < 3; i++) {
-      child->pos[i] = child->pos[i] + vec[i];
+      child->pos[i] = VfAdd(child->pos[i], vec[i]);
     }
     for (i = 0; i < 4; i++) {
       child->offset[i] = child->pos[i];
     }
-    len = vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2];
+    len = VfDot3(vec[0], vec[1], vec[2], vec[0], vec[1], vec[2]);
     if (VfIsZero(len)) {
       /* bank C720 = (0, 0, 0, 0) */
       for (i = 0; i < 4; i++) {
@@ -248,7 +247,7 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
       /* child->dir = normalize(vec) clamped to [-1, 1], w = S713 = 0 */
       k = VfRsq(len);
       for (i = 0; i < 3; i++) {
-        child->dir[i] = VfSat1(vec[i] * k);
+        child->dir[i] = VfSat1(VfMul(vec[i], k));
       }
       child->dir[3] = 0.0f;
     }
@@ -266,8 +265,7 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
     vec[2] = z;
     vec[3] = 0.0f;
     for (i = 0; i < 4; i++) {
-      tmp[i] = effect->matrix[i] * vec[0] + effect->matrix[4 + i] * vec[1] +
-               effect->matrix[8 + i] * vec[2] + effect->matrix[12 + i] * vec[3];
+      tmp[i] = VfDot4(effect->matrix[i], effect->matrix[4 + i], effect->matrix[8 + i], effect->matrix[12 + i], vec[0], vec[1], vec[2], vec[3]);
     }
     for (i = 0; i < 4; i++) {
       child->dir[i] = tmp[i];
@@ -281,7 +279,7 @@ void GfxEffectEmitChildren(GfxEffect *effect, float *args, u16 *cmd)
 
   if (inherit != 0) {
     for (i = 0; i < 3; i++) {
-      child->dir[i] = child->dir[i] + effect->dir[i];
+      child->dir[i] = VfAdd(child->dir[i], effect->dir[i]);
     }
   }
   __builtin_memcpy(child->matrix, effect->matrix, sizeof(child->matrix));

@@ -12,9 +12,9 @@ static inline __attribute__((always_inline)) void GameEventCamKeysFinishStore(fl
   float y = (float)key[1] * 0.00024414062f;
   float z = (float)key[2] * 0.00024414062f;
 
-  dst[0] = x * 20.0f;
-  dst[1] = y * 20.0f;
-  dst[2] = z * 20.0f;
+  dst[0] = VfMul(x, 20.0f);
+  dst[1] = VfMul(y, 20.0f);
+  dst[2] = VfMul(z, 20.0f);
 }
 
 void GameEventCamKeysFinish(GameEventCamKeys *self, s32 kind, u8 apply)

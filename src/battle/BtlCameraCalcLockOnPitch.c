@@ -20,7 +20,7 @@ float BtlCameraCalcLockOnPitch(float selfY, float targetY, float basePitch, floa
     if (t != t) {
         t = __builtin_signbit(t) ? 0.0f : 1.0f;
     } else {
-        t = t <= 0.0f ? 0.0f : t > 1.0f ? 1.0f : t;
+        t = VfMax(VfMin(t, 1.0f), 0.0f);
     }
     pitch = t * weight * (0.872664630f - basePitch) + basePitch; /* 0x3f5f66f3 */
     if (dy < 0.0f) {

@@ -87,9 +87,9 @@ void BtlBakuganPushApartFromUnits(BtlBakugan *self, float *delta, u32 flags)
         }
         reach = selfReach + radius;
         /* rel = self pos - unit pos (xyz; w keeps self pos w) */
-        rel[0] = self->base.pos[0] - unit->base.pos[0];
-        rel[1] = self->base.pos[1] - unit->base.pos[1];
-        rel[2] = self->base.pos[2] - unit->base.pos[2];
+        rel[0] = VfSub(self->base.pos[0], unit->base.pos[0]);
+        rel[1] = VfSub(self->base.pos[1], unit->base.pos[1]);
+        rel[2] = VfSub(self->base.pos[2], unit->base.pos[2]);
         rel[3] = self->base.pos[3];
         dy = ABS(rel[1]) - height * 1.20000005f;
         if (!(dy < 0.0f)) {
@@ -100,7 +100,7 @@ void BtlBakuganPushApartFromUnits(BtlBakugan *self, float *delta, u32 flags)
             overlap = 1.0f;
         }
         rel[1] = 0.0f;
-        lenSq = rel[0] * rel[0] + rel[1] * rel[1] + rel[2] * rel[2];
+        lenSq = VfDot3(rel[0], rel[1], rel[2], rel[0], rel[1], rel[2]);
         if (lenSq < reach * reach && !(lenSq <= 0.00100000005f)) {
             dist = reach - __builtin_sqrtf(lenSq);
             if (dist <= reach) {
@@ -109,15 +109,15 @@ void BtlBakuganPushApartFromUnits(BtlBakugan *self, float *delta, u32 flags)
                 amount = reach * 0.699999988f * overlap;
             }
             /* rel.xyz = normalise(rel.xyz) x amount (zero length: 0); w = S713 (0) */
-            lenSq = rel[0] * rel[0] + rel[1] * rel[1] + rel[2] * rel[2];
-            k = (VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq)) * amount;
-            rel[0] = rel[0] * k;
-            rel[1] = rel[1] * k;
-            rel[2] = rel[2] * k;
+            lenSq = VfDot3(rel[0], rel[1], rel[2], rel[0], rel[1], rel[2]);
+            k = VfMul((VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq)), amount);
+            rel[0] = VfMul(rel[0], k);
+            rel[1] = VfMul(rel[1], k);
+            rel[2] = VfMul(rel[2], k);
             rel[3] = 0.0f;
-            push[0] = push[0] + rel[0];
-            push[1] = push[1] + rel[1];
-            push[2] = push[2] + rel[2];
+            push[0] = VfAdd(push[0], rel[0]);
+            push[1] = VfAdd(push[1], rel[1]);
+            push[2] = VfAdd(push[2], rel[2]);
         } else if (lenSq <= 0.00100000005f) {
             /* origin = push collider's sphere centre (collider1 re-read after the calls) */
             origin[0] = ((CollisionSphereQuery *)self->collider1->shapeBlock.desc)->center.x;
@@ -132,22 +132,22 @@ void BtlBakuganPushApartFromUnits(BtlBakugan *self, float *delta, u32 flags)
             }
             /* rel = (cos yaw, 0, sin yaw, 0) x 2 reach */
             k = reach * 2.0f;
-            rel[0] = __builtin_cosf(yaw) * k;
+            rel[0] = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), k);
             rel[1] = 0.0f;
-            rel[2] = __builtin_sinf(yaw) * k;
+            rel[2] = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), k);
             rel[3] = 0.0f;
             if (CollisionRaycastRayB(self->collisionMask, origin, rel) != NULL) {
                 yaw = self->base.rot[1];
             }
             /* rel = (cos yaw, 0, sin yaw, 0) x 5 overlap */
             k = overlap * 5.0f;
-            rel[0] = __builtin_cosf(yaw) * k;
+            rel[0] = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), k);
             rel[1] = 0.0f;
-            rel[2] = __builtin_sinf(yaw) * k;
+            rel[2] = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), k);
             rel[3] = 0.0f;
-            push[0] = push[0] + rel[0];
-            push[1] = push[1] + rel[1];
-            push[2] = push[2] + rel[2];
+            push[0] = VfAdd(push[0], rel[0]);
+            push[1] = VfAdd(push[1], rel[1]);
+            push[2] = VfAdd(push[2], rel[2]);
         } else {
             continue;
         }
@@ -160,15 +160,15 @@ void BtlBakuganPushApartFromUnits(BtlBakugan *self, float *delta, u32 flags)
     if (!found) {
         return;
     }
-    lenSq = push[0] * push[0] + push[1] * push[1] + push[2] * push[2];
+    lenSq = VfDot3(push[0], push[1], push[2], push[0], push[1], push[2]);
     if (!big) {
         selfReach = self->combat.stats->reachRadius;
         if (!(lenSq <= selfReach * selfReach)) {
             /* push.xyz = normalise(push.xyz) x reach (zero length: 0); w = S713 (0) */
-            k = (VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq)) * selfReach;
-            push[0] = push[0] * k;
-            push[1] = push[1] * k;
-            push[2] = push[2] * k;
+            k = VfMul((VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq)), selfReach);
+            push[0] = VfMul(push[0], k);
+            push[1] = VfMul(push[1], k);
+            push[2] = VfMul(push[2], k);
             push[3] = 0.0f;
         }
         self->stateFlags |= 0x10;

@@ -69,10 +69,10 @@ void UiUpgradeDraw(UiUpgrade *self)
       else if (dist < 0.0f) {
         scale.f = 1.0f / dist;
       }
-      rgb = (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.x) * 255.0f, 23))
-          | (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.y) * 255.0f, 23)) << 8
-          | (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.z) * 255.0f, 23)) << 16
-          | (u32)VfI2uc(VfF2iz(VfSat0(g_colorWhite.w) * 255.0f, 23)) << 24;
+      rgb = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.x), 255.0f), 23))
+          | (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.y), 255.0f), 23)) << 8
+          | (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.z), 255.0f), 23)) << 16
+          | (u32)VfI2uc(VfF2iz(VfMul(VfSat0(g_colorWhite.w), 255.0f), 23)) << 24;
       cmd = (rgb & 0xffffff) | 0xcf000000;
     }
     dl[0] = cmd;                                          /* FOGCOLOR */

@@ -9,7 +9,7 @@
 void UiScreenPulsePalettes(UiScreen *screen)
 {
     /* vcos.s of (radians · S703 = 2/π) quarter turns == cos(radians) */
-    float c = __builtin_cosf((float)(screen->pulseTimer * 3) * 0.017453292f);
+    float c = VfCosQuarter(VfMul((float)(screen->pulseTimer * 3) * 0.017453292f, 0.636619747f));
     float t = 1.0f - __builtin_fabsf(c);
     s32 next;
 

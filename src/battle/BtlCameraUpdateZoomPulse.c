@@ -28,7 +28,7 @@ void BtlCameraUpdateZoomPulse(BtlCamera *camera)
     t = camera->zoomPulse - 1.0f;
     angle = (1.0f - t * t) * 3.14159274f;
     /* vmul.s by the bank's S703 (2/π) then vcos.s (quarter turns): the cosine of the angle. */
-    cosine = __builtin_cosf(angle);
+    cosine = VfCosQuarter(VfMul(angle, 0.636619747f));
 
     camera->base.frustumScale = 1.0f - (1.0f - cosine) * 0.5f * 0.349999994f;
 }

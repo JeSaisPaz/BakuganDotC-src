@@ -181,10 +181,10 @@ void GfxMeshObjDrawList(void *packet, GfxMeshObj *first, u32 fog)
     dl++;
 
     /* Material colour packed to RGBA8: clamp to [0, 1], scale by 255 (bank constant S701). */
-    rgba = (u32)VfI2uc(VfF2iz(VfSat0(obj->color[0]) * 255.0f, 23)) |
-           (u32)VfI2uc(VfF2iz(VfSat0(obj->color[1]) * 255.0f, 23)) << 8 |
-           (u32)VfI2uc(VfF2iz(VfSat0(obj->color[2]) * 255.0f, 23)) << 16 |
-           (u32)VfI2uc(VfF2iz(VfSat0(obj->color[3]) * 255.0f, 23)) << 24;
+    rgba = (u32)VfI2uc(VfF2iz(VfMul(VfSat0(obj->color[0]), 255.0f), 23)) |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(obj->color[1]), 255.0f), 23)) << 8 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(obj->color[2]), 255.0f), 23)) << 16 |
+           (u32)VfI2uc(VfF2iz(VfMul(VfSat0(obj->color[3]), 255.0f), 23)) << 24;
     rgb = rgba & 0xffffff;
     alpha = rgba >> 24;
     if (obj->extraCmd != 0) {

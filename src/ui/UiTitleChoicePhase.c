@@ -88,7 +88,7 @@ void UiTitleChoicePhase(UiScreen *screen)
           angle = angle - 3.1415927f;
           title->choiceAngle = angle;
         }
-        sprite->alpha = __builtin_sinf(angle) * 0.5f + 0.5f;
+        sprite->alpha = VfSinQuarter(VfMul(angle, 0.636619747f)) * 0.5f + 0.5f;
         scale = title->unk7c[i];
       } else {
         title->unk7c[i] = title->unk7c[i] - 0.17453292f;
@@ -102,7 +102,7 @@ void UiTitleChoicePhase(UiScreen *screen)
       }
       title->unk7c[i] = scale;
       ease = 1.0f - (scale - 1.0f) * (scale - 1.0f);
-      scale = (1.0f - __builtin_cosf(ease * 3.1415927f)) * 0.5f * 0.3f + 0.7f;
+      scale = (1.0f - VfCosQuarter(VfMul(ease * 3.1415927f, 0.636619747f))) * 0.5f * 0.3f + 0.7f;
       GfxSpriteSetScaleRotation(sprite, scale, scale, 0.0f, false);
     }
   }
@@ -131,7 +131,7 @@ void UiTitleChoicePhase(UiScreen *screen)
       angle = 1.5707964f;
     }
     title->animAngle = angle;
-    alpha = __builtin_sinf(angle);
+    alpha = VfSinQuarter(VfMul(angle, 0.636619747f));
     for (i = 2; i < 4; i++) {
       ((GfxSprite **)screen->data)[i]->alpha = alpha;
     }

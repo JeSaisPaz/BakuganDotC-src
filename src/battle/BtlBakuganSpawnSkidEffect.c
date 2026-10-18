@@ -25,16 +25,14 @@ void BtlBakuganSpawnSkidEffect(BtlBakugan *self)
     }
     /* dir.xyz = velocity.xyz / |velocity| (0 when zero), each clamped to [-1, 1]; dir.w = 0 */
     vel = self->base.velocity;
-    lenSq = vel[0] * vel[0];
-    lenSq = lenSq + vel[1] * vel[1];
-    lenSq = lenSq + vel[2] * vel[2];
+    lenSq = VfDot3(vel[0], vel[1], vel[2], vel[0], vel[1], vel[2]);
     k = VfRsq(lenSq);
     if (VfIsZero(lenSq)) {
         k = 0.0f;
     }
-    dir[0] = VfSat1(vel[0] * k);
-    dir[1] = VfSat1(vel[1] * k);
-    dir[2] = VfSat1(vel[2] * k);
+    dir[0] = VfSat1(VfMul(vel[0], k));
+    dir[1] = VfSat1(VfMul(vel[1], k));
+    dir[2] = VfSat1(VfMul(vel[2], k));
     dir[3] = 0.0f;
     effectId = 4;
     if (g_btlArenaIndex == 0xc || g_btlArenaIndex == 0xe || g_btlArenaIndex == 0xf) {

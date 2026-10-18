@@ -47,9 +47,9 @@ void BtlAiPickOpenHeading(BtlAi *self, float *outAngle, float *range)
     for (i = 0; i < 8; i++) {
         rays.clearDist = *range + self->owner->combat.stats->bodyRadius;
         /* dir = (cos, 0, sin)(angle) scaled by *range; dir.w = 0 */
-        dir[0] = __builtin_cosf(rays.angles[i]) * *range;
-        dir[1] = 0.0f * *range;
-        dir[2] = __builtin_sinf(rays.angles[i]) * *range;
+        dir[0] = VfMul(VfCosQuarter(VfMul(rays.angles[i], 0.636619747f)), *range);
+        dir[1] = VfMul(0.0f, *range);
+        dir[2] = VfMul(VfSinQuarter(VfMul(rays.angles[i], 0.636619747f)), *range);
         dir[3] = 0.0f;
         for (k = 0; k < 4; k++) {
             from[k] = ownerPos[k];

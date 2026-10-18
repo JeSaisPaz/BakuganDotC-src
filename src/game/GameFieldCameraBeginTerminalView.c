@@ -44,28 +44,28 @@ void GameFieldCameraBeginTerminalView(GameFieldCamera *cam)
 
   /* Offset in the yaw direction, length dist. */
   dist = g_gameFieldCameraTerminalDistance;
-  offset.x = __builtin_cosf(cam->yaw) * dist;
-  offset.y = 0.0f * dist;
-  offset.z = __builtin_sinf(cam->yaw) * dist;
+  offset.x = VfMul(VfCosQuarter(VfMul(cam->yaw, 0.636619747f)), dist);
+  offset.y = VfMul(0.0f, dist);
+  offset.z = VfMul(VfSinQuarter(VfMul(cam->yaw, 0.636619747f)), dist);
   offset.w = 0.0f;
 
   /* Horizontal perpendicular, normalised. */
   axis.x = offset.z;
   axis.y = offset.y;
   axis.z = -offset.x;
-  len2 = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
+  len2 = VfDot3(axis.x, axis.y, axis.z, axis.x, axis.y, axis.z);
   k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-  axis.x = VfSat1(axis.x * k);
-  axis.y = VfSat1(axis.y * k);
-  axis.z = VfSat1(axis.z * k);
+  axis.x = VfSat1(VfMul(axis.x, k));
+  axis.y = VfSat1(VfMul(axis.y, k));
+  axis.z = VfSat1(VfMul(axis.z, k));
 
   /* Axis-angle quaternion, half angle (1/pi * 0.5235988) quarter turns. */
   half = 0.318309873f * 0.5235988f;
   c = VfCosQuarter(half);
   s = VfSinQuarter(half);
-  quat.x = axis.x * s;
-  quat.y = axis.y * s;
-  quat.z = axis.z * s;
+  quat.x = VfMul(axis.x, s);
+  quat.y = VfMul(axis.y, s);
+  quat.z = VfMul(axis.z, s);
   quat.w = c;
   conj.x = -quat.x;
   conj.y = -quat.y;
@@ -73,17 +73,17 @@ void GameFieldCameraBeginTerminalView(GameFieldCamera *cam)
   conj.w = quat.w;
 
   /* rotated = quat * offset * conj (offset.w = 0). */
-  tmp.x = quat.x * offset.w + quat.y * offset.z - quat.z * offset.y + quat.w * offset.x;
-  tmp.y = -quat.x * offset.z + quat.y * offset.w + quat.z * offset.x + quat.w * offset.y;
-  tmp.z = quat.x * offset.y - quat.y * offset.x + quat.z * offset.w + quat.w * offset.z;
-  tmp.w = -quat.x * offset.x - quat.y * offset.y - quat.z * offset.z + quat.w * offset.w;
-  rotated.x = tmp.x * conj.w + tmp.y * conj.z - tmp.z * conj.y + tmp.w * conj.x;
-  rotated.y = -tmp.x * conj.z + tmp.y * conj.w + tmp.z * conj.x + tmp.w * conj.y;
-  rotated.z = tmp.x * conj.y - tmp.y * conj.x + tmp.z * conj.w + tmp.w * conj.z;
+  tmp.x = VfDot4(quat.x, quat.y, quat.z, quat.w, offset.w, offset.z, -offset.y, offset.x);
+  tmp.y = VfDot4(-quat.x, quat.y, quat.z, quat.w, offset.z, offset.w, offset.x, offset.y);
+  tmp.z = VfDot4(quat.x, quat.y, quat.z, quat.w, offset.y, -offset.x, offset.w, offset.z);
+  tmp.w = VfDot4(-quat.x, quat.y, quat.z, quat.w, offset.x, -offset.y, -offset.z, offset.w);
+  rotated.x = VfDot4(tmp.x, tmp.y, tmp.z, tmp.w, conj.w, conj.z, -conj.y, conj.x);
+  rotated.y = VfDot4(-tmp.x, tmp.y, tmp.z, tmp.w, conj.z, conj.w, conj.x, conj.y);
+  rotated.z = VfDot4(tmp.x, tmp.y, tmp.z, tmp.w, conj.y, -conj.x, conj.w, conj.z);
 
-  cam->base.eye[0] = cam->followLookAt.x + rotated.x;
-  cam->base.eye[1] = cam->followLookAt.y + rotated.y;
-  cam->base.eye[2] = cam->followLookAt.z + rotated.z;
+  cam->base.eye[0] = VfAdd(cam->followLookAt.x, rotated.x);
+  cam->base.eye[1] = VfAdd(cam->followLookAt.y, rotated.y);
+  cam->base.eye[2] = VfAdd(cam->followLookAt.z, rotated.z);
   cam->base.eye[3] = cam->followLookAt.w;
   cam->base.target[0] = cam->followLookAt.x;
   cam->base.target[1] = cam->followLookAt.y;

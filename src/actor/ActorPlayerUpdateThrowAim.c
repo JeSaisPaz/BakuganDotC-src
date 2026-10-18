@@ -40,23 +40,23 @@ static inline void ThrowAimNormalize(float *d, const float *v)
   float x = v[0];
   float y = v[1];
   float z = v[2];
-  float lenSq = x * x + y * y + z * z;
+  float lenSq = VfDot3(x, y, z, x, y, z);
   float k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
 
-  d[0] = VfSat1(x * k);
-  d[1] = VfSat1(y * k);
-  d[2] = VfSat1(z * k);
+  d[0] = VfSat1(VfMul(x, k));
+  d[1] = VfSat1(VfMul(y, k));
+  d[2] = VfSat1(VfMul(z, k));
   d[3] = 0.0f;
 }
 
 /* |a.xyz - b.xyz|^2 */
 static inline float ThrowAimDistSq(const float *a, const float *b)
 {
-  float dx = a[0] - b[0];
-  float dy = a[1] - b[1];
-  float dz = a[2] - b[2];
+  float dx = VfSub(a[0], b[0]);
+  float dy = VfSub(a[1], b[1]);
+  float dz = VfSub(a[2], b[2]);
 
-  return dx * dx + dy * dy + dz * dz;
+  return VfDot3(dx, dy, dz, dx, dy, dz);
 }
 
 void ActorPlayerUpdateThrowAim(ActorPlayer *self)
@@ -127,19 +127,19 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
   offset[3] = 0.0f;
   /* offset.xyz = rootMatrix (3x3, vtfm3 E form) * offset; origin.xyz += offset.xyz */
   m = self->base.base.data->rootMatrix;
-  tmp[0] = m[0] * offset[0] + m[4] * offset[1] + m[8] * offset[2];
-  tmp[1] = m[1] * offset[0] + m[5] * offset[1] + m[9] * offset[2];
-  tmp[2] = m[2] * offset[0] + m[6] * offset[1] + m[10] * offset[2];
+  tmp[0] = VfDot3(m[0], m[4], m[8], offset[0], offset[1], offset[2]);
+  tmp[1] = VfDot3(m[1], m[5], m[9], offset[0], offset[1], offset[2]);
+  tmp[2] = VfDot3(m[2], m[6], m[10], offset[0], offset[1], offset[2]);
   offset[0] = tmp[0];
   offset[1] = tmp[1];
   offset[2] = tmp[2];
-  origin[0] = origin[0] + offset[0];
-  origin[1] = origin[1] + offset[1];
-  origin[2] = origin[2] + offset[2];
+  origin[0] = VfAdd(origin[0], offset[0]);
+  origin[1] = VfAdd(origin[1], offset[1]);
+  origin[2] = VfAdd(origin[2], offset[2]);
   /* far = eye + dir * 150 (w = eye.w) */
-  far[0] = eye[0] + dir[0] * 150.0f;
-  far[1] = eye[1] + dir[1] * 150.0f;
-  far[2] = eye[2] + dir[2] * 150.0f;
+  far[0] = VfAdd(eye[0], VfMul(dir[0], 150.0f));
+  far[1] = VfAdd(eye[1], VfMul(dir[1], 150.0f));
+  far[2] = VfAdd(eye[2], VfMul(dir[2], 150.0f));
   far[3] = eye[3];
   /* ray query: origin, dir and per-axis 1/dir (0 for a zero axis), invDir.w = 0 */
   g_collisionRayDesc.origin.x = origin[0];
@@ -158,9 +158,9 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
       VfIsZero(g_collisionRayDesc.dir.z) ? 0.0f : VfRcp(g_collisionRayDesc.dir.z);
   g_collisionRayDesc.invDir.w = 0.0f;
   /* aimPoint = eye + dir * 100 (w = eye.w) */
-  self->base.aimPoint[0] = eye[0] + dir[0] * 100.0f;
-  self->base.aimPoint[1] = eye[1] + dir[1] * 100.0f;
-  self->base.aimPoint[2] = eye[2] + dir[2] * 100.0f;
+  self->base.aimPoint[0] = VfAdd(eye[0], VfMul(dir[0], 100.0f));
+  self->base.aimPoint[1] = VfAdd(eye[1], VfMul(dir[1], 100.0f));
+  self->base.aimPoint[2] = VfAdd(eye[2], VfMul(dir[2], 100.0f));
   self->base.aimPoint[3] = eye[3];
   if (self->base.aimTargetKind != 0) {
     ThrowAimCopy4(self->base.aimPoint, far);
@@ -173,9 +173,9 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
 
   /* segment origin -> far (dir.w = far.w) */
   ThrowAimCopy4(g_collisionSegmentDesc.start, origin);
-  g_collisionSegmentDesc.dir[0] = far[0] - origin[0];
-  g_collisionSegmentDesc.dir[1] = far[1] - origin[1];
-  g_collisionSegmentDesc.dir[2] = far[2] - origin[2];
+  g_collisionSegmentDesc.dir[0] = VfSub(far[0], origin[0]);
+  g_collisionSegmentDesc.dir[1] = VfSub(far[1], origin[1]);
+  g_collisionSegmentDesc.dir[2] = VfSub(far[2], origin[2]);
   g_collisionSegmentDesc.dir[3] = far[3];
   if (CollisionRaycast(mask, &g_collisionSegmentBlock2, 0) != NULL) {
     far[0] = g_collisionHitResult.point.x;
@@ -247,21 +247,21 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
     }
     center = shape->center;
     /* toCenter = normalize(centre - origin) */
-    tmp[0] = center[0] - origin[0];
-    tmp[1] = center[1] - origin[1];
-    tmp[2] = center[2] - origin[2];
+    tmp[0] = VfSub(center[0], origin[0]);
+    tmp[1] = VfSub(center[1], origin[1]);
+    tmp[2] = VfSub(center[2], origin[2]);
     ThrowAimNormalize(toCenter, tmp);
     reach = shape->radius * 1.5f;
     /* toCenter rescaled to length reach (no clamp); probe = centre - toCenter */
-    lenSq = toCenter[0] * toCenter[0] + toCenter[1] * toCenter[1] + toCenter[2] * toCenter[2];
+    lenSq = VfDot3(toCenter[0], toCenter[1], toCenter[2], toCenter[0], toCenter[1], toCenter[2]);
     k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    k = k * reach;
-    toCenter[0] = toCenter[0] * k;
-    toCenter[1] = toCenter[1] * k;
-    toCenter[2] = toCenter[2] * k;
-    probe[0] = center[0] - toCenter[0];
-    probe[1] = center[1] - toCenter[1];
-    probe[2] = center[2] - toCenter[2];
+    k = VfMul(k, reach);
+    toCenter[0] = VfMul(toCenter[0], k);
+    toCenter[1] = VfMul(toCenter[1], k);
+    toCenter[2] = VfMul(toCenter[2], k);
+    probe[0] = VfSub(center[0], toCenter[0]);
+    probe[1] = VfSub(center[1], toCenter[1]);
+    probe[2] = VfSub(center[2], toCenter[2]);
     probe[3] = shape->radiusSq;
     dist2 = ThrowAimDistSq(probe, origin);
     if (g_throwAimRangeSq <= dist2) {
@@ -269,15 +269,15 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
     }
     /* cosAngle = dot(normalize(far - camEye), normalize(gimmick pos - camEye)) */
     ThrowAimCopy4(camEye, self->base.camera->base.eye);
-    tmp[0] = far[0] - camEye[0];
-    tmp[1] = far[1] - camEye[1];
-    tmp[2] = far[2] - camEye[2];
+    tmp[0] = VfSub(far[0], camEye[0]);
+    tmp[1] = VfSub(far[1], camEye[1]);
+    tmp[2] = VfSub(far[2], camEye[2]);
     ThrowAimNormalize(viewFar, tmp);
-    tmp[0] = gimmick->base.pos[0] - camEye[0];
-    tmp[1] = gimmick->base.pos[1] - camEye[1];
-    tmp[2] = gimmick->base.pos[2] - camEye[2];
+    tmp[0] = VfSub(gimmick->base.pos[0], camEye[0]);
+    tmp[1] = VfSub(gimmick->base.pos[1], camEye[1]);
+    tmp[2] = VfSub(gimmick->base.pos[2], camEye[2]);
     ThrowAimNormalize(viewGim, tmp);
-    cosAngle = viewFar[0] * viewGim[0] + viewFar[1] * viewGim[1] + viewFar[2] * viewGim[2];
+    cosAngle = VfDot3(viewFar[0], viewFar[1], viewFar[2], viewGim[0], viewGim[1], viewGim[2]);
     if (cosAngle <= 0.95f) {
       continue;
     }
@@ -288,16 +288,14 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
     g_collisionSweptSphereDesc.start.y = origin[1];
     g_collisionSweptSphereDesc.start.z = origin[2];
     g_collisionSweptSphereDesc.start.w = origin[3];
-    g_collisionSweptSphereDesc.dir.x = center[0] - origin[0];
-    g_collisionSweptSphereDesc.dir.y = center[1] - origin[1];
-    g_collisionSweptSphereDesc.dir.z = center[2] - origin[2];
+    g_collisionSweptSphereDesc.dir.x = VfSub(center[0], origin[0]);
+    g_collisionSweptSphereDesc.dir.y = VfSub(center[1], origin[1]);
+    g_collisionSweptSphereDesc.dir.z = VfSub(center[2], origin[2]);
     g_collisionSweptSphereDesc.dir.w = shape->radiusSq;
     g_collisionSweptSphereDesc.start.w =
         g_collisionSweptSphereDesc.radius * g_collisionSweptSphereDesc.radius;
-    g_collisionSweptSphereDesc.dir.w = __builtin_sqrtf(
-        g_collisionSweptSphereDesc.dir.x * g_collisionSweptSphereDesc.dir.x +
-        g_collisionSweptSphereDesc.dir.y * g_collisionSweptSphereDesc.dir.y +
-        g_collisionSweptSphereDesc.dir.z * g_collisionSweptSphereDesc.dir.z);
+    g_collisionSweptSphereDesc.dir.w = VfSqrt(
+        VfDot3(g_collisionSweptSphereDesc.dir.x, g_collisionSweptSphereDesc.dir.y, g_collisionSweptSphereDesc.dir.z, g_collisionSweptSphereDesc.dir.x, g_collisionSweptSphereDesc.dir.y, g_collisionSweptSphereDesc.dir.z));
     hitDist = dist2;
     if (CollisionRaycast(mask, &g_collisionSweptSphereDesc.shapeBlock, 0) != NULL) {
       hitDist = ThrowAimDistSq(&g_collisionHitResult.point.x, origin);
@@ -310,15 +308,15 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
       aimDir[i] = 0.0f;
       centerDir[i] = 0.0f;
     }
-    tmp[0] = far[0] - origin[0];
-    tmp[1] = far[1] - origin[1];
-    tmp[2] = far[2] - origin[2];
+    tmp[0] = VfSub(far[0], origin[0]);
+    tmp[1] = VfSub(far[1], origin[1]);
+    tmp[2] = VfSub(far[2], origin[2]);
     ThrowAimNormalize(aimDir, tmp);
-    tmp[0] = center[0] - origin[0];
-    tmp[1] = center[1] - origin[1];
-    tmp[2] = center[2] - origin[2];
+    tmp[0] = VfSub(center[0], origin[0]);
+    tmp[1] = VfSub(center[1], origin[1]);
+    tmp[2] = VfSub(center[2], origin[2]);
     ThrowAimNormalize(centerDir, tmp);
-    cosAngle = aimDir[0] * centerDir[0] + aimDir[1] * centerDir[1] + aimDir[2] * centerDir[2];
+    cosAngle = VfDot3(aimDir[0], aimDir[1], aimDir[2], centerDir[0], centerDir[1], centerDir[2]);
     if (!(acosf(cosAngle) < 0.235619467f)) {
       continue;
     }
@@ -354,15 +352,15 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
       aimDir[i] = 0.0f;
       actorDir[i] = 0.0f;
     }
-    tmp[0] = far[0] - origin[0];
-    tmp[1] = far[1] - origin[1];
-    tmp[2] = far[2] - origin[2];
+    tmp[0] = VfSub(far[0], origin[0]);
+    tmp[1] = VfSub(far[1], origin[1]);
+    tmp[2] = VfSub(far[2], origin[2]);
     ThrowAimNormalize(aimDir, tmp);
-    tmp[0] = actorPoint[0] - origin[0];
-    tmp[1] = actorPoint[1] - origin[1];
-    tmp[2] = actorPoint[2] - origin[2];
+    tmp[0] = VfSub(actorPoint[0], origin[0]);
+    tmp[1] = VfSub(actorPoint[1], origin[1]);
+    tmp[2] = VfSub(actorPoint[2], origin[2]);
     ThrowAimNormalize(actorDir, tmp);
-    cosAngle = aimDir[0] * actorDir[0] + aimDir[1] * actorDir[1] + aimDir[2] * actorDir[2];
+    cosAngle = VfDot3(aimDir[0], aimDir[1], aimDir[2], actorDir[0], actorDir[1], actorDir[2]);
     if (!(acosf(cosAngle) < 0.157079637f)) {
       continue;
     }
@@ -373,21 +371,21 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
     fwd[2] = 1.0f;
     fwd[3] = 0.0f;
     m = actor->base.data->rootMatrix;
-    tmp[0] = m[0] * fwd[0] + m[4] * fwd[1] + m[8] * fwd[2];
-    tmp[1] = m[1] * fwd[0] + m[5] * fwd[1] + m[9] * fwd[2];
-    tmp[2] = m[2] * fwd[0] + m[6] * fwd[1] + m[10] * fwd[2];
+    tmp[0] = VfDot3(m[0], m[4], m[8], fwd[0], fwd[1], fwd[2]);
+    tmp[1] = VfDot3(m[1], m[5], m[9], fwd[0], fwd[1], fwd[2]);
+    tmp[2] = VfDot3(m[2], m[6], m[10], fwd[0], fwd[1], fwd[2]);
     ThrowAimNormalize(fwd, tmp);
     ThrowAimNormalize(dir, dir);
-    cosAngle = dir[0] * fwd[0] + dir[1] * fwd[1] + dir[2] * fwd[2];
-    cosLimit = __builtin_cosf(1.04719758f);
+    cosAngle = VfDot3(dir[0], dir[1], dir[2], fwd[0], fwd[1], fwd[2]);
+    cosLimit = VfCosQuarter(1.04719758f * 0.636619747f);
     if (cosAngle <= cosLimit) {
       continue;
     }
     /* segment actorPoint -> far must be clear (dir.w = far.w) */
     ThrowAimCopy4(g_collisionSegmentDesc.start, actorPoint);
-    g_collisionSegmentDesc.dir[0] = far[0] - actorPoint[0];
-    g_collisionSegmentDesc.dir[1] = far[1] - actorPoint[1];
-    g_collisionSegmentDesc.dir[2] = far[2] - actorPoint[2];
+    g_collisionSegmentDesc.dir[0] = VfSub(far[0], actorPoint[0]);
+    g_collisionSegmentDesc.dir[1] = VfSub(far[1], actorPoint[1]);
+    g_collisionSegmentDesc.dir[2] = VfSub(far[2], actorPoint[2]);
     g_collisionSegmentDesc.dir[3] = far[3];
     if (CollisionRaycast(mask, &g_collisionSegmentBlock2, 0) != NULL) {
       continue;
@@ -399,9 +397,9 @@ void ActorPlayerUpdateThrowAim(ActorPlayer *self)
     bestGimmick = NULL;
     reach = __builtin_sqrtf(dist2) - 6.3f;
     /* lockPoint = origin + actorDir * reach (w = origin.w) */
-    lockPoint[0] = origin[0] + actorDir[0] * reach;
-    lockPoint[1] = origin[1] + actorDir[1] * reach;
-    lockPoint[2] = origin[2] + actorDir[2] * reach;
+    lockPoint[0] = VfAdd(origin[0], VfMul(actorDir[0], reach));
+    lockPoint[1] = VfAdd(origin[1], VfMul(actorDir[1], reach));
+    lockPoint[2] = VfAdd(origin[2], VfMul(actorDir[2], reach));
     lockPoint[3] = origin[3];
     bestDist = dist2;
     self->ballTarget = actor;

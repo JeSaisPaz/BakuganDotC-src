@@ -11,24 +11,24 @@
 /* a.xyz . b.xyz (vdot.t). */
 static inline float Vec3Dot(const ScePspFVector4 *a, const ScePspFVector4 *b)
 {
-    return a->x * b->x + a->y * b->y + a->z * b->z;
+    return VfDot3(a->x, a->y, a->z, b->x, b->y, b->z);
 }
 
 /* out.xyz = a.xyz - b.xyz (vsub.t); w is never read. */
 static inline void Vec3Sub(ScePspFVector4 *out, const ScePspFVector4 *a, const ScePspFVector4 *b)
 {
-    out->x = a->x - b->x;
-    out->y = a->y - b->y;
-    out->z = a->z - b->z;
+    out->x = VfSub(a->x, b->x);
+    out->y = VfSub(a->y, b->y);
+    out->z = VfSub(a->z, b->z);
     out->w = a->w;
 }
 
 /* out.xyz = a.xyz x b.xyz (vcrsp.t); the asm stores S713 (0.0f) in w, never read. */
 static inline void Vec3Cross(ScePspFVector4 *out, const ScePspFVector4 *a, const ScePspFVector4 *b)
 {
-    out->x = a->y * b->z - a->z * b->y;
-    out->y = a->z * b->x - a->x * b->z;
-    out->z = a->x * b->y - a->y * b->x;
+    out->x = VfDot2(a->y, a->z, b->z, -b->y);
+    out->y = VfDot2(a->z, a->x, b->x, -b->z);
+    out->z = VfDot2(a->x, a->y, b->y, -b->x);
     out->w = 0.0f;
 }
 
@@ -57,9 +57,9 @@ bool CollisionTriangleTestSegment(const CollisionFacePart *part, const u16 *face
         return false;
 
     /* point = origin + dir * t (vmul.t then vadd.t; w = origin.w) */
-    point->x = query->origin.x + query->dir.x * t;
-    point->y = query->origin.y + query->dir.y * t;
-    point->z = query->origin.z + query->dir.z * t;
+    point->x = VfAdd(query->origin.x, VfMul(query->dir.x, t));
+    point->y = VfAdd(query->origin.y, VfMul(query->dir.y, t));
+    point->z = VfAdd(query->origin.z, VfMul(query->dir.z, t));
     point->w = query->origin.w;
 
     Vec3Sub(&e2, &((const ScePspFVector4 *)PspPtr(part->vertices))[face[2]], point);

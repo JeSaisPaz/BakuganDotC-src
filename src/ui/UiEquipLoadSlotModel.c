@@ -110,7 +110,7 @@ void UiEquipLoadSlotModel(UiEquip *self, u8 slot, u8 id)
     /* scale matrix rows 0..2 by rowScale[0..2] (row 0 mirrored) */
     for (r = 0; r < 3; r++) {
       for (k = 0; k < 4; k++) {
-        mtx[r * 4 + k] = mtx[r * 4 + k] * rowScale[r];
+        mtx[r * 4 + k] = VfMul(mtx[r * 4 + k], rowScale[r]);
       }
     }
   }

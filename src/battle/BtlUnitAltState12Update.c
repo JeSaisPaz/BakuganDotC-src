@@ -73,8 +73,8 @@ void BtlUnitAltState12Update(BtlBakugan *self)
             if ((self->commands & 1) != 0) {
                 /* velocity.xz = (cos, sin)(heading) * cap */
                 heading = self->input->heading;
-                self->base.velocity[0] = __builtin_cosf(heading) * cap;
-                self->base.velocity[2] = __builtin_sinf(heading) * cap;
+                self->base.velocity[0] = VfMul(VfCosQuarter(VfMul(heading, 0.636619747f)), cap);
+                self->base.velocity[2] = VfMul(VfSinQuarter(VfMul(heading, 0.636619747f)), cap);
             }
             self->base.velocity[1] = jump;
             damp = 0;
@@ -90,23 +90,23 @@ void BtlUnitAltState12Update(BtlBakugan *self)
             self->airborneFrames = 4;
         }
         if ((self->commands & 4) == 0) {
-            self->base.velocity[0] = self->base.velocity[0] * 0.800000012f;
-            self->base.velocity[2] = self->base.velocity[2] * 0.800000012f;
+            self->base.velocity[0] = VfMul(self->base.velocity[0], 0.800000012f);
+            self->base.velocity[2] = VfMul(self->base.velocity[2], 0.800000012f);
             return;
         }
         /* flat = velocity with y = 0; len = |flat| */
         flat[0] = self->base.velocity[0];
         flat[1] = 0.0f;
         flat[2] = self->base.velocity[2];
-        len = __builtin_sqrtf(flat[0] * flat[0] + flat[1] * flat[1] + flat[2] * flat[2]);
+        len = VfSqrt(VfDot3(flat[0], flat[1], flat[2], flat[0], flat[1], flat[2]));
         if (cap < len) {
             len = len + (cap - len) * 0.200000003f;
             /* flat = flat / |flat| * len (1/|flat| taken as 0 for a zero vector) */
-            sq = flat[0] * flat[0] + flat[1] * flat[1] + flat[2] * flat[2];
+            sq = VfDot3(flat[0], flat[1], flat[2], flat[0], flat[1], flat[2]);
             k = VfIsZero(sq) ? 0.0f : VfRsq(sq);
-            k = k * len;
-            self->base.velocity[0] = flat[0] * k;
-            self->base.velocity[2] = flat[2] * k;
+            k = VfMul(k, len);
+            self->base.velocity[0] = VfMul(flat[0], k);
+            self->base.velocity[2] = VfMul(flat[2], k);
         }
         return;
     }
@@ -123,23 +123,19 @@ void BtlUnitAltState12Update(BtlBakugan *self)
     if ((self->commands & 1) != 0) {
         /* velocity.xyz += (cos(heading), 0, sin(heading)) */
         heading = self->input->heading;
-        self->base.velocity[0] = self->base.velocity[0] + __builtin_cosf(heading);
-        self->base.velocity[2] = self->base.velocity[2] + __builtin_sinf(heading);
+        self->base.velocity[0] = VfAdd(self->base.velocity[0], VfCosQuarter(VfMul(heading, 0.636619747f)));
+        self->base.velocity[2] = VfAdd(self->base.velocity[2], VfSinQuarter(VfMul(heading, 0.636619747f)));
     }
     self->base.velocity[1] = 0.0f;
-    len = __builtin_sqrtf(self->base.velocity[0] * self->base.velocity[0] +
-                          self->base.velocity[1] * self->base.velocity[1] +
-                          self->base.velocity[2] * self->base.velocity[2]);
+    len = VfSqrt(VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]));
     if (cap < len) {
         len = len + (cap - len) * 0.150000006f;
         /* velocity = velocity / |velocity| * len; lane 3 gets the bank zero S713 */
-        sq = self->base.velocity[0] * self->base.velocity[0] +
-             self->base.velocity[1] * self->base.velocity[1] +
-             self->base.velocity[2] * self->base.velocity[2];
+        sq = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
         k = VfIsZero(sq) ? 0.0f : VfRsq(sq);
-        k = k * len;
-        self->base.velocity[0] = self->base.velocity[0] * k;
-        self->base.velocity[2] = self->base.velocity[2] * k;
+        k = VfMul(k, len);
+        self->base.velocity[0] = VfMul(self->base.velocity[0], k);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], k);
         self->base.velocity[3] = 0.0f;
     }
     self->base.velocity[1] = vy;

@@ -89,19 +89,19 @@ void BtlBakuganState15Update(BtlBakugan *self)
     tint[3] = color[3];
     t = (float)(0x23 - self->subWait) * 0.0299999993f;
     /* vmin.s with 1, then vmax.s with 0 (t is finite) */
-    t = t < 1.0f ? t : 1.0f;
-    t = t > 0.0f ? t : 0.0f;
+    t = VfMin(t, 1.0f);
+    t = VfMax(t, 0.0f);
     angle = t * 3.14159274f;
-    c = __builtin_cosf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
     tint[3] = (1.0f - c) * 0.5f;
     entry = &((const VtblEntry *)self->base.base.vtable)[4];
     ((void (*)(void *, float *))entry->fn)((u8 *)self + entry->delta, tint);
-    c = __builtin_cosf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
     scale = 1.0f - (1.0f - c) * 0.5f * 0.300000012f;
     node = (GmoNode *)GfxModelFindNode(&self->base, "Bip01_Pelvis");
-    node->scale[0] = node->scale[0] * scale;
-    node->scale[1] = node->scale[1] * scale;
-    node->scale[2] = node->scale[2] * scale;
+    node->scale[0] = VfMul(node->scale[0], scale);
+    node->scale[1] = VfMul(node->scale[1], scale);
+    node->scale[2] = VfMul(node->scale[2], scale);
     node->scaleW = 0.0f;
     if (self->subWait < 0x10) {
         self->base.ambient[3] = self->base.ambient[3] - 0.0625f;
@@ -125,11 +125,11 @@ void BtlBakuganState15Update(BtlBakugan *self)
         self->effectAnchor[i] = g_gfxActiveCamera->eye[i];
     }
     for (i = 0; i < 3; i++) {
-        k = g_gfxActiveCamera->dir[i] * 280.0f;
-        self->effectAnchor[i] = self->effectAnchor[i] + k;
+        k = VfMul(g_gfxActiveCamera->dir[i], 280.0f);
+        self->effectAnchor[i] = VfAdd(self->effectAnchor[i], k);
     }
     for (i = 0; i < 4; i++) {
-        k = (self->anchorMatrix[3][i] - self->effectAnchor[i]) * 0.400000006f;
-        self->effectAnchor[i] = self->effectAnchor[i] + k;
+        k = VfMul(VfSub(self->anchorMatrix[3][i], self->effectAnchor[i]), 0.400000006f);
+        self->effectAnchor[i] = VfAdd(self->effectAnchor[i], k);
     }
 }

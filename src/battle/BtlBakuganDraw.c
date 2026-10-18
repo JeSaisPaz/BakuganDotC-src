@@ -12,8 +12,7 @@ static void BtlBakuganDrawMatMul(float *dst, const float *a, const float *b)
 
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            r[j * 4 + i] = b[j * 4 + 0] * a[0 * 4 + i] + b[j * 4 + 1] * a[1 * 4 + i]
-                         + b[j * 4 + 2] * a[2 * 4 + i] + b[j * 4 + 3] * a[3 * 4 + i];
+            r[j * 4 + i] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], a[0 * 4 + i], a[1 * 4 + i], a[2 * 4 + i], a[3 * 4 + i]);
         }
     }
     for (i = 0; i < 16; i++) {

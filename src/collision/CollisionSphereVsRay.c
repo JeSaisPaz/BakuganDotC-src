@@ -10,11 +10,11 @@ bool CollisionSphereVsRay(const void *sphere, const void *ray, ScePspFVector4 *o
 {
   const CollisionSphere *sph = sphere;
   const CollisionRayShape *r = ray;
-  float mx = r->origin.x - sph->center[0];
-  float my = r->origin.y - sph->center[1];
-  float mz = r->origin.z - sph->center[2];
-  float b = mx * r->dir.x + my * r->dir.y + mz * r->dir.z;
-  float c = mx * mx + my * my + mz * mz;
+  float mx = VfSub(r->origin.x, sph->center[0]);
+  float my = VfSub(r->origin.y, sph->center[1]);
+  float mz = VfSub(r->origin.z, sph->center[2]);
+  float b = VfDot3(mx, my, mz, r->dir.x, r->dir.y, r->dir.z);
+  float c = VfDot3(mx, my, mz, mx, my, mz);
   float disc;
   float t;
 
@@ -27,9 +27,9 @@ bool CollisionSphereVsRay(const void *sphere, const void *ray, ScePspFVector4 *o
     return false;
   }
   t = -b - __builtin_sqrtf(disc);
-  out->x = r->dir.x * t;
-  out->y = r->dir.y * t;
-  out->z = r->dir.z * t;
+  out->x = VfMul(r->dir.x, t);
+  out->y = VfMul(r->dir.y, t);
+  out->z = VfMul(r->dir.z, t);
   out->w = 0.0f; /* bank S713: vmul.t writes only xyz of C710 */
   return true;
 }

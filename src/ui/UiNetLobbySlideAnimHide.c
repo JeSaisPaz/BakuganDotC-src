@@ -45,7 +45,7 @@ bool UiNetLobbySlideAnimHide(UiNetLobbySlideAnim *anim, u8 reset)
   if (frame < 24) {
     e = 1.0f - (float)frame * 0.041666668f;
     angle = e * e * 3.1415927f;
-    ease = (1.0f - __builtin_cosf(angle)) * 0.5f;
+    ease = (1.0f - VfCosQuarter(VfMul(angle, 0.636619747f))) * 0.5f;
     done = false;
   }
   anim->sprite->posX = (float)anim->layoutPos->x + (float)anim->offset * (1.0f - ease);

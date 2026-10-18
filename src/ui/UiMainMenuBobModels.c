@@ -18,7 +18,7 @@ void UiMainMenuBobModels(UiMainMenu *self)
         float c;
         float t = self->bob[i][2] + 0.022222223f;
         self->bob[i][2] = t;
-        c = __builtin_cosf(t * 3.1415927f);
+        c = VfCosQuarter(VfMul(t * 3.1415927f, 0.636619747f));
         model = (GfxModel *)self->models[i];
         model->pos[1] = self->bob[i][1] + (1.0f - c) * 0.5f * 10.0f;
         model = (GfxModel *)self->models[i];

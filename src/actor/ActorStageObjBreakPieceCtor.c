@@ -49,26 +49,26 @@ void *ActorStageObjBreakPieceCtor(ActorStageObjBreakPiece *self, int piece, int 
   maxB[1] = 0.0f;
   minB[1] = 0.0f;
   /* diagonal2 = |min - max| (xyz). */
-  diff[0] = minB[0] - maxB[0];
-  diff[1] = minB[1] - maxB[1];
-  diff[2] = minB[2] - maxB[2];
-  self->base.diagonal2 = __builtin_sqrtf(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
+  diff[0] = VfSub(minB[0], maxB[0]);
+  diff[1] = VfSub(minB[1], maxB[1]);
+  diff[2] = VfSub(minB[2], maxB[2]);
+  self->base.diagonal2 = VfSqrt(VfDot3(diff[0], diff[1], diff[2], diff[0], diff[1], diff[2]));
   /* The asm first zeroes `extents` (bank C720); both branches overwrite all four lanes. */
   if (minB[0] < 0.0f) {
-    self->base.extents[0] = maxB[0] - minB[0];
-    self->base.extents[1] = maxB[1] - minB[1];
-    self->base.extents[2] = maxB[2] - minB[2];
+    self->base.extents[0] = VfSub(maxB[0], minB[0]);
+    self->base.extents[1] = VfSub(maxB[1], minB[1]);
+    self->base.extents[2] = VfSub(maxB[2], minB[2]);
   } else {
-    self->base.extents[0] = maxB[0] + minB[0];
-    self->base.extents[1] = maxB[1] + minB[1];
-    self->base.extents[2] = maxB[2] + minB[2];
+    self->base.extents[0] = VfAdd(maxB[0], minB[0]);
+    self->base.extents[1] = VfAdd(maxB[1], minB[1]);
+    self->base.extents[2] = VfAdd(maxB[2], minB[2]);
   }
   self->base.extents[3] = maxB[3];
   scale[2] = 0.0f;
   scale[1] = 0.0f;
   scale[0] = 0.0f;
   scale[3] = 0.0f;
-  len = __builtin_sqrtf(size[0] * size[0] + size[1] * size[1] + size[2] * size[2]);
+  len = VfSqrt(VfDot3(size[0], size[1], size[2], size[0], size[1], size[2]));
   sy = len / self->base.diagonal2 * 0.800000012f;
   sx = size[0] / self->base.extents[0] * 0.899999976f;
   scale[0] = sx;

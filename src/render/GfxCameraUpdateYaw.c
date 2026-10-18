@@ -7,12 +7,12 @@
 
 float GfxCameraUpdateYaw(GfxCamera *cam)
 {
-  float x = cam->dir[0] * 10.0f;
-  float z = cam->dir[2] * 10.0f;
+  float x = VfMul(cam->dir[0], 10.0f);
+  float z = VfMul(cam->dir[2], 10.0f);
   float y = 0.0f;
   float a;
 
-  if (!(x * x + y * y + z * z <= 1.0f)) {
+  if (!(VfDot3(x, y, z, x, y, z) <= 1.0f)) {
     a = -atan2f(z, x);
     cam->yaw = a;
     if (!(a <= 3.1415927f)) {

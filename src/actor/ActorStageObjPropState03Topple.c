@@ -11,8 +11,7 @@ static void ToppleMtx4Mul(float *d, const float *a, const float *b)
 
   for (j = 0; j < 4; j++) {
     for (i = 0; i < 4; i++) {
-      r[j * 4 + i] = b[j * 4 + 0] * a[0 * 4 + i] + b[j * 4 + 1] * a[1 * 4 + i] +
-                     b[j * 4 + 2] * a[2 * 4 + i] + b[j * 4 + 3] * a[3 * 4 + i];
+      r[j * 4 + i] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], a[0 * 4 + i], a[1 * 4 + i], a[2 * 4 + i], a[3 * 4 + i]);
     }
   }
   for (i = 0; i < 16; i++) {
@@ -27,14 +26,14 @@ static void ToppleNormalize3(float *v)
   float lenSq;
   float k;
 
-  lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+  lenSq = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
   k = VfRsq(lenSq);
   if (VfIsZero(lenSq)) {
     k = 0.0f;
   }
-  v[0] = VfSat1(v[0] * k);
-  v[1] = VfSat1(v[1] * k);
-  v[2] = VfSat1(v[2] * k);
+  v[0] = VfSat1(VfMul(v[0], k));
+  v[1] = VfSat1(VfMul(v[1], k));
+  v[2] = VfSat1(VfMul(v[2], k));
   v[3] = 0.0f;
 }
 
@@ -88,9 +87,9 @@ void ActorStageObjPropState03Topple(ActorStageObjProp *self)
     mtx = self->base.base.data->rootMatrix;
     axis = self->base.toppleAxis;
     /* vsub.t: w keeps the root matrix's w.w */
-    axis[0] = mtx[12] - self->contactPos[0];
-    axis[1] = mtx[13] - self->contactPos[1];
-    axis[2] = mtx[14] - self->contactPos[2];
+    axis[0] = VfSub(mtx[12], self->contactPos[0]);
+    axis[1] = VfSub(mtx[13], self->contactPos[1]);
+    axis[2] = VfSub(mtx[14], self->contactPos[2]);
     axis[3] = mtx[15];
     if (ActorStageObjKindTopples(&self->base) != 0) {
       self->base.toppleAxis[0] = 0.0f;
@@ -101,8 +100,7 @@ void ActorStageObjPropState03Topple(ActorStageObjProp *self)
     x = axis[0];
     axis[0] = axis[2];
     axis[2] = -x;
-    speed = __builtin_sqrtf(self->contactVel[0] * self->contactVel[0] +
-                            self->contactVel[2] * self->contactVel[2]);
+    speed = VfSqrt(VfDot2(self->contactVel[0], self->contactVel[2], self->contactVel[0], self->contactVel[2]));
     self->toppleSpeed = speed;
     if (!(speed <= 45.0f)) {
       self->toppleSpeed = 45.0f;
@@ -120,20 +118,20 @@ void ActorStageObjPropState03Topple(ActorStageObjProp *self)
     self->toppleT = self->toppleT + 1.0f / (50.0f - self->toppleSpeed);
     angle = self->toppleAngle;
     t = self->toppleT;
-    angle = angle + (1.0f - __builtin_cosf(t * t * 3.1415927f)) * 0.5f * 1.5707964f;
+    angle = angle + (1.0f - VfCosQuarter(VfMul(t * t * 3.1415927f, 0.636619747f))) * 0.5f * 1.5707964f;
     self->toppleAngle = angle;
     if (!(angle < 1.5707964f)) {
       self->toppleAngle = 1.5707964f;
       self->step = self->step + 1;
     }
     /* quaternion (axis * sin(a/2), cos(a/2)): vcos/vsin of a * (1/pi) quarter turns */
-    half = 0.318309873f * self->toppleAngle;
+    half = VfMul(0.318309873f, self->toppleAngle);
     c = VfCosQuarter(half);
     s = VfSinQuarter(half);
     axis = self->base.toppleAxis;
-    quat[0] = axis[0] * s;
-    quat[1] = axis[1] * s;
-    quat[2] = axis[2] * s;
+    quat[0] = VfMul(axis[0], s);
+    quat[1] = VfMul(axis[1], s);
+    quat[2] = VfMul(axis[2], s);
     quat[3] = c;
     /* rotation matrix = L(q) * R(conj q) as one 4x4 product (vpfxs swizzles) */
     qa[0] = quat[3];   qa[1] = quat[2];   qa[2] = -quat[1];  qa[3] = -quat[0];
@@ -153,13 +151,13 @@ void ActorStageObjPropState03Topple(ActorStageObjProp *self)
     rotMtx[14] = self->base.base.pos[2];
     rotMtx[15] = 1.0f;
     t = self->toppleT;
-    self->toppleRise = self->toppleRise + (1.0f - __builtin_cosf(t * t * 3.1415927f)) * 0.5f * 25.0f;
+    self->toppleRise = self->toppleRise + (1.0f - VfCosQuarter(VfMul(t * t * 3.1415927f, 0.636619747f))) * 0.5f * 25.0f;
     rotMtx[13] = self->toppleRise;
     yawMtx[13] = self->base.base.pos[1];
     /* yaw rotation about y (vrot of rot.y * 2/pi), then root = rotMtx * (yaw * yawMtx) */
     angle = self->base.base.rot[1];
-    c = __builtin_cosf(angle);
-    s = __builtin_sinf(angle);
+    c = VfCosQuarter(VfMul(angle, 0.636619747f));
+    s = VfSinQuarter(VfMul(angle, 0.636619747f));
     yawRot[0] = c;     yawRot[1] = 0.0f;  yawRot[2] = -s;    yawRot[3] = 0.0f;
     yawRot[4] = 0.0f;  yawRot[5] = 1.0f;  yawRot[6] = 0.0f;  yawRot[7] = 0.0f;
     yawRot[8] = s;     yawRot[9] = 0.0f;  yawRot[10] = c;    yawRot[11] = 0.0f;
@@ -179,7 +177,7 @@ void ActorStageObjPropState03Topple(ActorStageObjProp *self)
         mtx = self->base.base.data->rootMatrix;
         bounds = ActorStageObjGetBounds(&self->base);
         h = bounds[5] * 2.0f;
-        y = h * (PlatformRandFloat12() - 1.0f);
+        y = h * (VfSub(PlatformRandFloat12(), 1.0f));
         bounds = ActorStageObjGetBounds(&self->base);
         local.x = 0.0f;
         local.y = y - bounds[5];
@@ -190,9 +188,9 @@ void ActorStageObjPropState03Topple(ActorStageObjProp *self)
         spawnPos[1] = out.y;
         spawnPos[2] = out.z;
         spawnPos[3] = out.w;
-        dir[0] = self->base.base.pos[0] - spawnPos[0];
+        dir[0] = VfSub(self->base.base.pos[0], spawnPos[0]);
         dir[1] = 0.0f;
-        dir[2] = self->base.base.pos[2] - spawnPos[2];
+        dir[2] = VfSub(self->base.base.pos[2], spawnPos[2]);
         dir[3] = self->base.base.pos[3];
         ToppleNormalize3(dir);
         GfxEffectSpawnDirected(g_btlUnitEffectMgr, 0xd, spawnPos, dir);

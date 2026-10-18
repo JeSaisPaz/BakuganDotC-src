@@ -113,11 +113,11 @@ commands:
 
     if ((self->stateFlags & 0x200000) != 0) {
         /* velocity.x and .z *= 0.85; y untouched */
-        vel[0] = vel[0] * 0.850000024f;
-        vel[2] = vel[2] * 0.850000024f;
+        vel[0] = VfMul(vel[0], 0.850000024f);
+        vel[2] = VfMul(vel[2], 0.850000024f);
         target = BtlBakuganGetTarget(self);
         /* horizontal speed: length of velocity with y zeroed */
-        speed = __builtin_sqrtf(vel[0] * vel[0] + 0.0f * 0.0f + vel[2] * vel[2]);
+        speed = VfSqrt(VfDot3(vel[0], 0.0f, vel[2], vel[0], 0.0f, vel[2]));
         if (target != NULL) {
             angle = atan2f(target->base.pos[2] - self->base.pos[2],
                            target->base.pos[0] - self->base.pos[0]);
@@ -129,8 +129,8 @@ commands:
         }
     } else {
         /* velocity.x and .z *= 0.7; y untouched */
-        vel[0] = vel[0] * 0.699999988f;
-        vel[2] = vel[2] * 0.699999988f;
+        vel[0] = VfMul(vel[0], 0.699999988f);
+        vel[2] = VfMul(vel[2], 0.699999988f);
     }
     self->stateFrames++;
 }

@@ -9,7 +9,5 @@ void CollisionCapsuleRecalc(CollisionCapsule *capsule)
 
 {
   capsule->radiusSq = capsule->radius * capsule->radius;
-  capsule->axisLen = __builtin_sqrtf(capsule->axis[0] * capsule->axis[0] +
-                                     capsule->axis[1] * capsule->axis[1] +
-                                     capsule->axis[2] * capsule->axis[2]);
+  capsule->axisLen = VfSqrt(VfDot3(capsule->axis[0], capsule->axis[1], capsule->axis[2], capsule->axis[0], capsule->axis[1], capsule->axis[2]));
 }

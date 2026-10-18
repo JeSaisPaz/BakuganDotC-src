@@ -33,9 +33,9 @@ void BtlAttackType5AUpdate(BtlAttack *self)
     vel = self->vel;
     if (self->age == 0) {
         /* vel.xyz *= 200; w = S713 (0) */
-        vel[0] = vel[0] * 200.0f;
-        vel[1] = vel[1] * 200.0f;
-        vel[2] = vel[2] * 200.0f;
+        vel[0] = VfMul(vel[0], 200.0f);
+        vel[1] = VfMul(vel[1], 200.0f);
+        vel[2] = VfMul(vel[2], 200.0f);
         vel[3] = 0.0f;
         self->effect = NULL;
         if (BtlCameraTaskExists() != 0) {
@@ -62,30 +62,30 @@ void BtlAttackType5AUpdate(BtlAttack *self)
         point[i] = pos[i];
         step[i] = vel[i];
     }
-    len = __builtin_sqrtf(vel[0] * vel[0] + vel[1] * vel[1] + vel[2] * vel[2]);
+    len = VfSqrt(VfDot3(vel[0], vel[1], vel[2], vel[0], vel[1], vel[2]));
     count = len * 0.0299999993f + 0.5f;
     n = (s32)count;
     /* step.xyz *= 1 / count; w = S713 (0) */
     inv = 1.0f / count;
-    step[0] = step[0] * inv;
-    step[1] = step[1] * inv;
-    step[2] = step[2] * inv;
+    step[0] = VfMul(step[0], inv);
+    step[1] = VfMul(step[1], inv);
+    step[2] = VfMul(step[2], inv);
     step[3] = 0.0f;
     for (i = 0; i < n; i++) {
         if (CollisionRaycastPoint(point, ground) != 0 && point[1] - 200.0f < ground[1]) {
             GfxEffectSpawnDirected(g_btlAttackEffectMgr, 0xf5, ground, self->dir);
         }
         /* point.xyz += step.xyz */
-        point[0] = point[0] + step[0];
-        point[1] = point[1] + step[1];
-        point[2] = point[2] + step[2];
+        point[0] = VfAdd(point[0], step[0]);
+        point[1] = VfAdd(point[1], step[1]);
+        point[2] = VfAdd(point[2], step[2]);
     }
     /* pos.xyz += vel.xyz (w kept); vel.xyz *= 0.9, w = S713 (0) */
-    pos[0] = pos[0] + vel[0];
-    pos[1] = pos[1] + vel[1];
-    pos[2] = pos[2] + vel[2];
-    vel[0] = vel[0] * 0.899999976f;
-    vel[1] = vel[1] * 0.899999976f;
-    vel[2] = vel[2] * 0.899999976f;
+    pos[0] = VfAdd(pos[0], vel[0]);
+    pos[1] = VfAdd(pos[1], vel[1]);
+    pos[2] = VfAdd(pos[2], vel[2]);
+    vel[0] = VfMul(vel[0], 0.899999976f);
+    vel[1] = VfMul(vel[1], 0.899999976f);
+    vel[2] = VfMul(vel[2], 0.899999976f);
     vel[3] = 0.0f;
 }

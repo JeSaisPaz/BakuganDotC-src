@@ -62,13 +62,13 @@ void GfxPacketDrawSpeedLines(float x, float y, float w, float h, float amount, v
   spread = (400.0f - minR) * 0.004f;
   /* (w, h, 0) normalised (zero length: scaled by 0), each lane clamped to [-1, 1], then ×768.
      The original also scales it by len(w, h) + 32 into two stack temps that are never read. */
-  dot = w * w + h * h + 0.0f * 0.0f;
+  dot = VfDot3(w, h, 0.0f, w, h, 0.0f);
   inv = VfRsq(dot);
   if (VfIsZero(dot)) {
     inv = 0.0f;
   }
-  outerX = VfSat1(w * inv) * 768.0f;
-  outerY = VfSat1(h * inv) * 768.0f;
+  outerX = VfMul(VfSat1(VfMul(w, inv)), 768.0f);
+  outerY = VfMul(VfSat1(VfMul(h, inv)), 768.0f);
   col[0] = colour[0];
   col[1] = colour[1];
   col[2] = colour[2];
@@ -76,7 +76,7 @@ void GfxPacketDrawSpeedLines(float x, float y, float w, float h, float amount, v
   /* outer colour: RGBA8 of `colour` with alpha 0 */
   outerColour = 0;
   for (lane = 0; lane < 4; lane++) {
-    outerColour |= (u32)VfI2uc(VfF2iz(VfSat0(col[lane]) * 255.0f, 23)) << (lane * 8);
+    outerColour |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(col[lane]), 255.0f), 23)) << (lane * 8);
   }
   list = GfxPacketBeginChunk(packet);
   list = GfxDlCall2DState(list);
@@ -105,19 +105,19 @@ void GfxPacketDrawSpeedLines(float x, float y, float w, float h, float amount, v
   jump[1] = (PspAddr(cmd) & 0xffffff) | 0x8000000;
   jitter = spread * 0.2f;
   for (i = 0; i < 0x100; i++) {
-    rnd = PlatformRandFloat12() - 1.0f;
+    rnd = VfSub(PlatformRandFloat12(), 1.0f);
     if (rnd < 0.5f) {
       continue;
     }
     /* on-screen test at the last drawn angle */
-    px = x + __builtin_cosf(angle) * w;
+    px = x + VfCosQuarter(VfMul(angle, 0.636619747f)) * w;
     if (!(px <= 480.0f)) {
       continue;
     }
     if (px < 0.0f) {
       continue;
     }
-    py = y + __builtin_sinf(angle) * h;
+    py = y + VfSinQuarter(VfMul(angle, 0.636619747f)) * h;
     if (!(py <= 272.0f)) {
       continue;
     }
@@ -128,33 +128,33 @@ void GfxPacketDrawSpeedLines(float x, float y, float w, float h, float amount, v
     /* inner colour: RGBA8 of `colour` with the faded alpha */
     innerColour = 0;
     for (lane = 0; lane < 4; lane++) {
-      innerColour |= (u32)VfI2uc(VfF2iz(VfSat0(col[lane]) * 255.0f, 23)) << (lane * 8);
+      innerColour |= (u32)VfI2uc(VfF2iz(VfMul(VfSat0(col[lane]), 255.0f), 23)) << (lane * 8);
     }
     angle = 0.0245436933f * (float)i;
-    rnd2 = PlatformRandFloat12() - 1.0f;
+    rnd2 = VfSub(PlatformRandFloat12(), 1.0f);
     scale = spread * rnd2 + 1.0f - jitter;
-    tipX = __builtin_cosf(angle) * w * scale;
+    tipX = VfCosQuarter(VfMul(angle, 0.636619747f)) * w * scale;
     if (!(x + tipX <= 480.0f)) {
       continue;
     }
     if (x + tipX < 0.0f) {
       continue;
     }
-    tipY = __builtin_sinf(angle) * h * scale;
+    tipY = VfSinQuarter(VfMul(angle, 0.636619747f)) * h * scale;
     if (!(y + tipY <= 272.0f)) {
       continue;
     }
     if (y + tipY < 0.0f) {
       continue;
     }
-    baseX = __builtin_cosf(angle) * w * scale * 1.5f;
-    baseY = __builtin_sinf(angle) * h * scale * 1.5f;
-    farX = __builtin_cosf(angle) * outerX;
-    farY = __builtin_sinf(angle) * outerY;
-    prevX = __builtin_cosf(angle - 0.0245436933f) * outerX;
-    prevY = __builtin_sinf(angle - 0.0245436933f) * outerY;
-    nextX = __builtin_cosf(angle + 0.0245436933f) * outerX;
-    nextY = __builtin_sinf(angle + 0.0245436933f) * outerY;
+    baseX = VfCosQuarter(VfMul(angle, 0.636619747f)) * w * scale * 1.5f;
+    baseY = VfSinQuarter(VfMul(angle, 0.636619747f)) * h * scale * 1.5f;
+    farX = VfCosQuarter(VfMul(angle, 0.636619747f)) * outerX;
+    farY = VfSinQuarter(VfMul(angle, 0.636619747f)) * outerY;
+    prevX = VfCosQuarter(VfMul((angle - 0.0245436933f), 0.636619747f)) * outerX;
+    prevY = VfSinQuarter(VfMul((angle - 0.0245436933f), 0.636619747f)) * outerY;
+    nextX = VfCosQuarter(VfMul((angle + 0.0245436933f), 0.636619747f)) * outerX;
+    nextY = VfSinQuarter(VfMul((angle + 0.0245436933f), 0.636619747f)) * outerY;
     (*verts)[0].colour = innerColour;
     (*verts)[0].x = baseX;
     (*verts)[0].y = baseY;

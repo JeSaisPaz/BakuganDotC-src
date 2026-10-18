@@ -188,8 +188,8 @@ void BtlShadowUpdate(void *shadowObj)
     }
     if (alongY) {
         /* Rotation by yaw; the angle is scaled to quarter turns by the bank's 2/pi. */
-        c = __builtin_cosf(yaw);
-        s = __builtin_sinf(yaw);
+        c = VfCosQuarter(VfMul(yaw, 0.636619747f));
+        s = VfSinQuarter(VfMul(yaw, 0.636619747f));
         basis[0] = c;
         basis[1] = 0.0f;
         basis[2] = -s;
@@ -216,9 +216,9 @@ void BtlShadowUpdate(void *shadowObj)
         if (alongY) {
             /* yawQuat = (0, sin(yaw / 2), 0, cos(yaw / 2)); quat = identity * yawQuat */
             yawQuat[0] = 0.0f;
-            yawQuat[1] = VfSinQuarter(yaw * 0.318309873f);
+            yawQuat[1] = VfSinQuarter(VfMul(yaw, 0.318309873f));
             yawQuat[2] = 0.0f;
-            yawQuat[3] = VfCosQuarter(yaw * 0.318309873f);
+            yawQuat[3] = VfCosQuarter(VfMul(yaw, 0.318309873f));
             axisQuat[0] = g_quatIdentity.x;
             axisQuat[1] = g_quatIdentity.y;
             axisQuat[2] = g_quatIdentity.z;
@@ -228,37 +228,33 @@ void BtlShadowUpdate(void *shadowObj)
             axis[1] = 0.0f;
             axis[2] = -normal[0];
             /* Normalise the axis (a zero length gives 0), clamped to [-1, 1]. */
-            len2 = axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2];
+            len2 = VfDot3(axis[0], axis[1], axis[2], axis[0], axis[1], axis[2]);
             inv = VfRsq(len2);
             if (VfIsZero(len2)) {
                 inv = 0.0f;
             }
-            axis[0] = VfSat1(axis[0] * inv);
-            axis[1] = VfSat1(axis[1] * inv);
-            axis[2] = VfSat1(axis[2] * inv);
+            axis[0] = VfSat1(VfMul(axis[0], inv));
+            axis[1] = VfSat1(VfMul(axis[1], inv));
+            axis[2] = VfSat1(VfMul(axis[2], inv));
             axis[3] = 0.0f;
             angle = acosf(normal[1]);
             /* axisQuat = (axis * sin(angle / 2), cos(angle / 2)) */
-            c = VfCosQuarter(0.318309873f * angle);
-            s = VfSinQuarter(0.318309873f * angle);
-            axisQuat[0] = axis[0] * s;
-            axisQuat[1] = axis[1] * s;
-            axisQuat[2] = axis[2] * s;
+            c = VfCosQuarter(VfMul(0.318309873f, angle));
+            s = VfSinQuarter(VfMul(0.318309873f, angle));
+            axisQuat[0] = VfMul(axis[0], s);
+            axisQuat[1] = VfMul(axis[1], s);
+            axisQuat[2] = VfMul(axis[2], s);
             axisQuat[3] = c;
             yawQuat[0] = 0.0f;
-            yawQuat[1] = VfSinQuarter(yaw * 0.318309873f);
+            yawQuat[1] = VfSinQuarter(VfMul(yaw, 0.318309873f));
             yawQuat[2] = 0.0f;
-            yawQuat[3] = VfCosQuarter(yaw * 0.318309873f);
+            yawQuat[3] = VfCosQuarter(VfMul(yaw, 0.318309873f));
         }
         /* quat = axisQuat * yawQuat (Hamilton product, w last) */
-        quat[0] = axisQuat[0] * yawQuat[3] + axisQuat[1] * yawQuat[2] - axisQuat[2] * yawQuat[1]
-                  + axisQuat[3] * yawQuat[0];
-        quat[1] = -axisQuat[0] * yawQuat[2] + axisQuat[1] * yawQuat[3] + axisQuat[2] * yawQuat[0]
-                  + axisQuat[3] * yawQuat[1];
-        quat[2] = axisQuat[0] * yawQuat[1] - axisQuat[1] * yawQuat[0] + axisQuat[2] * yawQuat[3]
-                  + axisQuat[3] * yawQuat[2];
-        quat[3] = -axisQuat[0] * yawQuat[0] - axisQuat[1] * yawQuat[1] - axisQuat[2] * yawQuat[2]
-                  + axisQuat[3] * yawQuat[3];
+        quat[0] = VfDot4(axisQuat[0], axisQuat[1], axisQuat[2], axisQuat[3], yawQuat[3], yawQuat[2], -yawQuat[1], yawQuat[0]);
+        quat[1] = VfDot4(-axisQuat[0], axisQuat[1], axisQuat[2], axisQuat[3], yawQuat[2], yawQuat[3], yawQuat[0], yawQuat[1]);
+        quat[2] = VfDot4(axisQuat[0], axisQuat[1], axisQuat[2], axisQuat[3], yawQuat[1], -yawQuat[0], yawQuat[3], yawQuat[2]);
+        quat[3] = VfDot4(-axisQuat[0], axisQuat[1], axisQuat[2], axisQuat[3], yawQuat[0], -yawQuat[1], -yawQuat[2], yawQuat[3]);
 
         /* Matrix of quat (vmmul.q E000, E200, E100 = M100 · M200, column-major): row j,
            lane i = sum_k b[j][k] * a[k][i] over the two signed swizzles of quat; the w row and
@@ -273,8 +269,7 @@ void BtlShadowUpdate(void *shadowObj)
         b[3][0] = -quat[0]; b[3][1] = -quat[1]; b[3][2] = -quat[2]; b[3][3] = quat[3];
         for (j = 0; j < 3; j++) {
             for (i = 0; i < 3; i++) {
-                m[j][i] = b[j][0] * a[0][i] + b[j][1] * a[1][i] + b[j][2] * a[2][i]
-                          + b[j][3] * a[3][i];
+                m[j][i] = VfDot4(b[j][0], b[j][1], b[j][2], b[j][3], a[0][i], a[1][i], a[2][i], a[3][i]);
             }
             m[j][3] = 0.0f;
         }
@@ -291,8 +286,7 @@ void BtlShadowUpdate(void *shadowObj)
                                       : (j == 2) ? &g_gfxSwapYZMatrix.z
                                                  : &g_gfxSwapYZMatrix.w;
             for (i = 0; i < 4; i++) {
-                basis[j * 4 + i] = row->x * m[0][i] + row->y * m[1][i] + row->z * m[2][i]
-                                   + row->w * m[3][i];
+                basis[j * 4 + i] = VfDot4(row->x, row->y, row->z, row->w, m[0][i], m[1][i], m[2][i], m[3][i]);
             }
         }
     }
@@ -313,10 +307,10 @@ void BtlShadowUpdate(void *shadowObj)
     /* Scale basis rows 0..2 by (size[0], size[2], 1); row 2 times 1.0f is unchanged. */
     basis = shadow->mesh->basis;
     for (k = 0; k < 4; k++) {
-        basis[k] = basis[k] * shadow->size[0];
+        basis[k] = VfMul(basis[k], shadow->size[0]);
     }
     for (k = 0; k < 4; k++) {
-        basis[4 + k] = basis[4 + k] * shadow->size[2];
+        basis[4 + k] = VfMul(basis[4 + k], shadow->size[2]);
     }
     shadow->mesh->color[3] = alpha;
     GfxMeshObjSetPositionWithChildren(shadow->mesh, pos);

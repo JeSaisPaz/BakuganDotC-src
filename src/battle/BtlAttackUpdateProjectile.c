@@ -61,9 +61,9 @@ void BtlAttackUpdateProjectile(float speed, float maxSpeed, BtlAttack *self, s32
         if (self->age != 0) {
             BtlAttackSteerToTarget(speed, maxSpeed, self, 1, NULL);
             /* pos.xyz += vel.xyz (w kept) */
-            self->pos[0] = self->pos[0] + self->vel[0];
-            self->pos[1] = self->pos[1] + self->vel[1];
-            self->pos[2] = self->pos[2] + self->vel[2];
+            self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+            self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+            self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
         }
         return;
     }
@@ -74,16 +74,15 @@ void BtlAttackUpdateProjectile(float speed, float maxSpeed, BtlAttack *self, s32
                 owner = self->owner;
                 targetY = unit->base.pos[1] + 80.0f;
                 /* dir = (target + (0, 80, 0)) - (owner + (0, paramF2, 0)); w = target w */
-                self->dir[0] = unit->base.pos[0] - owner->base.pos[0];
-                self->dir[1] = targetY - (owner->base.pos[1] + self->paramF2);
-                self->dir[2] = unit->base.pos[2] - owner->base.pos[2];
+                self->dir[0] = VfSub(unit->base.pos[0], owner->base.pos[0]);
+                self->dir[1] = VfSub(targetY, (owner->base.pos[1] + self->paramF2));
+                self->dir[2] = VfSub(unit->base.pos[2], owner->base.pos[2]);
                 /* dir = normalize(dir), clamped to [-1, 1], w = 0 */
-                lenSq = self->dir[0] * self->dir[0] + self->dir[1] * self->dir[1] +
-                        self->dir[2] * self->dir[2];
+                lenSq = VfDot3(self->dir[0], self->dir[1], self->dir[2], self->dir[0], self->dir[1], self->dir[2]);
                 k = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-                self->dir[0] = VfSat1(self->dir[0] * k);
-                self->dir[1] = VfSat1(self->dir[1] * k);
-                self->dir[2] = VfSat1(self->dir[2] * k);
+                self->dir[0] = VfSat1(VfMul(self->dir[0], k));
+                self->dir[1] = VfSat1(VfMul(self->dir[1], k));
+                self->dir[2] = VfSat1(VfMul(self->dir[2], k));
                 self->dir[3] = 0.0f;
                 self->vel[0] = self->dir[0];
                 self->vel[1] = self->dir[1];
@@ -99,25 +98,24 @@ void BtlAttackUpdateProjectile(float speed, float maxSpeed, BtlAttack *self, s32
             }
         }
         /* vel.xyz *= speed; vel.w = 0 */
-        self->vel[0] = self->vel[0] * speed;
-        self->vel[1] = self->vel[1] * speed;
-        self->vel[2] = self->vel[2] * speed;
+        self->vel[0] = VfMul(self->vel[0], speed);
+        self->vel[1] = VfMul(self->vel[1], speed);
+        self->vel[2] = VfMul(self->vel[2], speed);
         self->vel[3] = 0.0f;
         return;
     }
     if (self->age == 1) {
-        len = __builtin_sqrtf(self->vel[0] * self->vel[0] + self->vel[1] * self->vel[1] +
-                              self->vel[2] * self->vel[2]);
+        len = VfSqrt(VfDot3(self->vel[0], self->vel[1], self->vel[2], self->vel[0], self->vel[1], self->vel[2]));
         if (len < 10.0f) {
             /* vel.xyz *= speed; vel.w = 0 */
-            self->vel[0] = self->vel[0] * speed;
-            self->vel[1] = self->vel[1] * speed;
-            self->vel[2] = self->vel[2] * speed;
+            self->vel[0] = VfMul(self->vel[0], speed);
+            self->vel[1] = VfMul(self->vel[1], speed);
+            self->vel[2] = VfMul(self->vel[2], speed);
             self->vel[3] = 0.0f;
         }
     }
     /* pos.xyz += vel.xyz (w kept) */
-    self->pos[0] = self->pos[0] + self->vel[0];
-    self->pos[1] = self->pos[1] + self->vel[1];
-    self->pos[2] = self->pos[2] + self->vel[2];
+    self->pos[0] = VfAdd(self->pos[0], self->vel[0]);
+    self->pos[1] = VfAdd(self->pos[1], self->vel[1]);
+    self->pos[2] = VfAdd(self->pos[2], self->vel[2]);
 }

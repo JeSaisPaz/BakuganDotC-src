@@ -13,8 +13,7 @@ static void GfxEffectMatMul(float *d, const float *a, const float *b)
 
   for (j = 0; j < 4; j++) {
     for (i = 0; i < 4; i++) {
-      r[j * 4 + i] = b[j * 4 + 0] * a[0 * 4 + i] + b[j * 4 + 1] * a[1 * 4 + i] +
-                     b[j * 4 + 2] * a[2 * 4 + i] + b[j * 4 + 3] * a[3 * 4 + i];
+      r[j * 4 + i] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], a[0 * 4 + i], a[1 * 4 + i], a[2 * 4 + i], a[3 * 4 + i]);
     }
   }
   for (i = 0; i < 16; i++) {
@@ -26,7 +25,7 @@ static void GfxEffectMatMul(float *d, const float *a, const float *b)
    columns (c, s, 0, 0), (-s, c, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1). */
 static void GfxEffectRollMatrix(float *d, float angle)
 {
-  float q = angle * 0.636619747f;
+  float q = VfMul(angle, 0.636619747f);
   float c = VfCosQuarter(q);
   float s = VfSinQuarter(q);
   int i;
@@ -64,7 +63,7 @@ static void GfxEffectScaledRoll(float *d, const float *size, float angle)
 /* 1 / |v.xyz|, or 0 for a zero-length vector (`vrsq.s` + `vcmovt.s` of the bank's 0, S713). */
 static float GfxEffectInvLength3(const float *v)
 {
-  float lenSq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+  float lenSq = VfDot3(v[0], v[1], v[2], v[0], v[1], v[2]);
 
   if (VfIsZero(lenSq)) {
     return 0.0f;
@@ -136,13 +135,13 @@ void GfxEffectMgrDrawModels(GfxEffectMgr *mgr, void *packet, void *camera)
     float z = light[2];
     float inv;
 
-    light[0] = x * c + y * 0.0f + z * -s;
-    light[2] = x * s + y * 0.0f + z * c;
+    light[0] = VfDot3(x, y, z, c, 0.0f, -s);
+    light[2] = VfDot3(x, y, z, s, 0.0f, c);
     /* then normalise x/y/z in place (clamped to [-1, 1]); w becomes the bank's 0 (lane 3 of C710) */
     inv = GfxEffectInvLength3(light);
-    light[0] = VfSat1(light[0] * inv);
-    light[1] = VfSat1(light[1] * inv);
-    light[2] = VfSat1(light[2] * inv);
+    light[0] = VfSat1(VfMul(light[0], inv));
+    light[1] = VfSat1(VfMul(light[1], inv));
+    light[2] = VfSat1(VfMul(light[2], inv));
     light[3] = 0.0f;
   }
   *cursor = 0x53000003;
@@ -171,9 +170,9 @@ void GfxEffectMgrDrawModels(GfxEffectMgr *mgr, void *packet, void *camera)
     case 2:
       /* the effect matrix columns x/y/z scaled by size */
       for (k = 0; k < 4; k++) {
-        m[0 + k] = effect->matrix[0 + k] * effect->size[0];
-        m[4 + k] = effect->matrix[4 + k] * effect->size[1];
-        m[8 + k] = effect->matrix[8 + k] * effect->size[2];
+        m[0 + k] = VfMul(effect->matrix[0 + k], effect->size[0]);
+        m[4 + k] = VfMul(effect->matrix[4 + k], effect->size[1]);
+        m[8 + k] = VfMul(effect->matrix[8 + k], effect->size[2]);
       }
       break;
     case 3: {
@@ -264,23 +263,23 @@ void GfxEffectMgrDrawModels(GfxEffectMgr *mgr, void *packet, void *camera)
       /* orthonormal basis: z = normalised forward, x = up x z normalised, y = z x x
          (each normalisation clamped to [-1, 1]); lane 3 of x/y/z 0, w column (0, 0, 0, 1) */
       inv = GfxEffectInvLength3(fwd);
-      f[0] = VfSat1(fwd[0] * inv);
-      f[1] = VfSat1(fwd[1] * inv);
-      f[2] = VfSat1(fwd[2] * inv);
-      x[0] = up[1] * f[2] - up[2] * f[1];
-      x[1] = up[2] * f[0] - up[0] * f[2];
-      x[2] = up[0] * f[1] - up[1] * f[0];
+      f[0] = VfSat1(VfMul(fwd[0], inv));
+      f[1] = VfSat1(VfMul(fwd[1], inv));
+      f[2] = VfSat1(VfMul(fwd[2], inv));
+      x[0] = VfDot2(up[1], up[2], f[2], -f[1]);
+      x[1] = VfDot2(up[2], up[0], f[0], -f[2]);
+      x[2] = VfDot2(up[0], up[1], f[1], -f[0]);
       inv = GfxEffectInvLength3(x);
-      x[0] = VfSat1(x[0] * inv);
-      x[1] = VfSat1(x[1] * inv);
-      x[2] = VfSat1(x[2] * inv);
+      x[0] = VfSat1(VfMul(x[0], inv));
+      x[1] = VfSat1(VfMul(x[1], inv));
+      x[2] = VfSat1(VfMul(x[2], inv));
       m[0] = x[0];
       m[1] = x[1];
       m[2] = x[2];
       m[3] = 0.0f;
-      m[4] = f[1] * x[2] - f[2] * x[1];
-      m[5] = f[2] * x[0] - f[0] * x[2];
-      m[6] = f[0] * x[1] - f[1] * x[0];
+      m[4] = VfDot2(f[1], f[2], x[2], -x[1]);
+      m[5] = VfDot2(f[2], f[0], x[0], -x[2]);
+      m[6] = VfDot2(f[0], f[1], x[1], -x[0]);
       m[7] = 0.0f;
       m[8] = f[0];
       m[9] = f[1];
@@ -297,9 +296,9 @@ void GfxEffectMgrDrawModels(GfxEffectMgr *mgr, void *packet, void *camera)
       }
       /* columns x/y/z scaled by size */
       for (k = 0; k < 4; k++) {
-        m[0 + k] = m[0 + k] * effect->size[0];
-        m[4 + k] = m[4 + k] * effect->size[1];
-        m[8 + k] = m[8 + k] * effect->size[2];
+        m[0 + k] = VfMul(m[0 + k], effect->size[0]);
+        m[4 + k] = VfMul(m[4 + k], effect->size[1]);
+        m[8 + k] = VfMul(m[8 + k], effect->size[2]);
       }
       break;
     }

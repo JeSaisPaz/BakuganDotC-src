@@ -16,7 +16,7 @@ void UiCollectionSphereUpdateModelGlow(UiCollectionSphere *self)
         for (i = 0; i < 7; i++) {
             if (self->models[i] != NULL) {
                 /* vcos.s of (t·π)·S703 (2/π): cos in radians */
-                c = __builtin_cosf(self->bobT * 3.1415927f);
+                c = VfCosQuarter(VfMul(self->bobT * 3.1415927f, 0.636619747f));
                 self->models[i]->pos[1] = self->bobBaseY + (1.0f - c) * 0.5f * 0.2f;
                 /* lv.q/sv.q C000: quad copy of pos into rootMatrix[12..15] */
                 m = self->models[i];

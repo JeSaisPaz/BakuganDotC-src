@@ -57,8 +57,8 @@ void BtlCameraApplyCloseUp(BtlCamera *camera)
     }
 
     /* vcos of angle * 2/pi (bank S703) in quarter turns: the cosine of the angle */
-    easeA = (1.0f - __builtin_cosf(camera->closeUpBlendA * 3.14159274f)) * 0.5f;
-    easeB = (1.0f - __builtin_cosf(camera->closeUpBlendB * 3.14159274f)) * 0.5f;
+    easeA = (1.0f - VfCosQuarter(VfMul(camera->closeUpBlendA * 3.14159274f, 0.636619747f))) * 0.5f;
+    easeB = (1.0f - VfCosQuarter(VfMul(camera->closeUpBlendB * 3.14159274f, 0.636619747f))) * 0.5f;
 
     radius = 250.0f;
     height = easeB * 200.0f + -80.0f;
@@ -78,52 +78,51 @@ void BtlCameraApplyCloseUp(BtlCamera *camera)
 
     /* eye = lookAt.xyz + (cos a, 0, sin a) * radius, a = heading + angleDeg in radians; eye.w = 0 */
     angle = unit->base.rot[1] + angleDeg * 0.017453292f;
-    eye[0] = __builtin_cosf(angle) * radius;
+    eye[0] = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), radius);
     eye[1] = 0.0f;
-    eye[2] = __builtin_sinf(angle) * radius;
+    eye[2] = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), radius);
     eye[3] = 0.0f;
     for (i = 0; i < 3; i++) {
-        eye[i] = eye[i] + lookAt[i];
+        eye[i] = VfAdd(eye[i], lookAt[i]);
     }
     eye[1] = eye[1] + height;
 
     /* boneOffset = (cos h, 0, sin h, 0) * radius for the unit heading h */
     unit = (BtlBakugan *)camera->target;
     angle = unit->base.rot[1];
-    boneOffset[0] = __builtin_cosf(angle) * radius;
+    boneOffset[0] = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), radius);
     boneOffset[1] = 0.0f;
-    boneOffset[2] = __builtin_sinf(angle) * radius;
+    boneOffset[2] = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), radius);
     boneOffset[3] = 0.0f;
     GfxModelGetNodeWorldPos((GfxModel *)camera->target, &node, "Bip01");
 
     /* boneOffset.xyz += node.xyz; lookAt += (boneOffset - lookAt) * pull (all four lanes) */
-    boneOffset[0] = boneOffset[0] + node.x;
-    boneOffset[1] = boneOffset[1] + node.y;
-    boneOffset[2] = boneOffset[2] + node.z;
+    boneOffset[0] = VfAdd(boneOffset[0], node.x);
+    boneOffset[1] = VfAdd(boneOffset[1], node.y);
+    boneOffset[2] = VfAdd(boneOffset[2], node.z);
     pull = easeB * camera->closeUpParam;
     for (i = 0; i < 4; i++) {
-        lookAt[i] = lookAt[i] + (boneOffset[i] - lookAt[i]) * pull;
+        lookAt[i] = VfAdd(lookAt[i], VfMul(VfSub(boneOffset[i], lookAt[i]), pull));
     }
     lookAt[1] = lookAt[1] + camera->closeUpDistance * camera->closeUpParam;
 
     /* base.eye/target/up += (eye/lookAt/g_vecUp - them) * easeA */
     for (i = 0; i < 4; i++) {
-        camera->base.eye[i] = camera->base.eye[i] + (eye[i] - camera->base.eye[i]) * easeA;
+        camera->base.eye[i] = VfAdd(camera->base.eye[i], VfMul(VfSub(eye[i], camera->base.eye[i]), easeA));
     }
     for (i = 0; i < 4; i++) {
-        camera->base.target[i] = camera->base.target[i] + (lookAt[i] - camera->base.target[i]) * easeA;
+        camera->base.target[i] = VfAdd(camera->base.target[i], VfMul(VfSub(lookAt[i], camera->base.target[i]), easeA));
     }
-    camera->base.up[0] = camera->base.up[0] + (g_vecUp.x - camera->base.up[0]) * easeA;
-    camera->base.up[1] = camera->base.up[1] + (g_vecUp.y - camera->base.up[1]) * easeA;
-    camera->base.up[2] = camera->base.up[2] + (g_vecUp.z - camera->base.up[2]) * easeA;
-    camera->base.up[3] = camera->base.up[3] + (g_vecUp.w - camera->base.up[3]) * easeA;
+    camera->base.up[0] = VfAdd(camera->base.up[0], VfMul(VfSub(g_vecUp.x, camera->base.up[0]), easeA));
+    camera->base.up[1] = VfAdd(camera->base.up[1], VfMul(VfSub(g_vecUp.y, camera->base.up[1]), easeA));
+    camera->base.up[2] = VfAdd(camera->base.up[2], VfMul(VfSub(g_vecUp.z, camera->base.up[2]), easeA));
+    camera->base.up[3] = VfAdd(camera->base.up[3], VfMul(VfSub(g_vecUp.w, camera->base.up[3]), easeA));
 
     /* up.xyz normalised (scale 0 when its length is zero) and saturated to [-1, 1]; up.w = 0 (bank S713) */
-    lenSq = camera->base.up[0] * camera->base.up[0] + camera->base.up[1] * camera->base.up[1]
-          + camera->base.up[2] * camera->base.up[2];
+    lenSq = VfDot3(camera->base.up[0], camera->base.up[1], camera->base.up[2], camera->base.up[0], camera->base.up[1], camera->base.up[2]);
     scale = VfIsZero(lenSq) ? 0.0f : VfRsq(lenSq);
-    camera->base.up[0] = VfSat1(camera->base.up[0] * scale);
-    camera->base.up[1] = VfSat1(camera->base.up[1] * scale);
-    camera->base.up[2] = VfSat1(camera->base.up[2] * scale);
+    camera->base.up[0] = VfSat1(VfMul(camera->base.up[0], scale));
+    camera->base.up[1] = VfSat1(VfMul(camera->base.up[1], scale));
+    camera->base.up[2] = VfSat1(VfMul(camera->base.up[2], scale));
     camera->base.up[3] = 0.0f;
 }

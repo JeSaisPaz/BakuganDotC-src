@@ -26,8 +26,8 @@ static inline void CellModelSetRotation(float *m, float yaw, float pitch)
     int j;
 
     /* Y rotation: fields (c,0,-s,0), (0,1,0,0), (s,0,c,0), (0,0,0,1). */
-    c = __builtin_cosf(yaw);
-    s = __builtin_sinf(yaw);
+    c = VfCosQuarter(VfMul(yaw, 0.636619747f));
+    s = VfSinQuarter(VfMul(yaw, 0.636619747f));
     m[0] = c;
     m[1] = 0.0f;
     m[2] = -s;
@@ -45,8 +45,8 @@ static inline void CellModelSetRotation(float *m, float yaw, float pitch)
     m[14] = 0.0f;
     m[15] = 1.0f;
     /* X rotation: fields (1,0,0,0), (0,c,s,0), (0,-s,c,0), (0,0,0,1). */
-    c = __builtin_cosf(pitch);
-    s = __builtin_sinf(pitch);
+    c = VfCosQuarter(VfMul(pitch, 0.636619747f));
+    s = VfSinQuarter(VfMul(pitch, 0.636619747f));
     rot[0] = 1.0f;
     rot[1] = 0.0f;
     rot[2] = 0.0f;
@@ -65,8 +65,7 @@ static inline void CellModelSetRotation(float *m, float yaw, float pitch)
     rot[15] = 1.0f;
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            tmp[j * 4 + i] = m[0 * 4 + j] * rot[0 * 4 + i] + m[1 * 4 + j] * rot[1 * 4 + i] +
-                             m[2 * 4 + j] * rot[2 * 4 + i] + m[3 * 4 + j] * rot[3 * 4 + i];
+            tmp[j * 4 + i] = VfDot4(m[0 * 4 + j], m[1 * 4 + j], m[2 * 4 + j], m[3 * 4 + j], rot[0 * 4 + i], rot[1 * 4 + i], rot[2 * 4 + i], rot[3 * 4 + i]);
         }
     }
     for (i = 0; i < 16; i++) {
@@ -80,7 +79,7 @@ static inline void CellModelScale(float *m, float scale)
     int i;
 
     for (i = 0; i < 12; i++) {
-        m[i] = m[i] * scale;
+        m[i] = VfMul(m[i], scale);
     }
 }
 

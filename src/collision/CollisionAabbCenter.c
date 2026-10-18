@@ -12,12 +12,12 @@ ScePspFVector4 *CollisionAabbCenter(const ScePspFVector4 *aabb)
     float y;
     float z;
 
-    x = v[0] + v[4];
-    y = v[1] + v[5];
-    z = v[2] + v[6];
-    g_collisionAabbCenterTmp.x = x * 0.5f;
-    g_collisionAabbCenterTmp.y = y * 0.5f;
-    g_collisionAabbCenterTmp.z = z * 0.5f;
+    x = VfAdd(v[0], v[4]);
+    y = VfAdd(v[1], v[5]);
+    z = VfAdd(v[2], v[6]);
+    g_collisionAabbCenterTmp.x = VfMul(x, 0.5f);
+    g_collisionAabbCenterTmp.y = VfMul(y, 0.5f);
+    g_collisionAabbCenterTmp.z = VfMul(z, 0.5f);
     g_collisionAabbCenterTmp.w = 0.0f; /* S713 */
     return &g_collisionAabbCenterTmp;
 }

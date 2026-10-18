@@ -13,10 +13,10 @@ bool CollisionTriangleTestSphere(const float *a, const float *b, const float *c,
     float dx, dy, dz, d;
 
     g_collisionMeshQuery.closestOnEdge = CollisionClosestPointOnTriangle(a, b, c, &center->x, &g_collisionMeshQuery.point.x);
-    dx = g_collisionMeshQuery.point.x - center->x;
-    dy = g_collisionMeshQuery.point.y - center->y;
-    dz = g_collisionMeshQuery.point.z - center->z;
-    d = dx * dx + dy * dy + dz * dz;
+    dx = VfSub(g_collisionMeshQuery.point.x, center->x);
+    dy = VfSub(g_collisionMeshQuery.point.y, center->y);
+    dz = VfSub(g_collisionMeshQuery.point.z, center->z);
+    d = VfDot3(dx, dy, dz, dx, dy, dz);
     *distSq = d;
     return !(center->w < d);
 }

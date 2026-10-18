@@ -108,9 +108,9 @@ void BtlAiMoveToGoalPoint(BtlAi *self)
     case 5:
         /* |owner->pos - goal| over x and z (y zeroed) */
     {
-        float dx = self->owner->base.pos[0] - self->goal[0];
-        float dz = self->owner->base.pos[2] - self->goal[2];
-        dist = __builtin_sqrtf(dx * dx + dz * dz);
+        float dx = VfSub(self->owner->base.pos[0], self->goal[0]);
+        float dz = VfSub(self->owner->base.pos[2], self->goal[2]);
+        dist = VfSqrt(VfDot2(dx, dz, dx, dz));
     }
         if (dist <= 100.0f) {
             ch->phase = 9;

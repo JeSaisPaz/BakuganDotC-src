@@ -22,9 +22,9 @@ void BtlDemoCameraRestore(float *savedEye)
     s[0] = savedEye[0];
     s[1] = savedEye[1];
     s[2] = savedEye[2];
-    target[0] = target[0] + s[0];
-    target[1] = target[1] + s[1];
-    target[2] = target[2] + s[2];
+    target[0] = VfAdd(target[0], s[0]);
+    target[1] = VfAdd(target[1], s[1]);
+    target[2] = VfAdd(target[2], s[2]);
 
     GfxCameraUpdate(g_gfxActiveCamera, 1);
 }

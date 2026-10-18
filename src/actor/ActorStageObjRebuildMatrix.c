@@ -22,22 +22,22 @@ void ActorStageObjRebuildMatrix(ActorStageObjBase *self, char force)
   sy = self->base.scale[1];
   sz = self->base.scale[2];
   /* vrot over heading * S703 (2/pi): cos/sin of the heading in radians. */
-  c = __builtin_cosf(self->base.rot[1]);
-  s = __builtin_sinf(self->base.rot[1]);
+  c = VfCosQuarter(VfMul(self->base.rot[1], 0.636619747f));
+  s = VfSinQuarter(VfMul(self->base.rot[1], 0.636619747f));
   /* vmmul.q E200, E300, E000: Y rotation [C,0,-S,0] / (0,1,0,0) / [S,0,C,0] / (0,0,0,1) times the
      diagonal scale matrix, column j = scale[j] * rotation column j. */
-  m[0] = sx * c;
-  m[1] = 0.0f;
-  m[2] = sx * -s;
-  m[3] = 0.0f;
-  m[4] = 0.0f;
-  m[5] = sy;
-  m[6] = 0.0f;
-  m[7] = 0.0f;
-  m[8] = sz * s;
-  m[9] = 0.0f;
-  m[10] = sz * c;
-  m[11] = 0.0f;
+  m[0] = VfDot2(sx, 0.0f, c, s);
+  m[1] = VfDot2(sx, 0.0f, 0.0f, 0.0f);
+  m[2] = VfDot2(sx, 0.0f, -s, c);
+  m[3] = VfDot2(sx, 0.0f, 0.0f, 0.0f);
+  m[4] = VfDot3(0.0f, sy, 0.0f, c, 0.0f, s);
+  m[5] = VfDot2(sy, 0.0f, 1.0f, 0.0f);
+  m[6] = VfDot3(0.0f, sy, 0.0f, -s, 0.0f, c);
+  m[7] = VfDot2(sy, 0.0f, 0.0f, 0.0f);
+  m[8] = VfDot2(0.0f, sz, c, s);
+  m[9] = VfDot2(sz, 0.0f, 0.0f, 0.0f);
+  m[10] = VfDot2(0.0f, sz, -s, c);
+  m[11] = VfDot2(sz, 0.0f, 0.0f, 0.0f);
   /* Column 3 ((0,0,0,1) from the product) is overwritten by the full position vec4. */
   m = self->base.data->rootMatrix;
   m[12] = self->base.pos[0];

@@ -47,10 +47,10 @@ int CollisionTestPair(u32 layerMask, void *other, float *query, char exact)
           (CollisionShapeBlock *)col->shapeBlock.shape);
       otherCenter = *center;
       /* mid = ownerCenter + (otherCenter - ownerCenter) * 0.9f, staged through `mid` */
-      mid.x = ownerCenter.x + (otherCenter.x - ownerCenter.x) * 0.9f;
-      mid.y = ownerCenter.y + (otherCenter.y - ownerCenter.y) * 0.9f;
-      mid.z = ownerCenter.z + (otherCenter.z - ownerCenter.z) * 0.9f;
-      mid.w = ownerCenter.w + (otherCenter.w - ownerCenter.w) * 0.9f;
+      mid.x = VfAdd(ownerCenter.x, VfMul(VfSub(otherCenter.x, ownerCenter.x), 0.9f));
+      mid.y = VfAdd(ownerCenter.y, VfMul(VfSub(otherCenter.y, ownerCenter.y), 0.9f));
+      mid.z = VfAdd(ownerCenter.z, VfMul(VfSub(otherCenter.z, ownerCenter.z), 0.9f));
+      mid.w = VfAdd(ownerCenter.w, VfMul(VfSub(otherCenter.w, ownerCenter.w), 0.9f));
       contact = mid;
       contact.y = ownerCenter.y;
     }

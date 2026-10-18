@@ -18,11 +18,11 @@ void BtlUnitMode4Update(BtlUnitMode4 *self)
         self->started = 1;
     }
     {
-        float dx = self->prevPos[0] - self->base.base.pos[0];
-        float dy = self->prevPos[1] - self->base.base.pos[1];
-        float dz = self->prevPos[2] - self->base.base.pos[2];
+        float dx = VfSub(self->prevPos[0], self->base.base.pos[0]);
+        float dy = VfSub(self->prevPos[1], self->base.base.pos[1]);
+        float dz = VfSub(self->prevPos[2], self->base.base.pos[2]);
 
-        dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+        dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
     }
     self->travelled = self->travelled + dist;
     self->prevPos[0] = self->base.base.pos[0];

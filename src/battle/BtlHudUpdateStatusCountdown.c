@@ -88,17 +88,17 @@ void BtlHudUpdateStatusCountdown(BtlHud *self)
         self->countdownScalePhase = self->countdownScalePhase - TWO_PI;
     }
 
-    glow = __builtin_sinf(self->countdownGlowPhase) * 0.1f + 0.15f;
+    glow = VfSinQuarter(VfMul(self->countdownGlowPhase, 0.636619747f)) * 0.1f + 0.15f;
     colour = g_colorYellow;
     alpha = (u8)(s32)(glow * 255.0f);
     for (i = 0; i < 3; i++) {
-        self->countdownGlow[i][0] = VfI2uc(VfF2iz(VfSat0(colour.x) * 255.0f, 23));
-        self->countdownGlow[i][1] = VfI2uc(VfF2iz(VfSat0(colour.y) * 255.0f, 23));
-        self->countdownGlow[i][2] = VfI2uc(VfF2iz(VfSat0(colour.z) * 255.0f, 23));
+        self->countdownGlow[i][0] = VfI2uc(VfF2iz(VfMul(VfSat0(colour.x), 255.0f), 23));
+        self->countdownGlow[i][1] = VfI2uc(VfF2iz(VfMul(VfSat0(colour.y), 255.0f), 23));
+        self->countdownGlow[i][2] = VfI2uc(VfF2iz(VfMul(VfSat0(colour.z), 255.0f), 23));
         self->countdownGlow[i][3] = (i & 1) ? 0 : alpha;
     }
 
-    scale = __builtin_sinf(self->countdownScalePhase) * 0.25f + 0.9f;
+    scale = VfSinQuarter(VfMul(self->countdownScalePhase, 0.636619747f)) * 0.25f + 0.9f;
     timer = (timer / 30 + 1) % 10;
     GfxSpriteSetCell(digit, (float)(timer / 5), (float)(timer % 5));
     GfxSpriteSetScaleRotation(digit, scale, scale, 0.0f, false);

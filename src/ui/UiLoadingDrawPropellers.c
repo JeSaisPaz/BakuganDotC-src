@@ -53,7 +53,7 @@ void UiLoadingDrawPropellers(UiLoading *self)
   self->frameScale = self->frameScale + 0.005f;
   scale = self->frameScale * 0.2f + 1.0f;
   GfxSpriteSetScaleRotation(g_uiLoadingShared->sprites[8], scale, scale, 0.0f, false);
-  g_uiLoadingShared->sprites[9]->alpha = (1.0f - __builtin_cosf(self->frameScale * 12.0f * 3.1415927f)) * 0.5f * 0.4f + 0.6f;
+  g_uiLoadingShared->sprites[9]->alpha = (1.0f - VfCosQuarter(VfMul(self->frameScale * 12.0f * 3.1415927f, 0.636619747f))) * 0.5f * 0.4f + 0.6f;
   body = g_uiLoadingShared->sprites[1];
 
   if (self->propPhase == 0) {
@@ -119,7 +119,7 @@ void UiLoadingDrawPropellers(UiLoading *self)
       spin = 0.3926991f;
     }
     self->propSpin = spin;
-    self->propRot[1] = __builtin_cosf(spin * 3.1415927f + 1.5707964f) * 50.0f;
+    self->propRot[1] = VfCosQuarter(VfMul((spin * 3.1415927f + 1.5707964f), 0.636619747f)) * 50.0f;
   } else if (self->propPhase == 1) {
     if (body->maybe_billboardParams80[2] != 0.0f) {
       body->maybe_billboardParams80[2] = body->maybe_billboardParams80[2] * 0.3f;
@@ -150,8 +150,8 @@ void UiLoadingDrawPropellers(UiLoading *self)
   self->propSpin = self->propSpin * 0.99f;
 
   /* body pos = base (+0x90) + propPos + propRot in x/y, pos.w = base.w (angle); posZ kept */
-  body->posX = body->scaleX + self->propPos[0] + self->propRot[0];
-  body->posY = body->scaleY + self->propPos[1] + self->propRot[1];
+  body->posX = VfAdd(VfAdd(body->scaleX, self->propPos[0]), self->propRot[0]);
+  body->posY = VfAdd(VfAdd(body->scaleY, self->propPos[1]), self->propRot[1]);
   body->posW = body->angle;
   GfxSpriteSetScaleRotation(body, body->maybe_billboardParams80[0], body->maybe_billboardParams80[1],
                             body->maybe_billboardParams80[2], false);
@@ -172,19 +172,19 @@ void UiLoadingDrawPropellers(UiLoading *self)
                               sprite->maybe_billboardParams80[2] + body->maybe_billboardParams80[2],
                               false);
     /* diff = sprite base - body base, dist = |diff.xyz| */
-    dx = sprite->scaleX - body->scaleX;
-    dy = sprite->scaleY - body->scaleY;
-    dz = sprite->scaleZ - body->scaleZ;
-    dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+    dx = VfSub(sprite->scaleX, body->scaleX);
+    dy = VfSub(sprite->scaleY, body->scaleY);
+    dz = VfSub(sprite->scaleZ, body->scaleZ);
+    dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
     atan = atan2f(dy, dx);
     /* off = (cos, sin) of (body angle + atan) * dist; pos = body base + propPos + propRot
        + off * body X scale, pos.w = body angle; posZ kept */
     angle = body->maybe_billboardParams80[2] + atan;
-    offX = __builtin_cosf(angle) * dist;
-    offY = __builtin_sinf(angle) * dist;
+    offX = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), dist);
+    offY = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), dist);
     mul = body->maybe_billboardParams80[0];
-    sprite->posX = body->scaleX + self->propPos[0] + self->propRot[0] + offX * mul;
-    sprite->posY = body->scaleY + self->propPos[1] + self->propRot[1] + offY * mul;
+    sprite->posX = VfAdd(VfAdd(VfAdd(body->scaleX, self->propPos[0]), self->propRot[0]), VfMul(offX, mul));
+    sprite->posY = VfAdd(VfAdd(VfAdd(body->scaleY, self->propPos[1]), self->propRot[1]), VfMul(offY, mul));
     sprite->posW = body->angle;
     i++;
   } while (i < 4);
@@ -205,19 +205,19 @@ void UiLoadingDrawPropellers(UiLoading *self)
                               sprite->maybe_billboardParams80[2] + body->maybe_billboardParams80[2],
                               false);
     /* diff = sprite base - body base, dist = |diff.xyz| */
-    dx = sprite->scaleX - body->scaleX;
-    dy = sprite->scaleY - body->scaleY;
-    dz = sprite->scaleZ - body->scaleZ;
-    dist = __builtin_sqrtf(dx * dx + dy * dy + dz * dz);
+    dx = VfSub(sprite->scaleX, body->scaleX);
+    dy = VfSub(sprite->scaleY, body->scaleY);
+    dz = VfSub(sprite->scaleZ, body->scaleZ);
+    dist = VfSqrt(VfDot3(dx, dy, dz, dx, dy, dz));
     atan = atan2f(dy, dx);
     /* off = (cos, sin) of (body angle + atan) * dist; pos = body base + propPos + propRot
        + off * body X scale, pos.w = body angle; posZ kept */
     angle = body->maybe_billboardParams80[2] + atan;
-    offX = __builtin_cosf(angle) * dist;
-    offY = __builtin_sinf(angle) * dist;
+    offX = VfMul(VfCosQuarter(VfMul(angle, 0.636619747f)), dist);
+    offY = VfMul(VfSinQuarter(VfMul(angle, 0.636619747f)), dist);
     mul = body->maybe_billboardParams80[0];
-    sprite->posX = body->scaleX + self->propPos[0] + self->propRot[0] + offX * mul;
-    sprite->posY = body->scaleY + self->propPos[1] + self->propRot[1] + offY * mul;
+    sprite->posX = VfAdd(VfAdd(VfAdd(body->scaleX, self->propPos[0]), self->propRot[0]), VfMul(offX, mul));
+    sprite->posY = VfAdd(VfAdd(VfAdd(body->scaleY, self->propPos[1]), self->propRot[1]), VfMul(offY, mul));
     sprite->posW = body->angle;
     sprite->texture = GfxFindTexture(name);
     i++;

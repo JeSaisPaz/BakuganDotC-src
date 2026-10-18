@@ -132,12 +132,10 @@ void BtlBakuganState11Update(BtlBakugan *self)
         self->stateFlags |= 0x1000000;
         if (BtlBakuganIsLocalPlayer(self)) {
             /* dir = normalised velocity */
-            len2 = self->base.velocity[0] * self->base.velocity[0] +
-                   self->base.velocity[1] * self->base.velocity[1] +
-                   self->base.velocity[2] * self->base.velocity[2];
+            len2 = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
             k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
             for (i = 0; i < 3; i++) {
-                dir[i] = VfSat1(self->base.velocity[i] * k);
+                dir[i] = VfSat1(VfMul(self->base.velocity[i], k));
             }
             dir[3] = 0.0f;
             GfxEffectSpawnDirected(g_worldEffectMgr, 0x1d, self->base.pos, dir);
@@ -257,12 +255,10 @@ void BtlBakuganState11Update(BtlBakugan *self)
     if ((s32)self->attackPhase > 0 && (s32)self->attackPhase < 3) {
         self->stateFlags |= 1;
         /* norm = normalised velocity (only y is used) */
-        len2 = self->base.velocity[0] * self->base.velocity[0] +
-               self->base.velocity[1] * self->base.velocity[1] +
-               self->base.velocity[2] * self->base.velocity[2];
+        len2 = VfDot3(self->base.velocity[0], self->base.velocity[1], self->base.velocity[2], self->base.velocity[0], self->base.velocity[1], self->base.velocity[2]);
         k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
         for (i = 0; i < 3; i++) {
-            norm[i] = VfSat1(self->base.velocity[i] * k);
+            norm[i] = VfSat1(VfMul(self->base.velocity[i], k));
         }
         norm[3] = 0.0f;
         self->orient[0] = norm[1] * -0.899999976f;
@@ -270,17 +266,16 @@ void BtlBakuganState11Update(BtlBakugan *self)
         self->orient[2] = 0.0f;
         self->orient[3] = 0.0f;
         /* orient: rotate xz by rot.y (vrot of rot.y * 2/pi), then normalise */
-        c = __builtin_cosf(self->base.rot[1]);
-        s = __builtin_sinf(self->base.rot[1]);
+        c = VfCosQuarter(VfMul(self->base.rot[1], 0.636619747f));
+        s = VfSinQuarter(VfMul(self->base.rot[1], 0.636619747f));
         ox = self->orient[0];
         oz = self->orient[2];
-        self->orient[0] = ox * c + self->orient[1] * 0.0f + oz * -s;
-        self->orient[2] = ox * s + self->orient[1] * 0.0f + oz * c;
-        len2 = self->orient[0] * self->orient[0] + self->orient[1] * self->orient[1] +
-               self->orient[2] * self->orient[2];
+        self->orient[0] = VfDot3(ox, self->orient[1], oz, c, 0.0f, -s);
+        self->orient[2] = VfDot3(ox, self->orient[1], oz, s, 0.0f, c);
+        len2 = VfDot3(self->orient[0], self->orient[1], self->orient[2], self->orient[0], self->orient[1], self->orient[2]);
         k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
         for (i = 0; i < 3; i++) {
-            self->orient[i] = VfSat1(self->orient[i] * k);
+            self->orient[i] = VfSat1(VfMul(self->orient[i], k));
         }
         self->orient[3] = 0.0f;
     }
@@ -311,25 +306,24 @@ void BtlBakuganState11Update(BtlBakugan *self)
                 delta[i] = target->base.pos[i];
             }
             for (i = 0; i < 3; i++) {
-                delta[i] = delta[i] - self->base.pos[i];
+                delta[i] = VfSub(delta[i], self->base.pos[i]);
             }
             if (phaseStarted) {
                 speed = BtlBakuganGetScaledStat48(self);
                 self->dashSpeed = speed;
                 /* velocity = normalise(delta.xyz) * speed, w 0 */
-                len2 = delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
+                len2 = VfDot3(delta[0], delta[1], delta[2], delta[0], delta[1], delta[2]);
                 k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-                k = k * speed;
+                k = VfMul(k, speed);
                 for (i = 0; i < 3; i++) {
-                    delta[i] = delta[i] * k;
+                    delta[i] = VfMul(delta[i], k);
                 }
                 delta[3] = 0.0f;
                 for (i = 0; i < 4; i++) {
                     self->base.velocity[i] = delta[i];
                 }
             } else {
-                dist = __builtin_sqrtf(delta[0] * delta[0] + delta[1] * delta[1] +
-                                       delta[2] * delta[2]);
+                dist = VfSqrt(VfDot3(delta[0], delta[1], delta[2], delta[0], delta[1], delta[2]));
                 dist = dist - self->combat.stats->reachRadius * 1.20000005f;
                 speed = self->dashSpeed;
                 if (dist < 0.0f) {
@@ -338,17 +332,17 @@ void BtlBakuganState11Update(BtlBakugan *self)
                     dist = speed;
                 }
                 /* delta = normalise(delta.xyz) * dist (w 0); velocity += (delta - velocity) * 0.3 */
-                len2 = delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
+                len2 = VfDot3(delta[0], delta[1], delta[2], delta[0], delta[1], delta[2]);
                 k = VfIsZero(len2) ? 0.0f : VfRsq(len2);
-                k = k * dist;
+                k = VfMul(k, dist);
                 for (i = 0; i < 3; i++) {
-                    delta[i] = delta[i] * k;
+                    delta[i] = VfMul(delta[i], k);
                 }
                 delta[3] = 0.0f;
                 for (i = 0; i < 4; i++) {
                     self->base.velocity[i] =
-                        self->base.velocity[i] +
-                        (delta[i] - self->base.velocity[i]) * 0.300000012f;
+                        VfAdd(self->base.velocity[i],
+                        VfMul(VfSub(delta[i], self->base.velocity[i]), 0.300000012f));
                 }
                 oldSpeed = self->dashSpeed;
                 timeScale = GfxGetMotionTimeScale();
@@ -359,21 +353,21 @@ void BtlBakuganState11Update(BtlBakugan *self)
             yaw = self->base.rot[1];
             speed = BtlBakuganGetMeleeStepSpeed(self);
             /* step = {cos, 0, sin}(yaw) * speed, w 0; velocity += (step - velocity) * 0.3 */
-            step[0] = __builtin_cosf(yaw) * speed;
-            step[1] = 0.0f * speed;
-            step[2] = __builtin_sinf(yaw) * speed;
+            step[0] = VfMul(VfCosQuarter(VfMul(yaw, 0.636619747f)), speed);
+            step[1] = VfMul(0.0f, speed);
+            step[2] = VfMul(VfSinQuarter(VfMul(yaw, 0.636619747f)), speed);
             step[3] = 0.0f;
             for (i = 0; i < 4; i++) {
                 self->base.velocity[i] =
-                    self->base.velocity[i] + (step[i] - self->base.velocity[i]) * 0.300000012f;
+                    VfAdd(self->base.velocity[i], VfMul(VfSub(step[i], self->base.velocity[i]), 0.300000012f));
             }
         }
     }
 
     if (!hadTarget) {
         /* velocity.x/z *= 0.85 */
-        self->base.velocity[0] = self->base.velocity[0] * 0.850000024f;
-        self->base.velocity[2] = self->base.velocity[2] * 0.850000024f;
+        self->base.velocity[0] = VfMul(self->base.velocity[0], 0.850000024f);
+        self->base.velocity[2] = VfMul(self->base.velocity[2], 0.850000024f);
     }
     self->attackFrame++;
     if ((s32)self->attackPhase >= 2) {

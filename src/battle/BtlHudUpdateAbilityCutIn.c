@@ -26,19 +26,19 @@
    scaled by 255 and truncated (vsat0 / vscl by the bank's 255 / vf2iz 23 / vi2uc). */
 static inline void CutInPackColor(u8 *dst, const ScePspFVector4 *c)
 {
-    dst[0] = VfI2uc(VfF2iz(VfSat0(c->x) * 255.0f, 23));
-    dst[1] = VfI2uc(VfF2iz(VfSat0(c->y) * 255.0f, 23));
-    dst[2] = VfI2uc(VfF2iz(VfSat0(c->z) * 255.0f, 23));
-    dst[3] = VfI2uc(VfF2iz(VfSat0(c->w) * 255.0f, 23));
+    dst[0] = VfI2uc(VfF2iz(VfMul(VfSat0(c->x), 255.0f), 23));
+    dst[1] = VfI2uc(VfF2iz(VfMul(VfSat0(c->y), 255.0f), 23));
+    dst[2] = VfI2uc(VfF2iz(VfMul(VfSat0(c->z), 255.0f), 23));
+    dst[3] = VfI2uc(VfF2iz(VfMul(VfSat0(c->w), 255.0f), 23));
 }
 
 /* Moves the sprite position a fraction `k` of the way to `target`: pos += (target - pos) * k. */
 static inline void CutInLerp(GfxSprite *sprite, const float *target, float k)
 {
-    sprite->posX = sprite->posX + (target[0] - sprite->posX) * k;
-    sprite->posY = sprite->posY + (target[1] - sprite->posY) * k;
-    sprite->posZ = sprite->posZ + (target[2] - sprite->posZ) * k;
-    sprite->posW = sprite->posW + (target[3] - sprite->posW) * k;
+    sprite->posX = VfAdd(sprite->posX, VfMul(VfSub(target[0], sprite->posX), k));
+    sprite->posY = VfAdd(sprite->posY, VfMul(VfSub(target[1], sprite->posY), k));
+    sprite->posZ = VfAdd(sprite->posZ, VfMul(VfSub(target[2], sprite->posZ), k));
+    sprite->posW = VfAdd(sprite->posW, VfMul(VfSub(target[3], sprite->posW), k));
 }
 
 /* x < lo gives lo, x <= hi gives x, anything else (incl. NaN) gives hi. */
@@ -230,7 +230,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
         t = (float)self->cutInTimer * 0.1f * 1.5707964f;
         self->cutInTimer++;
         t = CutInClamp(t, 0.0f, 1.5707964f);
-        self->cutInAlpha = __builtin_sinf(t);
+        self->cutInAlpha = VfSinQuarter(VfMul(t, 0.636619747f));
         black = g_colorBlack;
         for (i = 0; i < 3; i++) {
             CutInPackColor(self->cutInColor[i], &black);
@@ -268,7 +268,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
         /* fall through */
     case 13:
         if (--self->cutInTimer > 0) {
-            s = __builtin_sinf((float)self->cutInSpinFrame * 0.5235988f);
+            s = VfSinQuarter(VfMul((float)self->cutInSpinFrame * 0.5235988f, 0.636619747f));
             t = s * 0.1f + 0.9f;
             band->alpha = t;
             band->alpha = CutInClamp(t, 0.0f, 1.0f);
@@ -290,7 +290,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
         self->cutInTimer++;
         done = false;
         t = CutInClamp(t, 0.0f, 1.5707964f);
-        fade = 1.0f - __builtin_sinf(t);
+        fade = 1.0f - VfSinQuarter(VfMul(t, 0.636619747f));
         scale = (float)self->cutInTimer * 0.05f + 1.0f;
         pos[0] = self->cutInPortraitPos[0];
         pos[1] = self->cutInPortraitPos[1];
@@ -327,7 +327,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
                 t = (float)self->cutInFadeFrame * 0.05f * 1.5707964f;
                 self->cutInFadeFrame++;
                 t = CutInClamp(t, 0.0f, 1.5707964f);
-                s = __builtin_sinf(t);
+                s = VfSinQuarter(VfMul(t, 0.636619747f));
                 scene = BDC_OR_ZERO(BtlGetCameraTask());
                 scene->dimColor[0] = 1.0f;
                 scene->dimColor[1] = 1.0f;
@@ -383,7 +383,7 @@ void BtlHudUpdateAbilityCutIn(BtlHud *self, BtlBakugan *unit)
         t = (float)self->cutInFadeFrame * 0.05f * 1.5707964f;
         self->cutInFadeFrame++;
         t = CutInClamp(t, 0.0f, 1.5707964f);
-        s = __builtin_sinf(t);
+        s = VfSinQuarter(VfMul(t, 0.636619747f));
         scene = BDC_OR_ZERO(BtlGetCameraTask());
         scene->dimColor[0] = 1.0f;
         scene->dimColor[1] = 1.0f;
