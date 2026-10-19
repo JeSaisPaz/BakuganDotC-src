@@ -18,8 +18,9 @@ void *ActorSpawnFromPlacement(u8 slot, s32 *record)
   pos[1] = (float)placed->pos[1] * 0.00024414062f;
   pos[2] = (float)placed->pos[2] * 0.00024414062f;
   pos[3] = 0.0f;
-  /* vscl.t + sv.q: xyz scaled by 20; the stored w lane is a stale VFPU value (ActorSpawn reads
-     only xyz), left out. */
+  /* vscl.t + sv.q: xyz scaled by 20; the sv.q also stores lane 3 = S713, the bank constant 0.0f
+     (VfpuLift: loaded once by BootMainThread, never written elsewhere). ActorSpawn reads pos[3]
+     as the heading (ActorSetHeading), so it gets exactly 0.0f. */
   pos[0] = VfMul(pos[0], 20.0f);
   pos[1] = VfMul(pos[1], 20.0f);
   pos[2] = VfMul(pos[2], 20.0f);

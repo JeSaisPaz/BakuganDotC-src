@@ -15,7 +15,7 @@
 #define CELL_COUNT 6
 
 /* Writes the Y rotation by `yaw` into `m`, then replaces it with the `vmmul.q E200, E100, E000`
-   product of it and the X rotation by `pitch`: field j lane i = sum_k m[k][j] * rot[k][i]. */
+   product of it and the X rotation by `pitch`: field j lane i = sum_k m[j][k] * rot[k][i] (m · rot). */
 static inline void CellModelSetRotation(float *m, float yaw, float pitch)
 {
     float rot[16];
@@ -65,7 +65,7 @@ static inline void CellModelSetRotation(float *m, float yaw, float pitch)
     rot[15] = 1.0f;
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            tmp[j * 4 + i] = VfDot4(m[0 * 4 + j], m[1 * 4 + j], m[2 * 4 + j], m[3 * 4 + j], rot[0 * 4 + i], rot[1 * 4 + i], rot[2 * 4 + i], rot[3 * 4 + i]);
+            tmp[j * 4 + i] = VfDot4(m[j * 4 + 0], m[j * 4 + 1], m[j * 4 + 2], m[j * 4 + 3], rot[0 * 4 + i], rot[1 * 4 + i], rot[2 * 4 + i], rot[3 * 4 + i]);
         }
     }
     for (i = 0; i < 16; i++) {

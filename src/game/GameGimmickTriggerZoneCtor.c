@@ -9,7 +9,7 @@
    transform is the Y rotation by `rot[1]` with translation `pos`, w = 1; the inverse (transposed
    rotation, negated rotated translation) is computed inline and `invValid` set.
    Finally clears `effect` and `inside` and sets `color` to (1, 1, 1, 1). Returns `obj`.
-   The extents' w lanes are not written here (the original stores a stale VFPU lane there). */
+   The extents' w lanes are written 0 (lane 3 of the vmul.t/vscl.t result, bank S713 = 0). */
 
 CoreObject *GameGimmickTriggerZoneCtor(GameGimmickTriggerZone *obj, s32 kind, void *record, u16 typeId, u8 flag)
 {
@@ -71,9 +71,11 @@ CoreObject *GameGimmickTriggerZoneCtor(GameGimmickTriggerZone *obj, s32 kind, vo
   obj->box.aabbMin.x = lo[0];
   obj->box.aabbMin.y = lo[1];
   obj->box.aabbMin.z = lo[2];
+  obj->box.aabbMin.w = 0.0f;
   obj->box.aabbMax.x = hi[0];
   obj->box.aabbMax.y = hi[1];
   obj->box.aabbMax.z = hi[2];
+  obj->box.aabbMax.w = 0.0f;
   obj->box.invValid = 0;
 
   t = &obj->box.transform;

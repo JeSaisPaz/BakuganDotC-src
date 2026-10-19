@@ -1,10 +1,12 @@
 // bdc 0x089f1ffc GfxDlSetBlendState
 #include "bdc.h"
 
-/* Writes the common flat-draw state: texture enable `tex & 0xff` (`0x1e`), lighting/cull/fog off
-   (`0x22`/`0x23`/`0x24`), shade model `0x21000001`, blend preset `blend` (0 alpha, 1 additive,
-   2 subtractive, 3 subtractive with reverse equation; `0xdf`/`0xe0`/`0xe1`; any other value writes
-   no blend commands) and the material/ambient colour from the RGBA `colour` (`0x55`/`0x58`).
+/* Writes the common flat-draw state: texture-map enable `tex & 0xff` (GE `0x1e`), alpha test,
+   depth test and stencil test off (`0x22`/`0x23`/`0x24`), alpha blend on (`0x21000001`), then
+   blend preset `blend` (`0xdf` blend mode, `0xe0`/`0xe1` fixed A/B colours): 0 opaque (fixed A
+   white + fixed B black), 1 alpha (src alpha / 1 - src alpha), 2 additive (src alpha + fixed B
+   white), 3 reverse-subtract (same factors, equation 2); a negative value or one above 3 writes
+   no blend commands. Finally the ambient colour and alpha from the RGBA `colour` (`0x55`/`0x58`).
    Returns the advanced list pointer. */
 
 u32 *GfxDlSetBlendState(u32 *list, const ScePspFVector4 *colour, u32 tex, s32 blend)

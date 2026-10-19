@@ -2,7 +2,7 @@
 #include "bdc.h"
 
 /* Draws the sword-blur trail (`BtlSwordBlurInit`) unless its alpha (`color[3]`) is 0 or below (called
-   by `BtlBakuganDraw`): writes GE commands at `*cursor` – additive blend, material colour/alpha
+   by `BtlBakuganDraw`): writes GE commands at `*cursor` – normal alpha blend (`ALPHA` 0xdf000032: SRC_ALPHA, ONE_MINUS_SRC_ALPHA, add), material colour/alpha
    from `color` (saturated to 0..1, scaled by 255 and truncated to bytes), UV scale (1.0, 0.3) and offset (0, 0.03), the 4x3 part of `g_gfxIdentityMatrix` as the
    world matrix (float24 operands ORed with `g_btlSwordBlurWorldCmd`), the `"swordblur"` texture
    (`GfxTextureWriteCall`, slot 1 when the owner's kind is 0x12) – then an inline 4×8 spline control net
