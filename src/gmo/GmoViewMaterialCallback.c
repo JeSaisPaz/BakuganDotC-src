@@ -13,10 +13,7 @@ static ScePspFVector4 ClipTransform(const ScePspFMatrix4 *m, float x, float y, f
 {
   ScePspFVector4 r;
 
-  r.x = VfDot4(m->x.x, m->y.x, m->z.x, m->w.x, x, y, z, 1.0f);
-  r.y = VfDot4(m->x.y, m->y.y, m->z.y, m->w.y, x, y, z, 1.0f);
-  r.z = VfDot4(m->x.z, m->y.z, m->z.z, m->w.z, x, y, z, 1.0f);
-  r.w = VfDot4(m->x.w, m->y.w, m->z.w, m->w.w, x, y, z, 1.0f);
+  VfDot4x4(&r.x, &m->x.x, &m->y.x, &m->z.x, &m->w.x, x, y, z, 1.0f);
   return r;
 }
 
@@ -27,27 +24,23 @@ static u32 ClipOutcode(const ScePspFMatrix4 *mvp, const ScePspFVector4 *eye, flo
 {
   ScePspFVector4 c;
   ScePspFVector4 s;
-  u32 code;
+  ScePspFVector4 w;  /* c.w in every lane: the [W] t-prefix */
+  ScePspFVector4 nw; /* -c.w: [-W] */
+  ScePspFVector4 sw;
+  ScePspFVector4 nsw;
 
   c = ClipTransform(mvp, x, y, z);
   s.x = VfMul(eye->x, c.x);
   s.y = VfMul(eye->y, c.y);
   s.z = VfMul(eye->z, c.z);
   s.w = VfMul(eye->w, c.w);
-  code = 0;
-  code |= VfSge(c.x, c.w) != 0.0f ? 0x001 : 0;
-  code |= VfSge(c.y, c.w) != 0.0f ? 0x002 : 0;
-  code |= VfSge(c.z, c.w) != 0.0f ? 0x004 : 0;
-  code |= VfSlt(c.x, -c.w) != 0.0f ? 0x008 : 0;
-  code |= VfSlt(c.y, -c.w) != 0.0f ? 0x010 : 0;
-  code |= VfSlt(c.z, -c.w) != 0.0f ? 0x020 : 0;
-  code |= VfSge(s.x, s.w) != 0.0f ? 0x040 : 0;
-  code |= VfSge(s.y, s.w) != 0.0f ? 0x080 : 0;
-  code |= VfSge(s.z, s.w) != 0.0f ? 0x100 : 0;
-  code |= VfSlt(s.x, -s.w) != 0.0f ? 0x200 : 0;
-  code |= VfSlt(s.y, -s.w) != 0.0f ? 0x400 : 0;
-  code |= VfSlt(s.z, -s.w) != 0.0f ? 0x800 : 0;
-  return code;
+  w.x = w.y = w.z = w.w = c.w;
+  nw.x = nw.y = nw.z = nw.w = -c.w;
+  sw.x = sw.y = sw.z = sw.w = s.w;
+  nsw.x = nsw.y = nsw.z = nsw.w = -s.w;
+  /* lanes x, y, z of each vsge.q / vslt.q (lane w is not tested) */
+  return (VfSgeBits4(&c.x, &w.x) & 7) | (VfSltBits4(&c.x, &nw.x) & 7) << 3 |
+         (VfSgeBits4(&s.x, &sw.x) & 7) << 6 | (VfSltBits4(&s.x, &nsw.x) & 7) << 9;
 }
 
 /* Three components of one vertex attribute: `kind` 0 s8 (vc2i + vi2f 31: /128), 1 s16 (vi2f 15:

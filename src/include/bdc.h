@@ -35,19 +35,181 @@ static inline float VfFromBits(unsigned u)
     v.u = u;
     return v.f;
 }
-static inline float VfDaz(float x)
-{
-    unsigned u = VfBits(x);
-    return (u & 0x7f800000u) == 0 ? VfFromBits(u & 0x80000000u) : x;
-}
+static inline float VfDaz(float x) { return __builtin_fabsf(x) < 0x1p-126f ? __builtin_copysignf(0.0f, x) : x; }
 
 /* Dot family (vdot, vmmul, vtfmN, vhtfmN, vcrsp, vqmul): each result lane is one call, all s lanes first,
-   then all t lanes (vdot d, s, t); missing lanes are 0. Products exact to 2 extra bits, aligned to the
-   largest by truncation, summed exactly, one rounding; denormal inputs count as 0; a result below 2^-126
-   is a zero with the sum's sign, an exact zero sum +0; NaN in, inf * 0 or inf - inf give VF_NAN. */
+   then all t lanes (vdot d, s, t); missing lanes are 0. Products exact to 2 extra bits, aligned to the largest
+   by truncation, summed exactly, one rounding; denormal inputs count as 0; a result below 2^-126 is a zero
+   with the sum's sign, an exact zero sum +0; NaN in, inf * 0 or inf - inf give VF_NAN.
+   bdc_vfpu.c has the model (PPSSPP's vfpu_dot). On SSE2 the helpers are inline and compute the same bits
+   from doubles: ex + ey per lane (0 for a zero or denormal input), ehi the largest; each product, exact in
+   double, in units of 2^(ehi - 279) truncated (cvttpd2dq) is the model's aligned product, rounded to odd in
+   the lanes of exponent sum ehi (a dropped bit sets bit 0, as the model's sticky bit does); the signed sum's
+   magnitude >> 2, rounded to 24 bits by the int -> float conversion, moved by 2^(ehi - 277) through the
+   exponent field. An inf or NaN input makes its lane's conversion 0x80000000: VfDotEdge. */
+float VfDotEdge(const float *s, const float *t); /* bdc_vfpu.c: a dot of 4 lanes with an inf or NaN input */
+#if defined(__SSE2__) && !defined(BDC_VFPU_SCALAR)
+#include <emmintrin.h> /* the compiler's own header: available under -nostdlibinc */
+static inline __attribute__((always_inline)) float VfDotLanes(__m128 s, __m128 t, int n) /* n = 2, 3 or 4 */
+{
+    const __m128i expBits = _mm_set1_epi32(0x7F800000), signBit = _mm_set1_epi32((int)0x80000000);
+    const __m128i zero = _mm_setzero_si128(), xs = _mm_castps_si128(s), xt = _mm_castps_si128(t);
+    const __m128i es = _mm_and_si128(xs, expBits), et = _mm_and_si128(xt, expBits);
+    const __m128i zs = _mm_cmpeq_epi32(es, zero), zt = _mm_cmpeq_epi32(et, zero);
+    const __m128i e = _mm_andnot_si128(_mm_or_si128(zs, zt), _mm_srli_epi32(_mm_add_epi32(es, et), 23));
+    __m128i ehi = _mm_max_epi16(e, _mm_shuffle_epi32(e, _MM_SHUFFLE(2, 3, 0, 1))); /* e < 2^15 */
+    ehi = n > 2 ? _mm_max_epi16(ehi, _mm_shuffle_epi32(ehi, _MM_SHUFFLE(1, 0, 3, 2)))
+                : _mm_shuffle_epi32(ehi, _MM_SHUFFLE(0, 0, 0, 0));
+    /* |s| * |t| * 2^(279 - ehi) (a flushed input is +0): the 2^(279 - ehi) bits from ehi's low word */
+    const __m128d scale = _mm_castsi128_pd(_mm_slli_epi64(_mm_sub_epi32(_mm_set1_epi32(1023 + 279), ehi), 52));
+    const __m128 s0 = _mm_andnot_ps(_mm_castsi128_ps(_mm_or_si128(zs, signBit)), s);
+    const __m128 t0 = _mm_andnot_ps(_mm_castsi128_ps(_mm_or_si128(zt, signBit)), t);
+    const __m128d alo = _mm_mul_pd(_mm_mul_pd(_mm_cvtps_pd(s0), _mm_cvtps_pd(t0)), scale);
+    const __m128i qlo = _mm_cvttpd_epi32(alo);
+    __m128i q;
+    __m128 dropped;
+    if (n > 2) {
+        const __m128d ahi = _mm_mul_pd(_mm_mul_pd(_mm_cvtps_pd(_mm_movehl_ps(s0, s0)),
+                                                  _mm_cvtps_pd(_mm_movehl_ps(t0, t0))), scale);
+        const __m128i qhi = _mm_cvttpd_epi32(ahi);
+        q = _mm_unpacklo_epi64(qlo, qhi);
+        dropped = _mm_shuffle_ps(_mm_castpd_ps(_mm_cmpneq_pd(alo, _mm_cvtepi32_pd(qlo))),
+                                 _mm_castpd_ps(_mm_cmpneq_pd(ahi, _mm_cvtepi32_pd(qhi))), _MM_SHUFFLE(2, 0, 2, 0));
+    } else {
+        q = qlo;
+        dropped = _mm_shuffle_ps(_mm_castpd_ps(_mm_cmpneq_pd(alo, _mm_cvtepi32_pd(qlo))), _mm_setzero_ps(),
+                                 _MM_SHUFFLE(2, 0, 2, 0));
+    }
+    if (__builtin_expect(_mm_movemask_ps(_mm_castsi128_ps(q)) != 0, 0)) {
+        float a[4], b[4];
+        _mm_storeu_ps(a, s);
+        _mm_storeu_ps(b, t);
+        return VfDotEdge(a, b);
+    }
+    const __m128i odd = _mm_and_si128(_mm_and_si128(_mm_castps_si128(dropped), _mm_cmpeq_epi32(e, ehi)),
+                                      _mm_set1_epi32(1));
+    const __m128i neg = _mm_srai_epi32(_mm_xor_si128(xs, xt), 31);
+    __m128i sum = _mm_sub_epi32(_mm_xor_si128(_mm_or_si128(q, odd), neg), neg);
+    sum = _mm_add_epi32(sum, _mm_shuffle_epi32(sum, _MM_SHUFFLE(2, 3, 0, 1)));
+    if (n > 2)
+        sum = _mm_add_epi32(sum, _mm_shuffle_epi32(sum, _MM_SHUFFLE(1, 0, 3, 2)));
+    /* |sum| >> 2 to 24 bits, then the exponent: biased 1..254 or a zero (also for a zero |sum| >> 2) or inf */
+    const __m128i sumSign = _mm_srai_epi32(sum, 31);
+    const __m128i m = _mm_srli_epi32(_mm_sub_epi32(_mm_xor_si128(sum, sumSign), sumSign), 2);
+    const __m128i f = _mm_castps_si128(_mm_cvtepi32_ps(m));
+    const __m128i k = _mm_sub_epi32(ehi, _mm_set1_epi32(277));
+    const __m128i be = _mm_add_epi32(_mm_srli_epi32(f, 23), k);
+    const __m128i none = _mm_or_si128(_mm_cmpgt_epi32(_mm_set1_epi32(1), be), _mm_cmpeq_epi32(m, zero));
+    const __m128i inf = _mm_cmpgt_epi32(be, _mm_set1_epi32(254));
+    __m128i r = _mm_andnot_si128(none, _mm_add_epi32(f, _mm_slli_epi32(k, 23)));
+    r = _mm_or_si128(_mm_andnot_si128(inf, r), _mm_and_si128(inf, expBits));
+    return _mm_cvtss_f32(_mm_castsi128_ps(_mm_or_si128(r, _mm_and_si128(sum, signBit))));
+}
+static inline __attribute__((always_inline)) float VfDot2(float s0, float s1, float t0, float t1)
+{
+    return VfDotLanes(_mm_setr_ps(s0, s1, 0.0f, 0.0f), _mm_setr_ps(t0, t1, 0.0f, 0.0f), 2);
+}
+static inline __attribute__((always_inline)) float VfDot3(float s0, float s1, float s2, float t0, float t1, float t2)
+{
+    return VfDotLanes(_mm_setr_ps(s0, s1, s2, 0.0f), _mm_setr_ps(t0, t1, t2, 0.0f), 3);
+}
+static inline __attribute__((always_inline)) float VfDot4(float s0, float s1, float s2, float s3, float t0, float t1,
+                                                          float t2, float t3)
+{
+    return VfDotLanes(_mm_setr_ps(s0, s1, s2, s3), _mm_setr_ps(t0, t1, t2, t3), 4);
+}
+/* VfDot4x4's input lane k for its four dots (one per SIMD lane): ex + ey, 0 for a zero or denormal input. */
+static inline __attribute__((always_inline)) __m128i VfDot4x4Exp(__m128 s, __m128i etk, __m128i ztk)
+{
+    const __m128i es = _mm_and_si128(_mm_castps_si128(s), _mm_set1_epi32(0x7F800000));
+    const __m128i zs = _mm_cmpeq_epi32(es, _mm_setzero_si128());
+    return _mm_andnot_si128(_mm_or_si128(zs, ztk), _mm_srli_epi32(_mm_add_epi32(es, etk), 23));
+}
+/* Its aligned, rounded-to-odd, signed product (VfDotLanes' steps; no inf or NaN input here). */
+static inline __attribute__((always_inline)) __m128i VfDot4x4Term(__m128 s, __m128i xtk, __m128i etk, __m128i ztk,
+                                                                 __m128d tk, __m128i ehi, __m128d sclo, __m128d schi)
+{
+    const __m128i xs = _mm_castps_si128(s), signBit = _mm_set1_epi32((int)0x80000000);
+    const __m128i zs = _mm_cmpeq_epi32(_mm_and_si128(xs, _mm_set1_epi32(0x7F800000)), _mm_setzero_si128());
+    const __m128 s0 = _mm_andnot_ps(_mm_castsi128_ps(_mm_or_si128(zs, signBit)), s);
+    const __m128d alo = _mm_mul_pd(_mm_mul_pd(_mm_cvtps_pd(s0), tk), sclo);
+    const __m128d ahi = _mm_mul_pd(_mm_mul_pd(_mm_cvtps_pd(_mm_movehl_ps(s0, s0)), tk), schi);
+    const __m128i qlo = _mm_cvttpd_epi32(alo), qhi = _mm_cvttpd_epi32(ahi);
+    const __m128i q = _mm_unpacklo_epi64(qlo, qhi);
+    const __m128 dropped = _mm_shuffle_ps(_mm_castpd_ps(_mm_cmpneq_pd(alo, _mm_cvtepi32_pd(qlo))),
+                                          _mm_castpd_ps(_mm_cmpneq_pd(ahi, _mm_cvtepi32_pd(qhi))),
+                                          _MM_SHUFFLE(2, 0, 2, 0));
+    const __m128i top = _mm_cmpeq_epi32(VfDot4x4Exp(s, etk, ztk), ehi);
+    const __m128i odd = _mm_and_si128(_mm_and_si128(_mm_castps_si128(dropped), top), _mm_set1_epi32(1));
+    const __m128i neg = _mm_srai_epi32(_mm_xor_si128(xs, xtk), 31);
+    return _mm_sub_epi32(_mm_xor_si128(_mm_or_si128(q, odd), neg), neg);
+}
+/* d[j] = VfDot4(s0[j], s1[j], s2[j], s3[j], t0, t1, t2, t3) for j = 0..3: the four dots of a vtfm4/vhtfm4 or a
+   vmmul column (one t), computed together, one dot per SIMD lane; the same bits as the four calls (and as
+   with s and t swapped: the dot commutes). d must not overlap s0..s3. */
+static inline __attribute__((always_inline)) void VfDot4x4(float *d, const float *s0, const float *s1, const float *s2,
+                                                            const float *s3, float t0, float t1, float t2, float t3)
+{
+    const __m128i expBits = _mm_set1_epi32(0x7F800000), signBit = _mm_set1_epi32((int)0x80000000);
+    const __m128i zero = _mm_setzero_si128();
+    const __m128 T = _mm_setr_ps(t0, t1, t2, t3);
+    const __m128i xt = _mm_castps_si128(T), et = _mm_and_si128(xt, expBits), zt = _mm_cmpeq_epi32(et, zero);
+    const __m128 T0 = _mm_andnot_ps(_mm_castsi128_ps(_mm_or_si128(zt, signBit)), T);
+#define VF_BCAST(v, k) _mm_shuffle_epi32((v), (k) * 0x55)
+    const __m128 r0 = _mm_loadu_ps(s0), r1 = _mm_loadu_ps(s1), r2 = _mm_loadu_ps(s2), r3 = _mm_loadu_ps(s3);
+    /* an inf or NaN input anywhere: the four VfDot4 (before any product, so nothing stays live across it) */
+    const __m128i infNan = _mm_or_si128(
+        _mm_or_si128(_mm_cmpeq_epi32(_mm_and_si128(_mm_castps_si128(r0), expBits), expBits),
+                     _mm_cmpeq_epi32(_mm_and_si128(_mm_castps_si128(r1), expBits), expBits)),
+        _mm_or_si128(_mm_cmpeq_epi32(_mm_and_si128(_mm_castps_si128(r2), expBits), expBits),
+                     _mm_or_si128(_mm_cmpeq_epi32(_mm_and_si128(_mm_castps_si128(r3), expBits), expBits),
+                                  _mm_cmpeq_epi32(et, expBits))));
+    if (__builtin_expect(_mm_movemask_ps(_mm_castsi128_ps(infNan)) != 0, 0)) {
+        for (int j = 0; j < 4; j++)
+            d[j] = VfDot4(s0[j], s1[j], s2[j], s3[j], t0, t1, t2, t3);
+        return;
+    }
+    const __m128i ehi = _mm_max_epi16(_mm_max_epi16(VfDot4x4Exp(r0, VF_BCAST(et, 0), VF_BCAST(zt, 0)),
+                                                    VfDot4x4Exp(r1, VF_BCAST(et, 1), VF_BCAST(zt, 1))),
+                                      _mm_max_epi16(VfDot4x4Exp(r2, VF_BCAST(et, 2), VF_BCAST(zt, 2)),
+                                                    VfDot4x4Exp(r3, VF_BCAST(et, 3), VF_BCAST(zt, 3))));
+    const __m128i sc = _mm_sub_epi32(_mm_set1_epi32(1023 + 279), ehi);
+    const __m128d sclo = _mm_castsi128_pd(_mm_slli_epi64(_mm_unpacklo_epi32(sc, zero), 52));
+    const __m128d schi = _mm_castsi128_pd(_mm_slli_epi64(_mm_unpackhi_epi32(sc, zero), 52));
+    __m128i sum;
+#define VF_TERM(r, k) VfDot4x4Term((r), VF_BCAST(xt, k), VF_BCAST(et, k), VF_BCAST(zt, k), \
+                                   _mm_cvtps_pd(_mm_castsi128_ps(VF_BCAST(_mm_castps_si128(T0), k))), ehi, sclo, schi)
+    sum = VF_TERM(r0, 0);
+    sum = _mm_add_epi32(sum, VF_TERM(r1, 1));
+    sum = _mm_add_epi32(sum, VF_TERM(r2, 2));
+    sum = _mm_add_epi32(sum, VF_TERM(r3, 3));
+#undef VF_TERM
+#undef VF_BCAST
+    const __m128i sumSign = _mm_srai_epi32(sum, 31);
+    const __m128i m = _mm_srli_epi32(_mm_sub_epi32(_mm_xor_si128(sum, sumSign), sumSign), 2);
+    const __m128i f = _mm_castps_si128(_mm_cvtepi32_ps(m));
+    const __m128i k = _mm_sub_epi32(ehi, _mm_set1_epi32(277));
+    const __m128i be = _mm_add_epi32(_mm_srli_epi32(f, 23), k);
+    const __m128i none = _mm_or_si128(_mm_cmpgt_epi32(_mm_set1_epi32(1), be), _mm_cmpeq_epi32(m, zero));
+    const __m128i inf = _mm_cmpgt_epi32(be, _mm_set1_epi32(254));
+    __m128i r = _mm_andnot_si128(none, _mm_add_epi32(f, _mm_slli_epi32(k, 23)));
+    r = _mm_or_si128(_mm_andnot_si128(inf, r), _mm_and_si128(inf, expBits));
+    _mm_storeu_ps(d, _mm_castsi128_ps(_mm_or_si128(r, _mm_and_si128(sum, signBit))));
+}
+#else
 float VfDot2(float s0, float s1, float t0, float t1);
 float VfDot3(float s0, float s1, float s2, float t0, float t1, float t2);
 float VfDot4(float s0, float s1, float s2, float s3, float t0, float t1, float t2, float t3);
+static inline void VfDot4x4(float *d, const float *s0, const float *s1, const float *s2, const float *s3, float t0,
+                            float t1, float t2, float t3)
+{
+    float r[4];
+    for (int j = 0; j < 4; j++)
+        r[j] = VfDot4(s0[j], s1[j], s2[j], s3[j], t0, t1, t2, t3);
+    for (int j = 0; j < 4; j++)
+        d[j] = r[j];
+}
+#endif
 /* The interpolated functions: 22-bit results of the VFPU's quadratic interpolator. vsin.s / vcos.s take
    quarter turns (x * pi/2 radians), reduced exactly (vsin(2) = -0, vcos(1) = -0); vasin.s returns quarter
    turns. vrot lanes: VfCosQuarter(a), VfSinQuarter(a), -VfSinQuarter(a). */
@@ -64,24 +226,35 @@ float VfLog2(float x);        /* vlog2.s */
    sign, the IEEE op rounds to nearest even, a result below 2^-126 becomes a zero of its sign (VFPU docs,
    "Floating point format"; pspautotests fcr31.expected:12, specials.expected:44, 69). NaN: vadd/vsub give
    VF_NAN (nan_gen.expected:2-3, 34-35), vmul/vdiv 0x7F800001 with the xor of the operands' signs
-   (nan_gen.expected:4-5, 36-37). vocp.s x is VfSub(1.0f, x) (specials.expected:23, 47). */
-float VfMulEdge(float a, float b); /* bdc_vfpu.c: VfMul's tiny and NaN results */
+   (nan_gen.expected:4-5, 36-37). vocp.s x is VfSub(1.0f, x) (specials.expected:23, 47).
+   Fast paths: the IEEE result is the PSP's unless an input is denormal, the result is below 2^-126 or a NaN.
+   A sum or difference of 2^-100 and up (inf too) or an exact zero is: a denormal input, below a quarter ulp
+   of the other operand there, cannot have moved it. A nonzero product of normal (or inf) inputs above 2^-126
+   is, and so is a zero product (the exact product is below 2^-150 or an input is a zero or denormal; the
+   sign is the xor either way). Everything else goes to the full model in bdc_vfpu.c. */
+float VfAddEdge(float a, float b); /* bdc_vfpu.c: VfAdd off its fast path */
+float VfMulEdge(float a, float b); /* bdc_vfpu.c: VfMul off its fast path */
 float VfDivEdge(float a, float b); /* bdc_vfpu.c: VfDiv's tiny and NaN results */
-static inline float VfAddResult(float r)
+static inline float VfAdd(float a, float b)
 {
-    unsigned u = VfBits(r);
-    if ((u & 0x7f800000u) == 0) /* a sum below 2^-126 is exact: no rounding to undo */
-        return VfFromBits(u & 0x80000000u);
-    return (u & 0x7fffffffu) > 0x7f800000u ? VF_NAN : r;
+    const float r = a + b;
+    if (__builtin_expect(!(__builtin_fabsf(r) >= 0x1p-100f) & (r != 0.0f), 0))
+        return VfAddEdge(a, b);
+    return r;
 }
-static inline float VfAdd(float a, float b) { return VfAddResult(VfDaz(a) + VfDaz(b)); }
-static inline float VfSub(float a, float b) { return VfAddResult(VfDaz(a) - VfDaz(b)); }
+static inline float VfSub(float a, float b)
+{
+    const float r = a - b;
+    if (__builtin_expect(!(__builtin_fabsf(r) >= 0x1p-100f) & (r != 0.0f), 0))
+        return VfAddEdge(a, -b); /* a - b is a + -b, NaN, zero signs and rounding included */
+    return r;
+}
 static inline float VfMul(float a, float b)
 {
-    float x = VfDaz(a), y = VfDaz(b), r = x * y;
-    unsigned m = VfBits(r) & 0x7fffffffu;
-    if (__builtin_expect(m - 0x00800001u >= 0x7f000000u && m != 0, 0)) /* tiny (<= FLT_MIN) or NaN */
-        return VfMulEdge(x, y);
+    const float r = a * b, x = __builtin_fabsf(a), y = __builtin_fabsf(b), z = __builtin_fabsf(r);
+    const float m = x < y ? x : y, least = m < z ? m : z; /* least is z if z is NaN */
+    if (__builtin_expect(!(least >= 0x1.000002p-126f) & (r != 0.0f), 0))
+        return VfMulEdge(a, b);
     return r;
 }
 static inline float VfDiv(float a, float b)
@@ -104,8 +277,41 @@ static inline float VfMin(float a, float b) { return VfOrderKey(a) < VfOrderKey(
 static inline float VfMax(float a, float b) { return VfOrderKey(a) > VfOrderKey(b) ? a : b; }
 /* vsge / vslt: 1.0f or 0.0f; NaN gives 0.0f; denormals compare as zeros (as vcmp's conditions do,
    specials.expected:6-8). */
-static inline float VfSge(float s, float t) { return VfDaz(s) >= VfDaz(t) ? 1.0f : 0.0f; }
-static inline float VfSlt(float s, float t) { return VfDaz(s) < VfDaz(t) ? 1.0f : 0.0f; }
+static inline float VfSge(float s, float t)
+{
+    return (__builtin_fabsf(s) < 0x1p-126f ? 0.0f : s) >= (__builtin_fabsf(t) < 0x1p-126f ? 0.0f : t) ? 1.0f : 0.0f;
+}
+static inline float VfSlt(float s, float t)
+{
+    return (__builtin_fabsf(s) < 0x1p-126f ? 0.0f : s) < (__builtin_fabsf(t) < 0x1p-126f ? 0.0f : t) ? 1.0f : 0.0f;
+}
+/* vsge.q / vslt.q whose results are only tested: bit i of the result is lane i's VfSge / VfSlt (1.0f). */
+#if defined(__SSE2__) && !defined(BDC_VFPU_SCALAR)
+static inline __attribute__((always_inline)) __m128 VfDazLanes(__m128 x) /* denormal lanes +0 (the compares' view) */
+{
+    const __m128 mag = _mm_andnot_ps(_mm_castsi128_ps(_mm_set1_epi32((int)0x80000000)), x);
+    return _mm_andnot_ps(_mm_cmplt_ps(mag, _mm_set1_ps(0x1p-126f)), x);
+}
+static inline unsigned VfSgeBits4(const float *s, const float *t)
+{
+    return (unsigned)_mm_movemask_ps(_mm_cmple_ps(VfDazLanes(_mm_loadu_ps(t)), VfDazLanes(_mm_loadu_ps(s))));
+}
+static inline unsigned VfSltBits4(const float *s, const float *t)
+{
+    return (unsigned)_mm_movemask_ps(_mm_cmplt_ps(VfDazLanes(_mm_loadu_ps(s)), VfDazLanes(_mm_loadu_ps(t))));
+}
+#else
+static inline unsigned VfSgeBits4(const float *s, const float *t)
+{
+    return (VfSge(s[0], t[0]) != 0.0f) | (VfSge(s[1], t[1]) != 0.0f) << 1 | (VfSge(s[2], t[2]) != 0.0f) << 2 |
+           (VfSge(s[3], t[3]) != 0.0f) << 3;
+}
+static inline unsigned VfSltBits4(const float *s, const float *t)
+{
+    return (VfSlt(s[0], t[0]) != 0.0f) | (VfSlt(s[1], t[1]) != 0.0f) << 1 | (VfSlt(s[2], t[2]) != 0.0f) << 2 |
+           (VfSlt(s[3], t[3]) != 0.0f) << 3;
+}
+#endif
 
 /* vcmp EZ (NZ: !VfIsZero): the PSP's zero test, true for +-0 and +-denormal operands, false for normal,
    inf and NaN ones (pspautotests 40c8f4c tests/cpu/vfpu/specials.expected:2-13, PSP-3000 6.61). The

@@ -67,6 +67,14 @@ static unsigned vf_dot_special(const unsigned *x, const unsigned *y, int n)
     return hasInf < 0 ? 0xFF800000u : 0x7F800000u;
 }
 
+float VfDotEdge(const float *s, const float *t)
+{
+    const unsigned x[4] = { vf_bits(s[0]), vf_bits(s[1]), vf_bits(s[2]), vf_bits(s[3]) };
+    const unsigned y[4] = { vf_bits(t[0]), vf_bits(t[1]), vf_bits(t[2]), vf_bits(t[3]) };
+    return vf_float(vf_dot_special(x, y, 4));
+}
+
+#if !defined(__SSE2__) || defined(BDC_VFPU_SCALAR)
 /* PPSSPP vfpu_dot_finish: val is the exact sum with 2 extra bits, ehi the biased exponent sum of the
    largest product (ex + ey). Truncates the extra bits, rounds to 24 bits (nearest even); the carry of
    the rounding moves into the exponent field by itself. */
@@ -83,65 +91,10 @@ static inline unsigned vf_dot_finish(int val, unsigned ehi)
     return bits | signBit;
 }
 
-#if defined(__SSE2__) && !defined(BDC_VFPU_SCALAR)
-#include <emmintrin.h> /* the compiler's own header: available under -nostdlibinc */
-
-/* PPSSPP's vfpu_dot_sse2: the scalar version below, four lanes at a time (bit-exact with it; about twice as
-   fast). Lanes past n are zeros, which flush their products. */
-static inline __attribute__((always_inline)) float vf_dot_sse2(const unsigned *xs, const unsigned *ys, int n)
-{
-    const __m128i x = _mm_setr_epi32((int)xs[0], (int)xs[1], n > 2 ? (int)xs[n > 2 ? 2 : 0] : 0,
-                                     n > 3 ? (int)xs[n > 3 ? 3 : 0] : 0);
-    const __m128i y = _mm_setr_epi32((int)ys[0], (int)ys[1], n > 2 ? (int)ys[n > 2 ? 2 : 0] : 0,
-                                     n > 3 ? (int)ys[n > 3 ? 3 : 0] : 0);
-    const __m128i expBits = _mm_set1_epi32(0x7F800000);
-    const __m128i xe = _mm_and_si128(x, expBits), ye = _mm_and_si128(y, expBits);
-    const __m128i zero = _mm_setzero_si128();
-    /* Zero and subnormal inputs make the product zero, with the lowest exponent. Inf and NaN get 0x7FF,
-       above any real exponent sum, so one maximum finds the alignment and the specials. All of these fit
-       in 15 bits, so the 16-bit maximum works on them. */
-    const __m128i flush = _mm_or_si128(_mm_cmpeq_epi32(xe, zero), _mm_cmpeq_epi32(ye, zero));
-    const __m128i special = _mm_or_si128(_mm_cmpeq_epi32(xe, expBits), _mm_cmpeq_epi32(ye, expBits));
-    const __m128i e = _mm_or_si128(_mm_andnot_si128(flush, _mm_srli_epi32(_mm_add_epi32(xe, ye), 23)),
-                                   _mm_srli_epi32(special, 21));
-    __m128i emax = _mm_max_epi16(e, _mm_shuffle_epi32(e, _MM_SHUFFLE(1, 0, 3, 2)));
-    emax = _mm_max_epi16(emax, _mm_shuffle_epi32(emax, _MM_SHUFFLE(2, 3, 0, 1)));
-    const unsigned ehi = (unsigned)_mm_cvtsi128_si32(emax);
-    if (__builtin_expect(ehi >= 0x7FF, 0))
-        return vf_float(vf_dot_special(xs, ys, n));
-    /* 24x24-bit products, even and odd lanes separately, kept to 2 extra bits with round-to-odd. */
-    const __m128i mantMask = _mm_set1_epi32(0x007FFFFF), implicitBit = _mm_set1_epi32(0x00800000);
-    const __m128i mx = _mm_or_si128(_mm_and_si128(x, mantMask), implicitBit);
-    const __m128i my = _mm_or_si128(_mm_and_si128(y, mantMask), implicitBit);
-    const __m128i pEven = _mm_mul_epu32(mx, my);
-    const __m128i pOdd = _mm_mul_epu32(_mm_srli_epi64(mx, 32), _mm_srli_epi64(my, 32));
-    const __m128i kept = _mm_or_si128(_mm_srli_epi64(pEven, 21), _mm_slli_epi64(_mm_srli_epi64(pOdd, 21), 32));
-    const __m128i lowMask = _mm_set_epi32(0, (1 << 21) - 1, 0, (1 << 21) - 1);
-    const __m128i dropped = _mm_or_si128(_mm_and_si128(pEven, lowMask), _mm_slli_epi64(_mm_and_si128(pOdd, lowMask), 32));
-    const __m128i sticky = _mm_andnot_si128(_mm_cmpeq_epi32(dropped, zero), _mm_set1_epi32(1));
-    const __m128i p = _mm_andnot_si128(flush, _mm_or_si128(kept, sticky));
-    /* Align to the largest exponent by truncation. SSE2 has no per-lane shift, so p >> d is done as
-       (p * 2^(28 - d)) >> 28, with the power of two built as float bits and converted by truncation. */
-    const __m128i d = _mm_min_epi16(_mm_sub_epi32(emax, e), _mm_set1_epi32(28));
-    const __m128i scale = _mm_cvttps_epi32(_mm_castsi128_ps(_mm_slli_epi32(_mm_sub_epi32(_mm_set1_epi32(127 + 28), d), 23)));
-    const __m128i sEven = _mm_srli_epi64(_mm_mul_epu32(p, scale), 28);
-    const __m128i sOdd = _mm_srli_epi64(_mm_mul_epu32(_mm_srli_epi64(p, 32), _mm_srli_epi64(scale, 32)), 28);
-    __m128i v = _mm_or_si128(sEven, _mm_slli_epi64(sOdd, 32));
-    /* Apply the signs and sum exactly. */
-    const __m128i sign = _mm_srai_epi32(_mm_xor_si128(x, y), 31);
-    v = _mm_sub_epi32(_mm_xor_si128(v, sign), sign);
-    v = _mm_add_epi32(v, _mm_shuffle_epi32(v, _MM_SHUFFLE(1, 0, 3, 2)));
-    v = _mm_add_epi32(v, _mm_shuffle_epi32(v, _MM_SHUFFLE(2, 3, 0, 1)));
-    return vf_float(vf_dot_finish(_mm_cvtsi128_si32(v), ehi));
-}
-#endif
-
-/* Inlined into each VfDotN, so that n is a constant there and the loops unroll. */
+/* On other hosts (and with BDC_VFPU_SCALAR) these are VfDot2/3/4. Inlined into each VfDotN, so that n is a
+   constant there and the loops unroll. */
 static inline __attribute__((always_inline)) float vf_dot(const unsigned *x, const unsigned *y, int n)
 {
-#if defined(__SSE2__) && !defined(BDC_VFPU_SCALAR)
-    return vf_dot_sse2(x, y, n);
-#else
     unsigned e[4], p[4], ehi = 0, special = 0;
     int val = 0;
     for (int i = 0; i < n; i++) {
@@ -163,7 +116,6 @@ static inline __attribute__((always_inline)) float vf_dot(const unsigned *x, con
         val += (v ^ s) - s;
     }
     return vf_float(vf_dot_finish(val, ehi));
-#endif
 }
 
 float VfDot2(float s0, float s1, float t0, float t1)
@@ -186,33 +138,53 @@ float VfDot4(float s0, float s1, float s2, float s3, float t0, float t1, float t
     const unsigned y[4] = { vf_bits(t0), vf_bits(t1), vf_bits(t2), vf_bits(t3) };
     return vf_dot(x, y, 4);
 }
+#endif
 
-/* ---- vmul / vdiv edges (bdc_vfpu.h's VfMul and VfDiv call these off their fast path) ----
-   a and b are already flushed (a subnormal input is a zero of its sign). The IEEE result r was a
-   subnormal, +-FLT_MIN or a NaN. The VFPU rounds to 24 bits with an unbounded exponent and flushes a
-   result below 2^-126 to a zero of its sign (VFPU docs, "Floating point format"; pspautotests
-   fcr31.expected:12, 0x80ffffff * 0.5 gives -0 where IEEE gives -FLT_MIN). PPSSPP's vfpu_mul/vfpu_div
-   flush when the double result is below FLT_MIN - FLT_TRUE_MIN/4, the same threshold; this does it in
-   float (no double arithmetic, which the MIPS build would need soft-float for): scaling the smaller
-   operand by 2^64 is exact and keeps the product (quotient) normal, so the float op rounds to 24 bits as
-   the VFPU does. NaN: 0x7F800001 with the xor of the operands' signs (nan_gen.expected:4-5, 36-37). */
+/* ---- vadd / vsub / vmul / vdiv off bdc_vfpu.h's fast paths ----
+   The VFPU flushes denormal inputs to zeros of their sign, rounds to 24 bits with an unbounded exponent
+   and flushes a result below 2^-126 to a zero of its sign (VFPU docs, "Floating point format"; pspautotests
+   fcr31.expected:12, 0x80ffffff * 0.5 gives -0 where IEEE gives -FLT_MIN). A sum below 2^-126 is exact (no
+   rounding to undo). A product (quotient) whose IEEE result is a subnormal or +-FLT_MIN: PPSSPP's
+   vfpu_mul/vfpu_div flush when the double result is below FLT_MIN - FLT_TRUE_MIN/4, the same threshold;
+   this does it in float (no double arithmetic, which the MIPS build would need soft-float for): scaling
+   the smaller operand by 2^64 is exact and keeps the product (quotient) normal, so the float op rounds to
+   24 bits as the VFPU does. NaN: vadd/vsub VF_NAN (nan_gen.expected:2-3, 34-35), vmul/vdiv 0x7F800001 with
+   the xor of the operands' signs (nan_gen.expected:4-5, 36-37). */
+static inline float vf_daz(float x)
+{
+    const unsigned u = vf_bits(x);
+    return (u & 0x7F800000u) == 0 ? vf_float(u & 0x80000000u) : x;
+}
+
 static float vf_tiny(float r, float scaled)
 {
     const unsigned sign = vf_bits(r) & 0x80000000u;
     return vf_float(__builtin_fabsf(scaled) >= 0x1p-62f ? sign | 0x00800000u : sign);
 }
 
-float VfMulEdge(float a, float b)
+float VfAddEdge(float a, float b)
 {
-    const unsigned x = vf_bits(a), y = vf_bits(b);
-    const float r = a * b;
-    if (r != r)
-        return vf_float(((x ^ y) & 0x80000000u) | 0x7F800001u);
-    if ((x & 0x7FFFFFFFu) <= (y & 0x7FFFFFFFu))
-        return vf_tiny(r, (a * 0x1p64f) * b);
-    return vf_tiny(r, a * (b * 0x1p64f));
+    const float r = vf_daz(a) + vf_daz(b);
+    const unsigned u = vf_bits(r);
+    if ((u & 0x7F800000u) == 0)
+        return vf_float(u & 0x80000000u);
+    return (u & 0x7FFFFFFFu) > 0x7F800000u ? vf_float(0x7F800001u) : r;
 }
 
+float VfMulEdge(float a, float b)
+{
+    const float x = vf_daz(a), y = vf_daz(b), r = x * y;
+    const unsigned ux = vf_bits(x), uy = vf_bits(y), m = vf_bits(r) & 0x7FFFFFFFu;
+    if (m - 0x00800001u < 0x7F000000u || m == 0) /* above FLT_MIN, inf or zero: IEEE's */
+        return r;
+    if (r != r)
+        return vf_float(((ux ^ uy) & 0x80000000u) | 0x7F800001u);
+    if ((ux & 0x7FFFFFFFu) <= (uy & 0x7FFFFFFFu))
+        return vf_tiny(r, (x * 0x1p64f) * y);
+    return vf_tiny(r, x * (y * 0x1p64f));
+}
+
+/* a and b already flushed; r = a / b was a subnormal, +-FLT_MIN or a NaN */
 float VfDivEdge(float a, float b)
 {
     const unsigned x = vf_bits(a), y = vf_bits(b);
