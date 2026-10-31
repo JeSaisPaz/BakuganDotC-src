@@ -14,7 +14,7 @@ void GameFieldActivateItemBox(CoreTask *task, s16 id)
             GameGimmickGetRecordParam(gimmick) == (s32)id) {
             const VtblEntry *entry = &((const VtblEntry *)gimmick->base.base.vtable)[16];
 
-            ((void (*)(void *, int))entry->fn)((u8 *)gimmick + entry->delta, 0);
+            ((void (*)(void *, s8))entry->fn)((u8 *)gimmick + entry->delta, 0);
             return;
         }
     }

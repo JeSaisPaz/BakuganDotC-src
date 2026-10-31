@@ -35,8 +35,11 @@ void UiEquipBuildGearLists(UiEquip *self)
             for (i = 0; i < 4; i++) {
                 profile = SaveGetProfile();
                 idx = (s8)self->bakuganPick[p] * 4 + i - 4;
-                /* signed idx / 8 and idx % 8, as the asm computes them (shift count masked to 5 bits) */
-                if ((u8)(profile->data->newItems[idx / 8] & (1 << ((idx % 8) & 0x1f))) == 0)
+                /* signed idx / 8 and idx % 8, as the asm computes them (shift count masked to 5 bits).
+                   PC port (class n): read through a byte pointer, as the MIPS does: a player without a pick
+                   (bakuganPick 0xff) gives idx -8..-5, and idx -8 reads the byte before newItems
+                   (bakuganBitsB[4], +0x5c7) on the PSP too; the array index was out of bounds for UBSan. */
+                if ((u8)(((const u8 *)profile->data->newItems)[idx / 8] & (1 << ((idx % 8) & 0x1f))) == 0)
                     continue;
                 self->panelCardIds[p * 4 + i] = (u8)idx;
                 for (j = 0; j < 2; j++) {
@@ -88,7 +91,7 @@ void UiEquipBuildGearLists(UiEquip *self)
             for (i = 0; i < 4; i++) {
                 profile = SaveGetProfile();
                 idx = (s8)self->bakuganPick[p] * 4 + i - 4;
-                if ((u8)(profile->data->newItems[idx / 8] & (1 << ((idx % 8) & 0x1f))) == 0)
+                if ((u8)(((const u8 *)profile->data->newItems)[idx / 8] & (1 << ((idx % 8) & 0x1f))) == 0)
                     continue;
                 self->panelCardIds[p * 4 + i] = (u8)idx;
                 if (count < 2) {
