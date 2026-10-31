@@ -187,10 +187,8 @@ void GmoModelComputeWorldMatrices(GmoModel *self)
       float hz = 0.5f - zz;
 
       /* world = parent · local; the w lanes are replaced by wrow */
-      for (c = 0; c < 4; c++) {
-        for (r = 0; r < 3; r++)
-          node->localMatrix[c * 4 + r] =
-              VfDot4(L[c][0], L[c][1], L[c][2], L[c][3], P[0][r], P[1][r], P[2][r], P[3][r]);
+      for (c = 0; c < 4; c++) { /* field r = VfDot4(L column c, P row r): s and t commute; field 3 is replaced */
+        VfDot4x4(&node->localMatrix[c * 4], P[0], P[1], P[2], P[3], L[c][0], L[c][1], L[c][2], L[c][3]);
         node->localMatrix[c * 4 + 3] = wrow[c];
       }
 

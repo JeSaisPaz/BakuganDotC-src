@@ -18,19 +18,23 @@ void CollisionCapsuleTransform(void *capsule, const ScePspFMatrix4 *mtx, void *o
   float ax;
   float ay;
   float az;
+  ScePspFVector4 t;
+  const ScePspFVector4 zero = {0.0f, 0.0f, 0.0f, 0.0f};
 
   /* vtfm4.q C000, E100, C200 with S203 = 1.0 (vfim 0x3c00) */
-  dst->start[0] = VfDot4(mtx->x.x, mtx->y.x, mtx->z.x, mtx->w.x, px, py, pz, 1.0f);
-  dst->start[1] = VfDot4(mtx->x.y, mtx->y.y, mtx->z.y, mtx->w.y, px, py, pz, 1.0f);
-  dst->start[2] = VfDot4(mtx->x.z, mtx->y.z, mtx->z.z, mtx->w.z, px, py, pz, 1.0f);
+  VfDot4x4(&t.x, &mtx->x.x, &mtx->y.x, &mtx->z.x, &mtx->w.x, px, py, pz, 1.0f); /* lane w unused */
+  dst->start[0] = t.x;
+  dst->start[1] = t.y;
+  dst->start[2] = t.z;
 
   /* vtfm3.t C000, E100, C200 */
   ax = src->axis[0];
   ay = src->axis[1];
   az = src->axis[2];
-  dst->axis[0] = VfDot3(mtx->x.x, mtx->y.x, mtx->z.x, ax, ay, az);
-  dst->axis[1] = VfDot3(mtx->x.y, mtx->y.y, mtx->z.y, ax, ay, az);
-  dst->axis[2] = VfDot3(mtx->x.z, mtx->y.z, mtx->z.z, ax, ay, az);
+  VfDot4x4(&t.x, &mtx->x.x, &mtx->y.x, &mtx->z.x, &zero.x, ax, ay, az, 0.0f); /* VfDot3: 4th term 0 x 0 */
+  dst->axis[0] = t.x;
+  dst->axis[1] = t.y;
+  dst->axis[2] = t.z;
 
   dst->radius = src->radius;
   dst->radiusSq = src->radiusSq;

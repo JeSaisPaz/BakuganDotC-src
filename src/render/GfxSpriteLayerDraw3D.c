@@ -133,11 +133,9 @@ void GfxSpriteLayerDraw3D(GfxSpriteLayer *self, RenderPacket *packet, GfxCamera 
       } else {
         basis = sprite->matrix;
       }
-      for (j = 0; j < 4; j++) {
-        for (r = 0; r < 4; r++) {
-          m[j * 4 + r] = VfDot4(local[j * 4 + 0], local[j * 4 + 1], local[j * 4 + 2], local[j * 4 + 3],
-                                basis[0 * 4 + r], basis[1 * 4 + r], basis[2 * 4 + r], basis[3 * 4 + r]);
-        }
+      for (j = 0; j < 4; j++) { /* m[j * 4 + r] = VfDot4(local row j, basis column r): s and t commute */
+        VfDot4x4(&m[j * 4], &basis[0], &basis[4], &basis[8], &basis[12], local[j * 4 + 0], local[j * 4 + 1],
+                 local[j * 4 + 2], local[j * 4 + 3]);
       }
       break;
     case 1:

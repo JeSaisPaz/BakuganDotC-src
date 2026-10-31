@@ -78,14 +78,10 @@ static void TrailScaleBasis(float *basis, const float *size)
 static void TrailMat4Mul(float *out, const float *a, const float *b)
 {
   float r[16];
-  s32 i;
   s32 j;
 
-  for (j = 0; j < 4; j++) {
-    for (i = 0; i < 4; i++) {
-      r[j * 4 + i] = VfDot4(b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3], a[0 + i], a[4 + i], a[8 + i], a[12 + i]);
-    }
-  }
+  for (j = 0; j < 4; j++) /* field i of r column j = VfDot4(b column j, field i of a's columns): s and t commute */
+    VfDot4x4(&r[j * 4], &a[0], &a[4], &a[8], &a[12], b[j * 4 + 0], b[j * 4 + 1], b[j * 4 + 2], b[j * 4 + 3]);
   TrailCopy16(out, r);
 }
 

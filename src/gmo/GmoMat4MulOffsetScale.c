@@ -7,10 +7,7 @@ static ScePspFVector4 ComposeField(const ScePspFMatrix4 *p, float c0, float c1, 
 {
     ScePspFVector4 r;
 
-    r.x = VfDot4(c0, c1, c2, c3, p->x.x, p->y.x, p->z.x, p->w.x);
-    r.y = VfDot4(c0, c1, c2, c3, p->x.y, p->y.y, p->z.y, p->w.y);
-    r.z = VfDot4(c0, c1, c2, c3, p->x.z, p->y.z, p->z.z, p->w.z);
-    r.w = VfDot4(c0, c1, c2, c3, p->x.w, p->y.w, p->z.w, p->w.w);
+    VfDot4x4(&r.x, &p->x.x, &p->y.x, &p->z.x, &p->w.x, c0, c1, c2, c3); /* the dot's s and t commute */
     return r;
 }
 
@@ -28,10 +25,7 @@ ScePspFMatrix4 *GmoMat4MulOffsetScale(ScePspFMatrix4 *dst, const ScePspFMatrix4 
     ScePspFMatrix4 m;
     ScePspFMatrix4 r;
 
-    m.w.x = VfDot4(l.x.x, l.y.x, l.z.x, l.w.x, v.x, v.y, v.z, 1.0f);
-    m.w.y = VfDot4(l.x.y, l.y.y, l.z.y, l.w.y, v.x, v.y, v.z, 1.0f);
-    m.w.z = VfDot4(l.x.z, l.y.z, l.z.z, l.w.z, v.x, v.y, v.z, 1.0f);
-    m.w.w = VfDot4(l.x.w, l.y.w, l.z.w, l.w.w, v.x, v.y, v.z, 1.0f);
+    VfDot4x4(&m.w.x, &l.x.x, &l.y.x, &l.z.x, &l.w.x, v.x, v.y, v.z, 1.0f);
     m.x.x = VfMul(l.x.x, v.w);
     m.x.y = VfMul(l.x.y, v.w);
     m.x.z = VfMul(l.x.z, v.w);
